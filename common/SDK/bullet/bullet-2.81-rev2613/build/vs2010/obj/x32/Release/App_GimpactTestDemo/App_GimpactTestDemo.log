@@ -1,0 +1,6 @@
+﻿  GimpactTestDemo.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\GimpactTestDemo\GimpactTestDemo.cpp': No such file or directory
+  main.cpp
+  Win32GimpactDemo.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\GimpactTestDemo\main.cpp': No such file or directory
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\GimpactTestDemo\Win32GimpactDemo.cpp': No such file or directory

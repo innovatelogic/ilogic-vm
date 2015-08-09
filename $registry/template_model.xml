@@ -1,0 +1,20 @@
+<Explorer Transient="1" External="bExternal:false FilenameTag:D:\dev\$cashe\FileTest.xml " Value="Name:Explorer bVisible:true bEnabled:true bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; CompositeBounds:-3.40282347e+038;-3.40282347e+038;-3.40282347e+038;3.40282347e+038;3.40282347e+038;3.40282347e+038; " >
+
+	<Explorer3D Transient="1" External="bExternal:false FilenameTag: " Value="Name:Explorer3D bVisible:true bEnabled:true bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; CompositeBounds:-3.40282347e+038;-3.40282347e+038;-3.40282347e+038;3.40282347e+038;3.40282347e+038;3.40282347e+038; " >
+		<CCamera Transient="0" External="bExternal:false FilenameTag: " Value="Name:Camera bVisible:true bEnabled:true bRenderDebug:false LTM:-0.135160774;0;0.990823865;0;-0.40401876;0.913088918;-0.0551131666;0;-0.904710293;-0.407760501;-0.123413816;0;33.1636009;26.5343666;15.3401766;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; CompositeBounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; bOrtho:false Fov:60 Aspect:1.33329999 NearDist:1 FarDist:5000 m_fYaw:-10.8599987 m_fPitch:-0.419999987 m_fRoll:0 " >
+		</CCamera>
+	
+		<ProjectedLight Transient="0" External="bExternal:false FilenameTag: " Value="Name:ProjectedLight bVisible:true bEnabled:true bRenderDebug:false LTM:0.924909055;0;-0.380188435;0;0.329784185;0.497571528;0.80228734;0;0.189170927;-0.867422938;0.460208416;0;-261.647308;1209.86816;-1042.89636;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; CompositeBounds:3.40282347e+038;3.40282347e+038;3.40282347e+038;-3.40282347e+038;-3.40282347e+038;-3.40282347e+038; bOrtho:true Fov:60 Aspect:1.33329999 NearDist:1 FarDist:5000 m_fYaw:-0.390000015 m_fPitch:-1.04999948 m_fRoll:0 Color:4294967295 bTestAdapt:false IndexTest:0 " >
+		</ProjectedLight>
+
+    <CLevelActor Transient="0" External="bExternal:false FilenameTag: " Value="Name:Floor bVisible:true bEnabled:true bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:-2500;-5;-2500;2500;5;2500; CompositeBounds:-2500;-4.36822891;-2500;2500;5.63177109;2500; NameMesh:floor_zero_Ed.mat " >
+      </CLevelActor>  
+	  
+	<LevelActorEd Transient="0" External="bExternal:false FilenameTag: " Value="Name:Model bVisible:true bEnabled:true bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:-2500;-5;-2500;2500;5;2500; CompositeBounds:-2500;-4.36822891;-2500;2500;5.63177109;2500; NameMesh:wooden_box.mat" >
+    </LevelActorEd>  
+
+	</Explorer3D>
+
+	<Explorer2D Transient="1" External="bExternal:false FilenameTag: " Value="Name:Explorer2D bVisible:false bEnabled:false bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;-69;36;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:0;0;0;1024;600;0; CompositeBounds:-69;36;0;955;636;0; HPixelTransform:PixelOwner_Transform VPixelTransform:PixelOwner_Transform HSizeTransform:PixelOwner_Transform VSizeTransform:PixelOwner_Transform ClipBounds:false Width:1024 Height:768 Opacity:1 " >
+	</Explorer2D>
+</Explorer>

@@ -1,0 +1,309 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(CoreSDK)
+
+add_definitions(-DUNICODE -D_UNICODE)
+
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/src)
+include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
+include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+include_directories(${CMAKE_SOURCE_DIR}/Foundation)
+include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
+
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/lib/)
+
+set(BULLET_ARCHIVES BulletCollision_vs2010_debug.lib
+					BulletDynamics_vs2010_debug.lib
+					BulletSoftBody_vs2010_debug.lib
+					ConvexDecomposition_vs2010_debug.lib
+					HACD_vs2010_debug.lib
+					BulletDynamics_vs2010_debug.lib
+					LinearMath_vs2010_debug.lib)
+
+set(LIBRARIES TinyXML Foundation RenderSDK nv_math ${BULLET_ARCHIVES})
+
+set(SOURCE 
+	ActionBase.cpp
+	ActionBase.h
+	ActionEventUI.cpp
+	ActionEventUI.h
+	ActionHandler.cpp
+	ActionHandler.h
+	ActionLoadLevel.cpp
+	ActionLoadLevel.h
+	ActionTrigger.cpp
+	ActionTrigger.h
+	ActorAllocator.cpp
+	ActorAllocator.h
+	ActorAllocator_Static.cpp
+	ActorCollisionController.cpp
+	ActorCollisionController.h
+	ActorCollisionKinematicController.cpp
+	ActorCollisionKinematicController.h
+	AnimationController.cpp
+	AnimationController.h
+	AnimationController2D.cpp
+	AnimationController2D.h
+	AnimationSequerence.cpp
+	AnimationSequerence.h
+	BaseModificator.cpp
+	BaseModificator.h
+	BaseModificatorUI.cpp
+	BaseModificatorUI.h
+	BaseSplineAgregator.cpp
+	BaseSplineAgregator.h
+	BezierSplineAgregator_Brush.cpp
+	BezierSplineAgregator_Brush.h
+	Bezier_SplineAgregator.cpp
+	Bezier_SplineAgregator.h
+	BoxCharacterController.cpp
+	BoxCharacterController.h
+	BoxCollisionController.cpp
+	BoxCollisionController.h
+	BoxCollisionController_Brush.cpp
+	BoxCollisionController_Brush.h
+	Brush_AbstractInterface.cpp
+	Brush_AbstractInterface.h
+	Brush_LevelActor.cpp
+	Brush_LevelActor.h
+	Camera.cpp
+	Camera.h
+	CameraActor.cpp
+	CameraActor.h
+	CameraEditor.cpp
+	CameraEditor.h
+	CameraManager.cpp
+	CameraManager.h
+	CanvasFrame.cpp
+	CanvasFrame.h
+	CharacterControl.cpp
+	CharacterControl.h
+	CollisionController.cpp
+	CollisionController.h
+	ContactSensorCallbackBt.cpp
+	ContactSensorCallbackBt.h
+	CoreSDK.cpp
+	CoreSDK.h
+	coresdkafx.h
+	coresdkafx_actions.h
+	coresdkafx_components.h
+	coresdkafx_manager.h
+	coresdkafx_objects.h
+	coresdkafx_ui.h
+	CPawn.cpp
+	CPawn.h
+	DirectionalLight.cpp
+	DirectionalLight.h
+	DummyObject.cpp
+	DummyObject.h
+	Explorer.cpp
+	Explorer.h
+	Explorer2D.cpp
+	Explorer2D.h
+	Explorer3D.cpp
+	Explorer3D.h
+	GameInfoManager.cpp
+	GameInfoManager.h
+	GameRealmInfo.cpp
+	GameRealmInfo.h
+	GameStaticInfo.cpp
+	GameStaticInfo.h
+	game_types.h
+	IDrawInterface.cpp
+	IDrawInterface.h
+	IDrawInterfaceUI.cpp
+	IDrawInterfaceUI.h
+	IEntityController.cpp
+	IEntityController.h
+	IInputController.h
+	IInputInterface.cpp
+	IInputInterface.h
+	ImageProjection.cpp
+	ImageProjection.h
+	InputControllerEdImpl.cpp
+	InputControllerEdImpl.h
+	InputControllerImpl.cpp
+	InputControllerImpl.h
+	InputManager.cpp
+	InputManager.h
+	IPhysicsEngine.h
+	IUIInputController.h
+	IUIInputIController.cpp
+	IUpdateInterface.cpp
+	IUpdateInterface.h
+	Label.cpp
+	Label.h
+	LabelButton.cpp
+	LabelButton.h
+	LabelButton_Brush.cpp
+	LabelButton_Brush.h
+	LevelActor.cpp
+	LevelActor.h
+	LevelActorEd.cpp
+	LevelActorEd.h
+	LevelPlaneActor.cpp
+	LevelPlaneActor.h
+	LevitateVehicle.cpp
+	LevitateVehicle.h
+	MeshCollisionComponent.cpp
+	MeshCollisionComponent.h
+	ModelViewer.cpp
+	ModelViewer.h
+	MovementData.cpp
+	MovementData.h
+	object_export.h
+	PawnCueBall.cpp
+	PawnCueBall.h
+	PhysDebugDrawerGL.cpp
+	PhysDebugDrawerGL.h
+	physicsafx.h
+	PhysicsEngineBullet.cpp
+	PhysicsEngineBullet.h
+	PhysicsEnginePhysX.cpp
+	PhysicsEnginePhysX.h
+	PhysicsEnginePhysX_Loader.cpp
+	PhysNode.cpp
+	PhysNode.h
+	PlaneCollisionController.cpp
+	PlaneCollisionController.h
+	Point2D.cpp
+	Point2D.h
+	Point2DBezierKey.cpp
+	Point2DBezierKey.h
+	PointBezier2D.cpp
+	PointBezier2D.h
+	PointLight.cpp
+	PointLight.h
+	PolygonImage.cpp
+	PolygonImage.h
+	PolygonMesh.cpp
+	PolygonMesh.h
+	project.h
+	ProjectedLight.cpp
+	ProjectedLight.h
+	Registry.cpp
+	Registry.h
+	RemoteControlManager.cpp
+	RemoteControlManager.h
+	RestrictedVolume.cpp
+	RestrictedVolume.h
+	RestrictedVolumeCollisionController.cpp
+	RestrictedVolumeCollisionController.h
+	Scene.cpp
+	Scene.h
+	SceneGameArcanoid.cpp
+	SceneGameArcanoid.h
+	SceneManager.cpp
+	SceneManager.h
+	SceneSelectLevel.cpp
+	SceneSelectLevel.h
+	ScriptDriver.cpp
+	ScriptDriver.h
+	SkyDome.cpp
+	SkyDome.h
+	SphereCollisionController.cpp
+	SphereCollisionController.h
+	SphereCollisionController_Brush.cpp
+	SphereCollisionController_Brush.h
+	SphereController.cpp
+	SphereController.h
+	SplineAgregator.cpp
+	SplineAgregator.h
+	SplineAgregator_Brush.cpp
+	SplineAgregator_Brush.h
+	SplineAgregator_PointInserter_Brush.cpp
+	SplineAgregator_PointInserter_Brush.h
+	SplineCollision2DModificator.cpp
+	SplineCollision2DModificator.h
+	SplineCollision2DModificator_Brush.cpp
+	SplineCollision2DModificator_Brush.h
+	SplineMovementController.cpp
+	SplineMovementController.h
+	SplinePolygon.cpp
+	SplinePolygon.h
+	Stream.cpp
+	Stream.h
+	StyleSet.cpp
+	StyleSet.h
+	TerrainObject.h
+	TriggerCallbackReport.cpp
+	TriggerCallbackReport.h
+	TriggerObject.cpp
+	TriggerObject.h
+	UIFilter.cpp
+	UIFilter.h
+	UIFilter_Brush.cpp
+	UIFilter_Brush.h
+	UIImage.cpp
+	UIImage.h
+	UIImagePivotControl.cpp
+	UIImagePivotControl.h
+	UIImage_Brush.cpp
+	UIImage_Brush.h
+	UIPanel.cpp
+	UIPanel.h
+	UIProgressBar.cpp
+	UIProgressBar.h
+	UIScene.cpp
+	UIScene.h
+	UISceneBaseHud.cpp
+	UISceneBaseHud.h
+	UISceneLoadingScreen.cpp
+	UISceneLoadingScreen.h
+	UISceneLogin.cpp
+	UISceneLogin.h
+	UISceneManager.cpp
+	UISceneManager.h
+	UIScenePauseMenu.cpp
+	UIScenePauseMenu.h
+	UIScenePlayerInfo.cpp
+	UIScenePlayerInfo.h
+	UIScreenObject.cpp
+	UIScreenObject.h
+	UIScreenObject_Static.cpp
+	UISlider.cpp
+	UISlider.h
+	UISliderButton.cpp
+	UISliderButton.h
+	UISprite.cpp
+	UISprite.h
+	UISpritePawn.cpp
+	UISpritePawn.h
+	UISprite_Brush.cpp
+	UISprite_Brush.h
+	UIViewPivotControl.cpp
+	UIViewPivotControl.h
+	UpdateManager.cpp
+	UpdateManager.h
+	UserAllocator.cpp
+	UserAllocator.h
+	UVModificator.cpp
+	UVModificator.h
+	UVModificator_Brush.cpp
+	UVModificator_Brush.h
+	ValueParser.h
+	VehicleActor.cpp
+	VehicleActor.h
+	Viewport.h
+	ViewportInterface.cpp
+	ViewportInterface.h
+	ViewportManager.cpp
+	ViewportManager.h
+	)
+	
+add_library(${PROJECT_NAME} SHARED ${SOURCE})
+
+target_link_libraries( ${PROJECT_NAME} ${LIBRARIES})
+
+#SET_BIN_OUTPUT_FOLDER(${PROJECT_NAME} ${G_BIN_DIR})
+
+set_target_properties( ${PROJECT_NAME} PROPERTIES
+					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					)

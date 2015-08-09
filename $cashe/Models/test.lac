@@ -1,0 +1,20 @@
+<lactor>
+	<mesh obj="box.obj" hsk="box.hsk" trk="box.trk" col="box.col">
+		<textures>
+			<tex name="reflectivity_40.tga"/>
+			<tex name="skymap.tga"/>
+			<tex name="reflectivity_40.tga"/>
+			<tex name="skymap.tga"/>
+		</textures>
+
+		<mtrls>
+			<mat name="Material_#1" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;0;" txchs="1;1;" 
+			diffuse="0.537255;0.196078;0.196078;1;" specular="0.9;0.9;0.9;1;" shininess="0.1" ambient="0.179083;0.0653588;0.0653588;1;"
+			emission="0;0;0;1;" transparent="1" fog="0" fogcolor="1;1;1;1;"/>
+			
+			<mat name="Material_#2" fx="ogl_diffuse.vs" tehnique="Parallax" id="1" txids="2;0;" txchs="3;1;" 
+			diffuse="0.2;0.552941;0.176471;1;" specular="0.9;0.9;0.9;1;" shininess="0.1" ambient="0.066666;0.184312;0.0588229;1;"
+			emission="0;0;0;1;" transparent="1" fog="0" fogcolor="1;1;1;1;"/>
+		</mtrls>
+	</mesh>
+</lactor>

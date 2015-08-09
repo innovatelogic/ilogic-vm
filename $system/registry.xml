@@ -1,0 +1,92 @@
+<!--
+    App registry config file. describe all system variables
+ -->
+
+<registry>
+  
+  <resolution Value="1024;600"/>
+    
+  <Types>
+    <Type Name="Explorer" Icon="resources/CExplorer.bmp" Editor="Visible:true"></Type>
+	<Type Name="Explorer2D" Icon="resources/closedfolder.bmp" Editor="Visible:true"></Type>
+	<Type Name="Explorer3D" Icon="resources/closedfolder.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIImage" Icon="resources/UIImage.bmp" Editor="Visible:true"></Type>
+    <Type Name="Bezier_SplineAgregator" Icon="resources/Beier_SplineAgregator.bmp" Editor="Visible:true"></Type>
+    <Type Name="SplineAgregator" Icon="resources/SplineAgregator.bmp" Editor="Visible:true"></Type>
+    <Type Name="SplineCollision2DModificator" Icon="resources/SplineCollision2DModificator.bmp" Editor="Visible:true"></Type>
+    <Type Name="UVModificator" Icon="resources/UVModificator.bmp" Editor="Visible:true"></Type>
+    <Type Name="UISprite" Icon="resources/UISprite.bmp" Editor="Visible:true"></Type>
+    <Type Name="BoxCharacterController" Icon="resources/BoxCharacterController.bmp" Editor="Visible:true"></Type>
+    <Type Name="Label" Icon="resources/UILabel.bmp" Editor="Visible:true"></Type>
+    <Type Name="BaseSplineAgregator" Icon="resources/BaseSplineAgregator.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIFilter" Icon="resources/closedfolder.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIProgressBar" Icon="resources/ProgressBar.bmp" Editor="Visible:true"></Type>
+    <Type Name="SkyDome" Icon="resources/SkyDome.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIImage_Brush" Icon="resources/UIImage_Brush.bmp" Editor="Visible:true"></Type>
+    <Type Name="SplineAgregator_Brush" Icon="resources/SplineAgregator.bmp" Editor="Visible:true"></Type>
+    <Type Name="Bezier_SplineAgregator_Brush" Icon="resources/Beier_SplineAgregator.bmp" Editor="Visible:true"></Type>
+    <Type Name="SplineAgregator_PointInserter_Brush" Icon="resources/SplineAgregator_PointInserter_Brush.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIFilter_Brush" Icon="resources/closedfolder.bmp" Editor="Visible:true"></Type>
+    <Type Name="UVModificator_Brush" Icon="resources/UVModificator.bmp" Editor="Visible:true"></Type>
+    <Type Name="LabelButton" Icon="resources/LabelButton.bmp" Editor="Visible:true"></Type> 
+    <Type Name="LabelButton_Brush" Icon="resources/LabelButton.bmp" Editor="Visible:true"></Type>
+    <Type Name="SplineCollision2DModificator_Brush" Icon="resources/SplineCollision2DModificator.bmp" Editor="Visible:true"></Type>
+    <Type Name="CCamera" Icon="resources/CCamera.bmp" Editor="Visible:true"></Type>
+    <Type Name="VehicleActor" Icon="resources/Vehicle.bmp" Editor="Visible:true"></Type>
+    <Type Name="PointLight" Icon="resources/PointLight.bmp" Editor="Visible:true"></Type>
+    <Type Name="CPawn" Icon="resources/CPawn.bmp" Editor="Visible:true"></Type>
+    <Type Name="CLevelActor" Icon="resources/LevelActor.bmp" Editor="Visible:true"></Type>
+	<Type Name="CLevelPlaneActor" Icon="resources/plane.bmp" Editor="Visible:true"></Type>
+    <Type Name="LevelActorEd" Icon="resources/LevelActor.bmp" Editor="Visible:true"></Type>
+    <Type Name="Brush_LevelActor" Icon="resources/LevelActor.bmp" Editor="Visible:true"></Type>
+    <Type Name="ProjectedLight" Icon="resources/ProjectedLight.bmp" Editor="Visible:true"></Type>
+    <Type Name="CScene" Icon="resources/Scene.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIScene" Icon="resources/UIScene.bmp" Editor="Visible:true"></Type>
+    <Type Name="UISceneLoadingScreen" Icon="resources/UIScene.bmp" Editor="Visible:true"></Type>
+    <Type Name="UISceneBaseHud" Icon="resources/UIScene.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIScenePauseMenu" Icon="resources/UIScene.bmp" Editor="Visible:true"></Type>
+    <Type Name="CSceneSelectLevel" Icon="resources/UIScene.bmp" Editor="Visible:true"></Type>
+    <Type Name="UIComp_DrawFont" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="UIComp_DrawImage" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="UIComp_DrawImageState" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="UIComp_DrawFontState" Icon="resources/gears.bmp" Editor="Visible:false"></Type>	
+    <Type Name="UIComp_DrawMesh" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_AnimMesh" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_AnimTrack" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_SkeletonObject" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_MaterialButton" Icon="resources/gears.bmp" Editor="Visible:false"></Type>	
+    <Type Name="MeshNode" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Point2DBezierKey" Icon="resources/gears.bmp" Editor="Visible:false"></Type>	
+    <Type Name="Comp_StaticMesh" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_RenderTarget" Icon="resources/gears.bmp" Editor="Visible:true"></Type>	
+    <Type Name="Comp_MaterialEffect" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="Comp_MaterialEffectUI" Icon="resources/gears.bmp" Editor="Visible:false"></Type>
+    <Type Name="DummyObject" Icon="resources/gears.bmp" Editor="Visible:true"></Type>	
+    <Type Name="BoxCharacterController" Icon="resources/gears.bmp" Editor="Visible:true"></Type>	
+    <Type Name="ActorCollisionController" Icon="resources/gears.bmp" Editor="Visible:true"></Type>
+	<Type Name="CPlaneCollisionController" Icon="resources/gears.bmp" Editor="Visible:true"></Type>
+	<Type Name="CSphereCollisionController" Icon="resources/gears.bmp" Editor="Visible:true"></Type>
+    <Type Name="ActorCollisionKinematicController" Icon="resources/gears.bmp" Editor="Visible:true"></Type>
+    <Type Name="BoneObject" Icon="resources/gears.bmp" Editor="Visible:false"></Type>	
+    <Type Name="LevitateVehicle" Icon="resources/LevitateVehicle.bmp" Editor="Visible:true"></Type>
+    <Type Name="TriggerObject" Icon="resources/TriggerObject.bmp" Editor="Visible:true"></Type>  
+    <Type Name="ActionBase" Icon="resources/ActionBase.bmp" Editor="Visible:true"></Type>
+    <Type Name="CImageProjection" Icon="resources/snapshot_icon.bmp" Editor="Visible:true"></Type>
+    <Type Name="CComp_EnvSceneInfo" Icon="resources/earth.bmp" Editor="Visible:true"></Type>
+	<Type Name="CPolygonImage" Icon="resources/UIImage.bmp" Editor="Visible:true"></Type>
+	<Type Name="CModelViewer" Icon="resources/UIImage.bmp" Editor="Visible:true"></Type>
+  </Types>
+  
+  <Operations>
+    <Operation Name="Open" Icon="resources/open_icon.bmp"></Operation>
+    <Operation Name="Save" Icon="resources/save_icon.bmp"></Operation>
+    <Operation Name="Copy" Icon="resources/copy_icon.bmp"></Operation>
+    <Operation Name="Paste" Icon="resources/paste_icon.bmp"></Operation>
+    <Operation Name="Add" Icon="resources/Add.bmp"></Operation>
+    <Operation Name="Delete" Icon="resources/delete.bmp"></Operation>
+    <Operation Name="Rename" Icon="resources/Rename.bmp"></Operation>
+    <Operation Name="Hide" Icon="resources/Hide.bmp"></Operation>
+    <Operation Name="Unhide" Icon="resources/Unhide.bmp"></Operation>
+  </Operations>
+
+</registry> 

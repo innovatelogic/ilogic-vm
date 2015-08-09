@@ -1,0 +1,26 @@
+<PolygonMesh Name="Test.xml">
+
+<v value="Num:8">
+0.f 0.f 0.f
+0.f 0.f 4.f
+4.f 0.f 0.f
+8.f 0.f 4.f
+8.f 0.f -1.f
+2.f 0.f -1.f
+0.f -1.f 0.f
+0.f -1.f 2.f
+</v>
+
+<Topology>
+<f Value="Num:6">
+0 1 2 3 4 5 
+<n> 0.f 1.f 0.f </n>
+</f>
+
+<f Value="Num:4">
+0 6 7 1
+<n> -1.f 0.f 0.f </n>
+</f>
+</Topology>
+
+</PolygonMesh>

@@ -1,0 +1,4 @@
+<SkyDome Value="Detail:16 DiffuseTex:skymap.tga Color:-2126748 STM:4500.0000;0.0000;0.0000;0.0000;4500.0000;0.0000;0.0000;0.0000;4500.0000;" >
+<Comp_StaticMesh Transient="1" Value="Name:MeshComponent" />
+<Comp_MaterialEffect Transient="1" Value="Name:MaterialEffect XRef:ogl_diffuse.vs NameTehnique:DiffuseOnly" />
+</SkyDome>

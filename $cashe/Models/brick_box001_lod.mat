@@ -1,0 +1,12 @@
+<lactor>
+<mesh obj="brick_box001_lod.obj" col="brick_box001_lod.col">
+<textures>
+<tex name="Broken_Pillar_Diff_512.dds"/>
+<tex name="Raygun_Metal_01_gl.dds"/>
+</textures>
+<mtrls>
+<mat name="01 - Default" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;" txchs="0;" diffuse="0.588235;0.588235;0.588235;1" specular="0.9;0.9;0.9;1" shininess="0.1" ambient="0.588235;0.588235;0.588235;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+<mat name="02 - Default" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="1" txids="1;" txchs="0;" diffuse="0.588235;0.588235;0.588235;1" specular="0.9;0.9;0.9;1" shininess="0.1" ambient="0.588235;0.588235;0.588235;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+</mtrls>
+</mesh>
+</lactor>

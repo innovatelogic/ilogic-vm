@@ -1,0 +1,129 @@
+<PolyMesh Name="TestMesh">
+
+  <!--
+<Vertices Num="8">
+0.f, 0.f, 0.f
+4.f, 0.f, 0.f
+4.f, 0.f, 4.f
+0.f, 0.f, 4.f
+0.f, 4.f, 0.f
+4.f, 4.f, 0.f
+4.f, 4.f, 4.f
+0.f, 4.f, 4.f
+0.f, 0.f, 0.f
+0.f, 4.f, 0.f
+0.f, 4.f, 4.f
+0.f, 0.f, 4.f
+0.f, 0.f, 4.f
+0.f, 4.f, 4.f
+4.f, 4.f, 4.f
+4.f, 0.f, 4.f
+4.f, 0.f, 4.f
+4.f, 4.f, 4.f
+4.f, 4.f, 0.f
+4.f, 0.f, 0.f
+4.f, 0.f, 0.f
+4.f, 4.f, 0.f
+0.f, 4.f, 0.f
+0.f, 0.f, 0.f
+</Vertices>
+
+<TMaps>
+	<TMapBase>
+	0 0 0
+	1 0 0
+	1 1 0
+	0 1 0
+	0 0 0
+	1 0 0
+	1 1 0
+	0 1 0
+	0 0 0
+	0 1 0
+	1 1 0
+	1 0 0
+	0 0 0
+	0 1 0
+	1 1 0
+	1 0 0
+	0 0 0
+	0 1 0
+	1 1 0
+	1 0 0
+	0 0 0
+	0 1 0
+	1 1 0
+	1 0 0
+	</TMapBase>
+</TMaps>
+
+<Face>
+<Normal>0.f, -1.f, 0.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>0 1 2 3</Indexes>
+</Face>
+
+<Face>
+<Normal>0.f, 1.f, 0.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>7 6 5 4</Indexes>
+</Face>
+
+<Face>
+<Normal>0.f, 0.f, -1.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>11 10 9 8</Indexes>
+</Face>
+
+<Face>
+<Normal>1.f, 0.f, 0.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>15 14 13 12</Indexes>
+</Face>
+
+<Face>
+<Normal>0.f, 0.f, 1.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>19 18 17 16</Indexes>
+</Face>
+
+<Face>
+<Normal>-1.f, 0.f, 0.f</Normal>
+<Mat>BaseDiffuse.mat</Mat>
+<Indexes>23 22 21 20</Indexes>
+</Face>
+-->
+
+  <Vertices Num="6">
+    0.f, 0.f, 0.f
+    4.f, 0.f, 0.f
+    4.f, 4.f, 0.f
+    4.f, 4.f, 4.f
+    4.f, 0.f, 4.f
+    0.f, 0.f, 4.f
+  </Vertices>
+
+  <TMaps>
+    <TMapBase>
+      0 0 0
+      1 0 0
+      1 1 0
+      0 1 0
+      0 0 0
+      1 0 0
+    </TMapBase>
+  </TMaps>
+
+  <Face>
+    <Normal>0.f, 0.f, 0.f</Normal>
+    <Mat>BaseDiffuse.mat</Mat>
+    <Indexes>0 1 5</Indexes>
+  </Face>
+
+  <Face>
+    <Normal>0.f, 0.f, 0.f</Normal>
+    <Mat>BaseDiffuse.mat</Mat>
+    <Indexes>1 4 5</Indexes>
+  </Face>
+  
+</PolyMesh>

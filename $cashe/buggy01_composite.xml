@@ -1,0 +1,1 @@
+<CLevelActor Transient="0" Value="Name:body XRef: " ><Comp_StaticMesh Transient="1" Value="Name:MeshComponent " /><ActorCollisionController Transient="1" Value="Name:CollisionObject XRef: " /></CLevelActor>

@@ -1,0 +1,23 @@
+creature_ark_ap.obj
+creature_ark_ap.hsk
+creature_ark_ap.trk
+creature_ark_ap.mrk
+creature_ark_ap.col
+1
+dev_common_64_64.tga
+1
+01_-_Default
+dx9_hlsl_bumpmapping.fx
+DiffuseOnly
+0
+1
+0
+0
+0.588235 0.588235 0.588235 1
+0.9 0.9 0.9 1
+0.1
+0.588235 0.588235 0.588235 1
+0 0 0 1
+1
+0
+1 1 1 1

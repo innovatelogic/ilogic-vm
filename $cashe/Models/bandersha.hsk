@@ -1,0 +1,38 @@
+<Comp_SkeletonObject>
+<BoneObject Value="Name:Bone01 BoneIndex:1">
+<BoneObject Value="Name:Bone05 BoneIndex:2">
+<BoneObject Value="Name:Bone06 BoneIndex:3">
+<BoneObject Value="Name:Bone07 BoneIndex:4">
+<BoneObject Value="Name:Bone08 BoneIndex:5">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bone09 BoneIndex:6">
+<BoneObject Value="Name:Bone10 BoneIndex:7">
+<BoneObject Value="Name:Bone11 BoneIndex:8">
+<BoneObject Value="Name:Bone12 BoneIndex:9">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bone02 BoneIndex:0">
+<BoneObject Value="Name:Bone03 BoneIndex:10">
+<BoneObject Value="Name:Bone04 BoneIndex:11">
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bone13 BoneIndex:12">
+<BoneObject Value="Name:Bone14 BoneIndex:13">
+<BoneObject Value="Name:Bone15 BoneIndex:14">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bone16 BoneIndex:15">
+<BoneObject Value="Name:Bone17 BoneIndex:16">
+<BoneObject Value="Name:Bone18 BoneIndex:17">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</Comp_SkeletonObject>

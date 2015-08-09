@@ -1,0 +1,13 @@
+<lactor>
+	<mesh obj="bg.obj" hsk="wooden_box.hsk" trk="wooden_box.trk" col="wooden_box.col">
+		<textures>
+			<tex name="dev_cratewood01a.tga"/>
+		</textures>
+
+		<mtrls>
+			<mat name="Material_#1" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;1;" txchs="0;0;" 
+			diffuse="0.537255;0.196078;0.196078;1;" specular="0.9;0.9;0.9;1;" shininess="0.1" ambient="0.179083;0.0653588;0.0653588;1;"
+			emission="0;0;0;1;" transparent="1" fog="0" fogcolor="1;1;1;1;"/>
+		</mtrls>
+	</mesh>
+</lactor>

@@ -1,0 +1,13 @@
+<AnimationController2D Transient="1" Value="Name:TestAnimation">
+	<AnimationSequerence Transient="0" Value="Name:Run Duration:5">
+		<array Value="Name:AnimFrames Type:AnimFrame">
+		<AnimFrame Value="UV:0;0;0;0;"></AnimFrame>
+		<AnimFrame Value="UV:0;0;1;1;"></AnimFrame>
+		<AnimFrame Value="UV:0;0;2;2;"></AnimFrame>
+    <AnimFrame Value="UV:0;0;3;3;"></AnimFrame>
+    <AnimFrame Value="UV:0;0;4;4;"></AnimFrame>
+    <AnimFrame Value="UV:0;0;5;5;"></AnimFrame>
+    <AnimFrame Value="UV:0;0;6;6;"></AnimFrame>
+		</array>
+	</AnimationSequerence>
+</AnimationController2D>

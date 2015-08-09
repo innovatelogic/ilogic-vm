@@ -1,0 +1,43 @@
+box.obj
+box.hsk
+box.trk
+4
+stones.bmp
+stones_NM_height.tga
+rocks.jpg
+rocks_NM_height.tga
+2
+Material_#1
+dx9_hlsl_bumpmapping.fx
+DiffuseOnly
+0
+2
+0
+0
+1
+1
+0.537255 0.196078 0.196078 1
+0.9 0.9 0.9 1
+0.1
+0.179083 0.0653588 0.0653588 1
+0 0 0 1
+1
+0
+1 1 1 1
+Material_#2
+dx9_hlsl_bumpmapping.fx
+DiffuseOnly
+1
+2
+2
+0
+3
+1
+0.2 0.552941 0.176471 1
+0.9 0.9 0.9 1
+0.1
+0.066666 0.184312 0.0588229 1
+0 0 0 1
+1
+0
+1 1 1 1

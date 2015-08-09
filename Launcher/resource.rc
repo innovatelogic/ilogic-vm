@@ -1,0 +1,465 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "atlres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_TREEVIEW DIALOGEX 0, 0, 150, 421
+STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Object Browser"
+FONT 9, "Microsoft Sans Serif", 400, 0, 0xCC
+BEGIN
+    CONTROL         "",IDC_TREE1,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_HSCROLL | WS_TABSTOP,0,0,150,421
+END
+
+IDD_DIALOG_PROPERTY DIALOGEX 0, 0, 151, 269
+STYLE DS_SETFONT | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
+CAPTION "Properties"
+FONT 9, "Microsoft Sans Serif", 400, 0, 0xCC
+BEGIN
+END
+
+IDD_DIALOG_TOOLBOX DIALOGEX 0, 0, 55, 279
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_WINDOWEDGE
+CAPTION "New"
+FONT 9, "Microsoft Sans Serif", 400, 0, 0xCC
+BEGIN
+    CONTROL         "",IDC_TREE_TOOLBOX,"SysTreeView32",TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_TABSTOP,0,0,55,279
+END
+
+IDD_DIALOG_THREADMONITOR DIALOGEX 1480, 768, 613, 223
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Thread Monitor"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Serial Mode",IDC_CHECK_THREADMODE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,19,53,10
+    LTEXT           "CPS Main:",IDC_STATIC,19,34,35,8
+    LTEXT           "Static",IDC_STATIC_CPS_MAIN,68,34,46,8
+    LTEXT           "CPS Render:",IDC_STATIC,19,49,41,8
+    LTEXT           "Static",IDC_STATIC_CPS_RENDER,68,49,48,8
+    PUSHBUTTON      "Start Benchmark",IDC_BUTTON1,46,200,66,16
+    LTEXT           "CPS Update:",IDC_STATIC,19,63,41,8
+    LTEXT           "Static",IDC_STATIC_CPS_UPDATE,68,63,50,8
+    GROUPBOX        "CPS Monitor",IDC_STATIC,7,7,186,82
+    PUSHBUTTON      "+",IDC_BUTTON_ZOOM_IN,7,201,16,15
+    PUSHBUTTON      "-",IDC_BUTTON_ZOOM_OUT,23,201,16,15
+    LTEXT           "CPS Timer:",IDC_STATIC,19,76,41,8
+    LTEXT           "Static",IDC_STATIC_CPS_TIMER,68,76,50,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG_TREEVIEW, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG_PROPERTY, DIALOG
+    BEGIN
+        RIGHTMARGIN, 150
+        BOTTOMMARGIN, 266
+    END
+
+    IDD_DIALOG_TOOLBOX, DIALOG
+    BEGIN
+        VERTGUIDE, 50
+    END
+
+    IDD_DIALOG_THREADMONITOR, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 606
+        VERTGUIDE, 588
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 216
+        HORZGUIDE, 96
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_ABOUT DIALOGEX 0, 0, 429, 156
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,358,135,50,14
+    LTEXT           "OpenES - ",IDC_STATIC_TEXT,57,18,249,33
+    CONTROL         124,IDC_PICTURE_LOGO2,"Static",SS_BITMAP | SS_CENTERIMAGE,15,15,32,37
+END
+
+IDD_DIALOG_CAMERAS DIALOGEX 0, 0, 193, 224
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Camera manager"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TREE_CAMERAS,"SysTreeView32",TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_HSCROLL | WS_TABSTOP,7,7,179,210
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 422
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG_CAMERAS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 186
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 217
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""atlres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "File"
+    BEGIN
+        POPUP "Open"
+        BEGIN
+            MENUITEM "&Project",                    ID_MAINMENU_FILE_OPEN
+            MENUITEM "Open Model",                  ID_FILE_OPENMODEL
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Save",                        ID_FILE_SAVE40094
+        MENUITEM "Save as",                     ID_MAINMENU_FILE_SAVE
+        MENUITEM "Save All",                    ID_MAINMENU_SAVEALL
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        ID_MAINMENU_EXIT
+    END
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Undo",                        ID_EDIT_UNDO40026
+        MENUITEM "Redo",                        ID_EDIT_REDO40027
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         ID_EDIT_CUT40028
+        MENUITEM "Copy",                        ID_EDIT_COPY40029
+        MENUITEM "Paste",                       ID_EDIT_PASTE40030
+        MENUITEM "Delete",                      ID_EDIT_DELETE_MENU
+        MENUITEM SEPARATOR
+        MENUITEM "Select All",                  ID_EDIT_SELECTALL
+    END
+    POPUP "View"
+    BEGIN
+        POPUP "Objects"
+        BEGIN
+            MENUITEM "Wireframe",                   ID_OBJECTS_WIREFRAME
+            MENUITEM "Bounds",                      ID_OBJECTS_BOUNDS
+            MENUITEM "Sparital Sub.div.",           ID_OBJECTS_SPARITALSUB
+            MENUITEM "Collision",                   ID_OBJECTS_COLLISION
+            MENUITEM "Grid",                        ID_OBJECTS_GRID
+            MENUITEM "Freeze Render",               ID_OBJECTS_FREEZERENDER
+            MENUITEM "Draw Helpers",                ID_OBJECTS_DRAWHELPERS
+        END
+        POPUP "Windows"
+        BEGIN
+            MENUITEM "Object Browser",              ID_WINDOW_BROWSER
+            MENUITEM "Toolbox",                     ID_WINDOW_TOOLBOX
+            MENUITEM "Property",                    ID_WINDOW_PROPERTY
+            MENUITEM "Thread Monitor",              ID_WINDOW_THREADMONITOR
+            MENUITEM "CameraManager",               ID_WINDOWS_CAMERAMANAGER
+            MENUITEM "ActionPlay",                  ID_WINDOWS_ACTIONPLAY
+        END
+        POPUP "Edit Mode"
+        BEGIN
+            MENUITEM "2D Edit",                     ID_EDITMODE_2D
+            MENUITEM "3D Edit",                     ID_EDITMODE_3D
+        END
+    END
+    POPUP "Project"
+    BEGIN
+        MENUITEM "Add New Item",                ID_PROJECT_ADDNEWITEM
+        MENUITEM "Add Existing Item",           ID_PROJECT_ADDEXISTINGITEM
+    END
+    POPUP "Build"
+    BEGIN
+        MENUITEM "Play/Stop",                   ID_BUILD_PLAY
+        MENUITEM "_tst_Update_Bounds",          ID_BUILD_BOUNDS
+    END
+    POPUP "Control"
+    BEGIN
+        POPUP "Mode"
+        BEGIN
+            MENUITEM "Move",                        ID_MODE_MOVE
+            MENUITEM "Rotate",                      ID_MODE_ROTATE
+            MENUITEM "Scale",                       ID_MODE_SCALE
+        END
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "Ask a Question",              ID_COMMUNITY_ASKAQUESTION
+        MENUITEM SEPARATOR
+        MENUITEM "Contents",                    ID_HELP_CONTENTS
+    END
+END
+
+IDR_BROWSER_MENU MENU
+BEGIN
+    POPUP "Bring to Start"
+    BEGIN
+        MENUITEM "Hide",                        ID_BROWSER_CONTEXT_HIDE_UNHIDE
+        MENUITEM "Freeze",                      ID_BROWSER_CONTEXT_FREEZE, INACTIVE
+        MENUITEM SEPARATOR
+        MENUITEM "Copy",                        ID_BROWSER_CONTEXT_COPY
+        MENUITEM "Paste as child",              ID_BROWSER_CONTEXT_PASTE
+        MENUITEM "Rename",                      ID_BROWSER_CONTEXT_RENAME
+        MENUITEM "Delete",                      ID_BROWSER_CONTEXT_DELETE
+        MENUITEM SEPARATOR
+        POPUP "Commands"
+        BEGIN
+            MENUITEM "Save External",               ID_BROWSER_CONTEXT_SAVEEXTERNAL
+            MENUITEM "Load External",               ID_BROWSER_CONTEXT_LOADEXTERNAL
+            MENUITEM SEPARATOR
+        END
+        MENUITEM SEPARATOR
+        POPUP "Move"
+        BEGIN
+            MENUITEM "Move Up",                     ID_BROWSER_CONTEXT_MOVEUP
+            MENUITEM "Move Down",                   ID_BROWSER_CONTEXT_MOVEDOWN
+            MENUITEM "Move to Top",                 ID_BROWSER_CONTEXT_MOVETOP
+            MENUITEM "Move to Bottom",              ID_BROWSER_CONTEXT_MOVEBOTTOM
+        END
+        MENUITEM SEPARATOR
+        POPUP "Add as Child"
+        BEGIN
+            MENUITEM SEPARATOR
+        END
+    END
+END
+
+IDR_MENU_LINK MENU
+BEGIN
+    POPUP "Test"
+    BEGIN
+        MENUITEM SEPARATOR
+        MENUITEM "Unlink",                      ID_UNLINK
+    END
+END
+
+IDR_MENU_ACTION MENU
+BEGIN
+    POPUP "Add 1"
+    BEGIN
+        MENUITEM SEPARATOR
+        MENUITEM "Copy",                        ID_ADD1_COPY
+        MENUITEM "Paste",                       ID_ADD1_PASTE
+        MENUITEM "Cut",                         ID_ADD1_CUT
+        MENUITEM "Delete",                      ID_ADD1_DELETE
+    END
+END
+
+IDR_MENU_PROPERTY MENU
+BEGIN
+    MENUITEM "Categorized",                 ID_CATEGORIZED40129
+    MENUITEM "Alphabetical",                ID_ALPHABETICAL
+END
+
+IDR_MENU_ASSETBROWSER MENU
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Import",                      ID_FILE_EXPORT
+        MENUITEM "Save",                        ID_ASSET_SAVE
+        MENUITEM "Save As",                     ID_ASSET_SAVE_AS
+        MENUITEM "Close",                       ID_ASSET_CLOSE
+    END
+    MENUITEM "Options",                     65535
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000904b0"
+        BEGIN
+            VALUE "CompanyName", "innovatelogic LLC"
+            VALUE "FileDescription", "Launcher Application"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "Launcher"
+            VALUE "LegalCopyright", "Copyright (C) 2010"
+            VALUE "OriginalFilename", "Launcher.exe"
+            VALUE "ProductName", "Launcher Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x9, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_LOGO         BITMAP                  "resources\\logo.bmp"
+IDR_MENU_ASSETBROWSER   BITMAP                  "resources\\toolbar1.bmp"
+IDR_MAINFRAME           BITMAP                  "resources\\mainfram.bmp"
+IDB_BITMAP_TOOLBAR_MAIN BITMAP                  "resources\\toolbar_main.bmp"
+IDB_BITMAP_TOOLBAR_MAIN_HOT BITMAP              "resources\\toolbar_main_hot.bmp"
+IDB_BITMAP_TOOLBAR_MAIN_DISABLED BITMAP         "resources\\toolbar_main_disabled.bmp"
+IDB_BITMAP_TOOLBAR_ASSET BITMAP                 "resources\\toolbar_action.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MENU_ASSETBROWSER TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_BUTTON_AB_IMPORT
+    BUTTON      ID_BUTTON_AB_SAVE
+    BUTTON      ID_BUTTON_AB_UNDO
+    BUTTON      ID_BUTTON_AB_REDO
+    BUTTON      ID_BUTTON_AB_MOVE
+    BUTTON      ID_BUTTON_AB_SCALE
+    BUTTON      ID_BUTTON_AB_ROTATE
+END
+
+IDR_MAINFRAME TOOLBAR 50, 40
+BEGIN
+    BUTTON      ID_BUTTON_UNDO
+    BUTTON      ID_BUTTON_REDO
+    SEPARATOR
+    BUTTON      ID_BUTTON_MOVE
+    BUTTON      ID_BUTTON_SCALE
+    BUTTON      ID_BUTTON_ROTATE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAIN_ICON           ICON                    "resources\\game.ico"
+IDR_MAINFRAME           ICON                    "resources\\game.ico"
+IDR_MENU_ASSETBROWSER   ICON                    "resources\\icon1.ico"
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+

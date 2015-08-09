@@ -1,0 +1,28 @@
+<CSceneSelectLevel Transient="0" Value="Name:SceneSelectLevel InputMode:INPUTMODE_None HPixelTransform:PersentageOwner_Transform VPixelTransform:PersentageOwner_Transform HSizeTransform:PersentageOwner_Transform VSizeTransform:PersentageOwner_Transform ClipBounds:false Width:1.000000 Height:1.000000 Opacity:1.000000 bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;1.0000; Bounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; CompositeBounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; bExternal:false FilenameTag: " >
+
+<UIImage Transient="0" External="bExternal:false FilenameTag: " Value="Name:ImageBackground bVisible:true bEnabled:true bRenderDebug:false LTM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; STM:1;0;0;0;0;1;0;0;0;0;1;0;0;0;0;1; Bounds:0;0;0;1024;600;0; CompositeBounds:0;0;0;1024;600;0; HPixelTransform:PersentageOwner_Transform VPixelTransform:PersentageOwner_Transform HSizeTransform:PersentageOwner_Transform VSizeTransform:PersentageOwner_Transform ClipBounds:true Width:1 Height:1 Opacity:1 " >
+<UIComp_DrawImage Transient="1" Value="Name:UIImage_ImageComponent ResourceTag:background.tga UV:0;0;1;1; Color:4288663551 " >
+</UIComp_DrawImage>
+
+<LabelButton Transient="0" Text="Level0" Value="Name:ButtonLevel0 TextPositionX:45.000000 TextPositionY:4.000000 HPixelTransform:PersentageOwner_Transform VPixelTransform:PersentageOwner_Transform HSizeTransform:PersentageOwner_Transform VSizeTransform:PersentageOwner_Transform ClipBounds:false Width:0.1 Height:0.1 Opacity:1.000000 bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.1;0.1;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; Bounds:0.0000;0.0000;0.0000;174.9996;42.0000;0.0000; CompositeBounds:782.9744;433.2600;0.0000;957.9740;475.2600;0.0000; bExternal:false FilenameTag: " >
+<UIComp_DrawImageState Transient="1" Value="Name:ImageComponents ImageStates:button_normal.tga,0.0000;0.0000;1.0000;1.0000;,button_active.tga,0.0000;0.0000;1.0000;1.0000;,button_focused.tga,0.0000;0.0000;1.0000;1.0000;,button_pressed.tga,0.0000;0.0000;1.0000;1.0000;,button_disabled.tga,0.0000;0.0000;1.0000;1.0000; bCastShadows:true bReciveShadows:true bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; Bounds:340282346638528860000000000000000000000.0000;340282346638528860000000000000000000000.0000;340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000; CompositeBounds:340282346638528860000000000000000000000.0000;340282346638528860000000000000000000000.0000;340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000;-340282346638528860000000000000000000000.0000; bExternal:false FilenameTag: " >
+</UIComp_DrawImageState>
+<UIComp_DrawFontState Transient="1" Value="Name:FontComponentState bExternal:false FilenameTag: ArrFontStates:helvetica-normal.ttf,30,-16777216,helvetica-normal.ttf,30,-65536,helvetica-normal.ttf,30,-16711936,helvetica-normal.ttf,30,-16776961,helvetica-normal.ttf,30,-1," >
+		<CComp_MaterialEffectFont Transient="1" Value="Name:MaterialEffectFont XRef:ogl_ui_font.vs bExternal:false FilenameTag: " >
+		</CComp_MaterialEffectFont>
+	</UIComp_DrawFontState>
+</LabelButton>
+
+
+<LabelButton Transient="0" Text="<<" Value="Name:ButtonBack TextPositionX:45.000000 TextPositionY:4.000000 HPixelTransform:PersentageOwner_Transform VPixelTransform:PersentageOwner_Transform HSizeTransform:PersentageOwner_Transform VSizeTransform:PersentageOwner_Transform ClipBounds:false Width:0.1 Height:0.1 Opacity:1.000000 bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.9;0.9;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; Bounds:0.0000;0.0000;0.0000;174.9996;42.0000;0.0000; CompositeBounds:782.9744;433.2600;0.0000;957.9740;475.2600;0.0000; bExternal:false FilenameTag: " >
+<UIComp_DrawImageState Transient="1" Value="Name:ImageComponents ImageStates:button_normal.tga,0.0000;0.0000;1.0000;1.0000;,button_active.tga,0.0000;0.0000;1.0000;1.0000;,button_focused.tga,0.0000;0.0000;1.0000;1.0000;,button_pressed.tga,0.0000;0.0000;1.0000;1.0000;,button_disabled.tga,0.0000;0.0000;1.0000;1.0000; bCastShadows:true bReciveShadows:true bVisible:true bEnabled:true RenderDebug:false bExternal:false FilenameTag: " >
+</UIComp_DrawImageState>
+<UIComp_DrawFontState Transient="1" Value="Name:FontComponentState bExternal:false FilenameTag: ArrFontStates:helvetica-normal.ttf,30,-16777216,helvetica-normal.ttf,30,-65536,helvetica-normal.ttf,30,-16711936,helvetica-normal.ttf,30,-16776961,helvetica-normal.ttf,30,-1," >
+		<CComp_MaterialEffectFont Transient="1" Value="Name:MaterialEffectFont XRef:ogl_ui_font.vs bExternal:false FilenameTag: " >
+		</CComp_MaterialEffectFont>
+	</UIComp_DrawFontState>
+</LabelButton>
+
+</UIImage>
+
+</CSceneSelectLevel>

@@ -1,0 +1,64 @@
+#ifndef __basematerial_h__
+#define __basematerial_h__
+
+#ifdef _WIN32
+#pragma once
+#endif
+
+#include "D3DRenderInterface.h"
+
+class D3DDRIVER_API BaseMaterial : public D3DRenderInterface
+{
+public:
+	BaseMaterial(const class D3DDriver *pInterface);
+	BaseMaterial(const class BaseMaterial& Source);
+	virtual ~BaseMaterial();
+
+	virtual bool				Load(const char *URL);
+	virtual bool				LoadW(const wchar_t *URL);
+	
+	virtual bool				Release();
+	virtual void				Affect() = 0;
+
+	virtual unsigned int		BeginEffect(const char *Tehnique) const;
+	virtual void				EndEffect();
+
+	virtual void				BeginPass(unsigned int Pass) const;
+	virtual void				EndPass() const;
+
+	void						SetBoolParam(const char *ParamName, bool Value) const;
+	void						SetMatrixParam(const char *ParamName, const float* Value, int index = -1) const;
+	void						SetVector3Param(const char *ParamName, const float* Value) const;
+	void						SetVector4Param(const char *ParamName, const float* Value) const;
+	void						SetSampleTexture(const char *ParamName, const class Texture2D * Value) const;
+	void						SetSampleTextureID(short Index, const class Texture2D * Value) const;
+	void						SetSampleTexture(const char *ParamName, const class Texture3D * Value) const;
+//	void						SetSampleTextureDirect(const char *ParamName, LPDIRECT3DTEXTURE9 Value) const;
+	void						SetScalarValue(const char *ParamName, float Value) const;
+
+	const char*					GetTechniqueName() const { return m_TechniqueName.c_str(); }
+	void						SetTechniqueName(const char *name) { m_TechniqueName = name; }
+
+	void						SetReference(const char *Ref) { m_Reference = Ref; }
+	const char*					GetReference() const { return m_Reference.c_str(); }
+
+	class MaterialEffectNode*	GetNode() const { return m_pEffectNode; }
+
+public:
+	unsigned int				diffuse;	// diffuse color
+	unsigned int				specular;	// specular color
+	float						shininess;
+	unsigned int				ambient;
+	unsigned int				emmision;
+	float						transperent;
+	bool						fog;
+	unsigned int				fog_color;
+
+protected:
+	std::string					m_Reference;
+	std::string					m_TechniqueName;
+
+	class MaterialEffectNode	*m_pEffectNode;
+};
+
+#endif//__basematerial_h__

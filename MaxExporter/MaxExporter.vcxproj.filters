@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Inc">
+      <UniqueIdentifier>{b1120f11-358e-40e2-89fa-a2c14cac9f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Src">
+      <UniqueIdentifier>{add79a29-60f4-4582-9f00-6d75debb8328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{b0613f25-3529-4184-80fe-8f6000c23d15}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MaxExporter.def">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnimTrackMax.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTypes.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="exporterafx.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ExporterMax.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportTypes.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="expstdafx.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletonObjectMax.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityForm.h">
+      <Filter>Source Files\Inc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimTrackMax.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="DllEntry.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ExporterMax.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportModel.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportNode.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="FileExport.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialExporter.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletonObjectMax.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilityForm.cpp">
+      <Filter>Source Files\Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MaxExporter.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

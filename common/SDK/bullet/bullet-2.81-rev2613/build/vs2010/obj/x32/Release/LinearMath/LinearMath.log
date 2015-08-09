@@ -1,0 +1,11 @@
+﻿  btAlignedAllocator.cpp
+  btConvexHull.cpp
+  btConvexHullComputer.cpp
+  btGeometryUtil.cpp
+  btPolarDecomposition.cpp
+  btQuickprof.cpp
+  btSerializer.cpp
+  btVector3.cpp
+..\..\src\LinearMath\btPolarDecomposition.cpp(63): warning C4244: 'initializing' : conversion from 'double' to 'const btScalar', possible loss of data
+..\..\src\LinearMath\btPolarDecomposition.cpp(66): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
+  LinearMath.vcxproj -> D:\Project\common\SDK\bullet\bullet-2.81-rev2613\build\vs2010\..\..\lib\LinearMath_vs2010.lib

@@ -1,0 +1,10 @@
+<lactor>
+<mesh obj="buggy01_wheel_front.obj" col="buggy01_wheel_front.col">
+<textures>
+<tex name="buggy001.tga"/>
+</textures>
+<mtrls>
+<mat name="buggy001.tga" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;" txchs="0;" diffuse="0.588;0.588;0.588;1" specular="0.9;0.9;0.9;1" shininess="0.1" ambient="0.588;0.588;0.588;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+</mtrls>
+</mesh>
+</lactor>

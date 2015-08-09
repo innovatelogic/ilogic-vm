@@ -1,0 +1,6 @@
+﻿  main.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\VoronoiFractureDemo\main.cpp': No such file or directory
+  VoronoiFractureDemo.cpp
+  Win32VoronoiFractureDemo.cpp
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\VoronoiFractureDemo\VoronoiFractureDemo.cpp': No such file or directory
+c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\VoronoiFractureDemo\Win32VoronoiFractureDemo.cpp': No such file or directory

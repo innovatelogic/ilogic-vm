@@ -1,0 +1,12 @@
+<lactor>
+<mesh obj="tree001.obj" col="tree001.col">
+<textures>
+<tex name="trees_bark.dds"/>
+<tex name="shrubeuonymusleavessu.dds"/>
+</textures>
+<mtrls>
+<mat name="Material #1672" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="1" txids="1;" txchs="0;" diffuse="0.588;0.588;0.588;1" specular="0.9;0.9;0.9;1" shininess="0.1" ambient="0.588;0.588;0.588;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+<mat name="Material #1671" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;" txchs="0;" diffuse="0.588;0.588;0.588;1" specular="0.9;0.9;0.9;1" shininess="0.1" ambient="0.588;0.588;0.588;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+</mtrls>
+</mesh>
+</lactor>

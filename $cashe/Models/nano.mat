@@ -1,0 +1,16 @@
+<lactor>
+<mesh obj="nano.obj" col="nano.col">
+<textures>
+<tex name="Nanosuit_us_Neck.tga"/>
+<tex name="Nanosuit_us_Neck.tga"/>
+<tex name="NanoSuit_us.tga"/>
+<tex name="NanoSuit_us_spec.tga"/>
+<tex name="NanoSuit_us_spec.tga"/>
+</textures>
+<mtrls>
+<mat name="07 - Default" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="0" txids="0;1;" txchs="0;1;" diffuse="0.588235;0.588235;0.588235;1" specular="0.9;0.9;0.9;1" shininess="0.31" ambient="0.588235;0.588235;0.588235;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+<mat name="noneeye_blue01" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="2" txids="4;" txchs="0;" diffuse="0;0;0;1" specular="1;1;1;1" shininess="0.56" ambient="0;0;0;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+<mat name="Material #59" fx="ogl_diffuse.vs" tehnique="DiffuseOnly" id="1" txids="2;3;" txchs="0;1;" diffuse="0.501961;0.501961;0.501961;1" specular="1;1;1;1" shininess="0.2" ambient="0.627451;0.627451;0.627451;1" emission="0;0;0;1" transparent="1" fog="0" fogcolor="1;1;1;1" /> 
+</mtrls>
+</mesh>
+</lactor>

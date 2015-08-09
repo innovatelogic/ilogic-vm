@@ -1,0 +1,50 @@
+<Comp_SkeletonObject>
+<BoneObject Value="Name:Bip01 BoneIndex:4">
+<BoneObject Value="Name:Bip01_Pelvis BoneIndex:3">
+<BoneObject Value="Name:Bip01_Spine BoneIndex:2">
+<BoneObject Value="Name:Bip01_Neck BoneIndex:5">
+<BoneObject Value="Name:Bip01_Head BoneIndex:6">
+<BoneObject Value="Name:Bip01_HeadNub BoneIndex:7">
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bip01_L_Clavicle BoneIndex:8">
+<BoneObject Value="Name:Bip01_L_UpperArm BoneIndex:9">
+<BoneObject Value="Name:Bip01_L_Forearm BoneIndex:10">
+<BoneObject Value="Name:Bip01_L_Hand BoneIndex:11">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bip01_R_Clavicle BoneIndex:12">
+<BoneObject Value="Name:Bip01_R_UpperArm BoneIndex:13">
+<BoneObject Value="Name:Bip01_R_Forearm BoneIndex:14">
+<BoneObject Value="Name:Bip01_R_Hand BoneIndex:15">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bip01_R_Thigh BoneIndex:16">
+<BoneObject Value="Name:Bip01_R_Calf BoneIndex:17">
+<BoneObject Value="Name:Bip01_R_Foot BoneIndex:18">
+<BoneObject Value="Name:Bip01_R_Toe0 BoneIndex:19">
+<BoneObject Value="Name:Bip01_R_Toe0Nub BoneIndex:20">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+<BoneObject Value="Name:Bip01_L_Thigh BoneIndex:1">
+<BoneObject Value="Name:Bip01_L_Calf BoneIndex:0">
+<BoneObject Value="Name:Bip01_L_Foot BoneIndex:21">
+<BoneObject Value="Name:Bip01_L_Toe0 BoneIndex:22">
+<BoneObject Value="Name:Bip01_L_Toe0Nub BoneIndex:23">
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</BoneObject>
+</Comp_SkeletonObject>

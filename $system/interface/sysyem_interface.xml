@@ -1,0 +1,30 @@
+
+<SystemStyle>
+
+  <Style Name ="System_Button" StateNormal = "system_button.bmp" StateNormalUV = "0;0;1;1;"
+                               StateDisable = "system_button_Pressed.bmp" StateDisableUV = "0;0;1;1;"
+                               StateActive = "system_button_Active.bmp" StateActiveUV = "0;0;1;1;"
+                               StatePressed ="system_button_Pressed.bmp" StatePressedUV="0;0;1;1;"/>
+
+  <Style Name ="System_ButtonPrev" StateNormal = "PrevUp.bmp" StateNormalUV = "0;0;1;1;"
+                                 StateDisable = "PrevUp_Pressed.bmp" StateDisableUV = "0;0;1;1;"
+                                 StateActive = "PrevUp_Active.bmp" StateActiveUV = "0;0;1;1;"
+                                 StatePressed = "PrevUp_Pressed.bmp" StatePressedUV="0;0;1;1;"/>
+
+
+  <Style Name ="System_ButtonNext" StateNormal = "NextDown.bmp" StateNormalUV = "0;0;1;1;"
+                                   StateDisable = "NextDown_Pressed.bmp" StateDisableUV = "0;0;1;1;"
+                                   StateActive = "NextDown_Active.bmp" StateActiveUV = "0;0;1;1;"
+                                   StatePressed ="NextDown_Pressed.bmp" StatePressedUV="0;0;1;1;"/>
+
+  <Style Name ="System_ButtonLeftPrev" StateNormal = "PrevLeft.bmp" StateNormalUV = "0;0;1;1;"
+                                 StateDisable = "PrevLeft_Pressed.bmp" StateDisableUV = "0;0;1;1;"
+                                 StateActive = "PrevLeft_Active.bmp" StateActiveUV = "0;0;1;1;"
+                                 StatePressed = "PrevLeft_Pressed.bmp" StatePressedUV="0;0;1;1;"/>
+
+
+  <Style Name ="System_ButtonRightNext" StateNormal = "NextRight.bmp" StateNormalUV = "0;0;1;1;"
+                                   StateDisable = "NextRight_Pressed.bmp" StateDisableUV = "0;0;1;1;"
+                                   StateActive = "NextRight_Active.bmp" StateActiveUV = "0;0;1;1;"
+                                   StatePressed ="NextRight_Pressed.bmp" StatePressedUV="0;0;1;1;"/>
+</SystemStyle>

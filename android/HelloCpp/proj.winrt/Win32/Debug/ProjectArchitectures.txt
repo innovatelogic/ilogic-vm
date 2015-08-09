@@ -1,0 +1,9 @@
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\samples\gles2_book\Common\esUtil_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\preprocessor\preprocessor_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_common_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\compiler\translator_hlsl_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\libEGL\libEGL_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\platform\third_party\winrt\angleproject\src\libGLESv2\libGLESv2_winrt.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\cocos2dx\proj.winrt\cocos2d.vcxproj;x86
+D:\cocos2d-x-2.2.1\cocos2d-x-2.2.1\samples\Cpp\HelloCpp\proj.winrt\HelloCpp.vcxproj;x86
