@@ -39,6 +39,11 @@ class Config:
 		  shutil.rmtree(self.working_dir)
 		pass
 		
+	def clearBinDir(self):
+		if os.path.exists(self.bin_dir):
+			shutil.rmtree(self.bin_dir + '\..')
+		pass
+		
 	def ensure_dir(f):
 		d = os.path.dirname(f)
 		if not os.path.exists(d):
@@ -53,6 +58,7 @@ class Config:
 		print('working_dir:' + self.working_dir)
 		print('bin_dir:' + self.bin_dir)
 		
+		self.clearBinDir()
 		self.clearWorkingDir()
 		
 		cmd_gen = self.cmake_exe
@@ -97,8 +103,8 @@ class Config:
 		
 		if config:
 			cmd_build += r' --config %s' % config
-		if self.install:
-			cmd_build += r' --target INSTALL'
+		#if self.install:
+		#	cmd_build += r' --target INSTALL'
 		  
 		print(cmd_build)
 		res = os.system(cmd_build)
@@ -131,7 +137,7 @@ def main():
 			#client_deps.buld('Release')
 		elif args.goal == 'client_debug':
 			client_deps.generate()
-			#clinet_deps.build('Debug')
+			client_deps.build('Debug')
 	except Exception:
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])
