@@ -107,6 +107,8 @@ set(SOURCE
 	VBObject.h
 	VisualStyle.cpp
 	VisualStyle.h
+	RenderAdjacency.cpp
+	RenderAdjacency.h
 	)
 	
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

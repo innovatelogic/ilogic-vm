@@ -1,12 +1,9 @@
-#ifndef __rendersdk_h__
-#define __rendersdk_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "ObjectAbstract.h"
 #include "RenderSDKInterface.h"
+#include "RenderAdjacency.h"
 
 #define TRIGGERED_VALUE 2
 
@@ -180,6 +177,8 @@ private:
 	bool					bFlagSwapStack;
 	volatile byte			ActiveStack;
 	
+	RenderSDK::RenderAdjacency	m_RenderAdjacency[TRIGGERED_VALUE];
+
 	TRenderAdjacencyQuevue	RenderAdjacencyQuevue[TRIGGERED_VALUE];
 	TVRenderStack			RenderStack[TRIGGERED_VALUE];
 	TVRenderStack			RenderStackPost[TRIGGERED_VALUE];
@@ -215,4 +214,3 @@ private:
 public:
 	int						ThreadRenderID;
 };
-#endif//__rendersdk_h__
