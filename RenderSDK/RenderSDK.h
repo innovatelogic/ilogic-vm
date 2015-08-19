@@ -177,7 +177,7 @@ private:
 	bool					bFlagSwapStack;
 	volatile byte			ActiveStack;
 	
-	RenderSDK::RenderAdjacency	m_RenderAdjacency[TRIGGERED_VALUE];
+	RenderSDK::RenderAdjacency	m_RenderAdjacency;
 
 	TRenderAdjacencyQuevue	RenderAdjacencyQuevue[TRIGGERED_VALUE];
 	TVRenderStack			RenderStack[TRIGGERED_VALUE];

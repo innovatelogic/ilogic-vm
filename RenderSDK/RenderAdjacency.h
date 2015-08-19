@@ -81,9 +81,14 @@ public:
 	RenderAdjacency();
 	~RenderAdjacency();
 
+	SRTVariant_Adjacency& PushRenderQuevueAdjaency();
+	void PopRenderQuevueAdjaency();
+
 protected:
 private:
 	size_t		m_nMaxAdjacency;
-	LPRTVARIANT m_pVariantAdjacency;
+	LPRTVARIANT m_pVariantAdjacency[2];
+
+	volatile int m_ActiveStack;
 };
 }
