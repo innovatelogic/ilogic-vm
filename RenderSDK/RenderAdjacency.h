@@ -8,7 +8,7 @@
 
 namespace RenderSDK
 {
-class RenderAdjacency
+class EXPORT RenderAdjacency
 {
 	//RenderAdjacency(const RenderAdjacency &that) = delete;
 	//RenderAdjacency& operator=(const RenderAdjacency &that) = delete;

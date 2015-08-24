@@ -143,6 +143,8 @@ void CRenderSDK::SwapBuffer()
 {
 	EnterCS();
 
+	m_RenderAdjacency.SwapBuffer();
+
 	for_each( RenderStack[ActiveStack].begin(),
 			  RenderStack[ActiveStack].end(),
 		      DeleteVectorFntor());
