@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "RenderAdjacency.h"
 
 REGISTER_CLASS(Explorer3D, ActorAllocator);
 
@@ -35,6 +36,33 @@ void Explorer3D::InitializeBrushes()
 //----------------------------------------------------------------------------------------------
 void Explorer3D::DoDraw()
 {
+#ifdef NEW_ADJACENCY
+	// new
+	{
+		 RenderSDK::RenderAdjacency &refAdj = m_pRenderSDK->GetRenderAdjacency();
+		 RenderSDK::SRTVariant_Adjacency &adjacency = refAdj.GetCurrentAdjacency();
+
+		 /** setup matrix */
+		 if (GetAppMain()->GetCameraManager())
+		 {
+			 const CCamera *pCamera = GetAppMain()->GetCameraManager()->GetActiveCamera(Queve.pRenderContext);
+
+			 if (pCamera)
+			 {
+				 adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderSDK->GetRenderDriver()->GetDefaultContext();
+				 memcpy(adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, pCamera->GetViewMatrix().m, 16 * sizeof(float));
+				 memcpy(adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, pCamera->GetViewMatrix().m, 16 * sizeof(float));
+				 adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = pCamera->GetNearDist();
+				 adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = pCamera->GetFarDist();
+				 memcpy(adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, pCamera->GetPosition_().vec_array, 3 * sizeof(float));
+
+				 SetViewPoint(pCamera->GetPosition_());
+			 }
+		 }
+	}
+#else//
+	// old
+
 	RenderQuevueAdjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
 	/** setup matrix */
@@ -50,15 +78,18 @@ void Explorer3D::DoDraw()
 			Queve.fNearPlane = pCamera->GetNearDist();
 			Queve.fFarPlane  = pCamera->GetFarDist();
 			Queve.ViewPos	 = pCamera->GetPosition_();
+
 			SetViewPoint(pCamera->GetPosition_());
 		}
 	}
+#endif//NEW_ADJACENCY
 
 	if (GetAppMain()->GetShowGrid() && GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{
 		DrawGrid();
 		GetPhysicsEngine()->DebugRender(GetRenderComponent());
 	}
+
 }
 
 //----------------------------------------------------------------------------------------------

@@ -86,8 +86,6 @@ public:
 	void					Render(SRenderContext *pContext, int cps = 0);
 	void					RenderAdjacency(RenderQuevueAdjacency &Adjacency);
 
-	void					BeginDraw(RenderQuevueAdjacency &Adjacency);
-	void					EndDraw(RenderQuevueAdjacency &Adjacency);
 	void					Present(const SRenderContext *pContext);
 
 	void					UpdateResources(bool bLock = false);
@@ -109,6 +107,11 @@ public:
 	inline_ void			ResetBlend();
 
 	void					GetViewport(Vector4f& OutViewport);
+
+	/** 
+	* Return render adjacency object
+	*/
+	RenderSDK::RenderAdjacency& GetRenderAdjacency() { return m_RenderAdjacency; }
 
 	RenderQuevueAdjacency&	PushRenderQuevueAdjaency();
 	void					PopRenderQuevueAdjaency();
@@ -186,9 +189,7 @@ private:
 
 	TTransformStack			TransformStack;
 	TAlphaBlendStack		AlphaBlendStack;
-
-
-	
+		
 	Matrix					World;
 	Matrix					View;
 	Matrix					Proj;

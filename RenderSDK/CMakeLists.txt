@@ -109,6 +109,8 @@ set(SOURCE
 	VisualStyle.h
 	RenderAdjacency.cpp
 	RenderAdjacency.h
+	variant_render_adj.h
+	variant_render_command.h
 	)
 	
 add_library(${PROJECT_NAME} SHARED ${SOURCE})

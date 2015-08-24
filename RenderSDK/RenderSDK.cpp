@@ -250,8 +250,7 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 
 	Present(pActiveContext);
 
-// 	BeginDraw();
-// 	
+
 // 	// separate render
 // 	TRenderAdjacencyQuevue::iterator IterAdj = RenderAdjacencyQuevue[ActiveStack].begin();
 // 	TRenderAdjacencyQuevue::iterator IterEnd = RenderAdjacencyQuevue[ActiveStack].end();
@@ -281,7 +280,6 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 // 		++IterAdj; // move to next adjacency
 // 	}
 // 
-// 	EndDraw();
 
 	// execute post command
 	TVRenderStack::iterator IterCommand	= RenderStackPost[ActiveStack].begin();
@@ -360,19 +358,6 @@ void CRenderSDK::RenderAdjacency(RenderQuevueAdjacency &Adjacency)
 			m_pRenderDriver->RenderDebugSphere((*Iter).Pos.GetPtr(), (*Iter).rad, (*Iter).Color, (*Iter).Seg);
 		}
 	}
-}
-
-//----------------------------------------------------------------------------------------------
-void CRenderSDK::BeginDraw(RenderQuevueAdjacency& Adjacency)
-{   
-//	m_pRenderDriver->ClearBackBuffer(); 
-//	m_pRenderDriver->DriverBeginDraw();
-}
-
-//----------------------------------------------------------------------------------------------
-void CRenderSDK::EndDraw(RenderQuevueAdjacency& Adjacency)
-{  
-	//m_pRenderDriver->DriverEndDraw();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -529,6 +514,11 @@ void CRenderSDK::ResetBlend()
 //----------------------------------------------------------------------------------------------
 RenderQuevueAdjacency& CRenderSDK::PushRenderQuevueAdjaency()
 {
+	if (0)
+	{
+		m_RenderAdjacency.PushRenderQuevueAdjaency();
+	}
+
 	byte NonActive = (ActiveStack == 0) ? 1 : 0;
 	
 	// get adjacency start index
@@ -538,7 +528,6 @@ RenderQuevueAdjacency& CRenderSDK::PushRenderQuevueAdjaency()
 	size_t IdxObjStart = m_RenderQuevue[NonActive].empty() ? 0 : m_RenderQuevue[NonActive].size();
 
 	RenderQuevueAdjacency Adjaency(IdxStart, IdxObjStart);
-	Adjaency.RTarget = 0;
 
 	RenderAdjacencyQuevue[NonActive].push_back(Adjaency);
 
@@ -548,6 +537,11 @@ RenderQuevueAdjacency& CRenderSDK::PushRenderQuevueAdjaency()
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::PopRenderQuevueAdjaency()
 {
+	if (0)
+	{
+		m_RenderAdjacency.PopRenderQuevueAdjaency();
+	}
+
 	byte NonActive = (ActiveStack == 0) ? 1 : 0;
 
 	assert (!RenderAdjacencyQuevue[NonActive].empty());
