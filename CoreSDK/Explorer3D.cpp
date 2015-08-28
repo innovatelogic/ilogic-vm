@@ -60,7 +60,7 @@ void Explorer3D::DoDraw()
 			 }
 		 }
 	}
-#else//
+#else
 	// old
 
 	RenderQuevueAdjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
@@ -97,18 +97,6 @@ bool Explorer3D::DoVisibilityTest_()
 {
 	return GetVisible();
 }
-
-//----------------------------------------------------------------------------------------------
-/*bool Explorer3D::OnEventPressed(const MouseInputData& InputData)
-{
-	bool bResult = false;
-
-	if (GetAppMain()->GetEditorInputFlag() & EF_EDIT_3D)
-	{
-		bResult = Super::OnEventPressed(InputData);
-	}
-	return bResult;
-}*/
 
 //----------------------------------------------------------------------------------------------
 void Explorer3D::DrawGrid()

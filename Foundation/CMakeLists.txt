@@ -12,7 +12,7 @@ if(Boost_FOUND)
   link_directories(${Boost_LIBRARY_DIR})
 endif()
 
-set(LIBRARIES TinyXML)
+set(LIBRARIES TinyXML gtest gtest_main)
 
 include_directories(${COMMON_SDK_DIR})
 
@@ -109,3 +109,15 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
+					
+# setup testing
+enable_testing()
+
+include_directories(../utils/gtest-1.7.0/include)
+add_executable(UT.${PROJECT_NAME} ut/ut_vector3f.cpp)
+
+target_link_libraries(UT.${PROJECT_NAME} gtest gtest_main)
+
+#target_link_libraries(runUnitTests project1_lib)
+#find_package(GTest REQUIRED)
+#include_directories(${GTEST_INCLUDE_DIRS})

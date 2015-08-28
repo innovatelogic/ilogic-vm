@@ -81,6 +81,7 @@ if (MSVC)
     add_definitions(-D_VARIADIC_MAX=10)
 endif()
 
+add_subdirectory(utils/gtest-1.7.0)
 add_subdirectory(common/TinyXML)
 add_subdirectory(Foundation)
 add_subdirectory(D3DDrv)
