@@ -1,10 +1,19 @@
 #include <iostream>
 #include <gtest/gtest.h>
 
+#include "../vector.h"
+
 //----------------------------------------------------------------------------------------------
-TEST(MathTest, TwoPlusTwoEqualsFour) 
+TEST(MathTest, AddTwoVectors) 
 {
-EXPECT_EQ(2 + 2, 4);
+	Vector one(1.f, 1.f, 1.f);
+	Vector two(2.f, 2.f, 2.f);
+
+	Vector res = one + two;
+
+	EXPECT_EQ(res.x, 3.f);
+	EXPECT_EQ(res.y, 3.f);
+	EXPECT_EQ(res.z, 3.f);
 }
 
 //----------------------------------------------------------------------------------------------

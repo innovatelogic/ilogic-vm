@@ -81,6 +81,12 @@ if (MSVC)
     add_definitions(-D_VARIADIC_MAX=10)
 endif()
 
+set(BIN_GTEST_RELEASE ${CMAKE_BINARY_DIR}/utils/gtest-1.7.0/Release)
+set(BIN_GTEST_DEBUG ${CMAKE_BINARY_DIR}/utils/gtest-1.7.0/Debug)
+
+SET(GTEST_LIBRARIES optimized ${BIN_GTEST_RELEASE}/gtest.lib debug ${BIN_GTEST_DEBUG}/gtest_d.lib)
+SET(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} optimized ${BIN_GTEST_RELEASE}/gtest_main.lib debug ${BIN_GTEST_DEBUG}/gtest_main_d.lib)
+
 add_subdirectory(utils/gtest-1.7.0)
 add_subdirectory(common/TinyXML)
 add_subdirectory(Foundation)

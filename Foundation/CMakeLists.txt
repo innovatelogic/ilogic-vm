@@ -114,10 +114,16 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 enable_testing()
 
 include_directories(../utils/gtest-1.7.0/include)
+
+#find_package(GTest REQUIRED)
+
 add_executable(UT.${PROJECT_NAME} ut/ut_vector3f.cpp)
 
-target_link_libraries(UT.${PROJECT_NAME} gtest gtest_main)
+target_link_libraries(UT.${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES} ${PROJECT_NAME})
 
-#target_link_libraries(runUnitTests project1_lib)
-#find_package(GTest REQUIRED)
-#include_directories(${GTEST_INCLUDE_DIRS})
+set_target_properties( UT.${PROJECT_NAME} PROPERTIES
+					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					)

@@ -3,15 +3,15 @@ import sys
 import shutil
 import argparse
 
-def checkPythonVer(in_ver):
-	py_ver = sys.version_info[:2]
-	if py_ver != in_ver:
-		raise Exception("Incompatible python version: need %s", str(py_ver))
-    
 generators = {
     'vc110' : ('Visual Studio 11 2012', 'v110_xp'),
     'vc120' : ('Visual Studio 12 2013', None)
     }
+
+def checkPythonVer(in_ver):
+	py_ver = sys.version_info[:2]
+	if py_ver != in_ver:
+		raise Exception("Incompatible python version: need %s", str(py_ver))
 
 class Config:
 	cur_file_dir = os.path.dirname(__file__)
@@ -118,7 +118,7 @@ class Config:
 		except OSError as e:
 			print('Directory not copied. Error: %s' % e)
 		
-
+#
 def main():
 	checkPythonVer((3,4))
 	
