@@ -117,13 +117,28 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
-#MESSAGE( STATUS "SET_BIN_OUTPUT_FOLDER:" ${G_BIN_DIR} )
-
-#SET_BIN_OUTPUT_FOLDER(${PROJECT_NAME} ${G_BIN_DIR})
-
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
+
+# setup testing
+enable_testing()
+
+include_directories(../utils/gtest-1.7.0/include)
+  
+link_directories(${CMAKE_BINARY_DIR}/utils/gtest-1.7.0)
+
+add_executable( UT.${PROJECT_NAME} 
+				ut/main.cpp )
+				
+set_target_properties( UT.${PROJECT_NAME} PROPERTIES
+					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+					)
+
+target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})

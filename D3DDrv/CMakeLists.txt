@@ -102,6 +102,8 @@ set(SOURCE
                         RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
                         LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
                         )
+						
+
 	
 	#install path
 set(INSTALL_TARGETS "${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"
