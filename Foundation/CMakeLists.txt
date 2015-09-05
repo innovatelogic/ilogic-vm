@@ -97,8 +97,6 @@ set(SOURCE
 	xmlparser.h
 )
 
-
-
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
@@ -108,26 +106,30 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
 target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
-					
+
+#-------------------------------------------------------------------------------		
 # setup testing
-enable_testing()
+#-------------------------------------------------------------------------------
+if( ${ENABLE_TESTING} )
+	enable_testing()
 
-include_directories(../utils/gtest-1.7.0/include)
-  
-link_directories(${CMAKE_BINARY_DIR}/utils/gtest-1.7.0)
+	include_directories(../utils/gtest-1.7.0/include)
 
-add_executable( UT.${PROJECT_NAME} 
-				ut/ut_vector3f.cpp
-				ut/main.cpp )
-				
-set_target_properties( UT.${PROJECT_NAME} PROPERTIES
-					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
-					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
-					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
-					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
-					)
+	add_executable( UT.${PROJECT_NAME} 
+					ut/ut_vector3f.cpp
+					ut/main.cpp )
+					
+	set(GTEST_ROOT ${CMAKE_CURRENT_BINARY_DIR}/../utils/gtest-1.7.0)
+	#find_package(GTest REQUIRED)
 
-target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
+	target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})#${GTEST_BOTH_LIBRARIES
 
+	set_target_properties(UT.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
 
-set_target_properties(UT.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
+	set_target_properties( UT.${PROJECT_NAME} PROPERTIES
+						RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+						LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+						RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+						LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+						)
+endif( ${ENABLE_TESTING} )					

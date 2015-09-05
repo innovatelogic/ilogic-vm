@@ -1,19 +1,47 @@
 cmake_minimum_required(VERSION 2.8)
 cmake_policy(SET CMP0054 OLD)
 
+include(ExternalProject)
+
+get_filename_component(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Build/cmake" REALPATH)
+include(macros)
+
 #include(${CMAKE_CURRENT_SOURCE_DIR}/Build/cmake/macros.cmake)
 
 #---------------------------------------------------------------------------
-macro(SET_BIN_OUTPUT_FOLDER proj out)
-set_target_properties( ${PROJ} PROPERTIES
-					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${OUT}
-					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${OUT}
-					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${OUT}
-					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${OUT}
-					)
-endmacro()
+function( proj_thirdparty_add NAME )
+	cmake_parse_arguments( ARGS "" "SOURCE_DIR" "CMAKE_ARGS;DEPENDS" ${ARGN} )
+	string(TOUPPER ${NAME} NAMEU)
+	ExternalProject_Add( ${NAME}
+		SOURCE_DIR ${CMAKE_SOURCE_DIR}
+		DOWNLOAD_COMMAND ""
+		CMAKE_ARGS
+			-DCMAKE_INSTALL_PREFIX:PATH=${G_INSTALL_DIR}
+			#-DCMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
+			-DG_CMAKE_TARGET=${NAME}
+			-DG_CMAKE_TARGET_DIR=${ARGS_SOURCE_DIR}
+			-DG_BIN_DIR:PATH=${G_BIN_DIR}
+			#-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+			${ARGS_CMAKE_ARGS}
 
+		DEPENDS ${ARGS_DEPENDS}
+		
+		#BUILD_COMMAND 	${CMAKE_COMMAND} --build . --config Debug #${CMAKE_BUILD_TYPE}
+		#	COMMAND 	${CMAKE_COMMAND} --build . --config Release
+		#INSTALL_COMMAND	${CMAKE_COMMAND} --build . --target INSTALL --config Debug
+		#	COMMAND 	${CMAKE_COMMAND} --build . --target INSTALL --config Release
+		)
+	ExternalProject_Add_Step( ${NAME} forceconfigure
+		COMMAND ${CMAKE_COMMAND} -E echo "Force configure of ${NAME}"
+		DEPENDEES update
+		DEPENDERS configure
+		ALWAYS 1
+		)
+endfunction()
 #---------------------------------------------------------------------------
+
+enable_language(C)
+enable_language(CXX)
 
 add_definitions(-DUNICODE -D_UNICODE)
 
@@ -21,7 +49,7 @@ MESSAGE( STATUS "CMAKE_COMMAND: " ${CMAKE_CURRENT_SOURCE_DIR} )
 MESSAGE( STATUS "CMAKE_BINARY_DIR:" ${CMAKE_BINARY_DIR} )
 MESSAGE( STATUS "EXECUTABLE_OUTPUT_PATH:" ${EXECUTABLE_OUTPUT_PATH} )
 MESSAGE( STATUS "CMAKE_COMMAND:" ${CMAKE_COMMAND} )
-message(STATUS "CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
+message( STATUS "CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
 
 set(COMMON_SDK_DIR ${CMAKE_SOURCE_DIR}/common/SDK)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR};${CMAKE_SOURCE_DIR}/build/cmake)
@@ -40,8 +68,12 @@ set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/common/SDK/)
 set(BOOST_LIBRARYDIR ${CMAKE_SOURCE_DIR}/Lib)
 
 #variable_watch(Boost_USE_STATIC_LIBS)
+SET(GTEST_LIBRARIES optimized gtest.lib debug gtest_d.lib)
+SET(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} optimized gtest_main.lib debug gtest_main_d.lib)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+set(ENABLE_TESTING OFF)
 
 project("${G_CMAKE_TARGET}_${G_GENERATOR_TOKEN}_${G_PROCESSOR_ARCH}") 
 
@@ -50,7 +82,6 @@ MESSAGE(STATUS "GENERATOR_TOKEN:" ${G_GENERATOR_TOKEN})
 MESSAGE(STATUS "PROCESSOR_ARCH:" ${G_PROCESSOR_ARCH})
 MESSAGE(STATUS "CMAKE_INSTALL_PREFIX:" ${CMAKE_INSTALL_PREFIX})
 MESSAGE(STATUS "CMAKE_PREFIX_PATH:" ${CMAKE_PREFIX_PATH})
-MESSAGE(STATUS "CMAKE_SOURCE_DIR:" ${CMAKE_SOURCE_DIR})
 
 if (MSVC)
   #enable full optimization instead of the cmake default /O2
@@ -78,10 +109,15 @@ if (MSVC)
     add_definitions(-D_VARIADIC_MAX=10)
 endif()
 
-SET(GTEST_LIBRARIES optimized gtest.lib debug gtest_d.lib)
-SET(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} optimized gtest_main.lib debug gtest_main_d.lib)
+#proj_thirdparty_add(gtest SOURCE_DIR utils/gtest-1.7.0)
 
-add_subdirectory(utils/gtest-1.7.0)
+#ExternalProject_Add( gtest
+#		SOURCE_DIR ${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0
+#		DOWNLOAD_COMMAND ""
+#		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/gtest
+#		)
+
+#add_subdirectory(utils/gtest-1.7.0)
 add_subdirectory(common/TinyXML)
 add_subdirectory(Foundation)
 add_subdirectory(D3DDrv)

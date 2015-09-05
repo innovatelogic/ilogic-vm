@@ -14,7 +14,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." OFF)
 option(
   gtest_force_shared_crt
   "Use shared (DLL) run-time lib even when Google Test is built as static lib."
-  ON)
+  OFF)
 
 option(gtest_build_tests "Build all of gtest's own tests." OFF)
 
@@ -28,6 +28,10 @@ include(cmake/hermetic_build.cmake OPTIONAL)
 if (COMMAND pre_project_set_up_hermetic_build)
   pre_project_set_up_hermetic_build()
 endif()
+
+#add
+add_definitions(-D_VARIADIC_MAX=10)
+
 
 ########################################################################
 #
