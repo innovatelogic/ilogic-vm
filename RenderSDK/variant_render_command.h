@@ -10,6 +10,7 @@ namespace RenderSDK
 		ERC_WorldMatrix,
 		ERC_ViewMatrix,
 		ERC_ProjMatrix,
+		ERC_CropMatrix,
 		ERC_Viewport,
 		ERC_Object,
 		ERC_MAX,

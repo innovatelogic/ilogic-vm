@@ -16,6 +16,26 @@ class EXPORT RenderAdjacency
 	struct SAdjContext
 	{
 		size_t nIndexAdjaency;
+		size_t nIndexCommand;
+
+		SAdjContext() : nIndexAdjaency(0), nIndexCommand(0) 
+		{}
+	};
+
+public:
+	// Iterator.
+	class IteratorAdjacency
+	{
+	public:
+		IteratorAdjacency( LPRTVARIANT pptr ) : pPtr(pptr) {}
+		void operator++()      { pPtr++; }
+		LPRTVARIANT operator*()   const { return pPtr; }
+		LPRTVARIANT operator->()  const { return pPtr; }
+
+		bool operator!= (const IteratorAdjacency& other) const { return pPtr != other.pPtr; }
+
+	private:
+		LPRTVARIANT pPtr;
 	};
 
 public:
@@ -30,7 +50,16 @@ public:
 
 	SRVariantRenderCommand& PushRenderCommand();
 
-	void SwapBuffer();
+	void swapBuffer();
+
+	const LPRTVARIANT getAdjBuffer(size_t index) const { return &m_pVariantAdjacency[index]; }
+
+	const LPRTVARIANTCMD getActiveCmd(size_t index) const { return &m_pVariantCommands[index]; }
+
+	int getActiveStackIndex() const { return m_ActiveStack; }
+
+	LPRTVARIANT begin(size_t index) const;
+	LPRTVARIANT end(size_t index) const;
 
 protected:
 private:

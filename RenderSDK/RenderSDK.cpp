@@ -143,7 +143,7 @@ void CRenderSDK::SwapBuffer()
 {
 	EnterCS();
 
-	m_RenderAdjacency.SwapBuffer();
+	m_RenderAdjacency.swapBuffer();
 
 	for_each( RenderStack[ActiveStack].begin(),
 			  RenderStack[ActiveStack].end(),
@@ -169,6 +169,8 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 	EnterCS();
 
 	RenderCPS = cps;
+
+	_Render(pContext);
 
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
@@ -363,6 +365,54 @@ void CRenderSDK::RenderAdjacency(RenderQuevueAdjacency &Adjacency)
 }
 
 //----------------------------------------------------------------------------------------------
+void CRenderSDK::_Render(SRenderContext *pContext)
+{
+	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
+
+	m_pRenderDriver->PushContext(pActiveContext);
+
+	int activeStack = m_RenderAdjacency.getActiveStackIndex();
+
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter(m_RenderAdjacency.begin(activeStack));
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter_end(m_RenderAdjacency.end(activeStack));
+
+	while (iter != iter_end)
+	{
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext != pActiveContext)
+		{
+			++iter; // move to next adjacency
+			continue;
+		}
+
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target == 0)
+		{
+			// viewer parameters
+			m_pRenderDriver->SetViewMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix);
+			m_pRenderDriver->SetProjMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix);
+			m_pRenderDriver->SetNearPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane);
+			m_pRenderDriver->SetFarPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane);
+			m_pRenderDriver->SetViewPos(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos);
+
+			// params
+			m_pRenderDriver->m_bFog = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog;
+			m_pRenderDriver->m_fFogMin = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin;
+			m_pRenderDriver->m_fFogMax = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax;
+			m_pRenderDriver->m_fFogDensity = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity;
+			m_pRenderDriver->m_FogColor = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor;
+
+			_RenderAdjacency(*iter);
+		}
+		++iter;
+	}
+}
+
+//----------------------------------------------------------------------------------------------
+void CRenderSDK::_RenderAdjacency(RenderSDK::LPRTVARIANT adjacency)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
 void CRenderSDK::Present(const SRenderContext *pContext)
 {
 	m_pRenderDriver->Present(pContext);
@@ -400,6 +450,13 @@ void CRenderSDK::SetViewMatrix(const Matrix& M)
 	if (!bFakeDraw)
 	{
 		PushToRenderStack(new RenderChunk_SetViewMatrix<D3DDriver, Matrix>(m_pRenderDriver, M));
+
+		{
+			RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+			render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_ViewMatrix;
+
+			memcpy(&render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m, M.GetPtr(), 16 * sizeof(float));
+		}
 	}
 }
 
@@ -428,6 +485,13 @@ void CRenderSDK::SetProjMatrix(const Matrix& M)
 	if (!bFakeDraw)
 	{
 		PushToRenderStack(new RenderChunk_SetProjMatrix<D3DDriver, Matrix>(m_pRenderDriver, M));
+
+		{
+			RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+			render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_ProjMatrix;
+
+			memcpy(&render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m, M.GetPtr(), 16 * sizeof(float));
+		}
 	}
 }
 
@@ -445,6 +509,13 @@ void CRenderSDK::SetProjCropMatrix(const Matrix &M)
 	if (!bFakeDraw)
 	{
 		PushToRenderStack(new RenderChunk_SetProjCropMatrix<D3DDriver, Matrix>(m_pRenderDriver, M));
+
+		{
+			RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+			render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_CropMatrix;
+
+			memcpy(&render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m, M.GetPtr(), 16 * sizeof(float));
+		}
 	}
 }
 
@@ -462,6 +533,13 @@ void CRenderSDK::SetTransform(const Matrix &M)
 	if (!bFakeDraw)
 	{
 		PushToRenderStack(new RenderChunk_SetWorldMatrix<D3DDriver, Matrix>(m_pRenderDriver, M));
+
+		{
+			RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+			render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_WorldMatrix;
+
+			memcpy(&render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m, M.GetPtr(), 16 * sizeof(float));
+		}
 	}
 }
 
@@ -516,9 +594,9 @@ void CRenderSDK::ResetBlend()
 //----------------------------------------------------------------------------------------------
 RenderQuevueAdjacency& CRenderSDK::PushRenderQuevueAdjaency()
 {
-	if (0)
+	// NEW
 	{
-		m_RenderAdjacency.PushRenderQuevueAdjaency();
+		RenderSDK::SRTVariant_Adjacency& outAdjacency = m_RenderAdjacency.PushRenderQuevueAdjaency();
 	}
 
 	byte NonActive = (ActiveStack == 0) ? 1 : 0;
@@ -539,7 +617,7 @@ RenderQuevueAdjacency& CRenderSDK::PushRenderQuevueAdjaency()
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::PopRenderQuevueAdjaency()
 {
-	if (0)
+	// NEW
 	{
 		m_RenderAdjacency.PopRenderQuevueAdjaency();
 	}
@@ -579,13 +657,21 @@ void CRenderSDK::PushToRenderStack(CommandBase *pChunk, bool Post /*= false*/)
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::PushObjectToQuevue(const CRenderObject *pObject, unsigned int Flags /*= 0*/)
+void CRenderSDK::PushObjectToQuevue(const CRenderObject *pObject, unsigned int flags /*= 0*/)
 {
 	SRenderAtom sAtom;
 	sAtom.pRenderObject = pObject;
-	sAtom.uFlags = Flags;
+	sAtom.uFlags = flags;
 
 	m_RenderQuevue[(ActiveStack == 0) ? 1 : 0].push_back(sAtom);
+
+	// NEW
+	{
+		RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+		render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_Object;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_5.pRenderObject = pObject;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_5.uFlags = flags;
+	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -606,9 +692,21 @@ void CRenderSDK::EndRenderTarget()
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height, float MinZ /*= 0.f*/, float MaxZ /*= 1.f*/)
+void CRenderSDK::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height, float min_z /*= 0.f*/, float max_z /*= 1.f*/)
 {
-	PushToRenderStack(new RenderChunk_SetViewport<D3DDriver, unsigned int, float>(m_pRenderDriver, x, y, width, height, MinZ, MaxZ));
+	PushToRenderStack(new RenderChunk_SetViewport<D3DDriver, unsigned int, float>(m_pRenderDriver, x, y, width, height, min_z, max_z));
+
+	// NEW
+	{
+		RenderSDK::SRVariantRenderCommand& render_cmd = m_RenderAdjacency.PushRenderCommand();
+		render_cmd.__RT_VARIANT_NAME_1.vt = RenderSDK::ERC_Viewport;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.x = x;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.y = y;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.width = width;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.height = height;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.MinZ = min_z;
+		render_cmd.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.MaxZ = max_z;
+	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -619,6 +717,8 @@ void CRenderSDK::DrawObject(const CRenderObject *pObject)
 	if (!bFakeDraw)
 	{
 		PushObjectToQuevue(pObject, pObject->GetFlags()); // new functionality instead memalloc
+
+
 	}
 	
 	if (RenderInfoMask != RI_NONE)

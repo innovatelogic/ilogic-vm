@@ -70,4 +70,4 @@ namespace RenderSDK
 		} __RT_VARIANT_NAME_1;
 	} RTVARIANT, *LPRTVARIANT;
 
-}
+}//RenderSDK

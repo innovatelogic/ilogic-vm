@@ -86,6 +86,9 @@ public:
 	void					Render(SRenderContext *pContext, int cps = 0);
 	void					RenderAdjacency(RenderQuevueAdjacency &Adjacency);
 
+	void					_Render(SRenderContext *pContext);
+	void					_RenderAdjacency(RenderSDK::LPRTVARIANT adjacency);
+
 	void					Present(const SRenderContext *pContext);
 
 	void					UpdateResources(bool bLock = false);
