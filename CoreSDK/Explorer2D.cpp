@@ -60,16 +60,16 @@ void Explorer2D::InitializeBrushes()
 //----------------------------------------------------------------------------------
 void Explorer2D::DoDraw()
 {
-#ifdef NEW_ADJACENCY
+
 	RenderSDK::RenderAdjacency &refAdj = m_pRenderSDK->GetRenderAdjacency();
 	RenderSDK::SRTVariant_Adjacency &adjacency = refAdj.GetCurrentAdjacency();
 
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderSDK->GetRenderDriver()->GetDefaultContext();
-	memcpy(adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, GetViewportViewMatrix().m, 16 * sizeof(float));
-	memcpy(adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, GetViewportProjMatrix().m, 16 * sizeof(float));
+	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, GetViewportViewMatrix().m, 16 * sizeof(float));
+	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, GetViewportProjMatrix().m, 16 * sizeof(float));
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = GetNearPlane();
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = GetFarPlane();
-
+/*#ifdef NEW_ADJACENCY
 #else
 	RenderQuevueAdjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
@@ -79,7 +79,7 @@ void Explorer2D::DoDraw()
 	Queve.fNearPlane = GetNearPlane();
 	Queve.fFarPlane  = GetFarPlane();
 
-#endif//NEW_ADJACENCY
+#endif//NEW_ADJACENCY*/
 }
 
 //----------------------------------------------------------------------------------------------

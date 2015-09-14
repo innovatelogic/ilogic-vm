@@ -87,7 +87,7 @@ public:
 	void					RenderAdjacency(RenderQuevueAdjacency &Adjacency);
 
 	void					_Render(SRenderContext *pContext);
-	void					_RenderAdjacency(RenderSDK::LPRTVARIANT adjacency);
+	void					_RenderAdjacency(const RenderSDK::LPRTVARIANT adjacency);
 
 	void					Present(const SRenderContext *pContext);
 
@@ -116,7 +116,7 @@ public:
 	*/
 	RenderSDK::RenderAdjacency& GetRenderAdjacency() { return m_RenderAdjacency; }
 
-	RenderQuevueAdjacency&	PushRenderQuevueAdjaency();
+	void					PushRenderQuevueAdjaency();
 	void					PopRenderQuevueAdjaency();
 	RenderQuevueAdjacency&  GetCurrQuevueAdjaency();
 

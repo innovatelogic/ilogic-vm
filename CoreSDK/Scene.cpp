@@ -39,12 +39,12 @@ void CScene::Initialize()
 //------------------------------------------------------------------------
 void CScene::DoDraw()
 {
-	RenderQuevueAdjacency& Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
+	RenderSDK::RenderAdjacency &refAdj = m_pRenderSDK->GetRenderAdjacency();
+	RenderSDK::SRTVariant_Adjacency &adjacency = refAdj.GetCurrentAdjacency();
 
-	// setup fog params
-	Queve.bFog = m_pEnvSceneInfo->m_bFog;
-	Queve.fFogMin = m_pEnvSceneInfo->m_fFogMin;
-	Queve.fFogMax = m_pEnvSceneInfo->m_fFogMax;
-	Queve.fFogDensity =	m_pEnvSceneInfo->m_fFogDensity;
-	Queve.FogColor = m_pEnvSceneInfo->m_FogColor;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog = m_pEnvSceneInfo->m_bFog;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin = m_pEnvSceneInfo->m_fFogMin;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax = m_pEnvSceneInfo->m_fFogMax;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity = m_pEnvSceneInfo->m_fFogDensity;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor = m_pEnvSceneInfo->m_FogColor;
 }

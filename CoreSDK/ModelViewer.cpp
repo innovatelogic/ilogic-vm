@@ -51,6 +51,8 @@ void CModelViewer::Initialize()
 //----------------------------------------------------------------------------------------------
 void CModelViewer::DoDraw()
 {
+	return;
+
 	RenderQuevueAdjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
 	// setup env params

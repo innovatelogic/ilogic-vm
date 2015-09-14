@@ -43,7 +43,9 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 	// init base indexes
 	{
 		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart = (HALF_RCOMMANDS * nonActive) + cmd_shift;
-	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = nullptr;
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = nullptr;
 	}
 
 	return refAdjacency;
@@ -70,36 +72,49 @@ SRTVariant_Adjacency& RenderAdjacency::GetCurrentAdjacency()
 }
 
 //----------------------------------------------------------------------------------------------
-SRVariantRenderCommand& RenderAdjacency::PushRenderCommand()
+SRVariantRenderCommand* RenderAdjacency::PushRenderCommand()
 {
-	byte NonActive = (m_ActiveStack == 0) ? 1 : 0;
-
-	assert(m_aContext[NonActive].nIndexAdjaency < HALF_ADJACENCY - 1);
-
-	const size_t shift = m_aContext[NonActive].nIndexAdjaency;
-
-	SRTVariant_Adjacency &refAdjacency = *(m_pVariantAdjacency + (HALF_ADJACENCY * NonActive) + shift);
+	SRTVariant_Adjacency &refAdjacency = GetCurrentAdjacency();
 
 	const size_t startCmdIndex = refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart;
+
+	SRVariantRenderCommand *nextCommand = m_pVariantCommands + (startCmdIndex + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands);
 
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands++;
 
 	assert(refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands < HALF_RCOMMANDS - 1);
 
-	return m_pVariantCommands[startCmdIndex + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands];
+	return nextCommand;
 }
 
 //----------------------------------------------------------------------------------------------
 void RenderAdjacency::swapBuffer()
 {
-	m_ActiveStack = (m_ActiveStack == 0) ? 1 : 0; // toggle active stack
-
+	// reset already drawn context
 	m_aContext[m_ActiveStack].nIndexAdjaency = 0;
-	m_aContext[m_ActiveStack].nIndexCommand  = 0;
+	m_aContext[m_ActiveStack].nIndexCommand  = 0;	
+	
+	m_ActiveStack = (m_ActiveStack == 0) ? 1 : 0; // toggle active stack
 }
 
 //----------------------------------------------------------------------------------------------
-LPRTVARIANT RenderAdjacency::begin(size_t index) const
+LPRTVARIANT RenderAdjacency::getAdjBuffer(size_t index) const
+{ 
+	assert(index >= 0 && index < 2);
+
+	return m_pVariantAdjacency + (HALF_ADJACENCY * index);
+}
+
+//----------------------------------------------------------------------------------------------
+LPRTVARIANTCMD RenderAdjacency::getActiveCmd(size_t index) const
+{
+	assert(index >= 0 && index < MAX_RCOMMANDS - 1);
+	
+	return m_pVariantCommands + index;
+}
+
+//----------------------------------------------------------------------------------------------
+LPRTVARIANT RenderAdjacency::begin_adj(size_t index) const
 {
 	assert(index >= 0 && index < 2);
 
@@ -107,10 +122,26 @@ LPRTVARIANT RenderAdjacency::begin(size_t index) const
 }
 
 //----------------------------------------------------------------------------------------------
-LPRTVARIANT RenderAdjacency::end(size_t index) const
+LPRTVARIANT RenderAdjacency::end_adj(size_t index) const
 {
 	assert(index >= 0 && index < 2);
 
 	return m_pVariantAdjacency + (HALF_ADJACENCY * index) + m_aContext[index].nIndexAdjaency;
+}
+
+//----------------------------------------------------------------------------------------------
+LPRTVARIANTCMD RenderAdjacency::begin_cmd(size_t index) const
+{
+	assert(index >= 0 && index < 2);
+
+	return m_pVariantCommands + (HALF_RCOMMANDS * index);
+}
+
+//----------------------------------------------------------------------------------------------
+LPRTVARIANTCMD RenderAdjacency::end_cmd(size_t index) const
+{
+	assert(index >= 0 && index < 2);
+
+	return m_pVariantCommands + (HALF_RCOMMANDS * index) + m_aContext[index].nIndexCommand;
 }
 }

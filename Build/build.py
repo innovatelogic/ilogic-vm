@@ -1,7 +1,8 @@
-import os
-import sys
-import shutil
-import argparse
+import os, sys, shutil, argparse
+from functools import partial
+from scripts import cmake
+import subprocess
+import traceback
 
 generators = {
     'vc110' : ('Visual Studio 11 2012', 'v110_xp'),
@@ -128,7 +129,36 @@ def main():
 
 	client_deps = Config('client_dep', 'vc110', amd64=False, xpSupport=True, install=True, bindir='bin\\client')
 	client =      Config('client', 'vc120', amd64=False, xpSupport=True, install=False, bindir='bin\\client')
-  
+	
+	
+	#
+	cur_file_dir = os.path.dirname(os.path.realpath(__file__))
+	engine_source_dir = os.path.dirname(cur_file_dir)
+	root_dir = os.path.dirname(programming_dir)
+	
+	print(cur_file_dir)
+	print(programming_dir)
+	print(root_dir)
+	
+	specs = dict()
+	
+	specs['tools'] = {
+		'gen_id': 'vc120',
+		'amd64': True,
+		'xp_support': False,
+		'source_dir': engine_source_dir,
+		'out_dir': os.path.join(root_dir, 'out64'),
+		'bin_dir': os.path.join(root_dir, 'out64\\bin'),
+		'args': {
+		},
+		'install': True
+	}
+	
+	#tools_deps = cmake.Target('tools_dependencies', **specs['tools'])
+	#tools = cmake.Target('tools', **specs['tools'])
+	
+	#return 1;
+	
 	try:
 		if args.goal == None:
 			print('None args')

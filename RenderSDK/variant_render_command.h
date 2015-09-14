@@ -20,12 +20,12 @@ namespace RenderSDK
 
 	typedef struct SRVariantRenderCommand
 	{
-		union
-		{
 			RTVARTYPECMD vt;
 			WORD reserved0;
 			WORD reserved1;
 
+		union
+		{
 			struct __SRTVariant_matrix
 			{
 				float m[16];
