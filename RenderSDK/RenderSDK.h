@@ -114,7 +114,7 @@ public:
 	/** 
 	* Return render adjacency object
 	*/
-	RenderSDK::RenderAdjacency& GetRenderAdjacency() { return m_RenderAdjacency; }
+	RenderSDK::RenderAdjacency& GetRenderAdjacency() { return *m_pRenderAdjacency; }
 
 	void					PushRenderQuevueAdjaency();
 	void					PopRenderQuevueAdjaency();
@@ -183,7 +183,7 @@ private:
 	bool					bFlagSwapStack;
 	volatile byte			ActiveStack;
 	
-	RenderSDK::RenderAdjacency	m_RenderAdjacency;
+	RenderSDK::RenderAdjacency	*m_pRenderAdjacency;
 
 	TRenderAdjacencyQuevue	RenderAdjacencyQuevue[TRIGGERED_VALUE];
 	TVRenderStack			RenderStack[TRIGGERED_VALUE];

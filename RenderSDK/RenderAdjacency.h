@@ -6,6 +6,9 @@
 #include "variant_render_adj.h"
 #include "variant_render_command.h"
 
+class D3DDriver;
+class SRenderContext;
+
 namespace RenderSDK
 {
 class EXPORT RenderAdjacency final
@@ -13,24 +16,49 @@ class EXPORT RenderAdjacency final
 	//RenderAdjacency(const RenderAdjacency &that) = delete;
 	//RenderAdjacency& operator=(const RenderAdjacency &that) = delete;
 
-	struct SAdjContext
+	struct SAdjContext final
 	{
 		size_t nIndexAdjaency;
 		size_t nIndexCommand;
 
+		// debug counters
+		size_t nIndexDot;
+		size_t nIndexLine;
+		size_t nIndexLineZ;
+		size_t nIndexTriangle;
+		size_t nIndexSphere;
+
 		SAdjContext() 
 			: nIndexAdjaency(0)
 			, nIndexCommand(0) 
+			, nIndexDot(0)
+			, nIndexLine(0)
+			, nIndexLineZ(0)
+			, nIndexTriangle(0)
+			, nIndexSphere(0)
 		{}
+	};
+
+	// debug adjacency info
+	struct SDebugInfo final
+	{
+		SDbgPoint		*pDots;
+		SDbgPoint		*pLines;
+		SDbgPoint		*pLinesNoZ;
+		SDbgTriangle	*pTriangles;
+		SDbgSphere		*pSpheres;
+
+		SDebugInfo();
+		~SDebugInfo();
 	};
 
 public:
 	// Iterators.
-	class IteratorAdjacency
+	class IteratorAdjacency final
 	{
 	public:
 		IteratorAdjacency( LPRTVARIANT pptr ) : pPtr(pptr) {}
-		void operator++()      { pPtr++; }
+		void operator++()				{ pPtr++; }
 		LPRTVARIANT operator*()   const { return pPtr; }
 		LPRTVARIANT operator->()  const { return pPtr; }
 
@@ -40,7 +68,7 @@ public:
 		LPRTVARIANT pPtr;
 	};
 
-	class IteratorCommand
+	class IteratorCommand final
 	{
 	public:
 		IteratorCommand( LPRTVARIANTCMD pptr ) : pPtr(pptr) {}
@@ -55,7 +83,7 @@ public:
 	};
 
 public:
-	RenderAdjacency();
+	RenderAdjacency(D3DDriver *driver);
 	~RenderAdjacency();
 
 	SRTVariant_Adjacency& PushRenderQuevueAdjaency();
@@ -79,7 +107,11 @@ public:
 	LPRTVARIANTCMD begin_cmd(size_t index) const;
 	LPRTVARIANTCMD end_cmd(size_t index) const;
 
+	void render(SRenderContext *pContext);
+
 protected:
+	void renderAdjacency(const LPRTVARIANT adjacency);
+
 private:
 	LPRTVARIANT m_pVariantAdjacency;
 
@@ -87,6 +119,10 @@ private:
 
 	SAdjContext m_aContext[2];
 
+	SDebugInfo *m_pDbgInfo;
+
 	volatile int m_ActiveStack;
+
+	D3DDriver	*m_pRenderDriver;
 };
-}
+} // RenderSDK

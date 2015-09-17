@@ -2,6 +2,8 @@
 
 #include "platform_specific.h"
 
+class CRenderObject;
+
 namespace RenderSDK
 {
 	enum ERenderCmdType
@@ -48,7 +50,7 @@ namespace RenderSDK
 
 			struct __SRTVariant_obj
 			{
-				const class CRenderObject *pRenderObject;
+				const CRenderObject *pRenderObject;
 				unsigned int			   uFlags;
 			} __RT_VARIANT_NAME_5;
 

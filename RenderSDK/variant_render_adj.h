@@ -26,8 +26,17 @@ namespace RenderSDK
 				size_t	idxCommandStart;	// start command index
 				size_t	numCommands;		// end command index
 
-				size_t	idxObjectStart;		// start objects index
-				size_t	numObjects;			// objects number 
+				// debug info
+				size_t nDotStartIdx;
+				size_t nDotsNum;
+				size_t nLineStartIdx;
+				size_t nLinesNum;
+				size_t nLineZStartIdx;
+				size_t nLinesZNum;
+				size_t nTriangleStartIdx;
+				size_t nTrianglesNum;
+				size_t nSphereStartIdx;
+				size_t nSpheresZNum;
 
 				float	projMatrix[16];
 				float	viewMatrix[16];
@@ -61,8 +70,8 @@ namespace RenderSDK
 				float			fFogDensity;
 				unsigned int	nFogColor;
 
-				AdjDebugInfo *debugInfo; // debug render info
 
+				
 				class SRenderContext *pRenderContext;
 			
 			} __RT_VARIANT_NAME_2;
