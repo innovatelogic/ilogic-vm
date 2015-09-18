@@ -66,13 +66,13 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 	assert(m_aContext[nonActive].nIndexAdjaency < HALF_ADJACENCY - 1);
 
 	const size_t &shift = m_aContext[nonActive].nIndexAdjaency;
-	const size_t &cmd_shift = m_aContext[nonActive].nIndexCommand;
+	const size_t &curr_command = m_aContext[nonActive].nIndexCommand;
 
 	SRTVariant_Adjacency &refAdjacency = *(m_pVariantAdjacency + (HALF_ADJACENCY * nonActive) + shift);
 
 	// init base indexes
 	{
-		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart = (HALF_RCOMMANDS * nonActive) + cmd_shift;
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart = (HALF_RCOMMANDS * nonActive) + curr_command;
 		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
 		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = nullptr;
 		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = nullptr;
