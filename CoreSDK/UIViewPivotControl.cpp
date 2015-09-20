@@ -258,7 +258,7 @@ void UIViewPivotControl::Initialize()
 //----------------------------------------------------------------------------------------------
 void UIViewPivotControl::DoDraw()
 {
-	RenderQuevueAdjacency& Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
+/*	RenderQuevueAdjacency& Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
 	Queve.bClearTarget = true;
 	Queve.m_ClearColor = 0x11000000;
@@ -288,7 +288,7 @@ void UIViewPivotControl::DoDraw()
 	Queve.RT_ViewMatrix = viewmatrix;
 	Queve.RT_ProjMatrix = BuildCamera->GetProjMatrix();
 	
-	GetRenderComponent()->DrawObject(MeshComponent);
+	GetRenderComponent()->DrawObject(MeshComponent);*/
 }
 
 //----------------------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ namespace RenderSDK
 				size_t nTriangleStartIdx;
 				size_t nTrianglesNum;
 				size_t nSphereStartIdx;
-				size_t nSpheresZNum;
+				size_t nSpheresNum;
 
 				float	projMatrix[16];
 				float	viewMatrix[16];

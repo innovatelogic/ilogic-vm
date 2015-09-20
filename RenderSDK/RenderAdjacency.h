@@ -109,8 +109,18 @@ public:
 
 	void render(SRenderContext *pContext);
 
+	// aux helpers
+	void auxDrawDot(const Vector &point, unsigned int Color, bool bZEnable = true);
+	void auxDrawLine(const Vector &start, const Vector &end, unsigned int Color, bool bZEnable = true);
+	void auxDrawLine(const Vector2f &start, const Vector2f &end, unsigned int Color, bool bZEnable = true);
+	void auxDrawSphere(Vector &pos, float rad, unsigned int color, unsigned short segments = 16);
+	void auxDrawTriangle(const Vector &p0, const Vector &p1, const Vector &p2, unsigned int color = 0xffffffff);
+	void auxDrawTriangle2D(const Vector2f &p0, const Vector2f &p1, const Vector2f &p2, unsigned int color = 0xffffffff);
+	
 protected:
 	void renderAdjacency(const LPRTVARIANT adjacency);
+
+	void renderAux(const LPRTVARIANT adjacency);
 
 private:
 	LPRTVARIANT m_pVariantAdjacency;

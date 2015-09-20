@@ -83,11 +83,11 @@ void Explorer3D::DoDraw()
 	}*/
 //#endif//NEW_ADJACENCY
 
-/*	if (GetAppMain()->GetShowGrid() && GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
+	if (GetAppMain()->GetShowGrid() && GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{
 		DrawGrid();
 		GetPhysicsEngine()->DebugRender(GetRenderComponent());
-	}*/
+	}
 
 }
 

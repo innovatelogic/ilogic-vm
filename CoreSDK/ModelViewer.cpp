@@ -51,16 +51,14 @@ void CModelViewer::Initialize()
 //----------------------------------------------------------------------------------------------
 void CModelViewer::DoDraw()
 {
-	return;
-
-	RenderQuevueAdjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
+	RenderSDK::SRTVariant_Adjacency &Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
 	// setup env params
-	Queve.bFog = m_pEnvSceneInfo->m_bFog;
-	Queve.fFogMin = m_pEnvSceneInfo->m_fFogMin;
-	Queve.fFogMax = m_pEnvSceneInfo->m_fFogMax;
-	Queve.fFogDensity =	m_pEnvSceneInfo->m_fFogDensity;
-	Queve.FogColor = m_pEnvSceneInfo->m_FogColor;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog = m_pEnvSceneInfo->m_bFog;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin = m_pEnvSceneInfo->m_fFogMin;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax = m_pEnvSceneInfo->m_fFogMax;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity =	m_pEnvSceneInfo->m_fFogDensity;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor = m_pEnvSceneInfo->m_FogColor;
 
 	/** setup matrix */
 	if (GetAppMain()->GetCameraManager())
@@ -79,20 +77,21 @@ void CModelViewer::DoDraw()
 
 			ortho(projmatrix, -w, w, -h, h, 1.f, 100.f);
 
-			Queve.ViewMatrix = m;
-			Queve.ProjMatrix = projmatrix;
+			memcpy(&Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, m.m, 16 * sizeof(float));
+			memcpy(&Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, projmatrix.m, 16 * sizeof(float));
 		}
 		else
 		{
-			Queve.ViewMatrix = m_pCamera->GetViewMatrix();
-			Queve.ProjMatrix = m_pCamera->GetProjMatrix();
-			Queve.ViewPos	 = m_pCamera->GetPosition_();
+			memcpy(&Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, m_pCamera->GetViewMatrix().m, 16 * sizeof(float));
+			memcpy(&Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, m_pCamera->GetProjMatrix().m, 16 * sizeof(float));
+			memcpy(&Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, m_pCamera->GetPosition_().vec_array, 3 * sizeof(float));
+
 			SetViewPoint(m_pCamera->GetPosition_());
 		}
 
-		Queve.pRenderContext = m_pRenderContext;
-		Queve.fNearPlane = m_pCamera->GetNearDist();
-		Queve.fFarPlane  = m_pCamera->GetFarDist();
+		Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderContext;
+		Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = m_pCamera->GetNearDist();
+		Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane  = m_pCamera->GetFarDist();
 	}
 
 	if (m_pMeshComponent){

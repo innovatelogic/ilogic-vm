@@ -32,9 +32,6 @@ CRenderSDK::CRenderSDK(const CObjectAbstract *pParent)
 	m_RenderQuevue[0].reserve(RENDER_STACK_SIZE);
 	m_RenderQuevue[1].reserve(RENDER_STACK_SIZE);
 
-	RenderAdjacencyQuevue[0].reserve(RENDER_STACK_SIZE);
-	RenderAdjacencyQuevue[1].reserve(RENDER_STACK_SIZE);
-
 	ResetRenderInfoData();
 }
 
@@ -55,9 +52,6 @@ CRenderSDK::~CRenderSDK()
 	
 	m_RenderQuevue[0].clear();
 	m_RenderQuevue[1].clear();
-	
-	RenderAdjacencyQuevue[0].clear();
-	RenderAdjacencyQuevue[1].clear();
 
 	delete m_pFXManager;
 
@@ -157,7 +151,6 @@ void CRenderSDK::SwapBuffer()
 		RenderStackPost[ActiveStack].end(),
 		DeleteVectorFntor());
 
-	RenderAdjacencyQuevue[ActiveStack].clear();
 	RenderStack[ActiveStack].clear();		  // clear active stack
 	RenderStackPost[ActiveStack].clear();	  // clear active post stack
 	m_RenderQuevue[ActiveStack].clear();
@@ -301,7 +294,7 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 
 	LeaveCS();
 }
-
+/*
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::RenderAdjacency(RenderQuevueAdjacency &Adjacency)
 {
@@ -364,99 +357,7 @@ void CRenderSDK::RenderAdjacency(RenderQuevueAdjacency &Adjacency)
 			m_pRenderDriver->RenderDebugSphere((*Iter).Pos.GetPtr(), (*Iter).rad, (*Iter).Color, (*Iter).Seg);
 		}
 	}
-}
-
-//----------------------------------------------------------------------------------------------
-void CRenderSDK::_Render(SRenderContext *pContext)
-{
-	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
-
-	m_pRenderDriver->PushContext(pActiveContext);
-
-	m_pRenderDriver->DriverBeginDraw();
-
-	int activeStack = m_pRenderAdjacency->getActiveStackIndex();
-
-	RenderSDK::RenderAdjacency::IteratorAdjacency iter(m_pRenderAdjacency->begin_adj(activeStack));
-	RenderSDK::RenderAdjacency::IteratorAdjacency iter_end(m_pRenderAdjacency->end_adj(activeStack));
-
-	while (iter != iter_end)
-	{
-		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext != pActiveContext)
-		{
-			++iter; // move to next adjacency
-			continue;
-		}
-
-		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target == nullptr)
-		{
-			// viewer parameters
-			m_pRenderDriver->SetViewMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix);
-			m_pRenderDriver->SetProjMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix);
-			m_pRenderDriver->SetNearPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane);
-			m_pRenderDriver->SetFarPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane);
-			m_pRenderDriver->SetViewPos(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos);
-
-			// params
-			m_pRenderDriver->m_bFog = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog;
-			m_pRenderDriver->m_fFogMin = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin;
-			m_pRenderDriver->m_fFogMax = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax;
-			m_pRenderDriver->m_fFogDensity = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity;
-			m_pRenderDriver->m_FogColor = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor;
-
-			_RenderAdjacency(*iter);
-		}
-		++iter;
-	}
-}
-
-//----------------------------------------------------------------------------------------------
-void CRenderSDK::_RenderAdjacency(const RenderSDK::LPRTVARIANT adjacency)
-{
-	size_t startCmd = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart;
-	size_t numCmd = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands;
-
-	int activeStack = m_pRenderAdjacency->getActiveStackIndex();
-
-	RenderSDK::LPRTVARIANTCMD pCommandBegin = m_pRenderAdjacency->getActiveCmd(startCmd);
-
-	while (numCmd)
-	{
-		switch (pCommandBegin->vt)
-		{
-		case RenderSDK::ERC_WorldMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
-			break;
-		case RenderSDK::ERC_ViewMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
-			break;
-		case RenderSDK::ERC_ProjMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
-			break;
-		case RenderSDK::ERC_CropMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
-			break;
-		case RenderSDK::ERC_Viewport:
-			m_pRenderDriver->SetViewport(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.x, 
-										 pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.y, 
-										 pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.width,
-										 pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.height,
-										 pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.MinZ,
-										 pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.MaxZ);
-			break;
-		case RenderSDK::ERC_Object:
-			m_pRenderDriver->SetObjectFlags(&pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_5.uFlags);
-			pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_5.pRenderObject->Render();
-			break;
-		default:
-			assert(false);
-			break;
-		}
-
-		pCommandBegin++;
-		--numCmd;
-	}
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::Present(const SRenderContext *pContext)
@@ -481,9 +382,6 @@ void CRenderSDK::UpdateResources(bool bLock/*=false*/)
 
 	m_RenderQuevue[0].clear();
 	m_RenderQuevue[1].clear();
-
-	RenderAdjacencyQuevue[0].clear();
-	RenderAdjacencyQuevue[1].clear();
 
 	m_pRenderDriver->UpdateDriverThread();
 }
@@ -634,13 +532,9 @@ void CRenderSDK::PopRenderQuevueAdjaency()
 }
 
 //----------------------------------------------------------------------------------------------
-RenderQuevueAdjacency& CRenderSDK::GetCurrQuevueAdjaency()
+RenderSDK::SRTVariant_Adjacency& CRenderSDK::GetCurrQuevueAdjaency()
 {
-	byte NonActive = (ActiveStack == 0) ? 1 : 0;
-
-	assert (!RenderAdjacencyQuevue[NonActive].empty());
-
-	return RenderAdjacencyQuevue[NonActive][RenderAdjacencyQuevue[NonActive].size() - 1];
+	return m_pRenderAdjacency->GetCurrentAdjacency();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -698,14 +592,11 @@ void CRenderSDK::SetViewport(unsigned int x, unsigned int y, unsigned int width,
 
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::DrawObject(const CRenderObject *pObject)
-{
+{	
 	SetTransform(pObject->GetRWTM());
-
 	if (!bFakeDraw)
 	{
 		PushObjectToQuevue(pObject, pObject->GetFlags()); // new functionality instead memalloc
-
-
 	}
 	
 	if (RenderInfoMask != RI_NONE)
@@ -736,8 +627,7 @@ void CRenderSDK::DrawDot(const Vector &point, unsigned int Color, bool bZEnable/
 {
 	if (!bFakeDraw && bDrawHelpers)
 	{
-		RenderQuevueAdjacency &Queve = GetCurrQuevueAdjaency();
-		Queve.DebugInfo.DotsList.push_back(SDbgPoint(point, Color));
+		m_pRenderAdjacency->auxDrawDot(point, Color, bZEnable);
 	}
 }
 
@@ -746,18 +636,7 @@ void CRenderSDK::DrawLine(const Vector& start, const Vector& end, unsigned int C
 {
 	if (!bFakeDraw && bDrawHelpers)
 	{
-		RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
-
-		if (bZEnable)
-		{
-			Queve.DebugInfo.PointList.push_back(SDbgPoint(start, Color));
-			Queve.DebugInfo.PointList.push_back(SDbgPoint(end, Color));
-		}
-		else
-		{
-			Queve.DebugInfo.PointListNoZ.push_back(SDbgPoint(start, Color));
-			Queve.DebugInfo.PointListNoZ.push_back(SDbgPoint(end, Color));
-		}
+		m_pRenderAdjacency->auxDrawLine(start, end, Color, bZEnable);
 	}
 }
 
@@ -766,10 +645,7 @@ void CRenderSDK::DrawLine(const Vector2f& start, const Vector2f& end, unsigned i
 {
 	if (!bFakeDraw && bDrawHelpers)
 	{
-		RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
-
-		Queve.DebugInfo.PointList.push_back(SDbgPoint(Vector(start.x, start.y, 0.f), Color));
-		Queve.DebugInfo.PointList.push_back(SDbgPoint(Vector(end.x, end.y, 0.f), Color));
+		m_pRenderAdjacency->auxDrawLine(start, end, Color, bZEnable);
 	}
 }
 
@@ -789,9 +665,9 @@ void CRenderSDK::DrawCircle(const Matrix &WTM, float rad, unsigned int Color, un
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::DrawSphere(Vector &Pos, float rad, unsigned int color, unsigned short segments /*= 16*/)
 {
-	RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
+/*	RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
 
-	Queve.DebugInfo.SphereList.push_back(SDbgSphere(Pos, rad, color, segments));
+	Queve.DebugInfo.SphereList.push_back(SDbgSphere(Pos, rad, color, segments));*/
 }
 
 //----------------------------------------------------------------------------------------------
@@ -827,13 +703,11 @@ void CRenderSDK::DrawText2D(const wchar_t* text, const Vector2f& position, const
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::DrawTriangle(const Vector &P0, const Vector &P1, const Vector &P2, unsigned int color /*= 0xffffffff*/)
+void CRenderSDK::DrawTriangle(const Vector &p0, const Vector &p1, const Vector &p2, unsigned int color /*= 0xffffffff*/)
 {
-	if (!bFakeDraw)
+	if (!bFakeDraw && bDrawHelpers)
 	{
-		RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
-
-		Queve.DebugInfo.TriangleList.push_back(SDbgTriangle(P0, P1, P2, color));
+		m_pRenderAdjacency->auxDrawTriangle(p0, p1, p2, color);
 	}
 }
 
@@ -842,9 +716,9 @@ void CRenderSDK::DrawTriangle2D(const Vector2f &P0, const Vector2f &P1, const Ve
 {
 	if (!bFakeDraw)
 	{
-		RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
+/*		RenderQuevueAdjacency& Queve = GetCurrQuevueAdjaency();
 
-		Queve.DebugInfo.TriangleList.push_back(SDbgTriangle(Vector(P0.x, P0.y, 0.f), Vector(P1.x, P1.y, 0.f), Vector(P2.x, P2.y, 0.f), color));
+		Queve.DebugInfo.TriangleList.push_back(SDbgTriangle(Vector(P0.x, P0.y, 0.f), Vector(P1.x, P1.y, 0.f), Vector(P2.x, P2.y, 0.f), color));*/
 	}
 }
 

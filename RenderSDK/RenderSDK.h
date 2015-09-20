@@ -84,10 +84,6 @@ public:
 	
 	void					SwapBuffer();
 	void					Render(SRenderContext *pContext, int cps = 0);
-	void					RenderAdjacency(RenderQuevueAdjacency &Adjacency);
-
-	void					_Render(SRenderContext *pContext);
-	void					_RenderAdjacency(const RenderSDK::LPRTVARIANT adjacency);
 
 	void					Present(const SRenderContext *pContext);
 
@@ -118,7 +114,7 @@ public:
 
 	void					PushRenderQuevueAdjaency();
 	void					PopRenderQuevueAdjaency();
-	RenderQuevueAdjacency&  GetCurrQuevueAdjaency();
+	RenderSDK::SRTVariant_Adjacency&  GetCurrQuevueAdjaency();
 
 	inline_ void			PushToRenderStack(CommandBase* Chunk, bool Post = false);
 	inline_ void			PushObjectToQuevue(const CRenderObject *pObject, unsigned int Flags = 0);

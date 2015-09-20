@@ -23,7 +23,7 @@ RenderAdjacency::SDebugInfo::SDebugInfo()
 	pLines = (SDbgPoint*) malloc(sizeof(SDbgPoint) * MAX_RCOMMANDS);
 	pLinesNoZ = (SDbgPoint*) malloc(sizeof(SDbgPoint) * MAX_RCOMMANDS);
 	pTriangles = (SDbgTriangle*) malloc(sizeof(SDbgTriangle) * MAX_RCOMMANDS);
-	pSpheres = (SDbgSphere*) malloc(sizeof(SDbgSphere) * MAX_RCOMMANDS);;
+	pSpheres = (SDbgSphere*) malloc(sizeof(SDbgSphere) * MAX_RCOMMANDS);
 }
 //----------------------------------------------------------------------------------------------
 RenderAdjacency::SDebugInfo::~SDebugInfo()
@@ -71,12 +71,24 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 	SRTVariant_Adjacency &refAdjacency = *(m_pVariantAdjacency + (HALF_ADJACENCY * nonActive) + shift);
 
 	// init base indexes
-	{
-		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart = (HALF_RCOMMANDS * nonActive) + curr_command;
-		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
-		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = nullptr;
-		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = nullptr;
-	}
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart = (HALF_RCOMMANDS * nonActive) + curr_command;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = nullptr;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = nullptr;
+
+	// aux debug info
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexDot;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexLine;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineZStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexLineZ;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTriangleStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexTriangle;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nSphereStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexSphere;
+
+	//zero numbers
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum = 0;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum = 0;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum = 0;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum = 0;
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nSpheresNum = 0;
 
 	return refAdjacency;
 }
@@ -85,6 +97,15 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 void RenderAdjacency::PopRenderQuevueAdjaency()
 {
 	byte nonActive = (m_ActiveStack == 0) ? 1 : 0;
+
+	SRTVariant_Adjacency &adjacency = GetCurrentAdjacency();
+
+	m_aContext[nonActive].nIndexCommand += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands;
+	m_aContext[nonActive].nIndexDot += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum;
+	m_aContext[nonActive].nIndexLine += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum;
+	m_aContext[nonActive].nIndexLineZ += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum;
+	m_aContext[nonActive].nIndexTriangle += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum;
+	m_aContext[nonActive].nIndexSphere += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nSpheresNum;
 
 	m_aContext[nonActive].nIndexAdjaency++;
 }
@@ -225,6 +246,99 @@ void RenderAdjacency::render(SRenderContext *pContext)
 }
 
 //----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawDot(const Vector &point, unsigned int color, bool bZEnable /*= true*/)
+{
+	SRTVariant_Adjacency &refAdjacency = GetCurrentAdjacency();
+
+	const size_t startDotsIdx = refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotStartIdx;
+
+	SDbgPoint *nextDot = m_pDbgInfo->pDots + (startDotsIdx + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum);
+
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum++;
+
+	assert(refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum < HALF_RCOMMANDS - 1);
+
+	nextDot->Point = point;
+	nextDot->Color = color;
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawLine(const Vector &start, const Vector &end, unsigned int color, bool bZEnable /*= true*/)
+{
+	SRTVariant_Adjacency &refAdjacency = GetCurrentAdjacency();
+
+	if (bZEnable)
+	{
+		const size_t startLinesIdx = refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineStartIdx;
+
+		SDbgPoint *nextLine = m_pDbgInfo->pLines + (startLinesIdx + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum);
+
+		nextLine->Point = start;
+		nextLine->Color = color;
+
+		(nextLine + 1)->Point = end;
+		(nextLine + 1)->Color = color;	
+		
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum += 2; // count dots
+
+		assert(refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum < HALF_RCOMMANDS - 1);
+	}
+	else
+	{
+		const size_t startLinesIdx = refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineZStartIdx;
+
+		SDbgPoint *nextLine = m_pDbgInfo->pLinesNoZ + (startLinesIdx + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum);
+
+		nextLine->Point = start;
+		nextLine->Color = color;
+
+		(nextLine + 1)->Point = end;
+		(nextLine + 1)->Color = color;
+		
+		refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum += 2; // count dots
+
+		assert(refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum < HALF_RCOMMANDS - 1);
+	}
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawLine(const Vector2f &start, const Vector2f &end, unsigned int color, bool bZEnable /*= true*/)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawSphere(Vector &pos, float rad, unsigned int color, unsigned short segments /*= 16*/)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawTriangle(const Vector &p0, const Vector &p1, const Vector &p2, unsigned int color /*= 0xffffffff*/)
+{
+	SRTVariant_Adjacency &refAdjacency = GetCurrentAdjacency();
+
+	const size_t startTriIdx = refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTriangleStartIdx;
+
+	SDbgTriangle *nextTriangle = m_pDbgInfo->pTriangles + (startTriIdx + refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum);
+
+	nextTriangle->P0 = p0;
+	nextTriangle->P1 = p1;
+	nextTriangle->P2 = p2;
+	nextTriangle->Color = color;
+
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum++;
+
+	assert(refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum < HALF_RCOMMANDS - 1);
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::auxDrawTriangle2D(const Vector2f &p0, const Vector2f &p1, const Vector2f &p2, unsigned int color /*= 0xffffffff*/)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
 void RenderAdjacency::renderAdjacency(const LPRTVARIANT adjacency)
 {
 	size_t startCmd = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.idxCommandStart;
@@ -270,5 +384,117 @@ void RenderAdjacency::renderAdjacency(const LPRTVARIANT adjacency)
 		pCommandBegin++;
 		--numCmd;
 	}
+
+	renderAux(adjacency);
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::renderAux(const LPRTVARIANT adjacency)
+{	
+	int activeStack = getActiveStackIndex();
+	
+	// dots
+	{
+		size_t startDot = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotStartIdx;
+		size_t numDots = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotsNum;
+
+		SDbgPoint *pPoint = m_pDbgInfo->pDots + startDot;
+
+		while (numDots)
+		{
+			m_pRenderDriver->AddDot(pPoint->Point.GetPtr(), pPoint->Color);
+			pPoint++;
+			--numDots;
+		}
+	}
+	
+	// lines
+	{
+		size_t startLine = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineStartIdx;
+		size_t numLinePoints = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesNum;
+
+		SDbgPoint *pPoint = m_pDbgInfo->pLines + startLine;
+
+		while (numLinePoints)
+		{
+			m_pRenderDriver->AddLine(pPoint->Point.GetPtr(), 0, pPoint->Color);
+			pPoint++;
+			numLinePoints--;
+		}
+	}
+
+	// lines Z
+	{
+		size_t startLine = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineZStartIdx;
+		size_t numLinePoints = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLinesZNum;
+
+		SDbgPoint *pPoint = m_pDbgInfo->pLinesNoZ + startLine;
+
+		while (numLinePoints)
+		{
+			m_pRenderDriver->AddLine(pPoint->Point.GetPtr(), 0, pPoint->Color, false);
+			pPoint++;
+			numLinePoints--;
+		}
+	}
+
+	m_pRenderDriver->DrawDebugLines();
+
+	// triangles
+	{
+		size_t startTriangle = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTriangleStartIdx;
+		size_t numTriangles = adjacency->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum;
+
+		SDbgTriangle *pTriangle = m_pDbgInfo->pTriangles + startTriangle;
+
+		while (numTriangles)
+		{
+			m_pRenderDriver->AddTriangle(pTriangle->P0.GetPtr(), pTriangle->P1.GetPtr(), pTriangle->P2.GetPtr(), pTriangle->Color);
+			pTriangle++;
+			numTriangles--;
+		}
+
+		m_pRenderDriver->DrawDebugTriangles();
+	}
+
+	/*
+	// debug render
+	if (Adjacency.DebugInfo.DotsList.size() > 0 ||
+		Adjacency.DebugInfo.PointList.size() > 0 ||
+		Adjacency.DebugInfo.PointListNoZ.size() > 0)
+	{
+		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.DotsList.begin(); Iter != Adjacency.DebugInfo.DotsList.end(); ++Iter)
+		{
+			m_pRenderDriver->AddDot((*Iter).Point.GetPtr(), (*Iter).Color);
+		}
+
+		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.PointList.begin(); Iter != Adjacency.DebugInfo.PointList.end(); ++Iter)
+		{
+			m_pRenderDriver->AddLine((*Iter).Point.GetPtr(), 0, (*Iter).Color);
+		}
+
+		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.PointListNoZ.begin(); Iter != Adjacency.DebugInfo.PointListNoZ.end(); ++Iter)
+		{
+			m_pRenderDriver->AddLine((*Iter).Point.GetPtr(), 0, (*Iter).Color, false);
+		}
+		m_pRenderDriver->DrawDebugLines();
+	}
+
+	if (Adjacency.DebugInfo.TriangleList.size() > 0)
+	{
+		for (std::vector<SDbgTriangle>::iterator Iter = Adjacency.DebugInfo.TriangleList.begin(); Iter != Adjacency.DebugInfo.TriangleList.end(); ++Iter)
+		{
+			m_pRenderDriver->AddTriangle((*Iter).P0.GetPtr(), (*Iter).P1.GetPtr(), (*Iter).P2.GetPtr(), (*Iter).Color);
+		}
+		m_pRenderDriver->DrawDebugTriangles();
+	}
+
+	if (Adjacency.DebugInfo.SphereList.size() > 0)
+	{
+		for (std::vector<SDbgSphere>::iterator Iter = Adjacency.DebugInfo.SphereList.begin(); Iter != Adjacency.DebugInfo.SphereList.end(); ++Iter)
+		{
+			m_pRenderDriver->RenderDebugSphere((*Iter).Pos.GetPtr(), (*Iter).rad, (*Iter).Color, (*Iter).Seg);
+		}
+	}*/
 }
 }

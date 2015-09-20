@@ -145,9 +145,9 @@ void IDrawInterface::DrawController() const
 {
 	if (m_pNode->m_pValue->IsFocused())
 	{
-		RenderQuevueAdjacency &Queve = m_pCoreSDK->GetRenderSDK()->GetCurrQuevueAdjaency();
+		RenderSDK::SRTVariant_Adjacency &Queve = m_pCoreSDK->GetRenderSDK()->GetCurrQuevueAdjaency();
 
-		if (const CCamera *pCamera = m_pCoreSDK->GetCameraManager()->GetActiveCamera(Queve.pRenderContext))
+		if (const CCamera *pCamera = m_pCoreSDK->GetCameraManager()->GetActiveCamera(Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext))
 		{
 			EScrObjectEvent Mode = m_pNode->m_pKey->GetControlMode();
 			Matrix WorldMatrixTransform = GetTransformedWTM_();
