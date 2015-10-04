@@ -184,7 +184,6 @@ private:
 	TRenderAdjacencyQuevue	RenderAdjacencyQuevue[TRIGGERED_VALUE];
 	TVRenderStack			RenderStack[TRIGGERED_VALUE];
 	TVRenderStack			RenderStackPost[TRIGGERED_VALUE];
-	TVRenderQuevue			m_RenderQuevue[TRIGGERED_VALUE];
 
 	TTransformStack			TransformStack;
 	TAlphaBlendStack		AlphaBlendStack;

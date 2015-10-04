@@ -29,9 +29,6 @@ CRenderSDK::CRenderSDK(const CObjectAbstract *pParent)
 	RenderStackPost[0].reserve(RENDER_STACK_SIZE);
 	RenderStackPost[1].reserve(RENDER_STACK_SIZE);
 
-	m_RenderQuevue[0].reserve(RENDER_STACK_SIZE);
-	m_RenderQuevue[1].reserve(RENDER_STACK_SIZE);
-
 	ResetRenderInfoData();
 }
 
@@ -49,9 +46,6 @@ CRenderSDK::~CRenderSDK()
 
 	RenderStackPost[0].clear();
 	RenderStackPost[1].clear();
-	
-	m_RenderQuevue[0].clear();
-	m_RenderQuevue[1].clear();
 
 	delete m_pFXManager;
 
@@ -153,7 +147,6 @@ void CRenderSDK::SwapBuffer()
 
 	RenderStack[ActiveStack].clear();		  // clear active stack
 	RenderStackPost[ActiveStack].clear();	  // clear active post stack
-	m_RenderQuevue[ActiveStack].clear();
 
 	ActiveStack = (ActiveStack == 0) ? 1 : 0; // toggle active stack
 
@@ -379,9 +372,6 @@ void CRenderSDK::UpdateResources(bool bLock/*=false*/)
 
 	RenderStackPost[0].clear();
 	RenderStackPost[1].clear();
-
-	m_RenderQuevue[0].clear();
-	m_RenderQuevue[1].clear();
 
 	m_pRenderDriver->UpdateDriverThread();
 }
