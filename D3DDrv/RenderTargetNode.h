@@ -1,27 +1,31 @@
-#ifndef __rendertargetnode_h__
-#define __rendertargetnode_h__
-
-#ifdef WIN32
 #pragma once
-#pragma warning (disable:4251)
-#endif
 
 #include "Refcount.h"
 
-class D3DDRIVER_API RenderTargetNode : public Refcount
+const SRenderContext;
+
+namespace RenderDriver
 {
-public:
-	RenderTargetNode(const class D3DDriver *pDriver);
-	virtual ~RenderTargetNode();
+	class D3DDRIVER_API RenderTargetNode : public Refcount
+	{
+		struct STarget
+		{
+			GLuint texture;
+			size_t width;
+			size_t height;
+		};
 
-protected:
-	virtual void DoRelease();
+	public:
+		RenderTargetNode(size_t width, size_t height, SRenderContext *const pCtxt);
+		virtual ~RenderTargetNode();
 
-public:
-//	LPD3DXRENDERTOSURFACE   m_pRenderToSurface;
-//	LPDIRECT3DSURFACE9		pSurfaceBuffer; // Depth-stencil buffer
-//	LPDIRECT3DTEXTURE9		pTextureMap;
-	class D3DDriver			*p3DDriver;
-};
+		SRenderContext* GetOwnerContext() { return m_pContextOwner; }
 
-#endif//__rendertarget_h__
+	protected:
+		virtual void DoRelease();
+
+	public:
+		STarget m_target;
+		SRenderContext *const m_pContextOwner;
+	};
+}

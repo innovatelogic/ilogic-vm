@@ -13,6 +13,8 @@
 #define DEBUG_VS
 #define DEBUG_PS
 
+class RenderDriver::RenderTargetNode;
+
 class D3DDRIVER_API D3DDriver
 {
 public:
@@ -63,7 +65,9 @@ public:
 
 	class SkeletonNode*			GetSkeletonNode(const char *pURL);
 
-	class RenderTargetNode*		CreateRenderTarget(unsigned int Width, unsigned int Height);
+	RenderDriver::RenderTargetNode*	CreateRenderTarget(unsigned int width, unsigned int height);
+	void	ReleaseRenderTarget(RenderDriver::RenderTargetNode *rt);
+
 	class SubMeshAgregator*		GetD3DMeshNode(const char *filename);
 
 private:
@@ -218,7 +222,6 @@ private:
 	TSubMeshNodes					SubMeshNodes;
 	TSceneMeshNodes					m_MapSceneMeshNodes;
 	TSkeletonNodes					SkeletonNodes;
-	TVecRenderTargets				RenderTargets;
 	TVecFontNodes					m_VecFontNodes;
 	TSubMeshAgregatorNodes			SubMeshAgregatorNodes;
 

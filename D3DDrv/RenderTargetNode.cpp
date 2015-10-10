@@ -1,41 +1,43 @@
-#include "d3ddriverstdafx.h"
+#include "RenderContext.h"
+#include "RenderTargetNode.h"
 
-//----------------------------------------------------------------------------------------------
-RenderTargetNode::RenderTargetNode(const D3DDriver *pDriver)
-: /*m_pRenderToSurface(NULL)
-, pSurfaceBuffer(NULL)
-, pTextureMap(NULL)
-,*/ p3DDriver(const_cast<D3DDriver*>(pDriver))
+namespace RenderDriver
 {
-
-}
-
-//----------------------------------------------------------------------------------------------
-RenderTargetNode::~RenderTargetNode()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
-void RenderTargetNode::DoRelease()
-{
-/*	if (m_pRenderToSurface)
+	RenderTargetNode::RenderTargetNode(size_t width, size_t height, SRenderContext *const pCtxt)
+	: m_pContextOwner(pCtxt)
 	{
-		SAFE_RELEASE(m_pRenderToSurface);
-		m_pRenderToSurface = NULL;
+		const size_t bpp = 4;
+		const size_t size = (width * height) * bpp * sizeof(unsigned int);
+
+		// Create Storage Space For Texture Data (128x128x4)
+		unsigned int *data = (unsigned int*)new GLuint[size];
+
+		ZeroMemory(data, size);   // Clear Storage Memory
+
+		m_target.width = width;
+		m_target.height = height;
+
+		glGenTextures(1, &m_target.texture);                // Create 1 Texture
+		glBindTexture(GL_TEXTURE_2D, m_target.texture);     // Bind The Texture
+		glTexImage2D(GL_TEXTURE_2D, 0, bpp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data); // Build Texture Using Information In data
+			           
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		delete [] data; // Release data
 	}
 
-	if (pSurfaceBuffer)
+	//----------------------------------------------------------------------------------------------
+	RenderTargetNode::~RenderTargetNode()
 	{
-		SAFE_RELEASE(pSurfaceBuffer);
-		pSurfaceBuffer = NULL;
+
 	}
 
-	if (pTextureMap)
+	//----------------------------------------------------------------------------------------------
+	void RenderTargetNode::DoRelease()
 	{
-		SAFE_RELEASE(pTextureMap);
-		pTextureMap = NULL;
+		glDeleteTextures(1, &m_target.texture);
+
+		Refcount::DoRelease();
 	}
-	*/
-	Refcount::DoRelease();
 }

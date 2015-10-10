@@ -3,7 +3,7 @@
 //----------------------------------------------------------------------------------------------
 D3DRenderTarget::D3DRenderTarget(const class D3DDriver * Interface)
 : Super(Interface)
-, RenderTarget(NULL)
+, m_pRenderTarget(nullptr)
 {
 
 }
@@ -25,23 +25,21 @@ D3DRenderTarget::~D3DRenderTarget()
 }
 
 //----------------------------------------------------------------------------------------------
-bool D3DRenderTarget::CreateRenderTarget(unsigned int Width, unsigned int Height)
+bool D3DRenderTarget::CreateRenderTarget(size_t width, size_t height)
 {
-	bool bResult = false;
-	
-	RenderTarget = m_pD3DInterface->CreateRenderTarget(Width, Height);
+	assert(m_pRenderTarget == nullptr);
 
-	bResult = true;
+	m_pRenderTarget = m_pD3DInterface->CreateRenderTarget(width, height);
 
-	return bResult;
+	return (m_pRenderTarget != nullptr);
 }
 
 //----------------------------------------------------------------------------------------------
 void D3DRenderTarget::Release()
 {
-	if (RenderTarget)
+	if (m_pRenderTarget)
 	{
-		RenderTarget->Release();
-		RenderTarget = NULL;
+		m_pRenderTarget->Release();
+		m_pRenderTarget = nullptr;
 	}
 }

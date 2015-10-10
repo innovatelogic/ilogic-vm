@@ -10,23 +10,37 @@
 
 #include "dxstdafx.h"
 
-class D3DDRIVER_API SRenderContext
+class D3DDriver;
+class TextureNode;
+class MaterialEffectNode;
+class CFontNode;
+class CSceneMeshNode;
+
+namespace RenderDriver{
+	class RenderTargetNode;
+}
+
+class D3DDRIVER_API SRenderContext final
 {
 public:
-	SRenderContext(class D3DDriver *pDriver);
+	SRenderContext(D3DDriver *pDriver);
+	~SRenderContext();
 
-	class TextureNode*			LoadTextureW(const wchar_t *URL);
-	bool						UnregisterTexture(TextureNode *pNode);
+	TextureNode*			LoadTextureW(const wchar_t *URL);
+	bool					UnregisterTexture(TextureNode *pNode);
 
-	class MaterialEffectNode*	LoadMaterialEffectW(const wchar_t *URL);
-	bool						UnregisterMaterialEffect(MaterialEffectNode *Node);
+	MaterialEffectNode*		LoadMaterialEffectW(const wchar_t *URL);
+	bool					UnregisterMaterialEffect(MaterialEffectNode *Node);
 
-	class CFontNode*			LoadFontW(const char *Name, int Size);
-	bool						UnregisterFont(const CFontNode* pFont);
+	CFontNode*				LoadFontW(const char *Name, int Size);
+	bool					UnregisterFont(const CFontNode* pFont);
 
-	class CSceneMeshNode*		GetSceneMeshNode(const wchar_t *pURL);
-	class CSceneMeshNode*		AllocSceneMeshNode(const wchar_t *pURL);
-	bool						UnregisterSceneMeshNode(const CSceneMeshNode *pNode);
+	CSceneMeshNode*			GetSceneMeshNode(const wchar_t *pURL);
+	CSceneMeshNode*			AllocSceneMeshNode(const wchar_t *pURL);
+	bool					UnregisterSceneMeshNode(const CSceneMeshNode *pNode);
+
+	RenderDriver::RenderTargetNode* AllocRenderTarget(unsigned int width, unsigned int height);
+	void							FreeRenderTarget(RenderDriver::RenderTargetNode *rt);
 
 private:
 	bool LoadTGAW(TextureNode *pNode, const wchar_t *filename);
@@ -42,8 +56,8 @@ private:
 public:
 	HWND	m_hWnd;
 	HDC		m_hDC;				// Private GDI Device Context
-	UINT	m_displayModeWidth;
-	UINT	m_displayModeHeight;
+	size_t	m_displayModeWidth;
+	size_t	m_displayModeHeight;
 
 	HGLRC	m_hRC;				// Permanent Rendering Context
 	GLuint	m_PixelFormat;		// Holds The Results After Searching For A Match
@@ -55,6 +69,8 @@ private:
 	TMapMaterialEffectsW			m_MapMaterialEffects;
 	TVecFontNodes					m_VecFontNodes;
 	TSceneMeshNodesW				m_MapSceneMeshNodes;
+
+	std::vector<RenderDriver::RenderTargetNode*> m_renderTargets;
 };
 
 #endif//__rendercontext_h__

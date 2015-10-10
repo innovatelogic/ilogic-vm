@@ -22,8 +22,6 @@ void MaterialEffectNode::DoRelease()
 	glUseProgram(0);
 	glDeleteProgram(m_ShaderProgram);
 
-	//m_p3DDriver->UnregisterMaterialEffect(this);
-
 	Refcount::DoRelease();
 }
 

@@ -191,7 +191,7 @@ bool D3DDriver::UnregisterSceneMeshNode(const CSceneMeshNode *pNode)
 }
 
 //----------------------------------------------------------------------------------------------
-SkeletonNode* D3DDriver::GetSkeletonNode(const char * filename)
+SkeletonNode* D3DDriver::GetSkeletonNode(const char *filename)
 {
 	SkeletonNode * Node = NULL;
 
@@ -233,56 +233,22 @@ SkeletonNode* D3DDriver::GetSkeletonNode(const char * filename)
 }
 
 //----------------------------------------------------------------------------------------------
-RenderTargetNode* D3DDriver::CreateRenderTarget(unsigned int Width, unsigned Height)
+RenderDriver::RenderTargetNode* D3DDriver::CreateRenderTarget(unsigned int width, unsigned height)
 {
-	RenderTargetNode * Node = new RenderTargetNode(this);
+	SRenderContext *pContext = m_stackContext.top();
 
-	// Create depth-stencil buffer
-// 	if (FAILED(m_pd3dDevice->CreateDepthStencilSurface( Width,
-// 														Height,
-// 														D3DFMT_D24S8/*(D3DFORMAT*)m_d3dSettings->PDeviceCombo()->pDepthStencilFormatList->GetPtr(0)*/,
-// 														D3DMULTISAMPLE_NONE,
-// 														0,
-// 														TRUE,
-// 														&Node->pSurfaceBuffer,
-// 														NULL))) 
+	assert(pContext);
 
-/*
-	
-	// create render target texture
-	if (FAILED(m_pd3dDevice->CreateTexture( Width,
-											Height,
-											1,
-											D3DUSAGE_RENDERTARGET,
-											D3DFMT_A8R8G8B8,
-											D3DPOOL_DEFAULT,
-											&Node->pTextureMap,
-											NULL))) 
-	{
-		Node->pTextureMap;
-		MessageBox(NULL, TEXT("shadow map"), TEXT("ERROR: Create texture"), MB_OK|MB_SETFOREGROUND|MB_TOPMOST);
-	}
+	return pContext->AllocRenderTarget(width, height);
+}
+//----------------------------------------------------------------------------------------------
+void D3DDriver::ReleaseRenderTarget(RenderDriver::RenderTargetNode *rt)
+{
+	SRenderContext * const pContext = rt->GetOwnerContext();
 
-	D3DSURFACE_DESC desc;
-	Node->pTextureMap->GetSurfaceLevel(0, &Node->pSurfaceBuffer);
-	Node->pSurfaceBuffer->GetDesc(&desc);
+	assert(pContext);
 
-	if (FAILED(D3DXCreateRenderToSurface(m_pd3dDevice, 
-											desc.Width, 
-											desc.Height, 
-											desc.Format, 
-											TRUE,
-											D3DFMT_D16, 
-											&Node->m_pRenderToSurface)))
-	{
-		Node->pSurfaceBuffer = NULL;
-		MessageBox(NULL, TEXT("DepthStencil buffer"), TEXT("ERROR: Create DepthStencil buffer"), MB_OK|MB_SETFOREGROUND|MB_TOPMOST);
-	}
-
-	(Node->pSurfaceBuffer && Node->pTextureMap) ? Node->AddRef() : Node->Release();
-	RenderTargets.push_back(Node);
-	*/
-	return Node;
+	pContext->FreeRenderTarget(rt);
 }
 
 //----------------------------------------------------------------------------------------------

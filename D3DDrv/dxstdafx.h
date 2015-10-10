@@ -410,7 +410,6 @@ typedef std::map<std::string, class CSceneMeshNode*> TSceneMeshNodes;
 typedef std::map<std::wstring, class CSceneMeshNode*> TSceneMeshNodesW;
 typedef std::map<std::string, class SubMeshAgregator*> TSubMeshAgregatorNodes;
 typedef std::map<std::string, class SkeletonNode*> TSkeletonNodes;
-typedef std::vector<class RenderTargetNode*> TVecRenderTargets;
 typedef std::vector<class CFontNode*> TVecFontNodes;
 typedef std::vector<class SubMeshNode*> TVecMeshes;
 

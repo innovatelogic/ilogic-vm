@@ -7,17 +7,19 @@
 
 #include "dxstdafx.h"
 
+class D3DDriver;
+
 class D3DDRIVER_API D3DRenderInterface
 {
 public:
-	D3DRenderInterface(const class D3DDriver* Interface);
+	D3DRenderInterface(const D3DDriver* Interface);
 	D3DRenderInterface(const D3DRenderInterface &Source);
 	virtual ~D3DRenderInterface();
 
-	class D3DDriver* GetInterface() const;
+	D3DDriver* GetInterface() const;
 
 protected:
-	class D3DDriver * m_pD3DInterface;
+	D3DDriver * m_pD3DInterface;
 };
 
 #endif//__d3drenderinterface_h__

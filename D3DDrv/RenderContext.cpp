@@ -217,7 +217,6 @@ bool TReleaseStrategyBOOL(const TCLASS *pNode, TCONT_CLASS &refContainer)
 		const_cast<TCLASS*>(pNode)->Release();
 	}
 
-
 	//assert(bResult == true); // wrong context
 	
 	return bResult;
@@ -267,6 +266,12 @@ SRenderContext::SRenderContext(D3DDriver *pDriver)
 	: m_pDriver(pDriver)
 {
 	assert(m_pDriver);
+}
+
+//----------------------------------------------------------------------------------------------
+SRenderContext::~SRenderContext()
+{
+
 }
 
 //----------------------------------------------------------------------------------------------
@@ -668,12 +673,35 @@ bool SRenderContext::UnregisterSceneMeshNode(const CSceneMeshNode *pNode)
 }
 
 //----------------------------------------------------------------------------------------------
+RenderDriver::RenderTargetNode* SRenderContext::AllocRenderTarget(unsigned int width, unsigned int height)
+{
+	RenderDriver::RenderTargetNode *outRT = new RenderDriver::RenderTargetNode(width, height, this);
+
+	m_renderTargets.push_back(outRT);
+
+	return outRT;
+}
+
+//----------------------------------------------------------------------------------------------
+void SRenderContext::FreeRenderTarget(RenderDriver::RenderTargetNode *rt)
+{
+	std::vector<RenderDriver::RenderTargetNode*>::iterator iterFind = std::find(m_renderTargets.begin(), m_renderTargets.end(), rt);
+	if (iterFind != m_renderTargets.end())
+	{
+		(*iterFind)->Release();
+		delete *iterFind;
+
+		m_renderTargets.erase(iterFind);
+	}
+}
+
+//----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
 bool SRenderContext::LoadTGAW(TextureNode *pNode, const wchar_t *filename)
 {
 	FILE * fTGA = 0;											// File pointer to texture file
-	fTGA = _wfopen(filename, L"rb");								// Open file for reading
+	fTGA = _wfopen(filename, L"rb");							// Open file for reading
 
 	if (fTGA == NULL)											// If it didn't open....
 	{
@@ -685,7 +713,7 @@ bool SRenderContext::LoadTGAW(TextureNode *pNode, const wchar_t *filename)
 
 	if (fread(&tgaheader, sizeof(STGAHeader), 1, fTGA) == 0)				// Attempt to read 12 byte header from file
 	{
-		//MessageBox(NULL, "Could not read file header", "ERROR", MB_OK);		// If it fails, display an error message 
+		//MessageBox(NULL, "Could not read file header", "ERROR", MB_OK);	// If it fails, display an error message 
 		if (fTGA != NULL)													// Check to seeiffile is still open
 		{
 			fclose(fTGA);													// If it is, close it
@@ -724,7 +752,7 @@ bool SRenderContext::LoadTGAW(TextureNode *pNode, const wchar_t *filename)
 
 	if (pNode->m_pSTextureBitmap.imageData)						// If Texture Image Exists ( CHANGE )
 	{
-		free(pNode->m_pSTextureBitmap.imageData);					// Free The Texture Image Memory ( CHANGE )
+		free(pNode->m_pSTextureBitmap.imageData);				// Free The Texture Image Memory ( CHANGE )
 	}
 
 	return true;												// All went well, continue on
@@ -737,9 +765,9 @@ bool SRenderContext::LoadUncompressedTGA(TextureNode * pNode, FILE * fTGA)	// Lo
 	STGADesc &tga = pNode->m_TGADesc;
 	STextureBitmap *texture = &pNode->m_pSTextureBitmap;
 
-	if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)					// Read TGA header
+	if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)				// Read TGA header
 	{										
-		//MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);		// Display error
+		//MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);	// Display error
 
 		if (fTGA != NULL)													// if file is still open
 		{
@@ -788,7 +816,7 @@ bool SRenderContext::LoadUncompressedTGA(TextureNode * pNode, FILE * fTGA)	// Lo
 
 	if (fread(texture->imageData, 1, tga.imageSize, fTGA) != tga.imageSize)	// Attempt to read image data
 	{
-		//MessageBox(NULL, "Could not read image data", "ERROR", MB_OK);		// Display Error
+		//MessageBox(NULL, "Could not read image data", "ERROR", MB_OK);	// Display Error
 		if (texture->imageData != NULL)										// If imagedata has data in it
 		{
 			free(texture->imageData);										// Delete data from memory
@@ -814,9 +842,9 @@ bool SRenderContext::LoadCompressedTGA(TextureNode *pNode, FILE *fTGA)		// Load 
 	STGADesc &tga = pNode->m_TGADesc;
 	STextureBitmap *texture = &pNode->m_pSTextureBitmap;
 
-	if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)					// Attempt to read header
+	if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)				// Attempt to read header
 	{
-		//MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);		// Display Error
+		//MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);	// Display Error
 		if(fTGA != NULL)													// If file is open
 		{
 			fclose(fTGA);													// Close it
@@ -841,8 +869,8 @@ bool SRenderContext::LoadCompressedTGA(TextureNode *pNode, FILE *fTGA)		// Load 
 		return false;														// Return failed
 	}
 
-	if (texture->bpp == 24){													// If the BPP of the image is 24...
-		texture->type = GL_RGB;											// Set Image type to GL_RGB
+	if (texture->bpp == 24){												// If the BPP of the image is 24...
+		texture->type = GL_RGB;												// Set Image type to GL_RGB
 	}else{																	// Else if its 32 BPP
 		texture->type = GL_RGBA;											// Set image type to GL_RGBA
 	}
@@ -925,7 +953,7 @@ bool SRenderContext::LoadCompressedTGA(TextureNode *pNode, FILE *fTGA)		// Load 
 						fclose(fTGA);													// Close file
 					}	
 
-					if (colorbuffer != NULL){												// If there is data in colorbuffer
+					if (colorbuffer != NULL){											// If there is data in colorbuffer
 						free(colorbuffer);												// Delete it
 					}
 
@@ -946,7 +974,7 @@ bool SRenderContext::LoadCompressedTGA(TextureNode *pNode, FILE *fTGA)		// Load 
 				if(fTGA != NULL) {														// If thereis a file open
 					fclose(fTGA);														// Close it
 				}
-				if (colorbuffer != NULL){													// If there is data in the colorbuffer
+				if (colorbuffer != NULL){												// If there is data in the colorbuffer
 					free(colorbuffer);													// delete it
 				}
 				if(texture->imageData != NULL){											// If thereis image data

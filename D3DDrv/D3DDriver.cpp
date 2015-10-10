@@ -230,18 +230,6 @@ void D3DDriver::UpdateDriverThread()
 		}
 		++IterSkel;
 	}
-
-	TVecRenderTargets::iterator IterRT = RenderTargets.begin();
-	while (IterRT != RenderTargets.end())
-	{
-		if ((*IterRT)->IsClear())
-		{
-			delete *IterRT;
-			IterRT = RenderTargets.erase(IterRT);
-			continue;
-		}
-		++IterRT;
-	}
 }
 
 //----------------------------------------------------------------------------------------------

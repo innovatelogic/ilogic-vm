@@ -7,16 +7,20 @@
 
 #include "D3DRenderInterface.h"
 
+namespace RenderDriver{
+	class RenderTargetNode;
+}
+
 class D3DDRIVER_API D3DRenderTarget : public D3DRenderInterface
 {
 	DECL_CLASS_SIMPLE(D3DRenderTarget, D3DRenderInterface);
 
 public:
 	D3DRenderTarget(const class D3DDriver *pInterface);
-	D3DRenderTarget(const D3DRenderTarget & Source);
+	D3DRenderTarget(const D3DRenderTarget &Source);
 	virtual ~D3DRenderTarget();
 
-	virtual bool CreateRenderTarget(unsigned int Width, unsigned int Height);
+	virtual bool CreateRenderTarget(size_t width, size_t height);
 	virtual void Release();
 /*
 	LPD3DXRENDERTOSURFACE	GetRenderToSurface() const { return RenderTarget->m_pRenderToSurface; } 
@@ -25,7 +29,7 @@ public:
 	*/
 protected:
 private:
-	class RenderTargetNode * RenderTarget;
+	RenderDriver::RenderTargetNode *m_pRenderTarget;
 };
 
 
