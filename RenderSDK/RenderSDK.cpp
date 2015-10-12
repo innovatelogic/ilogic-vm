@@ -583,7 +583,7 @@ void CRenderSDK::SetViewport(unsigned int x, unsigned int y, unsigned int width,
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::DrawObject(const CRenderObject *pObject)
 {	
-	SetTransform(pObject->GetRWTM());
+	//SetTransform(pObject->GetRWTM());
 	if (!bFakeDraw)
 	{
 		PushObjectToQuevue(pObject, pObject->GetFlags()); // new functionality instead memalloc

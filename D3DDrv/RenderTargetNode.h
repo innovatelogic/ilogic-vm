@@ -10,7 +10,10 @@ namespace RenderDriver
 	{
 		struct STarget
 		{
-			GLuint texture;
+			GLuint dynamicTextureID;
+			GLuint frameBuffer;
+			GLuint depthRenderBuffer;
+
 			size_t width;
 			size_t height;
 		};
@@ -20,6 +23,13 @@ namespace RenderDriver
 		virtual ~RenderTargetNode();
 
 		SRenderContext* GetOwnerContext() { return m_pContextOwner; }
+
+		size_t GetWidth() const { return m_target.width; }
+		size_t GetHeight() const { return m_target.height; }
+
+		GLuint GetTexture() const { return m_target.dynamicTextureID; }
+		GLuint GetFrameBuffer() const { return m_target.frameBuffer; }
+		GLuint GetDepthBuffer() const { return m_target.depthRenderBuffer; }
 
 	protected:
 		virtual void DoRelease();

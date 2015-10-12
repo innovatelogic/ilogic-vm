@@ -206,6 +206,8 @@ void RenderAdjacency::render(SRenderContext *pContext)
 {
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
+	renderRenderTargets(pActiveContext);
+
 	m_pRenderDriver->PushContext(pActiveContext);
 
 	m_pRenderDriver->DriverBeginDraw();
@@ -496,5 +498,49 @@ void RenderAdjacency::renderAux(const LPRTVARIANT adjacency)
 			m_pRenderDriver->RenderDebugSphere((*Iter).Pos.GetPtr(), (*Iter).rad, (*Iter).Color, (*Iter).Seg);
 		}
 	}*/
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::renderRenderTargets(SRenderContext *pContext)
+{
+		int activeStack = getActiveStackIndex();
+
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter(begin_adj(activeStack));
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter_end(end_adj(activeStack));
+
+	while (iter != iter_end)
+	{
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext != pContext)
+		{
+			++iter; // move to next adjacency
+			continue;
+		}
+
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target)
+		{
+			m_pRenderDriver->SetRenderTarget(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target,
+											 iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bClearTarget,
+											 iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor);
+
+			// viewer parameters
+			m_pRenderDriver->SetViewMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix);
+			m_pRenderDriver->SetProjMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix);
+			m_pRenderDriver->SetNearPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane);
+			m_pRenderDriver->SetFarPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane);
+			m_pRenderDriver->SetViewPos(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos);
+
+			// params
+			m_pRenderDriver->m_bFog = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog;
+			m_pRenderDriver->m_fFogMin = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin;
+			m_pRenderDriver->m_fFogMax = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax;
+			m_pRenderDriver->m_fFogDensity = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity;
+			m_pRenderDriver->m_FogColor = iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor;
+
+			renderAdjacency(*iter);
+
+			m_pRenderDriver->EndRenderTarget(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target);
+		}
+		++iter;
+	}
 }
 }

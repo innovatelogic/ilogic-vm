@@ -985,8 +985,23 @@ void D3DDriver::ProjectWorldToScreen(float* v_out, const float* position)
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DDriver::SetRenderTarget(const D3DRenderTarget * RenderTarget, bool bClearFlag /*= false*/, DWORD ClearColor /*= 0x00000000*/)
+void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*/, DWORD color /*= 0x00000000*/)
 {
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, rt->GetFrameBuffer());
+	//glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, g_depthRenderBuffer );
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
+	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rt->GetDepthBuffer());
+
+	glViewport(0, 0, rt->GetWidth(), rt->GetHeight());
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//RenderTarget->GetSurface()
+
 /*	RenderTarget->GetRenderToSurface()->BeginScene(RenderTarget->GetSurface(), 0);
 	
 	if (bClearFlag){
@@ -1032,8 +1047,10 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget * RenderTarget, bool bClea
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DDriver::EndRenderTarget(const D3DRenderTarget * RenderTarget)
+void D3DDriver::EndRenderTarget(const D3DRenderTarget *rt)
 {
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
 	//m_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); 
 
 //	RenderTarget->GetRenderToSurface()->EndScene(0);

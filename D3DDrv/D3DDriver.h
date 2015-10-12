@@ -182,8 +182,8 @@ public:
     void	UnprojectScreenToWorld(float *v_out, const float *mat_view, const float *mat_proj, const float *screen_pos);  
     void	ProjectWorldToScreen(float *v_out, const float *position);
 
-	void	SetRenderTarget(const class D3DRenderTarget *pRenderTarget, bool bClearFlag = false, DWORD ClearColor = 0x00000000);
-	void	EndRenderTarget(const class D3DRenderTarget *pRenderTarget);
+	void	SetRenderTarget(const class D3DRenderTarget *rt, bool clear = false, DWORD color = 0x00000000);
+	void	EndRenderTarget(const class D3DRenderTarget *rt);
 
 	const class D3DRenderTarget*	GetActiveRenderTarget() const;
 

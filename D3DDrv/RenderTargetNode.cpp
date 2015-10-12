@@ -6,25 +6,40 @@ namespace RenderDriver
 	RenderTargetNode::RenderTargetNode(size_t width, size_t height, SRenderContext *const pCtxt)
 	: m_pContextOwner(pCtxt)
 	{
-		const size_t bpp = 4;
-		const size_t size = (width * height) * bpp * sizeof(unsigned int);
-
-		// Create Storage Space For Texture Data (128x128x4)
-		unsigned int *data = (unsigned int*)new GLuint[size];
-
-		ZeroMemory(data, size);   // Clear Storage Memory
-
 		m_target.width = width;
 		m_target.height = height;
 
-		glGenTextures(1, &m_target.texture);                // Create 1 Texture
-		glBindTexture(GL_TEXTURE_2D, m_target.texture);     // Bind The Texture
-		glTexImage2D(GL_TEXTURE_2D, 0, bpp, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data); // Build Texture Using Information In data
-			           
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glGenFramebuffersEXT(1, &m_target.frameBuffer);
+		glGenRenderbuffersEXT(1, &m_target.depthRenderBuffer);
 
-		delete [] data; // Release data
+		glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, m_target.depthRenderBuffer);
+		glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, m_target.width, m_target.height);
+
+		GLenum status = glCheckFramebufferStatusEXT( GL_FRAMEBUFFER_EXT );
+
+		switch( status )
+		{
+		case GL_FRAMEBUFFER_COMPLETE_EXT:
+			//MessageBox(NULL,"GL_FRAMEBUFFER_COMPLETE_EXT!","SUCCESS",MB_OK|MB_ICONEXCLAMATION);
+			break;
+
+		case GL_FRAMEBUFFER_UNSUPPORTED_EXT:
+			//MessageBox(NULL,"GL_FRAMEBUFFER_UNSUPPORTED_EXT!","ERROR",MB_OK|MB_ICONEXCLAMATION);
+			exit(0);
+			break;
+
+		default:
+			exit(0);
+		}
+
+		glGenTextures(1, &m_target.dynamicTextureID);
+
+		glBindTexture(GL_TEXTURE_2D, m_target.dynamicTextureID);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_target.width, m_target.height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -36,7 +51,10 @@ namespace RenderDriver
 	//----------------------------------------------------------------------------------------------
 	void RenderTargetNode::DoRelease()
 	{
-		glDeleteTextures(1, &m_target.texture);
+		glDeleteTextures(1, &m_target.dynamicTextureID);
+
+		glDeleteFramebuffersEXT(1, &m_target.frameBuffer);
+		glDeleteRenderbuffersEXT(1, &m_target.depthRenderBuffer);
 
 		Refcount::DoRelease();
 	}

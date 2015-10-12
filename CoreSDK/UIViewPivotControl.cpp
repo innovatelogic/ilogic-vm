@@ -258,6 +258,37 @@ void UIViewPivotControl::Initialize()
 //----------------------------------------------------------------------------------------------
 void UIViewPivotControl::DoDraw()
 {
+	RenderSDK::RenderAdjacency &refAdj = m_pRenderSDK->GetRenderAdjacency();
+	RenderSDK::SRTVariant_Adjacency &adjacency = refAdj.GetCurrentAdjacency();
+
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bClearTarget = true;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor = 0x11000000;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = CompRenderTarget->GetRenderTarget();
+
+	/*CameraManager * Mgr = GetAppMain()->GetCameraManager();
+	const CCamera * BuildCamera = Mgr->GetCamera(0);
+
+	Matrix viewmatrix;
+	Quaternion Rot = BuildCamera->GetRot();
+
+	Rot.Normalize();
+	Rot.ToMatrix(&viewmatrix);
+
+	Vector axisX(viewmatrix._11, viewmatrix._21, viewmatrix._31);
+	Vector axisY(viewmatrix._12, viewmatrix._22, viewmatrix._32);
+	Vector axisZ(viewmatrix._13, viewmatrix._23, viewmatrix._33);
+
+	Vector eye = BuildCamera->GetPosition_();
+	eye.normalize();
+	eye *= 2.f;
+
+	viewmatrix.a03 = -axisX.Dot(eye);
+	viewmatrix.a13 = -axisY.Dot(eye);
+	viewmatrix.a23 = -axisZ.Dot(eye);
+
+	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, viewmatrix.m, 16 * sizeof(float));
+	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, BuildCamera->GetProjMatrix().m, 16 * sizeof(float));*/
+
 /*	RenderQuevueAdjacency& Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
 
 	Queve.bClearTarget = true;
@@ -287,8 +318,8 @@ void UIViewPivotControl::DoDraw()
 
 	Queve.RT_ViewMatrix = viewmatrix;
 	Queve.RT_ProjMatrix = BuildCamera->GetProjMatrix();
-	
-	GetRenderComponent()->DrawObject(MeshComponent);*/
+	*/
+	GetRenderComponent()->DrawObject(MeshComponent);
 }
 
 //----------------------------------------------------------------------------------------------

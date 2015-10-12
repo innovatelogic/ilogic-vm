@@ -8,17 +8,7 @@ Explorer2D::Explorer2D(const CObjectAbstract *pParent)
 , ViewportInterface(pParent)
 {
 	RegisterViewportInterface(this);
-
-	const float VWidth = (float)GetRenderComponent()->GetViewportWidth();
-	const float VHeight = (float)GetRenderComponent()->GetViewportHeight();
-
 	SetTransient(true);
-//	SetSize(Vector2f(VWidth, VHeight));
-
-	Matrix M;
-	ortho(M, 0.f, VWidth, VHeight, 0.f, 0.1f, MAX_FLOAT);
-
-	SetViewportProjMatrix(M);
 }
 
 //----------------------------------------------------------------------------------
@@ -33,6 +23,17 @@ void Explorer2D::Initialize()
 	assert(!IsInitialized());
 
 	Super::Initialize();
+
+	const float width = (float)GetRenderComponent()->GetViewportWidth();
+	const float height = (float)GetRenderComponent()->GetViewportHeight();
+
+	SetTransient(true);
+	//	SetSize(Vector2f(VWidth, VHeight));
+
+	Matrix M;
+	ortho(M, 0.f, width, height, 0.f, 0.1f, MAX_FLOAT);
+
+	SetViewportProjMatrix(M);
 
 	//GetAppMain()->GetViewportManager()->RebuildTransform(this);
 }

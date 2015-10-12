@@ -22,11 +22,14 @@ public:
 
 	virtual bool CreateRenderTarget(size_t width, size_t height);
 	virtual void Release();
-/*
-	LPD3DXRENDERTOSURFACE	GetRenderToSurface() const { return RenderTarget->m_pRenderToSurface; } 
-	LPDIRECT3DSURFACE9		GetSurface() const { return RenderTarget->pSurfaceBuffer; }
-	LPDIRECT3DTEXTURE9		GetTexture() const { return RenderTarget->pTextureMap; }
-	*/
+
+	size_t GetWidth() const { return m_pRenderTarget->GetWidth(); }
+	size_t GetHeight() const { return m_pRenderTarget->GetHeight(); }
+
+	GLuint GetTexture() const { return m_pRenderTarget->GetTexture(); }
+	GLuint GetFrameBuffer() const { return m_pRenderTarget->GetFrameBuffer(); }
+	GLuint GetDepthBuffer() const { return m_pRenderTarget->GetDepthBuffer(); }
+
 protected:
 private:
 	RenderDriver::RenderTargetNode *m_pRenderTarget;
