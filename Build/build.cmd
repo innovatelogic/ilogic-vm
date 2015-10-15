@@ -20,5 +20,5 @@ IF "%MSVC_REDIST_LIBS%" == ""( setLocal EnableDelayedExpansion
   setLocal DisableDelayedExpansion
  )
 
-python -u %~dp0build.py --goal client_debug
+python -u %~dp0build.py --goal tools_build
 ECHO ERRORLEVEL=%ERRORLEVEL%

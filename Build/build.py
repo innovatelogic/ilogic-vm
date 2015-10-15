@@ -28,7 +28,7 @@ def main():
 	print(source_dir)
 
 	cmake.Config.cmake_exe = os.path.join(cmake_dir, 'cmake.exe')
-	client_deps = cmake.Config('client_dep', gen_id='vc110', amd64=False, xpSupport=True, install=True, source_dir=source_dir, out_dir=os.path.join(root_dir, 'out32'), bin_dir=os.path.join(root_dir, 'out32/bin'))
+	#client_deps = cmake.Config('client_dep', gen_id='vc110', amd64=False, xpSupport=True, install=True, source_dir=source_dir, out_dir=os.path.join(root_dir, 'out32'), #bin_dir=os.path.join(root_dir, 'out32/bin'))
 	#client =      cmake.Config('client', 'vc120', amd64=False, xpSupport=True, install=False, bindir='bin\\client')
 
 	#
@@ -40,22 +40,22 @@ def main():
 	#print(programming_dir)
 	#print(root_dir)
 	
-	#specs = dict()
+	specs = dict()
 	
-	#specs['tools'] = {
-	#	'gen_id': 'vc120',
-	#	'amd64': True,
-	#	'xp_support': False,
-	#	'source_dir': engine_source_dir,
-	#	'out_dir': os.path.join(root_dir, 'out64'),
-	#	'bin_dir': os.path.join(root_dir, 'out64\\bin'),
-	#	'args': {
-	#	},
-	#	'install': True
-	#}
+	specs['tools'] = {
+		'gen_id': 'vc110',
+		'amd64': False,
+		'xpSupport': True,
+		'source_dir': source_dir,
+		'out_dir': os.path.join(root_dir, 'out32'),
+		'bin_dir': os.path.join(root_dir, 'out32/bin'),
+		#'args': {
+		#},
+		'install': True
+	}
 	
-	#tools_deps = cmake.Target('tools_dependencies', **specs['tools'])
-	#tools = cmake.Target('tools', **specs['tools'])
+	tools_deps = cmake.Config('tools_dep', **specs['tools'])
+	tools = cmake.Target('tools', **specs['tools'])
 	
 	#return 1;
 	
@@ -64,10 +64,14 @@ def main():
 			print('None args')
 		elif args.goal == 'client_release':
 			client_deps.generate()
-			#client_deps.buld('Release')
-		elif args.goal == 'client_debug':
-			client_deps.generate()
-			client_deps.build('Debug')
+			client_deps.buld('Release')
+		elif args.goal == 'tools_build':
+			tools_deps.generate()
+			tools_deps.build('Debug')
+			tools_deps.build('Release')
+			#tools.generate()
+			#tools.build('Debug')
+			#tools.build('Release')
 	except Exception:
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])
