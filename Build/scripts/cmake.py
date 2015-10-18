@@ -105,13 +105,16 @@ class Config:
 		
 		if config:
 			cmd_build += r' --config %s' % config
-		#if self.install:
+		
+		#i = install if install is not None else self.install
+		#if i:
 		#	cmd_build += r' --target INSTALL'
 		  
 		print(cmd_build)
 		res = os.system(cmd_build)
 		if res != 0:
 			raise Exception
+		print('build_finish:' + config)
 
 	def copyBinResources(self, src, dest):
 		try:

@@ -55,20 +55,15 @@ def main():
 	}
 	
 	tools_deps = cmake.Config('tools_dep', **specs['tools'])
-	tools = cmake.Target('tools', **specs['tools'])
-	
-	#return 1;
+	#tools = cmake.Config('tools', **specs['tools'])
 	
 	try:
 		if args.goal == None:
 			print('None args')
-		elif args.goal == 'client_release':
-			client_deps.generate()
-			client_deps.buld('Release')
 		elif args.goal == 'tools_build':
 			tools_deps.generate()
 			tools_deps.build('Debug')
-			tools_deps.build('Release')
+			#tools_deps.build('Release')
 			#tools.generate()
 			#tools.build('Debug')
 			#tools.build('Release')
