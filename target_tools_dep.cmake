@@ -40,11 +40,27 @@ endfunction()
 
 #FILE(TO_CMAKE_PATH ${CMAKE_BINARY_DIR} CMAKE_BIN_DIR)
 
-set(ENABLE_GTEST ON)
+#proj_thirdparty_add( gtest SOURCE_DIR utils/gtest-1.7.0)
 
-proj_thirdparty_add( gtest SOURCE_DIR utils/gtest-1.7.0)
+# external project download and build (no install for gtest)
+ExternalProject_Add(gtest
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/utils/gtest-1.7.0
+	DOWNLOAD_COMMAND ""
+    # cmake arguments
+    CMAKE_ARGS 
+			-Dgtest_force_shared_crt=ON
+			-DG_BIN_DIR:PATH=${DG_BIN_DIR}
+			#-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+			-DGTEST_USE_OWN_TR1_TUPLE=0
+			${ARGS_CMAKE_ARGS}
+    # Disable install step
+    INSTALL_COMMAND ""
 
-#SET(DEFAULT_PROJECT_FOLDER default_project)
+    # Wrap download, configure and build steps in a script to log output
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON
+    )
 
 # INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BINARY_DIR}/deploy_deps.cmd )")
 #IF(NOT EXISTS ${CMAKE_BIN_DIR}/${DEFAULT_PROJECT_ARC})

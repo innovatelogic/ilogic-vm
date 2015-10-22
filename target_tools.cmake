@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-FILE(TO_CMAKE_PATH ${G_BIN_DIR} CMAKE_G_BIN_DIR)
+set(Boost_DEBUG ON)
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Lib)
+set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/common/SDK/)
+set(BOOST_LIBRARYDIR ${CMAKE_SOURCE_DIR}/Lib)
 
-set( ENABLE_GTEST ON )
+set(ENABLE_GTEST ON)
 
-_thirdparty_add(gtest SOURCE_DIR utils/gtest-1.7.0)
+add_subdirectory(common/TinyXML)
+add_subdirectory(Foundation)
+add_subdirectory(D3DDrv)
+add_subdirectory(RenderSDK)
+add_subdirectory(CoreSDK)
+add_subdirectory(Launcher)
+#add_subdirectory(MaxExporter)

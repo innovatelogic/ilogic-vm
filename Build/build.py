@@ -42,6 +42,18 @@ def main():
 	
 	specs = dict()
 	
+	specs['tools_dep'] = {
+		'gen_id': 'vc110',
+		'amd64': False,
+		'xpSupport': True,
+		'source_dir': source_dir,
+		'out_dir': os.path.join(root_dir, 'out32'),
+		'bin_dir': os.path.join(root_dir, 'out32/bin'),
+		#'args': {
+		#},
+		'install': True
+	}
+	
 	specs['tools'] = {
 		'gen_id': 'vc110',
 		'amd64': False,
@@ -54,8 +66,8 @@ def main():
 		'install': True
 	}
 	
-	tools_deps = cmake.Config('tools_dep', **specs['tools'])
-	#tools = cmake.Config('tools', **specs['tools'])
+	tools_deps = cmake.Config('tools_dep', **specs['tools_dep'])
+	tools = cmake.Config('tools', **specs['tools'])
 	
 	try:
 		if args.goal == None:
@@ -64,8 +76,8 @@ def main():
 			tools_deps.generate()
 			tools_deps.build('Debug')
 			#tools_deps.build('Release')
-			#tools.generate()
-			#tools.build('Debug')
+			tools.generate()
+			tools.build('Debug')
 			#tools.build('Release')
 	except Exception:
 		print(sys.exc_info()[0])

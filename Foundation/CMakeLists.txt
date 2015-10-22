@@ -120,7 +120,7 @@ if( ${ENABLE_TESTING} )
 					ut/main.cpp )
 					
 	set(GTEST_ROOT ${CMAKE_CURRENT_BINARY_DIR}/../utils/gtest-1.7.0)
-	#find_package(GTest REQUIRED)
+	find_package(gtest REQUIRED)
 
 	target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})#${GTEST_BOTH_LIBRARIES
 

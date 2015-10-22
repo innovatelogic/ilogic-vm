@@ -94,8 +94,6 @@ set(SOURCE
 	
 	target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ) #${GLEW_LIBRARIES}
 	
-	#SET_BIN_OUTPUT_FOLDER(${PROJECT_NAME} ${G_BIN_DIR})
-	
 	set_target_properties( ${PROJECT_NAME} PROPERTIES
                         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
                         LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
