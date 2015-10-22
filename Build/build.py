@@ -73,7 +73,7 @@ def main():
 		if args.goal == None:
 			print('None args')
 		elif args.goal == 'tools_build':
-			tools_deps.generate()
+			tools_deps.generate(True)
 			tools_deps.build('Debug')
 			#tools_deps.build('Release')
 			tools.generate()

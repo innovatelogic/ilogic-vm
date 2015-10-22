@@ -50,7 +50,7 @@ class Config:
 		if not os.path.exists(d):
 			os.makedirs(d)
     
-	def generate(self):
+	def generate(self, clear = False):
 		print("generate...")
 		print('source_dir:' + self.source_dir)
 		print('cmake_bin:' + self.cmake_exe) #cmake_dir
@@ -60,8 +60,9 @@ class Config:
 		print('out_dir:' + self.out_dir)
 		print('bin_dir:' + self.bin_dir)
 		
-		self.clearBinDir()
-		self.clearWorkingDir()
+		if clear:
+			self.clearBinDir()
+			self.clearWorkingDir()
 		
 		cmd_gen = self.cmake_exe
 		cmd_gen += ' -G"%s"' % self.generator

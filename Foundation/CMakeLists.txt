@@ -115,14 +115,15 @@ if( ${ENABLE_TESTING} )
 
 	include_directories(../utils/gtest-1.7.0/include)
 
+	find_package(gtest REQUIRED)
+
 	add_executable( UT.${PROJECT_NAME} 
 					ut/ut_vector3f.cpp
 					ut/main.cpp )
 					
-	set(GTEST_ROOT ${CMAKE_CURRENT_BINARY_DIR}/../utils/gtest-1.7.0)
-	find_package(gtest REQUIRED)
-
-	target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})#${GTEST_BOTH_LIBRARIES
+	#set(GTEST_ROOT ${CMAKE_CURRENT_BINARY_DIR}/../utils/gtest-1.7.0)
+	
+	target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES}) #${GTEST_BOTH_LIBRARIES
 
 	set_target_properties(UT.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
 
