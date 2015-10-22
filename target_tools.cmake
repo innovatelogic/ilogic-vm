@@ -8,7 +8,7 @@ set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/Lib)
 set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/common/SDK/)
 set(BOOST_LIBRARYDIR ${CMAKE_SOURCE_DIR}/Lib)
 
-set(ENABLE_GTEST ON)
+#set(ENABLE_GTEST ON)
 
 add_subdirectory(common/TinyXML)
 add_subdirectory(Foundation)

@@ -29,10 +29,10 @@ class Config:
 		self.generatorToolset = generators[gen_id][1] if xpSupport else None
 		
 		self.source_dir = source_dir
-		#self.install_dir = os.path.join(self.root_dir, out)
-		self.out_dir = out_dir #os.path.join(self.root_dir, out +'\\build_' + target + '_' + genID)
-		self.bin_dir = bin_dir #os.path.join(self.root_dir, bindir) if bindir else os.path.join(self.install_dir, 'bin')
+		self.out_dir = out_dir
+		self.bin_dir = bin_dir
 		
+		self.sln_dir = os.path.join(self.out_dir, 'build_%s_%s' % (self.name, self.gen_id))
 		self.install = install
   
 	def clearWorkingDir(self):
@@ -50,7 +50,7 @@ class Config:
 		if not os.path.exists(d):
 			os.makedirs(d)
     
-	def generate(self, clear = False):
+	def generate(self):
 		print("generate...")
 		print('source_dir:' + self.source_dir)
 		print('cmake_bin:' + self.cmake_exe) #cmake_dir
@@ -60,18 +60,21 @@ class Config:
 		print('out_dir:' + self.out_dir)
 		print('bin_dir:' + self.bin_dir)
 		
-		if clear:
-			self.clearBinDir()
-			self.clearWorkingDir()
-		
 		cmd_gen = self.cmake_exe
 		cmd_gen += ' -G"%s"' % self.generator
 		cmd_gen += ' -H"%s"' % self.source_dir
-		cmd_gen += ' -B"%s"' % self.out_dir
-		cmd_gen += ' -DG_GENERATOR_TOKEN="%s"' % self.gen_id
-		cmd_gen += ' -DG_CMAKE_TARGET="%s"' % self.name
-		cmd_gen += ' -DCMAKE_INSTALL_PREFIX="%s"' % self.bin_dir
-		cmd_gen += ' -DG_BIN_DIR="%s"' % self.bin_dir
+		cmd_gen += ' -B"%s"' % self.sln_dir
+		
+		if self.generatorToolset:
+			cmd_gen += ' -T ' + self.generatorToolset
+
+		if self.amd64:
+			cmd_gen += ' -A x64'
+			
+		#cmd_gen += ' -DG_GENERATOR_TOKEN="%s"' % self.gen_id
+		#cmd_gen += ' -DG_CMAKE_TARGET="%s"' % self.name
+		#cmd_gen += ' -DCMAKE_INSTALL_PREFIX="%s"' % self.bin_dir
+		#cmd_gen += ' -DG_BIN_DIR="%s"' % self.bin_dir
 		#cmd_gen = r'%s -DG_GENERATOR_TOKEN="%s" -DG_CMAKE_TARGET="%s" "%s"' %(self.cmake_exe, self.genID, self.target, self.source_dir)
 		
 		#cmd_gen = r'%s -G "%s" -B"%s" -REMOVE "%s" -DCMAKE_INSTALL_PREFIX="%s" -DG_CMAKE_TARGET="%s"' %(self.cmake_exe, self.source_dir, self.generator, self.source_dir, #self.working_dir, self.install_dir, self.target)

@@ -297,7 +297,7 @@ set(SOURCE
 	
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
-target_link_libraries( ${PROJECT_NAME} ${LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

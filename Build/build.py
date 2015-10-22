@@ -9,6 +9,11 @@ def checkPythonVer(in_ver):
 	if py_ver != in_ver:
 		raise Exception("Incompatible python version: need %s", str(py_ver))
 		
+def clearDir(dir):
+	if os.path.exists(dir):
+		shutil.rmtree(dir)
+	pass
+		
 def main():
 	checkPythonVer((3,4))
 	
@@ -21,11 +26,7 @@ def main():
 	root_dir = root_dir = os.path.dirname(source_dir)
 	cmake_dir = os.path.join(source_dir, "utils/cmake-3.2.1/bin")
 	
-	print('cur_file_dir')
-	print(cur_file_dir)
-	
-	print('programming_dir')
-	print(source_dir)
+	clearDir(os.path.join(root_dir, 'out32'))
 
 	cmake.Config.cmake_exe = os.path.join(cmake_dir, 'cmake.exe')
 	#client_deps = cmake.Config('client_dep', gen_id='vc110', amd64=False, xpSupport=True, install=True, source_dir=source_dir, out_dir=os.path.join(root_dir, 'out32'), #bin_dir=os.path.join(root_dir, 'out32/bin'))
@@ -39,7 +40,7 @@ def main():
 	#print(cur_file_dir)
 	#print(programming_dir)
 	#print(root_dir)
-	
+
 	specs = dict()
 	
 	specs['tools_dep'] = {
@@ -73,7 +74,7 @@ def main():
 		if args.goal == None:
 			print('None args')
 		elif args.goal == 'tools_build':
-			tools_deps.generate(True)
+			tools_deps.generate()
 			tools_deps.build('Debug')
 			#tools_deps.build('Release')
 			tools.generate()

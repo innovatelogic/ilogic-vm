@@ -51,7 +51,6 @@ ExternalProject_Add(gtest
 			-Dgtest_force_shared_crt=ON
 			-DG_BIN_DIR:PATH=${DG_BIN_DIR}
 			#-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-			-DGTEST_USE_OWN_TR1_TUPLE=0
 			${ARGS_CMAKE_ARGS}
     # Disable install step
     INSTALL_COMMAND ""
