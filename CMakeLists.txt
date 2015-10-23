@@ -68,9 +68,6 @@ if (MSVC)
     add_definitions(-D_VARIADIC_MAX=10)
 endif()
 
-set(ENABLE_TESTING ON)
-
-
 set( CMAKE_PREFIX_PATH ${G_INSTALL_DIR} )
 set( G_BIN_DIR ${CMAKE_INSTALL_PREFIX} )
 

@@ -56,6 +56,7 @@ class Config:
 		print('cmake_bin:' + self.cmake_exe) #cmake_dir
 		print('target:' + self.name)
 		print('generator:' + self.generator + (' x64' if self.amd64 else ' x86'))
+		print('sln_dir:' + self.sln_dir)
 		#print('install_dir:' + self.install_dir)
 		print('out_dir:' + self.out_dir)
 		print('bin_dir:' + self.bin_dir)
@@ -71,10 +72,10 @@ class Config:
 		if self.amd64:
 			cmd_gen += ' -A x64'
 			
-		#cmd_gen += ' -DG_GENERATOR_TOKEN="%s"' % self.gen_id
-		#cmd_gen += ' -DG_CMAKE_TARGET="%s"' % self.name
-		#cmd_gen += ' -DCMAKE_INSTALL_PREFIX="%s"' % self.bin_dir
-		#cmd_gen += ' -DG_BIN_DIR="%s"' % self.bin_dir
+		cmd_gen += ' -DG_GENERATOR_TOKEN="%s"' % self.gen_id
+		cmd_gen += ' -DG_CMAKE_TARGET="%s"' % self.name
+		cmd_gen += ' -DCMAKE_INSTALL_PREFIX="%s"' % self.bin_dir
+		cmd_gen += ' -DG_BIN_DIR="%s"' % self.bin_dir
 		#cmd_gen = r'%s -DG_GENERATOR_TOKEN="%s" -DG_CMAKE_TARGET="%s" "%s"' %(self.cmake_exe, self.genID, self.target, self.source_dir)
 		
 		#cmd_gen = r'%s -G "%s" -B"%s" -REMOVE "%s" -DCMAKE_INSTALL_PREFIX="%s" -DG_CMAKE_TARGET="%s"' %(self.cmake_exe, self.source_dir, self.generator, self.source_dir, #self.working_dir, self.install_dir, self.target)
@@ -105,7 +106,7 @@ class Config:
 		self.copyBinResources(self.source_dir + "\\$system", self.bin_dir + "\\..\\$system")
     
 	def build(self, config = None):
-		cmd_build = r'%s --build %s' % (self.cmake_exe, self.out_dir)
+		cmd_build = r'%s --build %s' % (self.cmake_exe, self.sln_dir)
 		
 		if config:
 			cmd_build += r' --config %s' % config

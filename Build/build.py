@@ -26,7 +26,7 @@ def main():
 	root_dir = root_dir = os.path.dirname(source_dir)
 	cmake_dir = os.path.join(source_dir, "utils/cmake-3.2.1/bin")
 	
-	clearDir(os.path.join(root_dir, 'out32'))
+	#clearDir(os.path.join(root_dir, 'out32'))
 
 	cmake.Config.cmake_exe = os.path.join(cmake_dir, 'cmake.exe')
 	#client_deps = cmake.Config('client_dep', gen_id='vc110', amd64=False, xpSupport=True, install=True, source_dir=source_dir, out_dir=os.path.join(root_dir, 'out32'), #bin_dir=os.path.join(root_dir, 'out32/bin'))

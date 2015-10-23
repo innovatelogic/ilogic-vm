@@ -1,1 +1,1 @@
-rmdir /Q /S %~dp0../../out32
+rmdir /Q /S %~dp0..\..\out32
