@@ -111,7 +111,6 @@ target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
 # setup testing
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
-
 	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
 	add_executable( ut.${PROJECT_NAME} 
 					ut/ut_vector3f.cpp

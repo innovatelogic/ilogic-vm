@@ -116,4 +116,25 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build 
     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
         "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll"      # <--this is in-file
         $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
-		
+
+
+#-------------------------------------------------------------------------------		
+# setup testing
+#-------------------------------------------------------------------------------
+if (${ENABLE_TESTING})
+	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
+	add_executable( ut.${PROJECT_NAME} 
+					ut/ut_utils.cpp
+					ut/main.cpp )
+	
+	target_link_libraries(ut.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
+
+	set_target_properties(ut.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
+
+	set_target_properties( ut.${PROJECT_NAME} PROPERTIES
+						RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+						LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
+						RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+						LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
+						)
+endif( ${ENABLE_TESTING} )					
