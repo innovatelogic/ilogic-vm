@@ -11,7 +11,7 @@ TEST(MathTest, AddTwoVectors)
 
 	Vector res = one + two;
 
-	EXPECT_EQ(res.x, 1.5f);
+	EXPECT_EQ(res.x, 2.5f);
 	EXPECT_EQ(res.y, 3.5f);
 	EXPECT_EQ(res.z, 4.5f);
 }

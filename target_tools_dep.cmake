@@ -47,12 +47,13 @@ ExternalProject_Add(gtest
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/utils/gtest-1.7.0
 	DOWNLOAD_COMMAND ""
     # cmake arguments
-    CMAKE_ARGS 
-			-Dgtest_force_shared_crt=ON
-			-DG_BIN_DIR:PATH=${DG_BIN_DIR}
-			#-DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-			${ARGS_CMAKE_ARGS}
-    # Disable install step
+    CMAKE_ARGS
+			-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../Libs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../Libs
+			   -DCMAKE_DEBUG_POSTFIX=_d
+               -Dgtest_force_shared_crt=ON
+			${ARGS_CMAKE_ARGS}# Disable install step
     INSTALL_COMMAND ""
 
     # Wrap download, configure and build steps in a script to log output
