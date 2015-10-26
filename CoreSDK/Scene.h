@@ -14,7 +14,6 @@ class CORESDK_API CScene :
 
 public:
 	CScene(const CObjectAbstract *Parent);
-	CScene(const CScene &Source);
 	virtual ~CScene();
 
 	/** 

@@ -28,7 +28,6 @@ IDrawInterfaceUI::IDrawInterfaceUI(const CObjectAbstract *pParent)
 IDrawInterfaceUI::IDrawInterfaceUI(const IDrawInterfaceUI &Source)
 : IDrawInterface(Source)
 {
-	m_bPushClipping = Source.m_bPushClipping;
 }
 
 //----------------------------------------------------------------------------------------------

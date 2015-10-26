@@ -1,6 +1,7 @@
 import os, sys, shutil, argparse
 from functools import partial
 from scripts import cmake
+from scripts import res_dep
 import subprocess
 import traceback
 
@@ -70,16 +71,22 @@ def main():
 	tools_deps = cmake.Config('tools_dep', **specs['tools_dep'])
 	tools = cmake.Config('tools', **specs['tools'])
 	
+	res_deploy = res_dep.ResDeploy(source_dir, os.path.join(root_dir, 'out32/bin'))
+	
 	try:
 		if args.goal == None:
 			print('None args')
 		elif args.goal == 'tools_build':
 			tools_deps.generate()
+			
 			tools_deps.build('Debug')
 			#tools_deps.build('Release')
 			tools.generate()
 			tools.build('Debug')
 			#tools.build('Release')
+			
+		res_deploy.deploy()
+		
 	except Exception:
 		print(sys.exc_info()[0])
 		print(sys.exc_info()[1])

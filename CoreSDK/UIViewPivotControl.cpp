@@ -225,11 +225,6 @@ UIViewPivotControl::UIViewPivotControl(const UIViewPivotControl &Source)
 {
 	if (this != &Source)
 	{
-		IDrawInterface::RegisterDrawInterface(this);
-
-		CompRenderTarget = CLONE_OBJECT(Comp_RenderTarget, Source.CompRenderTarget, "RenderTarget", this);
-		MeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.MeshComponent, "MeshComponent", this);
-		m_pMaterialEffect = CLONE_OBJECT(Comp_MaterialEffect, Source.m_pMaterialEffect, "UICompDrawImage_MaterialEffect", this);
 	}
 }
 

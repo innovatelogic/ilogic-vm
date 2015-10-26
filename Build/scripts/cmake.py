@@ -15,9 +15,6 @@ class Config:
 	cmake_exe = None
 	cmake_modules = None
 	cur_file_dir = os.path.dirname(__file__)
-	#source_dir = os.path.dirname(cur_file_dir)
-	#cmake_exe = os.path.join(source_dir, "utils\\cmake-3.2.1\\bin\\cmake.exe")
-	#root_dir = os.path.dirname(source_dir)
 
 	def __init__(self, name, gen_id, amd64, xpSupport, source_dir, out_dir, bin_dir, install=False):
 		self.name = name
@@ -76,12 +73,6 @@ class Config:
 		cmd_gen += ' -DG_CMAKE_TARGET="%s"' % self.name
 		cmd_gen += ' -DCMAKE_INSTALL_PREFIX="%s"' % self.bin_dir
 		cmd_gen += ' -DG_BIN_DIR="%s"' % self.bin_dir
-		#cmd_gen = r'%s -DG_GENERATOR_TOKEN="%s" -DG_CMAKE_TARGET="%s" "%s"' %(self.cmake_exe, self.genID, self.target, self.source_dir)
-		
-		#cmd_gen = r'%s -G "%s" -B"%s" -REMOVE "%s" -DCMAKE_INSTALL_PREFIX="%s" -DG_CMAKE_TARGET="%s"' %(self.cmake_exe, self.source_dir, self.generator, self.source_dir, #self.working_dir, self.install_dir, self.target)
-		
-		#if self.bin_dir != "":
-		#	cmd_gen += r' _D_BIN_DIR="%s"' % self.bin_dir
 		  
 		if self.amd64:
 			cmd_gen += r' -DG_PROCESSOR_ARCH=x64'
@@ -97,13 +88,6 @@ class Config:
     
 		if res != 0:
 		  raise Exception
-
-		#install resources
-		self.copyBinResources(self.source_dir + "\\bin\\resources", self.bin_dir + "\\resources")
-		self.copyBinResources(self.source_dir + "\\$cashe", self.bin_dir + "\\..\\$cashe")
-		self.copyBinResources(self.source_dir + "\\$Games", self.bin_dir + "\\..\\$Games")
-		self.copyBinResources(self.source_dir + "\\$registry", self.bin_dir + "\\..\\$registry")
-		self.copyBinResources(self.source_dir + "\\$system", self.bin_dir + "\\..\\$system")
     
 	def build(self, config = None):
 		cmd_build = r'%s --build %s' % (self.cmake_exe, self.sln_dir)

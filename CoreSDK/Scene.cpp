@@ -13,16 +13,6 @@ CScene::CScene(const CObjectAbstract *Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-CScene::CScene(const CScene &Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-	if (this != &Source)
-	{
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CScene::~CScene()
 {
 
