@@ -12,9 +12,6 @@ MaterialEffectUI::MaterialEffectUI(const D3DDriver * Interface)
 MaterialEffectUI::MaterialEffectUI(const MaterialEffectUI &Source)
 : BaseMaterial(Source)
 {
-	if (this != &Source)
-	{
-	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -68,7 +65,15 @@ void MaterialEffectUI::Affect()
 		glUniform2f(modelUVOffsetLocation, m_pDiffuseMap->GetU(), m_pDiffuseMap->GetV());
 	}
 
-	SetSampleTextureID(0, m_pDiffuseMap);
+	if (m_pRT == nullptr)
+	{
+		SetSampleTextureID(0, m_pDiffuseMap);
+	}
+	else
+	{
+		glActiveTexture(GL_TEXTURE0 + 0);
+		glBindTexture(GL_TEXTURE_2D, m_pRT->GetTexture());
+	}
 	
 	bool bFog = m_pD3DInterface->m_bFog && fog;
 

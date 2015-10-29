@@ -988,7 +988,6 @@ void D3DDriver::ProjectWorldToScreen(float* v_out, const float* position)
 void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*/, DWORD color /*= 0x00000000*/)
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, rt->GetFrameBuffer());
-	//glBindRenderbufferEXT( GL_RENDERBUFFER_EXT, g_depthRenderBuffer );
 	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
 	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rt->GetDepthBuffer());
 

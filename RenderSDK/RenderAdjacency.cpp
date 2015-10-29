@@ -25,6 +25,7 @@ RenderAdjacency::SDebugInfo::SDebugInfo()
 	pTriangles = (SDbgTriangle*) malloc(sizeof(SDbgTriangle) * MAX_RCOMMANDS);
 	pSpheres = (SDbgSphere*) malloc(sizeof(SDbgSphere) * MAX_RCOMMANDS);
 }
+
 //----------------------------------------------------------------------------------------------
 RenderAdjacency::SDebugInfo::~SDebugInfo()
 {
@@ -75,7 +76,7 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.numCommands = 0;
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = nullptr;
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = nullptr;
-
+	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_drawn = false;
 	// aux debug info
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nDotStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexDot;
 	refAdjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nLineStartIdx = (HALF_RCOMMANDS * nonActive) + m_aContext[nonActive].nIndexLine;
@@ -206,8 +207,10 @@ void RenderAdjacency::render(SRenderContext *pContext)
 {
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
-	renderRenderTargets(pActiveContext);
+	// render targets first
+	renderTargets(pActiveContext);
 
+	// forward rendering
 	m_pRenderDriver->PushContext(pActiveContext);
 
 	m_pRenderDriver->DriverBeginDraw();
@@ -227,7 +230,6 @@ void RenderAdjacency::render(SRenderContext *pContext)
 
 		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target == nullptr)
 		{
-			// viewer parameters
 			m_pRenderDriver->SetViewMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix);
 			m_pRenderDriver->SetProjMatrix(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix);
 			m_pRenderDriver->SetNearPlane(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane);
@@ -358,13 +360,13 @@ void RenderAdjacency::renderAdjacency(const LPRTVARIANT adjacency)
 			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
 			break;
 		case RenderSDK::ERC_ViewMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
+			m_pRenderDriver->SetViewMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
 			break;
 		case RenderSDK::ERC_ProjMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
+			m_pRenderDriver->SetProjMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
 			break;
 		case RenderSDK::ERC_CropMatrix:
-			m_pRenderDriver->SetWorldMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
+			m_pRenderDriver->SetProjCropMatrix(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.m);
 			break;
 		case RenderSDK::ERC_Viewport:
 			m_pRenderDriver->SetViewport(pCommandBegin->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_4.x, 
@@ -458,52 +460,12 @@ void RenderAdjacency::renderAux(const LPRTVARIANT adjacency)
 
 		m_pRenderDriver->DrawDebugTriangles();
 	}
-
-	/*
-	// debug render
-	if (Adjacency.DebugInfo.DotsList.size() > 0 ||
-		Adjacency.DebugInfo.PointList.size() > 0 ||
-		Adjacency.DebugInfo.PointListNoZ.size() > 0)
-	{
-		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.DotsList.begin(); Iter != Adjacency.DebugInfo.DotsList.end(); ++Iter)
-		{
-			m_pRenderDriver->AddDot((*Iter).Point.GetPtr(), (*Iter).Color);
-		}
-
-		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.PointList.begin(); Iter != Adjacency.DebugInfo.PointList.end(); ++Iter)
-		{
-			m_pRenderDriver->AddLine((*Iter).Point.GetPtr(), 0, (*Iter).Color);
-		}
-
-		for (std::vector<SDbgPoint>::iterator Iter = Adjacency.DebugInfo.PointListNoZ.begin(); Iter != Adjacency.DebugInfo.PointListNoZ.end(); ++Iter)
-		{
-			m_pRenderDriver->AddLine((*Iter).Point.GetPtr(), 0, (*Iter).Color, false);
-		}
-		m_pRenderDriver->DrawDebugLines();
-	}
-
-	if (Adjacency.DebugInfo.TriangleList.size() > 0)
-	{
-		for (std::vector<SDbgTriangle>::iterator Iter = Adjacency.DebugInfo.TriangleList.begin(); Iter != Adjacency.DebugInfo.TriangleList.end(); ++Iter)
-		{
-			m_pRenderDriver->AddTriangle((*Iter).P0.GetPtr(), (*Iter).P1.GetPtr(), (*Iter).P2.GetPtr(), (*Iter).Color);
-		}
-		m_pRenderDriver->DrawDebugTriangles();
-	}
-
-	if (Adjacency.DebugInfo.SphereList.size() > 0)
-	{
-		for (std::vector<SDbgSphere>::iterator Iter = Adjacency.DebugInfo.SphereList.begin(); Iter != Adjacency.DebugInfo.SphereList.end(); ++Iter)
-		{
-			m_pRenderDriver->RenderDebugSphere((*Iter).Pos.GetPtr(), (*Iter).rad, (*Iter).Color, (*Iter).Seg);
-		}
-	}*/
 }
 
 //----------------------------------------------------------------------------------------------
 void RenderAdjacency::renderRenderTargets(SRenderContext *pContext)
 {
-		int activeStack = getActiveStackIndex();
+	int activeStack = getActiveStackIndex();
 
 	RenderSDK::RenderAdjacency::IteratorAdjacency iter(begin_adj(activeStack));
 	RenderSDK::RenderAdjacency::IteratorAdjacency iter_end(end_adj(activeStack));
@@ -541,6 +503,62 @@ void RenderAdjacency::renderRenderTargets(SRenderContext *pContext)
 			m_pRenderDriver->EndRenderTarget(iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target);
 		}
 		++iter;
+	}
+}
+
+//----------------------------------------------------------------------------------------------
+void RenderAdjacency::renderTargets(SRenderContext *pContext)
+{
+	int activeStack = getActiveStackIndex();
+
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter(begin_adj(activeStack));
+	RenderSDK::RenderAdjacency::IteratorAdjacency iter_end(end_adj(activeStack));
+
+	std::stack<RenderSDK::RenderAdjacency::IteratorAdjacency> stackRT;
+
+	while (iter != iter_end)
+	{
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext != pContext)
+		{
+			++iter; // move to next adjacency
+			continue;
+		}
+
+		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target)
+		{
+			stackRT.push(iter);
+		}
+		++iter;
+	}
+
+	while (!stackRT.empty())
+	{
+		RenderSDK::RenderAdjacency::IteratorAdjacency top = stackRT.top();
+
+		m_pRenderDriver->SetRenderTarget(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target,
+										 top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bClearTarget,
+										 top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor);
+
+		m_pRenderDriver->SetViewMatrix(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix);
+		m_pRenderDriver->SetProjMatrix(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix);
+		m_pRenderDriver->SetNearPlane(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane);
+		m_pRenderDriver->SetFarPlane(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane);
+		m_pRenderDriver->SetViewPos(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos);
+
+		// params
+		m_pRenderDriver->m_bFog = top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog;
+		m_pRenderDriver->m_fFogMin = top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMin;
+		m_pRenderDriver->m_fFogMax = top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax;
+		m_pRenderDriver->m_fFogDensity = top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity;
+		m_pRenderDriver->m_FogColor = top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor;
+
+		renderAdjacency(*top);
+
+		m_pRenderDriver->EndRenderTarget(top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target);
+
+		top->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_drawn = true;
+
+		stackRT.pop();
 	}
 }
 }

@@ -96,6 +96,7 @@ void IDrawInterfaceUI::OnPropertyChangedIntf(const char *PropertyName)
 //----------------------------------------------------------------------------------------------
 void IDrawInterfaceUI::DrawController() const
 {
+	return;
 #ifndef FINAL_RELEASE
 	//if (GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{
@@ -153,6 +154,7 @@ void IDrawInterfaceUI::DrawController() const
 //----------------------------------------------------------------------------------------------
 void IDrawInterfaceUI::DrawBounds() const
 {
+	return;
 #ifndef FINAL_RELEASE
 	//if (GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{

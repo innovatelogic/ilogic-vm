@@ -117,7 +117,7 @@ bool CameraManager::UnregisterCamera(CCamera *pCamera)
 }
 
 //----------------------------------------------------------------------------------------------
-CCamera* CameraManager::GetActiveCamera(SRenderContext *pContext /*= 0*/) const 
+CCamera* CameraManager::GetActiveCamera(SRenderContext *pContext /*= nullptr*/) const 
 { 
 	if (pContext == nullptr){
 		pContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();

@@ -3,7 +3,7 @@
 REGISTER_CLASS(UIImagePivotControl, UIImage)
 
 //----------------------------------------------------------------------------------------------
-UIImagePivotControl::UIImagePivotControl(const CObjectAbstract * Parent)
+UIImagePivotControl::UIImagePivotControl(const CObjectAbstract *Parent)
 : Super(Parent)
 {
 	NEW_OBJECT_TRANSIENT_CHILD(m_pPivot, UIViewPivotControl, "Pivot", this);
@@ -12,13 +12,9 @@ UIImagePivotControl::UIImagePivotControl(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-UIImagePivotControl::UIImagePivotControl(const UIImagePivotControl & Source)
+UIImagePivotControl::UIImagePivotControl(const UIImagePivotControl &Source)
 : Super(Source)
 {
-	if (this != &Source)
-	{
-		m_pImageComponent->SetRenderTarget(m_pPivot->GetRenderTarget());
-	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -28,7 +24,7 @@ UIImagePivotControl::~UIImagePivotControl()
 }
 
 //----------------------------------------------------------------------------------------------
-bool UIImagePivotControl::DoEventPressed(const MouseInputData& InputData)
+bool UIImagePivotControl::DoEventPressed(const MouseInputData &InputData)
 {
 	MouseInputData RelInputData(InputData);
 	RelInputData.MousePos = InputData.MousePos - GetTransformedWTM_().t2;
@@ -41,7 +37,7 @@ bool UIImagePivotControl::DoEventPressed(const MouseInputData& InputData)
 }
 
 //----------------------------------------------------------------------------------------------
-bool UIImagePivotControl::DoEventReleased(const MouseInputData& InputData)
+bool UIImagePivotControl::DoEventReleased(const MouseInputData &InputData)
 {
 	return Super::DoEventReleased(InputData);
 }

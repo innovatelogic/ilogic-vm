@@ -194,10 +194,12 @@ void BaseMaterial::SetSampleTexture(const char *ParamName, const Texture2D *Valu
 }
 
 //----------------------------------------------------------------------------------------------
-void BaseMaterial::SetSampleTextureID(short Index, const class Texture2D * Value) const
+void BaseMaterial::SetSampleTextureID(short Index, const class Texture2D *texture) const
 {
+	assert(texture);
+
 	glActiveTexture(GL_TEXTURE0 + Index);
-	glBindTexture(GL_TEXTURE_2D, Value->GetTextureGL());
+	glBindTexture(GL_TEXTURE_2D, texture->GetTextureGL());
 }
 
 //----------------------------------------------------------------------------------------------

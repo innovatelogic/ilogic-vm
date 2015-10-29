@@ -124,6 +124,8 @@ protected:
 
 	void renderRenderTargets(SRenderContext *pContext);
 
+	void renderTargets(SRenderContext *pContext);
+
 private:
 	LPRTVARIANT m_pVariantAdjacency;
 

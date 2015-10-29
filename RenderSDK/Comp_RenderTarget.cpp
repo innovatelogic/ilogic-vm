@@ -16,8 +16,6 @@ Comp_RenderTarget::Comp_RenderTarget(const Comp_RenderTarget &source)
 {
 	if (this != &source)
 	{
-		//RenderTarget = new D3DRenderTarget(*Source.RenderTarget);
-		assert(false);
 	}
 }
 

@@ -2,6 +2,8 @@
 
 #include "platform_specific.h"
 
+class D3DRenderTarget;
+
 namespace RenderSDK
 {
 	enum ERenderAdjType
@@ -46,11 +48,12 @@ namespace RenderSDK
 
 				float	viewPos[4];
 
-				const class D3DRenderTarget *rt_target;
+				const D3DRenderTarget *rt_target;
 				float	rt_ProjMatrix[16];
 				float	rt_ViewMatrix[16];
 				bool	bClearTarget;
 				DWORD	clearColor;
+				bool	rt_drawn;
 
 				unsigned int RenderInfoMask;
 
@@ -70,8 +73,6 @@ namespace RenderSDK
 				float			fFogDensity;
 				unsigned int	nFogColor;
 
-
-				
 				class SRenderContext *pRenderContext;
 			
 			} __RT_VARIANT_NAME_2;

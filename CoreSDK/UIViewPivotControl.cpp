@@ -211,7 +211,7 @@ UIViewPivotControl::UIViewPivotControl(const CObjectAbstract *pParent)
 : Super(pParent)
 , IDrawInterface(pParent)
 {
-	IDrawInterface::RegisterDrawInterface(this, 0);
+	IDrawInterface::RegisterDrawInterface(this/*, 0*/);
 
 	NEW_OBJECT_TRANSIENT_CHILD(CompRenderTarget, Comp_RenderTarget, "RenderTarget", this);
 	NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_StaticMesh, "MeshComponent", this);
@@ -223,9 +223,6 @@ UIViewPivotControl::UIViewPivotControl(const UIViewPivotControl &Source)
 : Super(Source)
 , IDrawInterface(Source)
 {
-	if (this != &Source)
-	{
-	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -259,9 +256,10 @@ void UIViewPivotControl::DoDraw()
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bClearTarget = true;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor = 0x11000000;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = CompRenderTarget->GetRenderTarget();
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_drawn = false;
 
-	/*CameraManager * Mgr = GetAppMain()->GetCameraManager();
-	const CCamera * BuildCamera = Mgr->GetCamera(0);
+	CameraManager *pMgr = GetAppMain()->GetCameraManager();
+	const CCamera * BuildCamera = pMgr->GetActiveCamera();
 
 	Matrix viewmatrix;
 	Quaternion Rot = BuildCamera->GetRot();
@@ -282,38 +280,8 @@ void UIViewPivotControl::DoDraw()
 	viewmatrix.a23 = -axisZ.Dot(eye);
 
 	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, viewmatrix.m, 16 * sizeof(float));
-	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, BuildCamera->GetProjMatrix().m, 16 * sizeof(float));*/
+	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, BuildCamera->GetProjMatrix().m, 16 * sizeof(float));
 
-/*	RenderQuevueAdjacency& Queve = m_pRenderSDK->GetCurrQuevueAdjaency();
-
-	Queve.bClearTarget = true;
-	Queve.m_ClearColor = 0x11000000;
-	Queve.RTarget = CompRenderTarget->GetRenderTarget();
-
-	CameraManager * Mgr = GetAppMain()->GetCameraManager();
-	const CCamera * BuildCamera = Mgr->GetCamera(0);
-
-	Matrix viewmatrix;
-	Quaternion Rot = BuildCamera->GetRot();
-	
-	Rot.Normalize();
-	Rot.ToMatrix(&viewmatrix);
-
-	Vector axisX(viewmatrix._11, viewmatrix._21, viewmatrix._31);
-	Vector axisY(viewmatrix._12, viewmatrix._22, viewmatrix._32);
-	Vector axisZ(viewmatrix._13, viewmatrix._23, viewmatrix._33);
-
-	Vector eye = BuildCamera->GetPosition_();
-	eye.normalize();
-	eye *= 2.f;
-
-	viewmatrix.a03 = -axisX.Dot(eye);
-	viewmatrix.a13 = -axisY.Dot(eye);
-	viewmatrix.a23 = -axisZ.Dot(eye);
-
-	Queve.RT_ViewMatrix = viewmatrix;
-	Queve.RT_ProjMatrix = BuildCamera->GetProjMatrix();
-	*/
 	GetRenderComponent()->DrawObject(MeshComponent);
 }
 
@@ -378,9 +346,9 @@ void UIViewPivotControl::RebuildMesh()
 		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
-		Vector2f * texcoords = new Vector2f[NumVertices];
-		Vector * normals = new Vector[NumVertices];		// array of normals
-		Vector4f * colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
+		Vector2f *texcoords = new Vector2f[NumVertices];
+		Vector *normals = new Vector[NumVertices];		// array of normals
+		Vector4f *colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
 
 		for (int Index = 0; Index < NumVertices; ++ Index)
 		{
@@ -419,9 +387,9 @@ void UIViewPivotControl::RebuildMesh()
 		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
-		Vector2f * texcoords = new Vector2f[NumVertices];
-		Vector * normals = new Vector[NumVertices];		// array of normals
-		Vector4f * colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
+		Vector2f *texcoords = new Vector2f[NumVertices];
+		Vector *normals = new Vector[NumVertices];		// array of normals
+		Vector4f *colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
 
 		for (int Index = 0; Index < NumVertices; ++ Index)
 		{
@@ -460,9 +428,9 @@ void UIViewPivotControl::RebuildMesh()
 		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
-		Vector2f * texcoords = new Vector2f[NumVertices];
-		Vector * normals = new Vector[NumVertices];		// array of normals
-		Vector4f * colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
+		Vector2f *texcoords = new Vector2f[NumVertices];
+		Vector *normals = new Vector[NumVertices];		// array of normals
+		Vector4f *colors = new Vector4f[NumVertices];	// array of colors (vertex colors)
 
 		for (int Index = 0; Index < NumVertices; ++ Index)
 		{

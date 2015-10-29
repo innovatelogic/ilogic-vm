@@ -583,7 +583,8 @@ void CRenderSDK::SetViewport(unsigned int x, unsigned int y, unsigned int width,
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::DrawObject(const CRenderObject *pObject)
 {	
-	//SetTransform(pObject->GetRWTM());
+	SetTransform(pObject->GetRWTM());
+
 	if (!bFakeDraw)
 	{
 		PushObjectToQuevue(pObject, pObject->GetFlags()); // new functionality instead memalloc
@@ -598,7 +599,7 @@ void CRenderSDK::DrawObject(const CRenderObject *pObject)
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::DrawObject(const CRenderObject *pObject, const Matrix &WorldTransform)
 {
-	SetTransform(pObject->GetRWTM());
+	//SetTransform(pObject->GetRWTM());
 
 	if (!bFakeDraw)
 	{
