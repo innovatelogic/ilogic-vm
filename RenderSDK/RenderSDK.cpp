@@ -162,6 +162,9 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
+	// forward rendering
+	m_pRenderDriver->PushContext(pActiveContext);
+
 	m_pRenderAdjacency->render(pContext);
 /*
 	// render to targets first

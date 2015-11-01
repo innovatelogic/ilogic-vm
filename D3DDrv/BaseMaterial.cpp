@@ -96,8 +96,12 @@ void BaseMaterial::EndEffect()
 		glDisable(GL_ALPHA_TEST);
 	}
 
-	GLuint program = GetNode()->GetShaderProgram();
+	// reset states
 	glUseProgram(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }
 
 //----------------------------------------------------------------------------------------------

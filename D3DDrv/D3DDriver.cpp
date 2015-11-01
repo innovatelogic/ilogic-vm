@@ -367,6 +367,8 @@ BOOL D3DDriver::InitRenderDriver(HWND hWnd, unsigned int width, unsigned int hei
 
 		GLenum Result = glewInit();
 		InitDefaultResources();
+
+		PopContext();
 	}
 	return true;
 }

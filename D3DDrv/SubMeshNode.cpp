@@ -257,7 +257,6 @@ void SubMeshNode::InitializeVertexData(	const D3DDriver * D3DInterface,
 			{
 				index0 = 0;
 				vertex.m_Weights[0] = 0.f;
-
 			}
 			else
 			{
@@ -332,40 +331,28 @@ void SubMeshNode::InitializeVertexData(	const D3DDriver * D3DInterface,
 			if (remappedValue == -1)
 			{
 				AddBoneIdx(index2); //we've never seen this bone index before
-#ifdef D3DX_API_FVF	
-				vertex.m_Indices.z = (float)numDistinctBones;
-#else
+
 				vertex.m_Indices[2] = (float)numDistinctBones;
-#endif//D3DX_API_FVF
+
 				boneRemapper[index2] = numDistinctBones++;
 			}
 			else
 			{
-#ifdef D3DX_API_FVF
-				vertex.m_Indices.z = (float)remappedValue;   // use previous value
-#else
 				vertex.m_Indices[2] = (float)remappedValue;   // use previous value
-#endif//D3DX_API_FVF		
 			}
 
 			remappedValue = boneRemapper[index3];
 			if (remappedValue == -1)
 			{
 				AddBoneIdx(index3); //we've never seen this bone index before
-#ifdef D3DX_API_FVF				
-				vertex.m_Indices.w = (float)numDistinctBones;
-#else
+
 				vertex.m_Indices[3] = (float)numDistinctBones;
-#endif//D3DX_API_FVF
+
 				boneRemapper[index3] = numDistinctBones++;
 			}
 			else
 			{
-#ifdef D3DX_API_FVF
-				vertex.m_Indices.w = (float)remappedValue;   //use previous value
-#else
 				vertex.m_Indices[3] = (float)remappedValue;   //use previous value
-#endif//D3DX_API_FVF
 			}
 		}
 	}
@@ -381,27 +368,42 @@ void SubMeshNode::InitializeVertexData(	const D3DDriver * D3DInterface,
 		m_pIndices32[n + 1] = faces_idx[n + 0];
 		m_pIndices32[n + 2] = faces_idx[n + 2];
 	}
+	
 
 	glGenBuffers(1, &m_Vertex_VBOID);		// Create the buffer ID
+	assert(m_Vertex_VBOID != 0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_Vertex_VBOID); // Bind the buffer (vertex array data)
+	assert(glGetError() == GL_NO_ERROR);
+	
 	glBufferData(GL_ARRAY_BUFFER, sizeof(D3DVertex) * m_NumVertices, 0, GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(D3DVertex) * m_NumVertices, m_pVertices);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// index
 	glGenBuffers(1, &m_Index_VBOID);	// Generate buffer
+	assert(glGetError() == GL_NO_ERROR);
+	assert(m_Index_VBOID != 0);
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Index_VBOID); // Bind the element array buffer
+	assert(glGetError() == GL_NO_ERROR);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * sizeof(uint32_t), m_pIndices32, GL_STATIC_DRAW);
+	assert(glGetError() == GL_NO_ERROR);
 
 	// debug info
 	//@TODO: DISABLE ON RELEASE debug visualizer
 	if (m_VertexHasNormal)	// normal
 	{
 		glGenBuffers(1, &m_N_VBOID);				// Create the buffer ID
+		assert(m_N_VBOID != 0);
 		glBindBuffer(GL_ARRAY_BUFFER, m_N_VBOID);	// Bind the buffer (vertex array data)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(SVector3f) * m_NumVertices * 2, 0, GL_STATIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(SVector3f) * m_NumVertices * 2, &normalsVB[0][0]);
 
 		glGenBuffers(1, &m_SxT_VBOID);				// Create the buffer ID
+		assert(m_SxT_VBOID != 0);
 		glBindBuffer(GL_ARRAY_BUFFER, m_SxT_VBOID);	// Bind the buffer (vertex array data)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(SVector3f) * m_NumVertices * 2, 0, GL_STATIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(SVector3f) * m_NumVertices * 2, &normalsVB[0][0]);
@@ -410,6 +412,7 @@ void SubMeshNode::InitializeVertexData(	const D3DDriver * D3DInterface,
 	if (m_VertexHasS) // S buffer
 	{
 		glGenBuffers(1, &m_S_VBOID);				// Create the buffer ID
+		assert(m_S_VBOID != 0);
 		glBindBuffer(GL_ARRAY_BUFFER, m_S_VBOID);	// Bind the buffer (vertex array data)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(SVector3f) * m_NumVertices * 2, 0, GL_STATIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(SVector3f) * m_NumVertices * 2, &S[0][0]);
@@ -418,6 +421,7 @@ void SubMeshNode::InitializeVertexData(	const D3DDriver * D3DInterface,
 	if (m_VertexHasT) // S buffer
 	{
 		glGenBuffers(1, &m_T_VBOID);				// Create the buffer ID
+		assert(m_T_VBOID != 0);
 		glBindBuffer(GL_ARRAY_BUFFER, m_T_VBOID);	// Bind the buffer (vertex array data)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(SVector3f) * m_NumVertices * 2, 0, GL_STATIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(SVector3f) * m_NumVertices * 2, &T[0][0]);

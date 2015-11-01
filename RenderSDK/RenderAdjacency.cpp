@@ -64,9 +64,9 @@ SRTVariant_Adjacency& RenderAdjacency::PushRenderQuevueAdjaency()
 {
 	byte nonActive = (m_ActiveStack == 0) ? 1 : 0;
 
-	assert(m_aContext[nonActive].nIndexAdjaency < HALF_ADJACENCY - 1);
+	assert(m_aContext[nonActive].nIndexNextAdjaency < HALF_ADJACENCY - 1);
 
-	const size_t &shift = m_aContext[nonActive].nIndexAdjaency;
+	const size_t &shift = m_aContext[nonActive].nIndexNextAdjaency;
 	const size_t &curr_command = m_aContext[nonActive].nIndexCommand;
 
 	SRTVariant_Adjacency &refAdjacency = *(m_pVariantAdjacency + (HALF_ADJACENCY * nonActive) + shift);
@@ -108,7 +108,7 @@ void RenderAdjacency::PopRenderQuevueAdjaency()
 	m_aContext[nonActive].nIndexTriangle += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nTrianglesNum;
 	m_aContext[nonActive].nIndexSphere += adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nSpheresNum;
 
-	m_aContext[nonActive].nIndexAdjaency++;
+	m_aContext[nonActive].nIndexNextAdjaency++;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -116,9 +116,9 @@ SRTVariant_Adjacency& RenderAdjacency::GetCurrentAdjacency()
 {
 	byte nonActive = (m_ActiveStack == 0) ? 1 : 0;
 
-	assert(m_aContext[nonActive].nIndexAdjaency < HALF_ADJACENCY - 1);
+	assert(m_aContext[nonActive].nIndexNextAdjaency < HALF_ADJACENCY - 1);
 
-	const size_t shift = m_aContext[nonActive].nIndexAdjaency;
+	const size_t shift = m_aContext[nonActive].nIndexNextAdjaency;
 
 	return *(m_pVariantAdjacency + (HALF_ADJACENCY * nonActive) + shift);
 }
@@ -143,7 +143,7 @@ SRVariantRenderCommand* RenderAdjacency::PushRenderCommand()
 void RenderAdjacency::swapBuffer()
 {
 	// reset already drawn context
-	m_aContext[m_ActiveStack].nIndexAdjaency = 0;
+	m_aContext[m_ActiveStack].nIndexNextAdjaency = 0;
 	m_aContext[m_ActiveStack].nIndexCommand  = 0;	
 	m_aContext[m_ActiveStack].nIndexDot = 0;
 	m_aContext[m_ActiveStack].nIndexLine = 0;
@@ -183,7 +183,9 @@ LPRTVARIANT RenderAdjacency::end_adj(size_t index) const
 {
 	assert(index >= 0 && index < 2);
 
-	return m_pVariantAdjacency + (HALF_ADJACENCY * index) + m_aContext[index].nIndexAdjaency;
+	int endIndex = m_aContext[index].nIndexNextAdjaency;
+
+	return m_pVariantAdjacency + (HALF_ADJACENCY * index) + endIndex;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -208,10 +210,7 @@ void RenderAdjacency::render(SRenderContext *pContext)
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
 	// render targets first
-	renderTargets(pActiveContext);
-
-	// forward rendering
-	m_pRenderDriver->PushContext(pActiveContext);
+	//renderTargets(pActiveContext);
 
 	m_pRenderDriver->DriverBeginDraw();
 

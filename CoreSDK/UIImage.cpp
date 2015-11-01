@@ -17,11 +17,6 @@ UIImage::UIImage(const CObjectAbstract *pParent)
 UIImage::UIImage(const UIImage& Source)
 : Super(Source)
 {
-	if (this != &Source)
-	{
-		// clone transient object:
-		m_pImageComponent = CLONE_OBJECT(UIComp_DrawImage, Source.m_pImageComponent, Source.m_pImageComponent->GetName(), this);
-	}
 }
 
 //----------------------------------------------------------------------------------------------

@@ -18,7 +18,7 @@ class EXPORT RenderAdjacency final
 
 	struct SAdjContext final
 	{
-		size_t nIndexAdjaency;
+		size_t nIndexNextAdjaency;
 		size_t nIndexCommand;
 
 		// debug counters
@@ -29,7 +29,7 @@ class EXPORT RenderAdjacency final
 		size_t nIndexSphere;
 
 		SAdjContext() 
-			: nIndexAdjaency(0)
+			: nIndexNextAdjaency(0)
 			, nIndexCommand(0) 
 			, nIndexDot(0)
 			, nIndexLine(0)

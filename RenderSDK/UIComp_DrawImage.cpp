@@ -21,9 +21,6 @@ UIComp_DrawImage::UIComp_DrawImage(const CObjectAbstract * Parent)
 UIComp_DrawImage::UIComp_DrawImage(const UIComp_DrawImage &Source)
 : Super(Source)
 {
-	if (this != &Source)
-	{
-	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -180,6 +177,9 @@ void UIComp_DrawImage::DoRebuildMesh()
 	unsigned int numDistinctBones = 0;
 	std::vector<int> VecBoneRemapper;
 
+	CSceneMeshNode *pSceneMesh = new CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
+	pSceneMesh->AddRef();
+
 	SubMeshNode	*SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
 
 	SubMesh->InitializeVertexData(GetRenderComponent()->GetRenderDriver(),
@@ -199,8 +199,6 @@ void UIComp_DrawImage::DoRebuildMesh()
 								VecBoneRemapper,
 								numDistinctBones);
 
-
-
 	std::string sFilename;
 	if (FindFile(ResourceTag.c_str(), &sFilename)){
 		MaterialEffect->LoadDiffuseMap(sFilename.c_str(), false);
@@ -211,6 +209,12 @@ void UIComp_DrawImage::DoRebuildMesh()
 	D3DMesh * dx_mesh = m_pMeshComponent->GetD3DMesh();
 
 	dx_mesh->Clear(true);
+	//dx_mesh->AddMesh(SMeshEffectPair(SubMesh, MaterialEffect->pMaterialEffectUI));
+
+	pSceneMesh->GetSubMeshNodes().push_back(SubMesh);
+
+	dx_mesh->SetSceneMeshNode(pSceneMesh);
+
 	dx_mesh->AddMesh(SMeshEffectPair(SubMesh, MaterialEffect->pMaterialEffectUI));
 
 	delete [] texcoords;

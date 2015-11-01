@@ -106,6 +106,8 @@ void MaterialEffectUI::Affect()
 void MaterialEffectUI::EndEffect()
 {
 	glDisable(GL_ALPHA_TEST);
+
+	glUseProgram(0);
 }
 
 //----------------------------------------------------------------------------------------------
