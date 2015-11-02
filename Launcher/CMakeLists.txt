@@ -19,7 +19,7 @@ include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
 
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
+#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/lib/)

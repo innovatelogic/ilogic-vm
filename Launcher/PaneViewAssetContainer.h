@@ -55,12 +55,12 @@ public:
 		{
 			CModelViewer *pModelView = m_pAppMain->GetExplorerInstance()->GetModelViewer();
 			assert(pModelView);
-			/*
+			
 			CCamera *pCamera = pModelView->GetCamera();
 			assert(pCamera);
 
 			m_pAppMain->GetRenderSDK()->ResizeWindow(Width, Height, pCamera->GetRenderContext());
-			m_pAppMain->GetCameraManager()->ViewportResized();*/
+			m_pAppMain->GetCameraManager()->ViewportResized();
 		}
 		return 0;
 	}

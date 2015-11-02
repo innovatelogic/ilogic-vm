@@ -13,8 +13,8 @@ namespace RenderSDK
 {
 class EXPORT RenderAdjacency final
 {
-	//RenderAdjacency(const RenderAdjacency &that) = delete;
-	//RenderAdjacency& operator=(const RenderAdjacency &that) = delete;
+	//RenderAdjacency(const RenderAdjacency&) = delete;
+	//RenderAdjacency& operator=(const RenderAdjacency&) = delete;
 
 	struct SAdjContext final
 	{

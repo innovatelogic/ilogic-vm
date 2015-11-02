@@ -4,23 +4,31 @@ project(D3DDriver)
 
 add_definitions(-DUNICODE -D_UNICODE)
 
-set(GLEW_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/include)
-set(GLEW_LIBRARY ${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
+set(GLEW_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
+SET(GLEW_LIBRARY ${CMAKE_BINARY_DIR}/../Libs)
+
+SET(GLEW_LIBRARIES optimized ${CMAKE_BINARY_DIR}/../Libs/glew32.lib debug ${CMAKE_BINARY_DIR}/../Libs/glew32d.lib)
+SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/glew32mx.lib debug ${CMAKE_BINARY_DIR}/../Libs/glew32mxd.lib)
+SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libglew32d.lib debug ${CMAKE_BINARY_DIR}/../Libs/libglew32d.lib)
+SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libglew32mxd.lib debug ${CMAKE_BINARY_DIR}/../Libs/libglew32mxd.lib)
+
+#set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/../Libs)
+#set(CMAKE_LIBRARY_PATH ${CMAKE_BINARY_DIR}/../Libs)
 
 #find_package(GLEW REQUIRED)
 #if (GLEW_FOUND)
-#    include_directories(${GLEW_INCLUDE_DIRS})
-#    link_libraries(${GLEW_LIBRARIES})
+    include_directories(${GLEW_INCLUDE_DIRS})
+    #link_libraries(${GLEW_LIBRARIES})
 #endif()
 
 include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include)
 include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include/freetype2)
 
 #why its not done by GLEW find_package?
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
+#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 
-set(LIBRARIES libfreetype glew32)
+set(LIBRARIES libfreetype) #glew32
 
 set(SOURCE
 	AnimFrame.cpp
@@ -92,7 +100,7 @@ set(SOURCE
 	
 	add_library(${PROJECT_NAME} SHARED ${SOURCE})
 	
-	target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ) #${GLEW_LIBRARIES}
+	target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${GLEW_LIBRARIES})
 	
 	set_target_properties( ${PROJECT_NAME} PROPERTIES
                         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
@@ -100,23 +108,19 @@ set(SOURCE
                         RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
                         LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
                         )
-						
-
 	
-	#install path
-set(INSTALL_TARGETS "${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"
-					 "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll")
+#install path
+set(INSTALL_TARGETS "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll") #"${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
+#COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+#        "${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"      # <--this is in-file
+#       $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
 		
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
         "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll"      # <--this is in-file
         $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
-
 
 #-------------------------------------------------------------------------------		
 # setup testing

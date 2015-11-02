@@ -2,10 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 set(ENABLE_TESTING ON)
 
-
 set(ENABLE_GTEST ON)
-#set(GTEST_ROOT ${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0)
-#set(GTEST_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0)
 SET(GTEST_LIBRARIES optimized ${CMAKE_BINARY_DIR}/../Libs/gtest.lib debug ${CMAKE_BINARY_DIR}/../Libs/gtest_d.lib)
 SET(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/gtest_main.lib debug ${CMAKE_BINARY_DIR}/../Libs/gtest_main_d.lib)
 

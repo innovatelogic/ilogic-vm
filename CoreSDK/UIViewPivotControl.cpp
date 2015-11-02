@@ -4,6 +4,8 @@ REGISTER_CLASS(UIViewPivotControl, ActorAllocator);
 
 const Vector Offset(0.5f, 0.5f, 0.5f);
 
+static const char *CUBE_TEXTURE = "ground_001.tga"; // "dev_measuregeneric01b.tga"
+
 static const Vector vBuffBottom [] = 
 {
 	Vector(0.f, 0.f, 0.f) - Offset,
@@ -293,7 +295,7 @@ void UIViewPivotControl::RebuildMesh()
 	
 	// initialize
 	std::string sFilename;
-	if (FindFile("dev_measuregeneric01b.tga", &sFilename)){
+	if (FindFile(CUBE_TEXTURE, &sFilename)){
 		m_pMaterialEffect->LoadDiffuseMap(sFilename.c_str(), false);
 	}
 
