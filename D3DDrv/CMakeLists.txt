@@ -17,10 +17,11 @@ SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libgl
 
 #find_package(GLEW REQUIRED)
 #if (GLEW_FOUND)
-    include_directories(${GLEW_INCLUDE_DIRS})
+    #include_directories(${GLEW_INCLUDE_DIRS})
     #link_libraries(${GLEW_LIBRARIES})
 #endif()
 
+include_directories(${GLEW_INCLUDE_DIR})
 include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include)
 include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include/freetype2)
 

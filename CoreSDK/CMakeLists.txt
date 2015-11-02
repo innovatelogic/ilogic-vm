@@ -6,6 +6,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/src)
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
