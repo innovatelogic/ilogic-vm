@@ -14,9 +14,6 @@ Comp_RenderTarget::Comp_RenderTarget(const CObjectAbstract *parent)
 Comp_RenderTarget::Comp_RenderTarget(const Comp_RenderTarget &source)
 : Super(source)
 {
-	if (this != &source)
-	{
-	}
 }
 
 //----------------------------------------------------------------------------------------------

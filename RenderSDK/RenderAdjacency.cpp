@@ -210,7 +210,7 @@ void RenderAdjacency::render(SRenderContext *pContext)
 	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
 	// render targets first
-	//renderTargets(pActiveContext);
+	renderTargets(pActiveContext);
 
 	m_pRenderDriver->DriverBeginDraw();
 

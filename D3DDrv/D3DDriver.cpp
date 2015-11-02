@@ -995,7 +995,7 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*
 
 	glViewport(0, 0, rt->GetWidth(), rt->GetHeight());
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	//glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -1051,6 +1051,8 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*
 void D3DDriver::EndRenderTarget(const D3DRenderTarget *rt)
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+	PushContext(GetCurrentContext());
 
 	//m_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); 
 

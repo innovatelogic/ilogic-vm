@@ -211,7 +211,7 @@ UIViewPivotControl::UIViewPivotControl(const CObjectAbstract *pParent)
 : Super(pParent)
 , IDrawInterface(pParent)
 {
-	IDrawInterface::RegisterDrawInterface(this/*, 0*/);
+	IDrawInterface::RegisterDrawInterface(this, 0);
 
 	NEW_OBJECT_TRANSIENT_CHILD(CompRenderTarget, Comp_RenderTarget, "RenderTarget", this);
 	NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_StaticMesh, "MeshComponent", this);
@@ -253,6 +253,7 @@ void UIViewPivotControl::DoDraw()
 	RenderSDK::RenderAdjacency &refAdj = m_pRenderSDK->GetRenderAdjacency();
 	RenderSDK::SRTVariant_Adjacency &adjacency = refAdj.GetCurrentAdjacency();
 
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderSDK->GetRenderDriver()->GetDefaultContext();
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bClearTarget = true;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor = 0x11000000;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = CompRenderTarget->GetRenderTarget();

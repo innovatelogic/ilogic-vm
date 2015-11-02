@@ -69,6 +69,7 @@ void Explorer2D::DoDraw()
 	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, GetViewportProjMatrix().m, 16 * sizeof(float));
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = GetNearPlane();
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = GetFarPlane();
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog = false;
 }
 
 //----------------------------------------------------------------------------------------------
