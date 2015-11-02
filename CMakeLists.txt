@@ -36,10 +36,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 #set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/common/SDK/)
 #set(BOOST_LIBRARYDIR ${CMAKE_SOURCE_DIR}/Lib)
 
-#variable_watch(Boost_USE_STATIC_LIBS)
-#SET(GTEST_LIBRARIES optimized gtest.lib debug gtest_d.lib)
-#SET(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} optimized gtest_main.lib debug gtest_main_d.lib)
-
 project("${G_CMAKE_TARGET}_${G_GENERATOR_TOKEN}_${G_PROCESSOR_ARCH}") 
 
 if (MSVC)
@@ -83,14 +79,6 @@ MESSAGE(STATUS "CMAKE_INSTALL_PREFIX:" ${CMAKE_INSTALL_PREFIX})
 MESSAGE(STATUS "CMAKE_PREFIX_PATH:" ${CMAKE_PREFIX_PATH})
 message( STATUS "G_BIN_DIR: " ${G_BIN_DIR})
 
-#proj_thirdparty_add(gtest SOURCE_DIR utils/gtest-1.7.0)
-
-#ExternalProject_Add( gtest
-#		SOURCE_DIR ${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0
-#		DOWNLOAD_COMMAND ""
-#		CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_CURRENT_BINARY_DIR}/gtest
-#		)
-
 set(TARGET_FILENAME target_${G_CMAKE_TARGET}.cmake)
 
 find_file(TARGET_INCLUDE
@@ -108,12 +96,3 @@ endif()
 set(INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Installation directory for executables")
 set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")
 set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation directory for headers")
-
-##add_subdirectory(utils/gtest-1.7.0)
-#add_subdirectory(common/TinyXML)
-#add_subdirectory(Foundation)
-#add_subdirectory(D3DDrv)
-#add_subdirectory(RenderSDK)
-#add_subdirectory(CoreSDK)
-#add_subdirectory(Launcher)
-#add_subdirectory(MaxExporter)
