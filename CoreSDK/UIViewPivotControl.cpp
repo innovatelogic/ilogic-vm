@@ -260,6 +260,7 @@ void UIViewPivotControl::DoDraw()
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.clearColor = 0x11000000;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_target = CompRenderTarget->GetRenderTarget();
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_drawn = false;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog = false;
 
 	CameraManager *pMgr = GetAppMain()->GetCameraManager();
 	const CCamera * BuildCamera = pMgr->GetActiveCamera();
@@ -357,7 +358,7 @@ void UIViewPivotControl::RebuildMesh()
 		{
 			texcoords[Index] = Vector2f((vBuffBottom[Index].x + 0.5f) * 0.166666f + 0.166666f, vBuffBottom[Index].z + 0.5f);
 			normals[Index] = Vector(0.f, -1.f, 0.f);
-			colors[Index] = Vector4f(255.f, 255.f, 255.f, 1.f);
+			colors[Index] = Vector4f(255.f, 0.f, 0.f, 1.f);
 		}
 
 		unsigned int numDistinctBones = 0;
