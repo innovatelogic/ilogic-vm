@@ -106,7 +106,18 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/../common/zlib/win32/zlib.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
+#    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+#       "${PROJECT_SOURCE_DIR}/../common/zlib/win32/zlib.dll"      # <--this is in-file
+#        $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
+
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")	
+
+# Find user and system name
+#SET(SYSTEM_NAME $ENV{USERDOMAIN} CACHE STRING SystemName)
+#SET(USER_NAME $ENV{USERNAME} CACHE STRING UserName)
+
+# Configure the template file
+#SET(USER_FILE ${_projectName}.vcproj.${SYSTEM_NAME}.${USER_NAME}.user)
+#SET(OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR}/${USER_FILE})
+#CONFIGURE_FILE(UserTemplate.user ${USER_FILE} @ONLY)

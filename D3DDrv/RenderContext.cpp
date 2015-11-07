@@ -8,8 +8,11 @@
 
 //#pragma comment(lib, "../common/SDK/FreeType-2.1.4-lib/lib/libfreetype.lib")
 
-const GLubyte uTGAcompare[12] = {0, 0, 2, 0,0,0,0,0,0,0,0,0};	// Uncompressed TGA Header
-const GLubyte cTGAcompare[12] = {0, 0, 10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header
+static const GLubyte uTGAcompare[12] = {0, 0, 2, 0,0,0,0,0,0,0,0,0};	// Uncompressed TGA Header
+static const GLubyte cTGAcompare[12] = {0, 0, 10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header
+
+static const char *tagVertexShader = "[VertexShader]";
+static const char *tagFragmentShader = "[FragmentShader]";
 
 //----------------------------------------------------------------------------------------------
 ///This function gets the first power of 2 >= the
@@ -337,122 +340,103 @@ MaterialEffectNode*	SRenderContext::LoadMaterialEffectW(const wchar_t *URL)
 	MaterialEffectNode *pEffectNode = TAllocStrategyW
 		<MaterialEffectNode, TMapMaterialEffectsW, D3DDriver>(fileName.c_str(), m_MapMaterialEffects, m_pDriver);
 
-	if (pEffectNode->GetRefCount() != 1) { // check first init
-		return pEffectNode;
-	}
-
-	pEffectNode->CompileEffectW(URL);
-
-	const char *tagVertexShader = "[VertexShader]";  //@TODO: potentially easy hacked place!
-	const char *tagFragmentShader = "[FragmentShader]";
-
-	size_t tagVSLen = strlen(tagVertexShader);
-	size_t tagFSLen = strlen(tagFragmentShader);
-
-	GLuint   shaderV;
-	GLuint   shaderF;
-	char     shaderName[0x100];
-	uint8_t  *shaderSource;
-	uint32_t sourceLength;
-
-	pEffectNode->m_ShaderProgram = glCreateProgram();
-	assert(pEffectNode->m_ShaderProgram != 0);
-
-	memset(shaderName, 0, 0xFF);
-
-	// vertex & fragment
-	{
-		if ((shaderV = glCreateShader(GL_VERTEX_SHADER)) == 0)
+	if (pEffectNode->GetRefCount() == 1) // check first init
+	{ 
+		if (pEffectNode->CompileEffectW(URL))
 		{
-			glDeleteProgram(pEffectNode->m_ShaderProgram);
-			return 0;
-		}
+			size_t tagVSLen = strlen(tagVertexShader);
+			size_t tagFSLen = strlen(tagFragmentShader);
 
-		if ((shaderF = glCreateShader(GL_FRAGMENT_SHADER)) == 0)
-		{
-			glDeleteProgram(pEffectNode->m_ShaderProgram);
-			return 0;
-		}
+			char     shaderName[0x100]; // 256
+			uint8_t  *shaderSource = nullptr;
+			uint32_t sourceLength = 0;
 
-		if (!LoadFile(URL, false, &shaderSource, &sourceLength))
-		{
-			glDeleteShader(shaderV);
-			glDeleteShader(shaderF);
-			glDeleteProgram(pEffectNode->m_ShaderProgram);
-			return 0;
-		}
+			pEffectNode->m_ShaderProgram = glCreateProgram();
+		
+			assert(pEffectNode->m_ShaderProgram != 0);
 
-		const char * pChVS = strstr((const char*)shaderSource, tagVertexShader);
-		const char * pChFS = strstr((const char*)shaderSource, tagFragmentShader);
+			memset(shaderName, 0, 0xFF);
 
-		// Vertex shader shoud be first 
-		if (pChVS && pChFS)
-		{
-			size_t pChFSLen = strlen(pChFS); // size with tag
-			size_t pChVSLen = (unsigned int)pChFS - (unsigned int)shaderSource;
+			GLuint shaderV = glCreateShader(GL_VERTEX_SHADER);
+			GLuint shaderF = glCreateShader(GL_FRAGMENT_SHADER);
 
-			const char  *pSourceVS = pChVS + tagVSLen;
-			const int VSLen = pChVSLen - tagVSLen;  
+			assert(shaderV && shaderF);
 
-			glShaderSource(shaderV, 1, (const GLchar**)&(pSourceVS), (const GLint*)&VSLen);
-			glCompileShader(shaderV);
+			if (shaderV != 0 && shaderF != 0)
+			{
+				if (LoadFile(URL, true, &shaderSource, &sourceLength))
+				{
+					const char *pChVS = strstr((const char*)shaderSource, tagVertexShader);
+					const char *pChFS = strstr((const char*)shaderSource, tagFragmentShader);
 
-			if (ShaderStatus(shaderV, GL_COMPILE_STATUS) != GL_TRUE)
+					// Vertex shader should be first 
+					if (pChVS && pChFS)
+					{
+						size_t pChFSLen = strlen(pChFS); // size with tag
+						size_t pChVSLen = (unsigned int)pChFS - (unsigned int)shaderSource;
+
+						const char  *pSourceVS = pChVS + tagVSLen;
+						const int VSLen = pChVSLen - tagVSLen;  
+
+						glShaderSource(shaderV, 1, (const GLchar**)&(pSourceVS), (const GLint*)&VSLen);
+						glCompileShader(shaderV);
+
+						if (ShaderStatus(shaderV, GL_COMPILE_STATUS) != GL_TRUE)
+						{
+							glDeleteShader(shaderV);
+							glDeleteProgram(pEffectNode->m_ShaderProgram);
+							delete[] shaderSource;
+							return 0;
+						}
+
+						glAttachShader(pEffectNode->m_ShaderProgram, shaderV);
+						glDeleteShader(shaderV);
+
+						// fragment shader
+						const char  *pSourceFS = pChFS + tagFSLen;
+						const int FSLen = (pChFSLen - tagFSLen) - 1;  
+
+						glShaderSource(shaderF, 1, (const GLchar**)&pSourceFS, (const GLint*)&FSLen);
+						glCompileShader(shaderF);
+
+						if (ShaderStatus(shaderF, GL_COMPILE_STATUS) != GL_TRUE)
+						{
+							glDeleteShader(shaderF);
+							glDeleteProgram(pEffectNode->m_ShaderProgram);
+							delete[] shaderSource;
+
+							return 0;
+						}
+
+						glAttachShader(pEffectNode->m_ShaderProgram, shaderF);
+						glDeleteShader(shaderF);
+
+						delete[] shaderSource;
+					}
+				}
+
+				glLinkProgram(pEffectNode->m_ShaderProgram);
+
+				GLint Success;
+				GLchar ErrorLog[1024] = { 0 };
+
+				glValidateProgram(pEffectNode->m_ShaderProgram);
+				glGetProgramiv(pEffectNode->m_ShaderProgram, GL_VALIDATE_STATUS, &Success);
+
+				if (!Success)
+				{
+					glGetProgramInfoLog(pEffectNode->m_ShaderProgram, sizeof(ErrorLog), NULL, ErrorLog);
+					//MessageBox(NULL, (const char*)ErrorLog, "Fx Compile Error", MB_OK|MB_ICONEXCLAMATION);
+					return 0;
+				}
+			}
+			else
 			{
 				glDeleteShader(shaderV);
-				glDeleteProgram(pEffectNode->m_ShaderProgram);
-				delete[] shaderSource;
-				return 0;
-			}
-
-			glAttachShader(pEffectNode->m_ShaderProgram, shaderV);
-			glDeleteShader(shaderV);
-
-			// fragment shader
-			const char  *pSourceFS = pChFS + tagFSLen;
-			const int FSLen = (pChFSLen - tagFSLen) - 1;  
-
-			glShaderSource(shaderF, 1, (const GLchar**)&pSourceFS, (const GLint*)&FSLen);
-			glCompileShader(shaderF);
-
-			if (ShaderStatus(shaderF, GL_COMPILE_STATUS) != GL_TRUE)
-			{
 				glDeleteShader(shaderF);
 				glDeleteProgram(pEffectNode->m_ShaderProgram);
-				delete[] shaderSource;
-
-				return 0;
 			}
-
-			glAttachShader(pEffectNode->m_ShaderProgram, shaderF);
-			glDeleteShader(shaderF);
-
-			delete[] shaderSource;
 		}
-	}
-
-	glLinkProgram(pEffectNode->m_ShaderProgram);
-
-	GLint Success;
-	GLchar ErrorLog[1024] = { 0 };
-
-	glValidateProgram(pEffectNode->m_ShaderProgram);
-	glGetProgramiv(pEffectNode->m_ShaderProgram, GL_VALIDATE_STATUS, &Success);
-
-	if (!Success)
-	{
-		glGetProgramInfoLog(pEffectNode->m_ShaderProgram, sizeof(ErrorLog), NULL, ErrorLog);
-		//MessageBox(NULL, (const char*)ErrorLog, "Fx Compile Error", MB_OK|MB_ICONEXCLAMATION);
-		return 0;
-	}
-
-	//if (strstr(URL, "plain"))
-	{
-		//glBindAttribLocation(pEffectNode->m_ShaderProgram, 0, "position");
-	}
-	//else
-	{
-
 	}
 
 	return pEffectNode;
@@ -1024,53 +1008,58 @@ bool SRenderContext::LoadCompressedTGA(TextureNode *pNode, FILE *fTGA)		// Load 
 //----------------------------------------------------------------------------------------------
 bool SRenderContext::LoadFile(const wchar_t *fileName, bool binary, uint8_t **buffer, uint32_t *size)
 {
-	assert(fileName);
-	assert(buffer);
-	assert(size);
+	bool bResult = false;
 
-	FILE     *input;
-	uint32_t fileSize, readed;
-
-	const wchar_t mode[] = {L'r', binary ? L'b' : L't', L'\0'};
-
-	if ((input = _wfopen(fileName, mode)) == NULL)
+	if (fileName && buffer && size)
 	{
-		//LOG_ERROR("Opening file '%s'\n", fileName);
-		return false;
-	}
+		FILE *input = nullptr;
+		uint32_t fileSize, readed;
 
-	fseek(input, 0, SEEK_END);
-	fileSize = (uint32_t)ftell(input);
-	rewind(input);
+		const wchar_t mode[] = {L'r', binary ? L'b' : L't', L'\0'};
 
-	if (fileSize == 0)
-	{
-		//LOG_ERROR("Empty file '%s'\n", fileName);
-		fclose(input);
-		return false;
-	}
+		if ((input = _wfopen(fileName, mode)) != NULL)
+		{
+			fseek(input, 0, SEEK_END);
 
-	*buffer = new uint8_t[fileSize];
+			fileSize = (uint32_t)ftell(input);
+			
+			rewind(input);
+
+			if (fileSize > 0)
+			{
+				*buffer = new uint8_t[fileSize + 1];
 	
-	assert(*buffer);
+				assert(*buffer);
 
-	memset(*buffer, 0, sizeof(uint8_t) * fileSize);
+				memset(*buffer, '\0', sizeof(uint8_t) * (fileSize + 1));
 
-	readed = fread(*buffer, 1, fileSize, input);
+				readed = fread(*buffer, sizeof(uint8_t), fileSize, input);
 
-	fclose(input);
-	/*
-	if (readed != fileSize)
-	{
-		//LOG_ERROR("Reading file '%s'\n", fileName);
-		delete[] *buffer;
-		fclose(input);
-		return false;
-	}*/
+				if (readed == fileSize)
+				{
+					fclose(input);
 
-	*size = fileSize;
+					*size = fileSize;
 
-	return true;
+					bResult = true;
+				}
+				else
+				{
+					//LOG_ERROR("Reading file '%s'\n", fileName);
+					fclose(input);
+
+					delete[] *buffer;
+				}
+			}
+			else
+			{
+				//LOG_ERROR("Empty file '%s'\n", fileName);
+				fclose(input);
+			}
+		}
+	}
+
+	return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
