@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+  <VisualStudioUserFile
+    ProjectType="Visual C++"
+    Version="9.00"
+    ShowAllFiles="false"
+    >
+    <Configurations>
+    	<Configuration
+    		Name="Debug|@USERFILE_PLATFORM@"
+    		>
+    		<DebugSettings
+    			Command="@USERFILE_COMMAND_DEBUG@"
+    			WorkingDirectory="@USERFILE_WORKING_DIRECTORY_DEBUG@"
+    			CommandArguments="@USERFILE_COMMAND_ARGUMENTS_DEBUG@"
+    			Attach="false"
+    			DebuggerType="3"
+    			Remote="1"
+    			RemoteMachine="@USERFILE_REMOTE_MACHINE_DEBUG@"
+                            <!-- More settings removed for snippet -->
+    		/>
+    	</Configuration>
+            <!-- Rest of Configurations -->

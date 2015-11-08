@@ -394,7 +394,7 @@ MaterialEffectNode*	SRenderContext::LoadMaterialEffectW(const wchar_t *URL)
 
 						// fragment shader
 						const char  *pSourceFS = pChFS + tagFSLen;
-						const int FSLen = (pChFSLen - tagFSLen) - 1;  
+						const int FSLen = strlen(pSourceFS); //(pChFSLen - tagFSLen) - 1;  
 
 						glShaderSource(shaderF, 1, (const GLchar**)&pSourceFS, (const GLint*)&FSLen);
 						glCompileShader(shaderF);
@@ -1027,7 +1027,7 @@ bool SRenderContext::LoadFile(const wchar_t *fileName, bool binary, uint8_t **bu
 
 			if (fileSize > 0)
 			{
-				*buffer = new uint8_t[fileSize + 1];
+				*buffer = new uint8_t[fileSize + 1]; // alloc filesize + 1 bytes
 	
 				assert(*buffer);
 

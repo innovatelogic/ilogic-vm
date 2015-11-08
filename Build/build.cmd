@@ -1,12 +1,11 @@
 @echo off
 
-set AMD64=false
-set GENERATOR="Visual Studio 11 2012"
+call config.cmd
 
 if "%AMD64%" == "true"( set ARCH=x64 
-set OUT=out64
+set OUT=%OUT_FOLDER_64%
 ) else ( set ARCH=""	
-set OUT=out32
+set OUT=%OUT_FOLDER_32%
 )
 
 set ROOT_DIR=%~dp0..
@@ -19,6 +18,12 @@ IF "%MSVC_REDIST_LIBS%" == ""( setLocal EnableDelayedExpansion
   if !VS110COMNTOOLS!=="" (echo "Warning: failed to get redistributable lib path")
   setLocal DisableDelayedExpansion
  )
+ 
+set PYTHON="%python%"
+set SCRIPT=""-u %~dp0build.py --goal tools_build --out %OUT%""
 
-python -u %~dp0build.py --goal tools_build
+python %SCRIPT% %*
+::
+
+::python -u %~dp0build.py --goal tools_build --out '%OUT%'
 ECHO ERRORLEVEL=%ERRORLEVEL%
