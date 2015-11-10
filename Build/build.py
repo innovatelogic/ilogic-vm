@@ -78,9 +78,8 @@ def main():
 		elif args.goal == 'tools_build':
 			print("begin")
 			tools_deps.generate()
-			
 			tools_deps.build('Debug')
-			#tools_deps.build('Release')
+			tools_deps.build('Release')
 			tools.generate()
 			tools.build('Debug')
 			#tools.build('Release')

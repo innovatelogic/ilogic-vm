@@ -3,7 +3,8 @@ import shutil
 
 generators = {
     'vc110' : ('Visual Studio 11 2012', 'v110_xp'),
-    'vc120' : ('Visual Studio 12 2013', None)
+    'vc120' : ('Visual Studio 12 2013', None),
+	'vc140' : ('Visual Studio 14 2015', None)
     }
 
 def checkPythonVer(in_ver):
