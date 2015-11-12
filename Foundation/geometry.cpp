@@ -184,7 +184,7 @@ bool GetMinLeftPoint(TVecIndexedPoint2f& srcSpline, TVecIndexedPoint2fIterator &
 {
 	bool bResult = false;
 
-	float MinX = _FLT_MAX;
+	float MinX = V_FLT_MAX;
 
 	TVecIndexedPoint2fIterator Iterator = srcSpline.begin();
 
@@ -212,7 +212,7 @@ bool GetPointCloudBounds(TVecSIndexedPoint3f &srcPoints,
 {
 	bool bResult = false;
 
-	Bounds3f Bounds(_FLT_MAX, _FLT_MAX, _FLT_MAX, -_FLT_MAX, -_FLT_MAX, -_FLT_MAX);
+	Bounds3f Bounds(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX);
 
 	TVecSIndexedPoint3fIter Iter = srcPoints.begin();
 
@@ -280,7 +280,7 @@ bool GetMinPoint(const TVecVectorList &InVertices,
 		Vector CrossN = InPolygon.Normal.Cross(T);
 		CrossN.normalize();
 
-		float fMin = _FLT_MAX;
+		float fMin = V_FLT_MAX;
 
 		Vector p = InVertices[InPolygon.VertexIndexes[0]];
 
@@ -622,8 +622,8 @@ void CalcSplineBBox(TVecIndexedPoint2f& srcSpline)
 		return;
 	}
 
-	BoundChilds.bound_max = Vector2f(-_FLT_MAX,-_FLT_MAX);
-	BoundChilds.bound_min = Vector2f(_FLT_MAX,_FLT_MAX);
+	BoundChilds.bound_max = Vector2f(-V_FLT_MAX, -V_FLT_MAX);
+	BoundChilds.bound_min = Vector2f(V_FLT_MAX, V_FLT_MAX);
 
 	TVecIndexedPoint2fIterator Iterator = srcSpline.begin();
 

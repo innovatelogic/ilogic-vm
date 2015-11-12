@@ -289,7 +289,7 @@ private:
 		stream << "<" << GetType() << OutValue << (bContainChilds ? ">" : "/>");
 
 		if (bSaveExt){
-			stream << StreamInternal;
+			//stream << StreamInternal;
 		}
 
 		if (!GetExternal() || bSaveAsExternal)

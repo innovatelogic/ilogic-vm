@@ -7,8 +7,8 @@ m_node::node_type m_model::type = GEOMETRY;
 
 //-----------------------------------------------------------------------
 m_model::m_model()
-: aabb_min( _FLT_MAX, _FLT_MAX, _FLT_MAX)
-, aabb_max( -_FLT_MAX, -_FLT_MAX, -_FLT_MAX)
+: aabb_min(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX)
+, aabb_max(-V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX)
 {
 
 }

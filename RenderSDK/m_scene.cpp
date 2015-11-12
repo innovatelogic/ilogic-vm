@@ -11,10 +11,10 @@
 //-----------------------------------------------------------------------
 m_scene::m_scene()
 : num_keys(0)
-, aabb_min(_FLT_MAX, _FLT_MAX, _FLT_MAX)
-, aabb_max(-_FLT_MAX, -_FLT_MAX, -_FLT_MAX)
-, models_aabb_min(_FLT_MAX, _FLT_MAX, _FLT_MAX)
-, models_aabb_max(-_FLT_MAX, -_FLT_MAX, -_FLT_MAX)
+, aabb_min(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX)
+, aabb_max(-V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX)
+, models_aabb_min(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX)
+, models_aabb_max(-V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX)
 , ambient(float(0.1f),float(0.1f),float(0.1f),1.f)
 {
 }

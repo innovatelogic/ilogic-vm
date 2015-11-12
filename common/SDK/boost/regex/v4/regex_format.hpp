@@ -96,7 +96,7 @@ class basic_regex_formatter
 public:
    typedef typename traits::char_type char_type;
    basic_regex_formatter(OutputIterator o, const Results& r, const traits& t)
-      : m_traits(t), m_results(r), m_out(o), m_state(output_copy), m_restore_state(output_copy), m_have_conditional(false) {}
+      : m_traits(t), m_results(r), m_out(o), m_position(), m_end(), m_flags(), m_state(output_copy), m_restore_state(output_copy), m_have_conditional(false) {}
    OutputIterator format(ForwardIter p1, ForwardIter p2, match_flag_type f);
    OutputIterator format(ForwardIter p1, match_flag_type f)
    {
@@ -283,7 +283,8 @@ void basic_regex_formatter<OutputIterator, Results, traits, ForwardIter>::format
             format_perl();
             break;
          }
-         // fall through, not a special character:
+         // not a special character:
+         BOOST_FALLTHROUGH;
       default:
          put(*m_position);
          ++m_position;
@@ -354,7 +355,7 @@ void basic_regex_formatter<OutputIterator, Results, traits, ForwardIter>::format
    case '{':
       have_brace = true;
       ++m_position;
-      // fall through....
+      BOOST_FALLTHROUGH;
    default:
       // see if we have a number:
       {
@@ -1064,7 +1065,7 @@ struct format_functor_c_string
    template <class OutputIter>
    OutputIter operator()(const Match& m, OutputIter i, boost::regex_constants::match_flag_type f, const Traits& t = Traits())
    {
-      typedef typename Match::char_type char_type;
+      //typedef typename Match::char_type char_type;
       const charT* end = func;
       while(*end) ++end;
       return regex_format_imp(i, m, func, end, f, t);
@@ -1083,7 +1084,7 @@ struct format_functor_container
    template <class OutputIter>
    OutputIter operator()(const Match& m, OutputIter i, boost::regex_constants::match_flag_type f, const Traits& t = Traits())
    {
-      typedef typename Match::char_type char_type;
+      //typedef typename Match::char_type char_type;
       return re_detail::regex_format_imp(i, m, func.begin(), func.end(), f, t);
    }
 private:

@@ -44,7 +44,7 @@ def main():
 	specs = dict()
 	
 	specs['tools_dep'] = {
-		'gen_id': 'vc110',
+		'gen_id': 'vc140',
 		'amd64': False,
 		'xpSupport': True,
 		'source_dir': source_dir,
@@ -56,7 +56,7 @@ def main():
 	}
 	
 	specs['tools'] = {
-		'gen_id': 'vc110',
+		'gen_id': 'vc140',
 		'amd64': False,
 		'xpSupport': True,
 		'source_dir': source_dir,
@@ -79,7 +79,7 @@ def main():
 			print("begin")
 			tools_deps.generate()
 			tools_deps.build('Debug')
-			tools_deps.build('Release')
+			#tools_deps.build('Release')
 			tools.generate()
 			tools.build('Debug')
 			#tools.build('Release')

@@ -126,7 +126,7 @@ public:
 
  	std::string ToString()
  	{
- 		return boost::lexical_cast<std::string>(m[0]) + ";" +
+		return "TODO";/* boost::lexical_cast<std::string>(m[0]) + ";" +
  			boost::lexical_cast<std::string>(m[1]) + ";" +
  			boost::lexical_cast<std::string>(m[2]) + ";" +
  			boost::lexical_cast<std::string>(m[3]) + ";" + 
@@ -141,7 +141,7 @@ public:
  			boost::lexical_cast<std::string>(m[12]) + ";" + 
  			boost::lexical_cast<std::string>(m[13]) + ";" + 
  			boost::lexical_cast<std::string>(m[14]) + ";" + 
- 			boost::lexical_cast<std::string>(m[15]) + ";";
+ 			boost::lexical_cast<std::string>(m[15]) + ";";*/
  	}
 };
 

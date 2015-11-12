@@ -489,7 +489,7 @@ void CActor::PreRelease()
   		// add to all parent's child
  		for (TVecActorChild::iterator IterChild = IterParent->ChildNodes.begin(); IterChild != IterParent->ChildNodes.end(); ++IterChild)
  		{
- 			if ((*IterChild)->CompositeBounds.bound_min.x == _FLT_MAX){
+ 			if ((*IterChild)->CompositeBounds.bound_min.x == V_FLT_MAX){
  				continue;
  			}
  			IterParent->CompositeBounds += (*IterChild)->CompositeBounds;

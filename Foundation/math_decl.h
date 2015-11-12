@@ -24,7 +24,7 @@ typedef float scalar_t;
 
 #define INDEX_NONE          -1
 
-#define _FLT_MAX            3.402823466e+38F        /* max value */
+#define V_FLT_MAX            3.402823466e+38F        /* max value */
 
 // Type ranges
 #define MAX_SBYTE           0x7f                            //!<    max possible sbyte value

@@ -362,11 +362,11 @@ std::string ActionBase::GetLinkageString()
 			int Index = 0;
 			if ((*Iter)->LinkSocket && GetObjectIndex((*Iter)->LinkSocket->Owner, GetRootNode(), Index))
 			{
-				StrValue += boost::lexical_cast<std::string>(Index) + ";";
+				//StrValue += boost::lexical_cast<std::string>(Index) + ";";
 			}
 			else
 			{
-				StrValue += boost::lexical_cast<std::string>(-1) + ";";
+				//StrValue += boost::lexical_cast<std::string>(-1) + ";";
 			}
 		}
 	}

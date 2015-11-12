@@ -29,6 +29,15 @@ public:
 		SetBounds(min, max);
 	}
 
+	Bounds3f(const Bounds3f& source)
+	{
+		if (this != &source)
+		{
+			bound_min = source.bound_min;
+			bound_max = source.bound_max;
+		}
+	}
+
 	void SetBounds(const Vector& min, const Vector& max)
 	{
 		bound_min = min;
@@ -98,12 +107,12 @@ public:
 
 	std::string ToString() const
 	{
-		return boost::lexical_cast<std::string>(bound_min.x) + ";" +
+		return "TODO";/*boost::lexical_cast<std::string>(bound_min.x) + ";" +
 				boost::lexical_cast<std::string>(bound_min.y) + ";" +
 				boost::lexical_cast<std::string>(bound_min.z) + ";" +
 				boost::lexical_cast<std::string>(bound_max.x) + ";" + 
 				boost::lexical_cast<std::string>(bound_max.y) + ";" + 
-				boost::lexical_cast<std::string>(bound_max.z) + ";";
+				boost::lexical_cast<std::string>(bound_max.z) + ";"*/;
 	}
 
 	bool IsValid() const

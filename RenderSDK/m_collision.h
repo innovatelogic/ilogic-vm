@@ -9,7 +9,7 @@
 
 struct m_collision
 {
-	typedef enum collision_type
+	enum collision_type
 	{
 		BOX			= 0,
 		SPHERE		= 1,

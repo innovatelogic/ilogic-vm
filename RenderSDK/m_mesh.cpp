@@ -14,8 +14,8 @@ m_mesh::m_mesh()
 , texcoord_sets(0)
 , num_faces(0)
 , faces_idx(0)
-, aabb_min(-_FLT_MAX, -_FLT_MAX, -_FLT_MAX) // bounding box information...
-, aabb_max(_FLT_MAX, _FLT_MAX, _FLT_MAX)
+, aabb_min(-V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX) // bounding box information...
+, aabb_max(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX)
 {
 }
 

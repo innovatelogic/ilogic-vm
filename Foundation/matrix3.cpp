@@ -20,6 +20,17 @@ Matrix3f::Matrix3f(float m_00, float m_01, float m_02,
 }
 
 //------------------------------------------------------------------------
+Matrix3f::Matrix3f(const Matrix3f &source)
+{
+	if (this != &source)
+	{
+		row0 = source.row0;
+		row1 = source.row1;
+		row2 = source.row2;
+	}
+}
+
+//------------------------------------------------------------------------
 void Matrix3f::Set(float m_00, float m_01, float m_02, 
 		          float m_10, float m_11, float m_12,  
 		          float m_20, float m_21, float m_22)

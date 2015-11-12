@@ -1226,7 +1226,7 @@ Vector CPolygonMesh::GetSelectionPivot() const
 {
 	Vector OutResult(0.f, 0.f, 0.f);
 
-	Bounds3f Bounds(_FLT_MAX, _FLT_MAX, _FLT_MAX, -_FLT_MAX, -_FLT_MAX, -_FLT_MAX);
+	Bounds3f Bounds(V_FLT_MAX, V_FLT_MAX, V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX, -V_FLT_MAX);
 
 	for (std::map<int, SSelectInfo>::const_iterator Iter = m_MapSelectInfo.begin(); Iter != m_MapSelectInfo.end(); ++Iter)
 	{

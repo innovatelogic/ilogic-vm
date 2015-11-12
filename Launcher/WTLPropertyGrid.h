@@ -1637,7 +1637,7 @@ public:
 					cc.lpCustColors = (LPDWORD) acrCustClr;
 					cc.Flags = CC_FULLOPEN | CC_RGBINIT;
 
-					Buffer = boost::lexical_cast<DWORD>(ascii);
+					Buffer = "";// boost::lexical_cast<DWORD>(ascii);
 					cc.rgbResult = RGB(GetBValue(Buffer), GetGValue(Buffer), GetRValue(Buffer)); // 0x00rrggbb -> 0x00bbggrr
 
 					if (ChooseColor(&cc) == TRUE)

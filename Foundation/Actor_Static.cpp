@@ -148,13 +148,13 @@ std::string CActor::ResolveName(std::string& PrefferName, const CActor * InPlace
 		PreffixValue = PrefferName; // use preffer as a prefix
 	}
 
-	std::string FindName = PreffixValue + boost::lexical_cast<std::string>(++CounterIndex);
+	std::string FindName = PreffixValue;// +boost::lexical_cast<std::string>(++CounterIndex);
 	while (InPlaceObject->FindActor(FindName.c_str()))
 	{
 		// @TODO: add break
-		FindName = PreffixValue + boost::lexical_cast<std::string>(++CounterIndex);
+		FindName = PreffixValue;// +boost::lexical_cast<std::string>(++CounterIndex);
 	}
-	return PreffixValue + boost::lexical_cast<std::string>(CounterIndex);
+	return PreffixValue;// +boost::lexical_cast<std::string>(CounterIndex);
 }
 
 //----------------------------------------------------------------------------------------------

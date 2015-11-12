@@ -34,6 +34,8 @@ class EXPORT Matrix3f
 				float m_10, float m_11, float m_12, 
 				float m_20, float m_21, float m_22);
 
+		Matrix3f(const Matrix3f &source);
+
 		void Set(float m_00, float m_01, float m_02, 
 				 float m_10, float m_11, float m_12,  
 				 float m_20, float m_21, float m_22);
