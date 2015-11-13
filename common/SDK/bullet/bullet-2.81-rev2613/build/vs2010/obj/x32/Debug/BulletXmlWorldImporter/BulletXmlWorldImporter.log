@@ -1,8 +1,0 @@
-﻿  btBulletXmlWorldImporter.cpp
-  string_split.cpp
-  tinystr.cpp
-  tinyxml.cpp
-  tinyxmlerror.cpp
-  tinyxmlparser.cpp
-..\..\Extras\Serialize\BulletXmlWorldImporter\btBulletXmlWorldImporter.cpp(75): warning C4018: '<' : signed/unsigned mismatch
-  BulletXmlWorldImporter.vcxproj -> D:\Project\common\SDK\bullet\bullet-2.81-rev2613\build\vs2010\..\..\Extras\lib\BulletXmlWorldImporter_vs2010_debug.lib

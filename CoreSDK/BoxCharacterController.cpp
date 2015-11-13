@@ -36,7 +36,7 @@ BoxCharacterController::~BoxCharacterController()
 	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 	//UNREGISTER_EVENT_PROXY_INPUT(GetParent(), this);
 
-	GetPhysicsEngine()->ReleaseObject(this);
+	//GetPhysicsEngine()->ReleaseObject(this);
 }
 
 //------------------------------------------------------------------------

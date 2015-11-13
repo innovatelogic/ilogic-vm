@@ -99,6 +99,27 @@ ExternalProject_Add(zlib
     LOG_CONFIGURE ON
     LOG_BUILD ON
     )	
+	
+#glew	
+ExternalProject_Add(bullet
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/SDK/bullet/bullet3-2.83.6
+	DOWNLOAD_COMMAND ""
+    # cmake arguments
+    CMAKE_ARGS
+			-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../Libs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../Libs
+			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../bin
+			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../bin
+			   #-DCMAKE_DEBUG_POSTFIX=_d
+			${ARGS_CMAKE_ARGS}# Disable install step
+    INSTALL_COMMAND ""
+
+    # Wrap download, configure and build steps in a script to log output
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON
+    )	
 # INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BINARY_DIR}/deploy_deps.cmd )")
 #IF(NOT EXISTS ${CMAKE_BIN_DIR}/${DEFAULT_PROJECT_ARC})
 #ENDIF()

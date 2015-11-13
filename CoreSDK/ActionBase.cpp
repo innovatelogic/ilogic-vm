@@ -1,9 +1,9 @@
 #include "coresdkafx.h"
-
+/*
 REGISTER_CLASS_ACTION_EX(ActionBase, CObjectAbstract)
 	new PropertyVector2f("Position", (BYTE*)&((ActionBase*)NULL)->Position - (BYTE*)NULL, "ActionBase", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS_ACTION(ActionBase, CObjectAbstract);
-
+*/
 #define CAPTION_HEIGHT 35
 const int ConnectorWidth = 15;
 const int ConnectorHeight = 8;

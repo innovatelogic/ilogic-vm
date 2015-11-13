@@ -1,6 +1,0 @@
-﻿  main.cpp
-  SerializeDemo.cpp
-  Win32SerializeDemo.cpp
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\SerializeDemo\main.cpp': No such file or directory
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\SerializeDemo\SerializeDemo.cpp': No such file or directory
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\SerializeDemo\Win32SerializeDemo.cpp': No such file or directory

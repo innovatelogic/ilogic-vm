@@ -54,7 +54,7 @@ TriggerObject::~TriggerObject()
 {
 	UNREGISTER_EVENT(this, this, Event_OnChangePivot);
 
-	GetPhysicsEngine()->ReleaseObject(this);
+	//GetPhysicsEngine()->ReleaseObject(this);
 
 	ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
 	Driver->UnRegisterAction(ActionEvent);

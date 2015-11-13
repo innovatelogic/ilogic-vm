@@ -25,6 +25,7 @@
 
 #include "game_types.h"
 #include "../Foundation/StdafxFoundation.h"
+#include "ObjectAbstract.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
@@ -68,7 +69,11 @@ public:
 	inline_ class Registry*					GetRegistry()		const { return m_pRegistryInstance.get(); }
 	inline_ class CRenderSDK*				GetRenderSDK()		const { return m_pRenderSDK; }      
 	inline_ class ScriptDriver*				GetScriptDriver()	const { return m_pScriptDriver; } 
+
+#ifdef PHYS_ENABLED
 	inline_ class IPhysicsEngine*			GetPhysicsEngine()	const { return m_pPhysicsEngine; }
+#endif//PHYS_ENABLED
+
 	inline_ class Explorer*					GetExplorerInstance()	const { return m_pExplorerInstance; }
 	inline_ class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
 	inline_ class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
@@ -140,7 +145,10 @@ private:
 	boost::shared_ptr<class Registry> m_pRegistryInstance; 
 
 	/** Global resources */
+#ifdef PHYS_ENABLED
 	class IPhysicsEngine			*m_pPhysicsEngine;
+#endif//PHYS_ENABLED
+
 	class CRenderSDK				*m_pRenderSDK;
     class Explorer					*m_pExplorerInstance;
 	class CameraManager				*m_pCameraManager;

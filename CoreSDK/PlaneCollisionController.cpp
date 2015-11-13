@@ -28,7 +28,7 @@ void CPlaneCollisionController::Initialize()
 //------------------------------------------------------------------------
 bool CPlaneCollisionController::CreatePhysActor(Matrix &matrix)
 {
-	return GetPhysicsEngine()->CreatePlane(this, &matrix);
+	return false;// GetPhysicsEngine()->CreatePlane(this, &matrix);
 }
 
 //------------------------------------------------------------------------

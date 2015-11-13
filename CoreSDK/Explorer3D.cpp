@@ -60,7 +60,7 @@ void Explorer3D::DoDraw()
 	if (GetAppMain()->GetShowGrid() && GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{
 		DrawGrid();
-		GetPhysicsEngine()->DebugRender(GetRenderComponent());
+		//GetPhysicsEngine()->DebugRender(GetRenderComponent());
 	}
 
 }

@@ -28,13 +28,13 @@ void CRestrictedVolumeCollisionController::Initialize()
 //------------------------------------------------------------------------
 bool CRestrictedVolumeCollisionController::CreatePhysActor(Matrix &matrix, Vector &Ext, bool bSides[6])
 {
-	m_pPhysNode = GetPhysicsEngine()->CreateRestrictedVolume(this, Ext, &matrix, bSides);
+	//m_pPhysNode = GetPhysicsEngine()->CreateRestrictedVolume(this, Ext, &matrix, bSides);
 	return true;
 }
 
 //------------------------------------------------------------------------
 void CRestrictedVolumeCollisionController::ReleasePhysActor()
 {
-	GetPhysicsEngine()->ReleaseObject(m_pPhysNode);
+	//GetPhysicsEngine()->ReleaseObject(m_pPhysNode);
 	m_pPhysNode = NULL;
 }

@@ -67,7 +67,7 @@ CollisionController::CollisionController(const CollisionController &Source)
 CollisionController::~CollisionController()
 {
 	if (m_pPhysNode){
-		GetPhysicsEngine()->ReleaseObject(m_pPhysNode);
+		//GetPhysicsEngine()->ReleaseObject(m_pPhysNode);
 	}
 }
 
@@ -98,7 +98,7 @@ void CollisionController::OnChangePivot(const CActor * Sender, ESystemEventID Ev
 {
 	Matrix TempMat;// = GetParent()->GetTransformedWTM();
 
-	GetPhysicsEngine()->SetActorPosition(this, &TempMat);
+	//GetPhysicsEngine()->SetActorPosition(this, &TempMat);
 }
 
 //------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void CollisionController::Enable(bool bFlag)
 {
 	if (m_pPhysNode)
 	{
-		GetPhysicsEngine()->SetActorEnable(m_pPhysNode, bFlag);
+		//GetPhysicsEngine()->SetActorEnable(m_pPhysNode, bFlag);
 	}
 }
 
@@ -115,7 +115,7 @@ void CollisionController::ContactTest()
 {
 	if (m_pPhysNode)
 	{
-		GetPhysicsEngine()->ContactTest(m_pPhysNode);
+		//GetPhysicsEngine()->ContactTest(m_pPhysNode);
 	}
 }
 
@@ -124,7 +124,7 @@ void CollisionController::SetWorldPos(const Matrix &matrix)
 {
 	if (m_pPhysNode)
 	{
-		GetPhysicsEngine()->SetActorPositionNode(m_pPhysNode, &matrix);
+		//GetPhysicsEngine()->SetActorPositionNode(m_pPhysNode, &matrix);
 	}
 	
 }

@@ -7,6 +7,8 @@
 
 #include "physicsafx.h"
 
+#ifdef PHYS_ENABLED
+
 class CORESDK_API IPhysicsEngine
 {
 public:
@@ -142,5 +144,7 @@ public:
 protected:
 	virtual void SyncActors() = 0;
 };
+
+#endif//PHYS_ENABLED
 
 #endif//__iphysicsengine_h__

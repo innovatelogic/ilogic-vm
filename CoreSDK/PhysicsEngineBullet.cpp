@@ -1,6 +1,8 @@
 #include "coresdkafx.h"
 #include <btBulletDynamicsCommon.h>
 
+#ifdef PHYS_ENABLED
+
 //----------------------------------------------------------------------------------------------
 CPhysicsEngineBullet::CPhysicsEngineBullet(CCoreSDK *pSDK)
 : m_pBroadPhase(0)
@@ -1327,3 +1329,5 @@ CActor* CPhysicsEngineBullet::GetActorByShape(const btCollisionShape *pShape) co
 	}
 	return pOutActor;
 }
+
+#endif PHYS_ENABLED

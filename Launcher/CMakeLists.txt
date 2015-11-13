@@ -9,31 +9,43 @@ if(Boost_FOUND)
   link_directories(${Boost_LIBRARY_DIR})
 endif()
 
+set(BULLET_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet3-2.83.6/src/)
 
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
-include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
+include_directories(${BULLET_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/common/WTL/Include)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/src)
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
 
-#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/lib/)
 
-set(BULLET_ARCHIVES BulletCollision_vs2010_debug.lib
-					BulletDynamics_vs2010_debug.lib
-					BulletSoftBody_vs2010_debug.lib
-					ConvexDecomposition_vs2010_debug.lib
-					HACD_vs2010_debug.lib
-					BulletDynamics_vs2010_debug.lib
-					LinearMath_vs2010_debug.lib)
 
-set(LIBRARIES TinyXML Foundation RenderSDK CoreSDK nv_math ${BULLET_ARCHIVES})
+SET(BULLET_LIBRARY ${CMAKE_BINARY_DIR}/../Libs)
+
+SET(BULLET_LIBRARIES debug ${CMAKE_BINARY_DIR}/../Libs/Bullet2FileLoader_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet2FileLoader.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/Bullet3Collision_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet3Collision.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/Bullet3Common_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet3Common.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/Bullet3Dynamics_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet3Dynamics.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/Bullet3Geometry_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet3Geometry.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/Bullet3OpenCL_clew_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/Bullet3OpenCL_clew.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletCollision_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletCollision.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletDynamics_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletDynamics.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletFileLoader_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletFileLoader.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletSoftBody_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletSoftBody.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletWorldImporter_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletWorldImporter.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/BulletXmlWorldImporter_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/BulletXmlWorldImporter.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/ConvexDecomposition_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/ConvexDecomposition.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/HACD_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/HACD.lib)
+SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearMath_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/LinearMath.lib)
+
+
+set(LIBRARIES TinyXML Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES})
 
 set(SOURCE 
 	ActionPlayEditor.cpp

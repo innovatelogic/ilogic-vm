@@ -40,7 +40,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 				m_pCoreSDK->RestoreState();
 
 				m_pCoreSDK->SetPause(true);
-				m_pCoreSDK->GetPhysicsEngine()->SetEnableSimulation(false);
+				//m_pCoreSDK->GetPhysicsEngine()->SetEnableSimulation(false);
 
 				if (m_pCoreSDK->IsAEditor()) {	// if editor mode active, while paused drop IsAGame state flag.
 					m_pCoreSDK->SetIsAGame(false);
@@ -59,7 +59,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 				m_pCoreSDK->SaveState();
 
 				m_pCoreSDK->SetPause(false);
-				m_pCoreSDK->GetPhysicsEngine()->SetEnableSimulation(true);
+				//m_pCoreSDK->GetPhysicsEngine()->SetEnableSimulation(true);
 
 				if (m_pCoreSDK->IsAEditor()) {	// if editor mode active, while paused drop IsAGame state flag.
 					m_pCoreSDK->SetIsAGame(true);

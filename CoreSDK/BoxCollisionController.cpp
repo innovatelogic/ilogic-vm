@@ -28,7 +28,9 @@ BoxCollisionController::~BoxCollisionController()
 	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 	//UNREGISTER_EVENT_PROXY_INPUT(GetParent(), this);
 
+#ifdef PHYS_ENABLED
 	GetPhysicsEngine()->ReleaseObject(this);
+#endif
 }
 
 //------------------------------------------------------------------------

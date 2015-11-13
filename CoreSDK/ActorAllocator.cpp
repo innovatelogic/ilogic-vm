@@ -64,10 +64,10 @@ void ActorAllocator::SetAppMain(CCoreSDK * App)
 }
 
 //----------------------------------------------------------------------------------------------
-IPhysicsEngine* ActorAllocator::GetPhysicsEngine() const
+/*IPhysicsEngine* ActorAllocator::GetPhysicsEngine() const
 {
 	return  GetAppMain()->GetPhysicsEngine();
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 // ScriptDriver* ActorAllocator::GetObjectScriptDriver()

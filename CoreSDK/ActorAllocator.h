@@ -35,7 +35,7 @@ public:
 	*/
 	//inline_ virtual ScriptDriver*	GetObjectScriptDriver() const;
 
-	inline_ IPhysicsEngine*	GetPhysicsEngine() const;
+	//inline_ IPhysicsEngine*	GetPhysicsEngine() const;
 
 	virtual bool	DoEventReleased(const MouseInputData& InputData);
 

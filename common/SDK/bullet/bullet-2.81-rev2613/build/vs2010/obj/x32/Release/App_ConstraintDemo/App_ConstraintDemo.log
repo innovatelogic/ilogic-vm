@@ -1,6 +1,0 @@
-﻿  ConstraintDemo.cpp
-  main.cpp
-  Win32ConstraintDemo.cpp
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\ConstraintDemo\ConstraintDemo.cpp': No such file or directory
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\ConstraintDemo\main.cpp': No such file or directory
-c1xx : fatal error C1083: Cannot open source file: '..\..\Demos\ConstraintDemo\Win32ConstraintDemo.cpp': No such file or directory

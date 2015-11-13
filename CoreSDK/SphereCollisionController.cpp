@@ -63,7 +63,7 @@ bool CSphereCollisionController::CreatePhysActor(CContactSensorCallbackBt *pCall
 
 	if (pInterface)
 	{
-		SSphereBodyDesc Desc;
+		/*SSphereBodyDesc Desc;
 		Desc.fRadius = GetRadius();
 		Desc.bStatic = GetStatic();
 		Desc.fDensity = GetDesteny();
@@ -79,7 +79,7 @@ bool CSphereCollisionController::CreatePhysActor(CContactSensorCallbackBt *pCall
 		Desc.KINEMATIC = Get_KINEMATIC();
 		Desc.pCallback = pCallback;
 	
-		m_pPhysNode = GetPhysicsEngine()->CreateSphere(this, &pInterface->GetTransformedWTM_(), Desc);
+		m_pPhysNode = GetPhysicsEngine()->CreateSphere(this, &pInterface->GetTransformedWTM_(), Desc);*/
 	}
 	return (m_pPhysNode != 0);
 }

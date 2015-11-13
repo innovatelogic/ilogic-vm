@@ -25,7 +25,7 @@ SplineCollision2DModificator::~SplineCollision2DModificator()
 	UNREGISTER_EVENT(GetParent(), this, Event_Updated);
 	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 
-	GetPhysicsEngine()->ReleaseObject(this);
+	//GetPhysicsEngine()->ReleaseObject(this);
 }
 
 //------------------------------------------------------------------------

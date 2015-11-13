@@ -5,6 +5,8 @@
 #pragma once
 #endif
 
+#include "LinearMath/btAlignedObjectArray.h"
+
 #include "UserAllocator.h"
 #include "Stream.h"
 #include "TriggerCallbackReport.h"
@@ -12,8 +14,6 @@
 #include "MovementData.h"
 #include "PhysNode.h"
 #include "mathlib.h"
-
-#include <LinearMath/btAlignedObjectArray.h>
 
 #define PHIS_MULTYPLIER 1.0f
 

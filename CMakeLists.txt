@@ -71,7 +71,7 @@ if (MSVC)
   add_definitions(     	
         -Zi # Always generate debug information.
         -MP # Enable parallel builds
-    	-WX # Enable warnings as errors
+    	#-WX # Enable warnings as errors
         /d2Zi+ # Put local variables and inline functions into the PDB
     )
     add_definitions(-D_VARIADIC_MAX=10)

@@ -5,6 +5,8 @@
 #pragma once
 #endif
 
+#ifdef PHYS_ENABLED
+
 #include "IPhysicsEngine.h"
 
 class CActor;
@@ -178,5 +180,7 @@ private:
 
 	class CCoreSDK		*m_pCoreSDK;
 };
+
+#endif PHYS_ENABLED
 
 #endif//__physicsenginebullet_h__

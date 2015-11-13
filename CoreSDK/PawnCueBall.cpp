@@ -305,7 +305,7 @@ void CPawnCueBall::Update(float fDeltaTime)
 	m_linearVelocity += m_totalForce * fDeltaTime;
 
 	//GetAppMain()->GetPhysicsEngine()->SetCentralImpulse(m_pSphereController->GetPNode(), &m_totalForce);
-	GetAppMain()->GetPhysicsEngine()->SetCentralForce(m_pSphereController->GetPNode(), &m_totalForce);
+	//GetAppMain()->GetPhysicsEngine()->SetCentralForce(m_pSphereController->GetPNode(), &m_totalForce);
 
 	m_totalForce.Set(0.f, 0.f, 0.f);
 }

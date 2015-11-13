@@ -50,7 +50,7 @@ bool ActorCollisionController::Load(const char *filename)
 
 	if (pInterface)
 	{
-		m_pPhysNode = GetPhysicsEngine()->CreateActorFromFile(filename,
+		/*m_pPhysNode = GetPhysicsEngine()->CreateActorFromFile(filename,
 			this,
 			&pInterface->GetTransformedWTM_(), 
 			GetStatic(),
@@ -64,7 +64,7 @@ bool ActorCollisionController::Load(const char *filename)
 			Get_FROZEN_ROT_Z(),
 			Get_FROZEN_POS(),
 			Get_FROZEN_ROT(),
-			Get_KINEMATIC());
+			Get_KINEMATIC());*/
 	}
 	return bResult;
 }
@@ -78,7 +78,7 @@ bool ActorCollisionController::CreatePhysActor()
 
 	if (pInterface)
 	{
-		m_pPhysNode = GetPhysicsEngine()->CreateActorFromFile(m_XRef.c_str(),
+		/*m_pPhysNode = GetPhysicsEngine()->CreateActorFromFile(m_XRef.c_str(),
 											this,
 											&pInterface->GetTransformedWTM_(), 
 											GetStatic(),
@@ -92,7 +92,7 @@ bool ActorCollisionController::CreatePhysActor()
 											Get_FROZEN_ROT_Z(),
 											Get_FROZEN_POS(),
 											Get_FROZEN_ROT(),
-											Get_KINEMATIC());
+											Get_KINEMATIC());*/
 	}
 	return true;
 }
