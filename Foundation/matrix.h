@@ -126,22 +126,22 @@ public:
 
  	std::string ToString()
  	{
-		return "TODO";/* boost::lexical_cast<std::string>(m[0]) + ";" +
- 			boost::lexical_cast<std::string>(m[1]) + ";" +
- 			boost::lexical_cast<std::string>(m[2]) + ";" +
- 			boost::lexical_cast<std::string>(m[3]) + ";" + 
- 			boost::lexical_cast<std::string>(m[4]) + ";" + 
- 			boost::lexical_cast<std::string>(m[5]) + ";" + 
- 			boost::lexical_cast<std::string>(m[6]) + ";" +
- 			boost::lexical_cast<std::string>(m[7]) + ";" +
- 			boost::lexical_cast<std::string>(m[8]) + ";" +
- 			boost::lexical_cast<std::string>(m[9]) + ";" +
- 			boost::lexical_cast<std::string>(m[10]) + ";" +
- 			boost::lexical_cast<std::string>(m[11]) + ";" + 
- 			boost::lexical_cast<std::string>(m[12]) + ";" + 
- 			boost::lexical_cast<std::string>(m[13]) + ";" + 
- 			boost::lexical_cast<std::string>(m[14]) + ";" + 
- 			boost::lexical_cast<std::string>(m[15]) + ";";*/
+		return std::to_string(m[0]) + ";" +
+				std::to_string(m[1]) + ";" +
+				std::to_string(m[2]) + ";" +
+				std::to_string(m[3]) + ";" +
+				std::to_string(m[4]) + ";" +
+				std::to_string(m[5]) + ";" +
+				std::to_string(m[6]) + ";" +
+				std::to_string(m[7]) + ";" +
+				std::to_string(m[8]) + ";" +
+				std::to_string(m[9]) + ";" +
+				std::to_string(m[10]) + ";" +
+				std::to_string(m[11]) + ";" +
+				std::to_string(m[12]) + ";" +
+				std::to_string(m[13]) + ";" +
+				std::to_string(m[14]) + ";" +
+				std::to_string(m[15]) + ";";
  	}
 };
 

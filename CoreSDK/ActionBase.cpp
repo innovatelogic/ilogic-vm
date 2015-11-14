@@ -353,30 +353,30 @@ void ActionBase::SuperSerializer(std::stringstream &stream, bool bSaveAsExternal
 //----------------------------------------------------------------------------------------------
 std::string ActionBase::GetLinkageString()
 {
-	std::string StrValue("");
+	std::string outStr;
 
-	for (TVecSocketsConstIterator Iter = VecSockets.begin(); Iter != VecSockets.end(); ++Iter)
+	for (auto *socket : VecSockets)
 	{
-		if ((*Iter)->Dir == ELink_Out)
+		if (socket->Dir == ELink_Out)
 		{
-			int Index = 0;
-			if ((*Iter)->LinkSocket && GetObjectIndex((*Iter)->LinkSocket->Owner, GetRootNode(), Index))
+			int index = 0;
+			if (socket->LinkSocket && GetObjectIndex(socket->LinkSocket->Owner, GetRootNode(), index))
 			{
-				//StrValue += boost::lexical_cast<std::string>(Index) + ";";
+				outStr += std::to_string(index) + ";";
 			}
 			else
 			{
-				//StrValue += boost::lexical_cast<std::string>(-1) + ";";
+				outStr += std::to_string(-1) + ";";
 			}
 		}
 	}
 
-	if (!StrValue.empty())
+	if (!outStr.empty())
 	{
-		StrValue = "Link=\"Link:" + StrValue +  "\"";
+		outStr = "Link=\"Link:" + outStr +  "\"";
 	}
 
-	return StrValue;
+	return outStr;
 }
 
 //----------------------------------------------------------------------------------------------

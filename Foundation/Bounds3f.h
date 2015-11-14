@@ -98,21 +98,21 @@ public:
 		return inX && inY && inZ; 
 	}
 
-	bool HitTest(const Vector2f &Position) const
+	bool HitTest(const Vector2f &position) const
 	{
-		bool inX = (Position.x >= bound_min.x && Position.x <= bound_max.x);
-		bool inY = (Position.y >= bound_min.y && Position.y <= bound_max.y);
+		bool inX = (position.x >= bound_min.x && position.x <= bound_max.x);
+		bool inY = (position.y >= bound_min.y && position.y <= bound_max.y);
 		return inX && inY; 
 	}
 
 	std::string ToString() const
 	{
-		return "TODO";/*boost::lexical_cast<std::string>(bound_min.x) + ";" +
-				boost::lexical_cast<std::string>(bound_min.y) + ";" +
-				boost::lexical_cast<std::string>(bound_min.z) + ";" +
-				boost::lexical_cast<std::string>(bound_max.x) + ";" + 
-				boost::lexical_cast<std::string>(bound_max.y) + ";" + 
-				boost::lexical_cast<std::string>(bound_max.z) + ";"*/;
+		return std::to_string(bound_min.x) + ";" +
+				std::to_string(bound_min.y) + ";" +
+				std::to_string(bound_min.z) + ";" +
+				std::to_string(bound_max.x) + ";" +
+				std::to_string(bound_max.y) + ";" +
+				std::to_string(bound_max.z) + ";";
 	}
 
 	bool IsValid() const
