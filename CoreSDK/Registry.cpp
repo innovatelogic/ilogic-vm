@@ -9,15 +9,15 @@ Registry::Registry()
 , ControlBox(10.f,10.f)
 , ControlBoxOrigin(10.f,10.f)
 {
-	RegisterPath("$registry");
-	RegisterPath("$cashe");
-	RegisterPath("$Games");
-	RegisterPath("$System");
-	RegisterPath("$System\\interface");
-	RegisterPath("$System\\fonts");
-	RegisterPath("$cashe\\Textures");
-	RegisterPath("$cashe\\Models");
-	RegisterPath("$cashe\\Materials");
+	RegisterPath("data/$registry");
+	RegisterPath("data/$cashe");
+	RegisterPath("data/$Games");
+	RegisterPath("data/$System");
+	RegisterPath("data/$System/interface");
+	RegisterPath("data/$System/fonts");
+	RegisterPath("data/$cashe/Textures");
+	RegisterPath("data/$cashe/Models");
+	RegisterPath("data/$cashe/Materials");
 }
 
 //----------------------------------------------------------------------------------------------
@@ -26,11 +26,11 @@ Registry::~Registry()
 	MapTypeIcons.empty();
 	MapOprationsIcons.empty();
 
-	UnRegisterPath("$registry");
-	UnRegisterPath("$cashe");
-	UnRegisterPath("$Games");
-	UnRegisterPath("$System");
-	UnRegisterPath("$System\\interface");
+	UnRegisterPath("data/$registry");
+	UnRegisterPath("data/$cashe");
+	UnRegisterPath("data/$Games");
+	UnRegisterPath("data/$System");
+	UnRegisterPath("data/$System/interface");
 }
 
 //----------------------------------------------------------------------------------------------

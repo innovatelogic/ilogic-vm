@@ -376,10 +376,10 @@ BOOL D3DDriver::InitRenderDriver(HWND hWnd, unsigned int width, unsigned int hei
 //----------------------------------------------------------------------------------------------
 bool D3DDriver::InitDefaultResources()
 {
-	m_pTextureDef = LoadTextureW(L"..\\$cashe\\Textures\\dev_common_64_64.tga");
+	m_pTextureDef = LoadTextureW(L"../data/$cashe/Textures/dev_common_64_64.tga");
 
-	m_pDefaultDiffuse[EEF_PlainDbg]		 = LoadMaterialEffect("..\\$system\\ogl_plain_dbg.vs");
-	m_pDefaultDiffuse[EEF_PlainColorDbg] = LoadMaterialEffect("..\\$system\\ogl_plain_color_dbg.vs");
+	m_pDefaultDiffuse[EEF_PlainDbg]		 = LoadMaterialEffect("../data/$system/ogl_plain_dbg.vs");
+	m_pDefaultDiffuse[EEF_PlainColorDbg] = LoadMaterialEffect("../data/$system/ogl_plain_color_dbg.vs");
 
 	return true;
 }

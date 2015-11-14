@@ -106,7 +106,7 @@ public:
 
 		m_pPropertyGridPane = new CPanePropertyContainer<T_CLASS>(pAppMain);
 
-		std::wstring new_path = BuildFolderPath(L"\\$cashe");
+		std::wstring new_path = BuildFolderPath(L"data\\$cashe");
 
 		BuildContentTree(new_path.c_str());
 	}
