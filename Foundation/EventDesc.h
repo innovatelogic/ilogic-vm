@@ -11,11 +11,11 @@
 //
 //----------------------------------------------------------------------------------------------
 template<class T>
-class EXPORT EventAbstract
+class EXPORT EventAbstract 
 {	
 public:
 	EventAbstract()
-		: ReceiverObject(nullptr)
+		: m_receiverObject(nullptr)
 		, EventId(Event_None)
 	{
 	}
@@ -26,7 +26,7 @@ public:
 
 	virtual void		CallEvent(const T * Sender) = 0;	
 
-	const T				*ReceiverObject; // pointer to invoking object
+	const T				*m_receiverObject; // pointer to invoking object
 	ESystemEventID		EventId;
 };
 
@@ -34,9 +34,9 @@ public:
 //
 //---------------------------------------------------------------------
 template<class T>
-class EXPORT EventDesc : public EventAbstract<T>
+class EXPORT EventDesc final : public EventAbstract<T>
 {	
-	typedef boost::signal<void(const T*, ESystemEventID)> TSignalEvent;
+	typedef boost::signals2::signal<void(const T*, ESystemEventID)> TSignalEvent;
 
 public:
 	EventDesc()
@@ -45,13 +45,13 @@ public:
 
 	virtual ~EventDesc()
 	{
-		Event.disconnect(ReceiverObject);
-		ReceiverObject = nullptr;
+		Event.disconnect(m_receiverObject);
+		m_receiverObject = nullptr;
 	
 		EventId = Event_None;
 	}
 
-	virtual void CallEvent(const T * Sender)
+	void CallEvent(const T * Sender) override
 	{
 		Event(Sender, EventId);
 	}
@@ -63,9 +63,9 @@ public:
 //
 //---------------------------------------------------------------------
 template<class T>
-class EXPORT EventKeyInputProxy : public EventAbstract<T>
+class EXPORT EventKeyInputProxy final : public EventAbstract<T>
 {	
-	typedef boost::signal<bool(const T*, const EventInput &InputData)> TSignalEvent;
+	typedef boost::signals2::signal<bool(const T*, const EventInput &InputData)> TSignalEvent;
 
 public:
 	EventKeyInputProxy()
@@ -74,11 +74,13 @@ public:
 	virtual ~EventKeyInputProxy()
 	{}
 
-	virtual void Execute(const T * Sender, const EventInput &InputData)
+	void Execute(const T * Sender, const EventInput &InputData)
 	{
 		Event(Sender, InputData);
 	}
-	virtual void CallEvent(const T * Sender) {}
+
+	void CallEvent(const T * Sender) override 
+	{}
 
 	TSignalEvent Event;
 };

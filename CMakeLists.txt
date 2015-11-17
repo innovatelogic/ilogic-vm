@@ -68,7 +68,7 @@ if (MSVC)
   # http://www.ogre3d.org/forums/viewtopic.php?f=2&t=60015
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zm282" )
 
-  add_definitions(     	
+  add_definitions(
         -Zi # Always generate debug information.
         -MP # Enable parallel builds
     	#-WX # Enable warnings as errors

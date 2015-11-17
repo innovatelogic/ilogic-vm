@@ -252,7 +252,7 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 	bool bFind = false;\
 	for (TVecConstEventsIterator Iter = INSTIGATOR_OBJECT->m_VEvents.begin(); Iter != INSTIGATOR_OBJECT->m_VEvents.end(); ++Iter)\
 {\
-	if (EVENT_ID == (*Iter)->EventId && RECEIVER_OBJECT == (*Iter)->ReceiverObject)\
+	if (EVENT_ID == (*Iter)->EventId && RECEIVER_OBJECT == (*Iter)->m_receiverObject)\
 	{\
 		bFind = true;\
 	}\
@@ -261,7 +261,7 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 {\
 	EventDesc<CActor> * EventInfo = new EventDesc<CActor>();\
 	assert(EventInfo);\
-	EventInfo->ReceiverObject = RECEIVER_OBJECT;\
+	EventInfo->m_receiverObject = RECEIVER_OBJECT;\
 	EventInfo->EventId = EVENT_ID;\
 	EventInfo->Event.connect(FUNCTION);\
 	INSTIGATOR_OBJECT->m_VEvents.push_back(EventInfo);\
@@ -274,7 +274,7 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 assert(INSTIGATOR_OBJECT);\
 for (TVecEventsIterator Iter = INSTIGATOR_OBJECT->m_VEvents.begin(); Iter != INSTIGATOR_OBJECT->m_VEvents.end(); ++Iter)\
 {\
-	if (EVENT_ID == (*Iter)->EventId && RECEIVER_OBJECT == (*Iter)->ReceiverObject)\
+	if (EVENT_ID == (*Iter)->EventId && RECEIVER_OBJECT == (*Iter)->m_receiverObject)\
 	{\
 		delete (*Iter);\
 		INSTIGATOR_OBJECT->m_VEvents.erase(Iter);\
@@ -324,7 +324,7 @@ for (TVecEventsIterator Iter = m_VEvents.begin(); Iter != m_VEvents.end(); ++Ite
 	bool bFind = false;\
 	for (TVecInputKeyEventsIterator Iter = EVENT_OBJECT->m_EventsInput.begin(); Iter != EVENT_OBJECT->m_EventsInput.end(); ++Iter)\
 {\
-	if (RECIEVER_OBJECT == (*Iter)->ReceiverObject)\
+	if (RECIEVER_OBJECT == (*Iter)->m_receiverObject)\
 	{\
 		bFind = true;\
 	}\
@@ -333,7 +333,7 @@ for (TVecEventsIterator Iter = m_VEvents.begin(); Iter != m_VEvents.end(); ++Ite
 {\
 	EventKeyInputProxy<IInputInterface> * EventInfo = new EventKeyInputProxy<IInputInterface>();\
 	assert(EventInfo);\
-	EventInfo->ReceiverObject = RECIEVER_OBJECT;\
+	EventInfo->m_receiverObject = RECIEVER_OBJECT;\
 	EventInfo->Event.connect(FUNCTION);\
 	EVENT_OBJECT->m_EventsInput.push_back(EventInfo);\
 }\
@@ -345,7 +345,7 @@ for (TVecEventsIterator Iter = m_VEvents.begin(); Iter != m_VEvents.end(); ++Ite
 	assert(EVENT_OBJECT);\
 	for (TVecInputKeyEventsIterator Iter = EVENT_OBJECT->m_EventsInput.begin(); Iter != EVENT_OBJECT->m_EventsInput.end(); ++Iter)\
 {\
-	if (RECIEVER_OBJECT == (*Iter)->ReceiverObject)\
+	if (RECIEVER_OBJECT == (*Iter)->m_receiverObject)\
 	{\
 	delete (*Iter);\
 	EVENT_OBJECT->m_EventsInput.erase(Iter);\
@@ -410,11 +410,4 @@ for (TVecEventsIterator Iter = m_VEvents.begin(); Iter != m_VEvents.end(); ++Ite
 	}\
 }\
 
-//----------------------------------------------------------------------------------------------
-#define REGISTER_PROPERTY_COMMAND(NAME, OBJECT, CLASS, COMMAND)\
-{\
-	PropertyCommand<CLASS> * Property_Name = new PropertyCommand<CLASS>(OBJECT, NAME, #CLASS, "command");\
-	Property_Name->EventCommand.connect(boost::bind(&COMMAND, OBJECT));\
-	PropertyMap.push_back(Property_Name);\
-}
 #endif //__h_declaration__ 

@@ -7,7 +7,7 @@ import traceback
 
 def checkPythonVer(in_ver):
 	py_ver = sys.version_info[:2]
-	if py_ver != in_ver:
+	if py_ver >= in_ver:
 		raise Exception("Incompatible python version: need %s", str(py_ver))
 		
 def clearDir(dir):
@@ -16,7 +16,7 @@ def clearDir(dir):
 	pass
 		
 def main():
-	checkPythonVer((3,4))
+	#checkPythonVer((2,7))
 	
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--goal', type=str, help='')

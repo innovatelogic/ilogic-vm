@@ -750,47 +750,4 @@ public:
 	std::vector<StructDataMapping> MapInfo;
 };
 
-
-//----------------------------------------------------------------------------------------------
-class CommandImpl
-{ 
-public:
-	virtual void ExecuteCommand() = 0;
-};
-
-//----------------------------------------------------------------------------------------------
-template <class Container>
-class PropertyCommand : public Property_Base, public CommandImpl
-{
-public:
-	typedef boost::signal<void()> TEventCommand;
-
-	PropertyCommand(Container * Container, const char *name, const char *classname, const char *group,
-		int policy = INDEX_NONE, int ctrl = INDEX_NONE, bool serializable = NON_SERIALIZABLE , bool bCommon = NON_COMMON_PROP, bool bExtProp = INT_PROP)
-		: Property_Base(name, 0, classname, group, policy, ctrl, serializable, bCommon, bExtProp)
-		, m_Container(Container)
-	{
-	}
-
-	virtual ~PropertyCommand()
-	{
-		EventCommand.disconnect_all_slots();
-	}
-
-	virtual void DoSetProperty(const std::string& Value) 
-	{
-		EventCommand();
-	}
-
-	virtual bool IsSerializable() { return false; }
-
-	virtual void ExecuteCommand()
-	{
-		EventCommand();
-	}
-
-	Container * m_Container;
-	TEventCommand EventCommand;
-};
-
 #endif//__property_h__

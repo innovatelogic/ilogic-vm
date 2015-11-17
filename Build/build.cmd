@@ -23,7 +23,5 @@ set PYTHON="%python%"
 set SCRIPT=""-u %~dp0build.py --goal tools_build --out %OUT%""
 
 python %SCRIPT% %*
-::
 
-::python -u %~dp0build.py --goal tools_build --out '%OUT%'
 ECHO ERRORLEVEL=%ERRORLEVEL%

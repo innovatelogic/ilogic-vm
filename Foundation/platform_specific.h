@@ -66,7 +66,7 @@
 //#include "boost/ref.hpp"
 //#include "boost/functional.hpp"
 #include "boost/bind.hpp"
-#include "boost/signal.hpp"
+#include "boost/signals2.hpp"
 //#include "boost/lexical_cast.hpp" 
 //#include "boost/shared_ptr.hpp"
 //#include <boost/preprocessor/repetition/enum.hpp>
