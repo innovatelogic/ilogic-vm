@@ -1,0 +1,13 @@
+open 192.168.1.1
+user
+pass
+prompt
+cd My_Book(2)/autobuilds
+rmdir ilogic-vm
+mkdir ilogic-vm
+cd ilogic-vm
+mkdir bin
+cd bin
+lcd ../project_out32/bin
+mput *
+bye

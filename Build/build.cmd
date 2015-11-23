@@ -1,6 +1,6 @@
 @echo off
 
-call config.cmd
+call %~dp0/config.cmd
 
 if "%AMD64%" == "true"( set ARCH=x64 
 set OUT=%OUT_FOLDER_64%
@@ -11,6 +11,7 @@ set OUT=%OUT_FOLDER_32%
 set ROOT_DIR=%~dp0..
 set INSTALL_DIR=%ROOT_DIR%\..\%OUT%
 set WORKING_DIR=%INSTALL_DIR%\build_%TARGET%_vc110
+
 IF NOT EXIST %INSTALL_DIR% mkdir %INSTALL_DIR%
 
 IF "%MSVC_REDIST_LIBS%" == ""( setLocal EnableDelayedExpansion
