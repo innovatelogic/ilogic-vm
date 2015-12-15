@@ -212,6 +212,8 @@ void RenderAdjacency::render(SRenderContext *pContext)
 	// render targets first
 	renderTargets(pActiveContext);
 
+	glViewport(0, 0, pActiveContext->m_displayModeWidth, pActiveContext->m_displayModeHeight); // set The Current Viewport
+
 	m_pRenderDriver->DriverBeginDraw();
 
 	int activeStack = getActiveStackIndex();

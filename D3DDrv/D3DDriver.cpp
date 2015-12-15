@@ -516,14 +516,11 @@ void D3DDriver::ClearBackBuffer()
 	vOut._43 = zn/(zn-zf);
 }*/
 
-GLfloat	xrot;				// X Rotation ( NEW )
-GLfloat	yrot;				// Y Rotation ( NEW )
-GLfloat	zrot;				// Z Rotation ( NEW )
-
 //----------------------------------------------------------------------------------------------
 void D3DDriver::DriverBeginDraw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
+	glClearColor(0.20f, 0.20f, 0.20f, 1.0f);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -989,97 +986,44 @@ void D3DDriver::ProjectWorldToScreen(float* v_out, const float* position)
 //----------------------------------------------------------------------------------------------
 void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*/, DWORD color /*= 0x00000000*/)
 {
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, rt->GetFrameBuffer());
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
+	glViewport(0, 0, rt->GetWidth(), rt->GetHeight()); // set The Current Viewport to the fbo size
+
+	glBindTexture(GL_TEXTURE_2D, 0);                                // unlink textures because if we dont it all is gonna fail
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, rt->GetFrameBuffer()); // switch to rendering on our FBO
+	//glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
 	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rt->GetDepthBuffer());
 
-	glViewport(0, 0, rt->GetWidth(), rt->GetHeight());
+	glClearColor(0.0f, 0.0f, 1.0f, 0.0f); 
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer on the fbo
 
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glPushAttrib(GL_VIEWPORT_BIT);
+	
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//RenderTarget->GetSurface()
-
-/*	RenderTarget->GetRenderToSurface()->BeginScene(RenderTarget->GetSurface(), 0);
-	
-	if (bClearFlag){
-		m_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x11000000, 1.0f, 0);
-	}
-
-	D3DXMatrixIdentity(&m_view);
-	D3DXMatrixIdentity(&m_proj);
-	D3DXMatrixIdentity(&m_world);*/
-
-	//m_pd3dDevice->SetRenderState(D3DRS_COLORWRITEENABLE, D3DCOLORWRITEENABLE_ALPHA | D3DCOLORWRITEENABLE_RED | D3DCOLORWRITEENABLE_GREEN | D3DCOLORWRITEENABLE_BLUE);
-
-	//m_pd3dDevice->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
-	//m_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); 
-	//m_pd3dDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
-
-// 	pOldRT = NULL;
-// 	m_pd3dDevice->GetRenderTarget(0, &pOldRT);
-// 
-// 	LPDIRECT3DSURFACE9 pShadowSurf;
-// 	if (SUCCEEDED( RenderTarget->GetTexture()->GetSurfaceLevel(0, &pShadowSurf )))
-// 	{
-// 		m_pd3dDevice->SetRenderTarget(0, pShadowSurf);
-// 		SAFE_RELEASE(pShadowSurf);
-// 	}
-// 
-// 	m_pd3dDevice->GetDepthStencilSurface(&pOldDS);
-// 	m_pd3dDevice->SetDepthStencilSurface(RenderTarget->GetSurface());
-// 	
-// 	//m_pd3dDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
-// 
-// 	if (bClearFlag){
-// 		m_pd3dDevice->Clear(0L, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0xffffffff, 1.0f, 0L);
-// 	}
-// 
-// 	//m_pd3dDevice->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-// 	//m_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-// 
-// 	//m_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-// 
-// 	bRenderShadowmap = true;
-// 	ActiveRenderTarget = RenderTarget;
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 //----------------------------------------------------------------------------------------------
 void D3DDriver::EndRenderTarget(const D3DRenderTarget *rt)
 {
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+	glPopAttrib();
+
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // switch to rendering on the framebuffer
 
 	SRenderContext *pContext = GetCurrentContext();
 	assert(pContext);
 
-	glViewport(0, 0, pContext->m_displayModeWidth, pContext->m_displayModeHeight);	
+	//glBlendFunc(GL_ONE, GL_ZERO);
+	//glDisable(GL_BLEND);
 
-	//m_pd3dDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE); 
+	//glEnable(GL_TEXTURE_2D);
+	
 
-//	RenderTarget->GetRenderToSurface()->EndScene(0);
-
-	//HRESULT hr = D3DXSaveSurfaceToFile(TEXT("D:\\test.tga"), D3DXIFF_TGA, RenderTarget->GetSurface(), 0, 0);
-
-// 	if (pOldDS)
-// 	{
-// 		m_pd3dDevice->SetDepthStencilSurface(pOldDS);
-// 		pOldDS->Release();
-// 	}
-// 	m_pd3dDevice->SetRenderTarget(0, pOldRT);
-// 	SAFE_RELEASE(pOldRT);
-// 
-// 	bRenderShadowmap = false;
-// 	pTextureShadowMap = ActiveRenderTarget->GetTexture();
-// 	ActiveRenderTarget = NULL;
-// 
-// 	//m_pd3dDevice->SetRenderState( D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-// 	//m_pd3dDevice->SetRenderState(D3DRS_COLORWRITEENABLE, 0xf);
-// 	m_pd3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-// 
-// 	//m_pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//glViewport(0, 0, pContext->m_displayModeWidth, pContext->m_displayModeHeight); // set The Current Viewport
 }
 
 //----------------------------------------------------------------------------------------------

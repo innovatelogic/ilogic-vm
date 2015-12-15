@@ -1,6 +1,6 @@
 open 192.168.1.1
-user
-pass
+bender
+123
 prompt
 cd My_Book(2)/autobuilds
 rmdir ilogic-vm
@@ -9,5 +9,10 @@ cd ilogic-vm
 mkdir bin
 cd bin
 lcd ../project_out32/bin
+mput *
+cd ..
+mkdir data
+cd data
+lcd ../data
 mput *
 bye
