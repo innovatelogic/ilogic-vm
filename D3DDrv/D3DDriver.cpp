@@ -519,8 +519,8 @@ void D3DDriver::ClearBackBuffer()
 //----------------------------------------------------------------------------------------------
 void D3DDriver::DriverBeginDraw()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glClearColor(0.20f, 0.20f, 0.20f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 }
 
 //----------------------------------------------------------------------------------------------
@@ -960,7 +960,7 @@ void D3DDriver::UnprojectScreenToWorld( float * v_out,
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DDriver::ProjectWorldToScreen(float* v_out, const float* position)
+void D3DDriver::ProjectWorldToScreen(float *v_out, const float *position)
 {
 /*	D3DXVECTOR3 vOut;
 	D3DVIEWPORT9 viewPort;
@@ -986,44 +986,24 @@ void D3DDriver::ProjectWorldToScreen(float* v_out, const float* position)
 //----------------------------------------------------------------------------------------------
 void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*/, DWORD color /*= 0x00000000*/)
 {
-	glViewport(0, 0, rt->GetWidth(), rt->GetHeight()); // set The Current Viewport to the fbo size
-
-	glBindTexture(GL_TEXTURE_2D, 0);                                // unlink textures because if we dont it all is gonna fail
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, rt->GetFrameBuffer()); // switch to rendering on our FBO
-	//glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, rt->GetTexture(), 0);
 	glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, rt->GetDepthBuffer());
 
-	glClearColor(0.0f, 0.0f, 1.0f, 0.0f); 
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer on the fbo
+	glViewport(0, 0, rt->GetWidth(), rt->GetHeight()); // set The Current Viewport to the fbo size
 
-	glPushAttrib(GL_VIEWPORT_BIT);
-	
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); 
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer on the fbo
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 //----------------------------------------------------------------------------------------------
 void D3DDriver::EndRenderTarget(const D3DRenderTarget *rt)
 {
-	glPopAttrib();
-
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // switch to rendering on the framebuffer
-
-	SRenderContext *pContext = GetCurrentContext();
-	assert(pContext);
-
-	//glBlendFunc(GL_ONE, GL_ZERO);
-	//glDisable(GL_BLEND);
-
-	//glEnable(GL_TEXTURE_2D);
-	
-
-	//glViewport(0, 0, pContext->m_displayModeWidth, pContext->m_displayModeHeight); // set The Current Viewport
 }
 
 //----------------------------------------------------------------------------------------------

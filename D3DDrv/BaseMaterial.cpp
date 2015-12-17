@@ -79,11 +79,15 @@ unsigned int BaseMaterial::BeginEffect(const char *Tehnique) const
 
 	glUseProgram(program);
 
-	if (transperent)
+	//if (transperent)
 	{
-		glAlphaFunc(GL_GREATER, 0.2f);	// Set Alpha Testing     (disable blending)
-		glEnable(GL_ALPHA_TEST);		// Enable Alpha Testing  (disable blending)
+		//glAlphaFunc(GL_GREATER, 0.2f);	// Set Alpha Testing     (disable blending)
+		//glEnable(GL_ALPHA_TEST);		// Enable Alpha Testing  (disable blending)
 	}
+
+	glEnable(GL_BLEND);
+	//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	return 0;
 }
@@ -91,10 +95,13 @@ unsigned int BaseMaterial::BeginEffect(const char *Tehnique) const
 //----------------------------------------------------------------------------------------------
 void BaseMaterial::EndEffect()
 {
-	if (transperent)
+	//if (transperent)
 	{
-		glDisable(GL_ALPHA_TEST);
+		//glDisable(GL_ALPHA_TEST);
 	}
+
+	glBlendFunc(GL_ONE, GL_ZERO);
+	glDisable(GL_BLEND);
 
 	// reset states
 	glUseProgram(0);
