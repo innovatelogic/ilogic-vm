@@ -992,7 +992,10 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*
 
 	glViewport(0, 0, rt->GetWidth(), rt->GetHeight()); // set The Current Viewport to the fbo size
 
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); 
+	const float alpha = 1.0f;
+
+	//glColorMask(FALSE, FALSE, FALSE, TRUE);
+	glClearColor(0.0f, 0.0f, 0.0f, alpha);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer on the fbo
 
@@ -1004,6 +1007,7 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*
 void D3DDriver::EndRenderTarget(const D3DRenderTarget *rt)
 {
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0); // switch to rendering on the framebuffer
+	//glColorMask(TRUE, TRUE, TRUE, TRUE);
 }
 
 //----------------------------------------------------------------------------------------------

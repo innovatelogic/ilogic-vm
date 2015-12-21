@@ -35,7 +35,7 @@ namespace RenderDriver
 		glGenTextures(1, &m_target.dynamicTextureID);
 
 		glBindTexture(GL_TEXTURE_2D, m_target.dynamicTextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_target.width, m_target.height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_target.width, m_target.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
