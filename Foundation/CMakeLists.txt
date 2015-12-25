@@ -112,15 +112,15 @@ target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
 	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
-	add_executable( ut.${PROJECT_NAME} 
+	add_executable( UT.${PROJECT_NAME} 
 					ut/ut_vector3f.cpp
 					ut/main.cpp )
 	
-	target_link_libraries(ut.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
+	target_link_libraries(UT.${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
 
-	set_target_properties(ut.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
+	set_target_properties(UT.${PROJECT_NAME} PROPERTIES FOLDER "UT" )
 
-	set_target_properties( ut.${PROJECT_NAME} PROPERTIES
+	set_target_properties(UT.${PROJECT_NAME} PROPERTIES
 						RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 						LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 						RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}

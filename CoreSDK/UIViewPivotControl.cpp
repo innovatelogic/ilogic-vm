@@ -4,7 +4,7 @@ REGISTER_CLASS(UIViewPivotControl, ActorAllocator);
 
 const Vector Offset(0.5f, 0.5f, 0.5f);
 
-static const char *CUBE_TEXTURE = "ground_001.tga"; // "dev_measuregeneric01b.tga"
+static const char *CUBE_TEXTURE = "dev_measuregeneric01b.tga";
 
 static const Vector vBuffBottom [] = 
 {
