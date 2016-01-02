@@ -8,13 +8,6 @@ CMaterialEffectFont::CMaterialEffectFont(const class D3DDriver *pInterface)
 }
 
 //----------------------------------------------------------------------------------------------
-CMaterialEffectFont::CMaterialEffectFont(const CMaterialEffectFont &Source)
-: BaseMaterial(Source)
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
 CMaterialEffectFont::~CMaterialEffectFont()
 {
 

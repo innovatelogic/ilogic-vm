@@ -7,19 +7,9 @@ BaseMaterial::BaseMaterial(const class D3DDriver * Interface)
 , m_pEffectNode(NULL)
 , m_Reference("ogl_diffuse.vs")
 , m_TechniqueName("Technique_Diffuse")
+, m_bAlphaTest(false)
+, transperent(0.f)
 {
-}
-
-//----------------------------------------------------------------------------------------------
-BaseMaterial::BaseMaterial(const class BaseMaterial& Source)
-: D3DRenderInterface(Source) 
-{
-	if (this != &Source)
-	{
-		m_pEffectNode = NULL;
-		m_Reference = Source.m_Reference;
-		m_TechniqueName = Source.m_TechniqueName;
-	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -79,10 +69,13 @@ unsigned int BaseMaterial::BeginEffect(const char *Tehnique) const
 
 	glUseProgram(program);
 
-	//if (transperent)
+	if (m_bAlphaTest)
 	{
-		glAlphaFunc(GL_GREATER, 0.7f);	// Set Alpha Testing     (disable blending)
 		glEnable(GL_ALPHA_TEST);		// Enable Alpha Testing  (disable blending)
+		
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+		glAlphaFunc(GL_GREATER, transperent);	// Set Alpha Testing     (disable blending)
 	}
 
 	//glEnable(GL_BLEND);
@@ -96,9 +89,10 @@ unsigned int BaseMaterial::BeginEffect(const char *Tehnique) const
 //----------------------------------------------------------------------------------------------
 void BaseMaterial::EndEffect()
 {
-	//if (transperent)
+	if (m_bAlphaTest)
 	{
 		glDisable(GL_ALPHA_TEST);
+		//glDisable(GL_BLEND);
 	}
 
 	//glBlendFunc(GL_ONE, GL_ZERO);

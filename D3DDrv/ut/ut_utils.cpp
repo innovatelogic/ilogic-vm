@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>
 
 //----------------------------------------------------------------------------------------------
-TEST(UtilsTest, DummyTest0) 
+TEST(TestUtils, DummyTest0)
 {
 }
 
 //----------------------------------------------------------------------------------------------
-TEST(MathTest, DummyTest1)
+TEST(TestMath, DummyTest1)
 {
 }

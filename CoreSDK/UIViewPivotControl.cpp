@@ -262,31 +262,51 @@ void UIViewPivotControl::DoDraw()
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.rt_drawn = false;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.bFog = false;
 
-	CameraManager *pMgr = GetAppMain()->GetCameraManager();
-	const CCamera * BuildCamera = pMgr->GetActiveCamera();
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glAlphaTest = true;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glBlend = false;
 
-	Matrix viewmatrix;
-	Quaternion Rot = BuildCamera->GetRot();
+	const CameraManager *pMgr = GetAppMain()->GetCameraManager();
+	assert(pMgr);
 
-	Rot.Normalize();
-	Rot.ToMatrix(&viewmatrix);
+	{
+		const CCamera *buildCamera = pMgr->GetActiveCamera();
+		assert(buildCamera);
 
-	Vector axisX(viewmatrix._11, viewmatrix._21, viewmatrix._31);
-	Vector axisY(viewmatrix._12, viewmatrix._22, viewmatrix._32);
-	Vector axisZ(viewmatrix._13, viewmatrix._23, viewmatrix._33);
+		if (buildCamera->IsArcball())
+		{
+			Matrix viewmatrix;
+			Quaternion Rot = buildCamera->GetRot();
 
-	Vector eye = BuildCamera->GetPosition_();
-	eye.normalize();
-	eye *= 2.f;
+			Rot.Normalize();
+			Rot.ToMatrix(&viewmatrix);
 
-	viewmatrix.a03 = -axisX.Dot(eye);
-	viewmatrix.a13 = -axisY.Dot(eye);
-	viewmatrix.a23 = -axisZ.Dot(eye);
+			Vector axisX(viewmatrix._11, viewmatrix._21, viewmatrix._31);
+			Vector axisY(viewmatrix._12, viewmatrix._22, viewmatrix._32);
+			Vector axisZ(viewmatrix._13, viewmatrix._23, viewmatrix._33);
 
-	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, viewmatrix.m, 16 * sizeof(float));
-	memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, BuildCamera->GetProjMatrix().m, 16 * sizeof(float));
+			Vector eye = buildCamera->GetPosition_();
+			eye.normalize();
+			eye *= 2.f;
 
-	GetRenderComponent()->DrawObject(MeshComponent);
+			viewmatrix.a03 = -axisX.Dot(eye);
+			viewmatrix.a13 = -axisY.Dot(eye);
+			viewmatrix.a23 = -axisZ.Dot(eye);
+
+			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, viewmatrix.m, 16 * sizeof(float));
+			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, buildCamera->GetProjMatrix().m, 16 * sizeof(float));
+
+			GetRenderComponent()->DrawObject(MeshComponent);
+			}
+
+		const Vector axisX(1.f, 0.f, 0.f);
+		const Vector axisY(0.f, 1.f, 0.f);
+		const Vector axisZ(0.f, 0.f, 1.f);
+		const Vector base(0.f, 0.f, 0.f);
+
+		m_pCoreSDK->GetRenderSDK()->DrawLine(base, axisX, COLOR_RED, false);
+		m_pCoreSDK->GetRenderSDK()->DrawLine(base, axisY, COLOR_BLUE, false);
+		m_pCoreSDK->GetRenderSDK()->DrawLine(base, axisZ, COLOR_GREEN, false);
+	}
 }
 
 //----------------------------------------------------------------------------------------------
@@ -299,6 +319,9 @@ void UIViewPivotControl::RebuildMesh()
 	if (FindFile(CUBE_TEXTURE, &sFilename)){
 		m_pMaterialEffect->LoadDiffuseMap(sFilename.c_str(), false);
 	}
+
+	m_pMaterialEffect->SetAlphaTestEnable(true);
+	m_pMaterialEffect->SetTransparent(0.f);
 
 	D3DMesh * dx_mesh = MeshComponent->GetD3DMesh();
 

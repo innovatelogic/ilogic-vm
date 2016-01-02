@@ -11,17 +11,6 @@ Comp_MaterialEffect::Comp_MaterialEffect(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-Comp_MaterialEffect::Comp_MaterialEffect(const Comp_MaterialEffect & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		pMaterialEffect = new MaterialEffect(*Source.pMaterialEffect);
-		SetBaseEffectPtr(pMaterialEffect);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 Comp_MaterialEffect::~Comp_MaterialEffect()
 {
 	Release_MaterialEffect(pMaterialEffect);
@@ -75,27 +64,63 @@ bool Comp_MaterialEffect::LoadHeightMap(const char *filename, bool ImmidiateLoad
 //----------------------------------------------------------------------------------------------
 Vector4f Comp_MaterialEffect::GetUV() const
 {
+	assert(pMaterialEffect);
+
 	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	return Vector4f(Tex->GetU(), Tex->GetV(), Tex->GetUL(), Tex->GetVL());
 }
 
 //----------------------------------------------------------------------------------------------
-void Comp_MaterialEffect::SetUV(const Vector4f & UV)
+void Comp_MaterialEffect::SetUV(const Vector4f &uv)
 {
+	assert(pMaterialEffect);
+
 	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
-	Tex->SetTexcoords(UV.x, UV.y, UV.z, UV.w);
+	Tex->SetTexcoords(uv.x, uv.y, uv.z, uv.w);
 }
 
 //----------------------------------------------------------------------------------------------
-void Comp_MaterialEffect::SetDiffuseReference(const std::string & StrRef)
+void Comp_MaterialEffect::SetDiffuseReference(const std::string &strRef)
 {
+	assert(pMaterialEffect);
+
 	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
-	Tex->SetReference(StrRef);
+	Tex->SetReference(strRef);
 }
 
 //----------------------------------------------------------------------------------------------
 std::string	Comp_MaterialEffect::GetDiffuseReference() const
 {
+	assert(pMaterialEffect);
+
 	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	return Tex->GetReference();
+}
+
+//----------------------------------------------------------------------------------------------
+void Comp_MaterialEffect::SetAlphaTestEnable(bool flag)
+{
+	assert(pMaterialEffect);
+	pMaterialEffect->SetAlphaTestEnable(flag);
+}
+
+//----------------------------------------------------------------------------------------------
+bool Comp_MaterialEffect::GetAlphaTestEnable()
+{
+	assert(pMaterialEffect);
+	return pMaterialEffect->GetAlphaTestEnable();
+}
+
+//----------------------------------------------------------------------------------------------
+void Comp_MaterialEffect::SetTransparent(float value)
+{
+	assert(pMaterialEffect);
+	pMaterialEffect->SetTransparent(value);
+}
+
+//----------------------------------------------------------------------------------------------
+float Comp_MaterialEffect::GetTransparent()
+{
+	assert(pMaterialEffect);
+	return pMaterialEffect->GetTransparent();
 }

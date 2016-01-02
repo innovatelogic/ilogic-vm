@@ -111,6 +111,9 @@ target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
 # setup testing
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
+
+	enable_testing()
+
 	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
 	add_executable( UT.${PROJECT_NAME} 
 					ut/ut_vector3f.cpp
@@ -126,4 +129,6 @@ if (${ENABLE_TESTING})
 						RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 						LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 						)
+
+	add_test(foundation_test runUnitTests)
 endif( ${ENABLE_TESTING} )					

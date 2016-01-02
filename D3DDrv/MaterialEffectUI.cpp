@@ -9,12 +9,6 @@ MaterialEffectUI::MaterialEffectUI(const D3DDriver * Interface)
 }
 
 //----------------------------------------------------------------------------------------------
-MaterialEffectUI::MaterialEffectUI(const MaterialEffectUI &Source)
-: BaseMaterial(Source)
-{
-}
-
-//----------------------------------------------------------------------------------------------
 MaterialEffectUI::~MaterialEffectUI()
 {
 	Release();

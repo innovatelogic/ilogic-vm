@@ -58,10 +58,10 @@ namespace RenderSDK
 				unsigned int RenderInfoMask;
 
 				// viewport params
-				DWORD x;
-				DWORD y;
-				DWORD Width;	// Zero value mean default viewport
-				DWORD Height;	// Zero value mean default viewport
+				size_t x;
+				size_t y;
+				size_t Width;	// Zero value mean default viewport
+				size_t Height;	// Zero value mean default viewport
 				float fMinZ;
 				float fMaxZ;
 
@@ -72,6 +72,13 @@ namespace RenderSDK
 				float			fFogMax;
 				float			fFogDensity;
 				unsigned int	nFogColor;
+
+				// opengl features
+				bool glAlphaTest;
+				float alphaValue;
+
+				bool glBlend;
+				float blendValue;
 
 				class SRenderContext *pRenderContext;
 			

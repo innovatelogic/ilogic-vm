@@ -992,7 +992,7 @@ void D3DDriver::SetRenderTarget(const D3DRenderTarget *rt, bool clear /*= false*
 
 	glViewport(0, 0, rt->GetWidth(), rt->GetHeight()); // set The Current Viewport to the fbo size
 
-	const float alpha = 0.0f;
+	const float alpha = 0.1f;
 	glClearColor(0.0f, 0.0f, 0.0f, alpha);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer on the fbo

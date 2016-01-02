@@ -100,6 +100,8 @@ public:
 	class SRenderContext* GetRenderContext() const { return m_pRenderContext; }
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
+	bool IsArcball() const { return m_bArcball; }
+
 protected:
 protected:
 	bool m_bArcball;

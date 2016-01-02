@@ -37,4 +37,6 @@ void CScene::DoDraw()
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax = m_pEnvSceneInfo->m_fFogMax;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity = m_pEnvSceneInfo->m_fFogDensity;
 	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor = m_pEnvSceneInfo->m_FogColor;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glAlphaTest = false;
+	adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glBlend = false;
 }

@@ -59,6 +59,8 @@ void CModelViewer::DoDraw()
 	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogMax = m_pEnvSceneInfo->m_fFogMax;
 	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFogDensity =	m_pEnvSceneInfo->m_fFogDensity;
 	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.nFogColor = m_pEnvSceneInfo->m_FogColor;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glAlphaTest = false;
+	Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.glBlend = false;
 
 	/** setup matrix */
 	if (GetAppMain()->GetCameraManager())

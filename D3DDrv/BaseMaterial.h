@@ -10,8 +10,10 @@
 class D3DDRIVER_API BaseMaterial : public D3DRenderInterface
 {
 public:
+	BaseMaterial(const BaseMaterial &other) = delete;
+	//BaseMaterial operator= (const BaseMaterial &other) = delete;
+
 	BaseMaterial(const class D3DDriver *pInterface);
-	BaseMaterial(const class BaseMaterial& Source);
 	virtual ~BaseMaterial();
 
 	virtual bool				Load(const char *URL);
@@ -44,6 +46,12 @@ public:
 
 	class MaterialEffectNode*	GetNode() const { return m_pEffectNode; }
 
+	void						SetAlphaTestEnable(bool flag) { m_bAlphaTest = flag; }
+	bool						GetAlphaTestEnable() { return m_bAlphaTest; }
+
+	void						SetTransparent(float value) { transperent = value; }
+	float						GetTransparent() { return transperent; }
+
 public:
 	unsigned int				diffuse;	// diffuse color
 	unsigned int				specular;	// specular color
@@ -53,6 +61,9 @@ public:
 	float						transperent;
 	bool						fog;
 	unsigned int				fog_color;
+
+	// opengl states
+	bool						m_bAlphaTest;
 
 protected:
 	std::string					m_Reference;

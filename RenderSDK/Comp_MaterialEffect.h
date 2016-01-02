@@ -13,7 +13,6 @@ class RENDERSDK_API Comp_MaterialEffect : public Comp_MaterialBaseEffect
 
 public:
 	Comp_MaterialEffect(const CObjectAbstract * Parent);
-	Comp_MaterialEffect(const Comp_MaterialEffect &Source);
 	virtual ~Comp_MaterialEffect();
 
 	virtual void			Initialize();
@@ -29,6 +28,12 @@ public:
 
 	virtual void			SetDiffuseReference(const std::string & StrRef);
 	virtual std::string		GetDiffuseReference() const;
+
+	void					SetAlphaTestEnable(bool flag);
+	bool					GetAlphaTestEnable();
+
+	void					SetTransparent(float value);
+	float					GetTransparent();
 
 protected:
 private:

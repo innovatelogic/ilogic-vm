@@ -11,7 +11,6 @@ class D3DDRIVER_API MaterialEffectUI : public BaseMaterial
 {
 public:
 	MaterialEffectUI(const class D3DDriver * Interface);
-	MaterialEffectUI(const MaterialEffectUI & Source);
 	virtual ~MaterialEffectUI();
 
 	virtual	bool	Release();

@@ -4,7 +4,7 @@
 #include "../vector.h"
 
 //----------------------------------------------------------------------------------------------
-TEST(MathTest, AddTwoVectors) 
+TEST(TestMath, AddTwoVectors)
 {
 	Vector one(1.5f, 2.5f, 3.5f);
 	Vector two(1.f, 1.f, 1.f);
@@ -17,7 +17,7 @@ TEST(MathTest, AddTwoVectors)
 }
 
 //----------------------------------------------------------------------------------------------
-TEST(MathTest, SubstractTwoVectors)
+TEST(TestMath, SubstractTwoVectors)
 {
 	Vector one(1.5f, 2.5f, 3.5f);
 	Vector two(1.f, 1.f, 1.f);

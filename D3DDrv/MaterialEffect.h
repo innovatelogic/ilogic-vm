@@ -11,8 +11,10 @@
 class D3DDRIVER_API MaterialEffect : public BaseMaterial
 {
 public:
+	MaterialEffect(const MaterialEffect &other) = delete;
+	MaterialEffect operator= (const MaterialEffect &other) = delete;
+
 	MaterialEffect(const class D3DDriver *Interface);
-	MaterialEffect(const MaterialEffect &Source);
 	virtual ~MaterialEffect();
 	
 	virtual bool			Release();

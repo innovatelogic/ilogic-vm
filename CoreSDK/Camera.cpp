@@ -297,12 +297,24 @@ bool CCamera::ProxyProcessInputKey(const IInputInterface *pSender, const EventIn
 //----------------------------------------------------------------------------------------------
 void CCamera::ProcessScroll(int pos)
 {
-	if (pos > 0){
-		SetPosition_(GetPosition_() + GetDirection() * 5.f);
+	const float mult = pos > 0 ? 5.f : -5.f;
+	const float min_rad = 5.f;
+
+	const auto dir = GetDirection();
+	auto currPos = GetPosition_();
+	auto newPos = currPos + dir * mult;
+		
+	if (m_bArcball)
+	{ 
+		Vector vecMinRad = -dir * min_rad;
+		if (GetHalfSpace(dir, vecMinRad, currPos) !=
+			GetHalfSpace(dir, vecMinRad, newPos))
+		{
+			newPos = vecMinRad - (dir * m_eps); // clamp to sphere with min_rad radius
+		}
 	}
-	else{
-		SetPosition_(GetPosition_() - GetDirection() * 5.f);
-	}
+
+	SetPosition_(newPos);
 
 	UpdateRotationQuat();
 	UpdateCamera();

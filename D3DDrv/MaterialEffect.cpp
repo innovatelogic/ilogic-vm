@@ -15,18 +15,6 @@ MaterialEffect::MaterialEffect(const class D3DDriver * Interface)
 }
 
 //----------------------------------------------------------------------------------------------
-MaterialEffect::MaterialEffect(const MaterialEffect & Source)
-: BaseMaterial(Source)
-{
-	if (this != &Source)
-	{
-		DiffuseMap	= new Texture2D(*Source.DiffuseMap);
-		HeightMap	= new Texture2D(*Source.HeightMap);
-		NormalMap	= new Texture2D(*Source.NormalMap);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 MaterialEffect::~MaterialEffect()
 {
 	Release();

@@ -11,7 +11,6 @@ class D3DDRIVER_API MaterialEffect_ButtonStates : public BaseMaterial
 {
 public:
 	MaterialEffect_ButtonStates(const class D3DDriver * Interface);
-	MaterialEffect_ButtonStates(const MaterialEffect_ButtonStates & Source);
 	virtual ~MaterialEffect_ButtonStates();
 
 	virtual bool			Release();

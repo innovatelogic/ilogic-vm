@@ -11,7 +11,6 @@ class D3DDRIVER_API MaterialEffectLava : public BaseMaterial
 {
 public:
 	MaterialEffectLava(const class D3DDriver * Interface);
-	MaterialEffectLava(const MaterialEffectLava & Source);
 	virtual ~MaterialEffectLava();
 
 	virtual void			Affect();

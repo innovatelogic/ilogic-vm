@@ -17,26 +17,6 @@ MaterialEffectLava::MaterialEffectLava(const D3DDriver * Interface)
 }
 
 //----------------------------------------------------------------------------------------------
-MaterialEffectLava::MaterialEffectLava(const MaterialEffectLava & Source)
-: BaseMaterial(Source)
-{
-	if (this != &Source)
-	{
-		noiseScale	= Source.noiseScale;
-		morphRate = Source.morphRate;
-		bubbleRate = Source.bubbleRate;
-		bubbleScale = Source.bubbleScale;
-		scale = Source.scale;
-		bias = Source.bias;
-
-		DiffuseMap	= new Texture2D(*Source.DiffuseMap);
-		HeightMap	= new Texture2D(*Source.HeightMap);
-		NormalMap	= new Texture2D(*Source.NormalMap);
-		NoiseMap	= new Texture3D(*Source.NoiseMap);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 MaterialEffectLava::~MaterialEffectLava()
 {
 	Release();

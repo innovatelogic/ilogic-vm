@@ -12,20 +12,6 @@ MaterialEffect_ButtonStates::MaterialEffect_ButtonStates(const D3DDriver * Inter
 }
 
 //----------------------------------------------------------------------------------------------
-MaterialEffect_ButtonStates::MaterialEffect_ButtonStates(const MaterialEffect_ButtonStates & Source)
-: BaseMaterial(Source)
-, StateIndex(0)
-{
-	if (this != &Source)
-	{
-		for (size_t Index = 0; Index < Source.DiffuseMaps.size(); ++Index)
-		{
-			DiffuseMaps.push_back(new Texture2D(*Source.DiffuseMaps[Index]));
-		}
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 MaterialEffect_ButtonStates::~MaterialEffect_ButtonStates()
 {
 	for (size_t Index = 0; Index < DiffuseMaps.size(); ++Index)

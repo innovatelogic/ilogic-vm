@@ -11,7 +11,6 @@ class D3DDRIVER_API CMaterialEffectFont : public BaseMaterial
 {
 public:
 	CMaterialEffectFont(const class D3DDriver *pInterface);
-	CMaterialEffectFont(const CMaterialEffectFont &Source);
 	virtual ~CMaterialEffectFont();
 
 	virtual	bool	Release();

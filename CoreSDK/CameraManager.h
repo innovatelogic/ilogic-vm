@@ -1,9 +1,5 @@
-#ifndef __cameramaneger_h__
-#define __cameramaneger_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "../Foundation/StdafxFoundation.h"
 
@@ -12,7 +8,6 @@ class EXPORT CameraManager
 	typedef std::vector<class CCamera*>  TVecCameras;
 	typedef TVecCameras::iterator		 TVecCameraIter;
 	typedef TVecCameras::const_iterator	 TVecCameraConstIter;
-
 	typedef class SRenderContext		 TSRenderContext;
 
 	struct SCameraContext
@@ -22,14 +17,17 @@ class EXPORT CameraManager
 		CCamera			*pActiveCamera;
 	};
 
+	CameraManager(const CameraManager &other) = delete;
+	CameraManager operator= (const CameraManager &other) = delete;
+
 public:
 	CameraManager(class CCoreSDK *pAppMain);
 	~CameraManager();
 
-	bool RegisterCamera(CCamera *pCamera, class SRenderContext *pContext = 0);
+	bool RegisterCamera(CCamera *pCamera, SRenderContext *pContext = nullptr);
 	bool UnregisterCamera(CCamera *pCamera);
 
-	CCamera* GetActiveCamera(class SRenderContext *pContext = 0) const;
+	CCamera* GetActiveCamera(SRenderContext *pContext = nullptr) const;
 	bool ActivateCamera(CCamera *pCamera);
 
 	class CCamera* GetCamera(size_t Index) const;
@@ -47,5 +45,3 @@ private:
 
 	CCoreSDK *m_pAppMain;
 };
-
-#endif//__cameramaneger_h__
