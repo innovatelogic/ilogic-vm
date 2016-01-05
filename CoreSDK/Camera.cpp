@@ -3,21 +3,23 @@
 static const bool V_TRUE = true;
 static const bool V_FALSE = false;
 static const float fZeroVal = 0.f;
-static const float fFowDef = 60.f;
+static const float fFowDef = 30.f;
 static const float fAspectDef = 1.3333f;
 static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
+#define FIELD_OFFSET(TYPE, FIELD) (BYTE*)&((TYPE*)nullptr)->FIELD - (BYTE*)nullptr
+
 REGISTER_CLASS_A(CCamera, ActorAllocator)
-	new PropertyBOOL("bArcball", (BYTE*)&((CCamera*)NULL)->m_bArcball - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE), 
-	new PropertyBOOL("bOrtho", (BYTE*)&((CCamera*)NULL)->bOrtho - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyFLOAT("Fov", (BYTE*)&((CCamera*)NULL)->Fov - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
-	new PropertyFLOAT("Aspect", (BYTE*)&((CCamera*)NULL)->Aspect - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
-	new PropertyFLOAT("NearDist", (BYTE*)&((CCamera*)NULL)->NearDist - (BYTE*)NULL, "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
-	new PropertyFLOAT("FarDist", (BYTE*)&((CCamera*)NULL)->FarDist - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
-	new PropertyFLOAT("m_fYaw", (BYTE*)&((CCamera*)NULL)->m_fYaw - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fPitch", (BYTE*)&((CCamera*)NULL)->m_fPitch - (BYTE*)NULL, "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fRoll", (BYTE*)&((CCamera*)NULL)->m_fRoll - (BYTE*)NULL, "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
+	new PropertyBOOL("bArcball", FIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new PropertyBOOL("bOrtho", FIELD_OFFSET(CCamera, bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new PropertyFLOAT("Fov", FIELD_OFFSET(CCamera, Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
+	new PropertyFLOAT("Aspect", FIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
+	new PropertyFLOAT("NearDist", FIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
+	new PropertyFLOAT("FarDist", FIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
+	new PropertyFLOAT("m_fYaw", FIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new PropertyFLOAT("m_fPitch", FIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new PropertyFLOAT("m_fRoll", FIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
 END_REGISTER_CLASS(CCamera, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------
@@ -575,11 +577,11 @@ void CCamera::CalcProjMatrix()
 	if (!bOrtho)
 	{
 		float fAspect = w / h;
-		perspective(m_projmatrix, Fov, fAspect, NearDist, FarDist);
+		perspective(m_projmatrix, Fov * fAspect, fAspect, NearDist, FarDist);
 
-		perspective(Subfrustras[0].SubProjMatrix, Fov, fAspect, Subfrustras[0].DistNear, Subfrustras[0].DistFar);
-		perspective(Subfrustras[1].SubProjMatrix, Fov, fAspect, Subfrustras[1].DistNear, Subfrustras[1].DistFar);
-		perspective(Subfrustras[2].SubProjMatrix, Fov, fAspect, Subfrustras[2].DistNear, Subfrustras[2].DistFar);	
+		perspective(Subfrustras[0].SubProjMatrix, Fov * fAspect, fAspect, Subfrustras[0].DistNear, Subfrustras[0].DistFar);
+		perspective(Subfrustras[1].SubProjMatrix, Fov * fAspect, fAspect, Subfrustras[1].DistNear, Subfrustras[1].DistFar);
+		perspective(Subfrustras[2].SubProjMatrix, Fov * fAspect, fAspect, Subfrustras[2].DistNear, Subfrustras[2].DistFar);
 	}
 	else
 	{

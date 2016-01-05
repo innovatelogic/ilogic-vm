@@ -236,13 +236,13 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnSize(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-		int Width = (int)GET_X_LPARAM(lParam);
-		int Height = (int)GET_Y_LPARAM(lParam);
+		int width = (int)GET_X_LPARAM(lParam);
+		int height = (int)GET_Y_LPARAM(lParam);
 
 		if (m_pApp)
 		{
-			m_pApp->GetRenderSDK()->ResizeWindow(Width, Height);
-			m_pApp->GetCameraManager()->ViewportResized();
+			m_pApp->GetRenderSDK()->ResizeWindow(width, height);
+			m_pApp->GetCameraManager()->ViewportResized(m_pRenderContext);
 		}
 		return 0;
 	}

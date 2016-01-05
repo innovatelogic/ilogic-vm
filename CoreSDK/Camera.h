@@ -30,6 +30,9 @@ public:
 		float			DistFar;
 	};
 
+    //CCamera(const CCamera &other) = delete;
+    CCamera& operator=(const CCamera &other) = delete;
+
 public:
 	CCamera(const CObjectAbstract *pParent);
 	CCamera(const CCamera &object);

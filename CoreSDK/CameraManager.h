@@ -35,7 +35,7 @@ public:
 	void Update(float dt);
 
 	/** reinit cameras projection */
-	void ViewportResized();
+	void ViewportResized(SRenderContext *context);
 
 	void Clear();
 

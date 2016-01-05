@@ -152,13 +152,6 @@ bool CameraManager::ActivateCamera(CCamera *pCamera)
 		}
 	}
 
-	/*TVecCameraConstIter Iter = std::find(m_VecCameras.begin(), m_VecCameras.end(), pCamera);
-
-	if (Iter != m_VecCameras.end())
-	{
-		m_pActiveCamera = *Iter;
-		bResult = true;
-	}*/
 	return bResult;
 }
 
@@ -185,16 +178,19 @@ void CameraManager::Update(float dt)
 }
 
 //----------------------------------------------------------------------------------------------
-void CameraManager::ViewportResized()
+void CameraManager::ViewportResized(SRenderContext *context)
 {
-/*	TVecCameraIter Iter = m_VecCameras.begin();
-	TVecCameraIter IterEnd = m_VecCameras.end();
-	 
-	while (Iter != IterEnd)
-	{
-		const_cast<CCamera*>((*Iter))->CalcProjMatrix();
-		++Iter;
-	}*/
+    for (auto *record : m_VecCtxtCameras)
+    {
+        if (record->pRenderContext == context)
+        {
+            for (auto *camera : record->vecCameras)
+            {
+                camera->CalcProjMatrix();
+            }
+            break;
+        }
+    }
 }
 
 //----------------------------------------------------------------------------------------------

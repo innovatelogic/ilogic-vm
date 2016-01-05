@@ -48,8 +48,8 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnSize(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-		int Width = (int)GET_X_LPARAM(lParam);
-		int Height = (int)GET_Y_LPARAM(lParam);
+		int width = (int)GET_X_LPARAM(lParam);
+		int height = (int)GET_Y_LPARAM(lParam);
 
 		if (m_pAppMain)
 		{
@@ -59,8 +59,11 @@ public:
 			CCamera *pCamera = pModelView->GetCamera();
 			assert(pCamera);
 
-			m_pAppMain->GetRenderSDK()->ResizeWindow(Width, Height, pCamera->GetRenderContext());
-			m_pAppMain->GetCameraManager()->ViewportResized();
+            SRenderContext *context = pCamera->GetRenderContext();
+            assert(context);
+
+			m_pAppMain->GetRenderSDK()->ResizeWindow(width, height, context);
+			m_pAppMain->GetCameraManager()->ViewportResized(context);
 		}
 		return 0;
 	}
