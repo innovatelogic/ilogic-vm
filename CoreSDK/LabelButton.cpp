@@ -174,7 +174,7 @@ void LabelButton::ResolveActiveState()
 }
 
 //----------------------------------------------------------------------------------------------
-void LabelButton::SuperDeserializerInternal(TiXmlElement *pTree)
+void LabelButton::SuperDeserializerInternal(tinyxml2::XMLElement *pTree)
 {
 	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
 

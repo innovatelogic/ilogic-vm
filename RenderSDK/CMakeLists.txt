@@ -7,14 +7,15 @@ add_definitions(-DUNICODE -D_UNICODE)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
-include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+#include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 
 #link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
-set(LIBRARIES Foundation D3DDriver TinyXML nv_math)
+set(LIBRARIES Foundation D3DDriver nv_math)
 
 set(SOURCE 
 	Allocator.h
@@ -116,7 +117,7 @@ set(SOURCE
 	
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${TINY_XML_LIBRARY})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

@@ -183,7 +183,7 @@ bool CObjectAbstract::IsGenerationFinished()
 }
 
 //----------------------------------------------------------------------------------------------
-void CObjectAbstract::SuperDeserializer(TiXmlElement *xml_current_tree)
+void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	AppClassTree &CTree = NObjectFactory::GetClassTree();
 
@@ -198,7 +198,11 @@ void CObjectAbstract::SuperDeserializer(TiXmlElement *xml_current_tree)
 			{
 				if ((*IterProp)->IsSerializable())
 				{
-					const std::string &VALUE = xml_current_tree->AttributeStr((*IterProp)->GetGroupName());
+                    std::string group = (*IterProp)->GetGroupName();
+
+                    const char *attribute = xml_current_tree->Attribute(group.c_str());
+
+					const std::string VALUE(attribute ? attribute : "");
 
 					if ((*IterProp)->IsCommonValue())
 					{
@@ -241,7 +245,7 @@ void CObjectAbstract::SuperDeserializer(TiXmlElement *xml_current_tree)
 								MemoryOffsetOverride = (*IterIntf)->byteShift;
 							}
 
-							const std::string &VALUE = xml_current_tree->AttributeStr((*IterIntfProp)->GetGroupName());
+							const std::string VALUE(xml_current_tree->Attribute((*IterIntfProp)->GetGroupName().c_str()));
 						
 							if ((*IterIntfProp)->IsCommonValue())
 							{
@@ -273,7 +277,7 @@ void CObjectAbstract::SuperDeserializer(TiXmlElement *xml_current_tree)
 }
 
 //----------------------------------------------------------------------------------------------
-void CObjectAbstract::SuperDeserializerExternal(TiXmlElement *xml_current_tree)
+void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_current_tree)
 {
 	AppClassTree &CTree = NObjectFactory::GetClassTree();
 
@@ -288,7 +292,7 @@ void CObjectAbstract::SuperDeserializerExternal(TiXmlElement *xml_current_tree)
 			{
 				if ((*IterProp)->IsSerializable())
 				{
-					const std::string &VALUE = xml_current_tree->AttributeStr((*IterProp)->GetGroupName());
+					const std::string VALUE(xml_current_tree->Attribute((*IterProp)->GetGroupName().c_str()));
 
 					if ((*IterProp)->IsExternalProp())
 					{
@@ -336,7 +340,7 @@ void CObjectAbstract::SuperDeserializerExternal(TiXmlElement *xml_current_tree)
 									MemoryOffsetOverride = (*IterIntf)->byteShift;
 								}
 
-								const std::string &VALUE = xml_current_tree->AttributeStr((*IterIntfProp)->GetGroupName());
+								const std::string VALUE(xml_current_tree->Attribute((*IterIntfProp)->GetGroupName().c_str()));
 
 								if ((*IterIntfProp)->IsCommonValue())
 								{

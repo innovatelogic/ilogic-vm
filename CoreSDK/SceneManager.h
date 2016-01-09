@@ -32,7 +32,7 @@ public:
 	 */
 	bool	LoadFromFile(const std::string &filename);
 
-	bool	LoadFromXML(TiXmlElement *pTree);
+	bool	LoadFromXML(tinyxml2::XMLElement *pTree);
 
 	void	Initialize();
 

@@ -19,8 +19,9 @@ def main():
 	#checkPythonVer((2,7))
 	
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--goal', type=str, help='')
-	parser.add_argument('--out', type=str, help='')
+	parser.add_argument('--goal', type=str, help='goal of the build. Build third-party dependencies, build client-tools or both. (tools_build)')
+	parser.add_argument('--out', type=str, help='output folder')
+	
 	args = parser.parse_args()
 	
 	cur_file_dir = os.path.dirname(os.path.realpath(__file__))

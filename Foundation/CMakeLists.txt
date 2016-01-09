@@ -12,9 +12,8 @@ if(Boost_FOUND)
   link_directories(${Boost_LIBRARY_DIR})
 endif()
 
-set(LIBRARIES TinyXML)
-
 include_directories(${COMMON_SDK_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 
 set(SOURCE
 	platform_specific.h
@@ -105,7 +104,7 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
-target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES} ${TINY_XML_LIBRARY})
 
 #-------------------------------------------------------------------------------		
 # setup testing

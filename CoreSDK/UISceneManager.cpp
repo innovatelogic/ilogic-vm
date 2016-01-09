@@ -91,7 +91,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 
 	if (FindFile(filename.c_str(), &sFilename) && SourceObject)
 	{
-		XML_PARSE_FILE(sFilename)
+		XML_PARSE_FILE(sFilename.c_str())
 		{
 			std::string V = std::string(xml_current_tree->Value());
 
@@ -137,7 +137,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 	return bResult;
 }
 //----------------------------------------------------------------------------------------------
-bool CUISceneManager::LoadFromXML(TiXmlElement *pTree)
+bool CUISceneManager::LoadFromXML(tinyxml2::XMLElement *pTree)
 {
 	return true;
 }

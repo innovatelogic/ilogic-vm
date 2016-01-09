@@ -46,7 +46,7 @@ bool Registry::Load(const std::string & filename)
 		return false;
 	}
 
-	XML_PARSE_FILE( sFilename )
+	XML_PARSE_FILE( sFilename.c_str())
 	{
 		XML_FOR_EACH_TREE(XML_CURRENT_NODE)
 		{

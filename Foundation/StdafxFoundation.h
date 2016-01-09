@@ -26,7 +26,7 @@
 /**
  *  class prototypes
  */
-class TiXmlElement;
+class tinyxml2::XMLElement;
 
 //#define FINAL_RELEASE 1
 

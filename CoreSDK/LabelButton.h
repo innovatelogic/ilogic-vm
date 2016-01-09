@@ -38,7 +38,7 @@ public:
 protected:
 	virtual void	ResolveActiveState();
 
-	virtual void	SuperDeserializerInternal(TiXmlElement *pTree);
+	virtual void	SuperDeserializerInternal(tinyxml2::XMLElement *pTree);
 	virtual bool	SuperSerializerInternal(std::ofstream &stream);
 	virtual bool	SuperSerializerInternal(std::stringstream &stream);
 

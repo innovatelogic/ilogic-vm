@@ -25,7 +25,7 @@ public:
    /**
     *  Deserialize from XML file
     */
-	virtual void	SuperDeserializer(TiXmlElement *Tree);
+	virtual void	SuperDeserializer(tinyxml2::XMLElement *Tree);
 
 	inline_ void			SetAppMain(class CCoreSDK * App);
 	inline_ class CCoreSDK* GetAppMain() const { return AppMain; }

@@ -18,7 +18,7 @@ public:
 	Explorer(const Explorer& Source);
 	virtual ~Explorer();
 
-	virtual void		SuperDeserializer(TiXmlElement *xml_current_tree);
+	virtual void		SuperDeserializer(tinyxml2::XMLElement *xml_current_tree);
 
 	virtual void		Initialize();
 	virtual void		InitializeExploers();

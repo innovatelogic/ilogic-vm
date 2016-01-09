@@ -212,7 +212,7 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 	wndMain->OutWindowMessageLog("Initialization completed");
 	wndMain->CloseSplash();
 	
-	//GRootProcess->Deserialize("d:\\Project\\$cashe\\test_sky.xml", NULL);
+	GRootProcess->Deserialize("3d_scene_controller.xml", NULL);
 	//GRootProcess->Deserialize("d:\\Project\\$cashe\\SceneLogin01.xml", NULL);
 
 	int nRet = theLoop.Run();

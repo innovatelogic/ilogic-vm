@@ -16,7 +16,7 @@ public:
 	SplineAgregator_Brush(const CObjectAbstract * Parent);
 	virtual ~SplineAgregator_Brush();
 
-	virtual void			Deserialize(TiXmlElement *xml_current_tree) {;}
+	virtual void			Deserialize(tinyxml2::XMLElement *xml_current_tree) {;}
 
 	virtual bool			DoEventPressed(const MouseInputData& InputData);
 

@@ -36,7 +36,7 @@ Explorer::~Explorer()
 }
 
 //----------------------------------------------------------------------------------
-void Explorer::SuperDeserializer(TiXmlElement *xml_current_tree)
+void Explorer::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	InitializeExploers();
 

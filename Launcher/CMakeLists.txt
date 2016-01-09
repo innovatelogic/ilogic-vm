@@ -17,7 +17,8 @@ include_directories(${CMAKE_SOURCE_DIR}/common/WTL/Include)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet-2.81-rev2613/src)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
-include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+#include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
@@ -45,7 +46,7 @@ SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/HACD_De
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearMath_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/LinearMath.lib)
 
 
-set(LIBRARIES TinyXML Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES})
+set(LIBRARIES Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES} ${TINY_XML_LIBRARY})
 
 set(SOURCE 
 	ActionPlayEditor.cpp

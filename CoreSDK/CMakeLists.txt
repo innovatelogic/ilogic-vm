@@ -10,14 +10,13 @@ include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${BULLET_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
-include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+#include_directories(${CMAKE_SOURCE_DIR}/TinyXML)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
-
-
 
 SET(BULLET_LIBRARY ${CMAKE_BINARY_DIR}/../Libs)
 
@@ -37,15 +36,7 @@ SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/ConvexD
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/HACD_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/HACD.lib)
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearMath_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/LinearMath.lib)
 
-#set(BULLET_ARCHIVES BulletCollision_vs2010_debug.lib
-#					BulletDynamics_vs2010_debug.lib
-#					BulletSoftBody_vs2010_debug.lib
-#					ConvexDecomposition_vs2010_debug.lib
-#					HACD_vs2010_debug.lib
-#					BulletDynamics_vs2010_debug.lib
-#					LinearMath_vs2010_debug.lib)
-
-set(LIBRARIES TinyXML Foundation RenderSDK nv_math ${BULLET_LIBRARIES})
+set(LIBRARIES Foundation RenderSDK nv_math ${BULLET_LIBRARIES} ${TINY_XML_LIBRARY})
 
 set(SOURCE 
 	ActionBase.cpp

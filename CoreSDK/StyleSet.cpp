@@ -14,7 +14,7 @@ StyleSet::~StyleSet()
 }
 
 //------------------------------------------------------------------------
-BOOL StyleSet::Load(TiXmlElement *Tree)
+BOOL StyleSet::Load(tinyxml2::XMLElement *Tree)
 {
 // 	XML_FOR_EACH_TREE(Tree)
 // 	{

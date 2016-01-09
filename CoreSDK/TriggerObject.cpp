@@ -84,7 +84,7 @@ void TriggerObject::OnPropertyChanged(const char* PropertyName)
 }
 
 //----------------------------------------------------------------------------------------------
-void TriggerObject::SuperDeserializer(TiXmlElement *xml_current_tree)
+void TriggerObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	Super::SuperDeserializer(xml_current_tree);
 

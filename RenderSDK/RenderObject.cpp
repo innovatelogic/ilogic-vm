@@ -35,7 +35,7 @@ CRenderObject::~CRenderObject()
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderObject::SuperDeserializer(TiXmlElement *xml_current_tree)
+void CRenderObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	NObjectFactory::TClassFactory * classFactory = GetClassFactoryA();
 

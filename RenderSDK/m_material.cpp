@@ -142,16 +142,16 @@ void LoadMaterial(const char *Path, m_material *pOutMaterial)
  		XML_FOR_EACH_TREE(XML_CURRENT_NODE)
  		{
  			XML_CHECK_NODE("fx"){
-				pOutMaterial->fx_file = XML_CURRENT_NODE->FirstChild()->ValueStr();
+				pOutMaterial->fx_file = XML_CURRENT_NODE->FirstChild()->Value();
  			}
 
 			XML_CHECK_NODE("tehnique"){
-				pOutMaterial->tehnique = XML_CURRENT_NODE->FirstChild()->ValueStr();
+				pOutMaterial->tehnique = XML_CURRENT_NODE->FirstChild()->Value();
 			}
 			
 			XML_CHECK_NODE("diffuse")
 			{
-				CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->ValueStr(), " ");
+				CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->Value(), " ");
 				pOutMaterial->diffuse = Vector4f(ParseString.m_vector[0], ParseString.m_vector[1], ParseString.m_vector[2], ParseString.m_vector[3]);
 			}
  		}

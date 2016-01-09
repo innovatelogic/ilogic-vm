@@ -22,7 +22,7 @@ public:
     CRenderObject(const CRenderObject &Source);
 	virtual ~CRenderObject();
 	
-	virtual void			SuperDeserializer(TiXmlElement *xml_current_tree);
+	virtual void			SuperDeserializer(tinyxml2::XMLElement *xml_current_tree);
 
 	virtual void			Render() const;
 	virtual void			PostRender() const;

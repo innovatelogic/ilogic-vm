@@ -86,13 +86,13 @@ bool CPolygonMesh::Load(const char * FileName)
 
 	unsigned int count = 0;
 
-	XML_PARSE_FILE( sFilename )
+	XML_PARSE_FILE( sFilename.c_str())
 	{
 		XML_FOR_EACH_TREE(XML_CURRENT_NODE)
 		{
 			XML_CHECK_NODE("Vertices")
 			{
-				CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->ValueStr(), " ");
+				CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->Value(), " ");
 
 				size_t Size = ParseString.m_vector.size();
 
@@ -121,7 +121,7 @@ bool CPolygonMesh::Load(const char * FileName)
 					{
 						STexMap Map;
 
-						CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->ValueStr(), " ");
+						CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->Value(), " ");
 
 						size_t Size = ParseString.m_vector.size();
 
@@ -169,13 +169,13 @@ bool CPolygonMesh::Load(const char * FileName)
 				{
 					XML_CHECK_NODE("Normal")
 					{
-						CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->ValueStr(), " ");
+						CStringUtility<float> ParseString(XML_CURRENT_NODE->FirstChild()->Value(), " ");
 						face.Normal = Vector(ParseString.m_vector[0], ParseString.m_vector[1], ParseString.m_vector[2]);
 					}
 
 					XML_CHECK_NODE("Mat")
 					{
-						if (MaterialEffect *pFx = GetCoreSDK()->GetRenderSDK()->GetFXManager()->GetMaterialInstance(XML_CURRENT_NODE->FirstChild()->ValueStr().c_str()))
+						if (MaterialEffect *pFx = GetCoreSDK()->GetRenderSDK()->GetFXManager()->GetMaterialInstance(XML_CURRENT_NODE->FirstChild()->Value()))
 						{
 							m_VecMatInstances.push_back(pFx);
 							face.mat_id = m_VecMatInstances.size();
@@ -184,7 +184,7 @@ bool CPolygonMesh::Load(const char * FileName)
 
 					XML_CHECK_NODE("Indexes")
 					{
-						CStringUtility<unsigned int> ParseString(XML_CURRENT_NODE->FirstChild()->ValueStr(), " ");
+						CStringUtility<unsigned int> ParseString(XML_CURRENT_NODE->FirstChild()->Value(), " ");
 						std::vector<unsigned int>::iterator Iter = ParseString.m_vector.begin();
 
 						while (Iter != ParseString.m_vector.end())

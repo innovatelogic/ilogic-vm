@@ -72,8 +72,8 @@ public:
 	*
 	* @param [in] Tree.
 	*/
-	virtual void	SuperDeserializer(TiXmlElement *xml_current_tree);
-	virtual void	SuperDeserializerExternal(TiXmlElement *xml_current_tree);
+	virtual void	SuperDeserializer(tinyxml2::XMLElement *xml_current_tree);
+	virtual void	SuperDeserializerExternal(tinyxml2::XMLElement *xml_current_tree);
 
 	virtual void	SuperSerializer(std::ofstream &stream, bool bSaveAsExternal = false) {}
 	virtual void	SuperSerializer(std::stringstream &stream, bool bSaveAsExternal = false) {}
@@ -201,7 +201,7 @@ protected:
 	/** 
 	* Internal child serializer / deserializer
 	*/
-	virtual void	SuperDeserializerInternal(TiXmlElement *pTree) {}
+	virtual void	SuperDeserializerInternal(tinyxml2::XMLElement *pTree) {}
 	virtual bool	SuperSerializerInternal(std::ofstream &stream) { return false; }
 	virtual bool	SuperSerializerInternal(std::stringstream &stream) { return false; }
 

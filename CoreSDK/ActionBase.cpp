@@ -264,7 +264,7 @@ ActionBase::~ActionBase()
 }
 
 //----------------------------------------------------------------------------------------------
-void ActionBase::SuperDeserializer(TiXmlElement *xml_current_tree)
+void ActionBase::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	XML_DEF_ATTRIBUTES_NODE(Link);
 	if (!Link.empty())

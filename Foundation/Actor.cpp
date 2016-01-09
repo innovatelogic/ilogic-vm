@@ -66,7 +66,7 @@ void CActor::OnPropertyChanged(const char *pPropertyName)
 }
 
 //----------------------------------------------------------------------------------------------
-void CActor::SuperDeserializer(TiXmlElement *xml_current_tree)
+void CActor::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	Super::SuperDeserializer(xml_current_tree);
 

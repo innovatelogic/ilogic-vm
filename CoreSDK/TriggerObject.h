@@ -24,7 +24,7 @@ public:
 	*
 	* @param [in] Tree.
 	*/
-	virtual void	SuperDeserializer(TiXmlElement *xml_current_tree);
+	virtual void	SuperDeserializer(tinyxml2::XMLElement *xml_current_tree);
 	virtual void	SuperSerializer(std::ofstream &Stream, bool bSaveAsExternal = false);
 
 	virtual void	Initialize();

@@ -50,7 +50,7 @@ void CPawnCueBall::Initialize()
 
 	if (FindFile("sphere01_1.mat", &sFilename))
 	{
-		XML_PARSE_FILE(sFilename)
+		XML_PARSE_FILE(sFilename.c_str())
 		{
 			XML_FOR_EACH_TREE(XML_CURRENT_NODE)
 			{

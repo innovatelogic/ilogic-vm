@@ -14,7 +14,7 @@ public:
 	StyleSet();
    ~StyleSet();
 
-    BOOL Load(TiXmlElement *Tree);
+    BOOL Load(tinyxml2::XMLElement *Tree);
 
 	bool GetStyle(const std::string& Name, VisualStyle *& OutStyle);
 

@@ -76,7 +76,7 @@ void ActorAllocator::SetAppMain(CCoreSDK * App)
 // }
 
 //----------------------------------------------------------------------------------------------
-void ActorAllocator::SuperDeserializer(TiXmlElement *xml_current_tree)
+void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	NObjectFactory::TClassFactory * classFactory = GetClassFactoryA();
 

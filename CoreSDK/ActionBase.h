@@ -59,7 +59,7 @@ public:
 	*
 	* @param [in] Tree.
 	*/
-	virtual void	SuperDeserializer(TiXmlElement *pTree);
+	virtual void	SuperDeserializer(tinyxml2::XMLElement *pTree);
 	virtual void	SuperSerializer(std::ofstream &stream, bool bSaveAsExternal = false);
 	virtual void	SuperSerializer(std::stringstream &stream, bool bSaveAsExternal = false);
 

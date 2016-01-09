@@ -13,7 +13,7 @@ bool CActor::LoadFromFile(const char *filename, bool bLoadAsExternal /*= false*/
 	{
 		SetFilenameTag(filename);
 
-		XML_PARSE_FILE(sFilename)
+		XML_PARSE_FILE(sFilename.c_str())
 		{
 			XML_CHECK_NODE(GetType())
 			{

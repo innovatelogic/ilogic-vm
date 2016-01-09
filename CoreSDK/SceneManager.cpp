@@ -78,7 +78,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 
 	if (FindFile(filename.c_str(), &sFilename) && SourceObject)
 	{
-		XML_PARSE_FILE(sFilename)
+		XML_PARSE_FILE(sFilename.c_str())
 		{
 			std::string V = std::string(xml_current_tree->Value());
 
@@ -125,7 +125,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 }
 
 //----------------------------------------------------------------------------------------------
-bool CSceneManager::LoadFromXML(TiXmlElement *xml_current_tree)
+bool CSceneManager::LoadFromXML(tinyxml2::XMLElement *xml_current_tree)
 {
 	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
 

@@ -27,7 +27,7 @@ Point2D::~Point2D()
 
 //---------------------------------------------------------------------
 /** Load XML file */
-// void Point2D::Deserialize(TiXmlElement *xml_current_tree)
+// void Point2D::Deserialize(tinyxml2::XMLElement *xml_current_tree)
 // {
 // 	Super::Deserialize(xml_current_tree);
 // 

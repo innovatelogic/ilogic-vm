@@ -181,7 +181,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 
 			if (FindFile(inFilename.c_str(), &sFilename))
 			{
-				XML_PARSE_FILE(sFilename)
+				XML_PARSE_FILE(sFilename.c_str())
 				{
 					std::string V = std::string(xml_current_tree->Value());
 

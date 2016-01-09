@@ -564,7 +564,7 @@ SPhysNode* CPhysicsEngineBullet::CreateActorFromFile(const char *filename,
 	{
 		std::vector<SBTObjInfo> localShapesInfos;
 
-		XML_PARSE_FILE(sFilename)
+		XML_PARSE_FILE(sFilename.c_str())
 		{
 			XML_CHECK_NODE("col")
 			{
