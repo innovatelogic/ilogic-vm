@@ -28,7 +28,7 @@ public:
 protected:
 private:
 	std::string						XRef;
-	class Comp_AnimMesh				*MeshComponent;
+	//class Comp_AnimMesh				*MeshComponent;
 	class Comp_MaterialEffect		*MaterialEffect;
 	class BoxCharacterController	*CharacterController;
 	class DummyObject				*HeadTracker;

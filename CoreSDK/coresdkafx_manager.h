@@ -6,7 +6,6 @@
 #endif
 
 #include "Registry.h"
-#include "PhysicsEnginePhysX.h"
 #include "PhysicsEngineBullet.h"
 #include "ContactSensorCallbackBt.h"
 #include "PhysDebugDrawerGL.h"

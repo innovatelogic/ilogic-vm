@@ -63,7 +63,6 @@ set(SOURCE
 	MemoryAllocator.cpp
 	MemoryAllocator.h
 	MessageMap.h
-	Mutex.h
 	ObjectAbstract.cpp
 	ObjectAbstract.h
 	ObjectDeclaration.h

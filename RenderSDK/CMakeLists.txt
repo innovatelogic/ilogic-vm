@@ -18,13 +18,6 @@ link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 set(LIBRARIES Foundation D3DDriver nv_math)
 
 set(SOURCE 
-	Allocator.h
-	BoneObject.cpp
-	BoneObject.h
-	Comp_AnimMesh.cpp
-	Comp_AnimMesh.h
-	Comp_AnimTrack.cpp
-	Comp_AnimTrack.h
 	Comp_EnvSceneInfo.cpp
 	Comp_EnvSceneInfo.h
 	Comp_MaterialBaseEffect.cpp
@@ -43,8 +36,6 @@ set(SOURCE
 	Comp_MeshNode.h
 	Comp_RenderTarget.cpp
 	Comp_RenderTarget.h
-	Comp_SkeletonObject.cpp
-	Comp_SkeletonObject.h
 	Comp_StaticMesh.cpp
 	Comp_StaticMesh.h
 	D3DMeshAllocator.cpp
@@ -54,7 +45,6 @@ set(SOURCE
 	MaterialInstance.h
 	m_animation.cpp
 	m_animation.h
-	m_book_set.h
 	m_camera.cpp
 	m_camera.h
 	m_collision.h
@@ -107,8 +97,6 @@ set(SOURCE
 	URenderCamera.h
 	VBObject.cpp
 	VBObject.h
-	VisualStyle.cpp
-	VisualStyle.h
 	RenderAdjacency.cpp
 	RenderAdjacency.h
 	variant_render_adj.h

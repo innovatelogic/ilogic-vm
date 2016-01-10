@@ -7,7 +7,7 @@ END_REGISTER_CLASS(CPawn, ActorAllocator);
 //----------------------------------------------------------------------------------------------
 CPawn::CPawn(const CObjectAbstract* Parent)
 : Super(Parent)
-, MeshComponent(NULL)
+//, MeshComponent(NULL)
 , XRef("bandersha.mat")
 , bWalk(false)
 , blend_weight(0.f)
@@ -15,7 +15,7 @@ CPawn::CPawn(const CObjectAbstract* Parent)
 	SetStates = new SetAnimState();
 	assert(SetStates);
 
-	NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_AnimMesh, "MeshComponent", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_AnimMesh, "MeshComponent", this);
 	NEW_OBJECT_TRANSIENT_CHILD(MaterialEffect, Comp_MaterialEffect, "UICompDrawImage_MaterialEffect", this);
 	NEW_OBJECT_TRANSIENT_CHILD(CharacterController, BoxCharacterController, "CharacterController", this);
 	NEW_OBJECT_TRANSIENT_CHILD(HeadTracker, DummyObject, "HeadTracker", this);
@@ -36,7 +36,7 @@ void CPawn::OnPropertyChanged(const char* PropertyName)
 
 	if (!strcmp(PropertyName, "XRef"))
 	{
-		MeshComponent->LoadMesh(GetXRef());
+		//MeshComponent->LoadMesh(GetXRef());
 		//SetBounds(MeshComponent->GetBounds());
 	}
 }
@@ -48,7 +48,7 @@ void CPawn::Initialize()
 
 	//REGISTER_EVENT_PROXY_INPUT(this, this, boost::bind<bool>(&CPawn::ProxyProcessInputKey, this, _1, _2));
 
-	MeshComponent->LoadMesh(GetXRef());
+	//MeshComponent->LoadMesh(GetXRef());
 	//SetBounds(MeshComponent->GetBounds());
 
 	GetAppMain()->GetUpdateManager()->RegisterActor(this);

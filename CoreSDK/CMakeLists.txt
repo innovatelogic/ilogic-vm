@@ -56,10 +56,6 @@ set(SOURCE
 	ActorCollisionController.h
 	ActorCollisionKinematicController.cpp
 	ActorCollisionKinematicController.h
-	AnimationController.cpp
-	AnimationController.h
-	AnimationController2D.cpp
-	AnimationController2D.h
 	AnimationSequerence.cpp
 	AnimationSequerence.h
 	BaseModificator.cpp
@@ -155,8 +151,6 @@ set(SOURCE
 	LabelButton_Brush.h
 	LevelActor.cpp
 	LevelActor.h
-	LevelActorEd.cpp
-	LevelActorEd.h
 	LevelPlaneActor.cpp
 	LevelPlaneActor.h
 	LevitateVehicle.cpp
@@ -175,9 +169,6 @@ set(SOURCE
 	physicsafx.h
 	PhysicsEngineBullet.cpp
 	PhysicsEngineBullet.h
-	PhysicsEnginePhysX.cpp
-	PhysicsEnginePhysX.h
-	PhysicsEnginePhysX_Loader.cpp
 	PhysNode.cpp
 	PhysNode.h
 	PlaneCollisionController.cpp
@@ -237,11 +228,6 @@ set(SOURCE
 	SplineMovementController.h
 	SplinePolygon.cpp
 	SplinePolygon.h
-	Stream.cpp
-	Stream.h
-	StyleSet.cpp
-	StyleSet.h
-	TerrainObject.h
 	TriggerCallbackReport.cpp
 	TriggerCallbackReport.h
 	TriggerObject.cpp
@@ -256,10 +242,6 @@ set(SOURCE
 	UIImagePivotControl.h
 	UIImage_Brush.cpp
 	UIImage_Brush.h
-	UIPanel.cpp
-	UIPanel.h
-	UIProgressBar.cpp
-	UIProgressBar.h
 	UIScene.cpp
 	UIScene.h
 	UISceneBaseHud.cpp
@@ -272,35 +254,22 @@ set(SOURCE
 	UISceneManager.h
 	UIScenePauseMenu.cpp
 	UIScenePauseMenu.h
-	UIScenePlayerInfo.cpp
-	UIScenePlayerInfo.h
 	UIScreenObject.cpp
 	UIScreenObject.h
 	UIScreenObject_Static.cpp
-	UISlider.cpp
-	UISlider.h
-	UISliderButton.cpp
-	UISliderButton.h
 	UISprite.cpp
 	UISprite.h
-	UISpritePawn.cpp
-	UISpritePawn.h
 	UISprite_Brush.cpp
 	UISprite_Brush.h
 	UIViewPivotControl.cpp
 	UIViewPivotControl.h
 	UpdateManager.cpp
 	UpdateManager.h
-	UserAllocator.cpp
-	UserAllocator.h
 	UVModificator.cpp
 	UVModificator.h
 	UVModificator_Brush.cpp
 	UVModificator_Brush.h
 	ValueParser.h
-	VehicleActor.cpp
-	VehicleActor.h
-	Viewport.h
 	ViewportInterface.cpp
 	ViewportInterface.h
 	ViewportManager.cpp

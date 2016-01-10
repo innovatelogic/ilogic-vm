@@ -49,8 +49,6 @@ SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearM
 set(LIBRARIES Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES} ${TINY_XML_LIBRARY})
 
 set(SOURCE 
-	ActionPlayEditor.cpp
-	ActionPlayEditor.h
 	AssetBrowser.h
 	DragDropSource.h
 	GameLoop.h
@@ -60,7 +58,6 @@ set(SOURCE
 	ImageBitmap.h
 	Launcher.cpp
 	LauncherStdAfx.h
-	Launcher_Actors.cpp
 	Licence.txt
 	ListVeiwEdit.h
 	ListViewCombobox.h
@@ -80,8 +77,6 @@ set(SOURCE
 	ToolbarControl.cpp
 	ToolbarControl.h
 	ToolbarHelper.h
-	Win32CameraManager.cpp
-	Win32CameraManager.h
 	Win32ImageList.cpp
 	Win32ImageList.h
 	Win32InputBox.cpp
@@ -91,12 +86,8 @@ set(SOURCE
 	Win32ObjectBrowserWidget.h
 	Win32ObjectToolbox.cpp
 	Win32ObjectToolbox.h
-	Win32PropertyGrid.cpp
-	Win32PropertyGrid.h
 	Win32ThreadMonitor.cpp
 	Win32ThreadMonitor.h
-	WindowManager.cpp
-	WindowManager.h
 	WTLItemsTree.h
 	WTLPlacementWidget.h
 	WTLPropertyGrid.h

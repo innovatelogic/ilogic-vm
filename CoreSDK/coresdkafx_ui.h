@@ -5,7 +5,6 @@
 #pragma once
 #endif
 
-#include "Viewport.h"
 #include "UIScreenObject.h"
 
 #include "BaseSplineAgregator.h"
@@ -14,10 +13,7 @@
 #include "UIImage.h"
 #include "Label.h"
 #include "LabelButton.h"
-#include "UIProgressBar.h"
-#include "UISlider.h"
 #include "UISprite.h"
-#include "UISpritePawn.h"
 #include "Point2D.h"
 #include "PointBezier2D.h"
 #include "Point2DBezierKey.h"
@@ -25,14 +21,11 @@
 #include "UIImagePivotControl.h"
 #include "UIViewPivotControl.h"
 
-#include "VisualStyle.h"
-
 #include "UIScene.h"
 #include "UISceneLogin.h"
 #include "UISceneLoadingScreen.h"
 #include "UISceneBaseHud.h"
 #include "UIScenePauseMenu.h"
-#include "UIScenePlayerInfo.h"
 #include "SceneSelectLevel.h"
 
 #endif//__coresdkafx_ui_h__

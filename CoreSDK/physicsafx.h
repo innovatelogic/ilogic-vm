@@ -7,8 +7,6 @@
 
 #include "LinearMath/btAlignedObjectArray.h"
 
-#include "UserAllocator.h"
-#include "Stream.h"
 #include "TriggerCallbackReport.h"
 #include "CriticalSection.h"
 #include "MovementData.h"

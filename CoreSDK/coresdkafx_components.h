@@ -9,8 +9,6 @@
 #include "UIComp_DrawImageState.h"
 #include "UIComp_DrawFont.h"
 #include "Comp_StaticMesh.h"
-#include "Comp_AnimMesh.h"
 #include "Comp_MaterialEffect.h"
-#include "Comp_SkeletonObject.h"
 
 #endif//__coresdkafx_components_h__
