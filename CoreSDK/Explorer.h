@@ -14,7 +14,7 @@ class EXPORT Explorer : public ActorAllocator
 
 public:
 	//Constructor/Destructor
-	Explorer(const CObjectAbstract * Parent);
+	Explorer(const CObjectAbstract *parent);
 	Explorer(const Explorer& Source);
 	virtual ~Explorer();
 

@@ -1,8 +1,14 @@
 #pragma once
 
-class IEditor
+#include "module.h"
+
+namespace editors
+{
+class DLLEXPORT IEditor
 {
 public:
+	virtual ~IEditor() = 0 {};
 protected:
 private:
 };
+}
