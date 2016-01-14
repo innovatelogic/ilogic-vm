@@ -23,7 +23,7 @@ include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
 
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
+#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
 
@@ -46,7 +46,7 @@ SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/HACD_De
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearMath_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/LinearMath.lib)
 
 
-set(LIBRARIES Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES} ${TINY_XML_LIBRARY})
+set(LIBRARIES Foundation RenderSDK CoreSDK nv_math ${BULLET_LIBRARIES} ${TINY_XML_LIBRARY} ${FREETYPE_LIBRARIES})
 
 set(SOURCE 
 	AssetBrowser.h

@@ -8,18 +8,16 @@ static const float fAspectDef = 1.3333f;
 static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
-#define FIELD_OFFSET(TYPE, FIELD) (BYTE*)&((TYPE*)nullptr)->FIELD - (BYTE*)nullptr
-
 REGISTER_CLASS_A(CCamera, ActorAllocator)
-	new PropertyBOOL("bArcball", FIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("bOrtho", FIELD_OFFSET(CCamera, bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyFLOAT("Fov", FIELD_OFFSET(CCamera, Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
-	new PropertyFLOAT("Aspect", FIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
-	new PropertyFLOAT("NearDist", FIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
-	new PropertyFLOAT("FarDist", FIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
-	new PropertyFLOAT("m_fYaw", FIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fPitch", FIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fRoll", FIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
+	new PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
+	new PropertyFLOAT("Aspect", DATAFIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
+	new PropertyFLOAT("NearDist", DATAFIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
+	new PropertyFLOAT("FarDist", DATAFIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
+	new PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
 END_REGISTER_CLASS(CCamera, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

@@ -11,13 +11,6 @@
 #else 
 #endif
 
-#ifdef _WIN32
-#define D3DDRIVER_API	 _declspec( dllexport )
-#else 
-#define D3DDRIVER_API	
-#endif//_WIN32
-
-//#pragma comment(lib, "../common/SDK/glew-1.9.0/lib/glew32.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 
@@ -26,7 +19,8 @@
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
 
-//#define STRICT
+#include "module.h"
+
 #include <windows.h>
 #include <windowsx.h>
 #include <mmsystem.h>
@@ -51,8 +45,6 @@
 	typedef baseClassName Super;\
 	typedef baseClassName BaseClass;\
 	typedef className ThisClass;\
-
-HRESULT WINAPI DXUTTrace( const CHAR* strFile, DWORD dwLine, HRESULT hr, const WCHAR* strMsg, bool bPopMsgBox );
 
 #if defined(DEBUG) || defined(_DEBUG)
 #else

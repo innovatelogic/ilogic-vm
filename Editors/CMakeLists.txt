@@ -9,13 +9,18 @@ set(SOURCE ieditor.h
 			editor.cpp
 			editor.h
 			module.h
+			icommand.h
+			scene_editor.h
 			)
 			
-set(LIBRARIES Foundation)
+set(LIBRARIES Foundation D3DDriver CoreSDK)
+
+#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 	
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${FREETYPE_LIBRARIES})
 	
 set_target_properties( ${PROJECT_NAME} PROPERTIES
                         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

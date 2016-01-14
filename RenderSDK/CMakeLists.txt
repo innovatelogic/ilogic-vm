@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(RenderSDK)
 
 add_definitions(-DUNICODE -D_UNICODE)
+add_definitions(-DLIB_COMPILE)
 
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)

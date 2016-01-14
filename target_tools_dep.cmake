@@ -57,7 +57,8 @@ ExternalProject_Add(gtest
     LOG_CONFIGURE ON
     LOG_BUILD ON
     )
-	
+
+#---------------------------------------------------------------------------
 #zlib	
 ExternalProject_Add(zlib
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/zlib-master
@@ -79,6 +80,7 @@ ExternalProject_Add(zlib
     LOG_BUILD ON
     )	
 
+#---------------------------------------------------------------------------
 #glew	
 ExternalProject_Add(glew
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/SDK/glew-1.13.0/build/cmake
@@ -100,7 +102,7 @@ ExternalProject_Add(glew
     LOG_BUILD ON
     )
 
-	
+#---------------------------------------------------------------------------
 #bullet	
 ExternalProject_Add(bullet
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/SDK/bullet/bullet3-2.83.6
@@ -122,6 +124,7 @@ ExternalProject_Add(bullet
     LOG_BUILD ON
     )
 
+#---------------------------------------------------------------------------
 #tinyxml	
 ExternalProject_Add(tinyxml2
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/tinyxml2
@@ -134,6 +137,28 @@ ExternalProject_Add(tinyxml2
 			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../bin
 			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../bin
 			   -DCMAKE_DEBUG_POSTFIX=_d
+			${ARGS_CMAKE_ARGS}# Disable install step
+    INSTALL_COMMAND ""
+
+    # Wrap download, configure and build steps in a script to log output
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON
+    )
+
+#---------------------------------------------------------------------------
+#freetype2	
+ExternalProject_Add(freetype2
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/common/freetype-2.6.2
+	DOWNLOAD_COMMAND ""
+    # cmake arguments
+    CMAKE_ARGS
+			-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../Libs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../Libs
+			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG:PATH=${CMAKE_BINARY_DIR}/../bin
+			   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE:PATH=${CMAKE_BINARY_DIR}/../bin
+			   #-DCMAKE_DEBUG_POSTFIX=_d
 			${ARGS_CMAKE_ARGS}# Disable install step
     INSTALL_COMMAND ""
 

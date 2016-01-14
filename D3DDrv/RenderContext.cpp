@@ -6,8 +6,6 @@
 #include "freetype/ftoutln.h"
 #include "freetype/fttrigon.h"
 
-//#pragma comment(lib, "../common/SDK/FreeType-2.1.4-lib/lib/libfreetype.lib")
-
 static const GLubyte uTGAcompare[12] = {0, 0, 2, 0,0,0,0,0,0,0,0,0};	// Uncompressed TGA Header
 static const GLubyte cTGAcompare[12] = {0, 0, 10,0,0,0,0,0,0,0,0,0};	// Compressed TGA Header
 

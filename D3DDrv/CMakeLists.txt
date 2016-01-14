@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(D3DDriver)
 
 add_definitions(-DUNICODE -D_UNICODE)
+add_definitions(-DLIB_COMPILE)
 
 set(GLEW_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 SET(GLEW_LIBRARY ${CMAKE_BINARY_DIR}/../Libs)
@@ -11,6 +12,8 @@ SET(GLEW_LIBRARIES optimized ${CMAKE_BINARY_DIR}/../Libs/glew32.lib debug ${CMAK
 SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/glew32mx.lib debug ${CMAKE_BINARY_DIR}/../Libs/glew32mxd.lib)
 SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libglew32d.lib debug ${CMAKE_BINARY_DIR}/../Libs/libglew32d.lib)
 SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libglew32mxd.lib debug ${CMAKE_BINARY_DIR}/../Libs/libglew32mxd.lib)
+
+SET(FREETYPE_LIBRARIES optimized ${CMAKE_BINARY_DIR}/../Libs/freetype.lib debug ${CMAKE_BINARY_DIR}/../Libs/freetyped.lib)
 
 #set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/../Libs)
 #set(CMAKE_LIBRARY_PATH ${CMAKE_BINARY_DIR}/../Libs)
@@ -22,16 +25,11 @@ SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libgl
 #endif()
 
 include_directories(${GLEW_INCLUDE_DIR})
-include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include)
-include_directories(${COMMON_SDK_DIR}/FreeType-2.1.4-lib/include/freetype2)
-
-#why its not done by GLEW find_package?
-#link_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.9.0/lib)
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
-
-set(LIBRARIES libfreetype) #glew32
+include_directories(${CMAKE_SOURCE_DIR}/common/freetype-2.6.2/include)
+include_directories(${CMAKE_SOURCE_DIR}/common/freetype-2.6.2/include/freetype)
 
 set(SOURCE
+	module.h
 	AnimFrame.cpp
 	AnimFrame.h
 	AnimSequence.cpp
@@ -101,7 +99,7 @@ set(SOURCE
 	
 	add_library(${PROJECT_NAME} SHARED ${SOURCE})
 	
-	target_link_libraries( ${PROJECT_NAME} ${LIBRARIES} ${GLEW_LIBRARIES})
+	target_link_libraries( ${PROJECT_NAME} ${FREETYPE_LIBRARIES} ${GLEW_LIBRARIES})
 	
 	set_target_properties( ${PROJECT_NAME} PROPERTIES
                         RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
@@ -111,17 +109,17 @@ set(SOURCE
                         )
 	
 #install path
-set(INSTALL_TARGETS "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll") #"${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"
+#set(INSTALL_TARGETS "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll") #"${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"
 
 #add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
 #COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
 #        "${PROJECT_SOURCE_DIR}/../common/SDK/glew-1.9.0/bin/glew32.dll"      # <--this is in-file
 #       $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
 		
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-        "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll"      # <--this is in-file
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
+#add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD        # Adds a post-build event to MyTest
+#    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+#        "${PROJECT_SOURCE_DIR}/../common/SDK/FreeType-2.1.4-lib/bin/FreeType-6.dll"      # <--this is in-file
+#        $<TARGET_FILE_DIR:${PROJECT_NAME}>)                 # <--this is out-file path
 
 #-------------------------------------------------------------------------------		
 # setup testing

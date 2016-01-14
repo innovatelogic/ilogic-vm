@@ -1,20 +1,10 @@
-#ifndef __rendersdkinterface_h__
-#define __rendersdkinterface_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
+
 
 #include "platform_specific.h"
 #include "mathlib.h"
-
-#ifndef RENDERSDK_API
-#ifdef _WIN32
-#define RENDERSDK_API	 _declspec( dllexport )
-#else 
-#define RENDERSDK_API	
-#endif
-#endif
+#include "module.h"
 
 enum RENDER_INFO
 {
@@ -510,4 +500,3 @@ public:
 		(TParam->*pfn_RI)(TValue1.c_str(), TValue2);
 	}
 };
-#endif//__rendersdkinterface_h__
