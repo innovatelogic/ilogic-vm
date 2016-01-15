@@ -112,7 +112,7 @@ if (${ENABLE_TESTING})
 
 	enable_testing()
 
-	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
+	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest/include)
 	add_executable( UT.${PROJECT_NAME} 
 					ut/ut_vector3f.cpp
 					ut/main.cpp )

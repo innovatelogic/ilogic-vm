@@ -15,15 +15,6 @@ SET(GLEW_LIBRARIES ${GLEW_LIBRARIES} optimized ${CMAKE_BINARY_DIR}/../Libs/libgl
 
 SET(FREETYPE_LIBRARIES optimized ${CMAKE_BINARY_DIR}/../Libs/freetype.lib debug ${CMAKE_BINARY_DIR}/../Libs/freetyped.lib)
 
-#set(CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/../Libs)
-#set(CMAKE_LIBRARY_PATH ${CMAKE_BINARY_DIR}/../Libs)
-
-#find_package(GLEW REQUIRED)
-#if (GLEW_FOUND)
-    #include_directories(${GLEW_INCLUDE_DIRS})
-    #link_libraries(${GLEW_LIBRARIES})
-#endif()
-
 include_directories(${GLEW_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/common/freetype-2.6.2/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/freetype-2.6.2/include/freetype)
@@ -126,7 +117,7 @@ set(SOURCE
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
 	enable_testing()
-	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
+	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest/include)
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
 	set( PROJECT_TEST_NAME UT.${PROJECT_NAME} )

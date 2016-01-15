@@ -119,7 +119,7 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 # setup testing
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
-	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest-1.7.0/include)
+	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest/include)
 	add_executable( UT.${PROJECT_NAME} 
 					ut/main.cpp )
 	
