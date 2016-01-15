@@ -1,4 +1,4 @@
-#include "editor.h"
+#include "../editor.h"
 #include <gmock.h>
 
 namespace editors
@@ -6,8 +6,8 @@ namespace editors
     class MockEditor : public Editor
     {
     public:
-        MOCK_METHOD0(Undo, void());
-        MOCK_METHOD0(Redo, void());
+        MOCK_METHOD0(Undo, bool());
+        MOCK_METHOD0(Redo, bool());
 
     protected:
     private:

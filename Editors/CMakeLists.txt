@@ -16,17 +16,16 @@ set(SOURCE ieditor.h
 			module.h
 			icommand.h
 			scene_editor.h
+			icommand_buffer.h
+			command_buffer.h
+			command_buffer.cpp
 			)
-
-set(SOURCE_MOC moc_editor.cxx)
-
-source_group("Moc Files" FILES ${SOURCE_MOC})
 
 set(LIBRARIES Foundation D3DDriver CoreSDK)
 
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_MOC})
+add_library(${PROJECT_NAME} SHARED ${SOURCE})
 	
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${FREETYPE_LIBRARIES})
 	
@@ -48,8 +47,18 @@ if (${ENABLE_TESTING})
 	set( PROJECT_TEST_NAME UT.${PROJECT_NAME} )
 	string( TOUPPER ${PROJECT_NAME} PROJECT_NAME_U )
 
+	set(SOURCE_MOC moc/moc_editor.cxx
+	       moc/moc_command_buffer.cxx
+	)
+
+	set(SOURCE_UT ut/ut_editor.cpp
+	)
+
+	source_group("Moc Files" FILES ${SOURCE_MOC})
+
 	add_executable(  ${PROJECT_TEST_NAME}
-					ut/ut_editor.cpp
+					${SOURCE_MOC}
+					${SOURCE_UT}
 					)
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})

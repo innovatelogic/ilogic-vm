@@ -1,13 +1,15 @@
 #pragma once
 
+#include "module.h"
+
 namespace editors
 {
-    class ICommand
+    class DLLEXPORT ICommand
     {
     public:
-        virtual ~ICommand() {} = delete;
+        virtual ~ICommand() = 0 {};
 
-        virtual Execute() = 0;
+        virtual void Execute() = 0;
     protected:
 
     private:
