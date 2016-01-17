@@ -2,24 +2,26 @@
 #include <assert.h>
 #include "command_buffer.h"
 
+#ifdef USE_MOCK
+#include "moc/moc_command_buffer.cxx"
+#endif//USE_MOCK
+
 namespace editors
 {
 //----------------------------------------------------------------------------------------------
 Editor::Editor()
 {
-    
+#ifndef USE_MOCK
+    m_CommandBuffer.reset(std::move(new CommandBuffer()));
+#else
+    m_CommandBuffer.reset(std::move(new MockCommandBuffer()));
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
 Editor::~Editor()
 {
 
-}
-
-//----------------------------------------------------------------------------------------------
-void Editor::SetCommandBuffer(ICommandBuffer *buffer)
-{
-    m_CommandBuffer.reset(buffer);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -51,7 +53,7 @@ bool Editor::Redo()
 }
 
 //----------------------------------------------------------------------------------------------
-void Editor::AddCommand(ICommand *command)
+void Editor::AddCommand(ICommandPtr command)
 {
     m_CommandBuffer->AddCommand(command);
 }

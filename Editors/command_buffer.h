@@ -3,35 +3,42 @@
 #include "icommand_buffer.h"
 #include "icommand.h"
 #include <memory>
-#include <stack>
 #include <vector>
+#include <stack>
 
 namespace editors
 {
+
 class DLLEXPORT CommandBuffer : public ICommandBuffer
 {
-    typedef std::unique_ptr<ICommand> ICommandPtr;
-
     struct SCommandButch
     {
-        std::vector<ICommandPtr> batch;
+        ICommandPtrList batch;
+
+        SCommandButch operator= (const SCommandButch &other)
+        {
+            return *this;
+        }
     };
 
 public:
     CommandBuffer();
     virtual ~CommandBuffer();
 
-    void AddCommand(ICommand *command);
-    void AddCommands(std::vector<ICommand*> *commands) override;
+    void AddCommand(ICommandPtr command);
+    void AddCommands(ICommandPtrList commands) override;
 
     void Clear() override;
 
     void Undo() override;
     void Redo() override;
 
+    size_t GetSizeUndo() const { return m_undoStack.size(); }
+    size_t GetSizeRedo() const { return m_redoStack.size(); }
+
 protected:
 private:
-    //std::stack< std::unique_ptr<SCommandButch> > m_undo;
-    //std::stack< std::unique_ptr<SCommandButch> > m_redo;
+    std::stack< SCommandButch > m_undoStack;
+    std::stack< SCommandButch > m_redoStack;
 };
 }

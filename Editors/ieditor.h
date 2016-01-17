@@ -13,7 +13,7 @@ public:
     virtual bool Undo() = 0;
     virtual bool Redo() = 0;
 
-    virtual void AddCommand(ICommand *command) = 0;
+    virtual void AddCommand(ICommandPtr command) = 0;
 
 protected:
 private:

@@ -15,13 +15,13 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBuffer::AddCommand(ICommand *command)
+    void CommandBuffer::AddCommand(ICommandPtr command)
     {
 
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBuffer::AddCommands(std::vector<ICommand*> *commands)
+    void CommandBuffer::AddCommands(ICommandPtrList commands)
     {
 
     }

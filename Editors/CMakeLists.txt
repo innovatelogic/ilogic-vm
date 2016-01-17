@@ -19,9 +19,14 @@ set(SOURCE ieditor.h
 			icommand_buffer.h
 			command_buffer.h
 			command_buffer.cpp
+			command_base.cpp
+			command_base.h
 			)
 
 set(LIBRARIES Foundation D3DDriver CoreSDK)
+
+#TODO: add optional linking
+set(LIBRARIES ${LIBRARIES} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})
 
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
@@ -41,6 +46,8 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 #-------------------------------------------------------------------------------					
 if (${ENABLE_TESTING})
 
+	enable_testing()
+
 	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest/include)
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
@@ -48,7 +55,8 @@ if (${ENABLE_TESTING})
 	string( TOUPPER ${PROJECT_NAME} PROJECT_NAME_U )
 
 	set(SOURCE_MOC moc/moc_editor.cxx
-	       moc/moc_command_buffer.cxx
+		moc/moc_command_buffer.cxx
+		moc/moc_command_base.cxx
 	)
 
 	set(SOURCE_UT ut/ut_editor.cpp
@@ -62,6 +70,8 @@ if (${ENABLE_TESTING})
 					)
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})
+
+	add_definitions(-DUSE_MOCK)
 
 	add_test(NAME ${PROJECT_NAME_U}_TEST COMMAND ${PROJECT_TEST_NAME})
 

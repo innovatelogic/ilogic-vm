@@ -3,7 +3,7 @@
 
 namespace editors
 {
-    class MockCommandBuffer : public CommandBuffer
+    class DLLEXPORT MockCommandBuffer : public CommandBuffer
     {
     public:
         MOCK_METHOD0(Undo, void());
