@@ -39,7 +39,19 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void CommandBuffer::Undo()
     {
+        if (!m_undoStack.empty())
+        {
+            SCommandButch top = m_undoStack.top();
 
+            for (auto &command : top.batch)
+            {
+                command->Execute();
+            }
+
+            m_redoStack.push(top);
+
+            m_undoStack.pop();
+        }
     }
 
     //----------------------------------------------------------------------------------------------

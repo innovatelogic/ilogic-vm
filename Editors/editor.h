@@ -6,6 +6,8 @@
 #include "icommand_buffer.h"
 #include <memory>
 
+class CActor;
+
 namespace editors
 {
 
@@ -30,6 +32,8 @@ public:
 protected:
 private:
     std::unique_ptr<ICommandBuffer> m_CommandBuffer;
+
+    CActor *m_pEditorRoot;
 };
 
 }

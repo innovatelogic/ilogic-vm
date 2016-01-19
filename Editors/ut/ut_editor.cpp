@@ -36,7 +36,29 @@ TEST(EditorTest, TestCommandAdd)
     EXPECT_TRUE(editor.GetCommandBuffer()->GetSizeUndoStack() == NUM_COMMANDS);
 }
 
+//----------------------------------------------------------------------------------------------
+TEST(EditorTest, TestCommandUndoRedo)
+{
+    const int NUM_COMMANDS = 3;
 
+    Editor editor;
+
+    std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
+    std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
+    std::shared_ptr<MockCommandBase> command2(new MockCommandBase());
+
+    editor.AddCommand(std::move(command0));
+    editor.AddCommand(std::move(command1));
+    editor.AddCommand(std::move(command2));
+
+    for (int i = 1; i <= NUM_COMMANDS; ++i)
+    {
+        editor.Undo();
+        EXPECT_TRUE(editor.GetCommandBuffer()->GetSizeUndoStack() == NUM_COMMANDS - i);
+    }
+
+    EXPECT_TRUE(editor.GetCommandBuffer()->GetSizeRedoStack() == NUM_COMMANDS);
+}
 //----------------------------------------------------------------------------------------------
 int main(int argc, char **argv) 
 {
