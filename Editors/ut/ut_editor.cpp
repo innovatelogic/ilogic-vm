@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 using ::testing::AtLeast;
-
+using namespace editors;
 //----------------------------------------------------------------------------------------------
 TEST(EditorTest, TestUndoRedoCall)
 {
@@ -21,10 +21,19 @@ TEST(EditorTest, TestUndoRedoCall)
 //----------------------------------------------------------------------------------------------
 TEST(EditorTest, TestCommandAdd)
 {
-    editors::Editor editor;
+    const int NUM_COMMANDS = 3;
 
+    Editor editor;
 
+    std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
+    std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
+    std::shared_ptr<MockCommandBase> command2(new MockCommandBase());
 
+    editor.AddCommand(std::move(command0));
+    editor.AddCommand(std::move(command1));
+    editor.AddCommand(std::move(command2));
+
+    EXPECT_TRUE(editor.GetCommandBuffer()->GetSizeUndoStack() == NUM_COMMANDS);
 }
 
 

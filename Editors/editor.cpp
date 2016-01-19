@@ -55,6 +55,6 @@ bool Editor::Redo()
 //----------------------------------------------------------------------------------------------
 void Editor::AddCommand(ICommandPtr command)
 {
-    m_CommandBuffer->AddCommand(command);
+    m_CommandBuffer->AddCommand(std::move(command));
 }
 }

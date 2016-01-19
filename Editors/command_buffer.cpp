@@ -17,7 +17,11 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void CommandBuffer::AddCommand(ICommandPtr command)
     {
+        SCommandButch batch;
 
+        batch.batch.push_back(std::move(command));
+
+        m_undoStack.push(batch);
     }
 
     //----------------------------------------------------------------------------------------------

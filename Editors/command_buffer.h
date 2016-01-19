@@ -33,8 +33,15 @@ public:
     void Undo() override;
     void Redo() override;
 
-    size_t GetSizeUndo() const { return m_undoStack.size(); }
-    size_t GetSizeRedo() const { return m_redoStack.size(); }
+    /*!
+    * returns number of batches in undo stack
+    */
+    size_t GetSizeUndoStack()  const override { return m_undoStack.size(); }
+
+    /*!
+    * returns number of batches in undo stack
+    */
+    virtual size_t GetSizeRedoStack() const override { return m_redoStack.size(); }
 
 protected:
 private:

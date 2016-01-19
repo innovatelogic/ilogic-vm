@@ -22,5 +22,16 @@ public:
 
 	virtual void Undo() = 0;
 	virtual void Redo() = 0;
+
+    /*!
+    * returns number of batches in undo stack
+    */
+    virtual size_t GetSizeUndoStack() const = 0;
+
+    /*!
+    * returns number of batches in undo stack
+    */
+    virtual size_t GetSizeRedoStack() const = 0;
+
 };
 }

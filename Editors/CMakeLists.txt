@@ -83,4 +83,9 @@ if (${ENABLE_TESTING})
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
 
+	set_target_properties( ${PROJECT_TEST_NAME} PROPERTIES
+            OUTPUT_NAME ${PROJECT_TEST_NAME}.test
+            DEBUG_POSTFIX ""
+        )
+
 endif( ${ENABLE_TESTING} )	
