@@ -14,7 +14,7 @@ namespace editors
 class DLLEXPORT Editor : public IEditor
 {
 public:
-	Editor();
+	Editor(ICommandBuffer *buffer);
 	virtual ~Editor();
 
     bool Undo() override;

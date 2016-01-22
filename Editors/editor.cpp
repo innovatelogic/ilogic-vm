@@ -9,13 +9,14 @@
 namespace editors
 {
 //----------------------------------------------------------------------------------------------
-Editor::Editor()
+Editor::Editor(ICommandBuffer *buffer)
+    : m_CommandBuffer(std::move(buffer))
 {
-#ifndef USE_MOCK
+/*#ifndef USE_MOCK
     m_CommandBuffer.reset(std::move(new CommandBuffer()));
 #else
     m_CommandBuffer.reset(std::move(new MockCommandBuffer()));
-#endif
+#endif*/
 }
 
 //----------------------------------------------------------------------------------------------
