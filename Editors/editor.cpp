@@ -9,7 +9,7 @@
 namespace editors
 {
 //----------------------------------------------------------------------------------------------
-Editor::Editor(ICommandBuffer *buffer)
+EditorBase::EditorBase(ICommandBuffer *buffer)
     : m_CommandBuffer(std::move(buffer))
 {
 /*#ifndef USE_MOCK
@@ -20,42 +20,44 @@ Editor::Editor(ICommandBuffer *buffer)
 }
 
 //----------------------------------------------------------------------------------------------
-Editor::~Editor()
+EditorBase::~EditorBase()
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-bool Editor::Undo()
+bool EditorBase::Undo()
 {
-    bool bResult = false;
+    assert(m_CommandBuffer);
 
-    if (m_CommandBuffer)
-    {
-        m_CommandBuffer->Undo();
-        bResult = true;
-    }
+    m_CommandBuffer->Undo();
 
     return true;
 }
 
 //----------------------------------------------------------------------------------------------
-bool Editor::Redo()
+bool EditorBase::Redo()
 {
-    bool bResult = false;
+    assert(m_CommandBuffer);
 
-    if (m_CommandBuffer)
-    {
-        m_CommandBuffer->Redo();
-        bResult = true;
-    }
+    m_CommandBuffer->Redo();
 
-    return bResult;
+    return true;
 }
 
 //----------------------------------------------------------------------------------------------
-void Editor::AddCommand(ICommandPtr command)
+void EditorBase::AddCommand(ICommandPtr command)
 {
+    assert(m_CommandBuffer);
+
     m_CommandBuffer->AddCommand(std::move(command));
+}
+
+//----------------------------------------------------------------------------------------------
+void EditorBase::AddCommandBatch(ICommandPtrList &vector)
+{
+    assert(m_CommandBuffer);
+
+    m_CommandBuffer->AddCommands(vector);
 }
 }

@@ -16,7 +16,7 @@ public:
 	virtual	~ICommandBuffer() = 0 {};
 	
 	virtual void AddCommand(ICommandPtr command) = 0;
-	virtual void AddCommands(ICommandPtrList commands) = 0;
+	virtual void AddCommands(ICommandPtrList &commands) = 0;
 
 	virtual void Clear() = 0;
 
@@ -33,5 +33,18 @@ public:
     */
     virtual size_t GetSizeRedoStack() const = 0;
 
+    /*!
+    * retreive command batch size of index command in undo stack
+    * index - value index
+    * return -1 if index is invalid
+    */
+    virtual int GetUndoCommandBatchSize(size_t index) const = 0;
+
+    /*!
+    * retreive command batch size of index command in undo stack
+    * index - value index
+    * return -1 if index is invalid
+    */
+    virtual int GetRedoCommandBatchSize(size_t index) const = 0;
 };
 }

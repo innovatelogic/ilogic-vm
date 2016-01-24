@@ -3,7 +3,7 @@
 
 namespace editors
 {
-    class MockEditor : public Editor
+    class MockEditor : public EditorBase
     {
     public:
         MOCK_METHOD0(Undo, bool());

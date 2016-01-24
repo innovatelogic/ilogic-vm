@@ -14,6 +14,7 @@ public:
     virtual bool Redo() = 0;
 
     virtual void AddCommand(ICommandPtr command) = 0;
+    virtual void AddCommandBatch(ICommandPtrList &vector) = 0;
 
 protected:
 private:

@@ -11,16 +11,17 @@ class CActor;
 namespace editors
 {
 
-class DLLEXPORT Editor : public IEditor
+class DLLEXPORT EditorBase : public IEditor
 {
 public:
-	Editor(ICommandBuffer *buffer);
-	virtual ~Editor();
+    EditorBase(ICommandBuffer *buffer);
+	virtual ~EditorBase();
 
     bool Undo() override;
     bool Redo() override;
 
     void AddCommand(ICommandPtr command) override;
+    void AddCommandBatch(ICommandPtrList &vector) override;
 	
 #ifdef USE_MOCK
     /*!

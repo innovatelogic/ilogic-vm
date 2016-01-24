@@ -17,17 +17,21 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void CommandBuffer::AddCommand(ICommandPtr command)
     {
-        SCommandButch batch;
+        SCommandBatch cmd;
 
-        batch.batch.push_back(std::move(command));
+        cmd.batch.push_back(std::move(command));
 
-        m_undoStack.push(batch);
+        m_undoStack.push(cmd);
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBuffer::AddCommands(ICommandPtrList commands)
+    void CommandBuffer::AddCommands(ICommandPtrList &commands)
     {
+        SCommandBatch cmd;
 
+        cmd.batch = commands;
+
+        m_undoStack.push(cmd);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -41,7 +45,7 @@ namespace editors
     {
         if (!m_undoStack.empty())
         {
-            SCommandButch top = m_undoStack.top();
+            SCommandBatch top = m_undoStack.top();
 
             for (auto &command : top.batch)
             {
@@ -57,6 +61,36 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void CommandBuffer::Redo()
     {
+        if (!m_redoStack.empty())
+        {
+            SCommandBatch top = m_redoStack.top();
 
+            for (auto &command : top.batch)
+            {
+                command->Execute();
+            }
+
+            m_undoStack.push(top);
+
+            m_redoStack.pop();
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    int CommandBuffer::GetUndoCommandBatchSize(size_t index) const
+    {
+        int outValue = -1;
+
+
+        return outValue;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    int CommandBuffer::GetRedoCommandBatchSize(size_t index) const
+    {
+        int outValue = -1;
+
+
+        return outValue;
     }
 }
