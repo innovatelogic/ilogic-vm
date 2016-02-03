@@ -116,8 +116,7 @@ set(SOURCE
 # setup testing
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
-	enable_testing()
-	include_directories(${CMAKE_SOURCE_DIR}/utils/gtest/include)
+	include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
 	set( PROJECT_TEST_NAME UT.${PROJECT_NAME} )

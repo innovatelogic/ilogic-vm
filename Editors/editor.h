@@ -30,6 +30,9 @@ public:
     ICommandBuffer* GetCommandBuffer() const { return m_CommandBuffer.get(); }
 #endif//USE_MOCK
 
+    int GetUndoCommandBatchSize(size_t index) const;
+    int GetRedoCommandBatchSize(size_t index) const;
+
 protected:
 private:
     std::unique_ptr<ICommandBuffer> m_CommandBuffer;

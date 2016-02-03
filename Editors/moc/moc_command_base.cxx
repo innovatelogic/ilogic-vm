@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../command_base.h"
-#include "gmock/gmock.h"
+#include <gmock/gmock.h>
 
 namespace editors
 {

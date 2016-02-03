@@ -15,10 +15,11 @@ SET(GMOCK_LIBRARY optimized ${CMAKE_BINARY_DIR}/../Libs/gmock.lib debug ${CMAKE_
 SET(GMOCK_BOTH_LIBRARIES ${GMOCK_LIBRARY}
 					optimized ${CMAKE_BINARY_DIR}/../Libs/gmock_main.lib debug ${CMAKE_BINARY_DIR}/../Libs/gmock_main_d.lib)
 
-#if(ENABLE_TESTING)
-#	find_package(GTest REQUIRED)
+if(ENABLE_TESTING)
+#find_package(GTest REQUIRED)
+#find_package(GMock REQUIRED)
 	enable_testing()
-#endif()
+endif()
 
 set(Boost_DEBUG ON)
 set(Boost_USE_STATIC_LIBS ON)

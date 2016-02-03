@@ -119,21 +119,19 @@ TEST(EditorTest, TestCommandBatchAdd)
 
     EditorBase editor(new MockCommandBuffer);
 
+    ICommandBuffer *ibuffer = editor.GetCommandBuffer();
+
+    EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(ibuffer), GetUndoCommandBatchSize(0))
+        .WillOnce(Return(batch0.size()))
+        .WillOnce(Return(batch1.size()))
+        .WillOnce(Return(1));
+
     editor.AddCommandBatch(batch0);
+
+    //EXPECT_TRUE(editor.GetUndoCommandBatchSize() == NUM_COMMANDS);
+
     editor.AddCommandBatch(batch1);
     editor.AddCommand(command2);
-    /*
-    EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(ibuffer), GetUndoCommandBatchSize())
-        .AtLeastTimes(NUM_COMMANDS)
-        .WillRepeatedly(testing::InvokeWithoutArgs([&]() {
-        static_cast<CommandBuffer*>(ibuffer)->CommandBuffer::Undo();
-    }));
-
-    EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(ibuffer), Undo())
-        .Times(NUM_COMMANDS)
-        .WillRepeatedly(testing::InvokeWithoutArgs([&]() {
-        static_cast<CommandBuffer*>(ibuffer)->CommandBuffer::Undo();
-    }));*/
 }
 
 //----------------------------------------------------------------------------------------------

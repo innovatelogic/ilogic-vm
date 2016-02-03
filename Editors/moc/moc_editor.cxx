@@ -1,5 +1,5 @@
 #include "../editor.h"
-#include <gmock.h>
+#include <gmock/gmock.h>
 
 namespace editors
 {

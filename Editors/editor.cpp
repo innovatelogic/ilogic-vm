@@ -60,4 +60,20 @@ void EditorBase::AddCommandBatch(ICommandPtrList &vector)
 
     m_CommandBuffer->AddCommands(vector);
 }
+
+//----------------------------------------------------------------------------------------------
+int EditorBase::GetUndoCommandBatchSize(size_t index) const
+{
+    assert(m_CommandBuffer);
+
+    return m_CommandBuffer->GetUndoCommandBatchSize(index);
+}
+
+//----------------------------------------------------------------------------------------------
+int EditorBase::GetRedoCommandBatchSize(size_t index) const
+{
+    assert(m_CommandBuffer);
+
+    return m_CommandBuffer->GetRedoCommandBatchSize(index);
+}
 }

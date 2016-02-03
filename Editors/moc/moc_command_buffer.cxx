@@ -1,5 +1,5 @@
 #include "../command_buffer.h"
-#include <gmock.h>
+#include <gmock/gmock.h>
 
 namespace editors
 {
