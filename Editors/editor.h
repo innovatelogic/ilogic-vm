@@ -4,17 +4,22 @@
 #include "ieditor.h"
 #include "icommand.h"
 #include "icommand_buffer.h"
+#include "command_buffer.h"
 #include <memory>
+#include <assert.h>
 
 class CActor;
 
+#ifndef __EDITORS_EDITOR_H__
+#define __EDITORS_EDITOR_H__
+
 namespace editors
 {
-
+template<typename TCLASS_BUFFER>
 class DLLEXPORT EditorBase : public IEditor
 {
 public:
-    EditorBase(ICommandBuffer *buffer);
+    EditorBase(/*ICommandBuffer *buffer*/);
 	virtual ~EditorBase();
 
     bool Undo() override;
@@ -40,5 +45,8 @@ private:
     CActor *m_pEditorRoot;
 };
 
+
 }
 
+#include "editor.cpp"
+#endif//__EDITORS_EDITOR_H__

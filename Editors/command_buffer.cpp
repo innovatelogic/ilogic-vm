@@ -49,7 +49,7 @@ namespace editors
 
             for (auto &command : top.batch)
             {
-                command->Execute();
+                command->ExecuteUndo();
             }
 
             m_redoStack.push(top);
@@ -67,7 +67,7 @@ namespace editors
 
             for (auto &command : top.batch)
             {
-                command->Execute();
+                command->ExecuteRedo();
             }
 
             m_undoStack.push(top);
@@ -79,18 +79,12 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     int CommandBuffer::GetUndoCommandBatchSize(size_t index) const
     {
-        int outValue = -1;
-
-
-        return outValue;
+        return -1;
     }
 
     //----------------------------------------------------------------------------------------------
     int CommandBuffer::GetRedoCommandBatchSize(size_t index) const
     {
-        int outValue = -1;
-
-
-        return outValue;
+        return -1;
     }
 }

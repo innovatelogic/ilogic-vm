@@ -10,8 +10,8 @@ namespace editors
         CommandBase();
         virtual ~CommandBase();
 
-        void Execute() override;
-
+        void ExecuteUndo() override;
+        void ExecuteRedo() override;
     protected:
     private:
     };

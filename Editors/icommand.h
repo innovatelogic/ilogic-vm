@@ -9,9 +9,10 @@ namespace editors
     public:
         virtual ~ICommand() = 0 {};
 
-        virtual void Execute() = 0;
-    protected:
+        virtual void ExecuteUndo() = 0;
+        virtual void ExecuteRedo() = 0;
 
+    protected:
     private:
     };
 }
