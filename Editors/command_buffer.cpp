@@ -21,7 +21,7 @@ namespace editors
 
         cmd.batch.push_back(std::move(command));
 
-        m_undoStack.push(cmd);
+        m_undoStack.push_front(cmd);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ namespace editors
 
         cmd.batch = commands;
 
-        m_undoStack.push(cmd);
+        m_undoStack.push_front(cmd);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -45,16 +45,16 @@ namespace editors
     {
         if (!m_undoStack.empty())
         {
-            SCommandBatch top = m_undoStack.top();
+            SCommandBatch top = m_undoStack.front();
 
             for (auto &command : top.batch)
             {
                 command->ExecuteUndo();
             }
 
-            m_redoStack.push(top);
+            m_redoStack.push_front(top);
 
-            m_undoStack.pop();
+            m_undoStack.pop_front();
         }
     }
 
@@ -63,28 +63,28 @@ namespace editors
     {
         if (!m_redoStack.empty())
         {
-            SCommandBatch top = m_redoStack.top();
+            SCommandBatch top = m_redoStack.front();
 
             for (auto &command : top.batch)
             {
                 command->ExecuteRedo();
             }
 
-            m_undoStack.push(top);
+            m_undoStack.push_front(top);
 
-            m_redoStack.pop();
+            m_redoStack.pop_front();
         }
     }
 
     //----------------------------------------------------------------------------------------------
-    int CommandBuffer::GetUndoCommandBatchSize(size_t index) const
+    size_t CommandBuffer::GetUndoCommandBatchSize(size_t index) const
     {
-        return -1;
+        return m_undoStack.at(index).batch.size();
     }
 
     //----------------------------------------------------------------------------------------------
-    int CommandBuffer::GetRedoCommandBatchSize(size_t index) const
+    size_t CommandBuffer::GetRedoCommandBatchSize(size_t index) const
     {
-        return -1;
+        return m_redoStack.at(index).batch.size();
     }
 }

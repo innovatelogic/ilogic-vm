@@ -19,7 +19,7 @@ template<typename TCLASS_BUFFER>
 class DLLEXPORT EditorBase : public IEditor
 {
 public:
-    EditorBase(/*ICommandBuffer *buffer*/);
+    EditorBase();
 	virtual ~EditorBase();
 
     bool Undo() override;
@@ -28,15 +28,10 @@ public:
     void AddCommand(ICommandPtr command) override;
     void AddCommandBatch(ICommandPtrList &vector) override;
 	
-#ifdef USE_MOCK
-    /*!
-    * Only for ut access
-    */
     ICommandBuffer* GetCommandBuffer() const { return m_CommandBuffer.get(); }
-#endif//USE_MOCK
 
-    int GetUndoCommandBatchSize(size_t index) const;
-    int GetRedoCommandBatchSize(size_t index) const;
+    size_t GetUndoCommandBatchSize(size_t index) const override;
+    size_t GetRedoCommandBatchSize(size_t index) const override;
 
 protected:
 private:
@@ -44,8 +39,6 @@ private:
 
     CActor *m_pEditorRoot;
 };
-
-
 }
 
 #include "editor.cpp"

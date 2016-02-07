@@ -118,7 +118,6 @@ TEST(EditorTest, TestCommandBatchAdd)
 
     std::shared_ptr<MockCommandBase> command_simple(new MockCommandBase());
 
-
     editor.AddCommandBatch(command_batch0);
     editor.AddCommandBatch(command_batch1);
     editor.AddCommand(command_simple);
@@ -126,6 +125,14 @@ TEST(EditorTest, TestCommandBatchAdd)
     EXPECT_TRUE(editor.GetUndoCommandBatchSize(0) == 1);
     EXPECT_TRUE(editor.GetUndoCommandBatchSize(1) == command_batch1.size());
     EXPECT_TRUE(editor.GetUndoCommandBatchSize(2) == command_batch0.size());
+
+    for (int i = 0; i < NUM_COMMANDS; ++i) {
+        editor.Undo();
+    }
+
+    EXPECT_TRUE(editor.GetRedoCommandBatchSize(0) == command_batch0.size());
+    EXPECT_TRUE(editor.GetRedoCommandBatchSize(1) == command_batch1.size());
+    EXPECT_TRUE(editor.GetRedoCommandBatchSize(2) == 1);
 }
 
 //----------------------------------------------------------------------------------------------

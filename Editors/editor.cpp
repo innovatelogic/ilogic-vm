@@ -5,14 +5,10 @@ namespace editors
 {
 //----------------------------------------------------------------------------------------------
 template<typename TCLASS_BUFFER>
-EditorBase<TCLASS_BUFFER>::EditorBase(/*ICommandBuffer *buffer*/)
+EditorBase<TCLASS_BUFFER>::EditorBase()
     : m_CommandBuffer(std::move(new TCLASS_BUFFER))
 {
-/*#ifndef USE_MOCK
-    m_CommandBuffer.reset(std::move(new TCLASS_BUFFER()));
-#else
-    m_CommandBuffer.reset(std::move(new MockCommandBuffer()));
-#endif*/
+
 }
 
 //----------------------------------------------------------------------------------------------
@@ -64,7 +60,7 @@ void EditorBase<TCLASS_BUFFER>::AddCommandBatch(ICommandPtrList &vector)
 
 //----------------------------------------------------------------------------------------------
 template<typename TCLASS_BUFFER>
-int EditorBase<TCLASS_BUFFER>::GetUndoCommandBatchSize(size_t index) const
+size_t EditorBase<TCLASS_BUFFER>::GetUndoCommandBatchSize(size_t index) const
 {
     assert(m_CommandBuffer);
 
@@ -73,7 +69,7 @@ int EditorBase<TCLASS_BUFFER>::GetUndoCommandBatchSize(size_t index) const
 
 //----------------------------------------------------------------------------------------------
 template<typename TCLASS_BUFFER>
-int EditorBase<TCLASS_BUFFER>::GetRedoCommandBatchSize(size_t index) const
+size_t EditorBase<TCLASS_BUFFER>::GetRedoCommandBatchSize(size_t index) const
 {
     assert(m_CommandBuffer);
 

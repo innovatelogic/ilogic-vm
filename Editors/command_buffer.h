@@ -3,7 +3,7 @@
 #include "icommand_buffer.h"
 #include "icommand.h"
 #include <memory>
-#include <vector>
+#include <deque>
 #include <stack>
 
 namespace editors
@@ -14,11 +14,6 @@ class DLLEXPORT CommandBuffer : public ICommandBuffer
     struct SCommandBatch
     {
         ICommandPtrList batch;
-
-        /*SCommandBatch operator= (const SCommandButch &other)
-        {
-            return *this;
-        }*/
     };
 
 public:
@@ -56,20 +51,18 @@ public:
     /*!
     * retreive command batch size of index command in undo stack
     * index - value index
-    * return -1 if index is invalid
     */
-    int GetUndoCommandBatchSize(size_t index) const override;
+    size_t GetUndoCommandBatchSize(size_t index) const override;
 
     /*!
     * retreive command batch size of index command in undo stack
     * index - value index
-    * return -1 if index is invalid
     */
-    int GetRedoCommandBatchSize(size_t index) const override;
+    size_t GetRedoCommandBatchSize(size_t index) const override;
 
 protected:
 private:
-    std::stack< SCommandBatch > m_undoStack;
-    std::stack< SCommandBatch > m_redoStack;
+    std::deque< SCommandBatch > m_undoStack;
+    std::deque< SCommandBatch > m_redoStack;
 };
 }

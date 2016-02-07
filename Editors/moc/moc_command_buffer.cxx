@@ -17,8 +17,8 @@ namespace editors
         MOCK_CONST_METHOD0(GetSizeUndoStack, size_t());
         MOCK_CONST_METHOD0(GetSizeRedoStack, size_t());
 
-        MOCK_CONST_METHOD1(GetUndoCommandBatchSize, int(size_t index));
-        MOCK_CONST_METHOD1(GetRedoCommandBatchSize, int(size_t index));
+        MOCK_CONST_METHOD1(GetUndoCommandBatchSize, size_t(size_t index));
+        MOCK_CONST_METHOD1(GetRedoCommandBatchSize, size_t(size_t index));
 
 
     protected:

@@ -38,13 +38,13 @@ public:
     * index - value index
     * return -1 if index is invalid
     */
-    virtual int GetUndoCommandBatchSize(size_t index) const = 0;
+    virtual size_t GetUndoCommandBatchSize(size_t index) const = 0;
 
     /*!
     * retreive command batch size of index command in undo stack
     * index - value index
     * return -1 if index is invalid
     */
-    virtual int GetRedoCommandBatchSize(size_t index) const = 0;
+    virtual size_t GetRedoCommandBatchSize(size_t index) const = 0;
 };
 }
