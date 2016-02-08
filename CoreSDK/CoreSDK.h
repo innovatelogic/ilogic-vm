@@ -20,7 +20,7 @@
 #include "game_types.h"
 #include "../Foundation/StdafxFoundation.h"
 #include "ObjectAbstract.h"
-#include "ieditor.h"
+//#include "ieditor.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
