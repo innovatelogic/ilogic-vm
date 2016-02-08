@@ -15,17 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //-------------------------------------------------------------------------------------
-
-#ifndef __gamesdk_h__
-#define __gamesdk_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "game_types.h"
 #include "../Foundation/StdafxFoundation.h"
 #include "ObjectAbstract.h"
+#include "ieditor.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
@@ -53,6 +48,8 @@ public:
 	bool	Initialize(HWND hWnd, unsigned int Width, unsigned int Height);
 	void	LoopWindow(float dt);
 	bool	SimulatePhysics(float dt);
+
+
 	
 	void	AddCommand(class CommandBase *Command, bool bPhys = false);
 	void	AddCommandLock(class CommandBase *Command);
@@ -142,7 +139,7 @@ private:
 	bool					DeserializeBufferImpl(std::stringstream &stream);
 
 private:
-	boost::shared_ptr<class Registry> m_pRegistryInstance; 
+	std::shared_ptr<Registry> m_pRegistryInstance; 
 
 	/** Global resources */
 #ifdef PHYS_ENABLED
@@ -192,5 +189,3 @@ public:
 
 	unsigned int EditorInputFlag;
 };
-
-#endif//__gamesdk_h__

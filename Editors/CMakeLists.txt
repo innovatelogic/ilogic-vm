@@ -25,7 +25,7 @@ set(SOURCE ieditor.h
 			command_base.h
 			)
 
-set(LIBRARIES Foundation D3DDriver CoreSDK)
+set(LIBRARIES Foundation D3DDriver RenderSDK)
 
 #TODO: add optional linking
 set(LIBRARIES ${LIBRARIES} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})
