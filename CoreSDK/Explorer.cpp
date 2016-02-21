@@ -38,8 +38,6 @@ Explorer::~Explorer()
 //----------------------------------------------------------------------------------
 void Explorer::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	InitializeExploers();
-
 	Super::SuperDeserializer(xml_current_tree);
 }
 
@@ -49,12 +47,6 @@ void Explorer::Initialize()
 	InitializeBrushes();
 
 	Super::Initialize();
-}
-
-//----------------------------------------------------------------------------------
-void Explorer::InitializeExploers()
-{
-
 }
 
 //----------------------------------------------------------------------------------

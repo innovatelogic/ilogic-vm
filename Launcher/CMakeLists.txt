@@ -22,6 +22,7 @@ include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
+include_directories(${CMAKE_SOURCE_DIR}/Editors)
 
 #link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)

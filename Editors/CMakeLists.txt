@@ -6,11 +6,11 @@ add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-DLIB_COMPILE)
 add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
 
+include_directories(${COMMON_SDK_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googlemock/include)
-
-#include_directories(${CMAKE_SOURCE_DIR}/utils/googlemock/include)
-#include_directories(${CMAKE_SOURCE_DIR}/utils/googlemock/include/gmock)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
+include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 
 set(SOURCE ieditor.h 
 			editor.cpp
@@ -47,6 +47,7 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 # setup testing
 #-------------------------------------------------------------------------------					
 if (${ENABLE_TESTING})
+
 	enable_testing()
 
 	set( PROJECT_NAME ${PROJECT_NAME} )

@@ -5,6 +5,8 @@
 #include "../command_buffer.h"
 #include "../editor.h"
 
+#include "Actor.h"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -15,7 +17,8 @@ using namespace editors;
 //----------------------------------------------------------------------------------------------
 TEST(EditorTest, TestUndoRedoCall)
 {
-    EditorBase<MockCommandBuffer> editor;
+    MockCommandBuffer buffer;
+    EditorBase editor(nullptr, &buffer);
 
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Undo()).Times(AtLeast(1));
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Redo()).Times(AtLeast(1));
@@ -29,7 +32,8 @@ TEST(EditorTest, TestCommandAdd)
 {
     const int NUM_COMMANDS = 3;
 
-    EditorBase<CommandBuffer> editor;
+    CommandBuffer buffer;
+    EditorBase editor(nullptr, &buffer);
 
     std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
     std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
@@ -47,9 +51,10 @@ TEST(EditorTest, TestCommandUndoRedo)
 {
     const int NUM_COMMANDS = 3;
 
-    EditorBase<CommandBuffer> editor;
+    CommandBuffer buffer;
+    EditorBase editor(nullptr, &buffer);
 
-    std::vector<std::shared_ptr<CommandBase>> commands;
+    std::vector<std::shared_ptr<editors::CommandBase>> commands;
 
     std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
     std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
@@ -103,7 +108,8 @@ TEST(EditorTest, TestCommandBatchAdd)
 {
     const size_t NUM_COMMANDS = 3;
 
-    EditorBase<CommandBuffer> editor;
+    CommandBuffer buffer;
+    EditorBase editor(nullptr, &buffer);
 
     ICommandPtrList command_batch0 = {
         std::shared_ptr<MockCommandBase>(new MockCommandBase()),

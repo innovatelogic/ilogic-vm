@@ -20,7 +20,8 @@
 #include "game_types.h"
 #include "../Foundation/StdafxFoundation.h"
 #include "ObjectAbstract.h"
-//#include "ieditor.h"
+#include "ieditor.h"
+#include "icommand.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
@@ -49,8 +50,6 @@ public:
 	void	LoopWindow(float dt);
 	bool	SimulatePhysics(float dt);
 
-
-	
 	void	AddCommand(class CommandBase *Command, bool bPhys = false);
 	void	AddCommandLock(class CommandBase *Command);
 	void	AddCommandsArray(std::vector<class CommandBase*> &ArrayCmd);
@@ -71,7 +70,7 @@ public:
 	inline_ class IPhysicsEngine*			GetPhysicsEngine()	const { return m_pPhysicsEngine; }
 #endif//PHYS_ENABLED
 
-	inline_ class Explorer*					GetExplorerInstance()	const { return m_pExplorerInstance; }
+	inline_ class Explorer*					GetExplorerInstance()	const { return m_pRootObject; }
 	inline_ class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
 	inline_ class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
 	inline_ class GameRealmInfo*			GetRealmInfo()		const { return m_pGameRealmInfo; }
@@ -134,6 +133,11 @@ public:
 	EObjEditControlMode		GetEditControlMode() const { return m_ObjEditControlMode; }
 	void					SetEditControlMode(EObjEditControlMode mode) { m_ObjEditControlMode = mode; }
 
+    /*!
+        Editor's management
+    */
+    editors::TIEditor       CreateEdtior(const char *name);
+
 private:
 	bool					DeserializeImpl(const char *filename, class CActor *pParent = NULL);
 	bool					DeserializeBufferImpl(std::stringstream &stream);
@@ -147,7 +151,7 @@ private:
 #endif//PHYS_ENABLED
 
 	class CRenderSDK				*m_pRenderSDK;
-    class Explorer					*m_pExplorerInstance;
+    class Explorer					*m_pRootObject;
 	class CameraManager				*m_pCameraManager;
 	class UpdateManager				*m_pUpdateManager;
 	class GameRealmInfo				*m_pGameRealmInfo;

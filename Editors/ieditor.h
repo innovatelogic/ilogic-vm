@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+#include <assert.h>
 #include "icommand.h"
 #include "icommand_buffer.h"
 
@@ -22,4 +24,6 @@ public:
 protected:
 private:
 };
+
+using TIEditor = std::shared_ptr<IEditor>;
 }

@@ -1,26 +1,24 @@
-
-#ifdef __EDITORS_EDITOR_H__
+#include "Actor.h"
+#include "editor.h"
 
 namespace editors
 {
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-EditorBase<TCLASS_BUFFER>::EditorBase()
-    : m_CommandBuffer(std::move(new TCLASS_BUFFER))
+EditorBase::EditorBase(CActor *actor, ICommandBuffer *buffer)
+    : m_CommandBuffer(buffer)
+    , m_pEditorRoot(actor)
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-EditorBase<TCLASS_BUFFER>::~EditorBase()
+EditorBase::~EditorBase()
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-bool EditorBase<TCLASS_BUFFER>::Undo()
+bool EditorBase::Undo()
 {
     assert(m_CommandBuffer);
 
@@ -30,8 +28,7 @@ bool EditorBase<TCLASS_BUFFER>::Undo()
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-bool EditorBase<TCLASS_BUFFER>::Redo()
+bool EditorBase::Redo()
 {
     assert(m_CommandBuffer);
 
@@ -41,8 +38,7 @@ bool EditorBase<TCLASS_BUFFER>::Redo()
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-void EditorBase<TCLASS_BUFFER>::AddCommand(ICommandPtr command)
+void EditorBase::AddCommand(ICommandPtr command)
 {
     assert(m_CommandBuffer);
 
@@ -50,8 +46,7 @@ void EditorBase<TCLASS_BUFFER>::AddCommand(ICommandPtr command)
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-void EditorBase<TCLASS_BUFFER>::AddCommandBatch(ICommandPtrList &vector)
+void EditorBase::AddCommandBatch(ICommandPtrList &vector)
 {
     assert(m_CommandBuffer);
 
@@ -59,8 +54,7 @@ void EditorBase<TCLASS_BUFFER>::AddCommandBatch(ICommandPtrList &vector)
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-size_t EditorBase<TCLASS_BUFFER>::GetUndoCommandBatchSize(size_t index) const
+size_t EditorBase::GetUndoCommandBatchSize(size_t index) const
 {
     assert(m_CommandBuffer);
 
@@ -68,13 +62,10 @@ size_t EditorBase<TCLASS_BUFFER>::GetUndoCommandBatchSize(size_t index) const
 }
 
 //----------------------------------------------------------------------------------------------
-template<typename TCLASS_BUFFER>
-size_t EditorBase<TCLASS_BUFFER>::GetRedoCommandBatchSize(size_t index) const
+size_t EditorBase::GetRedoCommandBatchSize(size_t index) const
 {
     assert(m_CommandBuffer);
 
     return m_CommandBuffer->GetRedoCommandBatchSize(index);
 }
 }
-
-#endif//__EDITORS_EDITOR_H__
