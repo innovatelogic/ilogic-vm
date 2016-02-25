@@ -29,6 +29,7 @@ set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/prebuild)
 set(BOOST_INCLUDEDIR ${CMAKE_SOURCE_DIR}/common/SDK/)
 set(BOOST_LIBRARYDIR ${CMAKE_SOURCE_DIR}/prebuild)
 
+add_subdirectory(BaseCommon)
 add_subdirectory(Foundation)
 add_subdirectory(D3DDrv)
 add_subdirectory(RenderSDK)

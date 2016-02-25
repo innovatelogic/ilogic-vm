@@ -35,7 +35,8 @@ SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/ConvexD
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/HACD_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/HACD.lib)
 SET(BULLET_LIBRARIES ${GLEW_LIBRARIES} debug ${CMAKE_BINARY_DIR}/../Libs/LinearMath_Debug.lib optimized ${CMAKE_BINARY_DIR}/../Libs/LinearMath.lib)
 
-set(LIBRARIES Foundation
+set(LIBRARIES CommonBase
+			  Foundation
 			  RenderSDK
 			  nv_math
 			  Editors
@@ -284,10 +285,3 @@ set(SOURCE
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
-
-set_target_properties( ${PROJECT_NAME} PROPERTIES
-					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
-					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
-					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
-					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
-					)

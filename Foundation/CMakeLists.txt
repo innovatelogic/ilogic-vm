@@ -95,6 +95,8 @@ set(SOURCE
 	xmlparser.h
 )
 
+set(LIBRARIES CommonBase)
+
 add_library(${PROJECT_NAME} SHARED ${SOURCE})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
@@ -103,7 +105,12 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
-target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES} ${TINY_XML_LIBRARY})
+
+target_link_libraries( ${PROJECT_NAME} 
+					   ${LIBRARIES}
+					   ${Boost_LIBRARIES}
+					   ${TINY_XML_LIBRARY}
+ )
 
 #-------------------------------------------------------------------------------		
 # setup testing
