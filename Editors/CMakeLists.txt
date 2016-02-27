@@ -10,6 +10,7 @@ include_directories(${COMMON_SDK_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googlemock/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
+include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 
 set(SOURCE ieditor.h 
@@ -25,7 +26,10 @@ set(SOURCE ieditor.h
 			command_base.h
 			)
 
-set(LIBRARIES Foundation D3DDriver RenderSDK)
+set(LIBRARIES	CommonBase
+				Foundation 
+				D3DDriver
+				RenderSDK)
 
 #TODO: add optional linking
 set(LIBRARIES ${LIBRARIES} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})

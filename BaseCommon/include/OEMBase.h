@@ -33,6 +33,26 @@
 #define OFFSET_OF(X, Y) offsetof(X, Y)
 #endif
 
+#if (defined(ES_WINDOWS))
+    #ifndef EXPORT
+        #define EXPORT	            _declspec(dllexport)
+        #define INL_EXPORT          inline EXPORT 
+        #define FORCE_EXPORT        __forceinline EXPORT
+
+        #define EXTERN_EXPORT       extern EXPORT
+        #define INL_EXTERN_EXPORT   inline EXTERN_EXPORT
+        #define FORCE_EXTERN_EXPORT __forceinline EXTERN_EXPORT 
+    #else 
+        #define EXPORT	
+    #endif
+#endif
+
+#ifdef ES_WINDOWS
+#define inline_   __forceinline
+#else
+#define inline_   inline
+#endif
+
 namespace common_base
 {
 

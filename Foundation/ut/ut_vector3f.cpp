@@ -1,7 +1,7 @@
 #include <iostream>
 #include <gtest/gtest.h>
 
-#include "../vector.h"
+/*#include "../vector.h"
 
 //----------------------------------------------------------------------------------------------
 TEST(TestMath, AddTwoVectors)
@@ -27,4 +27,4 @@ TEST(TestMath, SubstractTwoVectors)
 	EXPECT_EQ(res.x, 0.5f);
 	EXPECT_EQ(res.y, 1.5f);
 	EXPECT_EQ(res.z, 2.5f);
-}
+}*/

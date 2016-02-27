@@ -1,3 +1,4 @@
+#include "TypesBase.h"
 #include "vector2f.h"
 
 //------------------------------------------------------------------------
@@ -32,7 +33,7 @@ void Vector2f::Set(float _x, float _y)
 }
 
 //------------------------------------------------------------------------
-scalar_t Vector2f::Normalize()
+float Vector2f::Normalize()
 {
 	float norm = sqrtf(x * x + y * y);
 	if (norm > m_eps)

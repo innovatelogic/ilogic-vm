@@ -1,5 +1,4 @@
-#ifndef __bounds2f_h__
-#define __bounds2f_h__
+#pragma once
 
 #include "vector2f.h"
 
@@ -60,5 +59,3 @@ public:
 	Vector2f bound_min;
 	Vector2f bound_max;
 };
-
-#endif//__bounds2f_h__

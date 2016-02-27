@@ -1,11 +1,7 @@
-#ifndef __lsd_vector4f_h__
-#define __lsd_vector4f_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "platform_specific.h"
+#include <assert.h>
+#include "OEMBase.h"
 
 class EXPORT Vector4f
 {
@@ -55,5 +51,3 @@ __forceinline float& Vector4f::operator[](int i)
 	assert((i>=0)&&(i<4));
 	return ((float*)this)[i]; 
 }
-
-#endif //__lsd_vector_h__

@@ -1,11 +1,7 @@
-#ifndef __lsd_vector2f_h__
-#define __lsd_vector2f_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "platform_specific.h"
+#include <math.h>
+#include "OEMBase.h"
 
 //------------------------------------------------------------------------
 class EXPORT Vector2f
@@ -19,7 +15,7 @@ public:
 
 	__forceinline float* GetPtr() { return vec_array; }
 	__forceinline const float* GetPtr() const { return vec_array;	}
-	__forceinline scalar_t Normalize();
+	__forceinline float Normalize();
 
 	__forceinline Vector2f& Vector2f::operator+=(const Vector2f& v)
 	{
@@ -106,4 +102,3 @@ __forceinline float Vector2f::Dot(const Vector2f& _vector_other)const
 {
 	return DotProduct(*this,_vector_other);
 }
-#endif //__lsd_vector2f_h__

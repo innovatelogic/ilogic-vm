@@ -1,17 +1,9 @@
-//----------------------------------------------------------------------------------------------
-// Copyright 2006
-// Auth: Yur.G
-//
-//----------------------------------------------------------------------------------------------
-
-#ifndef __lsd_vector_h__
-#define __lsd_vector_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "platform_specific.h"
+#include <assert.h>
+#include <math.h>
+#include "OEMBase.h"
+#include "TypesBase.h"
 
 //----------------------------------------------------------------------------------------------
 class EXPORT Vector
@@ -19,53 +11,53 @@ class EXPORT Vector
 public:
 
 	Vector();
-	Vector(const float _x, const float _y, const float _z);
+	Vector(const TFlt32 _x, const TFlt32 _y, const TFlt32 _z);
 	Vector(const Vector &Source);
 
-	void Set(const float _x, const float _y, const float _z);
+	void Set(const TFlt32 _x, const TFlt32 _y, const TFlt32 _z);
 
-	float  operator[](int i)const;
-	float& operator[](int i);
+	TFlt32  operator[] (int i)const;
+	TFlt32& operator[] (int i);
 
-	bool operator==(const Vector& _v)const;
-	bool operator!=(const Vector& _v)const;
+	bool operator== (const Vector &_v)const;
+	bool operator!= (const Vector &_v)const;
 
-	__forceinline Vector& operator+=(const Vector& v); 
-	__forceinline Vector& operator-=(const Vector& v); 
-	__forceinline Vector& operator*=(const Vector& v); 
-	__forceinline Vector& operator*=(const float f); 
-	__forceinline Vector& operator/=(const Vector& v); 
-	__forceinline Vector& operator/=(const float  f); 
+	__forceinline Vector& operator+= (const Vector &v); 
+	__forceinline Vector& operator-= (const Vector &v); 
+	__forceinline Vector& operator*= (const Vector &v); 
+	__forceinline Vector& operator*= (const TFlt32 f); 
+	__forceinline Vector& operator/= (const Vector &v); 
+	__forceinline Vector& operator/= (const TFlt32  f); 
 
-	Vector operator+(const Vector& v)const;
-	Vector operator-(const Vector& v)const;
-	Vector operator*(const Vector& v)const;
-	Vector operator/(const Vector& v)const;
-	Vector operator*(float f);
-	Vector operator/(float f);
+	Vector operator+ (const Vector &v)const;
+	Vector operator- (const Vector &v)const;
+	Vector operator* (const Vector &v)const;
+	Vector operator/ (const Vector &v)const;
+	Vector operator* (TFlt32 f);
+	Vector operator/ (TFlt32 f);
 
 	Vector  Vector::operator-(void) const;
 
-	Vector& operator=(const Vector &vOther);
+	Vector& operator= (const Vector &vOther);
 
-	void Random(Vector& v_min,Vector& v_max);
-	void Random(float disp_x, float disp_y, float disp_z);
+	void Random(Vector &v_min,Vector &v_max);
+	void Random(TFlt32 disp_x, TFlt32 disp_y, TFlt32 disp_z);
 
 	void Negate();
-	bool IsZero(float _tolerance);
+	bool IsZero(TFlt32 _tolerance);
 
-	__forceinline float Length();
-	__forceinline float LengthSqr();
+	__forceinline TFlt32 Length();
+	__forceinline TFlt32 LengthSqr();
 
-	scalar_t normalize();
+	TFlt32 normalize();
 
-    __forceinline float* GetPtr() { return vec_array; }
-	__forceinline const float* GetPtr() const { return vec_array; }
+    __forceinline TFlt32* GetPtr() { return vec_array; }
+	__forceinline const TFlt32* GetPtr() const { return vec_array; }
 
-	__forceinline float  Dot(const Vector& _vector_other)const;
+	__forceinline TFlt32  Dot(const Vector& _vector_other)const;
 	__forceinline Vector Cross(const Vector& _vector_other)const;
 
-	__forceinline Vector Vector::operator*(float f)const
+	__forceinline Vector Vector::operator*(TFlt32 f)const
 	{
 		Vector out; 
 
@@ -80,16 +72,16 @@ public:
 	union  // data
 	{
 		struct{
-			float x,y,z;
+			TFlt32 x,y,z;
 		};
 
-		float vec_array[3];     // array access
+		TFlt32 vec_array[3];     // array access
 	};
 };
 
 //----------------------------------------------------------------------------------------------
 
-__forceinline EXPORT float   DotProduct(const Vector& v1, const Vector& v2);
+__forceinline EXPORT TFlt32   DotProduct(const Vector& v1, const Vector& v2);
 __forceinline EXPORT Vector  CrossProduct(const Vector& v1, const Vector& v2,Vector& _result);
 __forceinline EXPORT void    VectorAbs(const Vector& vIn, const Vector& v2,Vector& vOut); 
 
@@ -97,41 +89,44 @@ __forceinline EXPORT Vector& sub(Vector &u, const Vector &v, const Vector &w);
 __forceinline EXPORT Vector& add(Vector &u, const Vector &v, const Vector &w);
 __forceinline EXPORT Vector& cross(Vector &u, const Vector &v, const Vector &w);
 
-__forceinline EXPORT Vector& scale(Vector &u, const float s);
+__forceinline EXPORT Vector& scale(Vector &u, const TFlt32 s);
 
 // normalizes a vector and return a reference of itself
 __forceinline EXPORT Vector& normalize(Vector &u);
 
 // Computes the squared magnitude
-__forceinline  float sq_length(const Vector & n)
+__forceinline  TFlt32 sq_length(const Vector & n)
 { 
 	return n.x * n.x + n.y * n.y + n.z * n.z; 
 }
 
 //----------------------------------------------------------------------------------------------
 // Computes the magnitude
-__forceinline EXPORT float length(const Vector & n)
+__forceinline EXPORT TFlt32 length(const Vector & n)
 { 
 	return sqrtf(sq_length(n)); 
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline float Vector::operator[](int i) const
+__forceinline TFlt32 Vector::operator[](int i) const
 {
 	assert((i>=0)&&(i<3));
-	return ((float*)this)[i]; 
+	return ((TFlt32*)this)[i]; 
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline float& Vector::operator[](int i)
+__forceinline TFlt32& Vector::operator[](int i)
 {
 	assert((i>=0)&&(i<3));
-	return ((float*)this)[i]; 
+	return ((TFlt32*)this)[i]; 
 }
 //----------------------------------------------------------------------------------------------
 inline Vector& Vector::operator=(const Vector &vOther)	
 {
-	x=vOther.x; y=vOther.y; z=vOther.z; 
+	x=vOther.x;
+    y=vOther.y;
+    z=vOther.z; 
+
 	return *this; 
 }
 //----------------------------------------------------------------------------------------------
@@ -164,7 +159,7 @@ __forceinline Vector& Vector::operator*=(const Vector& v)
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline Vector Vector::operator*(float f)
+__forceinline Vector Vector::operator*(TFlt32 f)
 {
 	Vector out;
 
@@ -176,7 +171,7 @@ __forceinline Vector Vector::operator*(float f)
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline Vector Vector::operator/(float f)
+__forceinline Vector Vector::operator/(TFlt32 f)
 {
 	assert(f!=0.f);
 
@@ -190,7 +185,7 @@ __forceinline Vector Vector::operator/(float f)
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline Vector& Vector::operator*=(const float f)
+__forceinline Vector& Vector::operator*=(const TFlt32 f)
 {
 	x *= f;
 	y *= f;
@@ -212,7 +207,7 @@ __forceinline Vector& Vector::operator/=(const Vector &v)
 	return *this;
 }
 //----------------------------------------------------------------------------------------------
-__forceinline Vector& Vector::operator/=(const float f)
+__forceinline Vector& Vector::operator/=(const TFlt32 f)
 {
 	assert(f!=0.f);
 
@@ -261,23 +256,23 @@ inline bool Vector::operator !=(const Vector &v) const
 //----------------------------------------------------------------------------------------------
 __forceinline Vector  Vector::operator-(void) const
 {
-	return Vector(-x,-y,-z);
+	return Vector(-x, -y, -z);
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline float Vector::Length()
+__forceinline TFlt32 Vector::Length()
 {
 	return ::sqrtf(x * x + y * y + z * z);
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline float Vector::LengthSqr()
+__forceinline TFlt32 Vector::LengthSqr()
 {
    return x * x + y * y + z * z;
 }
 
 //----------------------------------------------------------------------------------------------
-__forceinline float Vector::Dot(const Vector &_vector_other) const
+__forceinline TFlt32 Vector::Dot(const Vector &_vector_other) const
 {
 	return DotProduct(*this,_vector_other);
 }
@@ -286,20 +281,20 @@ __forceinline float Vector::Dot(const Vector &_vector_other) const
 __forceinline Vector Vector::Cross(const Vector &_vector_other) const
 {
 	Vector out;
-	return CrossProduct(*this,_vector_other,out);
+	return CrossProduct(*this, _vector_other, out);
 }
 //----------------------------------------------------------------------------------------------
-__forceinline float DotProduct(const Vector &v1, const Vector &v2)
+__forceinline TFlt32 DotProduct(const Vector &v1, const Vector &v2)
 {
-	return  v1.x*v2.x + v1.y*v2.y + v1.z*v2.z; 
+	return  v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; 
 }
 
 //----------------------------------------------------------------------------------------------
 __forceinline Vector CrossProduct(const Vector &a, const Vector &b, Vector &_result)
 {
-	_result.x = a.y*b.z - a.z*b.y;
-	_result.y = a.z*b.x - a.x*b.z;
-	_result.z = a.x*b.y - a.y*b.x;
+	_result.x = a.y * b.z - a.z * b.y;
+	_result.y = a.z * b.x - a.x * b.z;
+	_result.z = a.x * b.y - a.y * b.x;
 	return _result;
 } 
 
@@ -310,5 +305,3 @@ __forceinline void VectorAbs(const Vector &vIn, const Vector &v2, Vector &vOut)
 	vOut.y = fabs(vIn.y);
 	vOut.z = fabs(vIn.z);
 }
-
-#endif // __lsd_vector_h__

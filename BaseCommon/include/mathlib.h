@@ -1,41 +1,22 @@
-#ifndef __mathlib_h__
-#define __mathlib_h__
+#pragma once
 
-#ifdef _WIN32
-   #pragma once
-#endif
+#include <list>
+#include <vector>
+#include <algorithm>
+#include <math.h> 
+#include <assert.h>
+#include <functional>
 
-#ifndef __lsd_vector_h__
 #include "vector.h"
-#endif
-
-#ifndef __lsd_vector2f_h__
 #include "vector2f.h"
-#endif
-
-#ifndef __lsd_vector4f_h__
 #include "vector4f.h"
-#endif
-
-#ifndef __lsd_matrix_h__
 #include "matrix.h"
-#endif
-
-#ifndef __matrix3_h__
 #include "matrix3.h"
-#endif
-
-#ifndef __lsd_quat_h__
 #include "quat.h"
-#endif
-
-#ifndef __bounds2f_h__
 #include "Bounds2f.h"
-#endif
-
-#ifndef __bounds3f_h__
 #include "Bounds3f.h"
-#endif
+#include "OEMBase.h"
+#include "TypesBase.h"
 
 /** macro. */
 #define FABS(x) (float(fabs(x)))		/* implement as is fastest on your machine */
@@ -190,7 +171,7 @@ typedef std::list<Pose>::const_iterator		  TPoseListConstIterator;
 EXPORT int		rand(int r1, int r2);
 EXPORT float	rand(float r1, float r2);
 EXPORT float	GetHalfSpace(const Vector2f& Point, const Vector2f& LineStart, const Vector2f& LineEnd);
-EXPORT INT		GetHalfSpace(const Vector& PlaneN, const Vector& PlanePt, const Vector& p);
+EXPORT int		GetHalfSpace(const Vector& PlaneN, const Vector& PlanePt, const Vector& p);
 
 // Computes B = inverse(A)
 //       -1
@@ -218,8 +199,8 @@ EXTERN_EXPORT Vector4f	transform_coord(const Vector4f &v, const Matrix &M);
 EXTERN_EXPORT Bounds3f&	transform_bound(Bounds3f &OutBound, const Bounds3f &InBound, const Matrix &M);
 EXTERN_EXPORT Bounds3f	transform_bound(const Bounds3f InBound, const Matrix &M);
 
-inline_ Matrix & frustum( Matrix &M, const scalar_t l, const scalar_t r, const scalar_t b, 
-                          const scalar_t t, const scalar_t n, const scalar_t f);
+inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b, 
+                          const float t, const float n, const float f);
 
 /** build perspective matrix */
 EXPORT inline_ Matrix& perspective(Matrix &vOut, float fov, float aspect, float n, float f);
@@ -261,7 +242,7 @@ EXPORT inline_ bool IntersectRayWithTriangle(const Vector2f &Point,
 											 const Vector2f &v1,
 											 const Vector2f &v2);
 
-EXPORT inline_ BOOL TriangleTriangleIntersection(const Vector &v00,
+EXPORT inline_ bool TriangleTriangleIntersection(const Vector &v00,
                                                  const Vector &v01,
                                                  const Vector &v02, 
                                                  const Vector &v10,
@@ -269,7 +250,7 @@ EXPORT inline_ BOOL TriangleTriangleIntersection(const Vector &v00,
                                                  const Vector &v12 );
 
 
-EXPORT inline_ BOOL TriangleTriangleSplit(const Vector &v00,
+EXPORT inline_ bool TriangleTriangleSplit(const Vector &v00,
                                           const Vector &v01,
                                           const Vector &v02, 
                                           const Vector &v10,
@@ -278,7 +259,7 @@ EXPORT inline_ BOOL TriangleTriangleSplit(const Vector &v00,
                                           int &out_triangle_count,
                                           Vector *triangle_strip);
 
-EXPORT inline_ BOOL PlaneTriangleSplit(const Vector &v00,
+EXPORT inline_ bool PlaneTriangleSplit(const Vector &v00,
                                        const Vector &v01,
                                        const Vector &v02, 
                                        const Vector &pN,
@@ -354,6 +335,3 @@ EXPORT inline_ float GetDistToLine(const Vector &Point, const Vector &start, con
 
 // clamp inBound into toBound if not overlap result invalid bound
 EXPORT Bounds2f ClampBound(const Bounds2f &inBound, const Bounds2f &toBound);
-
-
-#endif //__mathlib_h__

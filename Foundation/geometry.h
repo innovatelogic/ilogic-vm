@@ -6,6 +6,7 @@
 #endif
 
 #include "mathlib.h"
+#include <map>
 
 struct EXPORT SPolygonFace
 {

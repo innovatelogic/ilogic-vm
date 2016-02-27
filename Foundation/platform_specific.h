@@ -1,8 +1,8 @@
-#ifndef __platform_specific_h__
-#define __platform_specific_h__
+#pragma once
+
+#include "OEMBase.h"
 
 #ifdef _WIN32
-#pragma once
 
 // Modify the following defines if you have to target a platform prior to the ones specified below.
 // Refer to MSDN for the latest info on corresponding values for different platforms.
@@ -81,26 +81,6 @@
 //#pragma intrinsic(memcpy)
 
 #define CULLMODE_CCW		TRUE
-
-#ifndef EXPORT
-#ifdef _WIN32
-  #define EXPORT	          _declspec(dllexport)
-  #define INL_EXPORT          inline EXPORT 
-  #define FORCE_EXPORT        __forceinline EXPORT
-
-  #define EXTERN_EXPORT       extern EXPORT
-  #define INL_EXTERN_EXPORT   inline EXTERN_EXPORT
-  #define FORCE_EXTERN_EXPORT __forceinline EXTERN_EXPORT 
-#else 
-  #define EXPORT	
-#endif
-#endif
-
-#ifdef WIN32
-   #define inline_   __forceinline
-#else
-   #define inline_   inline
-#endif
 
 #ifdef WIN32
 #pragma warning ( disable : 4251 ) // needs to have dll-interface to be used by clients of class
@@ -256,5 +236,3 @@ void  appMemset(void* Dest, int C, int Count);
 void  appMemzero(void* Dest, int Count);
 void  appMemcpy(void* Dest, const void* Src, int Count);
 void  appMemswap(void* Ptr1, void* Ptr2, DWORD Size);
-
-#endif //__platform_specific_h__

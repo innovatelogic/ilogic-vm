@@ -1,17 +1,10 @@
-#ifndef __bounds3f_h__
-#define __bounds3f_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#ifndef __lsd_vector_h__
 #include "vector.h"
-#endif
+#include <string> 
 
 class Bounds3f
 {
-
 public:
 	Bounds3f()
 	{
@@ -151,5 +144,3 @@ public:
 		float vec_array[6];
 	};
 };
-
-#endif//__bounds3f_h__

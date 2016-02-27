@@ -13,17 +13,14 @@
 // links: http://www.euclideanspace.com/maths/geometry/affine/reflection/index.htm
 //        http://www.euclideanspace.com/maths/geometry/elements/plane/lineOnPlane/index.htm
 
-#ifndef __lsd_matrix_h__
-#define __lsd_matrix_h__
+#pragma once
 
-#ifdef _WIN32
-   #pragma once
-#endif
-
+#include <string>
 #include "vector.h"
 #include "vector2f.h"
 #include "vector4f.h"
 #include "quat.h"
+
 
 //--------------------------------------------------------------------------------------
 class EXPORT Matrix
@@ -155,5 +152,3 @@ Matrix & mult(Matrix & C, const Matrix & A, const Matrix3f & B);
 
 /* invert */
 //Matrix & invert(Matrix & B, const Matrix & A);
-
-#endif //__lsd_matrix_h__

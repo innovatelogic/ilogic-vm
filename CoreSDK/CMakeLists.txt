@@ -6,6 +6,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 
 set(BULLET_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet3-2.83.6/src/)
 
+include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${BULLET_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)

@@ -13,6 +13,7 @@ if(Boost_FOUND)
 endif()
 
 include_directories(${COMMON_SDK_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 
 set(SOURCE
@@ -24,8 +25,6 @@ set(SOURCE
 	Actor_Static.cpp
 	AutoTree.h
 	BoundingTree.h
-	Bounds2f.h
-	Bounds3f.h
 	ClassFactory.cpp
 	ClassFactory.h
 	ClassNode.cpp
@@ -54,12 +53,6 @@ set(SOURCE
 	m_streams.h
 	math_decl.h
 	math_float.h
-	mathlib.cpp
-	mathlib.h
-	matrix.cpp
-	matrix.h
-	matrix3.cpp
-	matrix3.h
 	MemoryAllocator.cpp
 	MemoryAllocator.h
 	MessageMap.h
@@ -70,8 +63,6 @@ set(SOURCE
 	ObjectFactory.h
 	Property.cpp
 	Property.h
-	quat.cpp
-	quat.h
 	singleton.h
 	StdafxFoundation.h
 	Streams.cpp
@@ -86,12 +77,6 @@ set(SOURCE
 	UtFile.h
 	UtMemory.h
 	ValueParser.h
-	vector.cpp
-	vector.h
-	vector2f.cpp
-	vector2f.h
-	vector4f.cpp
-	vector4f.h
 	xmlparser.h
 )
 

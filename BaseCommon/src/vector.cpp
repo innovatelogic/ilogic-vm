@@ -9,7 +9,7 @@ Vector::Vector()
 }
 
 //------------------------------------------------------------------------
-Vector::Vector(float _x, float _y, float _z)
+Vector::Vector(TFlt32 _x, TFlt32 _y, TFlt32 _z)
 : x(_x)
 , y(_y)
 , z(_z)
@@ -28,7 +28,7 @@ Vector::Vector(const Vector& Source)
 	}
 }
 //------------------------------------------------------------------------
-void Vector::Set(float _x, float _y, float _z)
+void Vector::Set(TFlt32 _x, TFlt32 _y, TFlt32 _z)
 {
 	x = _x;
 	y = _y;
@@ -44,9 +44,9 @@ void Vector::Negate()
 }
 
 //------------------------------------------------------------------------
-scalar_t Vector::normalize()
+TFlt32 Vector::normalize()
 {
-    float norm = sqrtf(x * x + y * y + z * z);
+    TFlt32 norm = sqrtf(x * x + y * y + z * z);
 	
 	if (norm > m_eps){
         norm = m_one / norm;
@@ -87,7 +87,7 @@ Vector& cross(Vector & u, const Vector& v, const Vector& w)
 	return u;
 }
 //------------------------------------------------------------------------
-Vector& scale(Vector & u, const float s)
+Vector& scale(Vector & u, const TFlt32 s)
 {
 	u.x *= s;
 	u.y *= s;
@@ -98,7 +98,7 @@ Vector& scale(Vector & u, const float s)
 //------------------------------------------------------------------------
 Vector& normalize(Vector& u)
 {
-	float norm = sqrtf(u.x * u.x + u.y * u.y + u.z * u.z);
+	TFlt32 norm = sqrtf(u.x * u.x + u.y * u.y + u.z * u.z);
 	
 	if (norm > m_eps){
 		norm = m_one / norm;

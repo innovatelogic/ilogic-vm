@@ -15,13 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
-
-#ifndef __criticalsection_h__
-#define __criticalsection_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "platform_specific.h"
 
@@ -41,5 +35,3 @@ private:
 	CriticalSectionType m_criticalSection;
 	bool m_valid;
 };
-
-#endif//__criticalsection_h__

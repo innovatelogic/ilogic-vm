@@ -1,9 +1,4 @@
-#ifndef __lsd_quat_h__
-#define __lsd_quat_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "matrix3.h"
 
@@ -44,5 +39,3 @@ public:
 EXTERN_EXPORT const Quaternion operator*(const Quaternion& p, const Quaternion& q);
 EXTERN_EXPORT float dot(const Quaternion& q1, const Quaternion& q2);
 EXTERN_EXPORT Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
-
-#endif // __lsd_quat_h__
