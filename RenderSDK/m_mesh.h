@@ -1,9 +1,4 @@
-#ifndef _m_mesh_h_ 
-#define _m_mesh_h_
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "m_node.h"
 #include "m_texcoord_set.h"
@@ -71,5 +66,3 @@ struct EXPORT m_mesh : public m_node
 
 EXPORT m_output_stream & operator << (m_output_stream & rOutputStream, const m_mesh & rMesh);
 EXPORT m_input_stream & operator >> (m_input_stream & rInputStream, m_mesh & rMesh);
-
-#endif   

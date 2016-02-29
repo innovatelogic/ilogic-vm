@@ -20,8 +20,13 @@
 #include "vector.h"
 #include "vector2f.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //--------------------------------------------------------------------------------------
-class EXPORT Matrix3f
+class Matrix3f
 {
 	public:
 		Matrix3f();
@@ -87,3 +92,6 @@ class EXPORT Matrix3f
 
 /** C = A * B */
 Matrix3f & mult(Matrix3f & C, const Matrix3f & A, const Matrix3f & B);
+
+}
+}

@@ -22,10 +22,10 @@ public:
 	virtual void DebugRender(class CRenderSDK *pRenderSDK) = 0;
 
 	virtual bool SetPosition(const class CActor *pSender) = 0;
-	virtual bool SetControllerPosition(const class CActor * Sender, const class Vector *pPosition) = 0;
+	virtual bool SetControllerPosition(const class CActor * Sender, const Vector *pPosition) = 0;
 
-	virtual bool SetActorPosition(const class CActor * Sender, const class Matrix *pWTM) = 0;
-	virtual bool SetActorPositionNode(const struct SPhysNode *pPhysNode, const class Matrix *pWTM) = 0;
+	virtual bool SetActorPosition(const class CActor * Sender, const Matrix *pWTM) = 0;
+	virtual bool SetActorPositionNode(const struct SPhysNode *pPhysNode, const Matrix *pWTM) = 0;
 
 	virtual bool ReleaseObject(const class CActor *pSender) = 0;
 	virtual bool ReleaseObject(const SPhysNode *pSender) = 0;

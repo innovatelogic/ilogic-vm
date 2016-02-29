@@ -1,9 +1,8 @@
-#ifndef __camera_editor_actor_h__
-#define __camera_editor_actor_h__
-
 #pragma once
 
 #include "Camera.h"
+
+using namespace oes::common_base;
 
 class CORESDK_API CameraEditor : public CCamera
 {
@@ -16,14 +15,11 @@ public:
 	
 	inline_ virtual void UpdateCullInfo();
 
-	virtual Vector GetUpVector();
-	virtual Vector GetRtVector();
-	virtual Vector GetZtVector();
+	oes::common_base::Vector GetUpVector();
+    oes::common_base::Vector GetRtVector();
+    oes::common_base::Vector GetZtVector();
 
 protected:
 private:
 
 };
-
-
-#endif/__camera_editor_actor_h__

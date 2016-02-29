@@ -1,12 +1,9 @@
-#ifndef _m_scene_h_
-#define _m_scene_h_
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "m_stdafx.h"
 #include "m_refcount.h"
+
+using namespace oes::common_base;
 
 //------------------------------------------------------------------------
 struct EXPORT m_scene : public m_refcount
@@ -59,5 +56,3 @@ EXPORT class m_output_stream & operator << (class m_output_stream & rOutputStrea
 EXPORT class m_input_stream & operator >> (class m_input_stream & rInputStream, m_scene & rScene);
 
 EXPORT class m_output_stream & SaveObjects(class m_output_stream & rOutputStream, const m_scene & Scene);
-
-#endif //_m_scene_h_

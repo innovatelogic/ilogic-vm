@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "vector.h"
 /*
 REGISTER_CLASS_ACTION_EX(ActionBase, CObjectAbstract)
 	new PropertyVector2f("Position", (BYTE*)&((ActionBase*)NULL)->Position - (BYTE*)NULL, "ActionBase", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
@@ -168,7 +169,7 @@ void SocketAction::Render(HDC hdc, const Matrix &ViewMatrix) const
 bool SocketAction::ProcessMouseClick(const Vector2f& MousePos, bool link /*= false*/) const
 {
 	bool bResult = false;
-
+/*
 	Vector2f Pos = Owner->GetPosition2f();
 	Vector2f Size = Owner->GetSize();
 
@@ -203,7 +204,7 @@ bool SocketAction::ProcessMouseClick(const Vector2f& MousePos, bool link /*= fal
 				Vector Result;
 				Cubic_Bezier_Spline(BPoints[3], BPoints[2], BPoints[1], BPoints[0], (float)Index / Detail, Result);
 				
-				Vector N = cross(N, Start - Result, Vector(0.f, 0.f, 1.f));
+				Vector N = oes::common_base::cross(N, Start - Result, Vector(0.f, 0.f, 1.f));
 				N.normalize();
 				N*=5;
 
@@ -225,7 +226,7 @@ bool SocketAction::ProcessMouseClick(const Vector2f& MousePos, bool link /*= fal
 	{
 		bResult = (MousePos.x >= Points[0].x && MousePos.x <= Points[1].x) &&
 					(MousePos.y >= Points[0].y && MousePos.y <=  Points[1].y);
-	}
+	}*/
 	return bResult;
 }
 
@@ -519,7 +520,7 @@ void ActionBase::Execute(class CActor * EventActor)
 //----------------------------------------------------------------------------------------------
 void ActionBase::Render(HDC hdc, const Matrix &ViewMatrix)
 {
-	TVecActionChildIterator IterActor = ChildNodes.begin();
+/*	TVecActionChildIterator IterActor = ChildNodes.begin();
 	while (IterActor != ChildNodes.end())
 	{
 		(*IterActor)->Render(hdc, ViewMatrix);
@@ -601,7 +602,7 @@ void ActionBase::Render(HDC hdc, const Matrix &ViewMatrix)
 	DeleteObject(hCustomFont);
 
 	::SelectObject(hdc, hPenOld);
-	::DeleteObject(hpen);
+	::DeleteObject(hpen);*/
 
 	//std::for_each(ChildNodes.begin(), ChildNodes.end(), std::bind2nd(std::mem_fun(&ActionBase::Render), hdc, ViewMatrix));
 }

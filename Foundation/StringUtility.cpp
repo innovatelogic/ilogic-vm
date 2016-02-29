@@ -1,6 +1,8 @@
+#include "mathlib.h"
 #include "StringUtility.h"
-#include "vector.h"
 #include <string>
+
+using namespace oes::common_base;
 
 //----------------------------------------------------------------------------------------------
 //  split formatted string to components

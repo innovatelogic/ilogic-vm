@@ -1,11 +1,8 @@
-#ifndef _m_texture_h_
-#define _m_texture_h_
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "m_stdafx.h"
+
+using namespace oes::common_base;
 
 struct EXPORT m_texture
 {
@@ -44,5 +41,3 @@ EXPORT class m_output_stream & operator << (m_output_stream & rOutputStream, con
 
 /// Read a scene from an nv_input_stream.
 EXPORT class m_input_stream & operator >> (m_input_stream & rInputStream, m_texture & rTexture);
-
-#endif // _m_texture_h_

@@ -1,12 +1,11 @@
-#ifndef _m_material_h_
-#define _m_material_h_
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "m_stdafx.h"
 #include "m_attribute.h"
+#include "m_streams.h"
+
+using namespace oes::common_base;
 
 struct EXPORT m_material 
 {
@@ -45,5 +44,3 @@ EXPORT m_input_stream & operator >> (m_input_stream & rInputStream, m_material &
 EXPORT void WriteToStreamMaterial(std::stringstream &ss, const m_material * material);
 
 EXPORT void LoadMaterial(const char *Path, m_material *pOutMaterial);
-
-#endif // _m_material_h_

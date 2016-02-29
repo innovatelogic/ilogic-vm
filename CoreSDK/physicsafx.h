@@ -1,9 +1,4 @@
-#ifndef __physicsafx_h__
-#define __physicsafx_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "LinearMath/btAlignedObjectArray.h"
 
@@ -12,6 +7,8 @@
 #include "MovementData.h"
 #include "PhysNode.h"
 #include "mathlib.h"
+
+using namespace oes::common_base;
 
 #define PHIS_MULTYPLIER 1.0f
 
@@ -105,5 +102,3 @@ struct SBoxBodyDesc : public SBodyDesc
 	{
 	}
 };
-
-#endif//__physicsafx_h__

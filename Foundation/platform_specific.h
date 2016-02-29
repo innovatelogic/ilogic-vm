@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OEMBase.h"
+#include "TypesBase.h"
 
 #ifdef _WIN32
 
@@ -63,20 +64,14 @@
 #include <tchar.h>
 
 /** boost libraries*/
-//#include "boost/ref.hpp"
-//#include "boost/functional.hpp"
 #include "boost/bind.hpp"
 #include "boost/signals2.hpp"
-//#include "boost/lexical_cast.hpp" 
-//#include "boost/shared_ptr.hpp"
-//#include <boost/preprocessor/repetition/enum.hpp>
-//#include <boost/preprocessor/repetition/enum_params.hpp>
-//#include <boost/preprocessor/repetition/enum_binary_params.hpp>
-//#include <boost/preprocessor/iteration/iterate.hpp>
+
 
 #include "DefTypes.h"
 #include "math_decl.h"
 #include "singleton.h"
+#include "mathlib.h"
 
 //#pragma intrinsic(memcpy)
 

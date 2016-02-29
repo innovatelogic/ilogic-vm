@@ -15,18 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
-
-#ifndef __ObjectAbstract_h__
-#define __ObjectAbstract_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "StdafxFoundation.h"
 #include "EventDesc.h"
 #include "Property.h"
 #include "ObjectFactory.h"
+
+using namespace oes::common_base;
 
 class EXPORT CObjectAbstract
 {
@@ -376,5 +372,3 @@ extern "C"
 // 	memory_delete(Ptr);
 // }
 #endif//USE_MEMORY_POOL
-
-#endif//__ObjectAbstract_h__

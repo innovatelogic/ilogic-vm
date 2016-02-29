@@ -1,5 +1,9 @@
 #include "vector4f.h"
 
+namespace oes
+{
+namespace common_base
+{
 //------------------------------------------------------------------------
 Vector4f::Vector4f()
 : x(0.f)
@@ -42,4 +46,7 @@ void Vector4f::Set(float _x, float _y, float _z, float _w)
 bool Vector4f::operator!= (const Vector4f& Other) const
 {
     return (x != Other.x || y != Other.y || z != Other.z || w != Other.w);
+}
+
+}
 }

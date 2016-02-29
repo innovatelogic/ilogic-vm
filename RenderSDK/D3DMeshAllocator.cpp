@@ -250,8 +250,9 @@ void D3DMeshAllocator::DeserializeMesh(m_file &oFile, SubMeshNode *pInMesh, unsi
 		oFile >> faces_idx[iVertex];
 	}
 
+    //todo
 	// Attributes
-	oFile >> mesh_attr;
+//	oFile >> mesh_attr;
 
 	// Bounding box 
 	oFile >> aabb_min >> aabb_max;

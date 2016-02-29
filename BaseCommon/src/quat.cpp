@@ -1,6 +1,11 @@
 #include "quat.h"
 #include "Matrix.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //------------------------------------------------------------------------
 Quaternion::Quaternion()
 {
@@ -9,7 +14,7 @@ Quaternion::Quaternion()
 //------------------------------------------------------------------------
 Quaternion::Quaternion(float _x, float _y, float _z, float _w)
 {
-   Set(_x,_y,_z,_w);
+   Set(_x, _y, _z, _w);
 }
 
 //------------------------------------------------------------------------
@@ -273,4 +278,7 @@ Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quatern
 	p.z = c1 * q1.z + c2 * q2.z;
 	p.w = c1 * q1.w + c2 * q2.w;
 	return p;
+}
+
+}
 }

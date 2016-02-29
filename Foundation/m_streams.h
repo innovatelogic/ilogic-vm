@@ -1,17 +1,10 @@
-#ifndef _m_input_output_stream_h_
-#define _m_input_output_stream_h_
-
 #pragma once
 
 #include "platform_specific.h"
+#include "mathlib.h"
+#include "m_attribute.h"
 
-class Vector2f;
-class Vector4f;
-class Vector;
-class Matrix3f;
-class Matrix;
-class Quaternion;
-class m_attribute;
+using namespace oes::common_base;
 
 //----------------------------------------------------------------------------------------------
 class EXPORT m_input_stream
@@ -84,7 +77,7 @@ operator << (m_output_stream & rOutputStream, double nDouble);
 
 /// Write a Vector2f
 EXPORT m_output_stream &
-operator << (m_output_stream & rOutputStream, const Vector2f & rVector);
+operator << (m_output_stream & rOutputStream, const oes::common_base::Vector2f & rVector);
 
 /// Write a Vector
 EXPORT m_output_stream &
@@ -105,10 +98,6 @@ operator << (m_output_stream & rOutputStream, const Matrix & rMatrix);
 /// Write a quaternion.
 EXPORT m_output_stream &
 operator << (m_output_stream & rOutputStream, const Quaternion & rQuaternion);
-
-/// Write an m_attribute
-EXPORT m_output_stream & 
-operator << (m_output_stream & rOutputStream, const m_attribute & rAttribute);
 
 //
 // Extracting functions
@@ -174,8 +163,8 @@ operator >> (m_input_stream & rInputStream, Matrix & rMatrix);
 EXPORT m_input_stream &
 operator >> (m_input_stream & rInputStream, Quaternion & rQuaternion);
 
-/// Read an m_attribute
-EXPORT m_input_stream &
-operator >> (m_input_stream & rInputStream, m_attribute & rAttribute);
+/// Write an m_attribute
+EXPORT m_output_stream& operator << (m_output_stream & rOutputStream, const m_attribute & rAttribute);
 
-#endif//_m_input_output_stream_h_
+/// Read an m_attribute
+EXPORT m_input_stream& operator >> (m_input_stream & rInputStream, m_attribute & rAttribute);

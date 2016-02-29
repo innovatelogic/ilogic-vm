@@ -5,8 +5,12 @@
 #include "OEMBase.h"
 #include "TypesBase.h"
 
+namespace oes
+{
+namespace common_base
+{
 //----------------------------------------------------------------------------------------------
-class EXPORT Vector
+class Vector
 {
 public:
 
@@ -81,18 +85,18 @@ public:
 
 //----------------------------------------------------------------------------------------------
 
-__forceinline EXPORT TFlt32   DotProduct(const Vector& v1, const Vector& v2);
-__forceinline EXPORT Vector  CrossProduct(const Vector& v1, const Vector& v2,Vector& _result);
-__forceinline EXPORT void    VectorAbs(const Vector& vIn, const Vector& v2,Vector& vOut); 
+__forceinline TFlt32   DotProduct(const Vector& v1, const Vector& v2);
+__forceinline Vector  CrossProduct(const Vector& v1, const Vector& v2,Vector& _result);
+__forceinline void    VectorAbs(const Vector& vIn, const Vector& v2,Vector& vOut); 
 
-__forceinline EXPORT Vector& sub(Vector &u, const Vector &v, const Vector &w);
-__forceinline EXPORT Vector& add(Vector &u, const Vector &v, const Vector &w);
-__forceinline EXPORT Vector& cross(Vector &u, const Vector &v, const Vector &w);
+__forceinline Vector& sub(Vector &u, const Vector &v, const Vector &w);
+__forceinline Vector& add(Vector &u, const Vector &v, const Vector &w);
+__forceinline Vector& cross(Vector &u, const Vector &v, const Vector &w);
 
-__forceinline EXPORT Vector& scale(Vector &u, const TFlt32 s);
+__forceinline Vector& scale(Vector &u, const TFlt32 s);
 
 // normalizes a vector and return a reference of itself
-__forceinline EXPORT Vector& normalize(Vector &u);
+__forceinline Vector& normalize(Vector &u);
 
 // Computes the squared magnitude
 __forceinline  TFlt32 sq_length(const Vector & n)
@@ -102,7 +106,7 @@ __forceinline  TFlt32 sq_length(const Vector & n)
 
 //----------------------------------------------------------------------------------------------
 // Computes the magnitude
-__forceinline EXPORT TFlt32 length(const Vector & n)
+__forceinline TFlt32 length(const Vector & n)
 { 
 	return sqrtf(sq_length(n)); 
 }
@@ -304,4 +308,7 @@ __forceinline void VectorAbs(const Vector &vIn, const Vector &v2, Vector &vOut)
 	vOut.x = fabs(vIn.x);
 	vOut.y = fabs(vIn.y);
 	vOut.z = fabs(vIn.z);
+}
+
+}
 }

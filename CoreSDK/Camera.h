@@ -1,9 +1,5 @@
-#ifndef  __ucamera_h__
-#define  __ucamera_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "ActorAllocator.h"
 #include "IDrawInterface.h"
@@ -11,6 +7,8 @@
 #include "IInputInterface.h"
 
 #define NUM_SPLITS 3
+
+using namespace oes::common_base;
 
 class CORESDK_API CCamera : public ActorAllocator,
 							public IDrawInterface,
@@ -145,5 +143,3 @@ private:
 
 	class SRenderContext *m_pRenderContext;
 };
-
-#endif //__ucamera_h__

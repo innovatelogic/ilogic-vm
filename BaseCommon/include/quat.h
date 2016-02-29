@@ -2,7 +2,12 @@
 
 #include "matrix3.h"
 
-class EXPORT Quaternion
+namespace oes
+{
+namespace common_base
+{
+
+class Quaternion
 {
 public:
     Quaternion();
@@ -36,6 +41,9 @@ public:
 	};
 };
 
-EXTERN_EXPORT const Quaternion operator*(const Quaternion& p, const Quaternion& q);
-EXTERN_EXPORT float dot(const Quaternion& q1, const Quaternion& q2);
-EXTERN_EXPORT Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
+const Quaternion operator*(const Quaternion& p, const Quaternion& q);
+float dot(const Quaternion& q1, const Quaternion& q2);
+Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
+
+}
+}

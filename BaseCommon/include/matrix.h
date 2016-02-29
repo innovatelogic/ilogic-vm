@@ -21,9 +21,13 @@
 #include "vector4f.h"
 #include "quat.h"
 
+namespace oes
+{
+namespace common_base
+{
 
 //--------------------------------------------------------------------------------------
-class EXPORT Matrix
+class Matrix
 {
 public:
 	Matrix();
@@ -142,9 +146,9 @@ public:
  	}
 };
 
-EXPORT Matrix GetMatrixIdentitly(const Vector &_translation);
-EXPORT Matrix GetMatrixScale(const Vector &_scale );
-EXPORT Matrix GetMatrixTranslation(const Vector& _translation);
+Matrix GetMatrixIdentitly(const Vector &_translation);
+Matrix GetMatrixScale(const Vector &_scale );
+Matrix GetMatrixTranslation(const Vector& _translation);
 
 /** C = A * B */
 Matrix & mult(Matrix & C, const Matrix & A, const Matrix & B);
@@ -152,3 +156,6 @@ Matrix & mult(Matrix & C, const Matrix & A, const Matrix3f & B);
 
 /* invert */
 //Matrix & invert(Matrix & B, const Matrix & A);
+
+}
+}

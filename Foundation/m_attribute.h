@@ -1,18 +1,11 @@
-#ifndef _M_ATTRIBUTE_
-#define _M_ATTRIBUTE_
-
-#ifdef _WIN32
 #pragma once
 #pragma warning (disable:4251) 
-#endif
 
 #include "platform_specific.h"
-#include "m_streams.h"
-
 
 class EXPORT m_attribute
 {
-	typedef std::map<std::string,m_attribute*>  _dico;
+	typedef std::map<std::string, m_attribute*> _dico;
 	typedef _dico::value_type                   _dico_pair;
 	typedef _dico::iterator                     _dico_it;
 	typedef _dico::const_iterator               _dico_cit;
@@ -105,12 +98,12 @@ protected:
 
 private: 
 
-	// dictionnary
+	// dictionary
 	_dico                   _attr;
 
 	friend EXPORT std::ostream & operator << ( std::ostream & os,  const m_attribute & att);
-	friend m_input_stream & operator >> ( m_input_stream & rInputStream, m_attribute & rAttribute);
-	friend m_output_stream & operator << ( m_output_stream & rOutputStream, const m_attribute & rAttribute); 	 
+//	friend m_input_stream & operator >> ( m_input_stream & rInputStream, m_attribute & rAttribute);
+//	friend m_output_stream & operator << ( m_output_stream & rOutputStream, const m_attribute & rAttribute); 	 
 
 
 public:
@@ -134,5 +127,3 @@ public:
 	// used to tell whether an attribute contains a valid value as well as its type
 	unsigned int    _flag;
 };
-
-#endif

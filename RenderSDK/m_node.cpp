@@ -132,7 +132,7 @@ m_input_stream & operator >> (m_input_stream & rInputStream, m_node & rNode)
 
    rInputStream >> rNode.anim;
 
-   rInputStream >> rNode.attr;
+  rInputStream >> rNode.attr;
 
    return rInputStream;
 }

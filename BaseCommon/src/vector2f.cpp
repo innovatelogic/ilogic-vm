@@ -1,6 +1,11 @@
 #include "TypesBase.h"
 #include "vector2f.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //------------------------------------------------------------------------
 Vector2f::Vector2f()
 : x(0.f)
@@ -47,3 +52,5 @@ float Vector2f::Normalize()
 	return norm;
 }
 
+}
+}

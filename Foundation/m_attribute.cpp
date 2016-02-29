@@ -1,4 +1,5 @@
 #include "m_attribute.h"
+#include "m_streams.h"
 
 #include <algorithm>
 #include <string>
@@ -542,3 +543,4 @@ std::ostream & operator << (std::ostream& os ,const m_attribute & attr)
 
 	return os;
 }
+

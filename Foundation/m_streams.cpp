@@ -1,5 +1,4 @@
 #include "m_streams.h"
-#include "m_attribute.h"
 
 #include <assert.h>
 
@@ -163,79 +162,6 @@ m_output_stream& operator << (m_output_stream & rOutputStream, const Quaternion 
 }
 
 //------------------------------------------------------------------------
-m_output_stream& operator << (m_output_stream & rOutputStream, const m_attribute & rAttribute)
-{
-
-	rOutputStream << rAttribute.get_num_attributes();
-
-	for(unsigned int i=0; i< rAttribute.get_num_attributes();++i)
-	{
-		rOutputStream << (unsigned int)strlen(rAttribute.get_attribute_name(i));  
-
-		rOutputStream.write((void*)rAttribute.get_attribute_name(i),
-			(int)strlen(rAttribute.get_attribute_name(i)));
-
-		rOutputStream << *(rAttribute.get_attribute(i));
-	}
-
-	rOutputStream << rAttribute._size;
-	rOutputStream << rAttribute._flag;
-
-	switch(rAttribute._flag)
-	{
-	case m_attribute::M_ATTRIBUTE_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_attribute_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_FLOAT_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_float_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_CHAR_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_char_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_SHORT_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_short_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_INT_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_int_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_UNSIGNED_INT_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_unsigned_int_array()[iAttribute];
-		}break;
-
-	case m_attribute::M_UNSIGNED_CHAR_ARRAY:
-		{
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rOutputStream << rAttribute.as_unsigned_char_array()[iAttribute];
-		}break;
-	}
-
-	// and save the 32-bit data word 
-	// if it's not used as data pointer.
-	if (rAttribute._size == 0)
-		rOutputStream << rAttribute._udword;
-
-	return rOutputStream;
-}
-
-
-//------------------------------------------------------------------------
 m_input_stream& operator >> (m_input_stream & rInputStream, bool & bBool)
 {
 	assert(1 == sizeof(bBool));
@@ -393,125 +319,197 @@ m_input_stream& operator >> (m_input_stream & rInputStream, Quaternion & rQuater
 }
 
 //------------------------------------------------------------------------
+m_output_stream& operator << (m_output_stream & rOutputStream, const m_attribute & rAttribute)
+{
+
+    rOutputStream << rAttribute.get_num_attributes();
+
+    for (unsigned int i = 0; i < rAttribute.get_num_attributes(); ++i)
+    {
+        rOutputStream << (unsigned int)strlen(rAttribute.get_attribute_name(i));
+
+        rOutputStream.write((void*)rAttribute.get_attribute_name(i),
+            (int)strlen(rAttribute.get_attribute_name(i)));
+
+        rOutputStream << *(rAttribute.get_attribute(i));
+    }
+
+    rOutputStream << rAttribute._size;
+    rOutputStream << rAttribute._flag;
+
+    switch (rAttribute._flag)
+    {
+    case m_attribute::M_ATTRIBUTE_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_attribute_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_FLOAT_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_float_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_CHAR_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_char_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_SHORT_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_short_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_INT_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_int_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_UNSIGNED_INT_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_unsigned_int_array()[iAttribute];
+    }break;
+
+    case m_attribute::M_UNSIGNED_CHAR_ARRAY:
+    {
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rOutputStream << rAttribute.as_unsigned_char_array()[iAttribute];
+    }break;
+    }
+
+    // and save the 32-bit data word 
+    // if it's not used as data pointer.
+    if (rAttribute._size == 0)
+        rOutputStream << rAttribute._udword;
+
+    return rOutputStream;
+}
+
+//------------------------------------------------------------------------
 m_input_stream& operator >> (m_input_stream & rInputStream, m_attribute & rAttribute)
 {
-	// Read the dictionary. First its size
-	unsigned int nEntries;
-	rInputStream >> nEntries;
+    // Read the dictionary. First its size
+    unsigned int nEntries;
+    rInputStream >> nEntries;
 
-	// ... then its elements.
-	for (unsigned int iAttribute = 0; iAttribute < nEntries; ++iAttribute)
-	{
-		int nNameLength;
-		rInputStream >> nNameLength;
+    // ... then its elements.
+    for (unsigned int iAttribute = 0; iAttribute < nEntries; ++iAttribute)
+    {
+        int nNameLength;
+        rInputStream >> nNameLength;
 
-		char * zName = new char[nNameLength + 1];
-		zName[nNameLength] = '\0';
+        char * zName = new char[nNameLength + 1];
+        zName[nNameLength] = '\0';
 
-		rInputStream.read(zName, nNameLength);
+        rInputStream.read(zName, nNameLength);
 
-		m_attribute oAttribute;
-		rInputStream >> oAttribute;
+        m_attribute oAttribute;
+        rInputStream >> oAttribute;
 
-		rAttribute[zName] = oAttribute;
+        rAttribute[zName] = oAttribute;
 
-		delete zName;
-	}
+        delete zName;
+    }
 
-	rInputStream >> rAttribute._size;
-	rInputStream >> rAttribute._flag;
+    rInputStream >> rAttribute._size;
+    rInputStream >> rAttribute._flag;
 
-	switch(rAttribute._flag)
-	{
-	case m_attribute::M_ATTRIBUTE_ARRAY:
-		{
-			m_attribute * aAttributes = new m_attribute[rAttribute._size];
+    switch (rAttribute._flag)
+    {
+    case m_attribute::M_ATTRIBUTE_ARRAY:
+    {
+        m_attribute * aAttributes = new m_attribute[rAttribute._size];
 
-			for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
-				rInputStream >> aAttributes[iAttribute];
+        for (unsigned int iAttribute = 0; iAttribute < rAttribute._size; ++iAttribute)
+            rInputStream >> aAttributes[iAttribute];
 
-			rAttribute.array(aAttributes, rAttribute._size);
+        rAttribute.array(aAttributes, rAttribute._size);
 
-			delete aAttributes;
-		}break;
+        delete aAttributes;
+    }break;
 
-	case m_attribute::M_FLOAT_ARRAY:
-		{
-			float * aFloats = new float[rAttribute._size];
+    case m_attribute::M_FLOAT_ARRAY:
+    {
+        float * aFloats = new float[rAttribute._size];
 
-			for (unsigned int iFloat = 0; iFloat < rAttribute._size; ++iFloat)
-				rInputStream >> aFloats[iFloat];
+        for (unsigned int iFloat = 0; iFloat < rAttribute._size; ++iFloat)
+            rInputStream >> aFloats[iFloat];
 
-			rAttribute.array(aFloats, rAttribute._size);
+        rAttribute.array(aFloats, rAttribute._size);
 
-			delete aFloats;
+        delete aFloats;
 
-		}break;
+    }break;
 
-	case m_attribute::M_CHAR_ARRAY:
-		{
-			char * aChars = new char[rAttribute._size];
+    case m_attribute::M_CHAR_ARRAY:
+    {
+        char * aChars = new char[rAttribute._size];
 
-			for (unsigned int iChar = 0; iChar < rAttribute._size; ++iChar)
-				rInputStream >> aChars[iChar];
+        for (unsigned int iChar = 0; iChar < rAttribute._size; ++iChar)
+            rInputStream >> aChars[iChar];
 
-			rAttribute.array(aChars, rAttribute._size);
+        rAttribute.array(aChars, rAttribute._size);
 
-			delete aChars;
-		}break;
+        delete aChars;
+    }break;
 
-	case m_attribute::M_SHORT_ARRAY:
-		{
-			short * aShorts = new short[rAttribute._size];
+    case m_attribute::M_SHORT_ARRAY:
+    {
+        short * aShorts = new short[rAttribute._size];
 
-			for (unsigned int iShort = 0; iShort < rAttribute._size; ++iShort)
-				rInputStream >> aShorts[iShort];
+        for (unsigned int iShort = 0; iShort < rAttribute._size; ++iShort)
+            rInputStream >> aShorts[iShort];
 
-			rAttribute.array(aShorts, rAttribute._size);
+        rAttribute.array(aShorts, rAttribute._size);
 
-			delete aShorts;
-		}break;
+        delete aShorts;
+    }break;
 
-	case m_attribute::M_INT_ARRAY:
-		{
-			int * aInts = new int[rAttribute._size];
+    case m_attribute::M_INT_ARRAY:
+    {
+        int * aInts = new int[rAttribute._size];
 
-			for (unsigned int iInt = 0; iInt < rAttribute._size; ++iInt)
-				rInputStream >> aInts[iInt];
+        for (unsigned int iInt = 0; iInt < rAttribute._size; ++iInt)
+            rInputStream >> aInts[iInt];
 
-			rAttribute.array(aInts, rAttribute._size);
+        rAttribute.array(aInts, rAttribute._size);
 
-			delete aInts;
-		}break;
+        delete aInts;
+    }break;
 
-	case m_attribute::M_UNSIGNED_INT_ARRAY:
-		{
-			unsigned int * aInts = new unsigned int[rAttribute._size];
+    case m_attribute::M_UNSIGNED_INT_ARRAY:
+    {
+        unsigned int * aInts = new unsigned int[rAttribute._size];
 
-			for (unsigned int iInt = 0; iInt < rAttribute._size; ++iInt)
-				rInputStream >> aInts[iInt];
-			rAttribute.array(aInts, rAttribute._size);
+        for (unsigned int iInt = 0; iInt < rAttribute._size; ++iInt)
+            rInputStream >> aInts[iInt];
+        rAttribute.array(aInts, rAttribute._size);
 
-			delete aInts;
-		}break;
+        delete aInts;
+    }break;
 
-	case m_attribute::M_UNSIGNED_CHAR_ARRAY:
-		{
-			unsigned char * aChars = new unsigned char[rAttribute._size];
+    case m_attribute::M_UNSIGNED_CHAR_ARRAY:
+    {
+        unsigned char * aChars = new unsigned char[rAttribute._size];
 
-			for (unsigned int iChar = 0; iChar < rAttribute._size; ++iChar)
-				rInputStream >> aChars[iChar];
+        for (unsigned int iChar = 0; iChar < rAttribute._size; ++iChar)
+            rInputStream >> aChars[iChar];
 
-			rAttribute.array(aChars, rAttribute._size);
+        rAttribute.array(aChars, rAttribute._size);
 
-			delete aChars;
-		}break;
-	}
+        delete aChars;
+    }break;
+    }
 
-	// and save the 32-bit data word 
-	// if it's not used as data pointer.
-	if (rAttribute._size == 0)
-		rInputStream >> rAttribute._udword;
+    // and save the 32-bit data word 
+    // if it's not used as data pointer.
+    if (rAttribute._size == 0)
+        rInputStream >> rAttribute._udword;
 
-	return rInputStream;
+    return rInputStream;
 }

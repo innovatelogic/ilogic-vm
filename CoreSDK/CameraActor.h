@@ -1,7 +1,5 @@
-#ifndef __camera_actor_h__
-#define __camera_actor_h__
-
 #pragma once
+
 #include "Camera.h"
 
 class CORESDK_API CameraActor : public CCamera
@@ -24,4 +22,3 @@ protected:
 private:
 
 };
-#endif//__camera_actor_h__

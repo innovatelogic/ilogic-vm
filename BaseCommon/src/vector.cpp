@@ -1,5 +1,10 @@
 #include "vector.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //------------------------------------------------------------------------
 Vector::Vector()
 {
@@ -107,4 +112,7 @@ Vector& normalize(Vector& u)
 	}
 
 	return scale(u,norm); 
+}
+
+}
 }

@@ -1,11 +1,8 @@
-#ifndef _m_animation_h_
-#define _m_animation_h_
+#pragma once
 
 #include "m_stdafx.h"
 
-#ifdef _WIN32
-#pragma once
-#endif
+using namespace oes::common_base;
 
 struct EXPORT m_animation
 {
@@ -23,5 +20,3 @@ struct EXPORT m_animation
 
 EXPORT class m_output_stream & operator << (m_output_stream & rOutputStream, const m_animation & rAnimation);
 EXPORT class m_input_stream & operator >> (m_input_stream & rInputStream, m_animation & rAnimation);
-
-#endif //_m_animation_h_

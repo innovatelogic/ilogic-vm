@@ -3,6 +3,11 @@
 #include "vector.h"
 #include <string> 
 
+namespace oes
+{
+namespace common_base
+{
+
 class Bounds3f
 {
 public:
@@ -144,3 +149,6 @@ public:
 		float vec_array[6];
 	};
 };
+
+}
+}

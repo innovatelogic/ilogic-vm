@@ -1,12 +1,9 @@
-#ifndef __geometry_h__
-#define __geometry_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "mathlib.h"
 #include <map>
+
+using namespace oes::common_base;
 
 struct EXPORT SPolygonFace
 {
@@ -451,5 +448,3 @@ EXPORT void		Triangulate(SPolygonFace &InOutPolygon,
 							std::vector<unsigned int>::iterator &CWIterator,
 							std::vector<unsigned int>::iterator &CCWIterator,
 							std::vector<unsigned int> &OutTriangleIndexes);
-
-#endif//__geometry_h__

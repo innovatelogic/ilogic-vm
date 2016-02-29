@@ -1,6 +1,11 @@
 #include "matrix3.h"
 #include "matrix.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //------------------------------------------------------------------------
 Matrix3f::Matrix3f()
 {
@@ -237,4 +242,7 @@ Matrix3f & mult(Matrix3f& C, const Matrix3f& A, const Matrix3f& B)
 	}
 
 	return C;
+}
+
+}
 }

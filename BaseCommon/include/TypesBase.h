@@ -2,10 +2,10 @@
 
 #include "OEMBase.h"
 
-//namespace oes
-//{
-//    namespace common_base
-//    {
+namespace oes
+{
+namespace common_base
+{
 #ifdef ES_WINDOWS
 
         typedef signed __int64      TInt64;
@@ -102,5 +102,5 @@
 #define IEEE_MAX_FLOAT      0x7f7fffff                      //!<    integer representation of MAX_FLOAT
 #define IEEE_MIN_FLOAT      0xff7fffff                      //!<    integer representation of MIN_FLOAT
 
-//}
-//}
+}
+}

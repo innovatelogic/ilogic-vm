@@ -6,6 +6,8 @@
 #include "mathlib.h"
 #include "module.h"
 
+using namespace oes::common_base;
+
 enum RENDER_INFO
 {
 	RI_NONE								= 0x00000000,

@@ -30,19 +30,19 @@ void CameraEditor::RenderDebug()
 }
 
 //------------------------------------------------------------------------
-Vector CameraEditor::GetUpVector()
+oes::common_base::Vector CameraEditor::GetUpVector()
 {
 	return GetLTM_()._row1;
 }
 
 //------------------------------------------------------------------------
-Vector CameraEditor::GetRtVector()
+oes::common_base::Vector CameraEditor::GetRtVector()
 {
 	return GetLTM_()._row0;
 }
 
 //------------------------------------------------------------------------
-Vector CameraEditor::GetZtVector()
+oes::common_base::Vector CameraEditor::GetZtVector()
 {
 	return GetLTM_()._row2;
 }

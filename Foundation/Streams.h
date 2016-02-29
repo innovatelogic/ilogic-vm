@@ -5,12 +5,7 @@
 
 #include "StdafxFoundation.h"
 
-class Vector2f;
-class Vector4f;
-class Vector;
-class Matrix3f;
-class Matrix;
-class Quaternion;
+using namespace oes::common_base;
 
 //////////////////////////////////////////////////////////////////////////
 class EXPORT input_stream

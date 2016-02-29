@@ -1,11 +1,4 @@
-#ifndef __stdafxfoundation_h__
-#define __stdafxfoundation_h__
-
- #ifdef _WIN32
-     #pragma once
- #else 
-     ;//
- #endif
+#pragma once
 
 #include "platform_specific.h"
 #include "ObjectDeclaration.h"
@@ -504,5 +497,3 @@ struct SPropertyClass
 typedef std::vector<struct SPropertyClass*>	TVecPropertyClass;
 typedef TVecPropertyClass::const_iterator	TVecPropertyClassConstIter;
 typedef TVecPropertyClass::iterator			TVecPropertyClassIter;
-
-#endif //__stdafxfoundation_h__

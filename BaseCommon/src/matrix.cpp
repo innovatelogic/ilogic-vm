@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "mathlib.h"
 
+namespace oes
+{
+namespace common_base
+{
+
 //----------------------------------------------------------------------------------------------
 Matrix::Matrix()
 {
@@ -551,3 +556,5 @@ float Matrix::Determinant() const
 						  _41, _42, _43);
 }
 
+}
+}

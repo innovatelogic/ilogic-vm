@@ -16,6 +16,8 @@
 
 namespace RenderSDK
 {
+    using namespace oes::common_base;
+
 //----------------------------------------------------------------------------------------------
 RenderAdjacency::SDebugInfo::SDebugInfo()
 {
@@ -454,7 +456,10 @@ void RenderAdjacency::renderAux(const LPRTVARIANT adjacency)
 
 		while (numTriangles)
 		{
-			m_pRenderDriver->AddTriangle(pTriangle->P0.GetPtr(), pTriangle->P1.GetPtr(), pTriangle->P2.GetPtr(), pTriangle->Color);
+			m_pRenderDriver->AddTriangle(pTriangle->P0.GetPtr(),
+                                         pTriangle->P1.GetPtr(),
+                                         pTriangle->P2.GetPtr(),
+                                         pTriangle->Color);
 			pTriangle++;
 			numTriangles--;
 		}
