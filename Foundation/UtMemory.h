@@ -15,7 +15,7 @@
 #pragma once
 
 #include "platform_specific.h"
-
+/*
 #undef ZeroMemory
 #undef CopyMemory
 #undef MoveMemory
@@ -32,5 +32,5 @@ inline_ void EXPORT CopyMemory(void* dest, const void* src, udword size) { memcp
 
 //! A function to move a buffer.
 inline_ void EXPORT MoveMemory(void* dest, const void* src, udword size) { memmove(dest, src, size); }
-
+*/
 #endif // __NVBMEMORYMACROS_H__

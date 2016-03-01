@@ -8,8 +8,6 @@
 
 #define NUM_SPLITS 3
 
-using namespace oes::common_base;
-
 class CORESDK_API CCamera : public ActorAllocator,
 							public IDrawInterface,
 							public IUpdateInterface,

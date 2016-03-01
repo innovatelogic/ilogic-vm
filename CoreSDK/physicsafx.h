@@ -8,8 +8,6 @@
 #include "PhysNode.h"
 #include "mathlib.h"
 
-using namespace oes::common_base;
-
 #define PHIS_MULTYPLIER 1.0f
 
 enum GameGroup

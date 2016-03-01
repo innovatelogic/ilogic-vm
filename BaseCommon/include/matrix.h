@@ -13,6 +13,9 @@
 // links: http://www.euclideanspace.com/maths/geometry/affine/reflection/index.htm
 //        http://www.euclideanspace.com/maths/geometry/elements/plane/lineOnPlane/index.htm
 
+#ifndef __matrix_h__
+#define __matrix_h__
+
 #pragma once
 
 #include <string>
@@ -27,7 +30,7 @@ namespace common_base
 {
 
 //--------------------------------------------------------------------------------------
-class Matrix
+class COMMON_BASE_EXPORT Matrix
 {
 public:
 	Matrix();
@@ -159,3 +162,5 @@ Matrix & mult(Matrix & C, const Matrix & A, const Matrix3f & B);
 
 }
 }
+
+#endif

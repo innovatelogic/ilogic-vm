@@ -16,8 +16,6 @@
 
 namespace RenderSDK
 {
-    using namespace oes::common_base;
-
 //----------------------------------------------------------------------------------------------
 RenderAdjacency::SDebugInfo::SDebugInfo()
 {

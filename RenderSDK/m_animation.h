@@ -2,8 +2,6 @@
 
 #include "m_stdafx.h"
 
-using namespace oes::common_base;
-
 struct EXPORT m_animation
 {
 	m_animation();

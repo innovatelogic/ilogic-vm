@@ -1,3 +1,6 @@
+#ifndef __bounds2f_h__
+#define __bounds2f_h__
+
 #pragma once
 
 #include "vector2f.h"
@@ -7,7 +10,7 @@ namespace oes
 namespace common_base
 {
 
-class Bounds2f
+class COMMON_BASE_EXPORT Bounds2f
 {
 public:
     Bounds2f()
@@ -31,12 +34,12 @@ public:
         bound_max = max;
     }
 
-    __forceinline void operator += (const Vector2f& v)
+     void operator += (const Vector2f& v)
     {
         Add(v);
     }
 
-    __forceinline void Add(const Vector2f& v)
+     void Add(const Vector2f& v)
     {
         if (bound_max.x < v.x) {
             bound_max.x = v.x;
@@ -55,7 +58,7 @@ public:
         }
     }
 
-    __forceinline void operator += (const Bounds2f& bound)
+     void operator += (const Bounds2f& bound)
     {
         Add(bound.bound_min);
         Add(bound.bound_max);
@@ -67,3 +70,5 @@ public:
 
 }
 }
+
+#endif

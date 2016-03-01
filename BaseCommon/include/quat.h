@@ -1,3 +1,6 @@
+#ifndef __quat_h__
+#define __quat_h__
+
 #pragma once
 
 #include "matrix3.h"
@@ -7,7 +10,7 @@ namespace oes
 namespace common_base
 {
 
-class Quaternion
+class COMMON_BASE_EXPORT Quaternion
 {
 public:
     Quaternion();
@@ -28,8 +31,8 @@ public:
 	Quaternion Inverse();
 	void Normalize();
 
-	__forceinline float* GetPtr() { return q; }
-	__forceinline const float* GetPtr() const { return q; }
+	 float* GetPtr() { return q; }
+	 const float* GetPtr() const { return q; }
 
 public:
     union
@@ -41,9 +44,11 @@ public:
 	};
 };
 
-const Quaternion operator*(const Quaternion& p, const Quaternion& q);
-float dot(const Quaternion& q1, const Quaternion& q2);
-Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
+COMMON_BASE_EXPORT const Quaternion operator*(const Quaternion& p, const Quaternion& q);
+COMMON_BASE_EXPORT float dot(const Quaternion& q1, const Quaternion& q2);
+COMMON_BASE_EXPORT Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
 
 }
 }
+
+#endif

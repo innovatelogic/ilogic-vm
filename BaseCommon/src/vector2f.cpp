@@ -52,5 +52,35 @@ float Vector2f::Normalize()
 	return norm;
 }
 
+float sq_length(const Vector2f & n)
+{
+    return n.x * n.x + n.y * n.y;
+}
+//--------------------------------------------------------------------------------
+/** Computes the magnitude */
+float length(const Vector2f & n)
+{
+    return sqrtf(sq_length(n));
+}
+//----------------------------------------------------------------------------------
+float DotProduct(const Vector2f& v1, const Vector2f& v2)
+{
+    return  v1.x * v2.x + v1.y * v2.y;
+}
+//----------------------------------------------------------------------------------
+float Vector2f::Length() const
+{
+    return ::sqrtf(x * x + y * y);
+}
+//----------------------------------------------------------------------------------
+float Vector2f::LengthSqr() const
+{
+    return x * x + y * y;
+}
+//----------------------------------------------------------------------------------
+float Vector2f::Dot(const Vector2f& _vector_other)const
+{
+    return DotProduct(*this, _vector_other);
+}
 }
 }

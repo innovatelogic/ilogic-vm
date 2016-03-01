@@ -3,8 +3,6 @@
 #include "m_stdafx.h"
 #include "m_refcount.h"
 
-using namespace oes::common_base;
-
 //------------------------------------------------------------------------
 struct EXPORT m_scene : public m_refcount
 {

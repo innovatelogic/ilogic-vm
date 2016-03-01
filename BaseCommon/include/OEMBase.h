@@ -34,21 +34,17 @@
 #endif
 
 #if (defined(ES_WINDOWS))
-    #ifndef EXPORT
-        #define EXPORT	            _declspec(dllexport)
-        #define INL_EXPORT          inline EXPORT 
-        #define FORCE_EXPORT        __forceinline EXPORT
+#ifdef COMMON_LIB_COMPILE
+#define COMMON_BASE_EXPORT _declspec(dllexport)
+#define EXTERN_COMMON_BASE_EXPORT   extern COMMON_BASE_EXPORT
 
-        #define EXTERN_EXPORT       extern EXPORT
-        #define INL_EXTERN_EXPORT   inline EXTERN_EXPORT
-        #define FORCE_EXTERN_EXPORT __forceinline EXTERN_EXPORT 
-    #else 
-        #define EXPORT	
-    #endif
+#else
+#define COMMON_BASE_EXPORT
+#endif
 #endif
 
 #ifdef ES_WINDOWS
-#define inline_   __forceinline
+#define inline_   
 #else
 #define inline_   inline
 #endif

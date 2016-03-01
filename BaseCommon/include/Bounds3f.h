@@ -1,3 +1,6 @@
+#ifndef __bounds3f_h__
+#define __bounds3f_h__
+
 #pragma once
 
 #include "vector.h"
@@ -7,8 +10,7 @@ namespace oes
 {
 namespace common_base
 {
-
-class Bounds3f
+class COMMON_BASE_EXPORT Bounds3f
 {
 public:
 	Bounds3f()
@@ -152,3 +154,5 @@ public:
 
 }
 }
+
+#endif

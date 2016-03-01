@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(CommonBase)
 
+add_definitions(-DCOMMON_LIB_COMPILE)
 add_definitions(-DUNICODE -D_UNICODE)
 
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
@@ -32,7 +33,7 @@ src/matrix3.cpp
 src/mathlib.cpp
 )
 
-add_library(${PROJECT_NAME} STATIC ${INCLUDES} ${SRC})
+add_library(${PROJECT_NAME} SHARED ${INCLUDES} ${SRC})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

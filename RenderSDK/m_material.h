@@ -5,8 +5,6 @@
 #include "m_attribute.h"
 #include "m_streams.h"
 
-using namespace oes::common_base;
-
 struct EXPORT m_material 
 {
 	m_material();

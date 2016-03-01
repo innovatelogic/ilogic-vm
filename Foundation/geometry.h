@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mathlib.h"
+#include "platform_specific.h"
 #include <map>
 
 using namespace oes::common_base;

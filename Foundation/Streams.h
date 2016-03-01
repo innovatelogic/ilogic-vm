@@ -5,8 +5,6 @@
 
 #include "StdafxFoundation.h"
 
-using namespace oes::common_base;
-
 //////////////////////////////////////////////////////////////////////////
 class EXPORT input_stream
 {

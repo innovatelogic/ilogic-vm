@@ -48,5 +48,18 @@ bool Vector4f::operator!= (const Vector4f& Other) const
     return (x != Other.x || y != Other.y || z != Other.z || w != Other.w);
 }
 
+//------------------------------------------------------------------------
+float Vector4f::operator[](int i)const
+{
+    assert((i >= 0) && (i < 4));
+    return ((float*)this)[i];
+}
+
+//------------------------------------------------------------------------
+float& Vector4f::operator[](int i)
+{
+    assert((i >= 0) && (i < 4));
+    return ((float*)this)[i];
+}
 }
 }

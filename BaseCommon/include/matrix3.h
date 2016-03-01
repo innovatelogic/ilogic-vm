@@ -14,6 +14,9 @@
 // links: http://www.euclideanspace.com/maths/geometry/affine/reflection/index.htm
 //        http://www.euclideanspace.com/maths/geometry/elements/plane/lineOnPlane/index.htm
 
+#ifndef __matrix3_h__
+#define __matrix3_h__
+
 #pragma once
 
 #include "OEMBase.h"
@@ -24,9 +27,7 @@ namespace oes
 {
 namespace common_base
 {
-
-//--------------------------------------------------------------------------------------
-class Matrix3f
+class COMMON_BASE_EXPORT Matrix3f
 {
 	public:
 		Matrix3f();
@@ -95,3 +96,5 @@ Matrix3f & mult(Matrix3f & C, const Matrix3f & A, const Matrix3f & B);
 
 }
 }
+
+#endif

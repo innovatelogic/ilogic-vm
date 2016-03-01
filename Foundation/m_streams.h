@@ -4,8 +4,6 @@
 #include "mathlib.h"
 #include "m_attribute.h"
 
-using namespace oes::common_base;
-
 //----------------------------------------------------------------------------------------------
 class EXPORT m_input_stream
 {

@@ -1,3 +1,6 @@
+#ifndef __vector4f_h__
+#define __vector4f_h__
+
 #pragma once
 
 #include <assert.h>
@@ -7,7 +10,7 @@ namespace oes
 {
 namespace common_base
 {
-class Vector4f
+class COMMON_BASE_EXPORT Vector4f
 {
 public:
     Vector4f();
@@ -21,8 +24,8 @@ public:
 
     bool operator!=(const Vector4f& _v) const;
 
-    __forceinline float* GetPtr() { return vec_array; }
-    __forceinline const float* GetPtr() const { return vec_array; }
+     float* GetPtr() { return vec_array; }
+     const float* GetPtr() const { return vec_array; }
 
 public:
 
@@ -41,19 +44,7 @@ public:
 
 };
 
-//////////////////////////////////////////////////////////////////////////
-__forceinline float Vector4f::operator[](int i)const
-{
-    assert((i >= 0) && (i < 4));
-    return ((float*)this)[i];
+}
 }
 
-//////////////////////////////////////////////////////////////////////////
-__forceinline float& Vector4f::operator[](int i)
-{
-    assert((i >= 0) && (i < 4));
-    return ((float*)this)[i];
-}
-
-}
-}
+#endif

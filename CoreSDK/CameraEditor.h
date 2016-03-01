@@ -2,8 +2,6 @@
 
 #include "Camera.h"
 
-using namespace oes::common_base;
-
 class CORESDK_API CameraEditor : public CCamera
 {
 
@@ -15,10 +13,10 @@ public:
 	
 	inline_ virtual void UpdateCullInfo();
 
-	oes::common_base::Vector GetUpVector();
-    oes::common_base::Vector GetRtVector();
-    oes::common_base::Vector GetZtVector();
-
+	Vector GetUpVector();
+    Vector GetRtVector();
+    Vector GetZtVector();
+    
 protected:
 private:
 

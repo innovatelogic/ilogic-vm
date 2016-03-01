@@ -2,6 +2,7 @@
 
 #include "OEMBase.h"
 #include "TypesBase.h"
+#include "mathlib.h"
 
 #ifdef _WIN32
 
@@ -71,7 +72,20 @@
 #include "DefTypes.h"
 #include "math_decl.h"
 #include "singleton.h"
-#include "mathlib.h"
+
+using namespace oes::common_base;
+
+#ifndef EXPORT
+#define EXPORT	            _declspec(dllexport)
+#define INL_EXPORT          inline EXPORT 
+#define FORCE_EXPORT        __forceinline EXPORT
+
+#define EXTERN_EXPORT       extern EXPORT
+#define INL_EXTERN_EXPORT   inline EXTERN_EXPORT
+#define FORCE_EXTERN_EXPORT __forceinline EXTERN_EXPORT 
+#else 
+#define EXPORT	
+#endif
 
 //#pragma intrinsic(memcpy)
 

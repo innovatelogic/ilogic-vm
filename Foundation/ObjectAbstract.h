@@ -22,8 +22,6 @@
 #include "Property.h"
 #include "ObjectFactory.h"
 
-using namespace oes::common_base;
-
 class EXPORT CObjectAbstract
 {
 	friend class ValueParser;

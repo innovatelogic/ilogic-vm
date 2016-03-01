@@ -1,3 +1,6 @@
+#ifndef __mathlib_h__
+#define __mathlib_h__
+
 #pragma once
 
 #include <list>
@@ -173,21 +176,21 @@ typedef std::list<Pose>::const_iterator		  TPoseListConstIterator;
 /**
    random value  
 */
- int		rand(int r1, int r2);
- float	rand(float r1, float r2);
- float	GetHalfSpace(const Vector2f& Point, const Vector2f& LineStart, const Vector2f& LineEnd);
- int		GetHalfSpace(const Vector& PlaneN, const Vector& PlanePt, const Vector& p);
+COMMON_BASE_EXPORT int		rand(int r1, int r2);
+COMMON_BASE_EXPORT float	rand(float r1, float r2);
+COMMON_BASE_EXPORT float	GetHalfSpace(const Vector2f& Point, const Vector2f& LineStart, const Vector2f& LineEnd);
+COMMON_BASE_EXPORT int		GetHalfSpace(const Vector& PlaneN, const Vector& PlanePt, const Vector& p);
 
 // Computes B = inverse(A)
 //       -1
 //  B = A
- Matrix& invert(Matrix &B, const Matrix &A);
+COMMON_BASE_EXPORT Matrix& invert(Matrix &B, const Matrix &A);
 
 // Computes B = Transpose(B)
 //       T
 //  B = B
- Matrix & transpose(Matrix &B);
- Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
+COMMON_BASE_EXPORT Matrix & transpose(Matrix &B);
+COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 
  Vector&  mult_pos(Vector &vOut, const Matrix &mIn, const Vector &vIn);
  Vector&  mult_pos(Vector &vOut, const Vector &vIn, const Matrix &M);
@@ -195,59 +198,59 @@ typedef std::list<Pose>::const_iterator		  TPoseListConstIterator;
 
 // mult point by matrix
 // Out: transformed point
- Vector&	transform_coord(Vector &u, const Vector &v, const Matrix &M);
- Vector	transform_coord(const Vector &v, const Matrix& M);
- Vector2f& transform_coord(Vector2f &u, const Vector2f &v, const Matrix &M);
- Vector2f	transform_coord(const Vector2f &v, const Matrix &M);
- Vector4f& transform_coord(Vector4f &u, const Vector4f &v, const Matrix &M);
- Vector4f	transform_coord(const Vector4f &v, const Matrix &M);
- Bounds3f&	transform_bound(Bounds3f &OutBound, const Bounds3f &InBound, const Matrix &M);
- Bounds3f	transform_bound(const Bounds3f InBound, const Matrix &M);
+ COMMON_BASE_EXPORT Vector&	transform_coord(Vector &u, const Vector &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector	transform_coord(const Vector &v, const Matrix& M);
+ COMMON_BASE_EXPORT Vector2f& transform_coord(Vector2f &u, const Vector2f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector2f	transform_coord(const Vector2f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector4f& transform_coord(Vector4f &u, const Vector4f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector4f	transform_coord(const Vector4f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Bounds3f&	transform_bound(Bounds3f &OutBound, const Bounds3f &InBound, const Matrix &M);
+ COMMON_BASE_EXPORT Bounds3f	transform_bound(const Bounds3f InBound, const Matrix &M);
 
-inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b, 
+ COMMON_BASE_EXPORT inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b,
                           const float t, const float n, const float f);
 
 /** build perspective matrix */
- inline_ Matrix& perspective(Matrix &vOut, float fov, float aspect, float n, float f);
+ COMMON_BASE_EXPORT inline_ Matrix& perspective(Matrix &vOut, float fov, float aspect, float n, float f);
 
- inline_ Matrix& ortho(Matrix &vOut, float l, float r, float b, float t, float zn, float zf);
+ COMMON_BASE_EXPORT inline_ Matrix& ortho(Matrix &vOut, float l, float r, float b, float t, float zn, float zf);
 
 /** view matrix */
- inline_ Matrix& look_at(Matrix &vOut, const Vector &eye, const Vector &center, const Vector &up);
+ COMMON_BASE_EXPORT inline_ Matrix& look_at(Matrix &vOut, const Vector &eye, const Vector &center, const Vector &up);
 
- inline_ Vector UnprojectViewport(Vector &v_out, 
+ COMMON_BASE_EXPORT inline_ Vector UnprojectViewport(Vector &v_out,
 										const Matrix &proj, 
 										const Matrix &view,
                                         const Vector2f &pos, 
 										const Vector2f &dimension, 
 										float d = 1.f);
 
- inline_ Vector ProjectViewport(Vector &v_out, 
+ COMMON_BASE_EXPORT inline_ Vector ProjectViewport(Vector &v_out,
 									  const Vector &InPos, 
 									  const Matrix &view, 
 									  const Matrix &proj, 
 									  const Vector2f &dimension);
 
 /** intersection tests */
- inline_ Vector RayPlaneIntersect( const Vector &planePos,
+ COMMON_BASE_EXPORT inline_ Vector RayPlaneIntersect( const Vector &planePos,
                                          const Vector &planeNorm,
                                          const Vector &linePos, 
                                          const Vector &lineDir);
 
 /** ray triangle intersection */
- inline_ int IntersectRayWithTriangle(const Vector &start, 
+ COMMON_BASE_EXPORT inline_ int IntersectRayWithTriangle(const Vector &start,
                                             const Vector &end,
                                             const Vector &v0,
                                             const Vector &v1,
                                             const Vector &v2, 
                                             float *t );
 /** ray triangle intersection 2d */
- inline_ bool IntersectRayWithTriangle(const Vector2f &Point,
+ COMMON_BASE_EXPORT inline_ bool IntersectRayWithTriangle(const Vector2f &Point,
 				  							 const Vector2f &v0,
 											 const Vector2f &v1,
 											 const Vector2f &v2);
 
- inline_ bool TriangleTriangleIntersection(const Vector &v00,
+ COMMON_BASE_EXPORT inline_ bool TriangleTriangleIntersection(const Vector &v00,
                                                  const Vector &v01,
                                                  const Vector &v02, 
                                                  const Vector &v10,
@@ -255,7 +258,7 @@ inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b
                                                  const Vector &v12 );
 
 
- inline_ bool TriangleTriangleSplit(const Vector &v00,
+ COMMON_BASE_EXPORT inline_ bool TriangleTriangleSplit(const Vector &v00,
                                           const Vector &v01,
                                           const Vector &v02, 
                                           const Vector &v10,
@@ -264,7 +267,7 @@ inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b
                                           int &out_triangle_count,
                                           Vector *triangle_strip);
 
- inline_ bool PlaneTriangleSplit(const Vector &v00,
+ COMMON_BASE_EXPORT inline_ bool PlaneTriangleSplit(const Vector &v00,
                                        const Vector &v01,
                                        const Vector &v02, 
                                        const Vector &pN,
@@ -274,14 +277,14 @@ inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b
 
 // Interpolate a Catmull-Rom spline.
 // t is a [0,1] value and interpolates a curve between p2 and p3.
- inline_ void Catmull_Rom_Spline(const Vector &p1,
+ COMMON_BASE_EXPORT inline_ void Catmull_Rom_Spline(const Vector &p1,
                                        const Vector &p2,
                                        const Vector &p3,
                                        const Vector &p4,
                                        float t, 
                                        Vector &output);
 
- inline_ void Cubic_Bezier_Spline(const Vector &p1,
+ COMMON_BASE_EXPORT inline_ void Cubic_Bezier_Spline(const Vector &p1,
 										const Vector &p2,
 										const Vector &p3,
 										const Vector &p4,
@@ -289,57 +292,59 @@ inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b
 										Vector &output);
 
 
- inline_ void RotateMatrixAxisSelf(Matrix &out,const Vector &u, float rad);
- inline_ void AngleMatrix( const float Yaw, const float Pitch, const float Roll, Matrix& matrix );
+ COMMON_BASE_EXPORT inline_ void RotateMatrixAxisSelf(Matrix &out,const Vector &u, float rad);
+ COMMON_BASE_EXPORT inline_ void AngleMatrix( const float Yaw, const float Pitch, const float Roll, Matrix& matrix );
 
- inline_ bool IsPointInRect(float x, float y, const Vector2f &Start, const Vector2f &End);
- inline_ Vector2f GetSegmentNormal(const Vector2f &Start, const Vector2f &End);
+ COMMON_BASE_EXPORT inline_ bool IsPointInRect(float x, float y, const Vector2f &Start, const Vector2f &End);
+ COMMON_BASE_EXPORT inline_ Vector2f GetSegmentNormal(const Vector2f &Start, const Vector2f &End);
 
 //-------------------------------------------------------------------------
- inline_ bool SegmentIntersection2D(Vector2f & out_pos,
+ COMMON_BASE_EXPORT inline_ bool SegmentIntersection2D(Vector2f & out_pos,
 										  const Vector2f &s1_start,
 										  const Vector2f &s1_end,
 										  const Vector2f &s2_start,
 										  const Vector2f &s2_end);
 
- inline_ bool SegmentSphereIntersection2D(const Vector2f &s_start,
+ COMMON_BASE_EXPORT inline_ bool SegmentSphereIntersection2D(const Vector2f &s_start,
 												const Vector2f &s_end,
 												const Vector2f &Center,
 												float Radius,
 												float *mu1,
 												float *mu2);
 
- inline_ bool SegmentSphereIntersection(const Vector &s_start,
+ COMMON_BASE_EXPORT inline_ bool SegmentSphereIntersection(const Vector &s_start,
 											  const Vector &s_end,
 											  const Vector &Center,
 											  float Radius,
 											  float *mu1,
 											  float *mu2);
 
- inline_ bool	TestBBoxIntercection(const Bounds2f& A, const Bounds2f& B);
- inline_ bool	TestBBoxIntercection(const Bounds3f& A, const Bounds3f& B);
- inline_ bool FrustrumIntersectBBox(const FrustrumCullinfo& cullinfo, const Bounds3f& B);
- inline_ bool FrustrumIntersectBBox(const UniCullinfo& cullinfo, const Bounds3f& B);
+ COMMON_BASE_EXPORT inline_ bool	TestBBoxIntercection(const Bounds2f& A, const Bounds2f& B);
+ COMMON_BASE_EXPORT inline_ bool	TestBBoxIntercection(const Bounds3f& A, const Bounds3f& B);
+ COMMON_BASE_EXPORT inline_ bool FrustrumIntersectBBox(const FrustrumCullinfo& cullinfo, const Bounds3f& B);
+ COMMON_BASE_EXPORT inline_ bool FrustrumIntersectBBox(const UniCullinfo& cullinfo, const Bounds3f& B);
 
 // linear interpolation
- inline_ float Lerp(float t, float a, float b);
- inline_ Vector& Lerp(Vector &OutVec, float t, const Vector &a, const Vector &b);
- inline_ Vector4f& Lerp(Vector4f &OutVec, float t, const Vector4f &a, const Vector4f &b);
- inline_ Pose& Lerp(Pose &OutPose, float t, const Pose &a, const Pose &b);
+ COMMON_BASE_EXPORT inline_ float Lerp(float t, float a, float b);
+ COMMON_BASE_EXPORT inline_ Vector& Lerp(Vector &OutVec, float t, const Vector &a, const Vector &b);
+ COMMON_BASE_EXPORT inline_ Vector4f& Lerp(Vector4f &OutVec, float t, const Vector4f &a, const Vector4f &b);
+ COMMON_BASE_EXPORT inline_ Pose& Lerp(Pose &OutPose, float t, const Pose &a, const Pose &b);
 
- inline_ bool BuildEdgeList(std::vector<UniEdge> &OutEdges, const std::vector<UniTriangle> &TriInfo);
+ COMMON_BASE_EXPORT inline_ bool BuildEdgeList(std::vector<UniEdge> &OutEdges, const std::vector<UniTriangle> &TriInfo);
 
- float det2x2(float a1, float a2,
+ COMMON_BASE_EXPORT float det2x2(float a1, float a2,
 						   float b1, float b2);
 
- float det3x3(float a1, float a2, float a3, 
+ COMMON_BASE_EXPORT float det3x3(float a1, float a2, float a3,
 							float b1, float b2, float b3, 
 							float c1, float c2, float c3);
 
- inline_ float GetDistToLine(const Vector &Point, const Vector &start, const Vector &end);
+ COMMON_BASE_EXPORT inline_ float GetDistToLine(const Vector &Point, const Vector &start, const Vector &end);
 
 // clamp inBound into toBound if not overlap result invalid bound
- Bounds2f ClampBound(const Bounds2f &inBound, const Bounds2f &toBound);
+ //COMMON_BASE_EXPORT Bounds2f ClampBound(const Bounds2f &inBound, const Bounds2f &toBound);
 
 }
 }
+
+#endif
