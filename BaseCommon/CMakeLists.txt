@@ -31,6 +31,7 @@ include/ObjectFactory.h
 include/StringUtility.h
 include/singleton.h
 include/BaseTypes.h
+include/IObjectAbstract.h
 )
 
 set(SRC
