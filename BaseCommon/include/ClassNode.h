@@ -1,33 +1,12 @@
-//----------------------------------------------------------------------------------------------
-// OpenES: Open Entertainment System
-// Copyright (C) 2010  Yura Gunko email: yura.gunko@gmail.com
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//----------------------------------------------------------------------------------------------
-#ifndef __classnode_h__
-#define __classnode_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
-#include "platform_specific.h"
+#include "OEMBase.h"
+#include <vector>
 
-class EXPORT ClassNode
+class COMMON_BASE_EXPORT ClassNode
 {
 public:
-	typedef std::vector<class ClassNode*>		TVecClassNode;
+	typedef std::vector<ClassNode*>		        TVecClassNode;
 	typedef TVecClassNode::iterator				TVecClassNodeIterator;
 	typedef TVecClassNode::const_iterator		TVecClassNodeConstIterator;
 	typedef TVecClassNode::reverse_iterator		TVecClassNodeRevIterator;
@@ -99,5 +78,3 @@ private:
 	struct SInterfaceDecl	**m_pInterfaces;
 	unsigned int			m_nIntfSize;
 };
-
-#endif//__classnode_h__

@@ -2,14 +2,14 @@
 #include "ClassNode.h"
 #include "ClassNodeInterface.h"
 #include "ClassNodeType.h"
-#include "ObjectAbstract.h"
-#include "Actor.h"
+//#include "ObjectAbstract.h"
+//#include "Actor.h"
 
 //----------------------------------------------------------------------------------------------
 AppClassTree::AppClassTree()
 : m_pRootNode(nullptr)
 {
- 	m_pRootNode = new ClassNodeType<CObjectAbstract>("CObjectAbstract");
+ 	//m_pRootNode = new ClassNodeType<CObjectAbstract>("CObjectAbstract");
 }
 
 //----------------------------------------------------------------------------------------------

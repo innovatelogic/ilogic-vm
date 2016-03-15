@@ -23,11 +23,12 @@
 #pragma once
 #endif
 
+#include "OEMBase.h"
 #include "IBaseInterface.h"
 #include "ClassNode.h"
 
 template<typename T>
-class EXPORT CClassNodeInterface : public ClassNode
+class COMMON_BASE_EXPORT CClassNodeInterface : public ClassNode
 {
 	typedef T OwnerClass;
 

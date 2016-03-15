@@ -224,16 +224,16 @@ CStringDataStoreMarkup::CStringDataStoreMarkup( const std::string& str,
 //----------------------------------------------------------------------------------------------
 // Name: ConvertWideStringToAnsi()
 // Desc: This is a UNICODE conversion utility to convert a WCHAR string into a
-//       CHAR string. 
+//       char string. 
 //       cchDestChar is the size in TCHARs of strDestination
 //----------------------------------------------------------------------------------------------
-bool ConvertWideStringToAnsiCch(char* strDestination, const wchar_t* wstrSource, int cchDestChar)
+bool ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar)
 {
 	if( strDestination==nullptr || wstrSource==nullptr || cchDestChar < 1 )
 		return false;
 
 	int nResult = WideCharToMultiByte( CP_ACP, 0, wstrSource, -1, strDestination, 
-		cchDestChar*sizeof(CHAR), nullptr, nullptr );
+		cchDestChar*sizeof(char), nullptr, nullptr );
 	strDestination[cchDestChar-1] = 0;
 
 	if( nResult == 0 )

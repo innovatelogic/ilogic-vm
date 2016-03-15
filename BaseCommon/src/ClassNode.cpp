@@ -1,5 +1,5 @@
-#include "ClassNode.h"
 #include "Property.h"
+#include "ClassNode.h"
 
 //----------------------------------------------------------------------------------------------
 ClassNode::ClassNode(const char * name)
@@ -44,7 +44,7 @@ ClassNode::~ClassNode()
 		delete [] m_pPropsRaw;
 	}
 
-	DELETESINGLE(m_pPropAlloc);
+	delete m_pPropAlloc;
 }
 
 //----------------------------------------------------------------------------------------------

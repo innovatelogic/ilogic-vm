@@ -1,13 +1,8 @@
-#ifndef __ibaseinterface_h__
-#define __ibaseinterface_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "StdafxFoundation.h"
+#include "OEMBase.h"
 
-class EXPORT IBaseInterface
+class COMMON_BASE_EXPORT IBaseInterface
 {
 public:
 	/** 
@@ -24,5 +19,3 @@ public:
 	 */
 	virtual void OnPropertyChangedIntf(const char *PropertyName) = 0;
 };
-
-#endif//__ibaseinterface_h__

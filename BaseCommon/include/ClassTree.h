@@ -1,34 +1,13 @@
-//----------------------------------------------------------------------------------------------
-// OpenES: Open Entertainment System
-// Copyright (C) 2010  Yura Gunko email: yura.gunko@gmail.com
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//----------------------------------------------------------------------------------------------
-
-#ifndef __classtree_h__
-#define __classtree_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
-#include "platform_specific.h"
+#include "OEMBase.h"
+#include "ClassNode.h"
+#include <vector>
 
-class EXPORT AppClassTree
+class COMMON_BASE_EXPORT AppClassTree
 {
 public:
-	typedef std::vector<class ClassNode*>			TVecClassNodeInterface;
+	typedef std::vector<ClassNode*>			TVecClassNodeInterface;
 	typedef TVecClassNodeInterface::iterator		TVecClassNodeInterfaceIter;
 	typedef TVecClassNodeInterface::const_iterator	TVecClassNodeInterfaceConstIter;
 
@@ -64,7 +43,7 @@ private:
 //
 //----------------------------------------------------------------------------------------------
 template<typename T>
-struct CEnumerateChildTypeStrategy
+struct COMMON_BASE_EXPORT CEnumerateChildTypeStrategy
 {
 	CEnumerateChildTypeStrategy(const char *InterfaceName, const ClassNode *pRootNode, T &pStoreType)
 	{
@@ -96,5 +75,3 @@ struct CEnumerateChildTypeStrategy
 		};
 	}
 };
-
-#endif//__classtree_h__

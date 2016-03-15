@@ -30,14 +30,7 @@ class tinyxml2::XMLElement;
 #define H_Transform 0
 #define V_Transform 1
 
-/** position states for UI Controls */
-enum EPixelTransform
-{
-	PixelOwner_Transform        = 0,
-	PixelViewport_Transform		= 1,
-	PersentageOwner_Transform   = 2,
-	PersentageViewport_Transform = 3,
-};
+
 
 enum EScrObjectEvent
 {
@@ -112,27 +105,6 @@ enum EDIT_FLAG
 	EF_NONE		= 0x00000000,
 	EF_EDIT_2D	= 0x00000001,
 	EF_EDIT_3D	= 0x00000010,
-};
-
-enum ESceneInputmode
-{
-	INPUTMODE_None			= 0,
-	INPUTMODE_ActiveOnly	= 1,
-	ESceneInputmode_MAX,
-};
-
-enum EHandleInputKey
-{
-	HIK_HandleInputKey = 0,
-	HIK_IgnoreInputKey,
-	EHandleInputKey_MAX,
-};
-
-enum EHandleInputMouse
-{
-	HIM_HandleInputMouse = 0,
-	HIM_IgnoreInputMouse,
-	EHandleInputMouse_MAX,
 };
 
 enum EPhysEventCallback

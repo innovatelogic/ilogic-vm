@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
 
-#ifndef __property_h__
-#define __property_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "StdAfxFoundation.h"
+#include "OEMBase.h"
+#include <string>
+#include "mathlib.h"
+#include "BaseTypes.h"
+
+using namespace oes::common_base;
 
 #define NO_READ_WRITE 0
 #define READ_ONLY	  1
@@ -54,14 +54,14 @@
 #define INT_PROP			false
 
 //----------------------------------------------------------------------------------------------
-struct StructDataMapping 
+struct COMMON_BASE_EXPORT StructDataMapping
 {
 	std::string Name;
-	INT			SubOffset;
+	size_t		SubOffset;
 };
 
 //----------------------------------------------------------------------------------------------
-struct EXPORT SInterfaceDecl
+struct COMMON_BASE_EXPORT SInterfaceDecl
 {
 	const char	*strType;
 	unsigned int byteShift;
@@ -73,18 +73,7 @@ struct EXPORT SInterfaceDecl
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT IPropertiesAllocator
-{
-public:
-	virtual const Property_Base** GetProps() const = 0;
-	virtual unsigned int GetSize() const = 0;
-
-	virtual const SInterfaceDecl** GetInterfaces() const = 0;
-	virtual unsigned int GetIntfSize() const = 0;
-};
-
-//----------------------------------------------------------------------------------------------
-class EXPORT Property_Base
+class COMMON_BASE_EXPORT Property_Base
 {
 public:
 	Property_Base(const char *name,
@@ -138,7 +127,7 @@ public:
 	virtual size_t		GetElementOffset(size_t Index) const { return 0; }
 	virtual char*		GetElementName(size_t Index) const { return ""; }
 
-	void				SetMemOffset(INT Offset) { m_MemOffset = Offset; }
+	void				SetMemOffset(size_t Offset) { m_MemOffset = Offset; }
 
 	void				SetElementSize(int Size) { m_ElementSize = Size; }
 	int					GetElementSize() const { return m_ElementSize; }
@@ -206,7 +195,18 @@ protected:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyImpl : public Property_Base
+class COMMON_BASE_EXPORT IPropertiesAllocator
+{
+public:
+    virtual const Property_Base** GetProps() const = 0;
+    virtual unsigned int GetSize() const = 0;
+
+    virtual const SInterfaceDecl** GetInterfaces() const = 0;
+    virtual unsigned int GetIntfSize() const = 0;
+};
+
+//----------------------------------------------------------------------------------------------
+class COMMON_BASE_EXPORT PropertyImpl : public Property_Base
 {
 public:
 	PropertyImpl(const char *name, int offset, const char *classname, const char *group,
@@ -219,7 +219,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyINT : public Property_Base
+class COMMON_BASE_EXPORT PropertyINT : public Property_Base
 {
 public:
 	PropertyINT(const char *name,
@@ -247,7 +247,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyUINT : public Property_Base
+class COMMON_BASE_EXPORT PropertyUINT : public Property_Base
 {
 public:
 	PropertyUINT(const char *name,
@@ -278,7 +278,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyFLOAT : public Property_Base
+class COMMON_BASE_EXPORT PropertyFLOAT : public Property_Base
 {
 public:
 	PropertyFLOAT(const char *name,
@@ -306,7 +306,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyBYTE : public Property_Base
+class COMMON_BASE_EXPORT PropertyBYTE : public Property_Base
 {
 public:
 	PropertyBYTE(const char *name,
@@ -320,7 +320,7 @@ public:
 				 bool bExtProp = INT_PROP,
 				 Property_Base *prev = 0,
 				 Property_Base *next = 0,
-				 const BYTE *pDefaultValue = 0);
+				 const char *pDefaultValue = 0);
 
 	virtual char*	GetProperty(const void *Ptr, char *OutBuffer) const;
 
@@ -330,11 +330,11 @@ private:
 	virtual void	DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset = 0, bool bSilent = false);
 
 private:
-	const BYTE *m_pDefaultValue;
+	const char *m_pDefaultValue;
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyBOOL : public Property_Base
+class COMMON_BASE_EXPORT PropertyBOOL : public Property_Base
 {
 public:
 	PropertyBOOL(const char *name, 
@@ -362,7 +362,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyString : public Property_Base
+class COMMON_BASE_EXPORT PropertyString : public Property_Base
 {
 public:
 	PropertyString(const char *name, 
@@ -390,7 +390,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyStringW : public Property_Base
+class COMMON_BASE_EXPORT PropertyStringW : public Property_Base
 {
 public:
 	PropertyStringW(const char *name,
@@ -418,7 +418,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyVector2f : public Property_Base
+class COMMON_BASE_EXPORT PropertyVector2f : public Property_Base
 {
 public:
 	PropertyVector2f(const char *name,
@@ -446,7 +446,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyVector : public Property_Base
+class COMMON_BASE_EXPORT PropertyVector : public Property_Base
 {
 public:
 	PropertyVector(const char *name,
@@ -474,7 +474,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyVector4f : public Property_Base
+class COMMON_BASE_EXPORT PropertyVector4f : public Property_Base
 {
 public:
 	PropertyVector4f(const char *name,
@@ -502,7 +502,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyMatrix3x3 : public Property_Base
+class COMMON_BASE_EXPORT PropertyMatrix3x3 : public Property_Base
 {
 public:
 	PropertyMatrix3x3(const char *name,
@@ -530,7 +530,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyMatrix : public Property_Base
+class COMMON_BASE_EXPORT PropertyMatrix : public Property_Base
 {
 public:
 	PropertyMatrix(const char *name,
@@ -558,7 +558,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyBounds3f : public Property_Base
+class COMMON_BASE_EXPORT PropertyBounds3f : public Property_Base
 {
 public:
 	PropertyBounds3f(const char *name,
@@ -586,7 +586,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyPixelTransform : public Property_Base
+class COMMON_BASE_EXPORT PropertyPixelTransform : public Property_Base
 {
 public:
 	PropertyPixelTransform(const char *name,
@@ -614,7 +614,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertySceneInputmode : public Property_Base
+class COMMON_BASE_EXPORT PropertySceneInputmode : public Property_Base
 {
 public:
 	PropertySceneInputmode(const char *name, 
@@ -642,7 +642,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyEHandleInputKey : public Property_Base
+class COMMON_BASE_EXPORT PropertyEHandleInputKey : public Property_Base
 {
 public:
 	PropertyEHandleInputKey(const char *name, 
@@ -670,7 +670,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyEHandleInputMouse : public Property_Base
+class COMMON_BASE_EXPORT PropertyEHandleInputMouse : public Property_Base
 {
 public:
 	PropertyEHandleInputMouse(const char *name, 
@@ -696,8 +696,9 @@ private:
 private:
 	const int *m_pDefaultValue;
 };
+
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyArrayStatic : public Property_Base
+class COMMON_BASE_EXPORT PropertyArrayStatic : public Property_Base
 {
 public:
 	PropertyArrayStatic(const char *name, 
@@ -724,7 +725,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class EXPORT PropertyArray : public Property_Base
+class COMMON_BASE_EXPORT PropertyArray : public Property_Base
 {
 public:
 	PropertyArray(const char *name,
@@ -749,5 +750,3 @@ private:
 public:
 	std::vector<StructDataMapping> MapInfo;
 };
-
-#endif//__property_h__

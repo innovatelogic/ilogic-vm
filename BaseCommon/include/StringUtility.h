@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
 
+
 #ifndef _STR_UTILITY_
 #define _STR_UTILITY_
 
@@ -70,7 +71,7 @@ private:
 };
 
 // Utility functions
-COMMON_BASE_EXPORT bool		    ConvertWideStringToAnsiCch(char* strDestination, const wchar_t* wstrSource, int cchDestChar);
+COMMON_BASE_EXPORT bool		   ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar);
 COMMON_BASE_EXPORT std::string  ConvertWideStringToString(const std::wstring& strSource);
 COMMON_BASE_EXPORT std::wstring ConvertStringToWideString(const std::string& strSource);
 

@@ -25,14 +25,6 @@ set(SOURCE
 	Actor_Static.cpp
 	AutoTree.h
 	BoundingTree.h
-	ClassFactory.cpp
-	ClassFactory.h
-	ClassNode.cpp
-	ClassNode.h
-	ClassNodeInterface.h
-	ClassNodeType.h
-	ClassTree.cpp
-	ClassTree.h
 	CriticalSection.cpp
 	CriticalSection.h
 	DefTypes.h
@@ -41,7 +33,6 @@ set(SOURCE
 	FoundationSDK.h
 	geometry.cpp
 	geometry.h
-	IBaseInterface.h
 	ICollisionInterface.h
 	IListener.h
 	IRenderInterface.h
@@ -59,16 +50,9 @@ set(SOURCE
 	ObjectAbstract.cpp
 	ObjectAbstract.h
 	ObjectDeclaration.h
-	ObjectFactory.cpp
-	ObjectFactory.h
-	Property.cpp
-	Property.h
-	singleton.h
 	StdafxFoundation.h
 	Streams.cpp
 	Streams.h
-	StringUtility.cpp
-	StringUtility.h
 	TArray.cpp
 	TArray.h
 	UtContainer.cpp

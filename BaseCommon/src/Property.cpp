@@ -1,6 +1,8 @@
 #include "Property.h"
 #include "ObjectFactory.h"
-#include "ObjectAbstract.h"
+//#include "ObjectAbstract.h"
+#include "ClassTree.h"
+#include "StringUtility.h"
 
 //----------------------------------------------------------------------------------------------
 Property_Base::Property_Base(const char *name,
@@ -58,7 +60,7 @@ PropertyINT::PropertyINT(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyINT::GetProperty(const void *Ptr, char *OutBuffer) const
 {
-	INT *Dest = (INT*)((BYTE*)Ptr + m_MemOffset);
+	size_t *Dest = (size_t*)((char*)Ptr + m_MemOffset);
 	return itoa(*Dest, OutBuffer, 10);
 }
 
@@ -89,8 +91,8 @@ void PropertyINT::DoSetProperty(const void *Ptr, const char *Value, unsigned int
 	}
 
 	int ValueINT = atoi(Value);
-	INT *Dest = (INT*)((BYTE*)Ptr + m_MemOffset + byteOffset);
-	*(INT*)(Dest) = *(INT*)&ValueINT;
+	size_t *Dest = (size_t*)((char*)Ptr + m_MemOffset + byteOffset);
+	*(size_t*)(Dest) = *(size_t*)&ValueINT;
 
 	if (!bSilent && pClassNode){
 		pClassNode->PostPropertyChange(Ptr, this);
@@ -118,7 +120,7 @@ PropertyUINT::PropertyUINT(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyUINT::GetProperty(const void * Ptr, char *OutBuffer) const
 {
-	unsigned int *Dest = (unsigned int*)((BYTE*)Ptr + m_MemOffset);
+	unsigned int *Dest = (unsigned int*)((char*)Ptr + m_MemOffset);
 	return itoa(*Dest, OutBuffer, 10);
 }
 
@@ -148,7 +150,7 @@ void PropertyUINT::DoSetProperty(const void * Ptr, const char* Value, unsigned i
 		return;
 
 	unsigned int ValueINT = atoi(Value);
-	unsigned int *Dest = (unsigned int*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	unsigned int *Dest = (unsigned int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(unsigned int*)(Dest) = *(unsigned int*)&ValueINT;
 
 	if (!bSilent && pClassNode){
@@ -177,7 +179,7 @@ PropertyFLOAT::PropertyFLOAT(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyFLOAT::GetProperty(const void *Ptr, char *OutBuffer) const
 {
-	FLOAT *Dest = (FLOAT*)((BYTE*)Ptr + m_MemOffset);
+	float *Dest = (float*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer, "%f", *Dest);
 	return OutBuffer;
 }
@@ -208,9 +210,9 @@ void PropertyFLOAT::DoSetProperty(const void * Ptr, const char* Value, unsigned 
 		return;
 
 	float ValueFLOAT = (float)atof(Value);
-	FLOAT *Dest = (FLOAT*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	float *Dest = (float*)((char*)Ptr + m_MemOffset + byteOffset);
 
-	*(FLOAT*)(Dest) = *(FLOAT*)&ValueFLOAT;
+	*(float*)(Dest) = *(float*)&ValueFLOAT;
 
 	if (!bSilent && pClassNode){
 		pClassNode->PostPropertyChange(Ptr, this);
@@ -229,7 +231,7 @@ PropertyBYTE::PropertyBYTE(const char *name,
 						   bool bExtProp /*= INT_PROP*/,
 						   Property_Base *prev /*= 0*/,
 						   Property_Base *next /*= 0*/,
-						   const BYTE *pDefaultValue /*= 0*/)
+						   const char *pDefaultValue /*= 0*/)
 : Property_Base(name, offset, classname, group, policy, ctrl, serializable, bCommon, bExtProp, prev, next)
 , m_pDefaultValue(pDefaultValue)
 {
@@ -238,7 +240,7 @@ PropertyBYTE::PropertyBYTE(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyBYTE::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	BYTE *Dest = (BYTE*)((BYTE*)Ptr + m_MemOffset);
+	char *Dest = (char*)((char*)Ptr + m_MemOffset);
 	*OutBuffer = (char)*Dest;
 	return OutBuffer;
 }
@@ -268,8 +270,8 @@ void PropertyBYTE::DoSetProperty(const void * Ptr, const char* Value, unsigned i
 	if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this))
 		return;
 
-	BYTE *Dest = (BYTE*)((BYTE*)Ptr + m_MemOffset + byteOffset);
-	*(BYTE*)(Dest) = *(BYTE*)Value;
+	char *Dest = (char*)((char*)Ptr + m_MemOffset + byteOffset);
+	*(char*)(Dest) = *(char*)Value;
 		
 	if (!bSilent && pClassNode){
 		pClassNode->PostPropertyChange(Ptr, this);
@@ -299,7 +301,7 @@ PropertyBOOL::PropertyBOOL(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyBOOL::GetProperty(const void *Ptr, char *OutBuffer) const
 {
-	bool *Dest = (bool*)((BYTE*)Ptr + m_MemOffset);
+	bool *Dest = (bool*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer, "%s", *Dest ? "true" : "false");
 	return OutBuffer;
 }
@@ -332,7 +334,7 @@ void PropertyBOOL::DoSetProperty(const void * Ptr, const char* Value, unsigned i
 
 	bool bFlag = (!stricmp(Value, "true") || !strcmp(Value, "1")) ? true : false;
 		
-	bool *Dest = (bool*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	bool *Dest = (bool*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(bool*)Dest = bFlag;
 
 	if (!bSilent && pClassNode){
@@ -361,7 +363,7 @@ PropertyString::PropertyString(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyString::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	std::string *Dest = (std::string*)((BYTE*)Ptr + m_MemOffset);
+	std::string *Dest = (std::string*)((char*)Ptr + m_MemOffset);
 	strcpy(OutBuffer, Dest->c_str());
 	return OutBuffer;
 }
@@ -392,7 +394,7 @@ void PropertyString::DoSetProperty(const void * Ptr, const char* Value, unsigned
 		return;
 	}
 
-	std::string *Dest = (std::string*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	std::string *Dest = (std::string*)((char*)Ptr + m_MemOffset + byteOffset);
 	*Dest = Value;
 		
 	if (!bSilent && pClassNode){
@@ -421,7 +423,7 @@ PropertyStringW::PropertyStringW(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyStringW::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	std::wstring *Dest = (std::wstring*)((BYTE*)Ptr + m_MemOffset);
+	std::wstring *Dest = (std::wstring*)((char*)Ptr + m_MemOffset);
 
 	int Length = (int)(*Dest).length() + 1;
 	ConvertWideStringToAnsiCch(OutBuffer, (*Dest).c_str(), Length);
@@ -454,7 +456,7 @@ void PropertyStringW::DoSetProperty(const void *Ptr, const char *Value, unsigned
 		return;
 	}
 
-	std::wstring *Dest = (std::wstring*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	std::wstring *Dest = (std::wstring*)((char*)Ptr + m_MemOffset + byteOffset);
 	*Dest = ConvertStringToWideString(std::string(Value));
 
 	if (!bSilent && pClassNode){
@@ -483,7 +485,7 @@ PropertyVector2f::PropertyVector2f(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyVector2f::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	Vector2f *Dest = (Vector2f*)((BYTE*)Ptr + m_MemOffset);
+	Vector2f *Dest = (Vector2f*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer, "%0.4f;%0.4f;", Dest->x,	Dest->y);
 	return OutBuffer;
 }
@@ -517,7 +519,7 @@ void PropertyVector2f::DoSetProperty(const void *Ptr, const char *Value, unsigne
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 2)
 	{
-		Vector2f * Dest = (Vector2f*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Vector2f * Dest = (Vector2f*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->x = ParseString.m_vector[0];
 		Dest->y = ParseString.m_vector[1];
 	}
@@ -549,7 +551,7 @@ PropertyVector::PropertyVector(const char *name,
 char* PropertyVector::GetProperty(const void * Ptr, char * OutBuffer) const
 {
 	const unsigned int size_float = sizeof(float);
-	Vector *Dest = (Vector*)((BYTE*)Ptr + m_MemOffset);
+	Vector *Dest = (Vector*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer, "%0.4f;%0.4f;%0.4f;", Dest->x, Dest->y, Dest->z);
 	return OutBuffer;
 }
@@ -584,7 +586,7 @@ void PropertyVector::DoSetProperty(const void *Ptr, const char *Value, unsigned 
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 3)
 	{
-		Vector * Dest = (Vector*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Vector * Dest = (Vector*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->x	= ParseString.m_vector[0];
 		Dest->y = ParseString.m_vector[1];
 		Dest->z = ParseString.m_vector[2];
@@ -617,7 +619,7 @@ PropertyVector4f::PropertyVector4f(const char *name,
 char* PropertyVector4f::GetProperty(const void * Ptr, char * OutBuffer) const
 {
 	const unsigned int size_float = sizeof(float);
-	Vector4f *Dest = (Vector4f*)((BYTE*)Ptr + m_MemOffset);
+	Vector4f *Dest = (Vector4f*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer,
 			"%0.4f;%0.4f;%0.4f;%0.4f;",
 			Dest->x,
@@ -657,7 +659,7 @@ void PropertyVector4f::DoSetProperty(const void *Ptr, const char *Value, unsigne
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 4)
 	{
-		Vector4f * Dest = (Vector4f*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Vector4f * Dest = (Vector4f*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->x	= ParseString.m_vector[0];
 		Dest->y = ParseString.m_vector[1];
 		Dest->z = ParseString.m_vector[2];
@@ -691,7 +693,7 @@ PropertyMatrix3x3::PropertyMatrix3x3(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyMatrix3x3::GetProperty(const void *Ptr, char *OutBuffer) const
 {
-	Matrix3f *Dest = (Matrix3f*)((BYTE*)Ptr + m_MemOffset);
+	Matrix3f *Dest = (Matrix3f*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer,
 		"%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;",
 		Dest->_11,
@@ -746,7 +748,7 @@ void PropertyMatrix3x3::DoSetProperty(const void * Ptr, const char* Value, unsig
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 9)
 	{
-		Matrix3f * Dest = (Matrix3f*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Matrix3f * Dest = (Matrix3f*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->_11 = ParseString.m_vector[0];
 		Dest->_12 = ParseString.m_vector[1];
 		Dest->_13 = ParseString.m_vector[2];
@@ -784,7 +786,7 @@ PropertyMatrix::PropertyMatrix(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyMatrix::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	Matrix *Dest = (Matrix*)((BYTE*)Ptr + m_MemOffset);
+	Matrix *Dest = (Matrix*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer,
 		"%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;",
 		Dest->_11,
@@ -854,7 +856,7 @@ void PropertyMatrix::DoSetProperty(const void * Ptr, const char* Value, unsigned
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 16)
 	{
-		Matrix * Dest = (Matrix*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Matrix * Dest = (Matrix*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->_11 = ParseString.m_vector[0];
 		Dest->_12 = ParseString.m_vector[1];
 		Dest->_13 = ParseString.m_vector[2];
@@ -900,7 +902,7 @@ PropertyBounds3f::PropertyBounds3f(const char *name,
 char* PropertyBounds3f::GetProperty(const void * Ptr, char * OutBuffer) const
 {
 	const unsigned int size_float = sizeof(float);
-	Bounds3f *Dest = (Bounds3f*)((BYTE*)Ptr + m_MemOffset);
+	Bounds3f *Dest = (Bounds3f*)((char*)Ptr + m_MemOffset);
 	sprintf(OutBuffer,
 		"%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;%0.4f;",
 		Dest->bound_min.x,
@@ -949,7 +951,7 @@ void PropertyBounds3f::DoSetProperty(const void *Ptr, const char *Value, unsigne
 	CStringUtility<float> ParseString(Value, ";");
 	if (ParseString.m_vector.size() == 6)
 	{
-		Bounds3f * Dest = (Bounds3f*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+		Bounds3f * Dest = (Bounds3f*)((char*)Ptr + m_MemOffset + byteOffset);
 		Dest->bound_min.x = ParseString.m_vector[0];
 		Dest->bound_min.y = ParseString.m_vector[1];
 		Dest->bound_min.z = ParseString.m_vector[2];
@@ -988,7 +990,7 @@ PropertyPixelTransform::PropertyPixelTransform(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyPixelTransform::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset);
 
 	if (*Dest == PixelOwner_Transform){
 		strcpy(OutBuffer, "PixelOwner_Transform");
@@ -1056,7 +1058,7 @@ void PropertyPixelTransform::DoSetProperty(const void *Ptr, const char *Value, u
 		iValue = PersentageViewport_Transform;
 	}
 
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(int*)Dest = iValue;
 	
 	if (!bSilent && pClassNode){
@@ -1088,7 +1090,7 @@ PropertySceneInputmode::PropertySceneInputmode(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertySceneInputmode::GetProperty(const void * Ptr, char * OutBuffer) const
 {
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset);
 
 	if (*Dest == INPUTMODE_None){
 		strcpy(OutBuffer, "INPUTMODE_None");
@@ -1145,7 +1147,7 @@ void PropertySceneInputmode::DoSetProperty(const void  *Ptr, const char *Value, 
 	}else{
 		iValue = INPUTMODE_None; // @TODO Warning
 	}
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(int*)Dest = iValue;
 
 	if (!bSilent && pClassNode){
@@ -1178,7 +1180,7 @@ PropertyEHandleInputKey::PropertyEHandleInputKey(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyEHandleInputKey::GetProperty(const void *Ptr, char *pOutBuffer) const
 {
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset);
 
 	if (*Dest == HIK_HandleInputKey){
 		strcpy(pOutBuffer, "HIK_HandleInputKey");
@@ -1236,7 +1238,7 @@ void PropertyEHandleInputKey::DoSetProperty(const void *Ptr, const char *Value, 
 	else{
 		assert(false);
 	}
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(int*)Dest = iValue;
 
 	if (!bSilent && pClassNode){
@@ -1269,7 +1271,7 @@ PropertyEHandleInputMouse::PropertyEHandleInputMouse(const char *name,
 //----------------------------------------------------------------------------------------------
 char* PropertyEHandleInputMouse::GetProperty(const void *Ptr, char *pOutBuffer) const
 {
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset);
 
 	if (*Dest == HIM_HandleInputMouse){
 		strcpy(pOutBuffer, "HIM_HandleInputMouse");
@@ -1327,7 +1329,7 @@ void PropertyEHandleInputMouse::DoSetProperty(const void *Ptr, const char *Value
 	else{
 		assert(false);
 	}
-	int *Dest = (int*)((BYTE*)Ptr + m_MemOffset + byteOffset);
+	int *Dest = (int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(int*)Dest = iValue;
 
 	if (!bSilent && pClassNode){
@@ -1386,7 +1388,7 @@ char* PropertyArrayStatic::GetProperty(const void * Ptr, char * OutBuffer) const
 		while (ChildProp)
 		{
 			char Buff[256] = {0};
-			ChildProp->GetProperty((BYTE*)Ptr + PropMemoryOffset, Buff);
+			ChildProp->GetProperty((char*)Ptr + PropMemoryOffset, Buff);
 
 			Property_Base * NextProp = ChildProp->GetNext();
 
@@ -1426,7 +1428,7 @@ void PropertyArrayStatic::DoSetProperty(const void * Ptr, const char* Value, uns
 
 				strncpy(SubValue, pValueBegin, len);
 
-				ChildProp->SetProperty((BYTE*)Ptr + PropMemoryOffset, SubValue, 0, bSilent);
+				ChildProp->SetProperty((char*)Ptr + PropMemoryOffset, SubValue, 0, bSilent);
 
 				pValueBegin += len + 1; 
 
@@ -1434,7 +1436,7 @@ void PropertyArrayStatic::DoSetProperty(const void * Ptr, const char* Value, uns
 			}
 			else
 			{
-				ChildProp->SetProperty((BYTE*)Ptr + PropMemoryOffset, pValueBegin, 0, bSilent);
+				ChildProp->SetProperty((char*)Ptr + PropMemoryOffset, pValueBegin, 0, bSilent);
 			}
 
 			ChildProp = ChildProp->GetNext();

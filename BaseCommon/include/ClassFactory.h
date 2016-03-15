@@ -19,11 +19,13 @@
 #ifndef __classfactory_h__
 #define __classfactory_h__
 
-#include "platform_specific.h"
+#include "OEMBase.h"
 #include "ClassTree.h"
 #include "ClassNode.h"
 #include "ClassNodeInterface.h"
 #include "ClassNodeType.h"
+#include "singleton.h"
+#include <map>
 
 #ifdef _WIN32
 #pragma once
@@ -46,7 +48,7 @@ namespace Utility
 		class T_COPY_FUNCTION,
 		template<class> class T_POLICE_DEFAULT = CPoliceNullPtr	
 		> 
-	class CClassFactory
+	class COMMON_BASE_EXPORT CClassFactory
 	{
 		typedef T_BASE          TBase;
 		typedef T_GEN_FUNCTION  TGenFunction;

@@ -20,6 +20,17 @@ include/matrix3.h
 include/mathlib.h
 include/Bounds2f.h
 include/Bounds3f.h
+include/Property.h
+include/ClassTree.h
+include/ClassNode.h
+include/ClassNodeInterface.h
+include/IBaseInterface.h
+include/ClassNodeType.h
+include/ClassFactory.h
+include/ObjectFactory.h
+include/StringUtility.h
+include/singleton.h
+include/BaseTypes.h
 )
 
 set(SRC
@@ -31,6 +42,12 @@ src/quat.cpp
 src/matrix.cpp
 src/matrix3.cpp
 src/mathlib.cpp
+src/Property.cpp
+src/ClassTree.cpp
+src/ClassNode.cpp
+src/ClassFactory.cpp
+src/ObjectFactory.cpp
+src/StringUtility.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${INCLUDES} ${SRC})

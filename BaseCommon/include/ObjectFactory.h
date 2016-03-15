@@ -23,6 +23,7 @@
 #pragma once
 #endif
 
+#include "OEMBase.h"
 #include "classfactory.h"
 
 /**
@@ -47,7 +48,7 @@ namespace NObjectFactory
 //----------------------------------------------------------------------------------------------
 	extern "C"
 	{
-		EXTERN_EXPORT TClassFactory* GetClassFactoryA();
+        COMMON_BASE_EXPORT TClassFactory* GetClassFactoryA();
 	}
 //----------------------------------------------------------------------------------------------
 	static size_t GetId(const char *pKey)
