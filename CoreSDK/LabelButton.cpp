@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "ObjectFactory.h"
 
 REGISTER_CLASS_A(LabelButton, UIScreenObject)
 	new PropertyFLOAT("TextPositionX", (BYTE*)&((LabelButton*)NULL)->TextPositionX - (BYTE*)NULL, "LabelButton", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
@@ -176,7 +177,7 @@ void LabelButton::ResolveActiveState()
 //----------------------------------------------------------------------------------------------
 void LabelButton::SuperDeserializerInternal(tinyxml2::XMLElement *pTree)
 {
-	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 	XML_FOR_EACH_TREE(pTree)
 	{

@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "ObjectFactory.h"
 
 //----------------------------------------------------------------------------------------------
 CUISceneManager::CUISceneManager(CCoreSDK *pSDK)
@@ -85,7 +86,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 
 	std::string sFilename;
 
-	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 	Explorer2D * SourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
 
@@ -96,7 +97,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 			std::string V = std::string(xml_current_tree->Value());
 
 			Utility::CClassFactory<
-				CObjectAbstract,
+				IObjectAbstract,
 				NObjectFactory::TGenFunction,
 				NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 

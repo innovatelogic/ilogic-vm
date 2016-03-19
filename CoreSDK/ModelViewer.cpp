@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "ObjectFactory.h"
 
 REGISTER_CLASS(CModelViewer, ActorAllocator);
 
@@ -131,7 +132,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 		m_pMaterialEffect = nullptr;
 	}
 
-	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 	std::string sFilename;
 
@@ -174,7 +175,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 		}
 		else // try to load compound xml
 		{
-			NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+			NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 			std::string inFilename = ConvertWideStringToString(pFilename);
 			std::string sFilename;
@@ -186,7 +187,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 					std::string V = std::string(xml_current_tree->Value());
 
 					Utility::CClassFactory<
-						CObjectAbstract,
+						IObjectAbstract,
 						NObjectFactory::TGenFunction,
 						NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 

@@ -1,6 +1,6 @@
 #include "coresdkafx.h"
 
-REGISTER_CLASS_ACTION(ActionHandler, ActionBase);
+//REGISTER_CLASS_ACTION(ActionHandler, ActionBase);
 
 //----------------------------------------------------------------------------------------------
 ActionHandler::ActionHandler(const CObjectAbstract * Parent)

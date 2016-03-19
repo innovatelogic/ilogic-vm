@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "ObjectFactory.h"
 
 #define COLOR_DARK_RED		0xff8b1818
 #define COLOR_DARK_GREEN	0xff117900
@@ -78,7 +79,7 @@ void ActorAllocator::SetAppMain(CCoreSDK * App)
 //----------------------------------------------------------------------------------------------
 void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory * classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory * classFactory = NObjectFactory::GetClassFactoryA();
 
 	int PlainElementIndex = 0;
 

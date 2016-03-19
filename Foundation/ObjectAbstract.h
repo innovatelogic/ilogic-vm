@@ -21,8 +21,9 @@
 #include "EventDesc.h"
 #include "Property.h"
 #include "ObjectFactory.h"
+#include "IObjectAbstract.h"
 
-class EXPORT CObjectAbstract
+class EXPORT CObjectAbstract : public IObjectAbstract
 {
 	friend class ValueParser;
 
@@ -90,7 +91,7 @@ public:
 	*/
 	virtual void	PostLink();
 
-	NObjectFactory::TClassFactory* GetClassFactory();
+	//NObjectFactory::TClassFactory* GetClassFactory();
 	
 	static NObjectFactory::TClassFactory* GetClassFactoryStatic()
 	{
@@ -343,7 +344,7 @@ extern "C"
 	EXTERN_EXPORT class CObjectAbstract* CLONE_OBJECT_SDK(const class CObjectAbstract * Source, const char *Name = nullptr, CObjectAbstract *pNewParent = nullptr);
 	EXTERN_EXPORT class CObjectAbstract* SLICE_CLONE_OBJECT(const CObjectAbstract *pSource, const char *NewType, const char *Name = nullptr);
 	
-	EXTERN_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA();
+	//EXTERN_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA();
 
 	EXTERN_EXPORT void* __cdecl	memory_new(size_t Size);
 	EXTERN_EXPORT void	__cdecl memory_delete(void* Ptr);

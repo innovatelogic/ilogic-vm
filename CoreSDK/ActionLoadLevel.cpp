@@ -1,6 +1,6 @@
 #include "coresdkafx.h"
 
-REGISTER_CLASS_ACTION(ActionLoadLevel, ActionBase);
+//REGISTER_CLASS_ACTION(ActionLoadLevel, ActionBase);
 
 //----------------------------------------------------------------------------------------------
 ActionLoadLevel::ActionLoadLevel(const CObjectAbstract * Parent)

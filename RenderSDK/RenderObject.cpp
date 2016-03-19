@@ -1,4 +1,5 @@
 #include "Stdafxrender.h"
+#include "ObjectFactory.h"
 
 static const bool	V_TRUE = true;
 
@@ -37,7 +38,7 @@ CRenderObject::~CRenderObject()
 //----------------------------------------------------------------------------------------------
 void CRenderObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory * classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory * classFactory = NObjectFactory::GetClassFactoryA();
 
 	int PlainElementIndex = 0;
 

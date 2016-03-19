@@ -1,4 +1,5 @@
 #include "coresdkafx.h"
+#include "ObjectFactory.h"
 
 //----------------------------------------------------------------------------------------------
 CSceneManager::CSceneManager(CCoreSDK *pSDK)
@@ -70,7 +71,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 {
 	bool bResult = false;
 
-	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 	Explorer3D * SourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer3D();
 
@@ -83,7 +84,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 			std::string V = std::string(xml_current_tree->Value());
 
 			Utility::CClassFactory<
-				CObjectAbstract,
+				IObjectAbstract,
 				NObjectFactory::TGenFunction,
 				NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
@@ -127,7 +128,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 //----------------------------------------------------------------------------------------------
 bool CSceneManager::LoadFromXML(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory *classFactory = GetClassFactoryA();
+	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
 
 	Explorer3D *pSourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer3D();
 

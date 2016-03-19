@@ -1,6 +1,6 @@
 #include "coresdkafx.h"
 
-REGISTER_CLASS_ACTION(ActionEventUI, ActionBase);
+//REGISTER_CLASS_ACTION(ActionEventUI, ActionBase);
 
 //----------------------------------------------------------------------------------------------
 ActionEventUI::ActionEventUI(const CObjectAbstract * Parent)

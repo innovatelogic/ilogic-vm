@@ -70,20 +70,20 @@
 //
 //----------------------------------------------------------------------------------------------
 #define REGISTER_CLASS_FACTORY_A(CLASS)\
-static CObjectAbstract* Generator##CLASS(const char *Name, const CObjectAbstract *pParent)\
+static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract *pParent)\
 {\
-	CObjectAbstract *pObject = new CLASS(pParent);\
+	CObjectAbstract *pObject = new CLASS(static_cast<const CObjectAbstract*>(pParent));\
 	if (pObject)\
 	{\
 		pObject->SetName(Name);\
 		pObject->SetType(#CLASS);\
 		pObject->SetTypeId(NObjectFactory::GetId(#CLASS));\
 		pObject->FinishGeneration();\
-		return pObject;\
+		return static_cast<CObjectAbstract*>(pObject);\
 	}\
 	return nullptr;\
 }\
-static CObjectAbstract* CopyGenerator##CLASS(const CObjectAbstract *Source, const CObjectAbstract *pParent)\
+static IObjectAbstract* CopyGenerator##CLASS(const IObjectAbstract *Source, const IObjectAbstract *pParent)\
 {\
 	CObjectAbstract *pObject = new CLASS(*static_cast<const CLASS*>(Source));\
 	CActor *pAParent = const_cast<CActor*>(static_cast<const CActor*>(pParent));\
@@ -93,7 +93,7 @@ static CObjectAbstract* CopyGenerator##CLASS(const CObjectAbstract *Source, cons
 		pAParent->AddChildNode(const_cast<CActor*>(static_cast<const CActor*>(pObject)));\
 		pObject->FinishGeneration();\
 	}\
-	return pObject;\
+	return static_cast<CObjectAbstract*>(pObject);\
 }
 
 //----------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 #include "coresdkafx.h"
 
-REGISTER_CLASS_ACTION(ActionTrigger, ActionBase);
+//REGISTER_CLASS_ACTION(ActionTrigger, ActionBase);
 
 #define CAPTION_HEIGHT 35
 #define SHIFT_HEIGHT 25

@@ -267,7 +267,7 @@ ActionBase::~ActionBase()
 //----------------------------------------------------------------------------------------------
 void ActionBase::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	XML_DEF_ATTRIBUTES_NODE(Link);
+/*	XML_DEF_ATTRIBUTES_NODE(Link);
 	if (!Link.empty())
 	{
 		ValueParser LinkStore(Link);
@@ -317,7 +317,7 @@ void ActionBase::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 			}
 		}
 	}
-	Super::SuperDeserializer(xml_current_tree);
+	Super::SuperDeserializer(xml_current_tree);*/
 }
 
 //----------------------------------------------------------------------------------------------

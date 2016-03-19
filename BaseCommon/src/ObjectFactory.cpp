@@ -1,6 +1,6 @@
-/*#include "ObjectFactory.h"
-#include "ObjectAbstract.h"
-
+#include "ObjectFactory.h"
+#include "IObjectAbstract.h"
+/*
 extern "C"
 {
 	EXTERN_EXPORT TClassFactory* GetClassFactoryA()
@@ -8,3 +8,12 @@ extern "C"
 		return GetClassFactoryA();
 	}
 }*/
+
+//----------------------------------------------------------------------------------------------
+namespace NObjectFactory
+{
+    NObjectFactory::TClassFactory* GetClassFactoryA()
+    {
+    return NObjectFactory::TGlobalClassFactory::GetInstance();
+    }
+}

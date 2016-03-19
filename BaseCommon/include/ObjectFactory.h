@@ -25,6 +25,8 @@
 
 #include "OEMBase.h"
 #include "classfactory.h"
+#include "IObjectAbstract.h"
+#include <assert.h>
 
 /**
  *  Class factory 
@@ -32,12 +34,12 @@
 namespace NObjectFactory
 {	
 	// define generate function declaration
-	typedef class CObjectAbstract* (*TGenFunction) (const char *pName, const CObjectAbstract *pParent);
-	typedef class CObjectAbstract* (*TCloneFunction) (const CObjectAbstract *pSource, const CObjectAbstract *pParent);
+	typedef class IObjectAbstract* (*TGenFunction) (const char *pName, const IObjectAbstract *pParent);
+	typedef class IObjectAbstract* (*TCloneFunction) (const IObjectAbstract *pSource, const IObjectAbstract *pParent);
 
 	// define class factory with specified types
 	typedef Utility::CClassFactory <
-		CObjectAbstract, 
+        IObjectAbstract,
 		NObjectFactory::TGenFunction, 
 		NObjectFactory::TCloneFunction
 	> TClassFactory;
@@ -45,11 +47,13 @@ namespace NObjectFactory
 	// define specified global class factory
 	typedef TClassFactory::TGlobalFactory TGlobalClassFactory;
 
+    extern "C"
+    {
+        COMMON_BASE_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA();
+    }
+
 //----------------------------------------------------------------------------------------------
-	extern "C"
-	{
-        COMMON_BASE_EXPORT TClassFactory* GetClassFactoryA();
-	}
+	
 //----------------------------------------------------------------------------------------------
 	static size_t GetId(const char *pKey)
     {
@@ -94,33 +98,33 @@ namespace NObjectFactory
 	}
 
 //----------------------------------------------------------------------------------------------
-	static CObjectAbstract* GenObject(const char *Type, const char *Name, CObjectAbstract * Parent = 0)
+	static IObjectAbstract* GenObject(const char *Type, const char *Name, IObjectAbstract * Parent = 0)
 	{
 		TClassFactory *classFactory = GetClassFactoryA();
 
-		CObjectAbstract *pAbstract = classFactory->Generation(Type, Name, Parent);
+        IObjectAbstract *pAbstract = classFactory->Generation(Type, Name, Parent);
 
 		assert(pAbstract);
 		return pAbstract;
 	}
 
 //----------------------------------------------------------------------------------------------
-	static CObjectAbstract * CloneObject(const CObjectAbstract *Source, CObjectAbstract *NewParent = nullptr)
+	static IObjectAbstract * CloneObject(const IObjectAbstract *Source, IObjectAbstract *NewParent = nullptr)
 	{
 		TClassFactory *classFactory = GetClassFactoryA();
 
-		CObjectAbstract *pAbstract = classFactory->Clone(const_cast<CObjectAbstract*>(Source), NewParent);
+        IObjectAbstract *pAbstract = classFactory->Clone(const_cast<IObjectAbstract*>(Source), NewParent);
 		assert(pAbstract);
 
 		return pAbstract;
 	}
 
 //----------------------------------------------------------------------------------------------
-	static CObjectAbstract* SliceCloneObject(const CObjectAbstract *Source, const char *NewType)
+	static IObjectAbstract* SliceCloneObject(const IObjectAbstract *Source, const char *NewType)
 	{
 		TClassFactory *classFactory = GetClassFactoryA();
 
-		CObjectAbstract *pAbstract = classFactory->SliceClone(const_cast<CObjectAbstract*>(Source), NewType);
+        IObjectAbstract *pAbstract = classFactory->SliceClone(const_cast<IObjectAbstract*>(Source), NewType);
 		assert(pAbstract);
 
 		return pAbstract;

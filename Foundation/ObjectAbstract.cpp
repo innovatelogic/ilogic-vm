@@ -67,13 +67,13 @@ extern "C"
 {
    EXTERN_EXPORT CObjectAbstract* GENERATE_OBJECT_SDK(const char *Type, const char *Name, CObjectAbstract *pParent /*= NULL*/)
    {
-		return NObjectFactory::GenObject(Type, Name, pParent);
+		return static_cast<CObjectAbstract*>(NObjectFactory::GenObject(Type, Name, pParent));
    }
 
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract * CLONE_OBJECT_SDK(const CObjectAbstract *pSource, const char* Name /*= NULL*/, CObjectAbstract *pNewParent /*= NULL*/)
    {
-		CObjectAbstract * NewObject = NObjectFactory::CloneObject(pSource, pNewParent);
+		CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(NObjectFactory::CloneObject(pSource, pNewParent));
 	
 		if (Name){
 			NewObject->SetName(Name);
@@ -85,7 +85,7 @@ extern "C"
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract* SLICE_CLONE_OBJECT(const CObjectAbstract *pSource, const char *NewType, const char *Name /*= NULL*/)
    {
-	   CObjectAbstract * NewObject = NObjectFactory::SliceCloneObject(pSource, NewType);
+	   CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(NObjectFactory::SliceCloneObject(pSource, NewType));
 
 	   NewObject->SetType(NewType);
 	   NewObject->SetTypeId(NObjectFactory::GetId(NewType));
@@ -97,10 +97,10 @@ extern "C"
    }
 
    //----------------------------------------------------------------------------------------------
-   EXTERN_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA()
+   /*EXTERN_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA()
    {
 		return CObjectAbstract::GetClassFactoryStatic();
-   }
+   }*/
 }
 
 //----------------------------------------------------------------------------------------------
@@ -612,10 +612,10 @@ void CObjectAbstract::PostLink()
 }
 
 //----------------------------------------------------------------------------------------------
-NObjectFactory::TClassFactory * CObjectAbstract::GetClassFactory()
+/*NObjectFactory::TClassFactory * CObjectAbstract::GetClassFactory()
 {
 	return NObjectFactory::TGlobalClassFactory::GetInstance();
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 bool CObjectAbstract::IsNameEqual(const char *Value)
