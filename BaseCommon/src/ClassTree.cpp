@@ -107,11 +107,11 @@ void AppClassTree::AddInterface(ClassNode *pInterface)
 }
 
 //----------------------------------------------------------------------------------------------
-ClassNode* AppClassTree::Find(const char * Type)
+ClassNode* AppClassTree::Find(const char *type)
 {
 	if (m_pRootNode)
 	{
-		ClassNode *pFindNode = m_pRootNode->Find(Type);
+		ClassNode *pFindNode = m_pRootNode->Find(type);
 
 		if (pFindNode){
 			return pFindNode;
@@ -121,13 +121,13 @@ ClassNode* AppClassTree::Find(const char * Type)
 }
 
 //----------------------------------------------------------------------------------------------
-ClassNode* AppClassTree::FindInterface(const char *Type) const
+ClassNode* AppClassTree::FindInterface(const char *type) const
 {
 	for (TVecClassNodeInterfaceConstIter Iter = m_VecInterfaces.begin(); Iter != m_VecInterfaces.end(); ++Iter)
 	{
-		if (!strcmp((*Iter)->GetName(), Type))
+		if (!strcmp((*Iter)->GetName(), type))
 		{
-			return (*Iter);
+			return *Iter;
 		}
 	}
 	return 0;
@@ -176,4 +176,63 @@ void AppClassTree::Release()
 		m_pRootNode->Release();
 		m_pRootNode = nullptr;
 	}
+}
+
+//----------------------------------------------------------------------------------------------
+bool AppClassTree::Add2(const char *type, const char *baseType)
+{
+    ClassNode *Base = Find(baseType);
+    ClassNode *Siblin = Find(type);
+
+    if (Base && Siblin) {
+        return true;
+    }
+
+    if (!Base && !Siblin) // add plain
+    {
+        //     !Base
+        //       |
+        //    !Siblin 
+
+        ClassNode* BaseClass = new ClassNode(BaseType);
+        ClassNode* InheritClass = BaseClass->AddChild(new ClassNode(Type));
+
+        m_pRootNode->AddChild(BaseClass);
+
+        BaseClass->SetRootNode(m_pRootNode);
+        InheritClass->SetRootNode(BaseClass);
+    }
+    else
+    {
+        if (!Base && Siblin)
+        {
+            //     Parent
+            //       |
+            //     !Base
+            //       |
+            //     Siblin 
+
+            //allocate new base
+            ClassNode* BaseClass = new ClassNode(BaseType);
+
+            // connect siblings
+            BaseClass->Childs.push_back(Siblin);
+
+            // disconnect sibling
+            ClassNode* ParentNode = RemoveNode(Siblin);
+
+            ParentNode->Childs.push_back(BaseClass);
+
+            BaseClass->SetRootNode(ParentNode);
+            Siblin->SetRootNode(BaseClass);
+        }
+        else // Base && !Sibling
+        {
+            ClassNode* InheritClass = new ClassNode(Type);
+            Base->AddChild(InheritClass);
+            InheritClass->SetRootNode(Base);
+        }
+    }
+
+    return true;
 }

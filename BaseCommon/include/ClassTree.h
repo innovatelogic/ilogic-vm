@@ -3,11 +3,12 @@
 #include "OEMBase.h"
 #include "ClassNode.h"
 #include <vector>
+#include <list>
 
 class COMMON_BASE_EXPORT AppClassTree
 {
 public:
-	typedef std::vector<ClassNode*>			TVecClassNodeInterface;
+	typedef std::vector<ClassNode*>			        TVecClassNodeInterface;
 	typedef TVecClassNodeInterface::iterator		TVecClassNodeInterfaceIter;
 	typedef TVecClassNodeInterface::const_iterator	TVecClassNodeInterfaceConstIter;
 
@@ -15,13 +16,13 @@ public:
 	AppClassTree(const AppClassTree &Source);
 	virtual ~AppClassTree();
 
-	bool Add(const char *Type, const char *BaseType);
-	bool AddPure(const char *Type, const class Property_Base **Arr, int Count);
+	bool Add(const char *type, const char *baseType);
+	bool AddPure(const char *type, const class Property_Base **arr, int count);
 
 	void AddInterface(ClassNode *pInterface);
 	
-	ClassNode*	Find(const char *Type);
-	ClassNode*	FindInterface(const char *Type) const;
+	ClassNode*	Find(const char *type);
+	ClassNode*	FindInterface(const char *type) const;
 
 	// returns parent node
 	ClassNode*	RemoveNode(ClassNode *pNode);
@@ -33,10 +34,14 @@ public:
 
 	const TVecClassNodeInterface& GetInterfaces() const { return m_VecInterfaces; }
 
+    bool Add2(const char *type, const char *baseType);
+
 private:
 	TVecClassNodeInterface m_VecInterfaces;	
 	
 	ClassNode	*m_pRootNode;
+
+    std::list<ClassNode*> m_roots;
 };
 
 //----------------------------------------------------------------------------------------------
