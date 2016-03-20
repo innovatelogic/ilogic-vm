@@ -23,7 +23,6 @@ set(SOURCE
 	Actor.cpp
 	Actor.h
 	Actor_Static.cpp
-	AutoTree.h
 	BoundingTree.h
 	CriticalSection.cpp
 	CriticalSection.h

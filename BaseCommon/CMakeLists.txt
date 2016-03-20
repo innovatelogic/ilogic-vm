@@ -32,6 +32,7 @@ include/StringUtility.h
 include/singleton.h
 include/BaseTypes.h
 include/IObjectAbstract.h
+include/AutoTree.h
 )
 
 set(SRC

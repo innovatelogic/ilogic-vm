@@ -1,9 +1,10 @@
-#ifndef __cautotree_h__
-#define __cautotree_h__
+#pragma once
+
+#include "OEMBase.h"
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-class CAutoTree
+class COMMON_BASE_EXPORT CAutoTree
 {
 public:
 	CAutoTree()
@@ -145,5 +146,3 @@ public:
 private:
 	std::vector<T_CLASS*> m_VRoots;
 };
-
-#endif//__cautotree_h__

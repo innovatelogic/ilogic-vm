@@ -181,7 +181,7 @@ void AppClassTree::Release()
 //----------------------------------------------------------------------------------------------
 bool AppClassTree::Add2(const char *type, const char *baseType)
 {
-    ClassNode *Base = Find(baseType);
+   /* ClassNode *Base = Find(baseType);
     ClassNode *Siblin = Find(type);
 
     if (Base && Siblin) {
@@ -233,6 +233,6 @@ bool AppClassTree::Add2(const char *type, const char *baseType)
             InheritClass->SetRootNode(Base);
         }
     }
-
+    */
     return true;
 }
