@@ -29,7 +29,28 @@ public:
 			if (pBase && pSiblin) // already exist
 			{
 				// check if already linked
-				std::vector<T_CLASS*>::iterator IterFind = pBase->Childs.begin();
+				std::vector<T_CLASS*>::iterator iterFind = std::find(pBase->Childs.begin(), pBase->Childs.end(), pSiblin);
+				
+				if (iterFind != pBase->Childs.end()) {
+					return pSiblin;
+				}
+				else // need rearrange
+				{
+					// try to remove in roots if exist
+					std::vector<T_CLASS*>::iterator iterFindInRoot = std::find(m_VRoots.begin(), m_VRoots.end(), pSiblin);
+					if (iterFindInRoot != m_VRoots.end())
+					{
+						*iterFindInRoot = nullptr;
+
+						pBase->AddChild(pSiblin);
+					}
+					else
+					{
+						assert(false); // WTF?
+					}
+				}
+
+				/*std::vector<T_CLASS*>::iterator IterFind = pBase->Childs.begin();
 				for (; IterFind != pBase->Childs.end(); ++IterFind)
 				{
 					if (*IterFind == pSiblin){
@@ -53,8 +74,8 @@ public:
 						m_VRoots.erase(IterSiblin); // rearrange
 						pBase->AddChild(pSiblin);
 					}
-				}
-				return pBase;
+				}*/
+				return pSiblin;
 			}
 			else if (!pBase && !pSiblin) // add plain
 			{
@@ -85,25 +106,17 @@ public:
 				}
 				else if (!pBase && pSiblin)
 				{
+					std::vector<T_CLASS*>::iterator iterFind = std::find(m_VRoots.begin(), m_VRoots.end(), pSiblin);
+
+					assert(iterFind != m_VRoots.end());
+
 					//allocate new base
 					T_CLASS *pBaseClass = new T_CLASS(BaseType);
 
-					// check Siblin class is in root's
-					std::vector<T_CLASS*>::iterator IterFind = m_VRoots.begin();
-					for (; IterFind != m_VRoots.end(); ++IterFind)
-					{
-						if (!strcmp((*IterFind)->GetName(), Type)){
-							break;
-						}
-					}
+					pBaseClass->AddChild(pSiblin);
 
-					assert(IterFind != m_VRoots.end());
+					*iterFind = pBaseClass;
 
-					if (IterFind != m_VRoots.end())
-					{
-						(*IterFind) = pBaseClass; // remap in roots
-						pBaseClass->AddChild(pSiblin);
-					}
 					return pSiblin;
 				}
 			}
