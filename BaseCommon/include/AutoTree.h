@@ -1,6 +1,8 @@
 #pragma once
 
 #include "OEMBase.h"
+#include <algorithm>
+#include <functional>
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
@@ -139,7 +141,7 @@ public:
 
 	void Release()
 	{
-		for_each(m_VRoots.begin(), m_VRoots.end(), std::mem_fun(&T_CLASS::Release));
+		std::for_each(m_VRoots.begin(), m_VRoots.end(), std::mem_fun(&T_CLASS::Release));
 		m_VRoots.clear();
 	}
 
