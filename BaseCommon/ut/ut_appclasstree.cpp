@@ -12,6 +12,8 @@ struct SNode
 
 	void Release() {}
 
+    void SetRootNode(SNode *pNode) {}
+
 	SNode* AddChild(SNode *pNode)
 	{
 		// adds compatibility check

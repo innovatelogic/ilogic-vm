@@ -21,8 +21,10 @@ public:
 	
 public:
 	ClassNode(const char *name);
-	ClassNode(const char *name, TVecProperties &PropInfo);
 	virtual ~ClassNode();
+
+    ClassNode(const ClassNode &other) = delete;
+    ClassNode& operator=(const ClassNode &other) = delete;
 
 	void		Release();
 

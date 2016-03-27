@@ -12,17 +12,6 @@ ClassNode::ClassNode(const char * name)
 }
 
 //----------------------------------------------------------------------------------------------
-ClassNode::ClassNode(const char * name, TVecProperties &PropInfo)
-: Name(name)
-, m_pRootNode(0)
-, PropertyMap(PropInfo)
-, m_pPropAlloc(0)
-, m_pPropsRaw(0)
-, m_PropsSize(0)
-{
-}
-
-//----------------------------------------------------------------------------------------------
 ClassNode::~ClassNode()
 {
 	if (m_pPropsRaw)
@@ -159,9 +148,11 @@ void ClassNode::SetProprties(const Property_Base** Arr, int Count)
 }
 
 //----------------------------------------------------------------------------------------------
-bool ClassNode::PrePropertyChange(const void * Prt, class Property_Base* Prop)
+bool ClassNode::PrePropertyChange(const void *prt, class Property_Base *Prop)
 {
-	return true;
+    //OwnerClass *pClass = const_cast<OwnerClass*>(reinterpret_cast<const OwnerClass*>(pPtr));
+
+    return true; // pClass->OnPrePropertyChange(Prop->GetName());
 }
 
 //----------------------------------------------------------------------------------------------

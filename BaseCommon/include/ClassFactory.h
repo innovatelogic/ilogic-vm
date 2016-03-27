@@ -89,108 +89,23 @@ namespace Utility
 				m_MapGenerator.insert(std::make_pair(Key, AutoManager(GenFunc, CloneFunc)));
 			}
 
-			ClassNode* Base = ClassTree.Find(BaseClassName);
-			ClassNode* Siblin = ClassTree.Find(ClassName);
+            ClassTree.Add(ClassName, BaseClassName);
 
-			if (!Base || !Siblin)
-			{
-				if (!Base && !Siblin) // add plain
-				{
-					//     !Base
-					//       |
-					//    !Siblin 
-
-					ClassNode* BaseClass = new ClassNodeType<CLASS_BASE>(BaseClassName);
-					ClassNode* InheritClass = BaseClass->AddChild(new ClassNodeType<T_CLASS>(ClassName));
-
-					ClassTree.GetRootNode()->AddChild(BaseClass);
-
-					BaseClass->SetRootNode(ClassTree.GetRootNode());
-					InheritClass->SetRootNode(BaseClass);
-				}
-				else
-				{
-					if (!Base && Siblin)
-					{
-						//     Parent
-						//       |
-						//     !Base
-						//       |
-						//     Siblin 
-
-						//allocate new base
-						ClassNode* BaseClass = new ClassNodeType<CLASS_BASE>(BaseClassName);
-
-						// connect siblings
-						BaseClass->Childs.push_back(Siblin);
-
-						// disconnect sibling
-						ClassNode* ParentNode = ClassTree.RemoveNode(Siblin);
-
-						ParentNode->Childs.push_back(BaseClass);
-
-						BaseClass->SetRootNode(ParentNode);
-						Siblin->SetRootNode(BaseClass);
-					}
-					else // Base && !Sibling
-					{
-						ClassNode* InheritClass = new ClassNodeType<T_CLASS>(ClassName);
-						Base->AddChild(InheritClass);
-						InheritClass->SetRootNode(Base);
-					}
-				}
-			}
-			else if (Base && Siblin)// reposition
-			{
-				if (Siblin->GetRootNode() && Siblin->GetRootNode() != Base)
-				{
-					ClassNode* RightBase = ClassTree.Find(BaseClassName);
-					if (RightBase)
-					{
-						// disconnect
-						Siblin->GetRootNode()->RemoveNode(Siblin);
-						Siblin->SetRootNode(Base);
-						Base->AddChild(Siblin);
-					}
-				}
-			}
-			//////////////////////////////////////////////////////////////////////////
 			return m_MapGenerator.size();
 		}
 	
 //----------------------------------------------------------------------------------------------
 		template <typename T_CLASS, typename CLASS_BASE>
-		void RegisterPure(const char* TypeName, const Property_Base** Arr, int Count)
+		void RegisterPure(const char* typeName, const Property_Base** arr, int count)
 		{
-			ClassNode* InheritClass = ClassTree.Find(TypeName);
-
-			if (!InheritClass)
-			{
-				InheritClass = new ClassNodeType<T_CLASS>(TypeName);
-				ClassTree.GetRootNode()->AddChild(InheritClass);
-				InheritClass->SetRootNode(ClassTree.GetRootNode());
-			}
-
-			InheritClass->SetProprties(Arr, Count);
+            ClassTree.Add(typeName, arr, count);
 		}
 
 //----------------------------------------------------------------------------------------------
 		template <typename T_CLASS, typename CLASS_BASE>
-		void RegisterPure2(const char* TypeName, const IPropertiesAllocator * PropAlloc)
+		void RegisterPure2(const char *type, const IPropertiesAllocator *prop)
 		{
-			ClassNode* pInheritClass = ClassTree.Find(TypeName);
-
-			if (!pInheritClass)
-			{
-				pInheritClass = new ClassNodeType<T_CLASS>(TypeName);
-
-				assert(pInheritClass);
-
-				ClassTree.GetRootNode()->AddChild(pInheritClass);
-				pInheritClass->SetRootNode(ClassTree.GetRootNode());
-			}
-
-			pInheritClass->SetProprties(PropAlloc);
+            ClassTree.Add(type, prop);
 		}
 
 //----------------------------------------------------------------------------------------------

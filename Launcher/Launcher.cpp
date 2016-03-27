@@ -767,7 +767,7 @@ void HandlePopupContextMenu(HWND hwnd, POINT pt, CActor * Selected)
 	std::vector<const ClassNode*> vecNodes;
 	AppClassTree &classTree = NObjectFactory::GetClassTree();
 
-	CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetRootNode(), vecNodes);
+	CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
 
 	NumBrushes = 0;
 	for (size_t Index = 0; Index < vecNodes.size(); ++Index)
@@ -922,7 +922,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 			std::vector<const ClassNode*> vecNodes;
 
-			CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetRootNode(), vecNodes);
+			CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
 
 			const ClassNode *pClass = vecNodes.at((INT)(wParam) - 5000);
 

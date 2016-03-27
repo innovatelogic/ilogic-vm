@@ -1,8 +1,10 @@
 #pragma once
 
 #include "OEMBase.h"
+#include "Property.h"
 #include <algorithm>
 #include <functional>
+#include <assert.h>
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
@@ -11,7 +13,6 @@ class COMMON_BASE_EXPORT CAutoTree
 public:
 	CAutoTree()
 	{
-
 	}
 
 	virtual ~CAutoTree()
@@ -19,6 +20,9 @@ public:
 		Release();
 	}
 
+    const std::vector<T_CLASS*>& GetRoots() const { return m_VRoots; }
+
+    //----------------------------------------------------------------------------------------------
 	T_CLASS* Add(const char *Type, const char *BaseType)
 	{
 		if (Type && BaseType)
@@ -50,31 +54,6 @@ public:
 					}
 				}
 
-				/*std::vector<T_CLASS*>::iterator IterFind = pBase->Childs.begin();
-				for (; IterFind != pBase->Childs.end(); ++IterFind)
-				{
-					if (*IterFind == pSiblin){
-						break;
-					}
-				}
-
-				if (IterFind != pBase->Childs.end()) // siblin is not direct child of base need rearrange
-				{
-					// check Siblin class is in root's
-					std::vector<T_CLASS*>::iterator IterSiblin = m_VRoots.begin();
-					for (; IterSiblin != m_VRoots.end(); ++IterSiblin)
-					{
-						if (*IterSiblin == pSiblin){
-							break;
-						}
-					}
-
-					if (IterSiblin != m_VRoots.end())
-					{
-						m_VRoots.erase(IterSiblin); // rearrange
-						pBase->AddChild(pSiblin);
-					}
-				}*/
 				return pSiblin;
 			}
 			else if (!pBase && !pSiblin) // add plain
@@ -84,7 +63,10 @@ public:
 				//    !Siblin  <- add
 
 				T_CLASS *pBaseClass = new T_CLASS(BaseType);
+
 				T_CLASS *pInheritClass = pBaseClass->AddChild(new T_CLASS(Type));
+
+                pInheritClass->SetRootNode(pBaseClass);
 
 				m_VRoots.push_back(pBaseClass);
 
@@ -102,6 +84,8 @@ public:
 
 					pBase->AddChild(pInheritClass);
 
+                    pInheritClass->SetRootNode(pBase);
+
 					return pInheritClass;
 				}
 				else if (!pBase && pSiblin)
@@ -116,6 +100,8 @@ public:
 					pBaseClass->AddChild(pSiblin);
 
 					*iterFind = pBaseClass;
+
+                    pSiblin->SetRootNode(pBaseClass);
 
 					return pSiblin;
 				}
@@ -137,21 +123,56 @@ public:
 				return pClass;
 			}
 		}
-		return 0;
+
+		return nullptr;
 	}
 
+    T_CLASS* AddPure(const char *type, const Property_Base **arr, int count)
+    {
+        T_CLASS *pBase = Find(type);
+
+        if (!pBase)
+        {
+            T_CLASS *pClass = new ClassNode(type);
+            m_VRoots.push_back(pClass);
+            pBase = pClass;
+        }
+        pBase->SetProprties(arr, count);
+        return pBase;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    T_CLASS* Add(const char *type, const IPropertiesAllocator *propAlloc)
+    {
+        T_CLASS *pBase = Find(type);
+
+        if (!pBase)
+        {
+            T_CLASS *pClass = new ClassNode(type);
+            m_VRoots.push_back(pClass);
+            pBase = pClass;
+        }
+        pBase->SetProprties(propAlloc);
+        return pBase;
+    }
+
+    //----------------------------------------------------------------------------------------------
 	T_CLASS* Find(const char *Type)
 	{
 		for (std::vector<T_CLASS*>::iterator Iter = m_VRoots.begin(); Iter != m_VRoots.end(); ++Iter)
 		{
-			if (T_CLASS *FindNode = (*Iter)->Find(Type))
-			{
-				return FindNode;
-			}
+            if (*Iter != nullptr)
+            {
+                if (T_CLASS *FindNode = (*Iter)->Find(Type))
+                {
+                    return FindNode;
+                }
+            }
 		}
-		return 0;
+		return nullptr;
 	}
 
+    //----------------------------------------------------------------------------------------------
 	void Release()
 	{
 		std::for_each(m_VRoots.begin(), m_VRoots.end(), std::mem_fun(&T_CLASS::Release));
