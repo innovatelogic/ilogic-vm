@@ -32,9 +32,7 @@ set(SOURCE
 	FoundationSDK.h
 	geometry.cpp
 	geometry.h
-	ICollisionInterface.h
 	IListener.h
-	IRenderInterface.h
 	m_attribute.cpp
 	m_attribute.h
 	m_file.cpp

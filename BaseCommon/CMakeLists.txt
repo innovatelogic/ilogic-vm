@@ -33,6 +33,8 @@ include/singleton.h
 include/BaseTypes.h
 include/IObjectAbstract.h
 include/AutoTree.h
+include/ICollisionInterface.h
+include/IRenderInterface.h
 )
 
 set(SRC

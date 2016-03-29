@@ -1,13 +1,10 @@
-#ifndef __irenderinterface_h__
-#define __irenderinterface_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "StdafxFoundation.h"
+#include "OEMBase.h"
+#include "matrix.h"
+#include "Bounds3f.h"
 
-class EXPORT IRenderInterface
+class COMMON_BASE_EXPORT IRenderInterface
 {
 public:
 	IRenderInterface()
@@ -47,5 +44,3 @@ protected:
 
 	unsigned int		m_Flags;
 };
-
-#endif//__irenderinterface_h__
