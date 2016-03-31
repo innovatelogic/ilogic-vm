@@ -5,7 +5,7 @@
 
 #pragma once
 
-//#include "platform_specific.h"
+#include "TypesBase.h"
 #include "math_float.h"
 #include "UtMemory.h"
 
@@ -17,12 +17,12 @@ class EXPORT Container
 public:
 	// Constructor/Destructor
 	Container();
-	Container(udword size, float growthfactor);
+	Container(TUInt32 size, float growthfactor);
 	~Container();
 
 	// Management
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	inline_ Container& Add(udword entry)
+	inline_ Container& Add(TUInt32 entry)
 	{
 		// Resize if needed
 		if(mCurNbEntries==mMaxNbEntries) 
@@ -35,7 +35,7 @@ public:
 		return *this;
 	}
 
-	inline_ Container& Add(udword* entries, udword nb)
+	inline_ Container& Add(TUInt32* entries, TUInt32 nb)
 	{
 		// Resize if needed
 		if(mCurNbEntries+nb>mMaxNbEntries)
@@ -44,7 +44,7 @@ public:
 		}
 
 		// Add new entry
-		CopyMemory(&mEntries[mCurNbEntries], entries, nb*sizeof(udword));
+		CopyMemory(&mEntries[mCurNbEntries], entries, nb*sizeof(TUInt32));
 		mCurNbEntries+=nb;
 		return *this;
 	}
@@ -63,7 +63,7 @@ public:
 		return *this;
 	}
 
-	inline_ Container& Add(float* entries, udword nb)
+	inline_ Container& Add(float* entries, TUInt32 nb)
 	{
 		// Resize if needed
 		if(mCurNbEntries+nb>mMaxNbEntries)
@@ -78,7 +78,7 @@ public:
 	}
 
 	//! Add unique [slow]
-	Container& AddUnique(udword entry)
+	Container& AddUnique(TUInt32 entry)
 	{
 		if(!Contains(entry)) 
 		{
@@ -92,7 +92,7 @@ public:
 	inline_ Container&  Empty()
 	{
 #ifdef CONTAINER_STATS
-		mUsedRam-=mMaxNbEntries*sizeof(udword);
+		mUsedRam-=mMaxNbEntries*sizeof(TUInt32);
 #endif
 		DELETEARRAY(mEntries);
 		mCurNbEntries = mMaxNbEntries = 0;
@@ -106,62 +106,62 @@ public:
 		if(mCurNbEntries)   mCurNbEntries = 0;
 	}
 
-	bool            SetSize(udword nb);
+	bool            SetSize(TUInt32 nb);
 	bool            Refit();
 
 	// Checks whether the container already contains a given value.
-	bool            Contains(udword entry, udword* location = nullptr) const;
+	bool            Contains(TUInt32 entry, TUInt32* location = nullptr) const;
 	// Deletes an entry - doesn't preserve insertion order.
-	bool            Delete(udword entry);
+	bool            Delete(TUInt32 entry);
 	// Deletes an entry - does preserve insertion order.
-	bool            DeleteKeepingOrder(udword entry);
+	bool            DeleteKeepingOrder(TUInt32 entry);
 	//! Deletes the very last entry.
 	inline_ void    DeleteLastEntry()                       { if(mCurNbEntries) mCurNbEntries--;            }
 	//! Deletes the entry whose index is given
-	inline_ void    DeleteIndex(udword index)               { mEntries[index] = mEntries[--mCurNbEntries];  }
+	inline_ void    DeleteIndex(TUInt32 index)               { mEntries[index] = mEntries[--mCurNbEntries];  }
 
 	// Helpers
-	Container&      FindNext(udword& entry, bool wrap=false);
-	Container&      FindPrev(udword& entry, bool wrap=false);
+	Container&      FindNext(TUInt32& entry, bool wrap=false);
+	Container&      FindPrev(TUInt32& entry, bool wrap=false);
 
 	// Data access.
-	inline_ udword          GetNbEntries()                  const   { return mCurNbEntries;     }   //!< Returns the current number of entries.
-	inline_ udword          GetEntry(udword i)              const   { return mEntries[i];       }   //!< Returns ith entry
-	inline_ udword*         GetEntries()                    const   { return mEntries;          }   //!< Returns the list of entries.
+	inline_ TUInt32          GetNbEntries()                  const   { return mCurNbEntries;     }   //!< Returns the current number of entries.
+	inline_ TUInt32          GetEntry(TUInt32 i)              const   { return mEntries[i];       }   //!< Returns ith entry
+	inline_ TUInt32*         GetEntries()                    const   { return mEntries;          }   //!< Returns the list of entries.
 
 	// Growth control
 	inline_ float           GetGrowthFactor()               const   { return mGrowthFactor;     }   //!< Returns the growth factor
 	inline_ void            SetGrowthFactor(float growth)           { mGrowthFactor = growth;   }   //!< Sets the growth factor
 
 	//! Access as an array
-	inline_ udword&         operator[](udword i)            const   { assert(i>=0 && i<mCurNbEntries); return mEntries[i];  }
+	inline_ TUInt32&         operator[](TUInt32 i)            const   { assert(i>=0 && i<mCurNbEntries); return mEntries[i];  }
 
 	// Stats
-	udword          GetUsedRam()                    const;
+	TUInt32          GetUsedRam()                    const;
 
 	//! Operator for Container A = Container B
 	void      operator = (const Container& object)
 	{
 		SetSize(object.GetNbEntries());
-		CopyMemory(mEntries, object.GetEntries(), mMaxNbEntries*sizeof(udword));
+		CopyMemory(mEntries, object.GetEntries(), mMaxNbEntries*sizeof(TUInt32));
 		mCurNbEntries = mMaxNbEntries;
 	}
 
 #ifdef CONTAINER_STATS
-	inline_ udword          GetNbContainers()               const   { return mNbContainers;     }
-	inline_ udword          GetTotalBytes()                 const   { return mUsedRam;          }
+	inline_ TUInt32          GetNbContainers()               const   { return mNbContainers;     }
+	inline_ TUInt32          GetTotalBytes()                 const   { return mUsedRam;          }
 private:
 
-	static  udword          mNbContainers;      //!< Number of containers around
-	static  udword          mUsedRam;           //!< Amount of bytes used by containers in the system
+	static  TUInt32          mNbContainers;      //!< Number of containers around
+	static  TUInt32          mUsedRam;           //!< Amount of bytes used by containers in the system
 #endif
 private:
 	// Resizing
-	bool            Resize(udword needed=1);
+	bool            Resize(TUInt32 needed=1);
 	// Data
-	udword          mMaxNbEntries;      //!< Maximum possible number of entries
-	udword          mCurNbEntries;      //!< Current number of entries
-	udword*         mEntries;           //!< List of entries
+	TUInt32          mMaxNbEntries;      //!< Maximum possible number of entries
+	TUInt32          mCurNbEntries;      //!< Current number of entries
+	TUInt32*         mEntries;           //!< List of entries
 	float           mGrowthFactor;      //!< Resize: new number of entries = old number * mGrowthFactor
 };
 
@@ -173,7 +173,7 @@ public:
 	inline_             Pairs()                     {}
 	inline_             ~Pairs()                    {}
 
-	_inline udword      GetNbPairs()    const       { return GetNbEntries()>>1;                 }
+	_inline TUInt32      GetNbPairs()    const       { return GetNbEntries()>>1;                 }
 	_inline Pair*       GetPairs()      const       { return (Pair*)GetEntries();               }
 
 	Pairs&      AddPair(const Pair& p)      { Add(p.id0).Add(p.id1);    return *this;   }

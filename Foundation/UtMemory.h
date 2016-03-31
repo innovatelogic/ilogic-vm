@@ -22,15 +22,15 @@
 #undef FillMemory
 
 //! A function to clear a buffer.
-inline_ void EXPORT ZeroMemory(void* addr, udword size) { memset(addr, 0, size);}
+inline_ void EXPORT ZeroMemory(void* addr, TUInt32 size) { memset(addr, 0, size);}
 
 //! A function to fill a buffer with a given byte.
-inline_ void EXPORT FillMemory(void* dest, udword size, ubyte val) { memset(dest, val, size);}
+inline_ void EXPORT FillMemory(void* dest, TUInt32 size, ubyte val) { memset(dest, val, size);}
 
 //! A function to copy a buffer.
-inline_ void EXPORT CopyMemory(void* dest, const void* src, udword size) { memcpy(dest, src, size); }
+inline_ void EXPORT CopyMemory(void* dest, const void* src, TUInt32 size) { memcpy(dest, src, size); }
 
 //! A function to move a buffer.
-inline_ void EXPORT MoveMemory(void* dest, const void* src, udword size) { memmove(dest, src, size); }
+inline_ void EXPORT MoveMemory(void* dest, const void* src, TUInt32 size) { memmove(dest, src, size); }
 */
 #endif // __NVBMEMORYMACROS_H__

@@ -68,9 +68,6 @@
 #include "boost/bind.hpp"
 #include "boost/signals2.hpp"
 
-
-#include "DefTypes.h"
-#include "math_decl.h"
 #include "singleton.h"
 
 using namespace oes::common_base;

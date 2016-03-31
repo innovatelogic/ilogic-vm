@@ -63,7 +63,7 @@ std::wstring EXPORT BuildFolderPath(const wchar_t *folder);
 bool	EXPORT RegisterPath(const char* path);
 bool	EXPORT UnRegisterPath(const char* path);
 
-udword	EXPORT GetFileSize(const char * name);     
+TUInt32	EXPORT GetFileSize(const char * name);     
 bool	EXPORT FileExists(const char * filename);
 bool	EXPORT FindFile(const char* filename, std::string* OutFile = nullptr, std::string* OutTag = nullptr);
 bool	EXPORT GetTagByPath(std::string* InFile, std::string* OutTag);

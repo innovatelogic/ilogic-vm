@@ -18,15 +18,12 @@ include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 
 set(SOURCE
 	platform_specific.h
-	_String.cpp
-	_String.h
 	Actor.cpp
 	Actor.h
 	Actor_Static.cpp
 	BoundingTree.h
 	CriticalSection.cpp
 	CriticalSection.h
-	DefTypes.h
 	EventDesc.cpp
 	EventDesc.h
 	FoundationSDK.h
@@ -39,7 +36,6 @@ set(SOURCE
 	m_file.h
 	m_streams.cpp
 	m_streams.h
-	math_decl.h
 	math_float.h
 	MemoryAllocator.cpp
 	MemoryAllocator.h

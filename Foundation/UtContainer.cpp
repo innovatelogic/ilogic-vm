@@ -27,8 +27,8 @@
 
 // Static members
 #ifdef CONTAINER_STATS
-udword Container::mNbContainers = 0;
-udword Container::mUsedRam = 0;
+TUInt32 Container::mNbContainers = 0;
+TUInt32 Container::mUsedRam = 0;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ Container::Container()
 *  Constructor. Also allocates a given number of entries.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Container::Container(udword size, float growthfactor)
+Container::Container(TUInt32 size, float growthfactor)
 : mMaxNbEntries(0)
 , mCurNbEntries(0)
 , mEntries(nullptr)
@@ -89,15 +89,15 @@ Container::~Container()
 *  \return     true if success.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Container::Resize(udword needed)
+bool Container::Resize(TUInt32 needed)
 {
 #ifdef CONTAINER_STATS
 	// Subtract previous amount of bytes
-	mUsedRam -= mMaxNbEntries*sizeof(udword);
+	mUsedRam -= mMaxNbEntries*sizeof(TUInt32);
 #endif
 
 	// Get more entries
-	mMaxNbEntries = mMaxNbEntries ? udword(float(mMaxNbEntries)*mGrowthFactor) : 2; // Default nb Entries = 2
+	mMaxNbEntries = mMaxNbEntries ? TUInt32(float(mMaxNbEntries)*mGrowthFactor) : 2; // Default nb Entries = 2
 	
 	if(mMaxNbEntries < mCurNbEntries + needed)
 	{
@@ -105,18 +105,18 @@ bool Container::Resize(udword needed)
 	}
 
 	// Get some bytes for new entries
-	udword* NewEntries = new udword[mMaxNbEntries];
+	TUInt32* NewEntries = new TUInt32[mMaxNbEntries];
 	CHECKALLOC(NewEntries);
 
 #ifdef CONTAINER_STATS
 	// Add current amount of bytes
-	mUsedRam+=mMaxNbEntries*sizeof(udword);
+	mUsedRam+=mMaxNbEntries*sizeof(TUInt32);
 #endif
 
 	// Copy old data if needed
 	if(mCurNbEntries)  
 	{
-		CopyMemory(NewEntries, mEntries, mCurNbEntries*sizeof(udword));
+		CopyMemory(NewEntries, mEntries, mCurNbEntries*sizeof(TUInt32));
 	}
 
 	// Delete old data
@@ -135,7 +135,7 @@ bool Container::Resize(udword needed)
 *  \return     true if success
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Container::SetSize(udword nb)
+bool Container::SetSize(TUInt32 nb)
 {
 	// Make sure it's empty
 	Empty();
@@ -150,12 +150,12 @@ bool Container::SetSize(udword nb)
 	mMaxNbEntries = nb;
 
 	// Get some bytes for new entries
-	mEntries = new udword[mMaxNbEntries];
+	mEntries = new TUInt32[mMaxNbEntries];
 	CHECKALLOC(mEntries);
 
 #ifdef CONTAINER_STATS
 	// Add current amount of bytes
-	mUsedRam+=mMaxNbEntries*sizeof(udword);
+	mUsedRam+=mMaxNbEntries*sizeof(TUInt32);
 #endif
 	return true;
 }
@@ -170,7 +170,7 @@ bool Container::Refit()
 {
 #ifdef CONTAINER_STATS
 	// Subtract previous amount of bytes
-	mUsedRam-=mMaxNbEntries*sizeof(udword);
+	mUsedRam-=mMaxNbEntries*sizeof(TUInt32);
 #endif
 
 	// Get just enough entries
@@ -181,16 +181,16 @@ bool Container::Refit()
 	}
 
 	// Get just enough bytes
-	udword* NewEntries = new udword[mMaxNbEntries];
+	TUInt32* NewEntries = new TUInt32[mMaxNbEntries];
 	CHECKALLOC(NewEntries);
 
 #ifdef CONTAINER_STATS
 	// Add current amount of bytes
-	mUsedRam+=mMaxNbEntries*sizeof(udword);
+	mUsedRam+=mMaxNbEntries*sizeof(TUInt32);
 #endif
 
 	// Copy old data
-	CopyMemory(NewEntries, mEntries, mCurNbEntries*sizeof(udword));
+	CopyMemory(NewEntries, mEntries, mCurNbEntries*sizeof(TUInt32));
 
 	// Delete old data
 	DELETEARRAY(mEntries);
@@ -206,16 +206,16 @@ bool Container::Refit()
 *  Checks whether the container already contains a given value.
 *  \param      entry           [in] the value to look for in the container
 *  \param      location        [out] a possible pointer to store the entry location
-*  \see        Add(udword entry)
+*  \see        Add(TUInt32 entry)
 *  \see        Add(float entry)
 *  \see        Empty()
 *  \return     true if the value has been found in the container, else false.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Container::Contains(udword entry, udword* location) const
+bool Container::Contains(TUInt32 entry, TUInt32* location) const
 {
 	// Look for the entry
-	for(udword i=0;i<mCurNbEntries;i++)
+	for(TUInt32 i=0;i<mCurNbEntries;i++)
 	{
 		if(mEntries[i]==entry)
 		{
@@ -237,10 +237,10 @@ bool Container::Contains(udword entry, udword* location) const
 *  \warning    This method is arbitrary slow (O(n)) and should be used carefully. Insertion order is not preserved.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Container::Delete(udword entry)
+bool Container::Delete(TUInt32 entry)
 {
 	// Look for the entry
-	for(udword i=0;i<mCurNbEntries;i++)
+	for(TUInt32 i=0;i<mCurNbEntries;i++)
 	{
 		if(mEntries[i]==entry)
 		{
@@ -260,17 +260,17 @@ bool Container::Delete(udword entry)
 *  \warning    This method is arbitrary slow (O(n)) and should be used carefully.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Container::DeleteKeepingOrder(udword entry)
+bool Container::DeleteKeepingOrder(TUInt32 entry)
 {
 	// Look for the entry
-	for(udword i=0;i<mCurNbEntries;i++)
+	for(TUInt32 i=0;i<mCurNbEntries;i++)
 	{
 		if(mEntries[i]==entry)
 		{
 			// Entry has been found at index i.
 			// Shift entries to preserve order. You really should use a linked list instead.
 			mCurNbEntries--;
-			for(udword j=i;j<mCurNbEntries;j++)
+			for(TUInt32 j=i;j<mCurNbEntries;j++)
 			{
 				mEntries[j] = mEntries[j+1];
 			}
@@ -288,9 +288,9 @@ bool Container::DeleteKeepingOrder(udword entry)
 *  \return     Self-Reference
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Container& Container::FindNext(udword& entry, bool wrap)
+Container& Container::FindNext(TUInt32& entry, bool wrap)
 {
-	udword Location;
+	TUInt32 Location;
 	if(Contains(entry, &Location))
 	{
 		Location++;
@@ -308,9 +308,9 @@ Container& Container::FindNext(udword& entry, bool wrap)
 *  \return     Self-Reference
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Container& Container::FindPrev(udword& entry, bool wrap)
+Container& Container::FindPrev(TUInt32& entry, bool wrap)
 {
-	udword Location;
+	TUInt32 Location;
 	if(Contains(entry, &Location))
 	{
 		Location--;
@@ -326,7 +326,7 @@ Container& Container::FindPrev(udword& entry, bool wrap)
 *  \return     the ram used in bytes.
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-udword Container::GetUsedRam() const
+TUInt32 Container::GetUsedRam() const
 {
-	return sizeof(Container) + mMaxNbEntries * sizeof(udword);
+	return sizeof(Container) + mMaxNbEntries * sizeof(TUInt32);
 }

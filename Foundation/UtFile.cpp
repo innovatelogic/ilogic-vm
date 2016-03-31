@@ -1,5 +1,4 @@
 #include "UtFile.h"
-#include "_string.h"
 
 #ifdef _MSC_VER
 #pragma warning( disable : 4996 ) // _CRT_SECURE_NO_DEPRECATE
@@ -99,7 +98,7 @@ bool UnRegisterPath(const char* path)
 }
 
 //-------------------------------------------------------------------
-udword GetFileSize(const char * name)
+TUInt32 GetFileSize(const char * name)
 {
 #ifndef SEEK_END
 #define SEEK_END 2
@@ -111,7 +110,7 @@ udword GetFileSize(const char * name)
 		return 0;
 	}
 	fseek(File, 0, SEEK_END);
-	udword eof_ftell = ftell(File);
+    TUInt32 eof_ftell = ftell(File);
     fclose(File);
 	return eof_ftell;
 }
@@ -148,7 +147,7 @@ bool FindFile(const char* filename, std::string* OutFile /*= NULL*/, std::string
 	for (size_t i = 0; i < gPathStr.size(); i++)
 	{
 		std::string   tmpFile = gPathStr[i];
-	    udword lastChar = (unsigned int)tmpFile.length();
+        TUInt32 lastChar = (unsigned int)tmpFile.length();
 
 		if (lastChar)
 		{
