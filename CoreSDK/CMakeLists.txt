@@ -93,8 +93,6 @@ set(SOURCE
 	CameraEditor.h
 	CameraManager.cpp
 	CameraManager.h
-	CanvasFrame.cpp
-	CanvasFrame.h
 	CharacterControl.cpp
 	CharacterControl.h
 	CollisionController.cpp
