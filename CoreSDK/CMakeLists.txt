@@ -276,7 +276,6 @@ set(SOURCE
 	UVModificator.h
 	UVModificator_Brush.cpp
 	UVModificator_Brush.h
-	ValueParser.h
 	ViewportInterface.cpp
 	ViewportInterface.h
 	ViewportManager.cpp

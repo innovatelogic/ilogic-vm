@@ -23,10 +23,9 @@
 #pragma once
 #endif
 
-#include "platform_specific.h"
 #include "StringUtility.h"
 
-class ValueParser
+class COMMON_BASE_EXPORT ValueParser
 {
 public:
 	typedef std::map<std::string, std::string> MMapStr; 

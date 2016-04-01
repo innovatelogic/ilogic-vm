@@ -35,6 +35,8 @@ include/IObjectAbstract.h
 include/AutoTree.h
 include/ICollisionInterface.h
 include/IRenderInterface.h
+include/ObjectDeclaration.h
+include/ValueParser.h
 )
 
 set(SRC

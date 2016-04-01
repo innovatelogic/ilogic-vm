@@ -42,7 +42,6 @@ set(SOURCE
 	MessageMap.h
 	ObjectAbstract.cpp
 	ObjectAbstract.h
-	ObjectDeclaration.h
 	StdafxFoundation.h
 	Streams.cpp
 	Streams.h
@@ -53,7 +52,6 @@ set(SOURCE
 	UtFile.cpp
 	UtFile.h
 	UtMemory.h
-	ValueParser.h
 	xmlparser.h
 )
 
