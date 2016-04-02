@@ -37,6 +37,7 @@ include/ICollisionInterface.h
 include/IRenderInterface.h
 include/ObjectDeclaration.h
 include/ValueParser.h
+include/UtFile.h
 )
 
 set(SRC
@@ -54,6 +55,7 @@ src/ClassNode.cpp
 src/ClassFactory.cpp
 src/ObjectFactory.cpp
 src/StringUtility.cpp
+src/UtFile.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${INCLUDES} ${SRC})

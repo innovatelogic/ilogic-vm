@@ -49,8 +49,6 @@ set(SOURCE
 	TArray.h
 	UtContainer.cpp
 	UtContainer.h
-	UtFile.cpp
-	UtFile.h
 	UtMemory.h
 	xmlparser.h
 )
