@@ -231,14 +231,3 @@ private:
 	( sizeof(array) / sizeof((array)[0]) )
 
 //----------------------------------------------------------------------------------------------
-#define appFree				free
-#define appRealloc			realloc
-
-extern "C" void* __cdecl _alloca(size_t);
-#define appAlloca(size) ((size==0) ? 0 : _alloca((size+7)&~7));
-
-//void* appMemmove(void* Dest, const void* Src, int Count);
-void  appMemset(void* Dest, int C, int Count);
-void  appMemzero(void* Dest, int Count);
-void  appMemcpy(void* Dest, const void* Src, int Count);
-void  appMemswap(void* Ptr1, void* Ptr2, DWORD Size);

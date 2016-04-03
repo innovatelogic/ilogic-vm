@@ -38,6 +38,7 @@ include/IRenderInterface.h
 include/ObjectDeclaration.h
 include/ValueParser.h
 include/UtFile.h
+include/TArray.h
 )
 
 set(SRC
@@ -56,6 +57,7 @@ src/ClassFactory.cpp
 src/ObjectFactory.cpp
 src/StringUtility.cpp
 src/UtFile.cpp
+src/TArray.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${INCLUDES} ${SRC})

@@ -1,31 +1,23 @@
-//----------------------------------------------------------------------------------------------
-// OpenES: Open Entertainment System
-// Copyright (C) 2010  Yura Gunko email: yura.gunko@gmail.com
-// 
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// 
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//----------------------------------------------------------------------------------------------
+#include "OEMBase.h"
+#include "TypesBase.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
 
-#ifndef __tarray_h__
-#define __tarray_h__
+namespace oes
+{
+namespace common_base
+{
 
-#ifdef _WIN32
-#pragma once
-#endif
+#define appFree				free
+#define appRealloc			realloc
 
-#ifndef __platform_specific_h__
-#include "platform_specific.h"
-#endif
+void* appMemmove(void* Dest, const void* Src, size_t Count);
+void  appMemset(void* Dest, int C, size_t Count);
+void  appMemzero(void* Dest, size_t Count);
+void  appMemcpy(void* Dest, const void* Src, size_t Count);
+void  appMemswap(void* Ptr1, void* Ptr2, size_t Size);
 
 template <class T> struct TTypeInfoBase
 {
@@ -40,7 +32,7 @@ template <class T> struct TTypeInfo : public TTypeInfoBase<T>
 {
 };
 
-template <> struct TTypeInfo<BYTE> : public TTypeInfoBase<BYTE>
+template <> struct TTypeInfo<TUInt8> : public TTypeInfoBase<TUInt8>
 {
 public:
 	static bool NeedsDestructor() { return 0; }
@@ -64,7 +56,7 @@ public:
 	static bool NeedsDestructor() { return 0; }
 };
 
-template <> struct TTypeInfo<DWORD> : public TTypeInfoBase<DWORD>
+template <> struct TTypeInfo<TUInt32> : public TTypeInfoBase<TUInt32>
 {
 public:
 	static bool NeedsDestructor() { return 0; }
@@ -117,7 +109,7 @@ public:
 	~Array()
 	{
 		if (Data){
-			appFree(Data);
+            free(Data);
 		}
 
 		Data = nullptr;
@@ -134,7 +126,7 @@ public:
 		return Data;
 	}
 
-	BOOL CheckIndex(int Index) const
+	bool CheckIndex(int Index) const
 	{
 		return Index >= 0 && Index < ArrayNum;
 	}
@@ -149,7 +141,7 @@ public:
 	void InsertZeroed(int Index, int Count, int ElementSize)
 	{
 		Insert(Index, Count, ElementSize);
-		appMemzero((BYTE*)Data + Index * ElementSize, Count * ElementSize);
+		appMemzero((TUInt8*)Data + Index * ElementSize, Count * ElementSize);
 	}
 
 	void Insert(int Index, int Count, int ElementSize)
@@ -168,8 +160,8 @@ public:
 		}
 
 		memmove(
-			(BYTE*)Data + (Index + Count) * ElementSize,
-			(BYTE*)Data + (Index) * ElementSize,
+			(TUInt8*)Data + (Index + Count) * ElementSize,
+			(TUInt8*)Data + (Index) * ElementSize,
 			(OldNum - Index) * ElementSize
 			);
 	}
@@ -192,7 +184,7 @@ public:
 	int AddZeroed(int ElementSize, int Num = 1)
 	{
 		int Index  = Add(Num, ElementSize);
-		appMemzero((BYTE*)Data + Index * ElementSize, Num * ElementSize);
+		appMemzero((TUInt8*)Data + Index * ElementSize, Num * ElementSize);
 		return Index;
 	}
 
@@ -216,7 +208,7 @@ public:
 
 	void Swap(int A, int B, int ElementSize)
 	{
-		appMemswap((BYTE*)Data + (ElementSize * A), (BYTE*)Data + (ElementSize * B), ElementSize);
+		appMemswap((TUInt8*)Data + (ElementSize * A), (TUInt8*)Data + (ElementSize * B), ElementSize);
 	}
 
 	void Remove(int Index, int Count, int ElementSize )
@@ -225,8 +217,8 @@ public:
 		{
 			memmove
 				(
-				(BYTE*)Data + (Index      ) * ElementSize,
-				(BYTE*)Data + (Index+Count) * ElementSize,
+				(TUInt8*)Data + (Index      ) * ElementSize,
+				(TUInt8*)Data + (Index+Count) * ElementSize,
 				(ArrayNum - Index - Count ) * ElementSize
 				);
 			ArrayNum -= Count;
@@ -248,7 +240,7 @@ protected:
 	{
 		// Avoid calling appRealloc( NULL, 0 ) as ANSI C mandates returning a valid pointer which is not what we want.
 		if (Data || ArrayMax){
-			Data = appRealloc(Data, ArrayMax*ElementSize);
+			Data = realloc(Data, ArrayMax * ElementSize);
 		}
 	}
 
@@ -517,7 +509,7 @@ public:
 
 	void SwapItems(int A, int B)
 	{
-		Array::Swap(A,B,sizeof(T));
+		Array::Swap(A, B, sizeof(T));
 	}
 
 	// Iterator.
@@ -540,10 +532,10 @@ public:
 	};
 };
 
-template<class T, UINT Max> struct TStaticArray
+template<class T, unsigned int Max> struct TStaticArray
 {
-	T		Elements[Max];
-	UINT	Num;
+	T		        Elements[Max];
+    unsigned int	Num;
 
 	// Constructor.
 
@@ -551,7 +543,7 @@ template<class T, UINT Max> struct TStaticArray
 
 	// AddItem
 
-	UINT AddItem(const T& Item)
+    size_t AddItem(const T& Item)
 	{
 		assert(Num < Max);
 		Elements[Num] = Item;
@@ -560,7 +552,7 @@ template<class T, UINT Max> struct TStaticArray
 
 	// operator()
 
-	T& operator()(UINT Index)
+	T& operator()(size_t Index)
 	{
 		assert(Index < Num);
 		return Elements[Index];
@@ -1211,5 +1203,5 @@ public:
 	TTMapNode *m_pFirstElement;
 	TTMapNode *m_pLastElement;
 };
-
-#endif//__tarray_h__
+}
+}

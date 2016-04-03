@@ -45,8 +45,6 @@ set(SOURCE
 	StdafxFoundation.h
 	Streams.cpp
 	Streams.h
-	TArray.cpp
-	TArray.h
 	UtContainer.cpp
 	UtContainer.h
 	UtMemory.h
