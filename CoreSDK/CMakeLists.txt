@@ -279,8 +279,15 @@ set(SOURCE
 	ViewportManager.cpp
 	ViewportManager.h
 	)
+
+
+set(SOURCE_API
+	include/api/Base.h
+)
+
+source_group("API" FILES ${SOURCE_API})
 	
-add_library(${PROJECT_NAME} SHARED ${SOURCE})
+add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API})
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
