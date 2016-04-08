@@ -8,7 +8,7 @@ static const float fAspectDef = 1.3333f;
 static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
-REGISTER_CLASS_A(CCamera, ActorAllocator)
+REGISTER_CLASS_A(CCamera, NpCameraT)
 	new PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
 	new PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
 	new PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
@@ -18,7 +18,7 @@ REGISTER_CLASS_A(CCamera, ActorAllocator)
 	new PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
 	new PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
 	new PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
-END_REGISTER_CLASS(CCamera, ActorAllocator);
+END_REGISTER_CLASS(CCamera, NpCameraT);
 
 //----------------------------------------------------------------------------------------------
 CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)
@@ -59,28 +59,12 @@ CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)
 
 //----------------------------------------------------------------------------------------------
 CCamera::CCamera(const CCamera &Source)
-: Super(Source)
-, IDrawInterface(Source)
-, IUpdateInterface(Source)
-, IInputInterface(Source)
+    : Super(Source)
+    , IDrawInterface(Source)
+    , IUpdateInterface(Source)
+    , IInputInterface(Source)
 {
-	if (&Source != this)
-	{
-		RegisterDrawInterface(this);
-		RegisterUpdateInterface(this, Source.GetParent());
-		RegisterInputInterface(this);
-
-		m_bArcball = Source.m_bArcball;
-		bOrtho = Source.bOrtho;
-		Fov = Source.Fov;
-		Aspect = Source.Aspect;
-		NearDist = Source.NearDist;
-		FarDist = Source.FarDist;
-		m_fYaw = Source.m_fYaw;
-		m_fPitch = Source.m_fPitch;
-		m_fRoll = Source.m_fRoll;
-		m_bInterp = Source.m_bInterp;
-	}
+   
 }
 
 //----------------------------------------------------------------------------------------------

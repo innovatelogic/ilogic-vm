@@ -52,7 +52,7 @@ set(SOURCE
 )
 
 set(SOURCE_API
-	include/api/NpActorTemplate.h
+
 )
 
 source_group("API" FILES ${SOURCE_API})

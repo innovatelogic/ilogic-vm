@@ -101,12 +101,8 @@ TEST(TestUtils, PlacementCtor)
     B *b = new B(1, 2, 3);
     A *a0 = new (b) A(4, 5);
     A *a1 = new (b) A();
-    
-    int s0 = b->sum();
-    float s1 = a0->sum();
-    float s2 = a1->sum();
 
-    EXPECT_EQ(b->sum() + a0->sum + a1->sum(), 12 + 9 + 9);
+    EXPECT_EQ((b->sum() + a0->sum() + a1->sum()), 12 + 9 + 9);
 
     delete b;
 }

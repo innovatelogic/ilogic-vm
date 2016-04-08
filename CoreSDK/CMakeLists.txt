@@ -278,6 +278,7 @@ set(SOURCE
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h
+	NpActorTemplate.h
 	)
 
 

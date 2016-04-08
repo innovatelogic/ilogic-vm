@@ -1,19 +1,23 @@
 
 #pragma once
 
-#include "ActorAllocator.h"
+#include "include/NpActorTemplate.h"
+#include "include/api/BaseActor.h"
 #include "IDrawInterface.h"
 #include "IUpdateInterface.h"
 #include "IInputInterface.h"
 
 #define NUM_SPLITS 3
 
-class CORESDK_API CCamera : public ActorAllocator,
+class CCamera;
+typedef core_sdk_api::NpActorTemplate<core_sdk_api::BaseActor> NpCameraT;
+
+class CORESDK_API CCamera : public NpCameraT,
 							public IDrawInterface,
 							public IUpdateInterface,
 							public IInputInterface
 {
-	DECLARE_CLASS_SIMPLE(CCamera, ActorAllocator);
+	DECLARE_CLASS_SIMPLE(CCamera, NpCameraT);
 
 public:
 	struct Subfrustra
@@ -31,7 +35,7 @@ public:
 
 public:
 	CCamera(const CObjectAbstract *pParent);
-	CCamera(const CCamera &object);
+    CCamera(const CCamera &object);
 	virtual ~CCamera();
 
 	virtual void			Initialize();

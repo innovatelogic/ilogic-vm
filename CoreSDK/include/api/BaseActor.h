@@ -4,7 +4,7 @@
 
 namespace core_sdk_api
 {
-    class BaseActor : public Base
+    class CORESDK_API BaseActor : public Base
     {
     public:
     protected:
