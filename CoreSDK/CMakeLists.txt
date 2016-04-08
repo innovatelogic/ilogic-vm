@@ -283,6 +283,7 @@ set(SOURCE
 
 set(SOURCE_API
 	include/api/Base.h
+	include/api/BaseActor.h
 )
 
 source_group("API" FILES ${SOURCE_API})

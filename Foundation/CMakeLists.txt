@@ -51,9 +51,15 @@ set(SOURCE
 	xmlparser.h
 )
 
+set(SOURCE_API
+	include/api/NpActorTemplate.h
+)
+
+source_group("API" FILES ${SOURCE_API})
+
 set(LIBRARIES CommonBase)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCE})
+add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API})
 
 set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

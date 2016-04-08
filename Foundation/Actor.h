@@ -123,7 +123,7 @@ public:
 	 * @param [in] actor - pointer to object.
 	 * @param [in] Index - optional place for object in array. default value INDEX_NONE means object will be appended to the tail of array.
 	 */
-	virtual bool			AddChildNode(const CActor * actor, int Index = INDEX_NONE);
+	virtual bool			AddChildNode(const CActor *actor, int Index = INDEX_NONE);
 
 	/** 
 	 * Mark object pending to delete.

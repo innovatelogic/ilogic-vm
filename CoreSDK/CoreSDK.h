@@ -23,6 +23,8 @@
 #include "ieditor.h"
 #include "icommand.h"
 
+#include "include/api/BaseActor.h"
+
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
 typedef int	      (*CALLBACK_DialogInputText) (LPCTSTR szTitle, LPCTSTR szPrompt, LPTSTR szResult, DWORD nResultSize, bool bMultiLine);
@@ -137,6 +139,17 @@ public:
         Editor's management
     */
     editors::TIEditor       CreateEdtior(const char *name);
+
+
+    //////////////////////////////////////////////////////////////////////////
+    // API Section
+
+    core_sdk_api::BaseActor* getRootObject();
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////
 
 private:
 	bool					DeserializeImpl(const char *filename, class CActor *pParent = NULL);

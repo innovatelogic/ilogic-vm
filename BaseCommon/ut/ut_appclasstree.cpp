@@ -60,3 +60,53 @@ TEST(TestUtils, BuildTreeTest)
 	foo.Add("2", "0");
 
 }
+
+//----------------------------------------------------------------------------------------------
+
+class A
+{
+public:
+    A()
+    {}
+
+    A(int a, int b)
+        : m_a(a)
+        , m_b(b)
+    {}
+
+    int sum() { return m_a + m_b; }
+
+private:
+    int m_a;
+    int m_b;
+};
+
+class B : public A
+{
+public:
+    B(int a, int b, int c)
+        : A(a, b)
+        , m_c(c)
+    {}
+
+    int sum() { return A::sum() + m_c; }
+
+private:
+    int m_c;
+};
+
+//----------------------------------------------------------------------------------------------
+TEST(TestUtils, PlacementCtor)
+{
+    B *b = new B(1, 2, 3);
+    A *a0 = new (b) A(4, 5);
+    A *a1 = new (b) A();
+    
+    int s0 = b->sum();
+    float s1 = a0->sum();
+    float s2 = a1->sum();
+
+    EXPECT_EQ(b->sum() + a0->sum + a1->sum(), 12 + 9 + 9);
+
+    delete b;
+}
