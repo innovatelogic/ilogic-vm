@@ -9,7 +9,6 @@
 
 #define NUM_SPLITS 3
 
-class CCamera;
 typedef core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera> NpCameraT;
 
 class CORESDK_API CCamera : public NpCameraT,

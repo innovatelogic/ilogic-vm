@@ -49,7 +49,6 @@ void Explorer2D::InitializeBrushes()
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, Bezier_SplineAgregator_Brush, "BezierSpline", this);
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineAgregator_Brush, "Spline", this);
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineAgregator_PointInserter_Brush, "PointSpline", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, UIFilter_Brush, "Filter", this);
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, UVModificator_Brush, "UVModificator", this);
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineCollision2DModificator_Brush, "SplineCollision2D", this);
  	NEW_OBJECT_TRANSIENT_CHILD(Generated, BoxCollisionController_Brush, "BoxController2D", this);

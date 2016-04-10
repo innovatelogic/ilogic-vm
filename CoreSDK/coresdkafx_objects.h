@@ -84,7 +84,6 @@
 #include "Brush_AbstractInterface.h"
 #include "UIImage_Brush.h"
 #include "UISprite_Brush.h"
-#include "UIFilter_Brush.h"
 #include "SplineAgregator_Brush.h"
 #include "BezierSplineAgregator_Brush.h"
 #include "SplineAgregator_PointInserter_Brush.h"

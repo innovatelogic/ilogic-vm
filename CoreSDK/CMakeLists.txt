@@ -239,8 +239,6 @@ set(SOURCE
 	TriggerObject.h
 	UIFilter.cpp
 	UIFilter.h
-	UIFilter_Brush.cpp
-	UIFilter_Brush.h
 	UIImage.cpp
 	UIImage.h
 	UIImagePivotControl.cpp
@@ -278,13 +276,13 @@ set(SOURCE
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h
-	NpActorTemplate.h
 	)
 
 
 set(SOURCE_API
 	include/api/Base.h
 	include/api/BaseActor.h
+	include/NpActorTemplate.h
 )
 
 source_group("API" FILES ${SOURCE_API})
