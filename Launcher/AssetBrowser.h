@@ -53,6 +53,8 @@ public:
 	SRenderContext		*m_pRenderContext;
 	class CCoreSDK		*m_pAppMain;
 
+    editors::TIEditor    m_editor;
+
 	BEGIN_MSG_MAP(CMainFrame)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 
@@ -152,6 +154,8 @@ public:
 		SRenderContext *pContext = m_pAppMain->GetExplorerInstance()->GetModelViewer()->GetRenderContext();
 
 		assert(pContext);
+
+        m_editor = m_pAppMain->CreateEdtior("test");
 
 		m_pRightBottomPane->SetRenderContext(pContext);
 		m_pPropertyGridPane->SetRenderContext(pContext);
