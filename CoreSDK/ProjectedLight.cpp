@@ -423,7 +423,7 @@ Matrix ProjectedLight::BuildCropMatrix(const CCamera::Subfrustra & InSubfrustra,
 //----------------------------------------------------------------------------------------------
 void ProjectedLight::CalcProjMatrix()
 {
-	if (!bOrtho)
+	if (!m_bOrtho)
 	{
 		Super::CalcProjMatrix();	
 	}

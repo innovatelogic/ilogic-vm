@@ -2,7 +2,7 @@
 #pragma once
 
 #include "include/NpActorTemplate.h"
-#include "include/api/BaseActor.h"
+#include "include/api/PxCamera.h"
 #include "IDrawInterface.h"
 #include "IUpdateInterface.h"
 #include "IInputInterface.h"
@@ -10,7 +10,7 @@
 #define NUM_SPLITS 3
 
 class CCamera;
-typedef core_sdk_api::NpActorTemplate<core_sdk_api::BaseActor> NpCameraT;
+typedef core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera> NpCameraT;
 
 class CORESDK_API CCamera : public NpCameraT,
 							public IDrawInterface,
@@ -51,29 +51,29 @@ public:
 	virtual const			Matrix& GetProjMatrix() const { return m_projmatrix; }
 	virtual const			Matrix& GetViewMatrix() const { return m_viewmatrix; }
 
-	virtual void			SetOrtho(bool Value) { bOrtho = Value; }
-	virtual bool			GetOrtho() const { return bOrtho; }
+	void			        SetOrtho(bool value) override { m_bOrtho = value; }
+	bool			        GetOrtho() const override  { return m_bOrtho; }
 
-	virtual void			SetFov(float fov) { Fov = fov; }
-	virtual float			GetFov() const { return Fov; }  
+	void			        SetFov(float fov) override  { m_Fov = fov; }
+	float			        GetFov() const override { return m_Fov; }
 
-	virtual void			SetAspect(float aspect) { Aspect = aspect; } 
-	virtual float			GetAspect() const {return Aspect;}
+    void			        SetAspect(float aspect) override { Aspect = aspect; }
+    float			        GetAspect() const override { return Aspect; }
 
-	virtual void			SetNearDist(float _near) { NearDist = _near; }
-	virtual float			GetNearDist() const { return NearDist; } 
+    void			        SetNearDist(float _near) override { NearDist = _near; }
+    float			        GetNearDist() const override { return NearDist; }
 
-	virtual void			SetFarDist(float _far) { FarDist = _far; }
-	virtual float			GetFarDist() const { return FarDist; } 
+    void			        SetFarDist(float _far) override { FarDist = _far; }
+    float			        GetFarDist() const override { return FarDist; }
 
-	virtual void			SetYaw(float yaw) { m_fYaw = yaw; }
-	virtual float			GetYaw() const { return m_fYaw; }
+    void			        SetYaw(float yaw) override { m_fYaw = yaw; }
+    float			        GetYaw() const override { return m_fYaw; }
 
-	virtual void			SetPitch(float pitch) { m_fPitch = pitch; }
-	virtual float			GetPitch() const { return m_fPitch; }
+    void			        SetPitch(float pitch) override { m_fPitch = pitch; }
+    float			        GetPitch() const override { return m_fPitch; }
 
-	virtual void			SetRoll(float roll) { m_fRoll = roll; }
-	virtual float			GetRoll() const { return m_fRoll; }
+    void			        SetRoll(float roll) override { m_fRoll = roll; }
+    float			        GetRoll() const override { return m_fRoll; }
 
 	virtual Vector			GetDirection() const;
 	virtual Vector			GetStrafe() const;
@@ -110,10 +110,10 @@ protected:
 	bool m_bArcball;
 
 	/** true if ortho projection matrix */
-	bool bOrtho;
+	bool m_bOrtho;
 
 	/** camera's fov */
-	float Fov;
+	float m_Fov;
 
 	/** aspect ratio */
 	float Aspect;

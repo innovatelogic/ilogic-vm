@@ -24,6 +24,7 @@
 #include "icommand.h"
 
 #include "include/api/BaseActor.h"
+#include "include/api/PxCamera.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
@@ -144,7 +145,7 @@ public:
     //////////////////////////////////////////////////////////////////////////
     // API Section
 
-    core_sdk_api::BaseActor* getRootObject();
+    core_sdk_api::PxCamera* getCamera();
 
 
 
