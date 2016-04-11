@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "scene_editor.h"
+
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
@@ -25,9 +27,10 @@ public:
 	CViewAssetContainer(CCoreSDK *pAppMain)
 		: m_MousePosPrevX(0)
 		, m_MousePosPrevY(0)
-		, m_pAppMain(pAppMain)
 		, m_bPush(false)
 		, m_pRenderContextRef(0)
+        , m_pAppMain(pAppMain)
+        , m_editor(nullptr)
 	{
 		
 	}
@@ -37,6 +40,9 @@ public:
 	{
 
 	}
+
+    //----------------------------------------------------------------------------------------------
+    void SetEditor(editors::TIEditor editor) { m_editor = editor; }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnActivate(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
@@ -51,20 +57,11 @@ public:
 		int width = (int)GET_X_LPARAM(lParam);
 		int height = (int)GET_Y_LPARAM(lParam);
 
-		if (m_pAppMain)
-		{
-			CModelViewer *pModelView = m_pAppMain->GetExplorerInstance()->GetModelViewer();
-			assert(pModelView);
-			
-			CCamera *pCamera = pModelView->GetCamera();
-			assert(pCamera);
-
-            SRenderContext *context = pCamera->GetRenderContext();
-            assert(context);
-
-			m_pAppMain->GetRenderSDK()->ResizeWindow(width, height, context);
-			m_pAppMain->GetCameraManager()->ViewportResized(context);
-		}
+        if (m_editor)
+        {
+            m_editor->ResizeVeiwport((size_t)width, (size_t)height);
+        }
+        
 		return 0;
 	}
 
@@ -108,25 +105,13 @@ public:
 		CRect rc;
 		GetClientRect(&rc);
 
-		CRenderSDK *pRenderSDK = m_pAppMain->GetRenderSDK();
-		assert(pRenderSDK);
-
-		D3DDriver *pDriver = pRenderSDK->GetRenderDriver();
-		assert(pDriver);
-
-		CModelViewer *pModelView = m_pAppMain->GetExplorerInstance()->GetModelViewer();
-		assert(pModelView);
-
-		m_pRenderContextRef = pModelView->GetRenderContext();
-		assert(m_pRenderContextRef);
-
-		pDriver->InitRenderDriver(m_hWnd, rc.right - rc.left, rc.bottom - rc.top, m_pRenderContextRef);
+        m_editor->InitViewport(static_cast<void*>(m_hWnd), rc.right - rc.left, rc.bottom - rc.top);
 	}
 
 	//----------------------------------------------------------------------------------------------
 	void Render()
 	{
-		m_pAppMain->Render(m_pRenderContextRef); // Render & change buffer
+        m_editor->Render();
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -275,6 +260,8 @@ public:
 	bool m_bPush;
 
 	SRenderContext	*m_pRenderContextRef;
+
+    editors::TIEditor    m_editor;
 };
 
 #endif//__paneviewassetcontainer_h__

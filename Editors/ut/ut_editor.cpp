@@ -4,6 +4,7 @@
 #include "../command_base.h"
 #include "../command_buffer.h"
 #include "../editor.h"
+#include "../scene_editor.h"
 
 #include "Actor.h"
 
@@ -18,7 +19,7 @@ using namespace editors;
 TEST(EditorTest, TestUndoRedoCall)
 {
     MockCommandBuffer buffer;
-    EditorBase editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, &buffer);
 
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Undo()).Times(AtLeast(1));
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Redo()).Times(AtLeast(1));
@@ -33,7 +34,7 @@ TEST(EditorTest, TestCommandAdd)
     const int NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorBase editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, &buffer);
 
     std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
     std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
@@ -52,7 +53,7 @@ TEST(EditorTest, TestCommandUndoRedo)
     const int NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorBase editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, &buffer);
 
     std::vector<std::shared_ptr<editors::CommandBase>> commands;
 
@@ -109,7 +110,7 @@ TEST(EditorTest, TestCommandBatchAdd)
     const size_t NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorBase editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, &buffer);
 
     ICommandPtrList command_batch0 = {
         std::shared_ptr<MockCommandBase>(new MockCommandBase()),

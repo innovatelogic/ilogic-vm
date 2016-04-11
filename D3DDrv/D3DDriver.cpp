@@ -233,13 +233,13 @@ void D3DDriver::UpdateDriverThread()
 }
 
 //----------------------------------------------------------------------------------------------
-BOOL D3DDriver::InitRenderDriver(HWND hWnd, unsigned int width, unsigned int height, SRenderContext *pContext /*= 0*/)
+BOOL D3DDriver::InitRenderDriver(void *canvas, unsigned int width, unsigned int height, SRenderContext *pContext /*= nullprt*/)
 { 
 	HRESULT hr = 0;
 
 	SRenderContext *pFillContext = (pContext != 0) ? pContext : m_pDefaultRenderContext;
 
-	pFillContext->m_hWnd = hWnd;
+	pFillContext->m_hWnd = (HWND)canvas;
     pFillContext->m_displayModeWidth = width;
     pFillContext->m_displayModeHeight = height;
 

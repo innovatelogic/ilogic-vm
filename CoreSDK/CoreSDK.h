@@ -20,8 +20,6 @@
 #include "game_types.h"
 #include "../Foundation/StdafxFoundation.h"
 #include "ObjectAbstract.h"
-#include "ieditor.h"
-#include "icommand.h"
 
 #include "include/api/BaseActor.h"
 #include "include/api/PxCamera.h"
@@ -31,6 +29,7 @@
 typedef int	      (*CALLBACK_DialogInputText) (LPCTSTR szTitle, LPCTSTR szPrompt, LPTSTR szResult, DWORD nResultSize, bool bMultiLine);
 typedef void	  (*FnStopModule) (void);
 typedef void	  (*FnStartExplorerOnCreate) (const class CActor *pSender, ESystemEventID EventId);
+
 
 class CORESDK_API CCoreSDK
 {
@@ -135,11 +134,6 @@ public:
 	/** Editor's object control mode */
 	EObjEditControlMode		GetEditControlMode() const { return m_ObjEditControlMode; }
 	void					SetEditControlMode(EObjEditControlMode mode) { m_ObjEditControlMode = mode; }
-
-    /*!
-        Editor's management
-    */
-    editors::TIEditor       CreateEdtior(const char *name);
 
 
     //////////////////////////////////////////////////////////////////////////

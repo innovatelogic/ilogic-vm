@@ -5,6 +5,7 @@
 
 #include "ActorAllocator.h"
 #include "ViewportInterface.h"
+#include "IDrawInterface.h"
 
 class CORESDK_API CModelViewer : public ActorAllocator, 
 	public ViewportInterface, 
@@ -14,7 +15,7 @@ class CORESDK_API CModelViewer : public ActorAllocator,
 
 public:
 	//Constructor/Destructor
-	CModelViewer(const CObjectAbstract *pParent);
+	CModelViewer(const CObjectAbstract *parent);
 	virtual ~CModelViewer();
 
 	virtual void	Initialize();

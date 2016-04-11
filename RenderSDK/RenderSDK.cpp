@@ -62,13 +62,20 @@ NObjectFactory::TClassFactory * CRenderSDK::GetClassFactory()
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::Initialize(HWND hWnd, unsigned int width, unsigned int height, void *driver/*=NULL*/)
+void CRenderSDK::Initialize(void *canvas, size_t width, size_t height, void *driver/*=NULL*/)
 {
 	if (driver == NULL)
 	{
 		m_pFXManager = new CFXMatManager(this);
-		m_pRenderDriver->InitRenderDriver(hWnd, width, height);
+
+        InitCanvas(canvas, width, height, nullptr);
 	}
+}
+
+//----------------------------------------------------------------------------------------------
+void CRenderSDK::InitCanvas(void *canvas, size_t width, size_t height, SRenderContext *context)
+{
+    m_pRenderDriver->InitRenderDriver(canvas, width, height, context);
 }
 
 //----------------------------------------------------------------------------------------------

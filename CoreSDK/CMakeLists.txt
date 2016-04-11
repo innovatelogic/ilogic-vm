@@ -14,7 +14,6 @@ include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
-include_directories(${CMAKE_SOURCE_DIR}/Editors)
 
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
@@ -40,7 +39,6 @@ set(LIBRARIES CommonBase
 			  Foundation
 			  RenderSDK
 			  nv_math
-			  Editors
 			  ${BULLET_LIBRARIES}
 			  ${TINY_XML_LIBRARY}
 			  ${FREETYPE_LIBRARIES})

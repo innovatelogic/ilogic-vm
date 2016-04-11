@@ -39,7 +39,10 @@ public:
 
 	NObjectFactory::TClassFactory* GetClassFactory();
 
-	void					Initialize(HWND hWnd, unsigned int width, unsigned int height, void *driver = NULL);
+	void					Initialize(void *canvas, size_t width, size_t height, void *driver = NULL);
+
+    void                    InitCanvas(void *canvas, size_t width, size_t height, SRenderContext *context);
+
 	void					ProcessStreaming();
 
 	void					SetViewport(float x, float y, float ext_x, float ext_y);

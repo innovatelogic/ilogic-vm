@@ -5,6 +5,7 @@
 
 #include "IAssetBrowserFrame.h"
 #include "ToolbarControl.h"
+#include "scene_editor.h"
 
 //template<class T_CLASS> class CVoid {};
 //template<class T_CLASS> struct CVoid_ {}; 
@@ -151,14 +152,16 @@ public:
 
 		m_pPaneTreeView->FillTree(m_TreeMapNodes);
 
-		SRenderContext *pContext = m_pAppMain->GetExplorerInstance()->GetModelViewer()->GetRenderContext();
+		//SRenderContext *pContext = m_pAppMain->GetExplorerInstance()->GetModelViewer()->GetRenderContext();
 
-		assert(pContext);
+		//assert(pContext);
 
-        m_editor = m_pAppMain->CreateEdtior("test");
+        m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer", m_pAppMain->GetExplorerInstance(), editors::EEditorType::EEditorDefault);
 
-		m_pRightBottomPane->SetRenderContext(pContext);
-		m_pPropertyGridPane->SetRenderContext(pContext);
+        m_pViewCtrl->SetEditor(m_editor);
+
+		m_pRightBottomPane->SetRenderContext(m_editor->GetRenderContext()); //pContext
+		m_pPropertyGridPane->SetRenderContext(m_editor->GetRenderContext());
 
 		return 0;
 	}

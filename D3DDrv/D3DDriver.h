@@ -27,7 +27,7 @@ public:
  	void	UpdateDriverThread();
 
 	/** init render context */
-    BOOL	InitRenderDriver(HWND hWnd, unsigned int width, unsigned int height, class SRenderContext *pContext = 0);
+    BOOL	InitRenderDriver(void *canvas, unsigned int width, unsigned int height, class SRenderContext *pContext = nullptr);
 	bool	InitDefaultResources();
  
     __forceinline D3DDriver*	GetRenderDriver() { return this; }

@@ -52,6 +52,7 @@ set(LIBRARIES	CommonBase
 				Foundation 
 				RenderSDK 
 				CoreSDK 
+				Editors
 				nv_math 
 				${BULLET_LIBRARIES} 
 				${TINY_XML_LIBRARY} 
