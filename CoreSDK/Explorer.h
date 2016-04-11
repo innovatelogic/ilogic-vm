@@ -60,6 +60,5 @@ private:
 
 	class Explorer2D	*pExplorer2D;
 	class Explorer3D	*pExplorer3D;
-	class CModelViewer  *m_pModelViewer;
 };
 #endif//__explorer_h__

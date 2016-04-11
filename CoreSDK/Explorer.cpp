@@ -17,7 +17,6 @@ Explorer::Explorer(const CObjectAbstract *pParent)
 
 	NEW_OBJECT_TRANSIENT_CHILD(pExplorer3D, Explorer3D, "Explorer3D", this);
 	NEW_OBJECT_TRANSIENT_CHILD(pExplorer2D, Explorer2D, "Explorer2D", this);
-	//NEW_OBJECT_TRANSIENT_CHILD(m_pModelViewer, CModelViewer, "ModelViewer", this);
 }
 
 //----------------------------------------------------------------------------------
@@ -180,10 +179,4 @@ Explorer2D*	Explorer::GetExplorer2D() const
 Explorer3D*	Explorer::GetExplorer3D() const
 {
 	return pExplorer3D;
-}
-
-//----------------------------------------------------------------------------------------------
-CModelViewer* Explorer::GetModelViewer() const
-{
-	return nullptr;
 }

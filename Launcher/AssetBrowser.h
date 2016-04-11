@@ -314,8 +314,10 @@ public:
 
 			strPath = strPath.substr(0, pos) + std::wstring(L"//") + m_strFilename;
 
-			CModelViewer *pModelView = m_pAppMain->GetExplorerInstance()->GetModelViewer();
-			pModelView->Save(strPath.c_str());
+            if (!m_editor->Save(strPath))
+            {
+                // TODO: Error
+            }
 		}
 		return 0;
 	}

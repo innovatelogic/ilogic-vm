@@ -222,7 +222,6 @@ public:
 		m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance(), ESystemEventID::Event_ObjectGenerated);
 		m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer2D(), ESystemEventID::Event_ObjectGenerated);
 		m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer3D(), ESystemEventID::Event_ObjectGenerated);
-		//m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetModelViewer(), ESystemEventID::Event_ObjectGenerated);
 
 		return 0;
 	}
