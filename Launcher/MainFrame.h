@@ -575,12 +575,7 @@ public:
 			m_pPlacementCtrl->Update(pSender, EventId);
 		}
 
-		const T_CLASS *pModelViewer = m_pAppMain->GetExplorerInstance()->GetModelViewer();
-
-		if (pModelViewer == pSender || CActor::IsChildOf(pModelViewer, pSender))
-		{
-			m_pAssetBrowserFrame->Update(pSender, EventId);
-		}
+		m_pAssetBrowserFrame->Update(pSender, EventId);
 	}
 
 	//----------------------------------------------------------------------------------------------

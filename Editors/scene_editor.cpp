@@ -96,6 +96,8 @@ namespace editors
             NEW_OBJECT_TRANSIENT_CHILD(actor, CModelViewer, name, root);
 
             actor->Initialize();
+
+            actor->GetAppMain()->GetFnOnCreate()(actor, ESystemEventID::Event_ObjectGenerated);
         }
         return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
     }

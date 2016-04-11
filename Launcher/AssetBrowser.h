@@ -152,16 +152,12 @@ public:
 
 		m_pPaneTreeView->FillTree(m_TreeMapNodes);
 
-		//SRenderContext *pContext = m_pAppMain->GetExplorerInstance()->GetModelViewer()->GetRenderContext();
-
-		//assert(pContext);
-
         m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer", m_pAppMain->GetExplorerInstance(), editors::EEditorType::EEditorDefault);
 
         m_pViewCtrl->SetEditor(m_editor);
         m_pPaneListView->SetEditor(m_editor);
 
-		m_pRightBottomPane->SetRenderContext(m_editor->GetRenderContext()); //pContext
+		m_pRightBottomPane->SetRenderContext(m_editor->GetRenderContext());
 		m_pPropertyGridPane->SetRenderContext(m_editor->GetRenderContext());
 
 		return 0;
@@ -381,6 +377,11 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void Update(const T_CLASS *pSender, ESystemEventID EventId)
 	{
+        //const T_CLASS *pModelViewer = m_editor->G
+
+        //if (pModelViewer == pSender || CActor::IsChildOf(pModelViewer, pSender))
+        //{
+
 		m_pRightBottomPane->Update(pSender, EventId);
 		m_pPropertyGridPane->Update(pSender, EventId);
 	}

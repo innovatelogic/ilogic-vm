@@ -141,7 +141,7 @@ public:
 
     core_sdk_api::PxCamera* getCamera();
 
-
+    FnStartExplorerOnCreate		GetFnOnCreate() const { return m_pfnStartExplorerOnCreate; }
 
 
     //////////////////////////////////////////////////////////////////////////
