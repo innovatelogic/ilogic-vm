@@ -25,15 +25,15 @@ public:
 
     virtual SRenderContext* GetRenderContext() const = 0;
 
-    virtual bool    Open(std::wstring &path) = 0;
-    virtual bool    Save(std::wstring &path) = 0;
+    virtual bool    Open(const std::wstring &path) = 0;
+    virtual bool    Save(const std::wstring &path) = 0;
 
     virtual void    InitViewport(void *canvas, size_t width, size_t height) = 0;
     virtual void    ResizeVeiwport(size_t width, size_t height) = 0;
 
     virtual void    Render() = 0;
 
-    virtual void	MouseMove(float dx, float dy, int ModifKey) = 0;
+    virtual void	MouseMove(size_t dx, size_t dy, int ModifKey) = 0;
 
 protected:
 private:

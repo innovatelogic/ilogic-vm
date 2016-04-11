@@ -24,15 +24,15 @@ namespace editors
 
         SRenderContext* GetRenderContext() const override;
 
-        bool    Open(std::wstring &path) override;
-        bool    Save(std::wstring &path) override;
+        bool    Open(const std::wstring &path) override;
+        bool    Save(const std::wstring &path) override;
 
         void    InitViewport(void *canvas, size_t width, size_t height) override;
         void    ResizeVeiwport(size_t width, size_t height) override;
 
         void    Render() override;
 
-        void	MouseMove(float dx, float dy, int ModifKey) override;
+        void	MouseMove(size_t dx, size_t dy, int ModifKey) override;
 
         static TIEditor CreateEdtior(const char *name, CActor *root, EEditorType type);
 

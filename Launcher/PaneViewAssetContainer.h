@@ -28,7 +28,6 @@ public:
 		: m_MousePosPrevX(0)
 		, m_MousePosPrevY(0)
 		, m_bPush(false)
-		, m_pRenderContextRef(0)
         , m_pAppMain(pAppMain)
         , m_editor(nullptr)
 	{
@@ -126,9 +125,11 @@ public:
 		}
 
 		int xPos = (int)GET_X_LPARAM(lParam);
-		int yPos = (int)GET_Y_LPARAM(lParam);
+        int yPos = (int)GET_Y_LPARAM(lParam);
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, m_pRenderContextRef);
+        SRenderContext *context = m_editor->GetRenderContext();
+
+		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, context);
 
 		SetCapture();
 
@@ -150,10 +151,12 @@ public:
 		float xPosRel = (wndWidth > 0.f) ? xPos / (float)wndWidth : 0.f;
 		float yPosRel = (wndHeight > 0.f) ? yPos / (float)wndHeight : 0.f;
 
-		unsigned int vprtWidth = m_pRenderContextRef->m_displayModeWidth;
-		unsigned int vprtHeight = m_pRenderContextRef->m_displayModeHeight;
+        SRenderContext *context = m_editor->GetRenderContext();
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, m_pRenderContextRef);
+		unsigned int vprtWidth = context->m_displayModeWidth;
+		unsigned int vprtHeight = context->m_displayModeHeight;
+
+		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, context);
 
 		ReleaseCapture();
 
@@ -163,8 +166,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBDown(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
+        SRenderContext *context = m_editor->GetRenderContext();
+
 		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_MIDDLE, 
-										GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContextRef);
+            GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
 
 		SetCapture();
 
@@ -176,8 +181,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBUp(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
+        SRenderContext *context = m_editor->GetRenderContext();
+
 		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_MIDDLE,
-										GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContextRef);
+										GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
 
 		ReleaseCapture();
 
@@ -212,8 +219,10 @@ public:
 			unsigned int wndWidth = rectWindow.right - rectWindow.left;
 			unsigned int wndHeight = rectWindow.bottom - rectWindow.top;
 
-			unsigned int vprtWidth = m_pRenderContextRef->m_displayModeWidth;
-			unsigned int vprtHeight = m_pRenderContextRef->m_displayModeHeight;
+            SRenderContext *context = m_editor->GetRenderContext();
+
+			unsigned int vprtWidth = context->m_displayModeWidth;
+			unsigned int vprtHeight = context->m_displayModeHeight;
 
 			float xPosRel = (wndWidth > 0.f) ? PosX / (float)wndWidth : 0.f;
 			float yPosRel = (wndHeight > 0.f) ? PosY / (float)wndHeight : 0.f;
@@ -221,15 +230,7 @@ public:
 			float xDRel = (wndWidth > 0.f) ? ((DX / (float)wndWidth) * vprtWidth) : 0.f;
 			float yDRel = (wndHeight > 0.f) ? ((DY / (float)wndHeight) * vprtHeight) : 0.f;
 
-			MouseMoveInputData InputData;
-
-			InputData.MousePos = Vector2f((float)xPosRel * vprtWidth, (float)yPosRel * vprtHeight);
-			InputData.DeltaPos = Vector2f((float)xDRel, (float)yDRel);
-			InputData.ModifKey = ModifKey;
-			InputData.bMiddleButtonPressed = ModifKey & MK_MMButton ? true : false;
-			InputData.pRenderContext = m_pRenderContextRef;
-
-			m_pAppMain->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, m_pRenderContextRef);
+			m_pAppMain->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, context);
 
 			m_MousePosPrevX = PosX;
 			m_MousePosPrevY = PosY;
@@ -242,7 +243,9 @@ public:
 	{
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
-		m_pAppMain->ProcessMouseWheel((float)zDelta, 0, 0, m_pRenderContextRef);
+        SRenderContext *context = m_editor->GetRenderContext();
+
+		m_pAppMain->ProcessMouseWheel((float)zDelta, 0, 0, context);
 
 		bHandled = TRUE;
 		return 0;
@@ -258,8 +261,6 @@ public:
 	bool m_bShiftPressed;
 	bool m_bCtrlPressed;
 	bool m_bPush;
-
-	SRenderContext	*m_pRenderContextRef;
 
     editors::TIEditor    m_editor;
 };

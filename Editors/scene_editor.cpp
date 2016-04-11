@@ -29,17 +29,17 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    bool EditorScene3D::Open(std::wstring &path)
+    bool EditorScene3D::Open(const std::wstring &path)
     {
         assert(m_pViewer);
-        return m_pViewer->Save(path.c_str());
+        return m_pViewer->GenerateObjectView(path.c_str());
     }
 
     //----------------------------------------------------------------------------------------------
-    bool EditorScene3D::Save(std::wstring &path)
+    bool EditorScene3D::Save(const std::wstring &path)
     {
         assert(m_pViewer);
-        return false;
+        return m_pViewer->Save(path.c_str());
     }
 
     //----------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void EditorScene3D::MouseMove(float dx, float dy, int ModifKey)
+    void EditorScene3D::MouseMove(size_t dx, size_t dy, int ModifKey)
     {
 
     }

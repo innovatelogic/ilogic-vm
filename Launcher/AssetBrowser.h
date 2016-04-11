@@ -159,6 +159,7 @@ public:
         m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer", m_pAppMain->GetExplorerInstance(), editors::EEditorType::EEditorDefault);
 
         m_pViewCtrl->SetEditor(m_editor);
+        m_pPaneListView->SetEditor(m_editor);
 
 		m_pRightBottomPane->SetRenderContext(m_editor->GetRenderContext()); //pContext
 		m_pPropertyGridPane->SetRenderContext(m_editor->GetRenderContext());

@@ -5,6 +5,7 @@
 
 #include "IAssetBrowserFrame.h"
 #include "DragDropSource.h"
+#include "scene_editor.h"
 
 struct __declspec(uuid("DE5BF786-477A-11d2-839D-00C04FD918D0")) IDragSourceHelper;
 
@@ -175,6 +176,9 @@ public:
 		delete m_pList;
 	}
 
+    //----------------------------------------------------------------------------------------------
+    void SetEditor(editors::TIEditor editor) { m_editor = editor; }
+
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&bHendled)
 	{
@@ -226,16 +230,10 @@ public:
 				const T_NODE *pNode = m_pList->GetNodeByIdx(hListItem->iItem);
 
 				assert(pNode);
-
-				CCoreSDK *pAppMain = m_pOwner->GetAppMain();
-
-				assert(pAppMain);
-
-				const wchar_t *strFilename = pNode->sName.c_str();
-
-				if (pAppMain->GetExplorerInstance()->GetModelViewer()->GenerateObjectView(strFilename))
+                
+				if (m_editor->Open(pNode->sName))
 				{
-					m_pOwner->SetOpenFileName(strFilename);
+					m_pOwner->SetOpenFileName(pNode->sName.c_str());
 				}
 			}
 		}
@@ -300,6 +298,8 @@ public:
 private:
 	IAssetBrowserFrame *m_pOwner;
 	class CWTLList<T_NODE>	*m_pList;
+
+    editors::TIEditor    m_editor;
 };
 
 #endif//__panelistveiw_h__
