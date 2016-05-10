@@ -4,8 +4,8 @@
 #include "../command_base.h"
 #include "../command_buffer.h"
 #include "../editor.h"
-#include "../scene_editor.h"
-
+//#include "../scene_editor.h"
+/*
 #include "Actor.h"
 
 #include <gmock/gmock.h>
@@ -149,4 +149,4 @@ int main(int argc, char **argv)
 	::testing::InitGoogleMock(&argc, argv);
 
 	return RUN_ALL_TESTS();
-}
+}*/

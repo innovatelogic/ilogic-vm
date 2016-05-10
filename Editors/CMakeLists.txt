@@ -15,14 +15,13 @@ include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
+include_directories(${CMAKE_SOURCE_DIR}/CoreSDK/editors)
 
 set(SOURCE ieditor.h 
 			editor.cpp
 			editor.h
 			module.h
 			icommand.h
-			scene_editor.h
-			scene_editor.cpp
 			icommand_buffer.h
 			command_buffer.h
 			command_buffer.cpp
@@ -34,7 +33,7 @@ set(LIBRARIES	CommonBase
 				Foundation 
 				D3DDriver
 				RenderSDK
-				CoreSDK)
+				)
 
 #TODO: add optional linking
 set(LIBRARIES ${LIBRARIES} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})

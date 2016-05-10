@@ -5,7 +5,7 @@
 
 #include "IAssetBrowserFrame.h"
 #include "DragDropSource.h"
-#include "scene_editor.h"
+#include "editors/scene_editor.h"
 
 struct __declspec(uuid("DE5BF786-477A-11d2-839D-00C04FD918D0")) IDragSourceHelper;
 

@@ -47,7 +47,6 @@ public:
 
 	class Explorer2D*	GetExplorer2D() const;
 	class Explorer3D*	GetExplorer3D() const;
-	class CModelViewer*	GetModelViewer() const;
 
 private:
 	bool bMiddleButtonPressed;

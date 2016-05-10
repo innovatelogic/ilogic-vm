@@ -23,6 +23,7 @@ include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
+include_directories(${CMAKE_SOURCE_DIR}/CoreSDK/editors)
 include_directories(${CMAKE_SOURCE_DIR}/Editors)
 
 #link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)

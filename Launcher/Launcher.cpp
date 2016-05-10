@@ -17,6 +17,7 @@
 //-------------------------------------------------------------------------------------
 
 #include "LauncherStdAfx.h"
+#include "scene_editor_main.h"
 
 //#define _CRTDBG_MAP_ALLOC
 
@@ -32,6 +33,8 @@ namespace nmLauncher
 	
 	/** root process */
 	CCoreSDK		*GRootProcess = NULL;
+
+    editors::SceneEditorMain *g_pSceneEditorMain = nullptr;
 
 	CMainFrame<CActor>	*wndMain = NULL;
 
@@ -197,6 +200,8 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 
 	GRootProcess = wndMain->m_pAppMain;
 
+    g_pSceneEditorMain = new editors::SceneEditorMain(GRootProcess, new editors::CommandBuffer);
+
 	// size of window to create
 	CRect rc = CRect(0, 0, 1024, 768);
 	if (wndMain->CreateEx(NULL, rc) == NULL)
@@ -204,8 +209,6 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 		ATLTRACE(_T("Main window creation failed!\n"));
 		return 0;
 	}
-
-	//wndMain->InitViewport();
 
 	// logging
 	wndMain->OutWindowMessageLog("Initialization completed");

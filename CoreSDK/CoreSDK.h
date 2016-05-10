@@ -72,6 +72,7 @@ public:
 	inline_ class IPhysicsEngine*			GetPhysicsEngine()	const { return m_pPhysicsEngine; }
 #endif//PHYS_ENABLED
 
+    inline_ CActor*					        GetRootActor()	const;
 	inline_ class Explorer*					GetExplorerInstance()	const { return m_pRootObject; }
 	inline_ class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
 	inline_ class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
@@ -147,8 +148,8 @@ public:
     //////////////////////////////////////////////////////////////////////////
 
 private:
-	bool					DeserializeImpl(const char *filename, class CActor *pParent = NULL);
-	bool					DeserializeBufferImpl(std::stringstream &stream);
+	bool	DeserializeImpl(const char *filename, class CActor *pParent = NULL);
+	bool	DeserializeBufferImpl(std::stringstream &stream);
 
 private:
 	std::shared_ptr<Registry> m_pRegistryInstance; 
