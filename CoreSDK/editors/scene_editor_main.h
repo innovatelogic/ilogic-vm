@@ -14,6 +14,10 @@ namespace editors
         SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer);
         virtual ~SceneEditorMain();
 
+        void Initialize();
+
+        void Update(float deltaTime);
+
         SRenderContext* GetRenderContext() const override;
 
         bool    Open(const std::wstring &path) override;
@@ -28,5 +32,6 @@ namespace editors
 
     protected:
     private:
+        CCoreSDK *m_pApi;
     };
 }

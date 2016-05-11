@@ -34,8 +34,6 @@ namespace nmLauncher
 	/** root process */
 	CCoreSDK		*GRootProcess = NULL;
 
-    editors::SceneEditorMain *g_pSceneEditorMain = nullptr;
-
 	CMainFrame<CActor>	*wndMain = NULL;
 
 	Win32ObjectBrowserWidget<CActor> *pGTreeBrowser = NULL;
@@ -200,8 +198,6 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 
 	GRootProcess = wndMain->m_pAppMain;
 
-    g_pSceneEditorMain = new editors::SceneEditorMain(GRootProcess, new editors::CommandBuffer);
-
 	// size of window to create
 	CRect rc = CRect(0, 0, 1024, 768);
 	if (wndMain->CreateEx(NULL, rc) == NULL)
@@ -214,8 +210,6 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 	wndMain->OutWindowMessageLog("Initialization completed");
 
 	wndMain->CloseSplash();
-	
-	GRootProcess->Deserialize("3d_scene_controller.xml", NULL);
 
     //editors::TIEditor editor = GRootProcess->CreateEdtior("TestEditor");
 
@@ -231,66 +225,9 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 //----------------------------------------------------------------------------------------------
 void UpdateFrame()
 {
-	//while (InterlockedExchange(&bFrameChanged, TRUE) == TRUE){
-	//	Sleep(0);
-	//}
+    wndMain->Update(UpdateDeltaTime());
 
-	float DeltaTime = UpdateDeltaTime();
-	GRootProcess->ElapsedTime = DeltaTime;
-
-	MillisecondsPassed += CalculateTimeDeltaMilliseconds();
-
-	if (MillisecondsPassed > CPS_FREQUENCY_MILLISECONDS)
-	{
-		UpdateCallsPerSecond(MillisecondsPassed);
-		MillisecondsPassed = 0;
-	}
-
-	int Mp1, Mp2;
-	Mp1 = Mp2 = 0;
-
-	CalculateTimeDeltaMilliseconds();
-	Mp1 = CalculateTimeDeltaMilliseconds();
-
-	GRootProcess->EnterDrawCS();
-
-	CalculateTimeDeltaMilliseconds();
-
-	if (MillisecondsPassed == 0){
-		GRootProcess->GetRenderSDK()->SetDebugInfoCPS(true, eventCPS, updateCPS, renderCPS, timerCPS, streamCPS);
-	}
-
-	GRootProcess->GetRenderSDK()->SetDeltaTime(DeltaTime);
-
-	GRootProcess->ProcessUpdate(DeltaTime);
-
-	GRootProcess->Draw(); // draw new frame to back buffer
-
-	InterlockedExchange(&bFramePrepared, TRUE);
-
-	Mp2 = CalculateTimeDeltaMilliseconds();
-
-	GRootProcess->LeaveDrawCS();
-
-	//GRootProcess->Render(0, renderCPS); // Render & change buffer
-
-	wndMain->Render();
-
-	{
-		static float LastTimeUpdate = 0.f;
-		static float DeltaCall = 0.f;
-
-		float DeltaTime = AppTimePassed - LastTimeUpdate;
-		LastTimeUpdate  = AppTimePassed;
-
-		DeltaCall += DeltaTime;
-
-		//if (DeltaCall > 0.001f)
-		{
-			GRootProcess->SimulatePhysics(DeltaCall * 1.4f);
-			DeltaCall = 0.f;
-		}
-	}
+    wndMain->Render();
 
 	//tm.doSerialWork();
 }
@@ -310,177 +247,6 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrInst, LPSTR sCmdStr, int nCmdSh
 	ValueParser CommandLineStr("");
 	CommandLineStr.ParseCommandLine(sCmdStr);
 
-#ifndef USE_WTL
-
-	ThreadManagerSerial &tm = ThreadManagerSerial::getThreadManagerSerial();
-
- 	try
- 	{
-		InitThreads();
-		InitCommonControls();
-		
-		// start core root process
-		GRootProcess = new CCoreSDK(CommandLineStr);
-
-		GRootProcess->SetIsAEditor(true);
-		GRootProcess->SetIsAGame(false);
-
-		WindowManager = new CWindowManager(GRootProcess);
-		WindowManager->Initialize(HandlePopupContextMenu, ContextMenuProcessor, GetImageOperationIcon);
-
-		// logging
-		WindowManager->OutWindowMessageLog(std::string("Start Loading..."));
-		
-		InitializeImageData(GRootProcess->GetRegistry());
-
-		srand(CalculateTimeDeltaMilliseconds());
-
-		HWND Wm_HWND = WindowManager->GetWindowManagerHWND();
-/*
-		CWin32ObjectBrowser::Initialize(WindowManager->m_pCtrlWindowRightBottom->GetHWND(),
-										HandlePopupContextMenu,
-										ContextMenuProcessor,
-										GetImageResource,
-										hTypeImageList,
-										WindowManager,
-										true);*/
-
-		pGTreeBrowser = new Win32ObjectBrowserWidget<CActor>(0,
-			WindowManager->m_pCtrlWindowRightBottom->GetHWND(),
-			WindowManager, 
-			HandlePopupContextMenu,
-			ContextMenuProcessor,
-			GetImageResource,
-			GCALLBACK_InvokeActor,
-			GCALLBACK_DirectInvokeActor,
-			GCALLBACK_ClearActor,
-			GCALLBACK_DirectClearActor,
-			hTypeImageList);
-
-		WindowManager->m_pCtrlWindowRightBottom->AddChild(pGTreeBrowser);
-		WindowManager->m_pCtrlWindowRightBottom->pWidget = pGTreeBrowser;
-
-		//CWin32ObjectToolbox::Initialize(Wm_HWND, GetImageResource, hTypeImageList, WindowManager);
-		//CWin32PropertyWindow::Initialize(WindowManager->m_pCtrlWindowRightTop->GetHWND(), WindowManager, true);
-		CWin32ThreadMonitor::Initialize(Wm_HWND, WindowManager, threadPhysID, threadRenderID, threadTimerID, threadStreamingID);
-		CWin32CameraManager::Initialize(Wm_HWND, HandlePopupContextMenu, ContextMenuProcessor, GetImageResource, hTypeImageList, WindowManager);
-		CWin32ActionPlayEditor::Initialize(Wm_HWND, HandlePopupContextMenu, ContextMenuProcessor, GetImageResource, hTypeImageList, WindowManager);
-
-		ShowWindow(Wm_HWND, SW_SHOWMAXIMIZED);
-
-		// logging
-		WindowManager->OutWindowMessageLog(std::string("Initialize Core"));
-		
-		OnActor_EventUpdated(GRootProcess->GetExplorerInstance(), Event_ObjectGenerated); 
-
-		RECT rectWindows;
-		GetWindowRect(WindowManager->m_pCtrlWindow->GetHWND(), &rectWindows);
-
-		unsigned int wndWidth = rectWindows.right - rectWindows.left;
-		unsigned int wndHeight = rectWindows.bottom - rectWindows.top;
-		
-		GRootProcess->Initialize(WindowManager->m_pCtrlWindow->GetHWND(), wndWidth, wndHeight);
-
-		// logging
-		WindowManager->OutWindowMessageLog(std::string("Initialization completed"));
-		WindowManager->CloseSplash();
-		
-		tm.startThread(threadRenderID);
-		tm.startThread(threadPhysID);
-		tm.startThread(threadTimerID);
-		tm.startThread(threadStreamingID);
-
-		ThreadManagerSerial::threadInfo *Info =  tm.GetThreadInfo(threadRenderID);
-		DWORD Id = ::GetThreadId(Info->thread);
-		GRootProcess->GetRenderSDK()->ThreadRenderID = Id;
-		
-		WindowManager->UpdateFlagsState();
- 	}
- 	catch (const std::exception &e)
- 	{
- 		_cputs("Core Initialization: Exception raised:\n");
- 		_cputs(e.what());
-         return EXIT_FAILURE;
- 	}
-	
- 	// main loop
- 	while (WindowManager->PeekMessageWindow())
-	{
-		while (InterlockedExchange(&bFrameChanged, TRUE) == TRUE){
-			Sleep(0);
-		}
-
-		float DeltaTime = UpdateDeltaTime();
-		GRootProcess->ElapsedTime = DeltaTime;
-
-		MillisecondsPassed += CalculateTimeDeltaMilliseconds();
-
-		if (MillisecondsPassed > CPS_FREQUENCY_MILLISECONDS)
-		{
-			UpdateCallsPerSecond(MillisecondsPassed);
-			MillisecondsPassed = 0;
-		}
-
-		int Mp1, Mp2;
-		Mp1 = Mp2 = 0;
-		
-		CalculateTimeDeltaMilliseconds();
-		Mp1 = CalculateTimeDeltaMilliseconds();
-				
-		GRootProcess->EnterDrawCS();
-
-		CalculateTimeDeltaMilliseconds();
-
-		if (MillisecondsPassed == 0){
-			GRootProcess->GetRenderSDK()->SetDebugInfoCPS(true, eventCPS, updateCPS, renderCPS, timerCPS, streamCPS);
-		}
-
-		GRootProcess->GetRenderSDK()->SetDeltaTime(DeltaTime);
-
-		GRootProcess->ProcessUpdate(DeltaTime);
-						
-		GRootProcess->Draw(); // draw new frame to back buffer
-
-		InterlockedExchange(&bFramePrepared, TRUE);
-	
-		Mp2 = CalculateTimeDeltaMilliseconds();
-
-		GRootProcess->LeaveDrawCS();
-
-		GRootProcess->Render(true, renderCPS); // Render & change buffer
-
-		{
-			static float LastTimeUpdate = 0.f;
-			static float DeltaCall = 0.f;
-
-			float DeltaTime = AppTimePassed - LastTimeUpdate;
-			LastTimeUpdate  = AppTimePassed;
-
-			DeltaCall += DeltaTime;
-
-			//if (DeltaCall > 0.001f)
-			{
-				GRootProcess->SimulatePhysics(DeltaCall * 1.4f);
-				DeltaCall = 0.f;
-			}
-		}
-
-		tm.doSerialWork();
- 	}
-
-	ReleaseThreads();
-
-	delete tm.sm_threadManager;
-	delete WindowManager;
-	delete GRootProcess;
-
-	NObjectFactory::TClassFactory * classFactory = GetClassFactoryA();
-
-	classFactory->m_MapGenerator.clear();
-	delete classFactory;
-
-#else
-
 	HRESULT hRes = ::CoInitialize(NULL);
 	ATLASSERT(SUCCEEDED(hRes));
 
@@ -492,11 +258,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrInst, LPSTR sCmdStr, int nCmdSh
 	int nRet = Run(CommandLineStr);
 
 	_Module.Term();
+
 	::CoUninitialize();
 
 	OleUninitialize();
-
-#endif//USE_WTL
 
 	return 0;
 }

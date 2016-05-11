@@ -10,6 +10,7 @@
 
 #include "AssetBrowser.h"
 #include "ToolbarControl.h"
+#include "scene_editor_main.h"
 
 //----------------------------------------------------------------------------------------------
 //
@@ -44,6 +45,7 @@ public:
 
 	CToolbarControl *m_pToolbarControl;
 
+    editors::SceneEditorMain *g_pSceneEditorMain = nullptr;
 	class CCoreSDK *m_pAppMain;
 
 	WNDCLASSEX  m_wcAppSplash;
@@ -146,6 +148,8 @@ public:
 		// start core root process
 		m_pAppMain = new CCoreSDK(cmd, 0, m_pfnOnEventUpdate);
 
+        g_pSceneEditorMain = new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer);
+
 		m_pPlacementCtrl = new CWTLPlacementWidget<T_CLASS>();
 
 		m_pAssetBrowserFrame = new CAssetBrowserFrame<T_CLASS>(m_pAppMain,
@@ -175,6 +179,8 @@ public:
 		m_ViewCtrl.m_pApp = m_pAppMain;
 
 		wcscpy(m_szAppSplashName, TEXT("Splash"));
+
+        g_pSceneEditorMain->Initialize();
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -186,6 +192,7 @@ public:
 		delete m_pRightTopPane;
 		delete m_pToolbarControl;
 		delete m_pAppMain;
+        delete g_pSceneEditorMain;
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -788,12 +795,18 @@ public:
 		m_ViewCtrl.m_pRenderContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
 	}
 
+    //----------------------------------------------------------------------------------------------
+    void Update(float deltaTime)
+    {
+        g_pSceneEditorMain->Update(deltaTime);
+    }
+
 	//----------------------------------------------------------------------------------------------
 	void Render()
 	{
 		m_pAssetBrowserFrame->Render();
 
-		m_pAppMain->Render(NULL); // Render & change buffer
+        g_pSceneEditorMain->Render();
 	}
 };
 
