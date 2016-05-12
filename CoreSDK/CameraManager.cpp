@@ -14,17 +14,18 @@ CameraManager::~CameraManager()
 }
 
 //----------------------------------------------------------------------------------------------
-bool CameraManager::RegisterCamera(CCamera *pCamera, SRenderContext *pContext /*= 0*/)
+bool CameraManager::RegisterCamera(CCamera *pCamera, SRenderContext *pContext /*= nullptr*/)
 {
 	bool bResult = false;
 
-	if (pContext == 0){
+	if (pContext == nullptr)
+    {
 		pContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
 	}
 
-	SCameraContext *pActiveContext = 0;
+	SCameraContext *pActiveContext = nullptr;
 
-	// find context
+	// find context already allocated
 	for (std::vector<SCameraContext*>::iterator Iter = m_VecCtxtCameras.begin(); Iter != m_VecCtxtCameras.end(); ++Iter)
 	{
 		if ((*Iter)->pRenderContext == pContext)
@@ -34,7 +35,8 @@ bool CameraManager::RegisterCamera(CCamera *pCamera, SRenderContext *pContext /*
 		}
 	}
 
-	if (pActiveContext == 0)
+    // allocate if not found
+	if (pActiveContext == nullptr)
 	{
 		pActiveContext = new SCameraContext;
 		pActiveContext->pRenderContext = pContext;

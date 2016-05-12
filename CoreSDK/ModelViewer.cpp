@@ -44,7 +44,7 @@ void CModelViewer::Initialize()
 	m_pCamera->SetRenderContext(m_pRenderContext);
 
 	// custom camera registration
-	GetAppMain()->GetCameraManager()->RegisterCamera(m_pCamera, m_pRenderContext);
+	//GetAppMain()->GetCameraManager()->RegisterCamera(m_pCamera, m_pRenderContext);
 
 	Super::Initialize();
 }

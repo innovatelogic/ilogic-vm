@@ -63,6 +63,7 @@ CCamera::CCamera(const CCamera &Source)
     , IDrawInterface(Source)
     , IUpdateInterface(Source)
     , IInputInterface(Source)
+    , m_pRenderContext(nullptr)
 {
    
 }
@@ -98,7 +99,7 @@ void CCamera::Initialize()
 	//GetAppMain()->GetViewportManager()->RebuildTransform(this);
 
 	// default registration
-	GetAppMain()->GetCameraManager()->RegisterCamera(this);
+	GetAppMain()->GetCameraManager()->RegisterCamera(this, m_pRenderContext);
 }
 
 //----------------------------------------------------------------------------------------------
