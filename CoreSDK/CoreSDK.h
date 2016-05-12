@@ -144,6 +144,8 @@ public:
 
     FnStartExplorerOnCreate		GetFnOnCreate() const { return m_pfnStartExplorerOnCreate; }
 
+    bool    GetWireframeMode(SRenderContext *ctxt) const;
+    void    SetWireframeMode(SRenderContext *ctxt, bool value);
 
     //////////////////////////////////////////////////////////////////////////
 

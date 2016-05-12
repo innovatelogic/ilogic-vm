@@ -110,19 +110,22 @@ bool CRenderSDK::ResizeWindow(unsigned int width, unsigned int height, SRenderCo
 }
 
 //----------------------------------------------------------------------------------------------
-bool CRenderSDK::GetWireframeMode() const
+bool CRenderSDK::GetWireframeMode(const SRenderContext *ctxt) const
 {
 	bool bResult = false;
-	if (m_pRenderDriver){
-		bResult = m_pRenderDriver->GetWireframeMode();
+	if (m_pRenderDriver)
+    {
+        const SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
+		bResult = pActiveContext->GetWireframeMode();
 	}
 	return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::SetWireframeMode(bool flag)
+void CRenderSDK::SetWireframeMode(SRenderContext *ctxt, bool value)
 {
-	m_pRenderDriver->SetWireframeMode(flag);
+    SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
+    pActiveContext->SetWireframeMode(value);
 }
 
 //----------------------------------------------------------------------------------------------

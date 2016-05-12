@@ -265,6 +265,7 @@ TCLASS* TFindStrategyW(const wchar_t *pUrl, TCONT_CLASS &refContainer)
 //----------------------------------------------------------------------------------------------
 SRenderContext::SRenderContext(D3DDriver *pDriver)
 	: m_pDriver(pDriver)
+    , m_bWireframe(false)
 {
 	assert(m_pDriver);
 }

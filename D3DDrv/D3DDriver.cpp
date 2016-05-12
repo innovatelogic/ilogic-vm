@@ -141,7 +141,9 @@ void D3DDriver::PushContext(SRenderContext *pContext)
 
 	wglMakeCurrent(pContext->m_hDC, pContext->m_hRC);
 
-	glViewport(0, 0, pContext->m_displayModeWidth, pContext->m_displayModeHeight);	
+	glViewport(0, 0, pContext->m_displayModeWidth, pContext->m_displayModeHeight);
+
+    SetWireframeMode(pContext->m_bWireframe);
 
 	m_stackContext.push(pContext);
 }

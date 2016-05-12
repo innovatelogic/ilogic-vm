@@ -212,7 +212,7 @@ void RenderAdjacency::render(SRenderContext *pContext)
 	// render targets first
 	renderTargets(pActiveContext);
 
-	glViewport(0, 0, pActiveContext->m_displayModeWidth, pActiveContext->m_displayModeHeight); // set The Current Viewport
+	glViewport(0, 0, pActiveContext->m_displayModeWidth, pActiveContext->m_displayModeHeight); // set the current viewport
 
 	m_pRenderDriver->DriverBeginDraw();
 
@@ -225,7 +225,7 @@ void RenderAdjacency::render(SRenderContext *pContext)
 	{
 		if (iter->__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext != pActiveContext)
 		{
-			++iter; // move to next adjacency
+			++iter; // skip to next adjacency
 			continue;
 		}
 

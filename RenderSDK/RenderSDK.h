@@ -49,8 +49,8 @@ public:
 	
 	bool					ResizeWindow(unsigned int width, unsigned int height, class SRenderContext *pContext = 0);
 
-	bool					GetWireframeMode() const;
-	void					SetWireframeMode(bool flag);
+	bool					GetWireframeMode(const SRenderContext *ctxt) const;
+	void					SetWireframeMode(SRenderContext *ctxt, bool value);
 
 	unsigned int			GetViewportWidth() const;
 	unsigned int			GetViewportHeight() const;

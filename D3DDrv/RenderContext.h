@@ -42,6 +42,9 @@ public:
 	RenderDriver::RenderTargetNode* AllocRenderTarget(unsigned int width, unsigned int height);
 	void							FreeRenderTarget(RenderDriver::RenderTargetNode *rt);
 
+    bool    GetWireframeMode() const { return m_bWireframe; }
+    void    SetWireframeMode(bool flag) { m_bWireframe = flag; }
+
 private:
 	bool LoadTGAW(TextureNode *pNode, const wchar_t *filename);
 	//void make_dlist(FT_Face face, char ch, GLuint list_base, GLuint *tex_base);
@@ -53,6 +56,8 @@ private:
 	bool LoadFile(const wchar_t *fileName, bool binary, uint8_t **buffer, uint32_t *size);
 	GLint ShaderStatus(GLuint shader, GLenum param);
 
+
+
 public:
 	HWND	m_hWnd;
 	HDC		m_hDC;				// Private GDI Device Context
@@ -61,6 +66,9 @@ public:
 
 	HGLRC	m_hRC;				// Permanent Rendering Context
 	GLuint	m_PixelFormat;		// Holds The Results After Searching For A Match
+
+    // render settings
+    bool    m_bWireframe;
 
 private:
 	class D3DDriver					*m_pDriver;

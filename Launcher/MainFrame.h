@@ -540,7 +540,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void UpdateFlagsState() const
 	{
-		CheckMenuItem(GetMenu(), ID_OBJECTS_WIREFRAME, m_pAppMain->GetRenderSDK()->GetWireframeMode() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_WIREFRAME, m_pAppMain->GetWireframeMode(nullptr) ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 //		CheckMenuItem(GetMenu(), ID_WINDOW_BROWSER, CWin32ObjectBrowser::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		//CheckMenuItem(GetMenu(m_hWnd), ID_WINDOW_TOOLBOX, CWin32ObjectToolbox::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		CheckMenuItem(GetMenu(), ID_WINDOW_THREADMONITOR, CWin32ThreadMonitor::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
@@ -780,7 +780,9 @@ public:
 		RECT rectWindows;
 		::GetWindowRect(m_hViewWnd, &rectWindows);
 
-        g_pSceneEditorMain->InitViewport((void*)m_hViewWnd, rectWindows.right - rectWindows.left, rectWindows.bottom - rectWindows.top);
+        g_pSceneEditorMain->InitViewport(static_cast<void*>(m_hViewWnd),
+            rectWindows.right - rectWindows.left,
+            rectWindows.bottom - rectWindows.top);
 
 		m_ViewCtrl.m_pRenderContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
 

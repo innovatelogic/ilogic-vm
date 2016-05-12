@@ -106,11 +106,13 @@ namespace editors
 
     bool SceneEditorMain::GetWireframeMode() const
     {
-        return m_pApi->GetRenderSDK()->GetWireframeMode();
+        return m_pApi->GetRenderSDK()->GetWireframeMode(nullptr);
     }
 
     void SceneEditorMain::SetWireframeMode(bool flag)
     {
+        SRenderContext *context = GetRenderContext();
+
         class CommandSetWireframe : public ICommand
         {
         public:
@@ -118,8 +120,8 @@ namespace editors
                 : m_value(value)
                 , m_api(api) { Execute(); }
 
-            void Execute() { m_api->GetRenderSDK()->SetWireframeMode(m_value); }
-            void ExecuteUndo() { m_api->GetRenderSDK()->SetWireframeMode(!m_value); }
+            void Execute() { m_api->SetWireframeMode(nullptr, m_value); }
+            void ExecuteUndo() { m_api->SetWireframeMode(nullptr, !m_value); }
             
         private:
             bool m_value;
