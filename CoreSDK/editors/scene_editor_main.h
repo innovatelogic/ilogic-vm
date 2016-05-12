@@ -30,6 +30,9 @@ namespace editors
 
         void	MouseMove(size_t dx, size_t dy, int ModifKey) override;
 
+        bool    GetWireframeMode() const;
+        void    SetWireframeMode(bool flag);
+
     protected:
     private:
         CCoreSDK *m_pApi;

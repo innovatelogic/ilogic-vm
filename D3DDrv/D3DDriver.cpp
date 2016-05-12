@@ -116,7 +116,7 @@ bool D3DDriver::GetWireframeMode() const
 //----------------------------------------------------------------------------------------------
 void D3DDriver::SetWireframeMode(bool flag)
 {
-	glPolygonMode(GL_FRONT_AND_BACK, (flag == true) ? GL_LINE : GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, flag ? GL_LINE : GL_FILL);
 }
 
 //----------------------------------------------------------------------------------------------

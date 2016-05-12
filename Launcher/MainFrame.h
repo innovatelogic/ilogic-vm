@@ -391,10 +391,9 @@ public:
 		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 		ofn.lpstrDefExt = L"txt";
 
-		CHAR chFileName[MAX_PATH] = "";
-		if (GetOpenFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
+		if (GetOpenFileName(&ofn))
 		{
-			m_pAppMain->Deserialize(chFileName, NULL);
+            g_pSceneEditorMain->Open(szFileName);
 		}
 		return 0;
 	}
@@ -413,10 +412,9 @@ public:
 		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 		ofn.lpstrDefExt = L"txt";
 
-		CHAR chFileName[MAX_PATH] = "";
-		if (GetSaveFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
+		if (GetSaveFileName(&ofn))
 		{
-			m_pAppMain->Serialize(chFileName);
+            g_pSceneEditorMain->Save(szFileName);
 		}
 		return 0;
 	}
@@ -424,8 +422,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnWireframe(WORD, WORD, HWND, BOOL&)
 	{
-		m_pAppMain->GetRenderSDK()->SetWireframeMode(!m_pAppMain->GetRenderSDK()->GetWireframeMode());
+        g_pSceneEditorMain->SetWireframeMode(!g_pSceneEditorMain->GetWireframeMode());
+
 		UpdateFlagsState();
+
 		return 0;
 	}
 
@@ -472,12 +472,14 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonUndo(WORD, WORD, HWND, BOOL&)
 	{
+        g_pSceneEditorMain->Undo();
 		return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonRedo(WORD, WORD, HWND, BOOL&)
 	{
+        g_pSceneEditorMain->Redo();
 		return 0;
 	}
 
@@ -778,21 +780,15 @@ public:
 		RECT rectWindows;
 		::GetWindowRect(m_hViewWnd, &rectWindows);
 
-		unsigned int wndWidth = rectWindows.right - rectWindows.left;
-		unsigned int wndHeight = rectWindows.bottom - rectWindows.top;
-
-		// center and show main window
-		CenterWindow();
-		ShowWindow(1);
-
-		UpdateFlagsState();
-
-		m_pAppMain->SetIsAEditor(true);
-		m_pAppMain->SetIsAGame(false);
-
-		m_pAppMain->Initialize(m_hViewWnd, wndWidth, wndHeight);
+        g_pSceneEditorMain->InitViewport((void*)m_hViewWnd, rectWindows.right - rectWindows.left, rectWindows.bottom - rectWindows.top);
 
 		m_ViewCtrl.m_pRenderContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
+
+        UpdateFlagsState();
+
+        // center and show main window
+        CenterWindow();
+        ShowWindow(1);
 	}
 
     //----------------------------------------------------------------------------------------------
