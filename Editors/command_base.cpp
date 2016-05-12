@@ -15,13 +15,13 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBase::ExecuteUndo()
+    void CommandBase::Execute()
     {
 
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBase::ExecuteRedo()
+    void CommandBase::ExecuteUndo()
     {
 
     }

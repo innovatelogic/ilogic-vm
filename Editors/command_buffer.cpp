@@ -67,7 +67,7 @@ namespace editors
 
             for (auto &command : top.batch)
             {
-                command->ExecuteRedo();
+                command->Execute();
             }
 
             m_undoStack.push_front(top);

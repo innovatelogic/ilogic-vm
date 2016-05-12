@@ -116,11 +116,11 @@ namespace editors
         public:
             CommandSetWireframe(CCoreSDK *api, bool value)
                 : m_value(value)
-                , m_api(api) { ExecuteRedo(); }
+                , m_api(api) { Execute(); }
 
+            void Execute() { m_api->GetRenderSDK()->SetWireframeMode(m_value); }
             void ExecuteUndo() { m_api->GetRenderSDK()->SetWireframeMode(!m_value); }
-
-            void ExecuteRedo() { m_api->GetRenderSDK()->SetWireframeMode(m_value);  }
+            
         private:
             bool m_value;
             CCoreSDK *m_api;
