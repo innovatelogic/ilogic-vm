@@ -3,7 +3,6 @@
 
 #include "editor.h"
 #include "../game_types.h"
-
 #include "../CoreSDK.h"
 
 namespace editors
@@ -14,9 +13,9 @@ namespace editors
         SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer);
         virtual ~SceneEditorMain();
 
-        void Initialize();
+        void Initialize() override;
 
-        void Update(float deltaTime);
+        void Update(float deltaTime) override;
 
         SRenderContext* GetRenderContext() const override;
 
@@ -33,8 +32,15 @@ namespace editors
         bool    GetWireframeMode() const;
         void    SetWireframeMode(bool flag);
 
+        void    AddSelected(const CActor *actor);
+        void    DelSelected(const CActor *actor);
+
+        CCoreSDK* GetApp() const override { return m_pApi; }
+
     protected:
     private:
+        std::list<const CActor*> m_selectionList;
+
         CCoreSDK *m_pApi;
     };
 }

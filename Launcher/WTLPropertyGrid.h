@@ -109,7 +109,7 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CWTLPropertyGrid(CCoreSDK *pAppMain)
+	CWTLPropertyGrid()
 		: m_bInit(FALSE)
 		, m_GridViewStyle(EGV_Categorized)
 		, m_EditingPropertyIndex(INDEX_NONE)
@@ -117,7 +117,7 @@ public:
 		, m_PointSize(90)
 		, m_TypeFace(_T("MS Shell Dlg 2"))
 		, m_nSelectedGroup(INDEX_NONE)
-		, m_pAppMain(pAppMain)
+		, m_pAppMain(nullptr)
 		, m_pRenderContext(0)
 	{
 		m_pEdit = new TEdit(this);
@@ -132,6 +132,8 @@ public:
 		SAFE_DELETE(m_pComboBox);
 		SAFE_DELETE(m_pResourceEdit);
 	}
+
+    void SetAppMain(CCoreSDK *app) { m_pAppMain = app; }
 
 	//----------------------------------------------------------------------------------------------
 	BOOL PreTranslateMessage(MSG* pMsg) { pMsg; return FALSE; }

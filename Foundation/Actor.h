@@ -272,6 +272,14 @@ public:
 	static bool			IsChildOf(const CActor *pParent, const CActor *pChild);
 	static bool			IsChildOf(const CActor *pParent1, const CActor *pParent2, const CActor *pChild);
 
+    /*!
+     *  returns the sequence of id's from most top to specified actor ex. "{0,1,23}"
+     *  @param [in] pointer to actor object
+     *  @param [in] pointer to most top object
+     *  @return sequence of actor's id
+    */
+    static std::string  GetFullPathID(const CActor *actor, const CActor *mostTop = nullptr);
+
 private:
 	template <class T> void SerializeImpl(T &stream, bool bSaveAsExternal = false)
 	{

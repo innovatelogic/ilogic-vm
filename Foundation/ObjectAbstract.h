@@ -118,7 +118,7 @@ public:
 	 *
 	 * @return true if name is equal or false in other case.
 	 */
-	bool			IsNameEqual(const char *Value);
+	bool			IsNameEqual(const char *value);
 
 	/** 
 	 * Set type information as a unique class name string.
@@ -187,6 +187,11 @@ public:
 	*/
 	class IListener*	GetListener() const { return m_pListener; }
 
+    /*!
+        returns session unique id 
+    */
+    long    GetUID() const { return m_uID; }
+
 protected:
 	/** 
 	* Release object.
@@ -218,8 +223,6 @@ public:
 	 * @HACK Uses for reinitialize root object.
 	 */
 	virtual void	ResetInitialize() { m_bIsInitialize = false; }
-
-
 
 	/** 
 	 * Transient means object not creates inline as a functional child of Parent object
@@ -272,6 +275,9 @@ private:
 	size_t			m_TypeId;
 	std::string		m_Type;
 
+    /** unique id until process session */
+    volatile long   m_uID;
+
 //	luabind::adl::object *	m_ScriptObject;	
 
 	volatile LONG	m_bGenerationFinished;
@@ -293,8 +299,8 @@ private:
 	std::string			m_FilenameTag;
 
 	/** user data fields */
-	void*				m_pUserData;
-	void*				m_pArrayUserData[3];
+	void				*m_pUserData;
+	void				*m_pArrayUserData[3];
 
 public:
 	std::vector<class IBaseInterface*>		m_VecInterfacesImp;

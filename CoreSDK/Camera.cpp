@@ -44,8 +44,6 @@ CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)
 	RegisterUpdateInterface(this, pParent);
 	RegisterInputInterface(this);
 
-	//((CCoreSDK*)pParent->GetUserData())->GetCameraManager()->RegisterCamera(this);
-
 	//if (((CCoreSDK*)pParent->GetUserData())->IsAEditor() && !((CCoreSDK*)pParent->GetUserData())->IsAGame())
 	{
 		// setup for editor

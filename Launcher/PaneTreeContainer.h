@@ -27,7 +27,7 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CTreePaneContainer(class CCoreSDK *pAppMain,
+	CTreePaneContainer(
 		pContextMenuFunction pfMenu,
 		pContextMenuProcessor pfnMenuProcessor,
 		pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -38,8 +38,7 @@ public:
 		CALLBACK_EV pfnOnEventUpdate,
 		HIMAGELIST hImageList,
 		SRenderContext *pRenderContext = 0)
-		: m_pAppMain(pAppMain)
-		, m_pfnContextMenu(pfMenu)
+		: m_pfnContextMenu(pfMenu)
 		, m_pfnContextMenuProcessor(pfnMenuProcessor)
 		, m_pfnGetResourceIconIndex(pfnGetResourceIconIndex)
 		, m_pfnInvokeObject(pfnInvokeObject)
@@ -49,7 +48,19 @@ public:
 		, m_pfnOnEventUpdate(pfnOnEventUpdate)
 		, m_hImageList(hImageList)
 		, m_pRenderContext(pRenderContext)
+        , m_editor(nullptr)
 	{
+        m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
+            m_hWnd,
+            m_pfnContextMenu,
+            m_pfnContextMenuProcessor,
+            m_pfnGetResourceIconIndex,
+            m_pfnInvokeObject,
+            m_pfnDirectInvokeObject,
+            m_pfnClearObject,
+            m_pfnDirectClearObject,
+            m_hImageList,
+            m_pRenderContext);
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -57,6 +68,9 @@ public:
 	{
 		delete m_pTreeBrowser;
 	}
+
+    //----------------------------------------------------------------------------------------------
+    void SetEditor(std::shared_ptr<editors::IEditor> &editor) { m_editor = editor;  m_pTreeBrowser->SetEditor(m_editor);}
 
 	//----------------------------------------------------------------------------------------------
 	void SetRenderContext(SRenderContext *pRenderContext)
@@ -71,18 +85,6 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-		m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(m_pAppMain,
-			m_hWnd,
-			m_pfnContextMenu,
-			m_pfnContextMenuProcessor,
-			m_pfnGetResourceIconIndex, 
-			m_pfnInvokeObject,
-			m_pfnDirectInvokeObject, 
-			m_pfnClearObject, 
-			m_pfnDirectClearObject,
-			m_hImageList,
-			m_pRenderContext);
-
 		// assign the edit to the bottom container
 		SetClient(m_pTreeBrowser->GetHWndTree());
 
@@ -151,9 +153,9 @@ private:
 
 	HIMAGELIST m_hImageList;
 
-	class CCoreSDK *m_pAppMain;
-
 	class SRenderContext *m_pRenderContext;
+
+    std::shared_ptr<editors::IEditor> m_editor;
 };
 
 #endif//__panetreecontainer_h__

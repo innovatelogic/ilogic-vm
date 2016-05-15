@@ -114,7 +114,7 @@ REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
 END_REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
 
 //----------------------------------------------------------------------------------------------
-CObjectAbstract::CObjectAbstract(const CObjectAbstract * Parent /*= NULL*/)
+CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 : m_bPendingToDelete(false)
 //, m_ScriptObject(0)
 , m_Type("")
@@ -128,14 +128,19 @@ CObjectAbstract::CObjectAbstract(const CObjectAbstract * Parent /*= NULL*/)
 , m_pUserData(0)
 , m_pListener(0)
 {
-	m_pArrayUserData[0] = m_pArrayUserData[1] = m_pArrayUserData[2] = 0;
-	if (Parent)
-	{
-		m_pUserData			= Parent->m_pUserData;
 
-		m_pArrayUserData[0] = Parent->m_pArrayUserData[0];
-		m_pArrayUserData[1] = Parent->m_pArrayUserData[1];
-		m_pArrayUserData[2] = Parent->m_pArrayUserData[2];
+    static long g_uID = 0;
+    m_uID = g_uID++;
+
+	m_pArrayUserData[0] = m_pArrayUserData[1] = m_pArrayUserData[2] = nullptr;
+
+	if (parent)
+	{
+		m_pUserData			= parent->m_pUserData;
+
+		m_pArrayUserData[0] = parent->m_pArrayUserData[0];
+		m_pArrayUserData[1] = parent->m_pArrayUserData[1];
+		m_pArrayUserData[2] = parent->m_pArrayUserData[2];
 	}
 }
 

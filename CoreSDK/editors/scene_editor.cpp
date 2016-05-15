@@ -22,6 +22,24 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
+    void EditorScene3D::Initialize()
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::Update(float deltaTime)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    CCoreSDK* EditorScene3D::GetApp() const
+    {
+        return m_pViewer->GetAppMain();
+    }
+
+    //----------------------------------------------------------------------------------------------
     SRenderContext* EditorScene3D::GetRenderContext() const
     {
         assert(m_pViewer);
@@ -101,4 +119,15 @@ namespace editors
         }
         return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
     }
+
+    bool EditorScene3D::GetWireframeMode() const
+    {
+        return false;// TODO
+    }
+
+    void EditorScene3D::SetWireframeMode(bool flag)
+    {
+        // TODO
+    }
+
 }

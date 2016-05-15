@@ -45,8 +45,8 @@ public:
 
 	CToolbarControl *m_pToolbarControl;
 
-    editors::SceneEditorMain *g_pSceneEditorMain = nullptr;
-	class CCoreSDK *m_pAppMain;
+    std::shared_ptr<editors::IEditor> m_editor;
+	CCoreSDK *m_pAppMain;
 
 	WNDCLASSEX  m_wcAppSplash;
 	WCHAR       m_szAppSplashName[255];
@@ -145,14 +145,9 @@ public:
 		, m_LogoWidth(0)
 		, m_LogoHeight(0)
 	{
-		// start core root process
-		m_pAppMain = new CCoreSDK(cmd, 0, m_pfnOnEventUpdate);
-
-        g_pSceneEditorMain = new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer);
-
 		m_pPlacementCtrl = new CWTLPlacementWidget<T_CLASS>();
 
-		m_pAssetBrowserFrame = new CAssetBrowserFrame<T_CLASS>(m_pAppMain,
+		m_pAssetBrowserFrame = new CAssetBrowserFrame<T_CLASS>(
 			m_pfnContextMenu,
 			m_pfnContextMenuProcessor,
 			m_pfnGetResourceIconIndex,
@@ -163,7 +158,7 @@ public:
 			m_pfnOnEventUpdate,
 			m_hImageList);
 
-		m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(m_pAppMain,
+		m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(
 			m_pfnContextMenu,
 			m_pfnContextMenuProcessor,
 			m_pfnGetResourceIconIndex,
@@ -174,13 +169,12 @@ public:
 			m_pfnOnEventUpdate,
 			m_hImageList);
 
-		m_pRightTopPane = new CPanePropertyContainer<T_CLASS>(m_pAppMain);
-
-		m_ViewCtrl.m_pApp = m_pAppMain;
+		m_pRightTopPane = new CPanePropertyContainer<T_CLASS>();
 
 		wcscpy(m_szAppSplashName, TEXT("Splash"));
 
-        g_pSceneEditorMain->Initialize();
+        // start core root process
+        m_pAppMain = new CCoreSDK(cmd, 0, m_pfnOnEventUpdate);
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -192,13 +186,12 @@ public:
 		delete m_pRightTopPane;
 		delete m_pToolbarControl;
 		delete m_pAppMain;
-        delete g_pSceneEditorMain;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-		CreateSimpleToolBar();
+ 		CreateSimpleToolBar();
 
 		// set flat toolbar style
 		CToolBarCtrl tool = m_hWndToolBar;
@@ -211,9 +204,20 @@ public:
 
 		CreateSimpleStatusBar();
 
-		m_hWndClient = CreateClient();
+        m_ViewCtrl.m_pApp = m_pAppMain;
+        m_pRightTopPane->SetAppMain(m_pAppMain);
+        m_pAssetBrowserFrame->SetAppMain(m_pAppMain);
 
-		InitViewport();
+        m_hWndClient = CreateClient();
+
+
+
+        m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
+        m_editor->Initialize();
+
+        m_pRightBottomPane->SetEditor(m_editor);
+		
+        InitViewport();    
 
 		// create asset browser window
 		CRect rc = CRect(0, 0, 1024, 768);
@@ -393,7 +397,7 @@ public:
 
 		if (GetOpenFileName(&ofn))
 		{
-            g_pSceneEditorMain->Open(szFileName);
+            m_editor->Open(szFileName);
 		}
 		return 0;
 	}
@@ -414,7 +418,7 @@ public:
 
 		if (GetSaveFileName(&ofn))
 		{
-            g_pSceneEditorMain->Save(szFileName);
+            m_editor->Save(szFileName);
 		}
 		return 0;
 	}
@@ -422,7 +426,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnWireframe(WORD, WORD, HWND, BOOL&)
 	{
-        g_pSceneEditorMain->SetWireframeMode(!g_pSceneEditorMain->GetWireframeMode());
+        m_editor->SetWireframeMode(!m_editor->GetWireframeMode());
 
 		UpdateFlagsState();
 
@@ -472,14 +476,14 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonUndo(WORD, WORD, HWND, BOOL&)
 	{
-        g_pSceneEditorMain->Undo();
+        m_editor->Undo();
 		return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonRedo(WORD, WORD, HWND, BOOL&)
 	{
-        g_pSceneEditorMain->Redo();
+        m_editor->Redo();
 		return 0;
 	}
 
@@ -780,7 +784,7 @@ public:
 		RECT rectWindows;
 		::GetWindowRect(m_hViewWnd, &rectWindows);
 
-        g_pSceneEditorMain->InitViewport(static_cast<void*>(m_hViewWnd),
+        m_editor->InitViewport(static_cast<void*>(m_hViewWnd),
             rectWindows.right - rectWindows.left,
             rectWindows.bottom - rectWindows.top);
 
@@ -796,7 +800,7 @@ public:
     //----------------------------------------------------------------------------------------------
     void Update(float deltaTime)
     {
-        g_pSceneEditorMain->Update(deltaTime);
+        m_editor->Update(deltaTime);
     }
 
 	//----------------------------------------------------------------------------------------------
@@ -804,7 +808,7 @@ public:
 	{
 		m_pAssetBrowserFrame->Render();
 
-        g_pSceneEditorMain->Render();
+        m_editor->Render();
 	}
 };
 

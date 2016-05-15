@@ -127,7 +127,9 @@ void OnActor_EventUpdated(const CActor *pSender, ESystemEventID EventId)
 		}
 	}
 
-	wndMain->Update(pSender, EventId);
+    if (wndMain) {
+        wndMain->Update(pSender, EventId);
+    }
 }
 
 //----------------------------------------------------------------------------------------------

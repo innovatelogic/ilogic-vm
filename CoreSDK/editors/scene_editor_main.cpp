@@ -1,6 +1,7 @@
 #include "scene_editor_main.h"
 #include "RenderSDK.h"
 #include <memory>
+#include <algorithm>
 
 namespace editors
 {
@@ -131,4 +132,23 @@ namespace editors
         AddCommand(std::move(std::shared_ptr<CommandSetWireframe>(new CommandSetWireframe(m_pApi, flag))));
     }
 
+    void SceneEditorMain::AddSelected(const CActor *actor)
+    {
+        std::list<const CActor*>::const_iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
+
+        if (iterFind == m_selectionList.end())
+        {
+            m_selectionList.push_back(actor);
+        }
+    }
+
+    void SceneEditorMain::DelSelected(const CActor *actor)
+    {
+        std::list<const CActor*>::iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
+
+        if (iterFind != m_selectionList.end())
+        {
+            m_selectionList.erase(iterFind);
+        }
+    }
 }

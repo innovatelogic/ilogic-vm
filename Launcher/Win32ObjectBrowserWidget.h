@@ -1,9 +1,6 @@
-#ifndef __win32objectbrowserwidget_h__
-#define __win32objectbrowserwidget_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
+
+#include "scene_editor_main.h"
 
 #define WM_USER_INSERTOBJECT				WM_APP+1
 #define WM_USER_REMOVEOBJECT_BRWSR			WM_APP+2
@@ -36,8 +33,7 @@ public:
 
 	HWND GetHWndTree() const { return m_hwndTree; }
 
-	Win32ObjectBrowserWidget(CCoreSDK *pAppMain,
-							 HWND hWndParent,
+	Win32ObjectBrowserWidget(HWND hWndParent,
 							 pContextMenuFunction pfMenu,
 							 pContextMenuProcessor pfnMenuProcessor,
 							 pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -47,8 +43,8 @@ public:
 							 CALLBACK_FN pfnDirectClearObject,
 							 HIMAGELIST hImageList,
 							 SRenderContext *pRenderContext = 0)
-	: m_pApp(pAppMain)
-	, m_pRegistry(pAppMain->GetRegistry())
+	: m_editor(nullptr)
+    , m_pRegistry(nullptr)
 	, m_hwndParent(hWndParent)
 	, m_pfnContextMenu(pfMenu)
 	, m_pfnContextMenuProcessor(pfnMenuProcessor)
@@ -95,6 +91,12 @@ public:
 	{
 
 	}
+    //----------------------------------------------------------------------------------------------
+    void SetEditor(editors::TIEditor editor) 
+    { 
+        m_editor = editor; 
+        m_pRegistry = editor->GetApp()->GetRegistry();
+    }
 
 	//----------------------------------------------------------------------------------------------
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
@@ -104,26 +106,29 @@ public:
 	{
 		int bResult = 0;
 
-		m_CS.enter();
+		//m_CS.enter();
 
-		if (m_pRegistry->IsEditorVisible(pSender->GetType()))
-		{
-			T_CLASS * pParent = pSender->GetParent();
-		
-			if ((m_ActorAddList.size() == 0) // initial enter
-				|| 
-				(std::find(m_ActorAddList.begin(), m_ActorAddList.end(), pParent) != m_ActorAddList.end() ||
-				 m_TreeMap.find(pParent) != m_TreeMap.end())) // already or been added
-			{
-				m_ActorAddList.push_back(const_cast<T_CLASS*>(pSender));
-			}
+        if (m_pRegistry) // TODO: fragile code REDESIGN
+        {
+            if (m_pRegistry->IsEditorVisible(pSender->GetType()))
+            {
+                T_CLASS * pParent = pSender->GetParent();
 
-			::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
+                if ((m_ActorAddList.size() == 0) // initial enter
+                    ||
+                    (std::find(m_ActorAddList.begin(), m_ActorAddList.end(), pParent) != m_ActorAddList.end() ||
+                        m_TreeMap.find(pParent) != m_TreeMap.end())) // already or been added
+                {
+                    m_ActorAddList.push_back(const_cast<T_CLASS*>(pSender));
+                }
 
-			bResult = 1;
-		}
+                ::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
 
-		m_CS.leave();
+                bResult = 1;
+            }
+        }
+
+		//m_CS.leave();
 
 		return bResult;
 	}
@@ -584,7 +589,7 @@ bool SelChangedTreeObject()
 	NodeItem.mask = TVIF_TEXT;
 	TreeView_GetItem(m_hwndTree, &NodeItem);
 
-	CCoreSDK *pCoreSDK = m_pApp;
+	CCoreSDK *pCoreSDK = m_editor->GetApp();
 
 	T_CLASS *pActor = GetActorByData(hTreeItem);
 
@@ -594,6 +599,9 @@ bool SelChangedTreeObject()
 		if (pIFocused && !pIFocused->IsFocused())
 		{
 			pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
+
+            std::string str = CActor::GetFullPathID(pActor);
+            int l = 0;
 		}
 		else
 		{
@@ -991,7 +999,7 @@ bool MouseMoveTreeObject(const LPARAM lParam)
 //------------------------------------------------------------------------
 bool EndDragTreeObject()
 {
-	CCoreSDK *pCoreSDK = m_pApp;
+	CCoreSDK *pCoreSDK = m_editor->GetApp();
 
 	SHORT CtrlPressed = GetAsyncKeyState(VK_LCONTROL);
 
@@ -1115,20 +1123,19 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 {
 	SRenderContext *swapContext = 0;
 	if (m_pRenderContext){
-		m_pApp->GetRenderSDK()->GetRenderDriver()->PushContext(m_pRenderContext);
+		m_editor->GetApp()->GetRenderSDK()->GetRenderDriver()->PushContext(m_pRenderContext);
 	}
 
 	bool bResult = m_pfnContextMenuProcessor(hWnd, messg, wParam, lParam);
 
 	if (m_pRenderContext){
-		m_pApp->GetRenderSDK()->GetRenderDriver()->PopContext();
+        m_editor->GetApp()->GetRenderSDK()->GetRenderDriver()->PopContext();
 	}
 	return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
 private:
-	class CCoreSDK			*m_pApp;
 	class Registry			*m_pRegistry;
 
 	TVecActorChild			m_ActorAddList;
@@ -1161,6 +1168,8 @@ private:
 
 	SRenderContext			*m_pRenderContext;
 
+    std::shared_ptr<editors::IEditor> m_editor;
+
 public:
 	WNDPROC					m_lpfnTreeProc;
 	CALLBACK_FN				m_pfnInvokeObject;
@@ -1168,5 +1177,3 @@ public:
 	CALLBACK_FN				m_pfnClearObject;
 	CALLBACK_FN				m_pfnDirectClearObject;
 };
-
-#endif//__win32objectbrowserwidget_h__

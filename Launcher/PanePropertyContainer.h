@@ -96,9 +96,9 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CPanePropertyContainer(CCoreSDK	*pAppMain)
+	CPanePropertyContainer()
 	{
-		m_pPropGrid = new CWTLPropertyGrid<T_CLASS>(pAppMain);
+		m_pPropGrid = new CWTLPropertyGrid<T_CLASS>();
 		m_pMenuCtrl = new CToolbarContainer<T_CLASS>(this);
 	}
 
@@ -108,6 +108,11 @@ public:
 		SAFE_DELETE(m_pPropGrid);
 		SAFE_DELETE(m_pMenuCtrl);
 	}
+
+    void SetAppMain(CCoreSDK *app) 
+    { 
+        m_pPropGrid->SetAppMain(app);
+    }
 
 	//----------------------------------------------------------------------------------------------
 	void SetRenderContext(SRenderContext *pContext) 

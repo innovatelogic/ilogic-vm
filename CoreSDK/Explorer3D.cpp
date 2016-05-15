@@ -13,6 +13,9 @@ Explorer3D::Explorer3D(const CObjectAbstract * pParent)
 	RegisterDrawInterface(this);
 
 	SetTransient(true);
+    
+    CActor *pGenerated;
+    NEW_OBJECT_TRANSIENT_CHILD(pGenerated, CCamera, "DefaultCamera", this);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -24,13 +27,13 @@ Explorer3D::~Explorer3D()
 //----------------------------------------------------------------------------------------------
 void Explorer3D::InitializeBrushes()
 {
-	CActor *pGenerated;
+
 /*
 	// add brushes
  	NEW_OBJECT_TRANSIENT_CHILD(pGenerated, Brush_LevelActor, "LevelActor", this);
  	NEW_OBJECT_TRANSIENT_CHILD(pGenerated, Brush_TriggerObject, "TriggerObject", this);
 	*/
-	NEW_OBJECT_TRANSIENT_CHILD(pGenerated, CCamera, "DefaultCamera", this);
+	
 }
 
 //----------------------------------------------------------------------------------------------

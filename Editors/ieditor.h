@@ -6,6 +6,7 @@
 #include "icommand_buffer.h"
 
 class SRenderContext;
+class CCoreSDK;
 
 namespace editors
 {
@@ -13,6 +14,8 @@ class DLLEXPORT IEditor
 {
 public:
 	virtual ~IEditor() = 0 {};
+
+    virtual void    Initialize() = 0;
 
     virtual bool    Undo() = 0;
     virtual bool    Redo() = 0;
@@ -34,6 +37,13 @@ public:
     virtual void    Render() = 0;
 
     virtual void	MouseMove(size_t dx, size_t dy, int ModifKey) = 0;
+
+    virtual CCoreSDK* GetApp() const = 0;
+
+    virtual void Update(float deltaTime) = 0;
+
+    virtual bool    GetWireframeMode() const = 0;
+    virtual void    SetWireframeMode(bool flag) = 0;
 
 protected:
 private:

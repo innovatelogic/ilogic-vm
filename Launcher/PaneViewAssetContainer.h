@@ -24,11 +24,11 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CViewAssetContainer(CCoreSDK *pAppMain)
+	CViewAssetContainer()
 		: m_MousePosPrevX(0)
 		, m_MousePosPrevY(0)
 		, m_bPush(false)
-        , m_pAppMain(pAppMain)
+        , m_pAppMain(nullptr)
         , m_editor(nullptr)
 	{
 		
@@ -41,7 +41,7 @@ public:
 	}
 
     //----------------------------------------------------------------------------------------------
-    void SetEditor(editors::TIEditor editor) { m_editor = editor; }
+    void SetEditor(editors::TIEditor editor) { m_editor = editor; m_pAppMain = editor->GetApp(); }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnActivate(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)

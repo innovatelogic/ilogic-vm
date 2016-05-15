@@ -57,7 +57,7 @@ bool CActor::FindCommonParent(CActor** OutParent, const CActor * ObjectA, const 
 	(*OutParent) = nullptr;
 
 	// try to find common root node
-	CActor * ParentB = const_cast<CActor*>(ObjectB);
+	CActor *ParentB = const_cast<CActor*>(ObjectB);
 
 	while (ParentB && !(*OutParent))
 	{
@@ -253,4 +253,25 @@ bool CActor::IsChildOf(const CActor *pParent1, const CActor *pParent2, const CAc
 		pIter = pIter->GetParent();
 	}
 	return bChild;
+}
+
+//----------------------------------------------------------------------------------------------
+std::string  CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*= nullptr*/)
+{
+    std::string outPath;
+
+    while (actor)
+    {
+        outPath = std::to_string(actor->GetUID()) + " " + outPath;
+        
+        actor = actor->GetParent();
+
+        if (actor == mostTop) {
+            break;
+        }
+       /* if (actor){
+            outPath += " ";
+        }*/
+    }
+    return outPath;
 }

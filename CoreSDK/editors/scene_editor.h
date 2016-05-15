@@ -23,6 +23,12 @@ namespace editors
         EditorScene3D(CModelViewer *viewer, ICommandBuffer *buffer);
         virtual ~EditorScene3D();
 
+        void Initialize() override;
+
+        void Update(float deltaTime) override;
+
+        CCoreSDK* GetApp() const override;
+
         SRenderContext* GetRenderContext() const override;
 
         bool    Open(const std::wstring &path) override;
@@ -36,6 +42,9 @@ namespace editors
         void	MouseMove(size_t dx, size_t dy, int ModifKey) override;
 
         static TIEditor CreateEdtior(const char *name, CActor *root, EEditorType type);
+
+        bool    GetWireframeMode() const override;
+        void    SetWireframeMode(bool flag) override;
 
     protected:
     private:
