@@ -32,6 +32,9 @@ namespace editors
         bool    GetWireframeMode() const;
         void    SetWireframeMode(bool flag);
 
+        bool    GetObjectBoundsVisible() const override;
+        void    SetObjectBoundsVisible(bool flag) override;
+
         void    AddSelected(const CActor *actor);
         void    DelSelected(const CActor *actor);
 

@@ -130,4 +130,13 @@ namespace editors
         // TODO
     }
 
+    bool EditorScene3D::GetObjectBoundsVisible() const
+    {
+        return false;
+    }
+
+    void EditorScene3D::SetObjectBoundsVisible(bool flag)
+    {
+
+    }
 }

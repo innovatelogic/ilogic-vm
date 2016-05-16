@@ -136,8 +136,6 @@ public:
 	{
         m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer", m_pAppMain->GetExplorerInstance(), editors::EEditorType::EEditorDefault);
 
-        m_pRightBottomPane->SetEditor(m_editor);
-        m_pViewCtrl->SetEditor(m_editor);
         m_pPropertyGridPane->SetAppMain(m_editor->GetApp());
 
 		CreateSimpleToolBar();
@@ -154,7 +152,8 @@ public:
 		CreateSimpleStatusBar();
 
 		m_hWndClient = CreateClient();
-
+        m_pViewCtrl->SetEditor(m_editor);
+        m_pRightBottomPane->SetEditor(m_editor);
 		m_pPaneTreeView->FillTree(m_TreeMapNodes);
 
         m_pViewCtrl->SetEditor(m_editor);

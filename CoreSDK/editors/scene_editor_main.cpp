@@ -5,6 +5,7 @@
 
 namespace editors
 {
+    //----------------------------------------------------------------------------------------------
     SceneEditorMain::SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer)
         : EditorBase(static_cast<CActor*>(pInstance->GetRootActor()), buffer)
         , m_pApi(pInstance)
@@ -12,16 +13,19 @@ namespace editors
 
     }
 
+    //----------------------------------------------------------------------------------------------
     SceneEditorMain::~SceneEditorMain()
     {
 
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::Initialize()
     {
         m_pApi->Deserialize("3d_scene_controller.xml", NULL);
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::Update(float deltaTime)
     {
         m_pApi->ElapsedTime = deltaTime;
@@ -51,11 +55,13 @@ namespace editors
         }*/
     }
 
+    //----------------------------------------------------------------------------------------------
     SRenderContext* SceneEditorMain::GetRenderContext() const
     {
         return nullptr;
     }
 
+    //----------------------------------------------------------------------------------------------
     bool SceneEditorMain::Open(const std::wstring &path)
     {
         bool bResult = false;
@@ -69,6 +75,7 @@ namespace editors
         return bResult;
     }
 
+    //----------------------------------------------------------------------------------------------
     bool SceneEditorMain::Save(const std::wstring &path)
     {
         bool bResult = false;
@@ -82,6 +89,7 @@ namespace editors
         return bResult;
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::InitViewport(void *canvas, size_t width, size_t height)
     {
         m_pApi->SetIsAEditor(true);
@@ -90,26 +98,31 @@ namespace editors
         m_pApi->Initialize((HWND)canvas, width, height);
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::ResizeVeiwport(size_t width, size_t height)
     {
 
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::Render()
     {
         m_pApi->Render(nullptr); // Render & change buffer
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::MouseMove(size_t dx, size_t dy, int ModifKey)
     {
 
     }
 
+    //----------------------------------------------------------------------------------------------
     bool SceneEditorMain::GetWireframeMode() const
     {
         return m_pApi->GetRenderSDK()->GetWireframeMode(nullptr);
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetWireframeMode(bool flag)
     {
         SRenderContext *context = GetRenderContext();
@@ -132,6 +145,38 @@ namespace editors
         AddCommand(std::move(std::shared_ptr<CommandSetWireframe>(new CommandSetWireframe(m_pApi, flag))));
     }
 
+    //----------------------------------------------------------------------------------------------
+    bool SceneEditorMain::GetObjectBoundsVisible() const
+    {
+        return m_pApi->GetObjectBoundsVisible();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SetObjectBoundsVisible(bool flag)
+    {
+        SRenderContext *context = GetRenderContext();
+
+        class CommandSetBBox : public ICommand
+        {
+        public:
+            CommandSetBBox(CCoreSDK *api, bool value)
+                : m_value(value)
+                , m_api(api) {
+                Execute();
+            }
+
+            void Execute() { m_api->SetObjectBoundsVisible(m_value); }
+            void ExecuteUndo() { m_api->SetObjectBoundsVisible(!m_value); }
+
+        private:
+            bool m_value;
+            CCoreSDK *m_api;
+        };
+
+        AddCommand(std::move(std::shared_ptr<CommandSetBBox>(new CommandSetBBox(m_pApi, flag))));
+    }
+
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::AddSelected(const CActor *actor)
     {
         std::list<const CActor*>::const_iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
@@ -142,6 +187,7 @@ namespace editors
         }
     }
 
+    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::DelSelected(const CActor *actor)
     {
         std::list<const CActor*>::iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);

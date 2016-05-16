@@ -137,9 +137,9 @@ public:
 		, m_pfnDirectClearObject(pfnDirectClearObject)
 		, m_pfnOnEventUpdate(pfnOnEventUpdate)
 		, m_hImageList(hImageList)
-		, m_hWndSplash(0)
-		, m_hSplashBitmap(0)
-		, m_hSplashLogo(0)
+		, m_hWndSplash(nullptr)
+		, m_hSplashBitmap(nullptr)
+		, m_hSplashLogo(nullptr)
 		, m_SplWidth(0)
 		, m_SplHeight(0)
 		, m_LogoWidth(0)
@@ -209,8 +209,6 @@ public:
         m_pAssetBrowserFrame->SetAppMain(m_pAppMain);
 
         m_hWndClient = CreateClient();
-
-
 
         m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
         m_editor->Initialize();
@@ -436,7 +434,8 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnObjectBounds(WORD, WORD, HWND, BOOL&)
 	{
-		m_pAppMain->SetObjectBoundsVisible(!m_pAppMain->GetObjectBoundsVisible());
+        m_editor->SetObjectBoundsVisible(!m_editor->GetObjectBoundsVisible());
+
 		UpdateFlagsState();
 		return 0;
 	}

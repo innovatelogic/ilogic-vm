@@ -45,6 +45,9 @@ public:
     virtual bool    GetWireframeMode() const = 0;
     virtual void    SetWireframeMode(bool flag) = 0;
 
+    virtual bool    GetObjectBoundsVisible() const = 0;
+    virtual void    SetObjectBoundsVisible(bool flag) = 0;
+
 protected:
 private:
 };

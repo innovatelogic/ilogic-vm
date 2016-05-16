@@ -50,7 +50,7 @@ class CPanePropertyContainer : public CPaneContainer
 			m_navigationBar.SetButtonSize(20, 20);
 			m_navigationBar.SetImageList(img);
 
-			TBBUTTON CustomButtons[]=
+			TBBUTTON CustomButtons []=
 			{
 				{0, ID_BUTTON_CATEGORIZED_A, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0L, 0, 0, 0},
 				{1, ID_BUTTON_SORTED, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0L, 0, 0, 0},
@@ -289,8 +289,6 @@ public:
 
 	CToolBarCtrl m_ToolBar;
 	class CWTLPropertyGrid<T_CLASS> *m_pPropGrid;
-
-	//CCommandBarCtrl m_CmdBar;
 };
 
 

@@ -49,18 +49,9 @@ public:
 		, m_hImageList(hImageList)
 		, m_pRenderContext(pRenderContext)
         , m_editor(nullptr)
+        , m_pTreeBrowser(nullptr)
 	{
-        m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
-            m_hWnd,
-            m_pfnContextMenu,
-            m_pfnContextMenuProcessor,
-            m_pfnGetResourceIconIndex,
-            m_pfnInvokeObject,
-            m_pfnDirectInvokeObject,
-            m_pfnClearObject,
-            m_pfnDirectClearObject,
-            m_hImageList,
-            m_pRenderContext);
+
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -70,7 +61,11 @@ public:
 	}
 
     //----------------------------------------------------------------------------------------------
-    void SetEditor(std::shared_ptr<editors::IEditor> &editor) { m_editor = editor;  m_pTreeBrowser->SetEditor(m_editor);}
+    void SetEditor(std::shared_ptr<editors::IEditor> &editor) 
+    { 
+        m_editor = editor; 
+        m_pTreeBrowser->SetEditor(m_editor);
+    }
 
 	//----------------------------------------------------------------------------------------------
 	void SetRenderContext(SRenderContext *pRenderContext)
@@ -85,8 +80,20 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-		// assign the edit to the bottom container
-		SetClient(m_pTreeBrowser->GetHWndTree());
+        m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
+            m_hWnd,
+            m_pfnContextMenu,
+            m_pfnContextMenuProcessor,
+            m_pfnGetResourceIconIndex,
+            m_pfnInvokeObject,
+            m_pfnDirectInvokeObject,
+            m_pfnClearObject,
+            m_pfnDirectClearObject,
+            m_hImageList,
+            m_pRenderContext);
+
+        // assign the edit to the bottom container
+        SetClient(m_pTreeBrowser->GetHWndTree());
 
 		return 0;
 	}
@@ -135,7 +142,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void Update(const T_CLASS *pSender, ESystemEventID EventId)
 	{
-		m_pTreeBrowser->Update(pSender, EventId);
+        if (m_pTreeBrowser)
+        {
+            m_pTreeBrowser->Update(pSender, EventId);
+        }
 	}
 
 private:

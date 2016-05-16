@@ -46,6 +46,9 @@ namespace editors
         bool    GetWireframeMode() const override;
         void    SetWireframeMode(bool flag) override;
 
+        bool    GetObjectBoundsVisible() const override;
+        void    SetObjectBoundsVisible(bool flag) override;
+
     protected:
     private:
         CModelViewer        *m_pViewer;
