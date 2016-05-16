@@ -154,8 +154,6 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetObjectBoundsVisible(bool flag)
     {
-        SRenderContext *context = GetRenderContext();
-
         class CommandSetBBox : public ICommand
         {
         public:
@@ -176,6 +174,59 @@ namespace editors
         AddCommand(std::move(std::shared_ptr<CommandSetBBox>(new CommandSetBBox(m_pApi, flag))));
     }
 
+    //----------------------------------------------------------------------------------------------
+    bool SceneEditorMain::GetSpartialSubdivisionVisible() const
+    {
+        return m_pApi->GetSparitalSubdivisionVisible();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SetSpartialSubdivisionVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool SceneEditorMain::GetGridVisible() const
+    {
+        return m_pApi->GetShowGrid();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SetGridVisible(bool flag)
+    {
+        class CommandSetShowGrid : public ICommand
+        {
+        public:
+            CommandSetShowGrid(CCoreSDK *api, bool value)
+                : m_value(value)
+                , m_api(api) {
+                Execute();
+            }
+
+            void Execute() { m_api->SetShowGrid(m_value); }
+            void ExecuteUndo() { m_api->SetShowGrid(!m_value); }
+
+        private:
+            bool m_value;
+            CCoreSDK *m_api;
+        };
+
+        AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, flag))));
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool SceneEditorMain::GetCollisionDebugVisible() const
+    {
+        return m_pApi->GetCollisionDebugRender();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SetCollisionDebugVisible(bool flag)
+    {
+        m_pApi->SetCollisionDebugRender(flag);
+    }
+    
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::AddSelected(const CActor *actor)
     {

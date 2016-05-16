@@ -437,31 +437,38 @@ public:
         m_editor->SetObjectBoundsVisible(!m_editor->GetObjectBoundsVisible());
 
 		UpdateFlagsState();
-		return 0;
+		
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnSpatialSub(WORD, WORD, HWND, BOOL&)
 	{
-		m_pAppMain->SetSparitalSubdivisionVisible(!m_pAppMain->GetSparitalSubdivisionVisible());
+		m_editor->SetSpartialSubdivisionVisible(!m_editor->GetSpartialSubdivisionVisible());
+
 		UpdateFlagsState();
+
 		return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnObjectsCollision(WORD, WORD, HWND, BOOL&)
 	{
-		m_pAppMain->SetCollisionDebugRender(!m_pAppMain->GetCollisionDebugRender());
+		m_editor->SetCollisionDebugVisible(!m_editor->GetCollisionDebugVisible());
+
 		UpdateFlagsState();
-		return 0;
+		
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnShowGrid(WORD, WORD, HWND, BOOL&)
 	{
-		m_pAppMain->SetShowGrid(!m_pAppMain->GetShowGrid());
+		m_editor->SetGridVisible(!m_editor->GetGridVisible());
+
 		UpdateFlagsState();
-		return 0;
+		
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------

@@ -49,6 +49,15 @@ namespace editors
         bool    GetObjectBoundsVisible() const override;
         void    SetObjectBoundsVisible(bool flag) override;
 
+        bool    GetSpartialSubdivisionVisible() const override;
+        void    SetSpartialSubdivisionVisible(bool flag) override;
+
+        bool    GetGridVisible() const override;
+        void    SetGridVisible(bool flag) override;
+
+        bool    GetCollisionDebugVisible() const override;
+        void    SetCollisionDebugVisible(bool flag) override;
+
     protected:
     private:
         CModelViewer        *m_pViewer;

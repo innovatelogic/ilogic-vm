@@ -48,6 +48,15 @@ public:
     virtual bool    GetObjectBoundsVisible() const = 0;
     virtual void    SetObjectBoundsVisible(bool flag) = 0;
 
+    virtual bool    GetSpartialSubdivisionVisible() const = 0;
+    virtual void    SetSpartialSubdivisionVisible(bool flag) = 0;
+
+    virtual bool    GetGridVisible() const = 0;
+    virtual void    SetGridVisible(bool flag) = 0;
+
+    virtual bool    GetCollisionDebugVisible() const = 0;
+    virtual void    SetCollisionDebugVisible(bool flag) = 0;
+
 protected:
 private:
 };

@@ -139,4 +139,40 @@ namespace editors
     {
 
     }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetSpartialSubdivisionVisible() const
+    {
+        return m_pViewer->GetAppMain()->GetSparitalSubdivisionVisible();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetSpartialSubdivisionVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetGridVisible() const
+    {
+        return m_pViewer->GetAppMain()->GetShowGrid();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetGridVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetCollisionDebugVisible() const
+    {
+        return false; // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetCollisionDebugVisible(bool flag)
+    {
+
+    }
 }
