@@ -58,6 +58,9 @@ namespace editors
         bool    GetCollisionDebugVisible() const override;
         void    SetCollisionDebugVisible(bool flag) override;
 
+        EObjEditControlMode		GetEditControlMode() const override;
+        void					SetEditControlMode(EObjEditControlMode mode) override;
+
     protected:
     private:
         CModelViewer        *m_pViewer;

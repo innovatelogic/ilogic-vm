@@ -173,6 +173,18 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void EditorScene3D::SetCollisionDebugVisible(bool flag)
     {
+        // TODO
+    }
 
+    //----------------------------------------------------------------------------------------------
+    EObjEditControlMode	EditorScene3D::GetEditControlMode() const
+    {
+        return m_pViewer->GetAppMain()->GetEditControlMode();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetEditControlMode(EObjEditControlMode mode)
+    {
+        // TODO
     }
 }

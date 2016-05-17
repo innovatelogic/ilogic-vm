@@ -1,9 +1,10 @@
 #pragma once
 
-#include <memory>
-#include <assert.h>
 #include "icommand.h"
 #include "icommand_buffer.h"
+#include "StdafxFoundation.h"
+#include <memory>
+#include <assert.h>
 
 class SRenderContext;
 class CCoreSDK;
@@ -56,6 +57,9 @@ public:
 
     virtual bool    GetCollisionDebugVisible() const = 0;
     virtual void    SetCollisionDebugVisible(bool flag) = 0;
+
+    virtual EObjEditControlMode		GetEditControlMode() const = 0;
+    virtual void					SetEditControlMode(EObjEditControlMode mode) = 0;
 
 protected:
 private:

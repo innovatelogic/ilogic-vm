@@ -44,6 +44,9 @@ namespace editors
         bool    GetCollisionDebugVisible() const override;
         void    SetCollisionDebugVisible(bool flag) override;
 
+        EObjEditControlMode		GetEditControlMode() const override;
+        void					SetEditControlMode(EObjEditControlMode mode) override;
+
         void    AddSelected(const CActor *actor);
         void    DelSelected(const CActor *actor);
 

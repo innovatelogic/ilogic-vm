@@ -475,30 +475,39 @@ public:
 	LRESULT OnBuildPlay(WORD, WORD, HWND, BOOL&)
 	{
 		m_pAppMain->SetPause(!m_pAppMain->GetPause());
-		UpdateFlagsState();
-		return 0;
+		
+        UpdateFlagsState();
+		
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonUndo(WORD, WORD, HWND, BOOL&)
 	{
         m_editor->Undo();
-		return 0;
+
+        UpdateFlagsState();
+        
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnButtonRedo(WORD, WORD, HWND, BOOL&)
 	{
         m_editor->Redo();
-		return 0;
+		
+        UpdateFlagsState();
+
+        return 0;
 	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnModeMove(WORD, WORD, HWND, BOOL&)
 	{
-		if (m_pAppMain->GetEditControlMode() != ECM_Move)
+		if (m_editor->GetEditControlMode() != ECM_Move)
 		{
-			m_pAppMain->SetEditControlMode(ECM_Move);
+			m_editor->SetEditControlMode(ECM_Move);
+
 			m_pPlacementCtrl->SetMode(ECM_Move);
 
 			m_pPlacementCtrl->UpdatePreview();
@@ -514,9 +523,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnModeRotate(WORD, WORD, HWND, BOOL&)
 	{
-		if (m_pAppMain->GetEditControlMode() != ECM_Rotate)
+		if (m_editor->GetEditControlMode() != ECM_Rotate)
 		{
-			m_pAppMain->SetEditControlMode(ECM_Rotate);
+			m_editor->SetEditControlMode(ECM_Rotate);
+
 			m_pPlacementCtrl->SetMode(ECM_Rotate);
 
 			m_pPlacementCtrl->UpdatePreview();
@@ -532,9 +542,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnModeScale(WORD, WORD, HWND, BOOL&)
 	{
-		if (m_pAppMain->GetEditControlMode() != ECM_Scale)
+		if (m_editor->GetEditControlMode() != ECM_Scale)
 		{
-			m_pAppMain->SetEditControlMode(ECM_Scale);
+            m_editor->SetEditControlMode(ECM_Scale);
+
 			m_pPlacementCtrl->SetMode(ECM_Scale);
 
 			m_pPlacementCtrl->UpdatePreview();
@@ -550,16 +561,16 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void UpdateFlagsState() const
 	{
-		CheckMenuItem(GetMenu(), ID_OBJECTS_WIREFRAME, m_pAppMain->GetWireframeMode(nullptr) ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_WIREFRAME, m_editor->GetWireframeMode() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 //		CheckMenuItem(GetMenu(), ID_WINDOW_BROWSER, CWin32ObjectBrowser::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		//CheckMenuItem(GetMenu(m_hWnd), ID_WINDOW_TOOLBOX, CWin32ObjectToolbox::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		CheckMenuItem(GetMenu(), ID_WINDOW_THREADMONITOR, CWin32ThreadMonitor::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 //		CheckMenuItem(GetMenu(), ID_WINDOWS_CAMERAMANAGER, CWin32CameraManager::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 //		CheckMenuItem(GetMenu(), ID_WINDOWS_ACTIONPLAY, CWin32ActionPlayEditor::IsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_OBJECTS_BOUNDS, m_pAppMain->GetObjectBoundsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_OBJECTS_SPARITALSUB, m_pAppMain->GetSparitalSubdivisionVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_OBJECTS_COLLISION, m_pAppMain->GetCollisionDebugRender() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_OBJECTS_GRID, m_pAppMain->GetShowGrid() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_BOUNDS, m_editor->GetObjectBoundsVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_SPARITALSUB, m_editor->GetSpartialSubdivisionVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_COLLISION, m_editor->GetCollisionDebugVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_OBJECTS_GRID, m_editor->GetGridVisible() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		CheckMenuItem(GetMenu(), ID_EDITMODE_2D, m_pAppMain->GetEditorInputFlag() & EF_EDIT_2D ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		CheckMenuItem(GetMenu(), ID_EDITMODE_3D, m_pAppMain->GetEditorInputFlag() & EF_EDIT_3D ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 		CheckMenuItem(GetMenu(), ID_OBJECTS_FREEZERENDER, m_pAppMain->GetRenderSDK()->GetFreezeRender() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
@@ -567,14 +578,14 @@ public:
 		CheckMenuItem(GetMenu(), ID_BUILD_PLAY, m_pAppMain->GetPause() ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 
 		// ECM State
-		CheckMenuItem(GetMenu(), ID_MODE_MOVE, m_pAppMain->GetEditControlMode() == ECM_Move ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_MODE_ROTATE, m_pAppMain->GetEditControlMode() == ECM_Rotate ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
-		CheckMenuItem(GetMenu(), ID_MODE_SCALE, m_pAppMain->GetEditControlMode() == ECM_Scale ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_MODE_MOVE, m_editor->GetEditControlMode() == ECM_Move ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_MODE_ROTATE, m_editor->GetEditControlMode() == ECM_Rotate ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
+		CheckMenuItem(GetMenu(), ID_MODE_SCALE, m_editor->GetEditControlMode() == ECM_Scale ? MF_BYCOMMAND | MF_CHECKED : MF_BYCOMMAND | MF_UNCHECKED);
 
 		CToolBarCtrl	barCtrl = m_hWndToolBar;
-		barCtrl.CheckButton(ID_BUTTON_MOVE, m_pAppMain->GetEditControlMode() == ECM_Move ? 1 : 0);
-		barCtrl.CheckButton(ID_BUTTON_SCALE, m_pAppMain->GetEditControlMode() == ECM_Scale ? 1 : 0);
-		barCtrl.CheckButton(ID_BUTTON_ROTATE, m_pAppMain->GetEditControlMode() == ECM_Rotate ? 1 : 0);
+		barCtrl.CheckButton(ID_BUTTON_MOVE, m_editor->GetEditControlMode() == ECM_Move ? 1 : 0);
+		barCtrl.CheckButton(ID_BUTTON_SCALE, m_editor->GetEditControlMode() == ECM_Scale ? 1 : 0);
+		barCtrl.CheckButton(ID_BUTTON_ROTATE, m_editor->GetEditControlMode() == ECM_Rotate ? 1 : 0);
 	}
 
 	//----------------------------------------------------------------------------------------------

@@ -116,9 +116,9 @@ enum EPhysEventCallback
 
 enum EObjEditControlMode
 {
-	ECM_Move = 0,
-	ECM_Rotate,
-	ECM_Scale
+	ECM_Move    = 0,
+	ECM_Rotate  = 1,
+	ECM_Scale   = 2,
 };
 
 //----------------------------------------------------------------------------------------------

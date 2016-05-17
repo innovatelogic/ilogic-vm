@@ -134,8 +134,8 @@ namespace editors
                 : m_value(value)
                 , m_api(api) { Execute(); }
 
-            void Execute() { m_api->SetWireframeMode(nullptr, m_value); }
-            void ExecuteUndo() { m_api->SetWireframeMode(nullptr, !m_value); }
+            void Execute() override { m_api->SetWireframeMode(nullptr, m_value); }
+            void ExecuteUndo() override { m_api->SetWireframeMode(nullptr, !m_value); }
             
         private:
             bool m_value;
@@ -163,8 +163,8 @@ namespace editors
                 Execute();
             }
 
-            void Execute() { m_api->SetObjectBoundsVisible(m_value); }
-            void ExecuteUndo() { m_api->SetObjectBoundsVisible(!m_value); }
+            void Execute() override { m_api->SetObjectBoundsVisible(m_value); }
+            void ExecuteUndo() override { m_api->SetObjectBoundsVisible(!m_value); }
 
         private:
             bool m_value;
@@ -204,8 +204,8 @@ namespace editors
                 Execute();
             }
 
-            void Execute() { m_api->SetShowGrid(m_value); }
-            void ExecuteUndo() { m_api->SetShowGrid(!m_value); }
+            void Execute() override { m_api->SetShowGrid(m_value); }
+            void ExecuteUndo() override { m_api->SetShowGrid(!m_value); }
 
         private:
             bool m_value;
@@ -227,6 +227,40 @@ namespace editors
         m_pApi->SetCollisionDebugRender(flag);
     }
     
+    //----------------------------------------------------------------------------------------------
+    EObjEditControlMode	SceneEditorMain::GetEditControlMode() const
+    {
+        return m_pApi->GetEditControlMode();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SetEditControlMode(EObjEditControlMode mode)
+    {
+        class CommandSetShowGrid : public ICommand
+        {
+        public:
+            CommandSetShowGrid(CCoreSDK *api,  EObjEditControlMode vNew, EObjEditControlMode vOld)
+                : m_new(vNew)
+                , m_old(vOld)
+                , m_api(api) {
+                Execute();
+            }
+            void Execute() override { m_api->SetEditControlMode(m_new); }
+            void ExecuteUndo() override { m_api->SetEditControlMode(m_old); }
+
+        private:
+            EObjEditControlMode m_new;
+            EObjEditControlMode m_old;
+            CCoreSDK *m_api;
+        };
+
+        EObjEditControlMode oldMode = GetEditControlMode();
+        if (oldMode != mode)
+        {
+            AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, mode, oldMode))));
+        }
+    }
+
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::AddSelected(const CActor *actor)
     {
