@@ -22,6 +22,8 @@ namespace editors
         cmd.batch.push_back(std::move(command));
 
         m_undoStack.push_front(cmd);
+
+        m_redoStack.clear();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -32,6 +34,8 @@ namespace editors
         cmd.batch = commands;
 
         m_undoStack.push_front(cmd);
+
+        m_redoStack.clear();
     }
 
     //----------------------------------------------------------------------------------------------
