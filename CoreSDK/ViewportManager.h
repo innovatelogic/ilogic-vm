@@ -7,13 +7,15 @@
 
 namespace core_sdk_api
 {
+    using TTreeMapViewport = TTreeMap<CActor, ViewportInterface>;
+    using TTreeMapDraw = TTreeMap<CActor, IDrawInterface>;
+    using TNodeIDraw = TNodeMap<CActor, IDrawInterface>;
+    using TNodeIView = TNodeMap<CActor, ViewportInterface>;
+    
     class CORESDK_API CViewportManager
     {
         friend class CInputControllerImpl;
         friend class CInputControllerEdImpl;
-
-        using TTreeMapViewport = TTreeMap<CActor, ViewportInterface>;
-        using TTreeMapDraw = TTreeMap<CActor, IDrawInterface>;
 
     public:
         CViewportManager(class CCoreSDK *pSDK);
@@ -21,18 +23,18 @@ namespace core_sdk_api
 
         inline_ class CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
 
-        TNodeMap<class CActor, class IDrawInterface>* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
-        void UnregisterObject(class TNodeMap<CActor, IDrawInterface> *pNode);
+        TNodeIDraw* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
+        void UnregisterObject(TNodeIDraw *pNode);
 
-        TNodeMap<class CActor, class ViewportInterface>* RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
-        void UnregisterViewport(class TNodeMap<CActor, ViewportInterface> *pNode);
+        TNodeIView* RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
+        void UnregisterViewport(TNodeIView *pNode);
 
         ViewportInterface* GetViewportInterface(const IDrawInterface *pIObject) const;
 
         bool IsRenderable(const CActor *key);
 
         void Draw();
-        void DrawNode(TNodeMap<CActor, IDrawInterface> *pNode);
+        void DrawNode(TNodeIDraw *pNode);
 
         // controller input
         void ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
@@ -67,5 +69,4 @@ namespace core_sdk_api
 
         class CCoreSDK* m_pCoreSDK;
     };
-
 }

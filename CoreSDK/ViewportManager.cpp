@@ -18,27 +18,25 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    TNodeMap<class CActor, class IDrawInterface>*
-        CViewportManager::RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
+    TNodeIDraw* CViewportManager::RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
     {
         return m_VecDrawList.PushBack(pKey, pSrc, pKeyParent);
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::UnregisterObject(class TNodeMap<CActor, IDrawInterface> *pNode)
+    void CViewportManager::UnregisterObject(TNodeIDraw *pNode)
     {
         m_VecDrawList.Erase(pNode);
     }
 
     //----------------------------------------------------------------------------------------------
-    TNodeMap<class CActor, ViewportInterface>*
-        CViewportManager::RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
+    TNodeIView* CViewportManager::RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
     {
         return m_VecViewports.PushBack(pKey, pSrc, pKeyParent);
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::UnregisterViewport(class TNodeMap<CActor, ViewportInterface> *pNode)
+    void CViewportManager::UnregisterViewport(TNodeIView *pNode)
     {
         m_VecViewports.Erase(pNode);
     }
@@ -49,8 +47,8 @@ namespace core_sdk_api
         if (pIObject)
         {
             // find in draw array
-            TNodeMap<CActor, IDrawInterface> *pNodeObject = 0;
-            if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+            TNodeIDraw *pNodeObject = 0;
+            if (TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement)
             {
                 do
                 {
