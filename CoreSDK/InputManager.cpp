@@ -53,7 +53,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 			bool bPaused = m_pCoreSDK->GetPause();
 			if (/*InputData.CtrlPressed &&*/ bPaused)
 			{
-				CViewportManager *pMgr = m_pCoreSDK->GetViewportManager();
+                core_sdk_api::CViewportManager *pMgr = m_pCoreSDK->GetViewportManager();
 				pMgr->SetFocus(pMgr->GetFocused(), false);
 
 				m_pCoreSDK->SaveState();

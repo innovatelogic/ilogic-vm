@@ -1,32 +1,30 @@
-#ifndef __inputcontrollerimpl_h__
-#define __inputcontrollerimpl_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "../Foundation/StdafxFoundation.h"
 
-class CInputControllerImpl
+namespace core_sdk_api
 {
-public:
-	CInputControllerImpl(class CViewportManager *pInterface);
-	virtual ~CInputControllerImpl();
+    class CViewportManager;
 
-	bool ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
-	void ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask = 0);
-	void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
+    class CInputControllerImpl
+    {
+    public:
+        CInputControllerImpl(CViewportManager *pInterface);
+        virtual ~CInputControllerImpl();
 
-protected:
-	bool ProcessPress(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
-	bool ProcessPressNode(const MouseInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode);
+        bool ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
+        void ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask = 0);
+        void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
 
-	bool ProcessInputMouseNode(const MouseMoveInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode);
+    protected:
+        bool ProcessPress(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
+        bool ProcessPressNode(const MouseInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode);
 
-	bool ProcessRelease(const MouseInputData &InputData);
+        bool ProcessInputMouseNode(const MouseMoveInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode);
 
-private:
-	class CViewportManager *m_pInterface;
-};
+        bool ProcessRelease(const MouseInputData &InputData);
 
-#endif//__inputcontrollerimpl_h__
+    private:
+        core_sdk_api::CViewportManager *m_pInterface;
+    };
+}

@@ -30,6 +30,10 @@ typedef int	      (*CALLBACK_DialogInputText) (LPCTSTR szTitle, LPCTSTR szPrompt
 typedef void	  (*FnStopModule) (void);
 typedef void	  (*FnStartExplorerOnCreate) (const class CActor *pSender, ESystemEventID EventId);
 
+namespace core_sdk_api
+{
+    class CViewportManager;
+}
 
 class CORESDK_API CCoreSDK
 {
@@ -72,16 +76,18 @@ public:
 	inline_ class IPhysicsEngine*			GetPhysicsEngine()	const { return m_pPhysicsEngine; }
 #endif//PHYS_ENABLED
 
-    inline_ CActor*					        GetRootActor()	const;
-	inline_ class Explorer*					GetExplorerInstance()	const { return m_pRootObject; }
-	inline_ class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
-	inline_ class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
-	inline_ class GameRealmInfo*			GetRealmInfo()		const { return m_pGameRealmInfo; }
-	inline_ class CViewportManager*			GetViewportManager() const { return m_pViewportManager; }
-	inline_ class CInputManager*			GetInputManager() const { return m_pInputManager; }
-	inline_ class CUISceneManager*			GetUISceneManager() const { return m_pUISceneManager; }
-	inline_ class CSceneManager*			GetSceneManager() const { return m_pSceneManager; }
-	inline_ class CRemoteControlManager*	GetRemoteControlMgr() const { return m_pRemoteControlMgr; }
+    CActor*					        GetRootActor()	const;
+	class Explorer*					GetExplorerInstance()	const { return m_pRootObject; }
+	class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
+	class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
+	class GameRealmInfo*			GetRealmInfo()		const { return m_pGameRealmInfo; }
+	
+    core_sdk_api::CViewportManager*			GetViewportManager() const { return m_pViewportManager; }
+	
+    class CInputManager*			GetInputManager() const { return m_pInputManager; }
+	class CUISceneManager*			GetUISceneManager() const { return m_pUISceneManager; }
+	class CSceneManager*			GetSceneManager() const { return m_pSceneManager; }
+	class CRemoteControlManager*	GetRemoteControlMgr() const { return m_pRemoteControlMgr; }
 
 	void	Draw();
 	void	ProcessInputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0, class SRenderContext *pRenderContext = 0);
@@ -167,7 +173,7 @@ private:
 	class UpdateManager				*m_pUpdateManager;
 	class GameRealmInfo				*m_pGameRealmInfo;
 	class ScriptDriver				*m_pScriptDriver;
-	class CViewportManager			*m_pViewportManager;
+    core_sdk_api::CViewportManager	*m_pViewportManager;
 	class CInputManager				*m_pInputManager; 
 	class CUISceneManager			*m_pUISceneManager;
 	class CSceneManager				*m_pSceneManager;

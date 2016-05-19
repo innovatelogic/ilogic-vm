@@ -1,39 +1,37 @@
-#ifndef __inputcontrolleredimpl_h__
-#define __inputcontrolleredimpl_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "../Foundation/StdafxFoundation.h"
 
-class CInputControllerEdImpl
+namespace core_sdk_api
 {
-public:
-	CInputControllerEdImpl(class CViewportManager *pInterface);
-	virtual ~CInputControllerEdImpl();
+    class CViewportManager;
 
-	void ProcessInputMouse(const MouseInputData &InputData);
-	void ProcessInputMouse(const MouseMoveInputData &InputData);
-	void ProcessMouseWheel(float ds, SRenderContext *pRenderContext = 0);
+    class CInputControllerEdImpl
+    {
+    public:
+        CInputControllerEdImpl(CViewportManager *pInterface);
+        virtual ~CInputControllerEdImpl();
 
-protected:
-	
-	/** Process controller move input */
-	bool ProcessMoveControllers(const MouseMoveInputData &InputData);
+        void ProcessInputMouse(const MouseInputData &InputData);
+        void ProcessInputMouse(const MouseMoveInputData &InputData);
+        void ProcessMouseWheel(float ds, SRenderContext *pRenderContext = 0);
 
-	/** Process move */
-	bool ProcessMove(const MouseMoveInputData &InputData);
-	
-	/** Process controller input */
-	bool ProcessControllers(const MouseInputData &InputData);
+    protected:
 
-	bool ProcessPress(const MouseInputData &InputData);
+        /** Process controller move input */
+        bool ProcessMoveControllers(const MouseMoveInputData &InputData);
 
-	bool ProcessRelease(const MouseInputData &InputData);
+        /** Process move */
+        bool ProcessMove(const MouseMoveInputData &InputData);
 
-private:
-	class CViewportManager *m_pInterface;
-};
+        /** Process controller input */
+        bool ProcessControllers(const MouseInputData &InputData);
 
-#endif//__inputcontrolleredimpl_h__
+        bool ProcessPress(const MouseInputData &InputData);
+
+        bool ProcessRelease(const MouseInputData &InputData);
+
+    private:
+        core_sdk_api::CViewportManager *m_pInterface;
+    };
+}

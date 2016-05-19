@@ -77,7 +77,7 @@ void CPhysicsEngineBullet::SimulateCharacters(float fElapsedTime)
 //----------------------------------------------------------------------------------------------
 void CPhysicsEngineBullet::PostSimulateUpdate()
 {
-	CViewportManager *pViewMgr = m_pCoreSDK->GetViewportManager();
+    core_sdk_api::CViewportManager *pViewMgr = m_pCoreSDK->GetViewportManager();
 
 	btCollisionObjectArray &refArray = m_pDynamicsWorld->getCollisionObjectArray();
 
@@ -1195,7 +1195,7 @@ void CPhysicsEngineBullet::SyncActors()
 {
 	//m_pCoreSDK->EnterCommandCS();
 
-	CViewportManager *pViewMgr = m_pCoreSDK->GetViewportManager();
+    core_sdk_api::CViewportManager *pViewMgr = m_pCoreSDK->GetViewportManager();
 
 	if (m_SyncData.size() > 0)
 	{
