@@ -65,7 +65,7 @@ void Point2DBezierKey::DoDraw()
 
 		if (SuperParent && (SuperParent->IsFocused() || SuperParent->GetExtraSelection()))
 		{	
-			ViewportInterface * Interface = GetViewportInterface(this);
+			core_sdk_api::ViewportInterface * Interface = GetViewportInterface(this);
 			assert(Interface);
 
 			Matrix ViewMatrix = Interface->GetViewportViewMatrix();

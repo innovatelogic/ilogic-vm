@@ -554,7 +554,7 @@ void SplineAgregator::UpdateCoordsUV(const Matrix &LTM, const Vector2f& SourceSi
 //----------------------------------------------------------------------------------------------
 bool SplineAgregator::InsertPoint(const Vector2f& MousePos, const UIScreenObject* Inserter)
 {
-/*	ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(this);
+/*	core_sdk_api::ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(this);
 
 	if (VInterface)
 	{

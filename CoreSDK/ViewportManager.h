@@ -58,7 +58,7 @@ namespace core_sdk_api
         void			RebuildTransform(CActor *pAObject = NULL);
 
     protected:
-        TNodeMap<CActor, IDrawInterface>* GetNodeByKey(CActor *pAObject) const;
+        TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
 
     private:
         TTreeMapViewport m_VecViewports;

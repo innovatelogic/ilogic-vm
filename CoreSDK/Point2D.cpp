@@ -57,7 +57,7 @@ bool Point2D::ProcessUserController(const MouseMoveInputData& InputData)
 //-----------------------------------------------------------------------------
 bool Point2D::HitTest(const Vector2f &Position)
 {
-/*	ViewportInterface * Interface = GetViewportInterface(this);
+/*	core_sdk_api::ViewportInterface * Interface = GetViewportInterface(this);
 	assert(Interface);
 
 	Matrix ViewMatrix = Interface->GetViewportViewMatrix();;
@@ -152,7 +152,7 @@ bool Point2D::DoEventReleased(const MouseInputData& InputData)
 //---------------------------------------------------------------------
 /*bool Point2D::ProcessControllers(const Vector2f& Position)
 {
-	ViewportInterface * Interface = GetViewportInterface(this);
+	core_sdk_api::ViewportInterface * Interface = GetViewportInterface(this);
 	assert(Interface);
 
 	Matrix ViewMatrix = Interface->GetViewportViewMatrix();

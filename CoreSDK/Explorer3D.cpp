@@ -7,9 +7,9 @@ REGISTER_CLASS(Explorer3D, ActorAllocator);
 Explorer3D::Explorer3D(const CObjectAbstract * pParent)
 : Super(pParent)
 , IDrawInterface(pParent)
-, ViewportInterface(pParent)
+, core_sdk_api::ViewportInterface(pParent)
 {
-	RegisterViewportInterface(this);
+    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
 	RegisterDrawInterface(this);
 
 	SetTransient(true);
@@ -56,7 +56,7 @@ void Explorer3D::DoDraw()
 			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = pCamera->GetFarDist();
 			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, pCamera->GetPosition_().vec_array, 3 * sizeof(float));
 
-			SetViewPoint(pCamera->GetPosition_());
+            core_sdk_api::ViewportInterface::SetViewPoint(pCamera->GetPosition_());
 		}
 	}
 

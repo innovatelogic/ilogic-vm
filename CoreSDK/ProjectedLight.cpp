@@ -73,7 +73,7 @@ void ProjectedLight::DoDraw()
 //----------------------------------------------------------------------------------------------
 void ProjectedLight::PreDraw()
 {
-	/*ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(this);
+	/*core_sdk_api::ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(this);
 	const CActor * VRoot = dynamic_cast<const CActor*>(VInterface);
 
 	CameraManager * Mgr = GetAppMain()->GetCameraManager();

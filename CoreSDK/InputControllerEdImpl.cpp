@@ -27,7 +27,7 @@ namespace core_sdk_api
 
         if (pFocused)
         {
-            ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
+            core_sdk_api::ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
 
             if (pInterface && pInterface == pCoreSDK->GetExplorerInstance()->GetExplorer2D())
             {
@@ -149,7 +149,7 @@ namespace core_sdk_api
 
         if (pFocused)
         {
-            ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
+            core_sdk_api::ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
 
             if (pInterface && pInterface == pCoreSDK->GetExplorerInstance()->GetExplorer2D())
             {

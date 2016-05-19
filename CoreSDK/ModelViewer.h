@@ -8,7 +8,7 @@
 #include "IDrawInterface.h"
 
 class CORESDK_API CModelViewer : public ActorAllocator, 
-	public ViewportInterface, 
+	public core_sdk_api::ViewportInterface,
 	public IDrawInterface
 {
 	DECLARE_CLASS_SIMPLE(CModelViewer, ActorAllocator);
