@@ -1,5 +1,6 @@
 #include "scene_editor_main.h"
 #include "RenderSDK.h"
+#include "../ViewportManager.h"
 #include <memory>
 #include <algorithm>
 
@@ -259,6 +260,12 @@ namespace editors
         {
             AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, mode, oldMode))));
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    IDrawInterface* SceneEditorMain::GetByActor(const CActor *actor) const
+    {
+        return m_pApi->GetViewportManager()->GetByActor(actor);
     }
 
     //----------------------------------------------------------------------------------------------

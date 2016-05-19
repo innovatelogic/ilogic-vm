@@ -47,6 +47,8 @@ namespace editors
         EObjEditControlMode		GetEditControlMode() const override;
         void					SetEditControlMode(EObjEditControlMode mode) override;
 
+        IDrawInterface* GetByActor(const CActor *actor) const override;
+
         void    AddSelected(const CActor *actor);
         void    DelSelected(const CActor *actor);
 

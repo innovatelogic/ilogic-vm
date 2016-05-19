@@ -187,4 +187,10 @@ namespace editors
     {
         // TODO
     }
+
+    //----------------------------------------------------------------------------------------------
+    IDrawInterface* EditorScene3D::GetByActor(const CActor *actor) const
+    {
+        return nullptr;
+    }
 }

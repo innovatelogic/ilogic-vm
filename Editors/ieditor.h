@@ -8,6 +8,7 @@
 
 class SRenderContext;
 class CCoreSDK;
+class IDrawInterface;
 
 namespace editors
 {
@@ -41,7 +42,7 @@ public:
 
     virtual CCoreSDK* GetApp() const = 0;
 
-    virtual void Update(float deltaTime) = 0;
+    virtual void    Update(float deltaTime) = 0;
 
     virtual bool    GetWireframeMode() const = 0;
     virtual void    SetWireframeMode(bool flag) = 0;
@@ -60,6 +61,8 @@ public:
 
     virtual EObjEditControlMode		GetEditControlMode() const = 0;
     virtual void					SetEditControlMode(EObjEditControlMode mode) = 0;
+
+    virtual IDrawInterface* GetByActor(const CActor *actor) const = 0;
 
 protected:
 private:

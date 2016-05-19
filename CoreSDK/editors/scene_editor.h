@@ -61,6 +61,8 @@ namespace editors
         EObjEditControlMode		GetEditControlMode() const override;
         void					SetEditControlMode(EObjEditControlMode mode) override;
 
+        IDrawInterface* GetByActor(const CActor *actor) const override;
+
     protected:
     private:
         CModelViewer        *m_pViewer;

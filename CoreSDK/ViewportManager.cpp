@@ -302,7 +302,7 @@ CActor* CViewportManager::GetFocusedActor() const
 }
 
 //----------------------------------------------------------------------------------------------
-IDrawInterface* CViewportManager::GetByActor(CActor *pAObject) const
+IDrawInterface* CViewportManager::GetByActor(const CActor *pAObject) const
 {
 	if (pAObject)
 	{

@@ -48,7 +48,7 @@ public:
 	int				SetMouseOver(IDrawInterface *pIObject, bool bFlag = true);
 	IDrawInterface* GetMouseOver() const;
 
-	IDrawInterface* GetByActor(CActor *pAObject) const;
+	IDrawInterface* GetByActor(const CActor *pAObject) const;
 
 	void			RebildWorldTransform();
 	void			RebuildSizeTransform();
