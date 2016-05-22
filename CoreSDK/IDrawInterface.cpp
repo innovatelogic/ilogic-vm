@@ -89,7 +89,7 @@ void IDrawInterface::RegisterDrawInterface(const CActor *pSrc, int SrcParent /*=
 	const_cast<CActor*>(pSrc)->RegisterInterfaceImpl(this);
 
 	if (m_pCoreSDK){
-		m_pNode = m_pCoreSDK->GetViewportManager()->RegisterObject(this, pSrc, (SrcParent == 1) ? pSrc->GetParent() : 0 );
+		m_pNode = m_pCoreSDK->GetViewportManager()->RegisterObject(this, pSrc, (SrcParent == 1) ? pSrc->GetParent() : nullptr );
 	}
 }
 

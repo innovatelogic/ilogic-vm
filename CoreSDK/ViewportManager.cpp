@@ -44,6 +44,8 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     ViewportInterface* CViewportManager::GetViewportInterface(const IDrawInterface *pIObject) const
     {
+        ViewportInterface *outViewport = nullptr;
+
         if (pIObject)
         {
             // find in draw array
@@ -61,6 +63,8 @@ namespace core_sdk_api
                 } while (pNode);
             }
 
+            assert(pNodeObject);
+
             // iterate to root viewport
             if (pNodeObject)
             {
@@ -71,12 +75,12 @@ namespace core_sdk_api
                 // find in view port array
                 TNodeMap<CActor, ViewportInterface> *pVNode = m_VecViewports.FindNodeByKey(pNodeObject->m_pKey);
 
-                if (pVNode) {
-                    return const_cast<ViewportInterface*>(pVNode->m_pValue);
-                }
+                assert(pVNode);
+                
+                outViewport = const_cast<ViewportInterface*>(pVNode->m_pValue);
             }
         }
-        return 0;
+        return outViewport;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -420,5 +424,11 @@ namespace core_sdk_api
         }
 
         return pOutNode;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void CViewportManager::SetSelectedImpl(IDrawInterface *pIObject, bool bFlag)
+    {
+
     }
 }

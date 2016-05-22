@@ -8,6 +8,8 @@
 #include "IBaseInterface.h"
 #include "../Foundation/StdafxFoundation.h"
 
+class CObjectAbstract;
+
 class CORESDK_API IDrawInterface : public IBaseInterface
 {
 	DECLARE_INTERFACE_CLASS(IDrawInterface);

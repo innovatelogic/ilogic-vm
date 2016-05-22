@@ -61,6 +61,9 @@ namespace core_sdk_api
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
 
     private:
+        void			SetSelectedImpl(IDrawInterface *pIObject, bool bFlag);
+
+    private:
         TTreeMapViewport m_VecViewports;
         TTreeMapDraw	 m_VecDrawList;
 

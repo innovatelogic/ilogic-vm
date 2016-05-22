@@ -12,7 +12,7 @@ CModelViewer::CModelViewer(const CObjectAbstract *pParent)
 , m_pGenerated(nullptr)
 , m_pMeshComponent(nullptr)
 {
-	RegisterViewportInterface(this);
+    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
 	RegisterDrawInterface(this);
 
 	SetTransient(true);

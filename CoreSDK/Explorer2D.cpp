@@ -7,7 +7,8 @@ Explorer2D::Explorer2D(const CObjectAbstract *pParent)
 : Super(pParent)
 , ViewportInterface(pParent)
 {
-	RegisterViewportInterface(this);
+    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
+
 	SetTransient(true);
 }
 

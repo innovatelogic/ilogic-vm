@@ -1,6 +1,8 @@
-#include "ViewportInterface.h"
 #include "ViewportManager.h"
+#include "IDrawInterface.h"
 #include "CoreSDK.h"
+#include "ViewportInterface.h"
+#include <algorithm>
 
 namespace core_sdk_api
 {
@@ -36,5 +38,30 @@ namespace core_sdk_api
         if (m_pCoreSDK && m_pNode) {
             m_pCoreSDK->GetViewportManager()->UnregisterViewport(m_pNode);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::SetSelect(IDrawInterface *object)
+    {
+        if (std::find(m_SelectedList.begin(), m_SelectedList.end(), object) == m_SelectedList.end())
+        {
+            m_SelectedList.push_back(object);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::DropSelect(IDrawInterface *object)
+    {
+        std::list<IDrawInterface*>::const_iterator iterFind = std::find(m_SelectedList.begin(), m_SelectedList.end(), object);
+        if (iterFind != m_SelectedList.end())
+        {
+            m_SelectedList.erase(iterFind);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::UnselectAll()
+    {
+        m_SelectedList.clear();
     }
 }
