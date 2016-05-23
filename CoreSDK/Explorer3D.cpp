@@ -66,6 +66,7 @@ void Explorer3D::DoDraw()
 		//GetPhysicsEngine()->DebugRender(GetRenderComponent());
 	}
 
+    DrawViewport();
 }
 
 //----------------------------------------------------------------------------------------------

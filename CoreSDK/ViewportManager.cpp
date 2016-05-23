@@ -166,6 +166,8 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     int CViewportManager::SetFocus(IDrawInterface *pIObject, bool bFlag /*= true*/)
     {
+        SetSelectedImpl(pIObject, true);
+
         // kill focus
         if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
@@ -429,6 +431,16 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void CViewportManager::SetSelectedImpl(IDrawInterface *pIObject, bool bFlag)
     {
+        ViewportInterface *viewport = GetViewportInterface(pIObject);
 
+        if (viewport)
+        {
+            if (bFlag) {
+                viewport->SetSelect(pIObject);
+            }
+            else {
+                viewport->DropSelect(pIObject);
+            }
+        }
     }
 }

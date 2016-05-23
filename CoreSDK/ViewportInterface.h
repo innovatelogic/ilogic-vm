@@ -33,7 +33,10 @@ namespace core_sdk_api
         float   GetFarPlane() const { return m_fFarPlane; }
         void    SetFarPlane(float fValue) { m_fFarPlane = fValue; }
 
-        virtual void	DrawViewport() {}
+        /*!
+        * Draw viewport's routine
+        */
+        virtual void	DrawViewport() const;
 
         /*!
          * adds selection to list
@@ -52,6 +55,11 @@ namespace core_sdk_api
         */
         void    UnselectAll();
         
+        /*!
+        * returns selected list
+        */
+        const std::list<IDrawInterface*>& GetSelected() const { return m_SelectedList; }
+
     protected:
     private:
         
@@ -65,7 +73,7 @@ namespace core_sdk_api
 
         TNodeMap<CActor, ViewportInterface> *m_pNode;
 
-        std::list<IDrawInterface*> m_SelectedList; // should it be here???
+        std::list<IDrawInterface*> m_SelectedList; 
 
         mutable CCoreSDK *m_pCoreSDK;
     };

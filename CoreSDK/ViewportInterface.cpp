@@ -1,6 +1,7 @@
 #include "ViewportManager.h"
 #include "IDrawInterface.h"
 #include "CoreSDK.h"
+#include "RenderSDK.h"
 #include "ViewportInterface.h"
 #include <algorithm>
 
@@ -37,6 +38,30 @@ namespace core_sdk_api
     {
         if (m_pCoreSDK && m_pNode) {
             m_pCoreSDK->GetViewportManager()->UnregisterViewport(m_pNode);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::DrawViewport() const
+    {
+        if (!m_SelectedList.empty())
+        {
+            Bounds3f out((*m_SelectedList.begin())->GetBounds_());
+
+            for each (const IDrawInterface *var in m_SelectedList)
+            {
+                Bounds3f bound = var->GetBounds_();
+
+                if (bound.IsValid())
+                {
+                    out += bound;
+                }
+            }
+            
+            Matrix I;
+            I.Identitly();
+
+            m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
         }
     }
 
