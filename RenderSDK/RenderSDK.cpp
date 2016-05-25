@@ -560,14 +560,14 @@ void CRenderSDK::DrawBounds(const Matrix& WTM, const Bounds3f &Bound, unsigned i
 {
 	Vector  Points[8];    // corners of the box
 	 
-	Points[0] = Vector(Bound.bound_min.x, Bound.bound_min.y, Bound.bound_min.z) + WTM.t; // xyz
-	Points[1] = Vector(Bound.bound_max.x, Bound.bound_min.y, Bound.bound_min.z) + WTM.t; // Xyz
-	Points[2] = Vector(Bound.bound_min.x, Bound.bound_max.y, Bound.bound_min.z) + WTM.t; // xYz
-	Points[3] = Vector(Bound.bound_max.x, Bound.bound_max.y, Bound.bound_min.z) + WTM.t; // XYz
-	Points[4] = Vector(Bound.bound_min.x, Bound.bound_min.y, Bound.bound_max.z) + WTM.t; // xyZ
-	Points[5] = Vector(Bound.bound_max.x, Bound.bound_min.y, Bound.bound_max.z) + WTM.t; // XyZ
-	Points[6] = Vector(Bound.bound_min.x, Bound.bound_max.y, Bound.bound_max.z) + WTM.t; // xYZ
-	Points[7] = Vector(Bound.bound_max.x, Bound.bound_max.y, Bound.bound_max.z) + WTM.t; // XYZ
+    Points[0] = Vector(Bound.bound_min.x, Bound.bound_min.y, Bound.bound_min.z);// +WTM.t; // xyz
+    Points[1] = Vector(Bound.bound_max.x, Bound.bound_min.y, Bound.bound_min.z);// +WTM.t; // Xyz
+    Points[2] = Vector(Bound.bound_min.x, Bound.bound_max.y, Bound.bound_min.z);// +WTM.t; // xYz
+    Points[3] = Vector(Bound.bound_max.x, Bound.bound_max.y, Bound.bound_min.z);// +WTM.t; // XYz
+    Points[4] = Vector(Bound.bound_min.x, Bound.bound_min.y, Bound.bound_max.z);// +WTM.t; // xyZ
+    Points[5] = Vector(Bound.bound_max.x, Bound.bound_min.y, Bound.bound_max.z);// +WTM.t; // XyZ
+    Points[6] = Vector(Bound.bound_min.x, Bound.bound_max.y, Bound.bound_max.z);// +WTM.t; // xYZ
+    Points[7] = Vector(Bound.bound_max.x, Bound.bound_max.y, Bound.bound_max.z);// +WTM.t; // XYZ
 
 	DrawLine(Points[0], Points[2], Color);
 	DrawLine(Points[2], Points[3], Color);

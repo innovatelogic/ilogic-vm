@@ -59,7 +59,7 @@ void Comp_StaticMesh::LoadMesh(const SMeshMaterialSet &Desc)
 	{
 		Bounds3f modelBBox;
 
-		pScene->GetSceneBBox(&modelBBox.bound_min.x, &modelBBox.bound_min.y, &modelBBox.bound_min.z,
+		pScene->GetModelsBBox(&modelBBox.bound_min.x, &modelBBox.bound_min.y, &modelBBox.bound_min.z,
 								&modelBBox.bound_max.x, &modelBBox.bound_max.y, &modelBBox.bound_max.z);
 		SetRBounds_(modelBBox);
 	}

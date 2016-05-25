@@ -28,23 +28,23 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::RegisterViewportInterface(const CActor *pSrc)
     {
-        if (m_pCoreSDK) {
-            m_pNode = m_pCoreSDK->GetViewportManager()->RegisterViewport(this, pSrc, nullptr);
-        }
+        assert(m_pCoreSDK && pSrc);
+
+        m_pNode = m_pCoreSDK->GetViewportManager()->RegisterViewport(this, pSrc, nullptr);
     }
 
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::UnregisterViewportInterface()
     {
-        if (m_pCoreSDK && m_pNode) {
-            m_pCoreSDK->GetViewportManager()->UnregisterViewport(m_pNode);
-        }
+        assert(m_pCoreSDK && m_pNode);
+
+        m_pCoreSDK->GetViewportManager()->UnregisterViewport(m_pNode);
     }
 
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::DrawViewport() const
     {
-        if (!m_SelectedList.empty())
+       /* if (!m_SelectedList.empty())
         {
             Bounds3f out((*m_SelectedList.begin())->GetBounds_());
 
@@ -62,7 +62,7 @@ namespace core_sdk_api
             I.Identitly();
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
-        }
+        }*/
     }
 
     //----------------------------------------------------------------------------------------------

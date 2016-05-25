@@ -343,8 +343,11 @@ void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const SMeshMaterialSet &Desc
 	oFile >> scene_aabb_min >> scene_aabb_max;
 	oFile >> models_aabb_min >> models_aabb_max;
 
-	m_pSceneMesh->SetSceneBBox(scene_aabb_min.x, scene_aabb_min.y, scene_aabb_min.z, scene_aabb_max.x, scene_aabb_max.y, scene_aabb_max.z);
-	m_pSceneMesh->SetModelsBBox(models_aabb_min.x, models_aabb_min.y, models_aabb_min.z, models_aabb_min.x, models_aabb_min.y, models_aabb_min.z);
+	m_pSceneMesh->SetSceneBBox(scene_aabb_min.x, scene_aabb_min.y, scene_aabb_min.z, 
+                                scene_aabb_max.x, scene_aabb_max.y, scene_aabb_max.z);
+
+	m_pSceneMesh->SetModelsBBox(models_aabb_min.x, models_aabb_min.y, models_aabb_min.z, 
+                                models_aabb_max.x, models_aabb_max.y, models_aabb_max.z);
 }
 
 //----------------------------------------------------------------------------------------------

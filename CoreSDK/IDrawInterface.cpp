@@ -1094,6 +1094,7 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 	m_WorldMatrixTransform = GetLTM_() * WTM * GetSTM_();
 
 	std::vector<IRenderInterface*> &VecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
+
 	for (std::vector<IRenderInterface*>::iterator Iter = VecRenderEntities.begin(); Iter != VecRenderEntities.end(); ++Iter)
 	{
 		(*Iter)->SetRWTM(m_WorldMatrixTransform);
@@ -1102,7 +1103,9 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 
 		if (BBox.IsValid())
 		{
-			Vector BoxPoints[] = 
+            const unsigned int BBOX_POINTS = 8;
+
+			Vector BoxPoints[BBOX_POINTS] =
 			{ 
 				Vector(BBox.bound_min.x, BBox.bound_min.y, BBox.bound_min.z),
 				Vector(BBox.bound_min.x, BBox.bound_min.y, BBox.bound_max.z),
@@ -1115,19 +1118,29 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 				Vector(BBox.bound_max.x, BBox.bound_max.y, BBox.bound_min.z),
 			}; 
 
-			m_Bounds.SetBounds(Vector(0.f, 0.f, 0.f), Vector(0.f, 0.f, 0.f));
+            Bounds3f tmpBound;
 
 			Matrix MT = m_WorldMatrixTransform;
 			MT.t = Vector(0.f, 0.f, 0.f);
 
-			for (int Index = 0; Index < 8; ++Index)
+			for (int Index = 0; Index < BBOX_POINTS; ++Index)
 			{
-				Vector TransformMax = transform_coord(BoxPoints[Index], MT);
-				m_Bounds.Add(TransformMax);
+				Vector point = transform_coord(BoxPoints[Index], MT);
+                
+                if (Index == 0)
+                {
+                    tmpBound.SetBounds(point, point);
+                    continue;
+                }
+                tmpBound.Add(point);
 			}
 
-			(*Iter)->SetWBounds(Bounds3f(Vector(m_WorldMatrixTransform.t + m_Bounds.bound_min), 
-										 Vector(m_WorldMatrixTransform.t + m_Bounds.bound_max)));
+            const Vector bound_min = m_WorldMatrixTransform.t + tmpBound.bound_min;
+            const Vector bound_max = m_WorldMatrixTransform.t + tmpBound.bound_max;
+
+			(*Iter)->SetWBounds(Bounds3f(bound_min, bound_max));
+
+            m_Bounds.SetBounds(bound_min, bound_max);
 		}
 	}
 }
