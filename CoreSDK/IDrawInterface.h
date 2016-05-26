@@ -116,6 +116,13 @@ public:
 	virtual void			DoBuildWorldTransform_(const Matrix &WTM);
 	virtual void			DoBuildSizeTransform() {}
 
+    /*!
+    * rebuilds compounds bbox tree
+    * call after DoBuildWorldTransform_
+    * complexity: N(n)??
+    */
+    virtual void            DoBuildCompounds();
+
 	inline_ virtual	Vector2f	GetTransformedSize_() const { return Vector2f(1.f, 1.f); }
 
 	/** Transforms local space position in to global space */

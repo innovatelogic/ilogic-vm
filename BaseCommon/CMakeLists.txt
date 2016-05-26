@@ -81,6 +81,8 @@ if (${ENABLE_TESTING})
 
 	add_executable( ${PROJECT_TEST_NAME}
 					ut/ut_appclasstree.cpp
+					ut/ut_treemap.cpp
+					ut/ut_treemap_fixture.h
 					ut/main.cpp )
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})

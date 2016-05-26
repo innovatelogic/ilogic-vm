@@ -928,6 +928,10 @@ public:
 	{
 	}
 
+    TTMapNode* begin() const { return m_pFirstElement; }
+
+    TTMapNode* end() const { return m_pLastElement; }
+
 	TTMapNode* PushBack(const T_KEY &Key, const T_CLASS *Value, const T_KEY *KeyParent)
 	{
 		return PushBack(new T_KEY(Key), Value, KeyParent);

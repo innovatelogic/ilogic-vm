@@ -334,15 +334,16 @@ namespace core_sdk_api
     {
         Matrix Indently;
 
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+        if (TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
-                TNodeMap<CActor, IDrawInterface> *pRoot = pNode->GetRootNode();
+                TNodeIDraw *pRoot = pNode->GetRootNode();
 
                 const_cast<IDrawInterface*>(pNode->m_pValue)->DoBuildWorldTransform_(pRoot ? pRoot->m_pValue->GetTransformedWTM_() : Indently);
 
                 pNode = m_VecDrawList.GetNext(pNode);
+
             } while (pNode);
         }
     }
@@ -364,16 +365,15 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::RebuildTransform(CActor *pAObject /*= NULL*/)
+    void CViewportManager::RebuildTransform(CActor *pAObject /*= nullptr*/)
     {
         if (pAObject)
         {
-            TNodeMap<CActor, IDrawInterface> *pNode = GetNodeByKey(pAObject);
-
+            TNodeIDraw *pNode = GetNodeByKey(pAObject);
             if (pNode)
             {
                 Matrix Indently;
-                TNodeMap<CActor, IDrawInterface> *pTmpNode = pNode;
+                TNodeIDraw *pTmpNode = pNode;
 
                 do
                 {
@@ -383,14 +383,39 @@ namespace core_sdk_api
 
                 pTmpNode = pNode;
 
-                TNodeMap<CActor, IDrawInterface> *pRoot = pNode->GetRootNode();
-                TNodeMap<CActor, IDrawInterface> *pParentPlainNext = pRoot ? pRoot->GetPlainNext() : 0;
+                TNodeIDraw *pRoot = pNode->GetRootNode();
+                TNodeIDraw *pParentPlainNext = pRoot ? pRoot->GetPlainNext() : nullptr; // stop condition
                 do
                 {
-                    pRoot = pTmpNode->GetRootNode();
-                    const_cast<IDrawInterface*>(pTmpNode->m_pValue)->DoBuildWorldTransform_(pRoot ? pRoot->m_pValue->GetTransformedWTM_() : Indently);
+                    TNodeIDraw *parent = pTmpNode->GetRootNode();
+         
+                    const_cast<IDrawInterface*>(pTmpNode->m_pValue)->DoBuildWorldTransform_(parent ? parent->m_pValue->GetTransformedWTM_() : Indently);
+
+                    /*if (pTmpNode->GetNumChilds() == 0) // rebuild composite box upwards
+                    {
+                        TNodeIDraw *up = pTmpNode->m_pNodeParent;
+
+                        if (up)
+                        {
+                            Bounds3f cmpBox = pTmpNode->m_pValue->GetBounds_();
+                    
+                            do
+                            {
+                                Bounds3f cmpBoxParent = pTmpNode->m_pValue->GetCompositeBounds_();
+
+                                if (cmpBoxParent.IsValid())
+                                {
+                                    cmpBoxParent += cmpBox;
+
+                                    const_cast<IDrawInterface*>(up->m_pValue)->SetCompositeBounds_(cmpBoxParent);
+                                }
+                                up = up->m_pNodeParent;
+                            } while (up != pRoot);
+                        }
+                    }*/
 
                     pTmpNode = m_VecDrawList.GetNext(pTmpNode);
+
                 } while (pTmpNode &&  pTmpNode != pParentPlainNext);
             }
         }
@@ -407,10 +432,10 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     TNodeMap<CActor, IDrawInterface>* CViewportManager::GetNodeByKey(CActor *pAObject) const
     {
-        TNodeMap<CActor, IDrawInterface>* pOutNode = nullptr;
+        TNodeIDraw* pOutNode = nullptr;
 
         bool bFind = false;
-        TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement;
+        TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement;
 
         if (pNode)
         {

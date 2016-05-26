@@ -28,3 +28,5 @@ set(SOURCE
 	)
 	
 add_library(MaxExporter STATIC ${SOURCE})
+
+set_target_properties(exe1 exe2 PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

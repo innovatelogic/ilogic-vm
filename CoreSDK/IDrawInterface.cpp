@@ -1093,13 +1093,12 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 {
 	m_WorldMatrixTransform = GetLTM_() * WTM * GetSTM_();
 
-	std::vector<IRenderInterface*> &VecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
-
-	for (std::vector<IRenderInterface*>::iterator Iter = VecRenderEntities.begin(); Iter != VecRenderEntities.end(); ++Iter)
+    std::vector<IRenderInterface*> &vecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
+	for (std::vector<IRenderInterface*>::const_iterator iter = vecRenderEntities.begin(); iter != vecRenderEntities.end(); ++iter)
 	{
-		(*Iter)->SetRWTM(m_WorldMatrixTransform);
+		(*iter)->SetRWTM(m_WorldMatrixTransform);
 	
-		Bounds3f BBox = (*Iter)->GetRBounds_();
+		Bounds3f BBox = (*iter)->GetRBounds_();
 
 		if (BBox.IsValid())
 		{
@@ -1107,7 +1106,7 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 
 			Vector BoxPoints[BBOX_POINTS] =
 			{ 
-				Vector(BBox.bound_min.x, BBox.bound_min.y, BBox.bound_min.z),
+				/*Vector(BBox.bound_min.x, BBox.bound_min.y, BBox.bound_min.z),
 				Vector(BBox.bound_min.x, BBox.bound_min.y, BBox.bound_max.z),
 				Vector(BBox.bound_max.x, BBox.bound_min.y, BBox.bound_max.z),
 				Vector(BBox.bound_max.x, BBox.bound_min.y, BBox.bound_min.z),
@@ -1115,14 +1114,24 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 				Vector(BBox.bound_min.x, BBox.bound_max.y, BBox.bound_min.z),
 				Vector(BBox.bound_min.x, BBox.bound_max.y, BBox.bound_max.z),
 				Vector(BBox.bound_max.x, BBox.bound_max.y, BBox.bound_max.z),
-				Vector(BBox.bound_max.x, BBox.bound_max.y, BBox.bound_min.z),
-			}; 
+				Vector(BBox.bound_max.x, BBox.bound_max.y, BBox.bound_min.z),*/
 
-            Bounds3f tmpBound;
+                // TODO make homogeneous with exporter tool
+                Vector(BBox.bound_min.z, BBox.bound_min.y, BBox.bound_min.x),
+                Vector(BBox.bound_max.z, BBox.bound_min.y, BBox.bound_min.x),
+                Vector(BBox.bound_max.z, BBox.bound_min.y, BBox.bound_max.x),
+                Vector(BBox.bound_min.z, BBox.bound_min.y, BBox.bound_max.x),
+
+                Vector(BBox.bound_min.z, BBox.bound_max.y, BBox.bound_min.x),
+                Vector(BBox.bound_max.z, BBox.bound_max.y, BBox.bound_min.x),
+                Vector(BBox.bound_max.z, BBox.bound_max.y, BBox.bound_max.x),
+                Vector(BBox.bound_min.z, BBox.bound_max.y, BBox.bound_max.x),
+			}; 
 
 			Matrix MT = m_WorldMatrixTransform;
 			MT.t = Vector(0.f, 0.f, 0.f);
 
+            Bounds3f tmpBound;
 			for (int Index = 0; Index < BBOX_POINTS; ++Index)
 			{
 				Vector point = transform_coord(BoxPoints[Index], MT);
@@ -1138,15 +1147,30 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
             const Vector bound_min = m_WorldMatrixTransform.t + tmpBound.bound_min;
             const Vector bound_max = m_WorldMatrixTransform.t + tmpBound.bound_max;
 
-			(*Iter)->SetWBounds(Bounds3f(bound_min, bound_max));
+            (*iter)->SetWBounds(Bounds3f(bound_min, bound_max));
 
-            m_Bounds.SetBounds(bound_min, bound_max);
+            if (iter == vecRenderEntities.begin())
+            {
+                m_Bounds.SetBounds(bound_min, bound_max);
+                continue;
+            }
+
+            m_Bounds.Add(bound_min);
+            m_Bounds.Add(bound_max);
+
+            m_CompositeBounds = m_Bounds;
 		}
 	}
 }
 
- //----------------------------------------------------------------------------------------------
- /** Transforms local space position in to global space point */
+//----------------------------------------------------------------------------------------------
+void IDrawInterface::DoBuildCompounds()
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+/** Transforms local space position in to global space point */
  Vector& IDrawInterface::LocalToGlobalTransform(Vector& OutGlobalPoint, const Vector& InLocalPoint) const
  {
 	 transform_coord(OutGlobalPoint, InLocalPoint, m_WorldMatrixTransform);

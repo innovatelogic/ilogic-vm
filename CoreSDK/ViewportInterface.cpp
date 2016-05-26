@@ -44,9 +44,9 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::DrawViewport() const
     {
-       /* if (!m_SelectedList.empty())
+        if (!m_SelectedList.empty())
         {
-            Bounds3f out((*m_SelectedList.begin())->GetBounds_());
+            Bounds3f out((*m_SelectedList.begin())->GetCompositeBounds_());
 
             for each (const IDrawInterface *var in m_SelectedList)
             {
@@ -62,7 +62,7 @@ namespace core_sdk_api
             I.Identitly();
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
-        }*/
+        }
     }
 
     //----------------------------------------------------------------------------------------------
