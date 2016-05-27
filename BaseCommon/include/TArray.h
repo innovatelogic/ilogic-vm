@@ -837,10 +837,10 @@ public:
 			delete lNode;
 			lNode = rNext;
 		}
-		m_pFirstElement = m_pLastElement = 0;
+		m_pFirstElement = m_pLastElement = nullptr;
 	}
 
-	bool Empty() const { return m_pFirstElement != 0; }
+	bool Empty() const { return m_pFirstElement != nullptr; }
 
 private:
 	size_t GetSubChildsCount(TNode<T> *Node)
@@ -901,6 +901,8 @@ public:
 
 	TNodeMap<T_KEY,T_CLASS>* GetRootNode() const { return m_pNodeParent; }
 	size_t	GetNumChilds() const { return m_NumChilds; }
+
+    const T_KEY* key() const { return m_pKey;  }
 
 //private:
 	TNodeMap<T_KEY,T_CLASS> *m_pNodeNext;		// pointer to next element
@@ -1180,21 +1182,32 @@ public:
 		return OutNode;
 	}
 
+    //----------------------------------------------------------------------------------------------
 	bool Empty() const { return m_pFirstElement == 0; }
 
+    //----------------------------------------------------------------------------------------------
+    /* 
+     * Deep-First traversal of a tree without recursion
+     */
+    TTMapNode* next(TTMapNode* node) const
+    {
+        assert(node);
+
+        if (node == m_pLastElement) {
+            return nullptr;
+        }
+
+        return (node->m_NumChilds || node->m_pNodeNext) ? node->m_pNodeNext : // first priority childs nodes or regular ones
+            (node->m_pNodeParent->GetPlainNext() ? node->m_pNodeParent->GetPlainNext() : nullptr);
+    }
+
+    //----------------------------------------------------------------------------------------------
 	/*
 		simulate standard tree iterating
 	*/
 	TTMapNode* GetNext(TTMapNode* pNode) const
 	{
-		assert(pNode);
-
-		if (pNode == m_pLastElement){
-			return 0;
-		}
-		
-		return (pNode->m_NumChilds || pNode->m_pNodeNext) ? pNode->m_pNodeNext : // first priority childs nodes or regular ones
-				(pNode->m_pNodeParent->GetPlainNext() ? pNode->m_pNodeParent->GetPlainNext() : 0);
+        return next(pNode);
 	}
 
 	TTMapNode* GetPrev(TTMapNode *pNode) const

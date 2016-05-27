@@ -50,7 +50,7 @@ namespace core_sdk_api
         {
             // find in draw array
             TNodeIDraw *pNodeObject = 0;
-            if (TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement)
+            if (TNodeIDraw *pNode = m_VecDrawList.begin())
             {
                 do
                 {

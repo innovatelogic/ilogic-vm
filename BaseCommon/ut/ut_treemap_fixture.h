@@ -34,14 +34,18 @@ class TestMapTest : public ::testing::Test
         void AddChild(TTestValue *val) { m_childs.push_back(val); }
 
         std::string m_name;
-        TTestKey    *m_key;
         TTestValue  *m_parent;
+
+        TTestKey    *m_key; // pointer to key
+
         std::vector<TTestValue*> m_childs;
     };
 
+protected:
     using TestTreeMap = oes::common_base::TTreeMap<TTestKey, TTestValue>;
     using TestTreeNode = oes::common_base::TNodeMap<TTestKey, TTestValue>;
 
+private:
     //----------------------------------------------------------------------------------------------
     void SetUp() override
     {
@@ -69,13 +73,22 @@ class TestMapTest : public ::testing::Test
     //----------------------------------------------------------------------------------------------
     void BuidTree()
     {
-        //          0
+        //          0     10
         //       1     2  
         //     3   4  5  6
         //     7   8     9
 
+        // depth-first traverse
+        // [ 0,                          10 ]
+        //     1,          2,
+        //       3,   4,       5,   6,
+        //         7,    8,             9,
+
         TTestKey *key0 = new TTestKey("0", new TTestValue("0", nullptr));
         RegisterNode(key0, nullptr);
+
+        TTestKey *key10 = new TTestKey("10", new TTestValue("10", nullptr));
+        RegisterNode(key10, nullptr);
 
         TTestKey *key1 = new TTestKey("1", new TTestValue("1", key0->m_value));
         key0->m_value->AddChild(key1->m_value);
@@ -115,16 +128,23 @@ class TestMapTest : public ::testing::Test
 
         m_root = key0;
 
-        m_veckeys.push_back(key0);
-        m_veckeys.push_back(key1);
-        m_veckeys.push_back(key2);
-        m_veckeys.push_back(key3);
-        m_veckeys.push_back(key4);
-        m_veckeys.push_back(key5);
-        m_veckeys.push_back(key6);
-        m_veckeys.push_back(key7);
-        m_veckeys.push_back(key8);
-        m_veckeys.push_back(key9);
+        // depth-first traverse
+        // [ 0,                          10 ]
+        //     1,          2,
+        //       3,   4,       5,   6,
+        //         7,    8,             9,
+
+        m_deepth_first_traverse.push_back(key0);
+        m_deepth_first_traverse.push_back(key1);
+        m_deepth_first_traverse.push_back(key3);
+        m_deepth_first_traverse.push_back(key7);
+        m_deepth_first_traverse.push_back(key4);
+        m_deepth_first_traverse.push_back(key8);
+        m_deepth_first_traverse.push_back(key2);
+        m_deepth_first_traverse.push_back(key5);
+        m_deepth_first_traverse.push_back(key6);
+        m_deepth_first_traverse.push_back(key9);
+        m_deepth_first_traverse.push_back(key10);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -154,7 +174,7 @@ class TestMapTest : public ::testing::Test
 
         m_map.Clear();
 
-        m_veckeys.clear();
+        m_breath_traverse.clear();
     }
 
 public:
@@ -162,5 +182,6 @@ public:
 
     TTestKey *m_root;
 
-    std::vector<TTestKey*> m_veckeys;
+    std::vector<TTestKey*> m_breath_traverse;
+    std::vector<TTestKey*> m_deepth_first_traverse;
 };
