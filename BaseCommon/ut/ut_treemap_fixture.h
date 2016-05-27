@@ -84,6 +84,9 @@ private:
         //       3,   4,       5,   6,
         //         7,    8,             9,
 
+        // breath-first traverse
+        // [0, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
         TTestKey *key0 = new TTestKey("0", new TTestValue("0", nullptr));
         RegisterNode(key0, nullptr);
 
@@ -129,22 +132,14 @@ private:
         m_root = key0;
 
         // depth-first traverse
-        // [ 0,                          10 ]
+        // [ 0,                            10 ]
         //     1,          2,
         //       3,   4,       5,   6,
         //         7,    8,             9,
 
-        m_deepth_first_traverse.push_back(key0);
-        m_deepth_first_traverse.push_back(key1);
-        m_deepth_first_traverse.push_back(key3);
-        m_deepth_first_traverse.push_back(key7);
-        m_deepth_first_traverse.push_back(key4);
-        m_deepth_first_traverse.push_back(key8);
-        m_deepth_first_traverse.push_back(key2);
-        m_deepth_first_traverse.push_back(key5);
-        m_deepth_first_traverse.push_back(key6);
-        m_deepth_first_traverse.push_back(key9);
-        m_deepth_first_traverse.push_back(key10);
+        m_deepth_first_traverse = { key0, key1, key3, key7, key4, key8, key2, key5, key6, key9, key10 };
+
+        m_breath_traverse = { key0, key10, key1, key2, key3, key4, key5, key6, key7, key8, key9 };
     }
 
     //----------------------------------------------------------------------------------------------
