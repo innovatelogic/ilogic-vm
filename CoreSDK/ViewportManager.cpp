@@ -301,7 +301,7 @@ namespace core_sdk_api
             {
                 if (pNode->m_pValue->IsFocused())
                 {
-                    return const_cast<CActor*>(pNode->m_pKey);
+                    return const_cast<CActor*>(pNode->key());
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
@@ -314,7 +314,7 @@ namespace core_sdk_api
     {
         if (pAObject)
         {
-            if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+            if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.begin())
             {
                 do
                 {
@@ -322,7 +322,7 @@ namespace core_sdk_api
                     {
                         return const_cast<IDrawInterface*>(pNode->m_pValue);
                     }
-                    pNode = m_VecDrawList.GetNext(pNode);
+                    pNode = m_VecDrawList.next(pNode);
                 } while (pNode);
             }
         }
@@ -378,41 +378,48 @@ namespace core_sdk_api
                 do
                 {
                     const_cast<IDrawInterface*>(pTmpNode->m_pValue)->DoBuildSizeTransform();
-                    pTmpNode = m_VecDrawList.GetNext(pTmpNode);
+                    pTmpNode = m_VecDrawList.next(pTmpNode);
                 } while (pTmpNode);
 
                 pTmpNode = pNode;
 
-                TNodeIDraw *pRoot = pNode->GetRootNode();
+                TNodeIDraw *pRoot = pNode->parent();
+
                 TNodeIDraw *pParentPlainNext = pRoot ? pRoot->GetPlainNext() : nullptr; // stop condition
+
                 do
                 {
-                    TNodeIDraw *parent = pTmpNode->GetRootNode();
+                    TNodeIDraw *parent = pTmpNode->parent();
          
                     const_cast<IDrawInterface*>(pTmpNode->m_pValue)->DoBuildWorldTransform_(parent ? parent->m_pValue->GetTransformedWTM_() : Indently);
 
-                    /*if (pTmpNode->GetNumChilds() == 0) // rebuild composite box upwards
+                    if (pTmpNode->GetNumChilds() == 0) // rebuild composite box upwards
                     {
-                        TNodeIDraw *up = pTmpNode->m_pNodeParent;
+                        TNodeIDraw *up = pTmpNode->parent();
 
-                        if (up)
+                        Bounds3f cmpBox = pTmpNode->m_pValue->GetCompositeBounds_();
+
+                        if (cmpBox.IsValid())
                         {
-                            Bounds3f cmpBox = pTmpNode->m_pValue->GetBounds_();
-                    
-                            do
+                            while (up)
                             {
-                                Bounds3f cmpBoxParent = pTmpNode->m_pValue->GetCompositeBounds_();
+                                Bounds3f upBox = up->m_pValue->GetCompositeBounds_();
 
-                                if (cmpBoxParent.IsValid())
+                                if (cmpBox.IsValid())
                                 {
-                                    cmpBoxParent += cmpBox;
-
-                                    const_cast<IDrawInterface*>(up->m_pValue)->SetCompositeBounds_(cmpBoxParent);
+                                    upBox += cmpBox;
                                 }
-                                up = up->m_pNodeParent;
-                            } while (up != pRoot);
+                                else
+                                {
+                                    upBox = cmpBox;
+                                }
+
+                                const_cast<IDrawInterface*>(up->m_pValue)->SetCompositeBounds_(upBox);
+
+                                up = up->parent();
+                            }
                         }
-                    }*/
+                    }
 
                     pTmpNode = m_VecDrawList.GetNext(pTmpNode);
 

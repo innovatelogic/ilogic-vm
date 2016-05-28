@@ -55,7 +55,7 @@ namespace core_sdk_api
         void			RebildWorldTransform();
         void			RebuildSizeTransform();
 
-        void			RebuildTransform(CActor *pAObject = NULL);
+        void			RebuildTransform(CActor *pAObject = nullptr);
 
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;

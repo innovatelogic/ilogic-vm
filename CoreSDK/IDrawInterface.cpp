@@ -1093,6 +1093,8 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 {
 	m_WorldMatrixTransform = GetLTM_() * WTM * GetSTM_();
 
+    m_Bounds.SetUnvalid(); // invalidate
+
     std::vector<IRenderInterface*> &vecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
 	for (std::vector<IRenderInterface*>::const_iterator iter = vecRenderEntities.begin(); iter != vecRenderEntities.end(); ++iter)
 	{
@@ -1154,13 +1156,16 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
                 m_Bounds.SetBounds(bound_min, bound_max);
                 continue;
             }
-
-            m_Bounds.Add(bound_min);
-            m_Bounds.Add(bound_max);
-
-            m_CompositeBounds = m_Bounds;
+            else
+            {
+                m_Bounds.Add(bound_min);
+                m_Bounds.Add(bound_max);
+            }
 		}
 	}
+
+    // invalidate composite bounds
+    m_CompositeBounds = m_Bounds;
 }
 
 //----------------------------------------------------------------------------------------------
