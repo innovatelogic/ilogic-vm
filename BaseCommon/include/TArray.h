@@ -899,7 +899,11 @@ public:
 	TNodeMap<T_KEY,T_CLASS>* GetNext() const { return m_pNodeNext; }
 	TNodeMap<T_KEY,T_CLASS>* GetPlainNext() const { return m_pNodeNextPlain; }
 
-	TNodeMap<T_KEY,T_CLASS>* GetRootNode() const { return m_pNodeParent; }
+    /* obsolete */
+	TNodeMap<T_KEY,T_CLASS>* GetRootNode() const { return parent(); }
+
+    TNodeMap<T_KEY, T_CLASS>* parent() const { return m_pNodeParent; }
+
 	size_t	GetNumChilds() const { return m_NumChilds; }
 
     const T_KEY* key() const { return m_pKey;  }

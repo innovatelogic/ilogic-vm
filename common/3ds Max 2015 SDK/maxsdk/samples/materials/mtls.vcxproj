@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>mtl</ProjectName>
+    <ProjectGuid>{AA9C8605-B6AF-46BC-A87F-E1B5CC78D689}</ProjectGuid>
+    <RootNamespace>mtl</RootNamespace>
+    <MaxSDK>../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>mtl</TargetName>
+    <TargetExt>.dlt</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories);$(DirectXSDKInc)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>mtlhdr.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;rtmax.lib;bmm.lib;maxscrpt.lib;paramblk2.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;assetmanagement.lib;mesh.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\mtl.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="acubic.cpp" />
+    <ClCompile Include="bakeShell.cpp" />
+    <ClCompile Include="bmtex.cpp" />
+    <ClCompile Include="checker.cpp" />
+    <ClCompile Include="cmtl.cpp" />
+    <ClCompile Include="color_correction.cpp" />
+    <ClCompile Include="composite.cpp" />
+    <ClCompile Include="composite_material.cpp" />
+    <ClCompile Include="dblsided.cpp" />
+    <ClCompile Include="DxStdMtl2.cpp" />
+    <ClCompile Include="falloff.cpp" />
+    <ClCompile Include="gradient.cpp" />
+    <ClCompile Include="marble.cpp" />
+    <ClCompile Include="mask.cpp" />
+    <ClCompile Include="matte.cpp" />
+    <ClCompile Include="mirror.cpp" />
+    <ClCompile Include="mix.cpp" />
+    <ClCompile Include="mixmat.cpp" />
+    <ClCompile Include="mtlmain.cpp">
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Debug'">EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Debug'">true</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <UseFullPaths>true</UseFullPaths>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Hybrid'">EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Hybrid'">true</BufferSecurityCheck>
+      <Optimization Condition="'$(Configuration)'=='Release'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)'=='Release'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)'=='Release'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)'=='Release'">false</OmitFramePointers>
+      <EnableFiberSafeOptimizations Condition="'$(Configuration)'=='Release'">true</EnableFiberSafeOptimizations>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Release'">Default</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Release'">false</BufferSecurityCheck>
+    </ClCompile>
+    <ClCompile Include="multi.cpp" />
+    <ClCompile Include="noise.cpp" />
+    <ClCompile Include="output.cpp" />
+    <ClCompile Include="partage.cpp" />
+    <ClCompile Include="partblur.cpp" />
+    <ClCompile Include="plate.cpp" />
+    <ClCompile Include="rgbmult.cpp" />
+    <ClCompile Include="StdMaterialViewportShading.cpp" />
+    <ClCompile Include="stdmtl2.cpp" />
+    <ClCompile Include="stdShaders.cpp" />
+    <ClCompile Include="TexMaps.cpp" />
+    <ClCompile Include="tint.cpp" />
+    <ClCompile Include="vertcol.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mtl.def" />
+    <None Include="comp_buttons.bmp" />
+    <None Include="comp_buttons_mask.bmp" />
+    <None Include="dmtlbut.bmp" />
+    <None Include="dmtlmsk.bmp" />
+    <None Include="icon1.ico" />
+    <None Include="preset_d.bmp" />
+    <None Include="preset_r.bmp" />
+    <None Include="error.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bmtex.h" />
+    <ClInclude Include="color_correction.h" />
+    <ClInclude Include="composite.h" />
+    <ClInclude Include="DxStdMtl2.h" />
+    <ClInclude Include="mtlhdr.h" />
+    <ClInclude Include="mtlres.h" />
+    <ClInclude Include="..\..\Include\shaders.h" />
+    <ClInclude Include="StdMaterialViewportShading.h" />
+    <ClInclude Include="stdmtl.h" />
+    <ClInclude Include="stdmtl2.h" />
+    <ClInclude Include="TexMaps.h" />
+    <ClInclude Include="util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mtl.rc" />
+    <ResourceCompile Include="mtl_plasma.rc">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ResourceCompile>
+    <ResourceCompile Include="mtl_viz.rc">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ResourceCompile>
+    <ResourceCompile Include="mtl_vizR.rc">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

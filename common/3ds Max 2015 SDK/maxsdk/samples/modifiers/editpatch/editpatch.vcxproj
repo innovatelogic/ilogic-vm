@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{36564402-90E1-49D8-8DBA-01BB1A70332B}</ProjectGuid>
+    <RootNamespace>EditPatch</RootNamespace>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>EditPatch</TargetName>
+    <TargetExt>.dlm</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;core.lib;geom.lib;maxutil.lib;gfx.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\EditPatch.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;EDITPATCH_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\EditableModifierCommon\CreateFaceMouseProcTemplate.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="editpat.cpp" />
+    <ClCompile Include="editpops.cpp" />
+    <ClCompile Include="editsops.cpp" />
+    <ClCompile Include="editspl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EditPatch.def" />
+    <None Include="addvertc.cur" />
+    <None Include="attach.cur" />
+    <None Include="Bevel.cur" />
+    <None Include="bmp00001.bmp" />
+    <None Include="bmp00002.bmp" />
+    <None Include="booleant.bmp" />
+    <None Include="boolinte.cur" />
+    <None Include="boolsubt.cur" />
+    <None Include="boolunio.cur" />
+    <None Include="chamfer.cur" />
+    <None Include="copy_tan.cur" />
+    <None Include="createwe.cur" />
+    <None Include="cross_se.cur" />
+    <None Include="CROSSHR.CUR" />
+    <None Include="crossins.cur" />
+    <None Include="extrudec.cur" />
+    <None Include="fillet.cur" />
+    <None Include="mask_boo.bmp" />
+    <None Include="outline.cur" />
+    <None Include="paste_tan.cur" />
+    <None Include="patselm.bmp" />
+    <None Include="patselt.bmp" />
+    <None Include="segbreak.cur" />
+    <None Include="segrefin.cur" />
+    <None Include="splinese.bmp" />
+    <None Include="splselm.bmp" />
+    <None Include="thselcur.cur" />
+    <None Include="Trim.cur" />
+    <None Include="vertconn.cur" />
+    <None Include="vinsert.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EditPatch.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="editspl.h" />
+    <ClInclude Include="..\..\EditableModifierCommon\CreateFaceMouseProcTemplate.h" />
+    <ClInclude Include="dllmain.h" />
+    <ClInclude Include="editpat.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

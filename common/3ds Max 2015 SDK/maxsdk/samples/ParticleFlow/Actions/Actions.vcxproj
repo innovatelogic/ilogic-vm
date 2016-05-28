@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>ParticleActions</ProjectName>
+    <ProjectGuid>{67953FFA-A7E2-446C-B373-E679FD75E82B}</ProjectGuid>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>ParticleActions</TargetName>
+    <TargetExt>.dlo</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);$(MaxSdkInc)\particleflow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;paramblk2.lib;particleflow.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;GraphicsDriver.lib;GraphicsUtility.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\Actions.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;ELEMENTS_EXPORTS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Actions.def" />
+    <None Include="Birth_DepotIconMask.bmp" />
+    <None Include="CollisionSpaceWarp_ActiveIcon.bmp" />
+    <None Include="CollisionSpaceWarp_DepotIcon.bmp" />
+    <None Include="CollisionSpaceWarp_FalseIcon.bmp" />
+    <None Include="CollisionSpaceWarp_TrueIcon.bmp" />
+    <None Include="Comments_ActiveIcon.bmp" />
+    <None Include="Comments_DepotIcon.bmp" />
+    <None Include="Comments_InactiveIcon.bmp" />
+    <None Include="Display_ActiveIcon.bmp" />
+    <None Include="Display_DepotIcon.bmp" />
+    <None Include="Display_InactiveIcon.bmp" />
+    <None Include="Duration_ActiveIcon.bmp" />
+    <None Include="Duration_DepotIcon.bmp" />
+    <None Include="Duration_FalseIcon.bmp" />
+    <None Include="Duration_TrueIcon.bmp" />
+    <None Include="Exit_ActiveIcon.bmp" />
+    <None Include="Exit_DepotIcon.bmp" />
+    <None Include="Exit_InactiveIcon.bmp" />
+    <None Include="FacingShape_ActiveIcon.bmp" />
+    <None Include="FacingShape_DepotIcon.bmp" />
+    <None Include="FacingShape_InactiveIcon.bmp" />
+    <None Include="ForceSpaceWarp_ActiveIcon.bmp" />
+    <None Include="ForceSpaceWarp_DepotIcon.bmp" />
+    <None Include="ForceSpaceWarp_InactiveIcon.bmp" />
+    <None Include="GoToNextEvent_ActiveIcon.bmp" />
+    <None Include="GoToNextEvent_DepotIcon.bmp" />
+    <None Include="GoToNextEvent_FalseIcon.bmp" />
+    <None Include="GoToNextEvent_TrueIcon.bmp" />
+    <None Include="GoToRotation_ActiveIcon.bmp" />
+    <None Include="GoToRotation_DepotIcon.bmp" />
+    <None Include="GoToRotation_FalseIcon.bmp" />
+    <None Include="GoToRotation_TrueIcon.bmp" />
+    <None Include="InstanceShape_ActiveIcon.bmp" />
+    <None Include="InstanceShape_DepotIcon.bmp" />
+    <None Include="InstanceShape_InactiveIcon.bmp" />
+    <None Include="MarkShape_ActiveIcon.bmp" />
+    <None Include="MarkShape_DepotIcon.bmp" />
+    <None Include="MarkShape_InactiveIcon.bmp" />
+    <None Include="Material_InactiveIcon.bmp" />
+    <None Include="Operator_DepotIconMask.bmp" />
+    <None Include="PositionOnObject_ActiveIcon.bmp" />
+    <None Include="PositionOnObject_DepotIcon.bmp" />
+    <None Include="PositionOnObject_InactiveIcon.bmp" />
+    <None Include="Render_ActiveIcon.bmp" />
+    <None Include="Render_DepotIcon.bmp" />
+    <None Include="Render_InactiveIcon.bmp" />
+    <None Include="ScaleTest_ActiveIcon.bmp" />
+    <None Include="ScaleTest_DepotIcon.bmp" />
+    <None Include="ScaleTest_FalseIcon.bmp" />
+    <None Include="ScaleTest_TrueIcon.bmp" />
+    <None Include="SimpleBirth_ActiveIcon.bmp" />
+    <None Include="SimpleBirth_DepotIcon.bmp" />
+    <None Include="SimpleBirth_InactiveIcon.bmp" />
+    <None Include="SimpleMapping_InactiveIcon.bmp" />
+    <None Include="SimpleOrientation_ActiveIcon.bmp" />
+    <None Include="SimpleOrientation_DepotIcon.bmp" />
+    <None Include="SimpleOrientation_InactiveIcon.bmp" />
+    <None Include="SimplePosition_ActiveIcon.bmp" />
+    <None Include="SimplePosition_DepotIcon.bmp" />
+    <None Include="SimplePosition_InactiveIcon.bmp" />
+    <None Include="SimpleScale_ActiveIcon.bmp" />
+    <None Include="SimpleScale_DepotIcon.bmp" />
+    <None Include="SimpleScale_InactiveIcon.bmp" />
+    <None Include="SimpleShape_ActiveIcon.bmp" />
+    <None Include="SimpleShape_DepotIcon.bmp" />
+    <None Include="SimpleShape_InactiveIcon.bmp" />
+    <None Include="SimpleSpeed_ActiveIcon.bmp" />
+    <None Include="SimpleSpeed_DepotIcon.bmp" />
+    <None Include="SimpleSpeed_InactiveIcon.bmp" />
+    <None Include="SimpleSpin_ActiveIcon.bmp" />
+    <None Include="SimpleSpin_DepotIcon.bmp" />
+    <None Include="SimpleSpin_InactiveIcon.bmp" />
+    <None Include="Spawn_ActiveIcon.bmp" />
+    <None Include="Spawn_DepotIcon.bmp" />
+    <None Include="Spawn_FalseIcon.bmp" />
+    <None Include="Spawn_TrueIcon.bmp" />
+    <None Include="SpawnOnCollision_ActiveIcon.bmp" />
+    <None Include="SpawnOnCollision_DepotIcon.bmp" />
+    <None Include="SpawnOnCollision_FalseIcon.bmp" />
+    <None Include="SpawnOnCollision_TrueIcon.bmp" />
+    <None Include="SpeedCopy_ActiveIcon.bmp" />
+    <None Include="SpeedCopy_DepotIcon.bmp" />
+    <None Include="SpeedCopy_InactiveIcon.bmp" />
+    <None Include="SpeedGoToTarget_ActiveIcon.bmp" />
+    <None Include="SpeedGoToTarget_DepotIcon.bmp" />
+    <None Include="SpeedGoToTarget_FalseIcon.bmp" />
+    <None Include="SpeedGoToTarget_TrueIcon.bmp" />
+    <None Include="SpeedKeepApart_InactiveIcon.bmp" />
+    <None Include="SpeedSurfaceNormals_InactiveIcon.bmp" />
+    <None Include="SpeedTest_ActiveIcon.bmp" />
+    <None Include="SpeedTest_DepotIcon.bmp" />
+    <None Include="SpeedTest_FalseIcon.bmp" />
+    <None Include="SpeedTest_TrueIcon.bmp" />
+    <None Include="SplitByAmount_ActiveIcon.bmp" />
+    <None Include="SplitByAmount_DepotIcon.bmp" />
+    <None Include="SplitByAmount_FalseIcon.bmp" />
+    <None Include="SplitByAmount_TrueIcon.bmp" />
+    <None Include="SplitBySource_ActiveIcon.bmp" />
+    <None Include="SplitBySource_DepotIcon.bmp" />
+    <None Include="SplitBySource_FalseIcon.bmp" />
+    <None Include="SplitBySource_TrueIcon.bmp" />
+    <None Include="SplitSelected_ActiveIcon.bmp" />
+    <None Include="SplitSelected_DepotIcon.bmp" />
+    <None Include="SplitSelected_FalseIcon.bmp" />
+    <None Include="SplitSelected_TrueIcon.bmp" />
+    <None Include="Test_DepotIconMask.bmp" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Actions.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DLLMain.cpp" />
+    <ClCompile Include="PFActions_GlobalFunctions.cpp" />
+    <ClCompile Include="PFActions_GlobalVariables.cpp" />
+    <ClCompile Include="PFActions_Icon.cpp" />
+    <ClCompile Include="PFActions_SysUtil.cpp" />
+    <ClCompile Include="PFOperatorMaterial.cpp" />
+    <ClCompile Include="PFOperatorSimpleBirth.cpp" />
+    <ClCompile Include="PFOperatorSimpleBirth_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleBirthDesc.cpp" />
+    <ClCompile Include="PFOperatorSimplePosition.cpp" />
+    <ClCompile Include="PFOperatorSimplePosition_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimplePositionDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpeed.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpeed_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpeedDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleOrientation.cpp" />
+    <ClCompile Include="PFOperatorSimpleOrientation_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleOrientationDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleShape.cpp" />
+    <ClCompile Include="PFOperatorSimpleShape_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleShapeDesc.cpp" />
+    <ClCompile Include="PFOperatorInstanceShape.cpp" />
+    <ClCompile Include="PFOperatorInstanceShape_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorInstanceShapeDesc.cpp" />
+    <ClCompile Include="PFOperatorFacingShape.cpp" />
+    <ClCompile Include="PFOperatorFacingShape_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorFacingShapeDesc.cpp" />
+    <ClCompile Include="PFOperatorMarkShape.cpp" />
+    <ClCompile Include="PFOperatorMarkShape_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorMarkShapeDesc.cpp" />
+    <ClCompile Include="PFOperatorForceSpaceWarp.cpp" />
+    <ClCompile Include="PFOperatorForceSpaceWarp_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorForceSpaceWarpDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpin.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpin_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleSpinDesc.cpp" />
+    <ClCompile Include="PFOperatorExit.cpp" />
+    <ClCompile Include="PFOperatorExit_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorExitDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleMapping.cpp" />
+    <ClCompile Include="PFOperatorSimpleMapping_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleMappingDesc.cpp" />
+    <ClCompile Include="PFOperatorPositionOnObject.cpp" />
+    <ClCompile Include="PFOperatorPositionOnObject_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorPositionOnObjectDesc.cpp" />
+    <ClCompile Include="PFOperatorSpeedSurfaceNormals.cpp" />
+    <ClCompile Include="PFOperatorSpeedSurfaceNormals_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSpeedSurfaceNormalsDesc.cpp" />
+    <ClCompile Include="PFOperatorSpeedCopy.cpp" />
+    <ClCompile Include="PFOperatorSpeedCopy_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSpeedCopyDesc.cpp" />
+    <ClCompile Include="PFOperatorSpeedKeepApart.cpp" />
+    <ClCompile Include="PFOperatorSpeedKeepApart_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSpeedKeepApartDesc.cpp" />
+    <ClCompile Include="PFOperatorComments.cpp" />
+    <ClCompile Include="PFOperatorComments_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorCommentsDesc.cpp" />
+    <ClCompile Include="PFOperatorSimpleScale.cpp" />
+    <ClCompile Include="PFOperatorSimpleScale_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorSimpleScaleDesc.cpp" />
+    <ClCompile Include="PFOperatorDisplay.cpp" />
+    <ClCompile Include="PFOperatorDisplay_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorDisplayDesc.cpp" />
+    <ClCompile Include="PFOperatorRender.cpp" />
+    <ClCompile Include="PFOperatorRender_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorRenderDesc.cpp" />
+    <ClCompile Include="PFOperatorMaterialStatic.cpp" />
+    <ClCompile Include="PFOperatorMaterialStatic_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorMaterialStaticDesc.cpp" />
+    <ClCompile Include="PFOperatorMaterialDynamic.cpp" />
+    <ClCompile Include="PFOperatorMaterialDynamic_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorMaterialDynamicDesc.cpp" />
+    <ClCompile Include="PFOperatorMaterialFrequency.cpp" />
+    <ClCompile Include="PFOperatorMaterialFrequency_ParamBlock.cpp" />
+    <ClCompile Include="PFOperatorMaterialFrequencyDesc.cpp" />
+    <ClCompile Include="PFTestDuration.cpp" />
+    <ClCompile Include="PFTestDuration_ParamBlock.cpp" />
+    <ClCompile Include="PFTestDurationDesc.cpp" />
+    <ClCompile Include="PFTestSpawn.cpp" />
+    <ClCompile Include="PFTestSpawn_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSpawnDesc.cpp" />
+    <ClCompile Include="PFTestSpawnOnCollision.cpp" />
+    <ClCompile Include="PFTestSpawnOnCollision_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSpawnOnCollisionDesc.cpp" />
+    <ClCompile Include="PFTestCollisionSpaceWarp.cpp" />
+    <ClCompile Include="PFTestCollisionSpaceWarp_ParamBlock.cpp" />
+    <ClCompile Include="PFTestCollisionSpaceWarpDesc.cpp" />
+    <ClCompile Include="PFTestSpeedGoToTarget.cpp" />
+    <ClCompile Include="PFTestSpeedGoToTarget_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSpeedGoToTargetDesc.cpp" />
+    <ClCompile Include="PFTestGoToNextEvent.cpp" />
+    <ClCompile Include="PFTestGoToNextEvent_ParamBlock.cpp" />
+    <ClCompile Include="PFTestGoToNextEventDesc.cpp" />
+    <ClCompile Include="PFTestSplitByAmount.cpp" />
+    <ClCompile Include="PFTestSplitByAmount_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSplitByAmountDesc.cpp" />
+    <ClCompile Include="PFTestSplitBySource.cpp" />
+    <ClCompile Include="PFTestSplitBySource_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSplitBySourceDesc.cpp" />
+    <ClCompile Include="PFTestSplitSelected.cpp" />
+    <ClCompile Include="PFTestSplitSelected_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSplitSelectedDesc.cpp" />
+    <ClCompile Include="PFTestGoToRotation.cpp" />
+    <ClCompile Include="PFTestGoToRotation_ParamBlock.cpp" />
+    <ClCompile Include="PFTestGoToRotationDesc.cpp" />
+    <ClCompile Include="PFTestScale.cpp" />
+    <ClCompile Include="PFTestScale_ParamBlock.cpp" />
+    <ClCompile Include="PFTestScaleDesc.cpp" />
+    <ClCompile Include="PFTestSpeed.cpp" />
+    <ClCompile Include="PFTestSpeed_ParamBlock.cpp" />
+    <ClCompile Include="PFTestSpeedDesc.cpp" />
+    <ClCompile Include="ShapeShareSplitter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PFActions_GlobalFunctions.h" />
+    <ClInclude Include="PFActions_GlobalVariables.h" />
+    <ClInclude Include="PFActions_Icon.h" />
+    <ClInclude Include="PFActions_SysUtil.h" />
+    <ClInclude Include="PFOperatorMaterial.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="PFOperatorSimpleBirth.h" />
+    <ClInclude Include="PFOperatorSimpleBirth_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleBirthDesc.h" />
+    <ClInclude Include="PFOperatorSimplePosition.h" />
+    <ClInclude Include="PFOperatorSimplePosition_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimplePositionDesc.h" />
+    <ClInclude Include="PFOperatorSimpleSpeed.h" />
+    <ClInclude Include="PFOperatorSimpleSpeed_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleSpeedDesc.h" />
+    <ClInclude Include="PFOperatorSimpleOrientation.h" />
+    <ClInclude Include="PFOperatorSimpleOrientation_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleOrientationDesc.h" />
+    <ClInclude Include="PFOperatorSimpleShape.h" />
+    <ClInclude Include="PFOperatorSimpleShape_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleShapeDesc.h" />
+    <ClInclude Include="PFOperatorInstanceShape.h" />
+    <ClInclude Include="PFOperatorInstanceShape_ParamBlock.h" />
+    <ClInclude Include="PFOperatorInstanceShapeDesc.h" />
+    <ClInclude Include="PFOperatorFacingShape.h" />
+    <ClInclude Include="PFOperatorFacingShape_ParamBlock.h" />
+    <ClInclude Include="PFOperatorFacingShapeDesc.h" />
+    <ClInclude Include="PFOperatorMarkShape.h" />
+    <ClInclude Include="PFOperatorMarkShape_ParamBlock.h" />
+    <ClInclude Include="PFOperatorMarkShapeDesc.h" />
+    <ClInclude Include="PFOperatorForceSpaceWarp.h" />
+    <ClInclude Include="PFOperatorForceSpaceWarp_ParamBlock.h" />
+    <ClInclude Include="PFOperatorForceSpaceWarpDesc.h" />
+    <ClInclude Include="PFOperatorSimpleSpin.h" />
+    <ClInclude Include="PFOperatorSimpleSpin_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleSpinDesc.h" />
+    <ClInclude Include="PFOperatorExit.h" />
+    <ClInclude Include="PFOperatorExit_ParamBlock.h" />
+    <ClInclude Include="PFOperatorExitDesc.h" />
+    <ClInclude Include="PFOperatorSimpleMapping.h" />
+    <ClInclude Include="PFOperatorSimpleMapping_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleMappingDesc.h" />
+    <ClInclude Include="PFOperatorPositionOnObject.h" />
+    <ClInclude Include="PFOperatorPositionOnObject_ParamBlock.h" />
+    <ClInclude Include="PFOperatorPositionOnObjectDesc.h" />
+    <ClInclude Include="PFOperatorSpeedSurfaceNormals.h" />
+    <ClInclude Include="PFOperatorSpeedSurfaceNormals_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSpeedSurfaceNormalsDesc.h" />
+    <ClInclude Include="PFOperatorSpeedCopy.h" />
+    <ClInclude Include="PFOperatorSpeedCopy_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSpeedCopyDesc.h" />
+    <ClInclude Include="PFOperatorSpeedKeepApart.h" />
+    <ClInclude Include="PFOperatorSpeedKeepApart_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSpeedKeepApartDesc.h" />
+    <ClInclude Include="PFOperatorComments.h" />
+    <ClInclude Include="PFOperatorComments_ParamBlock.h" />
+    <ClInclude Include="PFOperatorCommentsDesc.h" />
+    <ClInclude Include="PFOperatorSimpleScale.h" />
+    <ClInclude Include="PFOperatorSimpleScale_ParamBlock.h" />
+    <ClInclude Include="PFOperatorSimpleScaleDesc.h" />
+    <ClInclude Include="PFOperatorDisplay.h" />
+    <ClInclude Include="PFOperatorDisplay_ParamBlock.h" />
+    <ClInclude Include="PFOperatorDisplayDesc.h" />
+    <ClInclude Include="PFOperatorRender.h" />
+    <ClInclude Include="PFOperatorRender_ParamBlock.h" />
+    <ClInclude Include="PFOperatorRenderDesc.h" />
+    <ClInclude Include="PFOperatorMaterialStatic.h" />
+    <ClInclude Include="PFOperatorMaterialStatic_ParamBlock.h" />
+    <ClInclude Include="PFOperatorMaterialStaticDesc.h" />
+    <ClInclude Include="PFOperatorMaterialDynamic.h" />
+    <ClInclude Include="PFOperatorMaterialDynamic_ParamBlock.h" />
+    <ClInclude Include="PFOperatorMaterialDynamicDesc.h" />
+    <ClInclude Include="PFOperatorMaterialFrequency.h" />
+    <ClInclude Include="PFOperatorMaterialFrequency_ParamBlock.h" />
+    <ClInclude Include="PFOperatorMaterialFrequencyDesc.h" />
+    <ClInclude Include="PFTestDuration.h" />
+    <ClInclude Include="PFTestDuration_ParamBlock.h" />
+    <ClInclude Include="PFTestDurationDesc.h" />
+    <ClInclude Include="PFTestSpawn.h" />
+    <ClInclude Include="PFTestSpawn_ParamBlock.h" />
+    <ClInclude Include="PFTestSpawnDesc.h" />
+    <ClInclude Include="PFTestSpawnOnCollision.h" />
+    <ClInclude Include="PFTestSpawnOnCollision_ParamBlock.h" />
+    <ClInclude Include="PFTestSpawnOnCollisionDesc.h" />
+    <ClInclude Include="PFTestCollisionSpaceWarp.h" />
+    <ClInclude Include="PFTestCollisionSpaceWarp_ParamBlock.h" />
+    <ClInclude Include="PFTestCollisionSpaceWarpDesc.h" />
+    <ClInclude Include="PFTestSpeedGoToTarget.h" />
+    <ClInclude Include="PFTestSpeedGoToTarget_ParamBlock.h" />
+    <ClInclude Include="PFTestSpeedGoToTargetDesc.h" />
+    <ClInclude Include="PFTestGoToNextEvent.h" />
+    <ClInclude Include="PFTestGoToNextEvent_ParamBlock.h" />
+    <ClInclude Include="PFTestGoToNextEventDesc.h" />
+    <ClInclude Include="PFTestSplitByAmount.h" />
+    <ClInclude Include="PFTestSplitByAmount_ParamBlock.h" />
+    <ClInclude Include="PFTestSplitByAmountDesc.h" />
+    <ClInclude Include="PFTestSplitBySource.h" />
+    <ClInclude Include="PFTestSplitBySource_ParamBlock.h" />
+    <ClInclude Include="PFTestSplitBySourceDesc.h" />
+    <ClInclude Include="PFTestSplitSelected.h" />
+    <ClInclude Include="PFTestSplitSelected_ParamBlock.h" />
+    <ClInclude Include="PFTestSplitSelectedDesc.h" />
+    <ClInclude Include="PFTestGoToRotation.h" />
+    <ClInclude Include="PFTestGoToRotation_ParamBlock.h" />
+    <ClInclude Include="PFTestGoToRotationDesc.h" />
+    <ClInclude Include="PFTestScale.h" />
+    <ClInclude Include="PFTestScale_ParamBlock.h" />
+    <ClInclude Include="PFTestScaleDesc.h" />
+    <ClInclude Include="PFTestSpeed.h" />
+    <ClInclude Include="PFTestSpeed_ParamBlock.h" />
+    <ClInclude Include="PFTestSpeedDesc.h" />
+    <ClInclude Include="ShapeShareSplitter.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

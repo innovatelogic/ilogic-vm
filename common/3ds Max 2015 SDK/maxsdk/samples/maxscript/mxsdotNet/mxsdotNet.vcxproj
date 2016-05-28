@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5951C2D5-CB01-4EE6-962B-86084C2F1A79}</ProjectGuid>
+    <RootNamespace>mxsdotNet</RootNamespace>
+    <TargetFrameworkVersion>V4.0</TargetFrameworkVersion>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <PropertyGroup>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildBinAssembly)</OutDir>
+    <TargetName>mxsdotNet</TargetName>
+    <TargetExt>.dlx</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_AFXDLL;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>core.lib;maxscrpt.lib;maxutil.lib;assetmanagement.lib;geom.lib;mnmath.lib;bmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\mxsdotNet.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <Link />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <DelayLoadDLLs>dbghelp.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <DelayLoadDLLs>dbghelp.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="mxsdotNet.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="mxsdotNet.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ClassCfg.h" />
+    <ClInclude Include="dotnet_wraps.h" />
+    <ClInclude Include="DotNetClassManaged.h" />
+    <ClInclude Include="DotNetHashTables.h" />
+    <ClInclude Include="DotNetObjectManaged.h" />
+    <ClInclude Include="DotNetObjectWrapper.h" />
+    <ClInclude Include="MaxIncludes.h" />
+    <ClInclude Include="namedefs.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="CDotNetHostWnd.h" />
+    <ClInclude Include="dotNetControl.h" />
+    <ClInclude Include="maxCDotNetHostWnd.h" />
+    <ClInclude Include="maxDotNetButton.h" />
+    <ClInclude Include="maxDotNetControl.h" />
+    <ClInclude Include="mxsCDotNetHostWnd.h" />
+    <ClInclude Include="SkeletonMFC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyEntry.cpp" />
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="dotNetBase.cpp" />
+    <ClCompile Include="dotNetClass.cpp" />
+    <ClCompile Include="DotNetClassManaged.cpp" />
+    <ClCompile Include="DotNetHashTables.cpp" />
+    <ClCompile Include="dotNetMethod.cpp" />
+    <ClCompile Include="dotNetMXSValue.cpp" />
+    <ClCompile Include="dotNetObject.cpp" />
+    <ClCompile Include="DotNetObjectManaged.cpp" />
+    <ClCompile Include="DotNetObjectWrapper.cpp" />
+    <ClCompile Include="ListViewItemComparer.cpp" />
+    <ClCompile Include="mxsdotNet.cpp" />
+    <ClCompile Include="mxsdotNet_main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="CDotNetHostWnd.cpp" />
+    <ClCompile Include="dotNetControl.cpp" />
+    <ClCompile Include="maxCDotNetHostWnd.cpp" />
+    <ClCompile Include="maxDotNetButton.cpp" />
+    <ClCompile Include="maxDotNetControl.cpp" />
+    <ClCompile Include="mxsCDotNetHostWnd.cpp" />
+    <ClCompile Include="SkeletonMFC.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="mxsdotNet.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

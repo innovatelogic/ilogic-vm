@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>MetalBump</ProjectName>
+    <ProjectGuid>{AE8FAC35-6749-4FEE-8A36-A5D4BF66917B}</ProjectGuid>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)\metalbump\</OutDir>
+    <TargetName>MetalBump9</TargetName>
+    <TargetExt>.dlu</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories);$(DirectXSDKInc)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);%(AdditionalLibraryDirectories);$(DirectXSDKLib)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\MetalBump.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_USRDLL;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_SECURE_SCL=0;_USRDLL;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>d3dx9.lib;dxerr.lib;comctl32.lib;bmm.lib;core.lib;geom.lib;gfx.lib;mesh.lib;maxutil.lib;maxscrpt.lib;manipsys.lib;paramblk2.lib;vfw32.lib;assetmanagement.lib;mnmath.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ChannelMap.cpp" />
+    <ClCompile Include="DllEntry.cpp" />
+    <ClCompile Include="Lighting.cpp" />
+    <ClCompile Include="MatMgr.cpp" />
+    <ClCompile Include="MetalBump.cpp" />
+    <ClCompile Include="Movie.cpp" />
+    <ClCompile Include="MSEmulator.cpp" />
+    <ClCompile Include="RenderMesh.cpp" />
+    <ClCompile Include="ShaderMat.cpp" />
+    <ClCompile Include="TextureMgr.cpp" />
+    <ClCompile Include="Utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MetalBump.def" />
+    <None Include="Shaders\Ambient.nvv" />
+    <None Include="Shaders\Diffuse.nvv" />
+    <None Include="Shaders\DiffuseReflect.nvv" />
+    <None Include="Shaders\DirLight.nvv" />
+    <None Include="Shaders\DirLightNormal.nvv" />
+    <None Include="Shaders\DirLightNormalSpec.nvv" />
+    <None Include="Shaders\DirLightSpec.nvv" />
+    <None Include="Shaders\NormalReflect.nvv" />
+    <None Include="Shaders\OmniLight.nvv" />
+    <None Include="Shaders\OmniLightNormal.nvv" />
+    <None Include="Shaders\OmniLightNormalSpec.nvv" />
+    <None Include="Shaders\OmniLightSpec.nvv" />
+    <None Include="Shaders\Reflect.nvv" />
+    <None Include="Shaders\Specular.nvv" />
+    <None Include="Shaders\SpotLight.nvv" />
+    <None Include="Shaders\SpotLightNormal.nvv" />
+    <None Include="Shaders\SpotLightNormalSpec.nvv" />
+    <None Include="Shaders\SpotLightSpec.nvv" />
+    <None Include="Shaders\Ambient.nvp" />
+    <None Include="Shaders\DiffMixAlpha.nvp" />
+    <None Include="Shaders\DiffMixReflect.nvp" />
+    <None Include="Shaders\DiffMixReflectAlpha.nvp" />
+    <None Include="Shaders\DiffuseAlpha.nvp" />
+    <None Include="Shaders\DiffuseReflect.nvp" />
+    <None Include="Shaders\DiffuseReflectAlpha.nvp" />
+    <None Include="Shaders\DirLight.nvp" />
+    <None Include="Shaders\DirLightNormal.nvp" />
+    <None Include="Shaders\DirLightNormalSpec.nvp" />
+    <None Include="Shaders\DirLightSpec.nvp" />
+    <None Include="Shaders\NormalReflect.nvp" />
+    <None Include="Shaders\OmniLight.nvp" />
+    <None Include="Shaders\OmniLightNormal.nvp" />
+    <None Include="Shaders\OmniLightNormalSpec.nvp" />
+    <None Include="Shaders\OmniLightSpec.nvp" />
+    <None Include="Shaders\Specular.nvp" />
+    <None Include="Shaders\SpotLight.nvp" />
+    <None Include="Shaders\SpotLightNormal.nvp" />
+    <None Include="Shaders\SpotLightNormalSpec.nvp" />
+    <None Include="Shaders\SpotLightSpec.nvp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MetalBump.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ChannelMap.h" />
+    <ClInclude Include="Lighting.h" />
+    <ClInclude Include="MatMgr.h" />
+    <ClInclude Include="MetalBump.h" />
+    <ClInclude Include="Movie.h" />
+    <ClInclude Include="MSEmulator.h" />
+    <ClInclude Include="nvtexture.h" />
+    <ClInclude Include="RenderMesh.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ShaderConst.h" />
+    <ClInclude Include="ShaderMat.h" />
+    <ClInclude Include="singleton.h" />
+    <ClInclude Include="TextureMgr.h" />
+    <ClInclude Include="Utility.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

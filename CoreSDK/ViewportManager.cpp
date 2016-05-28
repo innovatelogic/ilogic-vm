@@ -334,11 +334,11 @@ namespace core_sdk_api
     {
         Matrix Indently;
 
-        if (TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement)
+        if (TNodeIDraw *pNode = m_VecDrawList.begin())
         {
             do
             {
-                TNodeIDraw *pRoot = pNode->GetRootNode();
+                TNodeIDraw *pRoot = pNode->parent();
 
                 const_cast<IDrawInterface*>(pNode->m_pValue)->DoBuildWorldTransform_(pRoot ? pRoot->m_pValue->GetTransformedWTM_() : Indently);
 

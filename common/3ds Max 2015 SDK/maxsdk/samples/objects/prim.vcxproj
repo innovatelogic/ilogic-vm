@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{102F1450-55F0-4FF7-AA6A-978418EA3201}</ProjectGuid>
+    <RootNamespace>prim</RootNamespace>
+    <SccLocalPath>.</SccLocalPath>
+    <MaxSDK>../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>prim</TargetName>
+    <TargetExt>.dlo</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>prim.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>Usp10.lib;edmodel.lib;comctl32.lib;delayimp.lib;maxscrpt.lib;bmm.lib;mnmath.lib;paramblk2.lib;particle.lib;poly.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;GraphicsUtility.lib;GraphicsDriver.lib;DefaultRenderItems.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\prim.def</ModuleDefinitionFile>
+      <DelayLoadDLLs>edmodel.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="3DSURFER.CPP" />
+    <ClCompile Include="arc.cpp" />
+    <ClCompile Include="bones.cpp" />
+    <ClCompile Include="boxobj.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="circle.cpp" />
+    <ClCompile Include="cone.cpp" />
+    <ClCompile Include="cyl.cpp" />
+    <ClCompile Include="donut.cpp" />
+    <ClCompile Include="ellipse.cpp" />
+    <ClCompile Include="gridobj.cpp" />
+    <ClCompile Include="hedraobj.cpp" />
+    <ClCompile Include="helix.cpp" />
+    <ClCompile Include="light.cpp" />
+    <ClCompile Include="mkhedra.cpp" />
+    <ClCompile Include="morphcnt.cpp" />
+    <ClCompile Include="morphobj.cpp" />
+    <ClCompile Include="ngon.cpp" />
+    <ClCompile Include="patchgrd.cpp" />
+    <ClCompile Include="prim.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="prothelp.cpp" />
+    <ClCompile Include="rain.cpp" />
+    <ClCompile Include="rectangl.cpp" />
+    <ClCompile Include="RingArray.cpp" />
+    <ClCompile Include="sphere.cpp" />
+    <ClCompile Include="spline.cpp" />
+    <ClCompile Include="star.cpp" />
+    <ClCompile Include="tapehelp.cpp" />
+    <ClCompile Include="target.cpp" />
+    <ClCompile Include="teapatch.cpp" />
+    <ClCompile Include="teapot.cpp" />
+    <ClCompile Include="teavert.cpp" />
+    <ClCompile Include="text.cpp" />
+    <ClCompile Include="torus.cpp" />
+    <ClCompile Include="tripatch.cpp" />
+    <ClCompile Include="tube.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="prim.def" />
+    <None Include="CROSSHR1.CUR" />
+    <None Include="dmtlbut.bmp" />
+    <None Include="fov.bmp" />
+    <None Include="fovmask.bmp" />
+    <None Include="HYBRIDKE.BMP" />
+    <None Include="locksep.bmp" />
+    <None Include="MASK_HYB.BMP" />
+    <None Include="mask_subobjtypes.bmp" />
+    <None Include="pushpin.bmp" />
+    <None Include="sphere16.bmp" />
+    <None Include="sphere16m.bmp" />
+    <None Include="sphere32.bmp" />
+    <None Include="sphere32m.bmp" />
+    <None Include="subobjtypes.bmp" />
+    <None Include="teapot16.bmp" />
+    <None Include="teapot16m.bmp" />
+    <None Include="teapot32.bmp" />
+    <None Include="teapot32m.bmp" />
+    <None Include="TEXT_BUT.BMP" />
+    <None Include="TEXT_MAS.BMP" />
+    <None Include="torus16.bmp" />
+    <None Include="torus16m.bmp" />
+    <None Include="torus32.bmp" />
+    <None Include="torus32m.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="prim.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3DSURFER.H" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="ellipse.h" />
+    <ClInclude Include="light.h" />
+    <ClInclude Include="..\..\Include\mesh.h" />
+    <ClInclude Include="..\..\Include\MNMesh.h" />
+    <ClInclude Include="..\..\Include\object.h" />
+    <ClInclude Include="..\..\Include\point3.h" />
+    <ClInclude Include="PRIM.H" />
+    <ClInclude Include="prothelp.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="TAPEHELP.H" />
+    <ClInclude Include="target.h" />
+    <ClInclude Include="tea_util.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

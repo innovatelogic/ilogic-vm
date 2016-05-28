@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|Win32">
+      <Configuration>Hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Hybrid|x64">
+      <Configuration>Hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>EditPolyObject</ProjectName>
+    <ProjectGuid>{9CE113DF-8812-47E7-911F-FADF85BE6DBB}</ProjectGuid>
+    <RootNamespace>EPoly</RootNamespace>
+    <MaxSDK>../../../../maxsdk</MaxSDK>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.general.project.settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(MaxSDK)\ProjectSettings\PropertySheets\3dsmax.cpp.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir>$(MaxBuildStdplugs)</OutDir>
+    <TargetName>EPoly</TargetName>
+    <TargetExt>.dlo</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>$(MaxSDK)\samples\mesh\editablepoly;$(MaxSdkInc);%(AdditionalIncludeDirectories);$(DirectXSDKInc)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MaxSdkInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;mnmath.lib;maxscrpt.lib;paramblk2.lib;poly.lib;bmm.lib;core.lib;geom.lib;gfx.lib;maxutil.lib;mesh.lib;polypaint.lib;GraphicsDriver.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\EPoly.def</ModuleDefinitionFile>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>EPoly.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;IMPORTING;_SECURE_SCL=0;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>EPoly.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>EPoly.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_CRT_NON_CONFORMING_SWPRINTFS;_SECURE_SCL=0;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>EPoly.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MaxSdkLib);$(MaxLib);..\polypaint\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\EditableModifierCommon\CreateFaceMouseProcTemplate.cpp" />
+    <ClCompile Include="EditNormals.cpp" />
+    <ClCompile Include="EPoly.cpp">
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Debug'">EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Debug'">true</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <FloatingPointModel Condition="'$(Configuration)'=='Debug'">Fast</FloatingPointModel>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)'=='Debug'">EPoly.h</PrecompiledHeaderFile>
+      <UseFullPaths>true</UseFullPaths>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Hybrid'">EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Hybrid'">true</BufferSecurityCheck>
+      <Optimization Condition="'$(Configuration)'=='Release'">MaxSpeed</Optimization>
+      <InlineFunctionExpansion Condition="'$(Configuration)'=='Release'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)'=='Release'">true</IntrinsicFunctions>
+      <FavorSizeOrSpeed Condition="'$(Configuration)'=='Release'">Speed</FavorSizeOrSpeed>
+      <OmitFramePointers Condition="'$(Configuration)'=='Release'">false</OmitFramePointers>
+      <EnableFiberSafeOptimizations Condition="'$(Configuration)'=='Release'">true</EnableFiberSafeOptimizations>
+      <BasicRuntimeChecks Condition="'$(Configuration)'=='Release'">Default</BasicRuntimeChecks>
+      <BufferSecurityCheck Condition="'$(Configuration)'=='Release'">false</BufferSecurityCheck>
+    </ClCompile>
+    <ClCompile Include="EPolyManipulatorGrip.cpp" />
+    <ClCompile Include="PolyAccel.cpp" />
+    <ClCompile Include="PolyEdit.cpp" />
+    <ClCompile Include="PolyEdOps.cpp" />
+    <ClCompile Include="PolyEdUi.cpp" />
+    <ClCompile Include="PolyGrips.cpp" />
+    <ClCompile Include="PolyModes.cpp" />
+    <ClCompile Include="PolySelect.cpp" />
+    <ClCompile Include="Restore.cpp" />
+    <ClCompile Include="SplineExtrude.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EPoly.def" />
+    <None Include="addvertc.cur" />
+    <None Include="Bevel.cur" />
+    <None Include="bevelcur.cur" />
+    <None Include="cut_edge.cur" />
+    <None Include="cut_face.cur" />
+    <None Include="cut_vert.cur" />
+    <None Include="echamfer.cur" />
+    <None Include="edge_ext.cur" />
+    <None Include="extrude_vertex.cur" />
+    <None Include="extrudec.cur" />
+    <None Include="mask_subobjtypes.bmp" />
+    <None Include="plusminus.bmp" />
+    <None Include="PlusMinusMask.bmp" />
+    <None Include="polymask.bmp" />
+    <None Include="polysubs.bmp" />
+    <None Include="quickslice.cur" />
+    <None Include="subobjtypes.bmp" />
+    <None Include="vchamfer.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Include\bitarray.h" />
+    <ClInclude Include="..\..\EditableModifierCommon\CreateFaceMouseProcTemplate.h" />
+    <ClInclude Include="..\..\..\include\custcont.h" />
+    <ClInclude Include="EPoly.h" />
+    <ClInclude Include="EPolyManipulatorGrip.h" />
+    <ClInclude Include="..\..\..\Include\hold.h" />
+    <ClInclude Include="..\..\..\include\iEditNormals.h" />
+    <ClInclude Include="..\..\..\Include\iEPoly.h" />
+    <ClInclude Include="..\..\..\Include\iFnPub.h" />
+    <ClInclude Include="..\..\..\Include\interval.h" />
+    <ClInclude Include="..\..\..\include\iparamb.h" />
+    <ClInclude Include="..\..\..\Include\iparamb2.h" />
+    <ClInclude Include="..\..\..\include\iparamm.h" />
+    <ClInclude Include="..\..\..\Include\iparamm2.h" />
+    <ClInclude Include="..\..\..\include\istdplug.h" />
+    <ClInclude Include="..\..\..\include\macrorec.h" />
+    <ClInclude Include="..\..\..\Include\matrix3.h" />
+    <ClInclude Include="..\..\..\Include\mesh.h" />
+    <ClInclude Include="..\..\..\include\MeshNormalSpec.h" />
+    <ClInclude Include="..\..\..\Include\MNCommon.h" />
+    <ClInclude Include="..\..\..\Include\MNMesh.h" />
+    <ClInclude Include="..\..\..\include\MNNormalSpec.h" />
+    <ClInclude Include="..\..\..\Include\namesel.h" />
+    <ClInclude Include="..\..\..\Include\nametab.h" />
+    <ClInclude Include="..\..\..\Include\point3.h" />
+    <ClInclude Include="PolyEdit.h" />
+    <ClInclude Include="PolyGrips.h" />
+    <ClInclude Include="..\..\..\include\polyobj.h" />
+    <ClInclude Include="..\PolyPaint\PolyPaint.h" />
+    <ClInclude Include="..\..\..\include\quat.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resourceOverride.h" />
+    <ClInclude Include="..\..\..\include\tab.h" />
+    <ClInclude Include="..\..\..\include\xtcobject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EPoly.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
