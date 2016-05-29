@@ -256,7 +256,7 @@ bool CActor::IsChildOf(const CActor *pParent1, const CActor *pParent2, const CAc
 }
 
 //----------------------------------------------------------------------------------------------
-std::string  CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*= nullptr*/)
+std::string CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*= nullptr*/)
 {
     std::string outPath;
 
@@ -274,4 +274,40 @@ std::string  CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*
         }*/
     }
     return outPath;
+}
+
+//----------------------------------------------------------------------------------------------
+CActor* CActor::GetActorByFullPath(const std::string &path, const CActor *root)
+{
+    CActor *out = nullptr;
+
+//    if (root)
+    {
+        const char *splitter = "/";
+        std::vector<std::string> tokens;
+
+        size_t idx = path.find(splitter);
+        if (idx != std::string::npos)
+        {
+            tokens.push_back(path.substr(0, idx));
+
+            size_t last = idx;
+            idx = path.find(splitter, idx + 1);
+
+            while (idx != std::string::npos)
+            {
+                std::string token = path.substr(last + 1, idx - last - 1);
+                if (!token.empty()) {
+                    tokens.push_back(token);
+                }
+                
+                last = idx;
+                idx = path.find(splitter, idx + 1);
+            }
+
+            int k = 0;
+        }
+    }
+
+    return out;
 }

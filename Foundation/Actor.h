@@ -280,6 +280,8 @@ public:
     */
     static std::string  GetFullPathID(const CActor *actor, const CActor *mostTop = nullptr);
 
+    static CActor* GetActorByFullPath(const std::string &paht, const CActor *root);
+
 private:
 	template <class T> void SerializeImpl(T &stream, bool bSaveAsExternal = false)
 	{

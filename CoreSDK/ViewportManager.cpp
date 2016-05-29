@@ -440,6 +440,11 @@ namespace core_sdk_api
     void CViewportManager::SetSelect(const std::vector<std::string> &paths)
     {
         // TODO
+
+        if (!paths.empty())
+        {
+            CActor::GetActorByFullPath(paths[0], nullptr);
+        }
     }
 
     //----------------------------------------------------------------------------------------------

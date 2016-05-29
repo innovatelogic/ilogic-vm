@@ -609,6 +609,8 @@ bool SelChangedTreeObject()
 		else
 		{
 			pCoreSDK->GetViewportManager()->SetFocus(0);
+
+            m_editor->DeselectAll();
 		}
 
 		pActor->BroadcastEvent(Event_OnSelected);

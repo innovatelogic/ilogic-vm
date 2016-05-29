@@ -321,11 +321,7 @@ namespace editors
         };
 
         // skip if nothing to select and deselect
-        if (m_selectionList.empty() && actors.empty())
-        {
-
-        }
-        else
+        if (!m_selectionList.empty() || !actors.empty())
         {
             AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(m_pApi, actors, m_selectionList))));
         }
