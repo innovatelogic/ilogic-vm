@@ -63,6 +63,17 @@ public:
     virtual void					SetEditControlMode(EObjEditControlMode mode) = 0;
 
     virtual IDrawInterface* GetByActor(const CActor *actor) const = 0;
+    
+    /*!
+    * commits selection command. empty vector equal to deselect all
+    */
+    virtual void    SelectActors(const std::vector<CActor*> &actors) = 0;
+
+    /*!
+    * commits deselect command. 
+    * does not have effect if no previous actors selected
+    */
+    virtual void    DeselectAll() = 0;
 
 protected:
 private:

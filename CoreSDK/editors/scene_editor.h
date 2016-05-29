@@ -63,6 +63,9 @@ namespace editors
 
         IDrawInterface* GetByActor(const CActor *actor) const override;
 
+        void    SelectActors(const std::vector<CActor*> &actors) override {}
+        void    DeselectAll() override {}
+
     protected:
     private:
         CModelViewer        *m_pViewer;

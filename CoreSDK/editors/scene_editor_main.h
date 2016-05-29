@@ -49,14 +49,17 @@ namespace editors
 
         IDrawInterface* GetByActor(const CActor *actor) const override;
 
-        void    AddSelected(const CActor *actor);
-        void    DelSelected(const CActor *actor);
+        void    AddSelected(CActor *actor);
+        void    DelSelected(CActor *actor);
 
         CCoreSDK* GetApp() const override { return m_pApi; }
 
+        void    SelectActors(const std::vector<CActor*> &actors) override;
+        void    DeselectAll() override;
+
     protected:
     private:
-        std::list<const CActor*> m_selectionList;
+        std::vector<CActor*> m_selectionList;
 
         CCoreSDK *m_pApi;
     };

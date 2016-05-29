@@ -237,6 +237,7 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetEditControlMode(EObjEditControlMode mode)
     {
+        // Command
         class CommandSetShowGrid : public ICommand
         {
         public:
@@ -254,6 +255,7 @@ namespace editors
             EObjEditControlMode m_old;
             CCoreSDK *m_api;
         };
+        // End Command
 
         EObjEditControlMode oldMode = GetEditControlMode();
         if (oldMode != mode)
@@ -269,9 +271,9 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::AddSelected(const CActor *actor)
+    void SceneEditorMain::AddSelected(CActor *actor)
     {
-        std::list<const CActor*>::const_iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
+        std::vector<CActor*>::const_iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
 
         if (iterFind == m_selectionList.end())
         {
@@ -280,13 +282,58 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::DelSelected(const CActor *actor)
+    void SceneEditorMain::DelSelected(CActor *actor)
     {
-        std::list<const CActor*>::iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
+        std::vector<CActor*>::iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
 
         if (iterFind != m_selectionList.end())
         {
             m_selectionList.erase(iterFind);
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::SelectActors(const std::vector<CActor*> &actors)
+    {
+        class CommandSetSelectActors : public ICommand
+        {
+        public:
+            CommandSetSelectActors(CCoreSDK *api,
+                const std::vector<CActor*> &actors,
+                const std::vector<CActor*> &old_actors)
+                : m_api(api) 
+            {
+                for each(auto *actor in actors) {
+                    m_new.push_back(CActor::GetFullPathID(actor)); // fill new selection
+                }
+                for each(auto *actor in old_actors) {
+                    m_old.push_back(CActor::GetFullPathID(actor)); // fill old selection
+                }
+                Execute();
+            }
+            void Execute() override { m_api->GetViewportManager()->SetSelect(m_new); }
+            void ExecuteUndo() override { m_api->GetViewportManager()->SetSelect(m_old); }
+
+        private:
+            std::vector<std::string> m_new;
+            std::vector<std::string> m_old;
+            CCoreSDK *m_api;
+        };
+
+        // skip if nothing to select and deselect
+        if (m_selectionList.empty() && actors.empty())
+        {
+
+        }
+        else
+        {
+            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(m_pApi, actors, m_selectionList))));
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::DeselectAll()
+    {
+        SelectActors({});
     }
 }

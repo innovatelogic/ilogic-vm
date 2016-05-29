@@ -602,7 +602,9 @@ bool SelChangedTreeObject()
 			pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
 
             std::string str = CActor::GetFullPathID(pActor);
-            int l = 0;
+
+            std::vector<CActor*> actors = { pActor };
+            m_editor->SelectActors(actors);
 		}
 		else
 		{

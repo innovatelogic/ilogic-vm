@@ -262,7 +262,7 @@ std::string  CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*
 
     while (actor)
     {
-        outPath = std::to_string(actor->GetUID()) + " " + outPath;
+        outPath = std::to_string(actor->GetUID()) + "/" + outPath;
         
         actor = actor->GetParent();
 

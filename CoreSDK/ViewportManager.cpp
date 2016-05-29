@@ -437,6 +437,12 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
+    void CViewportManager::SetSelect(const std::vector<std::string> &paths)
+    {
+        // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
     TNodeMap<CActor, IDrawInterface>* CViewportManager::GetNodeByKey(CActor *pAObject) const
     {
         TNodeIDraw* pOutNode = nullptr;

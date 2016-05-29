@@ -17,6 +17,9 @@ namespace core_sdk_api
         friend class CInputControllerImpl;
         friend class CInputControllerEdImpl;
 
+        CViewportManager(const CViewportManager&) = delete;
+        CViewportManager& operator=(const CViewportManager&) = delete;
+
     public:
         CViewportManager(class CCoreSDK *pSDK);
         virtual ~CViewportManager();
@@ -56,6 +59,12 @@ namespace core_sdk_api
         void			RebuildSizeTransform();
 
         void			RebuildTransform(CActor *pAObject = nullptr);
+
+        /*!
+        * set selection objects
+        * [paths] array of actors full paths
+        */
+        void            SetSelect(const std::vector<std::string> &paths);
 
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
