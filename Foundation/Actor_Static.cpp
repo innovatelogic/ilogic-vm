@@ -1,5 +1,7 @@
 #include "Actor.h"
 
+const char *SPLITTER = "/";
+
 //----------------------------------------------------------------------------------------------
 bool CActor::LoadFromFile(const char *filename, bool bLoadAsExternal /*= false*/)
 {
@@ -262,7 +264,8 @@ std::string CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*=
 
     while (actor)
     {
-        outPath = std::to_string(actor->GetUID()) + "/" + outPath;
+        const std::string str_id = std::to_string(actor->GetUID());
+        outPath = outPath.empty() ? str_id : str_id + SPLITTER + outPath;
         
         actor = actor->GetParent();
 
@@ -276,36 +279,82 @@ std::string CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*=
     return outPath;
 }
 
+
+void tokenize(const std::string &str, std::vector<std::string> &out)
+{
+    out.clear();
+
+    size_t start = 0;
+    size_t end = str.find(SPLITTER, start);
+
+    while (end != std::string::npos)
+    {
+        std::string sub = str.substr(start, end - start);
+
+        if (!sub.empty()) {
+            out.push_back(sub);
+        }
+
+        start = end + 1;
+        end = str.find(SPLITTER, start);
+
+        // endl 
+        if (end == std::string::npos) {
+            out.push_back(str.substr(start));
+        }
+    }
+
+    if (out.empty()) { // no splitter found fill whole string
+        out.push_back(str);
+    }
+}
+
 //----------------------------------------------------------------------------------------------
 CActor* CActor::GetActorByFullPath(const std::string &path, const CActor *root)
 {
     CActor *out = nullptr;
 
-//    if (root)
+    std::vector<std::string> tokens;
+
+    tokenize(path, tokens);
+
+    // find actor by path
+    if (root && !tokens.empty())
     {
-        const char *splitter = "/";
-        std::vector<std::string> tokens;
+        CActor *ptr_actor = const_cast<CActor*>(root);
 
-        size_t idx = path.find(splitter);
-        if (idx != std::string::npos)
+        std::vector<std::string>::const_iterator iter = tokens.begin();
+
+        if (ptr_actor->GetUID() == atoi(iter->c_str())) // entrance point to loop check with root UID
         {
-            tokens.push_back(path.substr(0, idx));
-
-            size_t last = idx;
-            idx = path.find(splitter, idx + 1);
-
-            while (idx != std::string::npos)
+            out = (++iter == tokens.end()) ? ptr_actor : nullptr;
+            
+            while (!out)
             {
-                std::string token = path.substr(last + 1, idx - last - 1);
-                if (!token.empty()) {
-                    tokens.push_back(token);
-                }
-                
-                last = idx;
-                idx = path.find(splitter, idx + 1);
-            }
+                bool bIterFound = false;
 
-            int k = 0;
+                for (auto *child : ptr_actor->m_ChildNodes)
+                {
+                    if (child->GetUID() == atoi(iter->c_str()))
+                    {
+                        ptr_actor = child;
+
+                        ++iter;
+
+                        bIterFound = true;
+
+                        if (iter == tokens.end()) 
+                        {
+                            out = ptr_actor; // last token exit
+                        }
+                        break;
+                    }
+                }
+
+                if (!bIterFound) {
+                    break; // not found break loop
+                }
+            }
         }
     }
 

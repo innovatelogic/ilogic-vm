@@ -439,11 +439,20 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void CViewportManager::SetSelect(const std::vector<std::string> &paths)
     {
-        // TODO
+        m_pCoreSDK->GetViewportManager()->SetFocus(0);
 
         if (!paths.empty())
         {
-            CActor::GetActorByFullPath(paths[0], nullptr);
+            CActor *actor = CActor::GetActorByFullPath(paths[0], m_pCoreSDK->GetRootActor());
+            
+            assert(actor);
+
+            IDrawInterface *pIFocused = m_pCoreSDK->GetViewportManager()->GetByActor(actor);
+
+            if (pIFocused)
+            {
+                m_pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
+            }
         }
     }
 

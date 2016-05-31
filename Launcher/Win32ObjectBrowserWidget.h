@@ -595,23 +595,21 @@ bool SelChangedTreeObject()
 
 	if (pActor) // find corresponding
 	{
-		IDrawInterface *pIFocused = m_editor->GetByActor(pActor);
+		//IDrawInterface *pIFocused = m_editor->GetByActor(pActor);
 
-		if (pIFocused && !pIFocused->IsFocused())
-		{
-			pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
-
-            std::string str = CActor::GetFullPathID(pActor);
+		//if (pIFocused)
+		//{
+			//pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
 
             std::vector<CActor*> actors = { pActor };
             m_editor->SelectActors(actors);
-		}
-		else
-		{
-			pCoreSDK->GetViewportManager()->SetFocus(0);
+		//}
+		//else
+		//{
+			//pCoreSDK->GetViewportManager()->SetFocus(0);
 
-            m_editor->DeselectAll();
-		}
+        //    m_editor->DeselectAll();
+		//}
 
 		pActor->BroadcastEvent(Event_OnSelected);
 		bResult = true;
