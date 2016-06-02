@@ -874,21 +874,22 @@ template<class T_KEY, class T_CLASS> class TNodeMap
 {
 public:
 	TNodeMap()
-		: m_pKey(0)
-		, m_pValue(0)
-		, m_pNodeNext(0)
-		, m_pNodeNextPlain(0)
-		, m_pNodeParent(0)
+		: m_pKey(nullptr)
+		, m_pValue(nullptr)
+		, m_pNodeNext(nullptr)
+		, m_pNodeNextPlain(nullptr)
+		, m_pNodeParent(nullptr)
 		, m_NumChilds(0)
 	{
 	}
+
 	TNodeMap(const T_KEY *Key, const T_CLASS *Value)
 		: m_pKey(Key)
 		, m_pValue(Value)
-		, m_pNodeNext(0)
-		, m_pNodeNextPlain(0)
-		, m_pNodeParent(0)
-		, m_pNodePrev(0)
+		, m_pNodeNext(nullptr)
+		, m_pNodeNextPlain(nullptr)
+		, m_pNodeParent(nullptr)
+		, m_pNodePrev(nullptr)
 		, m_NumChilds(0)
 	{
 	}
@@ -906,7 +907,8 @@ public:
 
 	size_t	GetNumChilds() const { return m_NumChilds; }
 
-    const T_KEY* key() const { return m_pKey;  }
+    const T_KEY*    key() const { return m_pKey;  }
+    const T_CLASS*  value() const { return m_pValue; }
 
 //private:
 	TNodeMap<T_KEY,T_CLASS> *m_pNodeNext;		// pointer to next element
@@ -1187,13 +1189,13 @@ public:
 	}
 
     //----------------------------------------------------------------------------------------------
-	bool Empty() const { return m_pFirstElement == 0; }
+	bool Empty() const { return m_pFirstElement == nullptr; }
 
     //----------------------------------------------------------------------------------------------
     /* 
      * Deep-First traversal of a tree without recursion
      */
-    TTMapNode* next(TTMapNode* node) const
+    TTMapNode* next(TTMapNode *node) const
     {
         assert(node);
 

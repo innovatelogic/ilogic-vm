@@ -1,6 +1,9 @@
 #include "scene_editor_main.h"
 #include "RenderSDK.h"
+#include "../ViewportInterface.h"
 #include "../ViewportManager.h"
+#include "../Explorer.h"
+#include "../Explorer3D.h"
 #include <memory>
 #include <algorithm>
 
@@ -298,10 +301,12 @@ namespace editors
         class CommandSetSelectActors : public ICommand
         {
         public:
-            CommandSetSelectActors(CCoreSDK *api,
+            CommandSetSelectActors(core_sdk_api::CViewportManager *manager,
+                core_sdk_api::ViewportInterface *ivprt,
                 const std::vector<CActor*> &actors,
                 const std::vector<CActor*> &old_actors)
-                : m_api(api) 
+                : m_manager(manager)
+                , m_ivprt(ivprt)
             {
                 for each(auto *actor in actors) {
                     m_new.push_back(CActor::GetFullPathID(actor)); // fill new selection
@@ -311,19 +316,28 @@ namespace editors
                 }
                 Execute();
             }
-            void Execute() override { m_api->GetViewportManager()->SetSelect(m_new); }
-            void ExecuteUndo() override { m_api->GetViewportManager()->SetSelect(m_old); }
+            void Execute() override { m_manager->SetSelect(m_new, m_ivprt); }
+            void ExecuteUndo() override { m_manager->SetSelect(m_old, m_ivprt); }
 
         private:
             std::vector<std::string> m_new;
             std::vector<std::string> m_old;
-            CCoreSDK *m_api;
+            core_sdk_api::CViewportManager *m_manager;
+            core_sdk_api::ViewportInterface *m_ivprt;
         };
 
         // skip if nothing to select and deselect
         if (!m_selectionList.empty() || !actors.empty())
         {
-            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(m_pApi, actors, m_selectionList))));
+            // hack
+            Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
+
+            core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
+            core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+
+            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(manager, ivprt, actors, m_selectionList))));
+
+            m_selectionList = actors;
         }
     }
 

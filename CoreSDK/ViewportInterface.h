@@ -39,6 +39,12 @@ namespace core_sdk_api
         virtual void	DrawViewport() const;
 
         /*!
+        * sets selection
+        * @selection - vector of pointers to draw interface
+        */
+        void SetSelection(const std::vector<IDrawInterface*> &selection);
+
+        /*!
          * adds selection to list
          * @object - pointer to draw interface
         */
@@ -61,6 +67,8 @@ namespace core_sdk_api
         const std::list<IDrawInterface*>& GetSelected() const { return m_SelectedList; }
 
     protected:
+        void DrawController(const Vector &pos) const;
+
     private:
         
         Matrix  m_ViewMatrix;
@@ -73,6 +81,7 @@ namespace core_sdk_api
 
         TNodeMap<CActor, ViewportInterface> *m_pNode;
 
+        // shrinked list of selected items
         std::list<IDrawInterface*> m_SelectedList; 
 
         mutable CCoreSDK *m_pCoreSDK;

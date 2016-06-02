@@ -3,6 +3,8 @@
 #include "CoreSDK.h"
 #include "RenderSDK.h"
 #include "ViewportInterface.h"
+#include "Camera.h"
+#include "CameraManager.h"
 #include <algorithm>
 
 namespace core_sdk_api
@@ -30,7 +32,11 @@ namespace core_sdk_api
     {
         assert(m_pCoreSDK && pSrc);
 
-        m_pNode = m_pCoreSDK->GetViewportManager()->RegisterViewport(this, pSrc, nullptr);
+        CViewportManager *manager = m_pCoreSDK->GetViewportManager();
+
+        assert(manager);
+
+        m_pNode = manager->RegisterViewport(this, pSrc, nullptr);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -62,7 +68,17 @@ namespace core_sdk_api
             I.Identitly();
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
+
+            DrawController(out.bound_min + ((out.bound_max - out.bound_min) * 0.5f));
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::SetSelection(const std::vector<IDrawInterface*> &selection)
+    {
+        m_SelectedList.clear();
+
+        std::copy(selection.begin(), selection.end(), std::back_inserter(m_SelectedList));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -88,5 +104,40 @@ namespace core_sdk_api
     void ViewportInterface::UnselectAll()
     {
         m_SelectedList.clear();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::DrawController(const Vector &pos) const
+    {
+        RenderSDK::SRTVariant_Adjacency &queve = m_pCoreSDK->GetRenderSDK()->GetCurrQuevueAdjaency();
+
+        if (const CCamera *pCamera = m_pCoreSDK->GetCameraManager()->GetActiveCamera(queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext))
+        {
+            EScrObjectEvent Mode = m_pNode->m_pKey->GetControlMode();
+
+            const Vector &position = pos;
+
+            Vector CamStrafe(pCamera->GetStrafe());
+            Vector TransDelta(pCamera->GetTransformedWTM_().t - position);
+
+            CamStrafe.normalize();
+
+            float fCathetusOppositLen = TransDelta.Length() * ::tan(0.1f);
+            Vector vCathetusOpposit = TransDelta.Cross(Vector(0.f, 1.f, 0.f));
+            vCathetusOpposit.normalize();
+            vCathetusOpposit *= fCathetusOppositLen;
+
+            float k = CamStrafe.Dot(vCathetusOpposit);
+
+            Matrix I;
+            const Vector AxisX = I._row0 * k;
+            const Vector AxisY = I._row1 * k;
+            const Vector AxisZ = I._row2 * k;
+
+            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisX, COLOR_WHITE/*(Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED*/, false);
+            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisY, COLOR_WHITE/*(Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE*/, false);
+            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisZ, COLOR_WHITE/*(Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN*/, false);
+
+        }
     }
 }

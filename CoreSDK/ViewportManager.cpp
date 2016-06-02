@@ -42,6 +42,25 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
+    ViewportInterface* CViewportManager::GetVeiwportInterface(const CActor *key)
+    {
+        ViewportInterface *out = nullptr;
+
+        if (TNodeIView *node = m_VecViewports.begin())
+        {
+            do
+            {
+                if (node->key() == key)
+                {
+                    out = const_cast<ViewportInterface*>(node->m_pValue);
+                }
+                node = node->GetNext();
+            } while (node);
+        }
+        return out;
+    }
+
+    //----------------------------------------------------------------------------------------------
     ViewportInterface* CViewportManager::GetViewportInterface(const IDrawInterface *pIObject) const
     {
         ViewportInterface *outViewport = nullptr;
@@ -437,8 +456,26 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::SetSelect(const std::vector<std::string> &paths)
+    void CViewportManager::SetSelect(const std::vector<std::string> &paths, ViewportInterface *viewport)
     {
+        assert(viewport);
+
+        std::vector<IDrawInterface*> objects;
+
+        for each (auto &item in paths)
+        {
+            if (CActor *actor = CActor::GetActorByFullPath(item, m_pCoreSDK->GetRootActor()))
+            {
+                if (IDrawInterface *pIDrawable = GetByActor(actor))
+                {
+                    objects.push_back(pIDrawable);
+                }
+            }
+        }
+
+        viewport->SetSelection(objects);
+
+        /*
         m_pCoreSDK->GetViewportManager()->SetFocus(0);
 
         if (!paths.empty())
@@ -453,7 +490,7 @@ namespace core_sdk_api
             {
                 m_pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
             }
-        }
+        }*/
     }
 
     //----------------------------------------------------------------------------------------------

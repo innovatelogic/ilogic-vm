@@ -32,8 +32,9 @@ namespace core_sdk_api
         TNodeIView* RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void UnregisterViewport(TNodeIView *pNode);
 
+        ViewportInterface* GetVeiwportInterface(const CActor *key);
         ViewportInterface* GetViewportInterface(const IDrawInterface *pIObject) const;
-
+        
         bool IsRenderable(const CActor *key);
 
         void Draw();
@@ -64,13 +65,15 @@ namespace core_sdk_api
         * set selection objects
         * [paths] array of actors full paths
         */
-        void            SetSelect(const std::vector<std::string> &paths);
+        void            SetSelect(const std::vector<std::string> &paths, ViewportInterface *viewport);
 
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
 
     private:
         void			SetSelectedImpl(IDrawInterface *pIObject, bool bFlag);
+
+        void            DrawController() const;
 
     private:
         TTreeMapViewport m_VecViewports;

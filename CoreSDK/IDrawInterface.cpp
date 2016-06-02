@@ -145,15 +145,17 @@ void IDrawInterface::DrawController() const
 {
 	if (m_pNode->m_pValue->IsFocused())
 	{
-		RenderSDK::SRTVariant_Adjacency &Queve = m_pCoreSDK->GetRenderSDK()->GetCurrQuevueAdjaency();
+		RenderSDK::SRTVariant_Adjacency &queve = m_pCoreSDK->GetRenderSDK()->GetCurrQuevueAdjaency();
 
-		if (const CCamera *pCamera = m_pCoreSDK->GetCameraManager()->GetActiveCamera(Queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext))
+		if (const CCamera *pCamera = m_pCoreSDK->GetCameraManager()->GetActiveCamera(queve.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext))
 		{
 			EScrObjectEvent Mode = m_pNode->m_pKey->GetControlMode();
 			Matrix WorldMatrixTransform = GetTransformedWTM_();
 
+            const Vector &position = WorldMatrixTransform.t;
+
 			Vector CamStrafe(pCamera->GetStrafe());
-			Vector TransDelta(pCamera->GetTransformedWTM_().t - WorldMatrixTransform.t);
+			Vector TransDelta(pCamera->GetTransformedWTM_().t - position);
 
 			CamStrafe.normalize();
 
@@ -169,57 +171,57 @@ void IDrawInterface::DrawController() const
 			const Vector AxisY = I._row1 * k;
 			const Vector AxisZ = I._row2 * k;
 
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t, WorldMatrixTransform.t + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED, false);
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t, WorldMatrixTransform.t + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE, false);
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t, WorldMatrixTransform.t + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN, false);
 
 			// render arrows
 			float a, b;
 			a = 0.8f; b = 0.1f;
 
 			// X arrow
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) + (AxisY * b), WorldMatrixTransform.t + (AxisX * a) + (AxisZ * b), WorldMatrixTransform.t + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) + (AxisZ * b), WorldMatrixTransform.t + (AxisX * a) - (AxisY * b), WorldMatrixTransform.t + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) - (AxisY * b), WorldMatrixTransform.t + (AxisX * a) - (AxisZ * b), WorldMatrixTransform.t + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) - (AxisZ * b), WorldMatrixTransform.t + (AxisX * a) + (AxisY * b), WorldMatrixTransform.t + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) + (AxisY * b), position + (AxisX * a) + (AxisZ * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) + (AxisZ * b), position + (AxisX * a) - (AxisY * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) - (AxisY * b), position + (AxisX * a) - (AxisZ * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) - (AxisZ * b), position + (AxisX * a) + (AxisY * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
 			
 			//back
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) - (AxisY * b), WorldMatrixTransform.t + (AxisX * a) + (AxisZ * b), WorldMatrixTransform.t + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisX * a) - (AxisZ * b), WorldMatrixTransform.t + (AxisX * a) - (AxisY * b), WorldMatrixTransform.t + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) - (AxisY * b), position + (AxisX * a) + (AxisZ * b), position + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisX * a) - (AxisZ * b), position + (AxisX * a) - (AxisY * b), position + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
 
 			//Y arrow
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) + (AxisZ * b), WorldMatrixTransform.t + (AxisY * a) + (AxisX * b), WorldMatrixTransform.t + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) + (AxisX * b), WorldMatrixTransform.t + (AxisY * a) - (AxisZ * b), WorldMatrixTransform.t + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) - (AxisZ * b), WorldMatrixTransform.t + (AxisY * a) - (AxisX * b), WorldMatrixTransform.t + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) - (AxisX * b), WorldMatrixTransform.t + (AxisY * a) + (AxisZ * b), WorldMatrixTransform.t + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) + (AxisZ * b), position + (AxisY * a) + (AxisX * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) + (AxisX * b), position + (AxisY * a) - (AxisZ * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) - (AxisZ * b), position + (AxisY * a) - (AxisX * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) - (AxisX * b), position + (AxisY * a) + (AxisZ * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
 			
 			//back
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) - (AxisZ * b), WorldMatrixTransform.t + (AxisY * a) + (AxisX * b), WorldMatrixTransform.t + (AxisY * a) + (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisY * a) + (AxisZ * b), WorldMatrixTransform.t + (AxisY * a) - (AxisX * b), WorldMatrixTransform.t + (AxisY * a) - (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) - (AxisZ * b), position + (AxisY * a) + (AxisX * b), position + (AxisY * a) + (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisY * a) + (AxisZ * b), position + (AxisY * a) - (AxisX * b), position + (AxisY * a) - (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
 
 			//Z arrow
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) + (AxisX * b), WorldMatrixTransform.t + (AxisZ * a) + (AxisY * b), WorldMatrixTransform.t + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) + (AxisY * b), WorldMatrixTransform.t + (AxisZ * a) - (AxisX * b), WorldMatrixTransform.t + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) - (AxisX * b), WorldMatrixTransform.t + (AxisZ * a) - (AxisY * b), WorldMatrixTransform.t + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) - (AxisY * b), WorldMatrixTransform.t + (AxisZ * a) + (AxisX * b), WorldMatrixTransform.t + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) + (AxisX * b), position + (AxisZ * a) + (AxisY * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) + (AxisY * b), position + (AxisZ * a) - (AxisX * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) - (AxisX * b), position + (AxisZ * a) - (AxisY * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) - (AxisY * b), position + (AxisZ * a) + (AxisX * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
 
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) + (AxisY * b), WorldMatrixTransform.t + (AxisZ * a) + (AxisX * b), WorldMatrixTransform.t + (AxisZ * a) - (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
-			m_pCoreSDK->GetRenderSDK()->DrawTriangle(WorldMatrixTransform.t + (AxisZ * a) - (AxisY * b), WorldMatrixTransform.t + (AxisZ * a) - (AxisX * b), WorldMatrixTransform.t + (AxisZ * a) + (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) + (AxisY * b), position + (AxisZ * a) + (AxisX * b), position + (AxisZ * a) - (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
+			m_pCoreSDK->GetRenderSDK()->DrawTriangle(position + (AxisZ * a) - (AxisY * b), position + (AxisZ * a) - (AxisX * b), position + (AxisZ * a) + (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
 
 			//render origin rects
 			float c = 0.3f;
 
 			// X-Y
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + (AxisX * c), WorldMatrixTransform.t + (AxisX * c) + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_RED, false);
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + (AxisX * c) + (AxisY * c), WorldMatrixTransform.t + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_BLUE, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisX * c), position + (AxisX * c) + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_RED, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisX * c) + (AxisY * c), position + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_BLUE, false);
 
 			// Y-Z
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + (AxisY * c), WorldMatrixTransform.t + (AxisY * c) + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_BLUE, false);
-			m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + (AxisY * c) + (AxisZ * c), WorldMatrixTransform.t + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisY * c), position + (AxisY * c) + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_BLUE, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisY * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_GREEN, false);
 
 			// X-Z
-			m_pCoreSDK->GetRenderSDK()->DrawLine((WorldMatrixTransform.t + (AxisX * c)), (WorldMatrixTransform.t + (AxisX * c) + (AxisZ * c)), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_RED, false);
-			m_pCoreSDK->GetRenderSDK()->DrawLine((WorldMatrixTransform.t + (AxisX * c) + (AxisZ * c)), (WorldMatrixTransform.t + (AxisZ * c)), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisX * c), position + (AxisX * c) + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_RED, false);
+			m_pCoreSDK->GetRenderSDK()->DrawLine(position + (AxisX * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_GREEN, false);
 		
 			// higlight control axis
 			if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
@@ -230,20 +232,20 @@ void IDrawInterface::DrawController() const
 					{
 					case SOEvent_ControlLockX:
 						{
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisX, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisX, WorldMatrixTransform.t + (AxisX * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisX, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisX, position + (AxisX * 2), COLOR_GREEN, false);
 						}break;
 
 					case SOEvent_ControlLockY:
 						{	
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisY, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisY, WorldMatrixTransform.t + (AxisY * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisY, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisY, position + (AxisY * 2), COLOR_GREEN, false);
 						}break;
 
 					case SOEvent_ControlLockZ:
 						{	
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisZ, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisZ, WorldMatrixTransform.t + (AxisZ * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisZ, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisZ, position + (AxisZ * 2), COLOR_GREEN, false);
 						}break;
 					}
 				}
@@ -253,20 +255,20 @@ void IDrawInterface::DrawController() const
 					{
 					case SOEvent_ControlLockX:
 						{
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisY, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisY, WorldMatrixTransform.t + (AxisY * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisY, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisY, position + (AxisY * 2), COLOR_GREEN, false);
 						}break;
 
 					case SOEvent_ControlLockY:
 						{	
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisZ, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisZ, WorldMatrixTransform.t + (AxisZ * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisZ, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisZ, position + (AxisZ * 2), COLOR_GREEN, false);
 						}break;
 
 					case SOEvent_ControlLockZ:
 						{		
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t - AxisX, WorldMatrixTransform.t, COLOR_GREEN, false);
-							m_pCoreSDK->GetRenderSDK()->DrawLine(WorldMatrixTransform.t + AxisX, WorldMatrixTransform.t + (AxisX * 2), COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position - AxisX, position, COLOR_GREEN, false);
+							m_pCoreSDK->GetRenderSDK()->DrawLine(position + AxisX, position + (AxisX * 2), COLOR_GREEN, false);
 						}break;
 					}
 				}
