@@ -2,6 +2,7 @@
 #include "RenderSDK.h"
 #include "../ViewportInterface.h"
 #include "../ViewportManager.h"
+#include "../CameraManager.h"
 #include "../Explorer.h"
 #include "../Explorer3D.h"
 #include <memory>
@@ -15,6 +16,8 @@ namespace editors
         , m_pApi(pInstance)
         , m_MousePosPrevX(0)
         , m_MousePosPrevY(0)
+        , m_bShiftPressed(false)
+        , m_bCtrlPressed(false)
     {
 
     }
@@ -107,7 +110,8 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::ResizeVeiwport(size_t width, size_t height)
     {
-
+        m_pApi->GetRenderSDK()->ResizeWindow(width, height);
+        m_pApi->GetCameraManager()->ViewportResized(GetRenderContext());
     }
 
     //----------------------------------------------------------------------------------------------
@@ -138,6 +142,18 @@ namespace editors
             m_MousePosPrevX = x;
             m_MousePosPrevY = y;
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::MouseWheel(float ds, int x, int y)
+    {
+        m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::InputKey(const EventInput &InputData)
+    {
+        m_pApi->ProcessInputKey(InputData);
     }
 
     //----------------------------------------------------------------------------------------------

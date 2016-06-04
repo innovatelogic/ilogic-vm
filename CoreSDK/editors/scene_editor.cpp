@@ -113,6 +113,18 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
+    void EditorScene3D::MouseWheel(float ds, int x, int y)
+    {
+        //m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::InputKey(const EventInput &InputData)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
     TIEditor EditorScene3D::CreateEdtior(const char *name, CActor *root, EEditorType type)
     {
         CModelViewer *actor = nullptr;

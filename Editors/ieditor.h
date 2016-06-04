@@ -40,6 +40,8 @@ public:
 
     virtual void	InputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0) = 0;
     virtual void	MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey = 0) = 0;
+    virtual void	MouseWheel(float ds, int x, int y) = 0;
+    virtual void	InputKey(const EventInput &InputData) = 0;
 
     virtual CCoreSDK* GetApp() const = 0;
 

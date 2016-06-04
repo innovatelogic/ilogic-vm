@@ -123,8 +123,8 @@ public:
 			ModifKey |= MK_Shift;
 		}
 
-		m_pApp->ProcessInputMouse(MOUSE_Pressed, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey, m_pRenderContext);
-
+        m_editor->InputMouse(MOUSE_Pressed, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey);
+		
 		SetCapture();
 
 		return 0;
@@ -141,9 +141,9 @@ public:
 			ModifKey |= MK_Shift;
 		}
 
-		m_pApp->ProcessInputMouse(MOUSE_Released, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey, m_pRenderContext);
-
-		ReleaseCapture();
+		m_editor->InputMouse(MOUSE_Released, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey);
+		
+        ReleaseCapture();
 
 		return 0;
 	}
@@ -231,9 +231,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMouseWheel(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 	{
-		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-
-		m_pApp->ProcessMouseWheel((float)zDelta, 0, 0, m_pRenderContext);
+		m_editor->MouseWheel((float)GET_WHEEL_DELTA_WPARAM(wParam), 0, 0);
 
 		bHandled = TRUE;
 		return 0;
@@ -242,14 +240,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnSize(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-		int width = (int)GET_X_LPARAM(lParam);
-		int height = (int)GET_Y_LPARAM(lParam);
-
-		if (m_pApp)
-		{
-			m_pApp->GetRenderSDK()->ResizeWindow(width, height);
-			m_pApp->GetCameraManager()->ViewportResized(m_pRenderContext);
-		}
+        if (m_editor)
+        {
+            m_editor->ResizeVeiwport((int)GET_X_LPARAM(lParam), (int)GET_Y_LPARAM(lParam));
+        }
 		return 0;
 	}
 
@@ -258,23 +252,23 @@ public:
 	{
 		switch ((DWORD)wParam) 
 		{
-		case VK_ESCAPE:	m_pApp->ProcessInputKey( IE(KEY_ESCAPE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_RETURN: m_pApp->ProcessInputKey( IE(KEY_ENTER, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_F1:		m_pApp->ProcessInputKey( IE(KEY_F1, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F2:		m_pApp->ProcessInputKey( IE(KEY_F2, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F3:		m_pApp->ProcessInputKey( IE(KEY_F3, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F4:		m_pApp->ProcessInputKey( IE(KEY_F4, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F5:		m_pApp->ProcessInputKey( IE(KEY_F5, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F6:		m_pApp->ProcessInputKey( IE(KEY_F6, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F7:		m_pApp->ProcessInputKey( IE(KEY_F7, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F8:		m_pApp->ProcessInputKey( IE(KEY_F8, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F9:		m_pApp->ProcessInputKey( IE(KEY_F9, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
-		case VK_F10:	m_pApp->ProcessInputKey( IE(KEY_F10, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_F11:	m_pApp->ProcessInputKey( IE(KEY_F11, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_F12:	m_pApp->ProcessInputKey( IE(KEY_F12, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_DELETE:	m_pApp->ProcessInputKey( IE(KEY_DELETE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_UP:		m_pApp->ProcessInputKey( IE(KEY_UP, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_DOWN:	m_pApp->ProcessInputKey( IE(KEY_DOWN, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_ESCAPE:	m_editor->InputKey( IE(KEY_ESCAPE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_RETURN: m_editor->InputKey( IE(KEY_ENTER, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_F1:		m_editor->InputKey( IE(KEY_F1, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F2:		m_editor->InputKey( IE(KEY_F2, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F3:		m_editor->InputKey( IE(KEY_F3, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F4:		m_editor->InputKey( IE(KEY_F4, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F5:		m_editor->InputKey( IE(KEY_F5, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F6:		m_editor->InputKey( IE(KEY_F6, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F7:		m_editor->InputKey( IE(KEY_F7, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F8:		m_editor->InputKey( IE(KEY_F8, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F9:		m_editor->InputKey( IE(KEY_F9, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));	break;
+		case VK_F10:	m_editor->InputKey( IE(KEY_F10, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_F11:	m_editor->InputKey( IE(KEY_F11, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_F12:	m_editor->InputKey( IE(KEY_F12, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_DELETE:	m_editor->InputKey( IE(KEY_DELETE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_UP:		m_editor->InputKey( IE(KEY_UP, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_DOWN:	m_editor->InputKey( IE(KEY_DOWN, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
 		case VK_PRIOR:
 			{
 				//CActor * SelectedActor = m_pAppMain->GetExplorerInstance()->GetFocused();
@@ -302,14 +296,14 @@ public:
 				//m_pAppMain->ProcessInputKey( IE(KEY_PAGEDOWN, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));
 			}break;
 
-		case VK_LEFT:   m_pApp->ProcessInputKey( IE(KEY_LEFT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));  break;
-		case VK_RIGHT:  m_pApp->ProcessInputKey( IE(KEY_RIGHT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
-		case VK_SPACE:  m_pApp->ProcessInputKey( IE(KEY_SPACE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_LEFT:   m_editor->InputKey( IE(KEY_LEFT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));  break;
+		case VK_RIGHT:  m_editor->InputKey( IE(KEY_RIGHT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
+		case VK_SPACE:  m_editor->InputKey( IE(KEY_SPACE, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); break;
 
 		case VK_SHIFT:	
 			{
 				m_bShiftPressed = true;
-				m_pApp->ProcessInputKey( IE(KEY_LSHIFT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));
+				m_editor->InputKey( IE(KEY_LSHIFT, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));
 				PushCtrlState(ECM_Scale);
 			}break;
 
@@ -338,17 +332,17 @@ public:
 		{
 		case 'Y':
 		case 'y':
-			m_pApp->ProcessInputKey(IE(KEY_Y, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); 
+			m_editor->InputKey(IE(KEY_Y, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); 
 			break;
 
 		case 'U':
 		case 'u':
-			m_pApp->ProcessInputKey(IE(KEY_U, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); 
+			m_editor->InputKey(IE(KEY_U, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed)); 
 			break;
 
 		case 'G':
 		case 'g':
-			m_pApp->ProcessInputKey(IE(KEY_G, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));
+			m_editor->InputKey(IE(KEY_G, KEY_Pressed, m_bShiftPressed, m_bCtrlPressed));
 			break;
 
 		default:

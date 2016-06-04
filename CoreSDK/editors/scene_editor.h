@@ -41,6 +41,8 @@ namespace editors
 
         void	InputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0) override;
         void	MouseMove(int dx, int dy, const size_t wndx, const size_t wndy, int modifKey = 0) override;
+        void	MouseWheel(float ds, int x, int y) override;
+        void	InputKey(const EventInput &InputData) override;
 
         static TIEditor CreateEdtior(const char *name, CActor *root, EEditorType type);
 
