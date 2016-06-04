@@ -25,6 +25,23 @@ public:
 		MESSAGE_HANDLER(WM_CHAR, OnChar)
 	END_MSG_MAP()
 
+public:
+    class CCoreSDK *m_pApp;
+
+    unsigned int m_MousePosPrevX;
+    unsigned int m_MousePosPrevY;
+
+    EObjEditControlMode m_SaveState;
+    bool m_bShiftPressed;
+    bool m_bCtrlPressed;
+    bool m_bPush;
+
+    class SRenderContext *m_pRenderContext;
+
+private:
+    std::shared_ptr<editors::IEditor> m_editor;
+
+public:
 	//----------------------------------------------------------------------------------------------
 	CViewContainer()
 		: m_MousePosPrevX(0)
@@ -35,6 +52,12 @@ public:
 	{
 
 	}
+
+    //----------------------------------------------------------------------------------------------
+    void SetEditor(std::shared_ptr<editors::IEditor> &editor)
+    {
+        m_editor = editor;
+    }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnActivate(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
@@ -128,7 +151,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBDown(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-		m_pApp->ProcessInputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContext);
+        m_editor->InputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
 		
 		SetCapture();
 
@@ -140,7 +163,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBUp(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-		m_pApp->ProcessInputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContext);
+        m_editor->InputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
 		
 		ReleaseCapture();
 		
@@ -157,7 +180,7 @@ public:
 		if (wParam & MK_SHIFT){
 			ModifKey |= MK_Shift;
 		}
-		m_pApp->ProcessInputMouse(MOUSE_DoubleClick, MOUSE_LEFT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContext);
+        m_editor->InputMouse(MOUSE_DoubleClick, MOUSE_LEFT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey);
 
 		return 0;
 	}
@@ -172,7 +195,7 @@ public:
 		if (wParam & MK_SHIFT){
 			ModifKey |= MK_Shift;
 		}
-		m_pApp->ProcessInputMouse(MOUSE_DoubleClick, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, m_pRenderContext);
+        m_editor->InputMouse(MOUSE_DoubleClick, MOUSE_RIGHT, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), ModifKey);
 
 		return 0;
 	}
@@ -194,31 +217,14 @@ public:
 			ModifKey |= MK_MMButton;
 		}
 
-		int DX = PosX - m_MousePosPrevX;
-		int DY = PosY - m_MousePosPrevY;
+        RECT rectWindow;
+        GetClientRect(&rectWindow);
 
-		if (DX != 0 || DY != 0)
-		{	
-			RECT rectWindow;
-			GetClientRect(&rectWindow);
+        const size_t wndWidth = rectWindow.right - rectWindow.left;
+        const size_t wndHeight = rectWindow.bottom - rectWindow.top;
 
-			unsigned int wndWidth = rectWindow.right - rectWindow.left;
-			unsigned int wndHeight = rectWindow.bottom - rectWindow.top;
+        m_editor->MouseMove(PosX, PosY, wndWidth, wndHeight, ModifKey);
 
-			unsigned int vprtWidth = m_pApp->GetRenderSDK()->GetViewportWidth();
-			unsigned int vprtHeight = m_pApp->GetRenderSDK()->GetViewportHeight();
-
-			float xPosRel = (wndWidth > 0.f) ? PosX / (float)wndWidth : 0.f;
-			float yPosRel = (wndHeight > 0.f) ? PosY / (float)wndHeight : 0.f;
-
-			float xDRel = (wndWidth > 0.f) ? ((DX / (float)wndWidth) * vprtWidth) : 0.f;
-			float yDRel = (wndHeight > 0.f) ? ((DY / (float)wndHeight) * vprtHeight) : 0.f;
-
-			m_pApp->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, m_pRenderContext);
-
-			m_MousePosPrevX = PosX;
-			m_MousePosPrevY = PosY;
-		}
 		return 0;
 	}
 
@@ -387,19 +393,6 @@ private:
 			m_bPush = false;
 		}
 	}
-
-public:
-	class CCoreSDK *m_pApp;
-
-	unsigned int m_MousePosPrevX;
-	unsigned int m_MousePosPrevY;
-
-	EObjEditControlMode m_SaveState;
-	bool m_bShiftPressed;
-	bool m_bCtrlPressed;
-	bool m_bPush;
-
-	class SRenderContext *m_pRenderContext;
 };
 
 #endif//__paneviewcontainer_h__

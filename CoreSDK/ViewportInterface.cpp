@@ -7,6 +7,10 @@
 #include "CameraManager.h"
 #include <algorithm>
 
+#define COLOR_DARK_RED		0xff8b1818
+#define COLOR_DARK_GREEN	0xff117900
+#define COLOR_DARK_BLUE		0xff000079
+
 namespace core_sdk_api
 {
     //------------------------------------------------------------------------
@@ -134,10 +138,110 @@ namespace core_sdk_api
             const Vector AxisY = I._row1 * k;
             const Vector AxisZ = I._row2 * k;
 
-            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisX, COLOR_WHITE/*(Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED*/, false);
-            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisY, COLOR_WHITE/*(Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE*/, false);
-            m_pCoreSDK->GetRenderSDK()->DrawLine(position, position + AxisZ, COLOR_WHITE/*(Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN*/, false);
+            CRenderSDK *const pRenderer = m_pCoreSDK->GetRenderSDK();
 
+            pRenderer->DrawLine(position, position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED, false);
+            pRenderer->DrawLine(position, position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE, false);
+            pRenderer->DrawLine(position, position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+
+            // render arrows
+            const float a = 0.8f;
+            const float b = 0.1f;
+            
+            // X arrow
+            pRenderer->DrawTriangle(position + (AxisX * a) + (AxisY * b), position + (AxisX * a) + (AxisZ * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+            pRenderer->DrawTriangle(position + (AxisX * a) + (AxisZ * b), position + (AxisX * a) - (AxisY * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+            pRenderer->DrawTriangle(position + (AxisX * a) - (AxisY * b), position + (AxisX * a) - (AxisZ * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+            pRenderer->DrawTriangle(position + (AxisX * a) - (AxisZ * b), position + (AxisX * a) + (AxisY * b), position + AxisX, (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_RED);
+
+            //back
+            pRenderer->DrawTriangle(position + (AxisX * a) - (AxisY * b), position + (AxisX * a) + (AxisZ * b), position + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
+            pRenderer->DrawTriangle(position + (AxisX * a) - (AxisZ * b), position + (AxisX * a) - (AxisY * b), position + (AxisX * a) + (AxisY * b), (Mode == SOEvent_ControlLockX) ? COLOR_YELLOW : COLOR_DARK_RED);
+
+            //Y arrow
+            pRenderer->DrawTriangle(position + (AxisY * a) + (AxisZ * b), position + (AxisY * a) + (AxisX * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+            pRenderer->DrawTriangle(position + (AxisY * a) + (AxisX * b), position + (AxisY * a) - (AxisZ * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+            pRenderer->DrawTriangle(position + (AxisY * a) - (AxisZ * b), position + (AxisY * a) - (AxisX * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+            pRenderer->DrawTriangle(position + (AxisY * a) - (AxisX * b), position + (AxisY * a) + (AxisZ * b), position + AxisY, (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
+
+            //back
+            pRenderer->DrawTriangle(position + (AxisY * a) - (AxisZ * b), position + (AxisY * a) + (AxisX * b), position + (AxisY * a) + (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
+            pRenderer->DrawTriangle(position + (AxisY * a) + (AxisZ * b), position + (AxisY * a) - (AxisX * b), position + (AxisY * a) - (AxisZ * b), (Mode == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_DARK_BLUE);
+
+            //Z arrow
+            pRenderer->DrawTriangle(position + (AxisZ * a) + (AxisX * b), position + (AxisZ * a) + (AxisY * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+            pRenderer->DrawTriangle(position + (AxisZ * a) + (AxisY * b), position + (AxisZ * a) - (AxisX * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+            pRenderer->DrawTriangle(position + (AxisZ * a) - (AxisX * b), position + (AxisZ * a) - (AxisY * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+            pRenderer->DrawTriangle(position + (AxisZ * a) - (AxisY * b), position + (AxisZ * a) + (AxisX * b), position + AxisZ, (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_GREEN);
+
+            pRenderer->DrawTriangle(position + (AxisZ * a) + (AxisY * b), position + (AxisZ * a) + (AxisX * b), position + (AxisZ * a) - (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
+            pRenderer->DrawTriangle(position + (AxisZ * a) - (AxisY * b), position + (AxisZ * a) - (AxisX * b), position + (AxisZ * a) + (AxisY * b), (Mode == SOEvent_ControlLockZ) ? COLOR_YELLOW : COLOR_DARK_GREEN);
+
+            //render origin rects
+            const float c = 0.3f;
+
+            // X-Y
+            pRenderer->DrawLine(position + (AxisX * c), position + (AxisX * c) + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_RED, false);
+            pRenderer->DrawLine(position + (AxisX * c) + (AxisY * c), position + (AxisY * c), (Mode == SOEvent_ControlLockXY) ? COLOR_YELLOW : COLOR_BLUE, false);
+
+            // Y-Z
+            pRenderer->DrawLine(position + (AxisY * c), position + (AxisY * c) + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_BLUE, false);
+            pRenderer->DrawLine(position + (AxisY * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockYZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+
+            // X-Z
+            pRenderer->DrawLine(position + (AxisX * c), position + (AxisX * c) + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_RED, false);
+            pRenderer->DrawLine(position + (AxisX * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_GREEN, false);
+
+            // higlight control axis
+            if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
+            {
+                if (m_pCoreSDK->GetEditControlMode() == ECM_Move)
+                {
+                    switch (m_pNode->m_pKey->GetControlMode())
+                    {
+                    case SOEvent_ControlLockX:
+                    {
+                        pRenderer->DrawLine(position - AxisX, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisX, position + (AxisX * 2), COLOR_GREEN, false);
+                    }break;
+
+                    case SOEvent_ControlLockY:
+                    {
+                        pRenderer->DrawLine(position - AxisY, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisY, position + (AxisY * 2), COLOR_GREEN, false);
+                    }break;
+
+                    case SOEvent_ControlLockZ:
+                    {
+                        pRenderer->DrawLine(position - AxisZ, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisZ, position + (AxisZ * 2), COLOR_GREEN, false);
+                    }break;
+                    }
+                }
+                else if (m_pCoreSDK->GetEditControlMode() == ECM_Rotate)
+                {
+                    switch (m_pNode->m_pKey->GetControlMode())
+                    {
+                    case SOEvent_ControlLockX:
+                    {
+                        pRenderer->DrawLine(position - AxisY, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisY, position + (AxisY * 2), COLOR_GREEN, false);
+                    }break;
+
+                    case SOEvent_ControlLockY:
+                    {
+                        pRenderer->DrawLine(position - AxisZ, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisZ, position + (AxisZ * 2), COLOR_GREEN, false);
+                    }break;
+
+                    case SOEvent_ControlLockZ:
+                    {
+                        pRenderer->DrawLine(position - AxisX, position, COLOR_GREEN, false);
+                        pRenderer->DrawLine(position + AxisX, position + (AxisX * 2), COLOR_GREEN, false);
+                    }break;
+                    }
+                }
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ namespace editors
     SceneEditorMain::SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer)
         : EditorBase(static_cast<CActor*>(pInstance->GetRootActor()), buffer)
         , m_pApi(pInstance)
+        , m_MousePosPrevX(0)
+        , m_MousePosPrevY(0)
     {
 
     }
@@ -115,9 +117,27 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::MouseMove(size_t dx, size_t dy, int ModifKey)
+    void SceneEditorMain::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int ModifKey)
     {
+        int dx = x - m_MousePosPrevX;
+        int dy = y - m_MousePosPrevY;
 
+        if (dx != 0 || dy != 0)
+        {
+            unsigned int vprtWidth = m_pApi->GetRenderSDK()->GetViewportWidth();
+            unsigned int vprtHeight = m_pApi->GetRenderSDK()->GetViewportHeight();
+
+            float xPosRel = (wndx > 0.f) ? x / (float)wndx : 0.f;
+            float yPosRel = (wndy > 0.f) ? y / (float)wndy : 0.f;
+
+            float xdRel = (wndx > 0.f) ? ((dx / (float)wndx) * vprtWidth) : 0.f;
+            float ydRel = (wndy > 0.f) ? ((dy / (float)wndy) * vprtHeight) : 0.f;
+
+            m_pApi->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xdRel, ydRel, ModifKey, GetRenderContext());
+            
+            m_MousePosPrevX = x;
+            m_MousePosPrevY = y;
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -345,5 +365,11 @@ namespace editors
     void SceneEditorMain::DeselectAll()
     {
         SelectActors({});
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
+    {
+        m_pApi->ProcessInputMouse(event, code, x, y, ModifKey, GetRenderContext());
     }
 }

@@ -101,7 +101,13 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void EditorScene3D::MouseMove(size_t dx, size_t dy, int ModifKey)
+    void EditorScene3D::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey /*= 0*/)
     {
 
     }

@@ -214,7 +214,8 @@ public:
         m_editor->Initialize();
 
         m_pRightBottomPane->SetEditor(m_editor);
-		
+        m_ViewCtrl.SetEditor(m_editor);
+
         InitViewport();    
 
 		// create asset browser window

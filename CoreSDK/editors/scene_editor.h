@@ -39,7 +39,8 @@ namespace editors
 
         void    Render() override;
 
-        void	MouseMove(size_t dx, size_t dy, int ModifKey) override;
+        void	InputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0) override;
+        void	MouseMove(int dx, int dy, const size_t wndx, const size_t wndy, int modifKey = 0) override;
 
         static TIEditor CreateEdtior(const char *name, CActor *root, EEditorType type);
 

@@ -27,7 +27,8 @@ namespace editors
 
         void    Render() override;
 
-        void	MouseMove(size_t dx, size_t dy, int ModifKey) override;
+        void	InputMouse(Event event, MouseCode code, int x, int y, int modifKey = 0) override;
+        void	MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey = 0) override;
 
         bool    GetWireframeMode() const;
         void    SetWireframeMode(bool flag);
@@ -57,9 +58,14 @@ namespace editors
         void    SelectActors(const std::vector<CActor*> &actors) override;
         void    DeselectAll() override;
 
+
+
     protected:
     private:
         std::vector<CActor*> m_selectionList;
+
+        unsigned int m_MousePosPrevX;
+        unsigned int m_MousePosPrevY;
 
         CCoreSDK *m_pApi;
     };
