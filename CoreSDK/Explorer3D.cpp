@@ -49,14 +49,24 @@ void Explorer3D::DoDraw()
 
 		if (pCamera)
 		{
-			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderSDK->GetRenderDriver()->GetDefaultContext();
-			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, pCamera->GetViewMatrix().m, 16 * sizeof(float));
-			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, pCamera->GetProjMatrix().m, 16 * sizeof(float));
-			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = pCamera->GetNearDist();
-			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = pCamera->GetFarDist();
-			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, pCamera->GetPosition_().vec_array, 3 * sizeof(float));
+            const Matrix &viewMat = pCamera->GetViewMatrix();
+            const Matrix &projMat = pCamera->GetProjMatrix();
+            const float nearZ = pCamera->GetNearDist();
+            const float farZ = pCamera->GetFarDist();
+            const Vector camPos = pCamera->GetPosition_();
 
-            core_sdk_api::ViewportInterface::SetViewPoint(pCamera->GetPosition_());
+			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.pRenderContext = m_pRenderSDK->GetRenderDriver()->GetDefaultContext();
+			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewMatrix, viewMat.m, 16 * sizeof(float));
+			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.projMatrix, projMat.m, 16 * sizeof(float));
+			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fNearPlane = nearZ;
+			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = farZ;
+			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, camPos.vec_array, 3 * sizeof(float));
+
+            core_sdk_api::ViewportInterface::SetViewportProjMatrix(projMat);
+            core_sdk_api::ViewportInterface::SetViewportViewMatrix(viewMat);
+            core_sdk_api::ViewportInterface::SetViewPoint(camPos);
+            core_sdk_api::ViewportInterface::SetNearPlane(nearZ);
+            core_sdk_api::ViewportInterface::SetFarPlane(farZ);
 		}
 	}
 

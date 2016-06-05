@@ -66,8 +66,16 @@ namespace core_sdk_api
         */
         const std::list<IDrawInterface*>& GetSelected() const { return m_SelectedList; }
 
+        /*!
+        * process controller input
+        * @input - mouse input data
+        */
+        virtual bool ProcessController(const MouseInputData &input);
+
     protected:
         void DrawController(const Vector &pos) const;
+
+        bool GetControllerPos(Vector &out) const;
 
     private:
         

@@ -1,4 +1,5 @@
 #include "scene_editor_main.h"
+#include "D3DDriver.h"
 #include "RenderSDK.h"
 #include "../ViewportInterface.h"
 #include "../ViewportManager.h"
@@ -67,7 +68,7 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     SRenderContext* SceneEditorMain::GetRenderContext() const
     {
-        return nullptr;
+        return m_pApi->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -386,6 +387,38 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
     {
-        m_pApi->ProcessInputMouse(event, code, x, y, ModifKey, GetRenderContext());
+        MouseInputData inputData;
+        inputData.Code = code;
+        inputData.event = event;
+        inputData.MousePos = Vector2f((float)x, (float)y);
+        inputData.ModifKey = ModifKey;
+        inputData.pRenderContext = GetRenderContext();
+
+        Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
+
+        core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
+        core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+
+        switch (inputData.Code)
+        {
+        case MOUSE_LEFT:
+        {
+            if (inputData.event == MOUSE_Pressed)
+            {
+                if (!ivprt->ProcessController(inputData))
+                {
+
+                }
+            }
+        }break;
+
+        default:
+            assert(false);
+            break;
+        }
+
+        //manager->ProcessInputMouse2(inputData, ivprt);
+
+        //m_pApi->ProcessInputMouse(event, code, x, y, ModifKey, GetRenderContext());
     }
 }

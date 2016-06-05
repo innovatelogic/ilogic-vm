@@ -80,7 +80,7 @@ public:
 		int xPos = (int)GET_X_LPARAM(lParam);
 		int yPos = (int)GET_Y_LPARAM(lParam);
 
-		m_pApp->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, m_pRenderContext);
+		m_editor->InputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey);
 
 		SetCapture();
 
@@ -105,7 +105,7 @@ public:
 		unsigned int vprtWidth = m_pApp->GetRenderSDK()->GetViewportWidth();
 		unsigned int vprtHeight = m_pApp->GetRenderSDK()->GetViewportHeight();
 
-		m_pApp->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, m_pRenderContext);
+		m_editor->InputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0);
 		
 		ReleaseCapture();
 

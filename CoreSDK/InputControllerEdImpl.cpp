@@ -73,6 +73,11 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
+    void CInputControllerEdImpl::ProcessInputMouse2(const MouseInputData &InputData, const ViewportInterface *viewport)
+    {
+    }
+
+    //----------------------------------------------------------------------------------------------
     void CInputControllerEdImpl::ProcessInputMouse(const MouseMoveInputData &InputData)
     {
         if (!ProcessMoveControllers(InputData))
@@ -134,6 +139,12 @@ namespace core_sdk_api
                 pNode = m_pInterface->m_VecDrawList.GetNext(pNode);
             } while (pNode);
         }
+        return false;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool CInputControllerEdImpl::ProcessControllers2(const MouseInputData &input, const ViewportInterface *viewport)
+    {
         return false;
     }
 

@@ -13,6 +13,7 @@ namespace core_sdk_api
         virtual ~CInputControllerEdImpl();
 
         void ProcessInputMouse(const MouseInputData &InputData);
+        void ProcessInputMouse2(const MouseInputData &input, const ViewportInterface *viewport);
         void ProcessInputMouse(const MouseMoveInputData &InputData);
         void ProcessMouseWheel(float ds, SRenderContext *pRenderContext = 0);
 
@@ -26,6 +27,7 @@ namespace core_sdk_api
 
         /** Process controller input */
         bool ProcessControllers(const MouseInputData &InputData);
+        bool ProcessControllers2(const MouseInputData &input, const ViewportInterface *viewport);
 
         bool ProcessPress(const MouseInputData &InputData);
 

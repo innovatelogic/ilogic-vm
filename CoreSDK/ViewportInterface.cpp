@@ -1,10 +1,12 @@
+#include "RenderContext.h"
 #include "ViewportManager.h"
 #include "IDrawInterface.h"
 #include "CoreSDK.h"
 #include "RenderSDK.h"
-#include "ViewportInterface.h"
 #include "Camera.h"
+#include "Registry.h"
 #include "CameraManager.h"
+#include "ViewportInterface.h"
 #include <algorithm>
 
 #define COLOR_DARK_RED		0xff8b1818
@@ -54,6 +56,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::DrawViewport() const
     {
+        Vector controllerPos;
         if (!m_SelectedList.empty())
         {
             Bounds3f out((*m_SelectedList.begin())->GetCompositeBounds_());
@@ -108,6 +111,83 @@ namespace core_sdk_api
     void ViewportInterface::UnselectAll()
     {
         m_SelectedList.clear();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool ViewportInterface::ProcessController(const MouseInputData &input)
+    {
+        const Vector2f &position = input.MousePos;
+
+        switch (input.Code)
+        {
+        case MOUSE_LEFT:
+        {
+            if (m_pCoreSDK->GetCameraManager())
+            {
+                Vector controllerPos;
+
+                if (GetControllerPos(controllerPos))
+                {
+                    const Vector2f &controlBox = m_pCoreSDK->GetRegistry()->ControlBox;
+
+                    Matrix InvView, I;
+                    invert(InvView, m_ViewMatrix);
+
+                    Vector camStrafe = Vector(m_ViewMatrix._11, m_ViewMatrix._21, m_ViewMatrix._31);
+                    Vector transDelta(m_ViewPoint - controllerPos);
+
+                    camStrafe.normalize();
+
+                    float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
+                    Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
+                    vCathetusOpposit.normalize();
+
+                    vCathetusOpposit *= fCathetusOppositLen;
+
+                    float k = camStrafe.Dot(vCathetusOpposit); // projection length 
+
+                    const Vector axisX = I._row0 * k;
+                    const Vector axisY = I._row1 * k;
+                    const Vector axisZ = I._row2 * k;
+
+                    const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
+                                                (float)input.pRenderContext->m_displayModeHeight);
+
+                    Vector ax, ay, az;
+
+                    ProjectViewport(ax, controllerPos + axisX, m_ViewMatrix, m_ProjMatrix, viewportSize);
+                    ProjectViewport(ay, controllerPos + axisY, m_ViewMatrix, m_ProjMatrix, viewportSize);
+                    ProjectViewport(az, controllerPos + axisZ, m_ViewMatrix, m_ProjMatrix, viewportSize);
+
+                    Vector ViewDirection = UnprojectViewport(ViewDirection,
+                        m_ProjMatrix,
+                        m_ViewMatrix,
+                        position,
+                        viewportSize);
+
+                    if (IsPointInRect(position.x, position.y, Vector2f(ax.x, ax.y) - controlBox, Vector2f(ax.x, ax.y) + controlBox))
+                    {
+                        Vector PlaneNormal = cross(PlaneNormal, ViewDirection, InvView._row1);
+                        Vector Intersect = RayPlaneIntersect(m_ViewPoint, PlaneNormal, controllerPos, I._row0);
+
+                        //                        m_SUserStartMouseDisplace = (Intersect - WorldMatrixTransform.t/* + AxisX*/) * (1.f / k);
+                        //                        m_SUserStartMousePosition = Vector(Position.x, Position.y, 0.f);
+
+                        //return const_cast<CActor*>(m_pNode->m_pKey)->SetControlMode(SOEvent_ControlLockX);
+                    }
+                }
+            }
+        }
+        break;
+
+        case MOUSE_MIDDLE:
+        {
+            //            m_SUserStartMousePosition = Vector(InputData.MousePos.x, InputData.MousePos.y, 0.f);
+            //            m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
+            return true;
+        }break;
+        };
+        return false;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -243,5 +323,31 @@ namespace core_sdk_api
                 }
             }
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool ViewportInterface::GetControllerPos(Vector &out) const
+    {
+        bool bResult = false;
+
+        if (!m_SelectedList.empty())
+        {
+            Bounds3f bbox((*m_SelectedList.begin())->GetCompositeBounds_());
+
+            for each (const IDrawInterface *var in m_SelectedList)
+            {
+                Bounds3f bound = var->GetBounds_();
+
+                if (bound.IsValid())
+                {
+                    bbox += bound;
+                }
+            }
+
+            out = bbox.bound_min + ((bbox.bound_max - bbox.bound_min) * 0.5f);
+
+            bResult = true;
+        }
+        return bResult;
     }
 }

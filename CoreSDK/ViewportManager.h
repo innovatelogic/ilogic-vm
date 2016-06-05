@@ -42,6 +42,8 @@ namespace core_sdk_api
 
         // controller input
         void ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
+        void ProcessInputMouse_2(const MouseInputData &InputData, const ViewportInterface *viewport);
+
         void ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask = 0);
         void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
 

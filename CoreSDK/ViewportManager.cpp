@@ -159,6 +159,11 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
+    void CViewportManager::ProcessInputMouse_2(const MouseInputData &InputData, const ViewportInterface *viewport)
+    {
+        m_pInputControllerEdImpl->ProcessInputMouse(InputData);
+    }
+    //----------------------------------------------------------------------------------------------
     void CViewportManager::ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask /*= 0*/)
     {
         if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
