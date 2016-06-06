@@ -15,7 +15,11 @@
 
 namespace core_sdk_api
 {
-    //------------------------------------------------------------------------
+    Vector	ViewportInterface::m_SUserStartMousePosition = Vector(0.f, 0.f, 0.f);
+    Vector	ViewportInterface::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
+    bool	ViewportInterface::m_bSMiddleButtonPressed = false;
+
+//------------------------------------------------------------------------
     ViewportInterface::ViewportInterface(const CObjectAbstract *pParent)
         : m_pNode(0)
         , m_fNearPlane(0.f)
@@ -159,7 +163,7 @@ namespace core_sdk_api
                     ProjectViewport(ay, controllerPos + axisY, m_ViewMatrix, m_ProjMatrix, viewportSize);
                     ProjectViewport(az, controllerPos + axisZ, m_ViewMatrix, m_ProjMatrix, viewportSize);
 
-                    Vector ViewDirection = UnprojectViewport(ViewDirection,
+                    Vector viewDirection = UnprojectViewport(viewDirection,
                         m_ProjMatrix,
                         m_ViewMatrix,
                         position,
@@ -167,13 +171,40 @@ namespace core_sdk_api
 
                     if (IsPointInRect(position.x, position.y, Vector2f(ax.x, ax.y) - controlBox, Vector2f(ax.x, ax.y) + controlBox))
                     {
-                        Vector PlaneNormal = cross(PlaneNormal, ViewDirection, InvView._row1);
-                        Vector Intersect = RayPlaneIntersect(m_ViewPoint, PlaneNormal, controllerPos, I._row0);
+                        Vector planeNormal = cross(planeNormal, viewDirection, InvView._row1);
+                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row0);
 
-                        //                        m_SUserStartMouseDisplace = (Intersect - WorldMatrixTransform.t/* + AxisX*/) * (1.f / k);
-                        //                        m_SUserStartMousePosition = Vector(Position.x, Position.y, 0.f);
+                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
-                        //return const_cast<CActor*>(m_pNode->m_pKey)->SetControlMode(SOEvent_ControlLockX);
+                        SetControlMode(SOEvent_ControlLockX);
+                        return true;
+                    }
+                    if (IsPointInRect(position.x, position.y, Vector2f(ay.x, ay.y) - controlBox, Vector2f(ay.x, ay.y) + controlBox))
+                    {
+                        Vector planeNormal;
+                        cross(planeNormal, viewDirection, InvView._row0);
+
+                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row1);
+
+                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+
+                        SetControlMode(SOEvent_ControlLockY);
+                        return true;
+                    }
+                    if (IsPointInRect(position.x, position.y, Vector2f(az.x, az.y) - controlBox, Vector2f(az.x, az.y) + controlBox))
+                    {
+                        Vector planeNormal;
+                        cross(planeNormal, viewDirection, InvView._row1);
+
+                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row2);
+
+                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+
+                        SetControlMode(SOEvent_ControlLockZ);
+                        return true;
                     }
                 }
             }

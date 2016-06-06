@@ -72,25 +72,37 @@ namespace core_sdk_api
         */
         virtual bool ProcessController(const MouseInputData &input);
 
+        /**
+        * [Editor] specific movement type.
+        */
+        EScrObjectEvent		GetControlMode() const { return m_controllerMode; }
+        void				SetControlMode(EScrObjectEvent mode) { m_controllerMode = mode; }
+
     protected:
         void DrawController(const Vector &pos) const;
 
         bool GetControllerPos(Vector &out) const;
 
     private:
-        
+
         Matrix  m_ViewMatrix;
         Matrix  m_ProjMatrix;
         Matrix  m_CameraWTM;
         Vector  m_ViewPoint;
-        
         float	m_fNearPlane;
         float	m_fFarPlane;
 
         TNodeMap<CActor, ViewportInterface> *m_pNode;
 
         // shrinked list of selected items
-        std::list<IDrawInterface*> m_SelectedList; 
+        std::list<IDrawInterface*> m_SelectedList;
+
+        // controller input state
+        EScrObjectEvent  m_controllerMode;
+
+        static Vector	 m_SUserStartMousePosition;
+        static Vector	 m_SUserStartMouseDisplace;
+        static bool		 m_bSMiddleButtonPressed;
 
         mutable CCoreSDK *m_pCoreSDK;
     };
