@@ -7,6 +7,7 @@
 #include "Registry.h"
 #include "CameraManager.h"
 #include "ViewportInterface.h"
+#include "mathlib.h"
 #include <algorithm>
 
 #define COLOR_DARK_RED		0xff8b1818
@@ -24,6 +25,8 @@ namespace core_sdk_api
         : m_pNode(0)
         , m_fNearPlane(0.f)
         , m_fFarPlane(0.f)
+        , m_controllerMode(SOEvent_None)
+        , m_controllerState(ActorState_None)
     {
         if (pParent)
         {
@@ -122,11 +125,11 @@ namespace core_sdk_api
     {
         const Vector2f &position = input.MousePos;
 
-        switch (input.Code)
+        if (GetControllerState() == ActorState_None)
         {
-        case MOUSE_LEFT:
-        {
-            if (m_pCoreSDK->GetCameraManager())
+            switch (input.Code)
+            {
+            case MOUSE_LEFT:
             {
                 Vector controllerPos;
 
@@ -155,7 +158,7 @@ namespace core_sdk_api
                     const Vector axisZ = I._row2 * k;
 
                     const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
-                                                (float)input.pRenderContext->m_displayModeHeight);
+                        (float)input.pRenderContext->m_displayModeHeight);
 
                     Vector ax, ay, az;
 
@@ -180,6 +183,7 @@ namespace core_sdk_api
                         SetControlMode(SOEvent_ControlLockX);
                         return true;
                     }
+
                     if (IsPointInRect(position.x, position.y, Vector2f(ay.x, ay.y) - controlBox, Vector2f(ay.x, ay.y) + controlBox))
                     {
                         Vector planeNormal;
@@ -193,6 +197,7 @@ namespace core_sdk_api
                         SetControlMode(SOEvent_ControlLockY);
                         return true;
                     }
+
                     if (IsPointInRect(position.x, position.y, Vector2f(az.x, az.y) - controlBox, Vector2f(az.x, az.y) + controlBox))
                     {
                         Vector planeNormal;
@@ -208,17 +213,113 @@ namespace core_sdk_api
                     }
                 }
             }
-        }
-        break;
+            break;
 
-        case MOUSE_MIDDLE:
-        {
-            //            m_SUserStartMousePosition = Vector(InputData.MousePos.x, InputData.MousePos.y, 0.f);
-            //            m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
-            return true;
-        }break;
-        };
+            case MOUSE_MIDDLE:
+            {
+                //            m_SUserStartMousePosition = Vector(InputData.MousePos.x, InputData.MousePos.y, 0.f);
+                //            m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
+                return true;
+            }break;
+            };
+        }
         return false;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool ViewportInterface::ProcessController(const MouseMoveInputData &input)
+    {
+        bool bResult = false;
+
+        switch (m_controllerState)
+        {
+        case ActorState_None:
+        {
+            // do nothing: Logging in a very particular case.
+        }break;
+
+        case ActorState_Locked:
+        {
+            const EObjEditControlMode mode = m_pCoreSDK->GetEditControlMode();
+
+            float k = 0.f;
+            Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
+
+            switch (m_controllerMode)
+            {
+                // local object movement 
+            case SOEvent_FreeMove:
+            case SOEvent_ControlLockOrigin: // free object move
+            {
+            }break;
+
+            case SOEvent_ControlLockX:
+            {
+                if (mode == EObjEditControlMode::ECM_Rotate) // rotate by x-axis
+                {
+                    //ProcessControllerRotateLocal(input);
+                }
+                else if (mode == EObjEditControlMode::ECM_Scale) // scale by x-axis
+                {
+                    //ProcessControllerScaleLocal(input);
+                }
+                else // move object by x-axis
+                {
+                    ControllerTranslate(intersect, k);
+                }
+                bResult = true;
+            }break;
+
+            case SOEvent_ControlLockY:
+            {
+                if (mode == EObjEditControlMode::ECM_Rotate) // rotate by y-axis
+                {
+                    //ProcessControllerRotateLocal(input);
+                }
+                else if (mode == EObjEditControlMode::ECM_Scale) // scale by y-axis
+                {
+                    //ProcessControllerScaleLocal(input);
+                }
+                else
+                {
+                    ControllerTranslate(intersect, k);
+                }
+                bResult = true;
+            }break;
+
+            case SOEvent_ControlLockZ:
+            {
+                if (mode == EObjEditControlMode::ECM_Rotate) // rotate by z-axis
+                {
+                    //ProcessControllerRotateLocal(InputData);
+                }
+                else if (mode == EObjEditControlMode::ECM_Scale) // scale by z-axis
+                {
+                    //ProcessControllerScaleLocal(InputData);
+                }
+                else
+                {	// move object by z-axis
+                    ControllerTranslate(intersect, k);
+                }
+                bResult = true;
+            }break;
+            };
+        }break;
+        default:
+            assert(false);
+            break;
+        }
+        return bResult;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ControllerRelease()
+    {
+        if (GetControllerState() == ActorState_Locked)
+        {
+            SetControlMode(SOEvent_None);
+            SetControllerState(ActorState_None);
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -303,7 +404,7 @@ namespace core_sdk_api
             pRenderer->DrawLine(position + (AxisX * c), position + (AxisX * c) + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_RED, false);
             pRenderer->DrawLine(position + (AxisX * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_GREEN, false);
 
-            // higlight control axis
+            // highlight control axis
             if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
             {
                 if (m_pCoreSDK->GetEditControlMode() == ECM_Move)
@@ -380,5 +481,110 @@ namespace core_sdk_api
             bResult = true;
         }
         return bResult;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ControllerTranslate(const Vector &pos, float k)
+    {
+        bool bTransformed = false;
+
+        if (!m_SelectedList.empty())
+        {
+            for each(auto *item in m_SelectedList)
+            {
+                Vector tpos;
+
+                item->GlobalToLocalTransform(tpos, pos - (m_SUserStartMouseDisplace * k));
+                
+                item->SetPosition_(tpos);
+
+                m_pCoreSDK->GetViewportManager()->RebuildTransform(const_cast<CActor*>(item->GetNode()->key()));
+
+                const_cast<CActor*>(item->GetNode()->key())->BroadcastEvent(Event_OnChangePivot);
+            }
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ControllerRotateLocal(const MouseMoveInputData &input)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ControllerScaleLocal(const MouseMoveInputData &input)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    Vector ViewportInterface::GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const
+    {
+        Vector out;
+
+        Matrix invView, I;
+        Vector ctrlPosition;
+        
+        GetControllerPos(ctrlPosition);
+
+        invert(invView, m_ViewMatrix);
+
+        float len = length(m_ViewPoint - ctrlPosition);
+
+        const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
+                                    (float)input.pRenderContext->m_displayModeHeight);
+
+        Vector viewDirection;
+        
+        UnprojectViewport(viewDirection,
+            m_ProjMatrix,
+            m_ViewMatrix,
+            input.MousePos,
+            viewportSize);
+
+        Vector camStrafe = Vector(m_ViewMatrix._11, m_ViewMatrix._21, m_ViewMatrix._31);
+        Vector transDelta(m_ViewPoint - ctrlPosition);
+
+        camStrafe.normalize();
+
+        float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
+        Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
+        vCathetusOpposit.normalize();
+        vCathetusOpposit *= fCathetusOppositLen;
+
+        float k = camStrafe.Dot(vCathetusOpposit); // projection length 
+
+        Vector planeNormal;
+
+        switch (mode)
+        {
+        case SOEvent_ControlLockX:
+        {
+            cross(planeNormal, viewDirection, invView._row1);
+
+            out = RayPlaneIntersect(m_ViewPoint, planeNormal, ctrlPosition, I._row0);
+        }break;
+
+        case SOEvent_ControlLockY:
+        {
+            cross(planeNormal, viewDirection, invView._row0);
+
+            out = RayPlaneIntersect(m_ViewPoint, planeNormal, ctrlPosition, I._row1);
+        }break;
+
+        case SOEvent_ControlLockZ:
+        {
+            cross(planeNormal, viewDirection, invView._row1);
+            out = RayPlaneIntersect(m_ViewPoint, planeNormal, ctrlPosition, I._row2);
+        }break;
+
+        default:
+            assert(false);
+            break;
+        }
+
+        out_mult = k;
+
+        return out;
     }
 }

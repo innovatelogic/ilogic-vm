@@ -70,7 +70,18 @@ namespace core_sdk_api
         * process controller input
         * @input - mouse input data
         */
-        virtual bool ProcessController(const MouseInputData &input);
+        bool ProcessController(const MouseInputData &input);
+       
+        /*!
+        * process controller input
+        * @input - mouse move input data
+        */
+        bool ProcessController(const MouseMoveInputData &input);
+
+        /*! 
+        * release controller processing state
+        **/
+        void ControllerRelease();
 
         /**
         * [Editor] specific movement type.
@@ -78,10 +89,19 @@ namespace core_sdk_api
         EScrObjectEvent		GetControlMode() const { return m_controllerMode; }
         void				SetControlMode(EScrObjectEvent mode) { m_controllerMode = mode; }
 
+        EActorState         GetControllerState() const { return m_controllerState;  }
+        void                SetControllerState(EActorState state) { m_controllerState = state; }
+
     protected:
         void DrawController(const Vector &pos) const;
 
         bool GetControllerPos(Vector &out) const;
+
+        void	ControllerTranslate(const Vector &pos, float k);
+        void	ControllerRotateLocal(const MouseMoveInputData &input);
+        void	ControllerScaleLocal(const MouseMoveInputData &input);
+
+        Vector  GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const;
 
     private:
 
@@ -99,6 +119,7 @@ namespace core_sdk_api
 
         // controller input state
         EScrObjectEvent  m_controllerMode;
+        EActorState	     m_controllerState;
 
         static Vector	 m_SUserStartMousePosition;
         static Vector	 m_SUserStartMouseDisplace;

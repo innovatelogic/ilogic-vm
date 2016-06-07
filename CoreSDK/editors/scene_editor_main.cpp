@@ -122,30 +122,6 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int ModifKey)
-    {
-        int dx = x - m_MousePosPrevX;
-        int dy = y - m_MousePosPrevY;
-
-        if (dx != 0 || dy != 0)
-        {
-            unsigned int vprtWidth = m_pApi->GetRenderSDK()->GetViewportWidth();
-            unsigned int vprtHeight = m_pApi->GetRenderSDK()->GetViewportHeight();
-
-            float xPosRel = (wndx > 0.f) ? x / (float)wndx : 0.f;
-            float yPosRel = (wndy > 0.f) ? y / (float)wndy : 0.f;
-
-            float xdRel = (wndx > 0.f) ? ((dx / (float)wndx) * vprtWidth) : 0.f;
-            float ydRel = (wndy > 0.f) ? ((dy / (float)wndy) * vprtHeight) : 0.f;
-
-            m_pApi->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xdRel, ydRel, ModifKey, GetRenderContext());
-            
-            m_MousePosPrevX = x;
-            m_MousePosPrevY = y;
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
     void SceneEditorMain::MouseWheel(float ds, int x, int y)
     {
         m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
@@ -368,7 +344,6 @@ namespace editors
         {
             // hack
             Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
-
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
             core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
@@ -387,38 +362,53 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
     {
-        MouseInputData inputData;
-        inputData.Code = code;
-        inputData.event = event;
-        inputData.MousePos = Vector2f((float)x, (float)y);
-        inputData.ModifKey = ModifKey;
-        inputData.pRenderContext = GetRenderContext();
+        MouseInputData input;
+        input.Code = code;
+        input.event = event;
+        input.MousePos = Vector2f((float)x, (float)y);
+        input.ModifKey = ModifKey;
+        input.pRenderContext = GetRenderContext();
 
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
-
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
         core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
-        switch (inputData.Code)
-        {
-        case MOUSE_LEFT:
-        {
-            if (inputData.event == MOUSE_Pressed)
-            {
-                if (!ivprt->ProcessController(inputData))
-                {
+        manager->InputMouse(input, ivprt);
+    }
 
-                }
-            }
-        }break;
+    //----------------------------------------------------------------------------------------------
+    void SceneEditorMain::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int ModifKey)
+    {
+        const int dx = x - m_MousePosPrevX;
+        const int dy = y - m_MousePosPrevY;
 
-        default:
-            assert(false);
-            break;
+        if (dx != 0 || dy != 0)
+        {
+            const unsigned int vprtWidth = m_pApi->GetRenderSDK()->GetViewportWidth();
+            const unsigned int vprtHeight = m_pApi->GetRenderSDK()->GetViewportHeight();
+
+            const float xPosRel = (wndx > 0.f) ? x / (float)wndx : 0.f;
+            const float yPosRel = (wndy > 0.f) ? y / (float)wndy : 0.f;
+
+            const float xdRel = (wndx > 0.f) ? ((dx / (float)wndx) * vprtWidth) : 0.f;
+            const float ydRel = (wndy > 0.f) ? ((dy / (float)wndy) * vprtHeight) : 0.f;
+
+            MouseMoveInputData input;
+
+            input.MousePos = Vector2f((float)x, (float)y);
+            input.DeltaPos = Vector2f((float)dx, (float)dy);
+            input.ModifKey = ModifKey;
+            input.pRenderContext = GetRenderContext();
+
+            // hack
+            Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
+            core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
+            core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+
+            manager->InputMouse(input, ivprt);
+
+            m_MousePosPrevX = x;
+            m_MousePosPrevY = y;
         }
-
-        //manager->ProcessInputMouse2(inputData, ivprt);
-
-        //m_pApi->ProcessInputMouse(event, code, x, y, ModifKey, GetRenderContext());
     }
 }

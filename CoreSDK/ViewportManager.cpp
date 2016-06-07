@@ -159,10 +159,53 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::ProcessInputMouse_2(const MouseInputData &InputData, const ViewportInterface *viewport)
+    void CViewportManager::InputMouse(const MouseInputData &input, const ViewportInterface *viewport /*=nullptr*/)
     {
-        m_pInputControllerEdImpl->ProcessInputMouse(InputData);
+        // TODO: get default viewport if nullptr
+        assert(viewport);
+
+        switch (input.Code)
+        {
+        case MOUSE_LEFT:
+        {
+            if (input.event == MOUSE_Pressed)
+            {
+                if (const_cast<ViewportInterface*>(viewport)->ProcessController(input))
+                {
+                    const_cast<ViewportInterface*>(viewport)->SetControllerState(ActorState_Locked);
+                }
+
+            }
+            else if (input.event == MOUSE_Released)
+            {
+                const_cast<ViewportInterface*>(viewport)->ControllerRelease();
+            }
+        }break;
+
+        case MOUSE_RIGHT:
+            //OnEventPressed(InputData); // button released
+            break;
+
+        case MOUSE_MIDDLE:
+        {
+            //ivprt->ProcessPress(input);
+        }break;
+
+        default:
+            assert(false);
+            break;
+        }
     }
+
+    //----------------------------------------------------------------------------------------------
+    void CViewportManager::InputMouse(const MouseMoveInputData &input, const ViewportInterface *viewport /*= nullptr*/)
+    {
+        // TODO: get default viewport if nullptr
+        assert(viewport);
+
+        const_cast<ViewportInterface*>(viewport)->ProcessController(input);
+    }
+
     //----------------------------------------------------------------------------------------------
     void CViewportManager::ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask /*= 0*/)
     {
@@ -387,7 +430,7 @@ namespace core_sdk_api
             } while (pNode);
         }
     }
-
+    
     //----------------------------------------------------------------------------------------------
     void CViewportManager::RebuildTransform(CActor *pAObject /*= nullptr*/)
     {
@@ -499,12 +542,12 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    TNodeMap<CActor, IDrawInterface>* CViewportManager::GetNodeByKey(CActor *pAObject) const
+    TNodeIDraw* CViewportManager::GetNodeByKey(CActor *pAObject) const
     {
-        TNodeIDraw* pOutNode = nullptr;
+        TNodeIDraw *pOutNode = nullptr;
 
         bool bFind = false;
-        TNodeIDraw *pNode = m_VecDrawList.m_pFirstElement;
+        TNodeIDraw *pNode = m_VecDrawList.begin();
 
         if (pNode)
         {
@@ -515,13 +558,13 @@ namespace core_sdk_api
                     pOutNode = pNode;
                     break;
                 }
-                pNode = m_VecDrawList.GetNext(pNode);
+                pNode = m_VecDrawList.next(pNode);
             } while (pNode);
         }
 
         return pOutNode;
     }
-
+    
     //----------------------------------------------------------------------------------------------
     void CViewportManager::SetSelectedImpl(IDrawInterface *pIObject, bool bFlag)
     {

@@ -25,12 +25,13 @@ public:
 	inline_ class CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
 	void					SetCoreSDK(class CCoreSDK* pCoreSDK) const { m_pCoreSDK = pCoreSDK; }
 
+    TNodeMap<class CActor, class IDrawInterface>* GetNode() const { return m_pNode; }
+
 	virtual bool	DoVisibilityTest_() const;
 	
 	virtual bool PrePropertyChangeIntf(const char *PropertyName);
 	virtual void OnPropertyChangedIntf(const char *PropertyName);
 	
-
 	/** 
 	 * Calls in main thread to fill render instructions for render thread.
 	 * Used to call DoDraw method.
@@ -163,7 +164,7 @@ public:
 	static bool		 m_bSMiddleButtonPressed;
 
 protected:
-	TNodeMap<class CActor, class IDrawInterface> *m_pNode;
+	TNodeMap<CActor, IDrawInterface> *m_pNode;
 
 	mutable class CCoreSDK *m_pCoreSDK;
 

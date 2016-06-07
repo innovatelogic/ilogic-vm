@@ -93,7 +93,7 @@ namespace core_sdk_api
     {
         bool bProcessed = false;
 
-        TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
+/*        TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
 
         if (pNode)
         {
@@ -121,7 +121,7 @@ namespace core_sdk_api
             assert(pCam); // means at least one active camera should persist
 
             pCam->OnMouseWheel(ds);
-        }
+        }*/
     }
 
     //----------------------------------------------------------------------------------------------

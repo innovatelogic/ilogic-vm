@@ -40,11 +40,12 @@ namespace core_sdk_api
         void Draw();
         void DrawNode(TNodeIDraw *pNode);
 
-        // controller input
-        void ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
-        void ProcessInputMouse_2(const MouseInputData &InputData, const ViewportInterface *viewport);
+        void InputMouse(const MouseInputData &input, const ViewportInterface *viewport = nullptr);
+        void InputMouse(const MouseMoveInputData &input, const ViewportInterface *viewport = nullptr);
 
-        void ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask = 0);
+        // OBSOLETE!! controller input
+        void ProcessInputMouse(const MouseInputData &input, IDrawInterface *pIObjectMask = 0);
+        void ProcessInputMouse(const MouseMoveInputData &input, IDrawInterface *pIObjectMask = 0);
         void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
 
         int				SetFocus(IDrawInterface *pIObject, bool bFlag = true);
@@ -62,7 +63,7 @@ namespace core_sdk_api
         void			RebuildSizeTransform();
 
         void			RebuildTransform(CActor *pAObject = nullptr);
-
+        
         /*!
         * set selection objects
         * [paths] array of actors full paths
@@ -71,7 +72,7 @@ namespace core_sdk_api
 
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
-
+        
     private:
         void			SetSelectedImpl(IDrawInterface *pIObject, bool bFlag);
 
