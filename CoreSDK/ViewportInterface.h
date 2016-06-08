@@ -110,6 +110,10 @@ namespace core_sdk_api
         void	ControllerScaleLocal(const MouseMoveInputData &input);
 
         Vector  GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const;
+       
+        void    UpdateSelectionState();
+
+        float   GetControllerScaleMultiplicator(const Matrix &view, const Vector &viewPos, const Vector &pos) const;
 
     private:
         Matrix  m_ViewMatrix;
@@ -130,7 +134,6 @@ namespace core_sdk_api
 
         static Vector	 m_SUserStartMousePosition;
         static Vector	 m_SUserStartMouseDisplace;
-        static Vector	 m_SUserStartPosDisplace;
         static bool		 m_bSMiddleButtonPressed;
         
         mutable CCoreSDK *m_pCoreSDK;

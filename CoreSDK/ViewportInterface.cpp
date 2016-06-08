@@ -18,7 +18,6 @@ namespace core_sdk_api
 {
     Vector	ViewportInterface::m_SUserStartMousePosition = Vector(0.f, 0.f, 0.f);
     Vector	ViewportInterface::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
-    Vector  ViewportInterface::m_SUserStartPosDisplace = Vector(0.f, 0.f, 0.f);
     bool	ViewportInterface::m_bSMiddleButtonPressed = false;
 
 //------------------------------------------------------------------------
@@ -65,6 +64,7 @@ namespace core_sdk_api
     void ViewportInterface::DrawViewport() const
     {
         Vector controllerPos;
+
         if (!m_SelectedList.empty())
         {
             IDrawInterface *idraw = m_SelectedList.begin()->first;
@@ -99,8 +99,6 @@ namespace core_sdk_api
         {
             m_SelectedList.insert(std::make_pair(item, SController()));
         }
-
-        //std::copy(selection.begin(), selection.end(), std::back_inserter(m_SelectedList));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -143,23 +141,10 @@ namespace core_sdk_api
 
                 if (GetControllerPos(controllerPos))
                 {
-                    const Vector2f &controlBox = m_pCoreSDK->GetRegistry()->ControlBox;
-
                     Matrix InvView, I;
                     invert(InvView, m_ViewMatrix);
 
-                    Vector camStrafe = Vector(m_ViewMatrix._11, m_ViewMatrix._21, m_ViewMatrix._31);
-                    Vector transDelta(m_ViewPoint - controllerPos);
-
-                    camStrafe.normalize();
-
-                    float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
-                    Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
-                    vCathetusOpposit.normalize();
-
-                    vCathetusOpposit *= fCathetusOppositLen;
-
-                    float k = camStrafe.Dot(vCathetusOpposit); // projection length 
+                    float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, controllerPos);
 
                     const Vector axisX = I._row0 * k;
                     const Vector axisY = I._row1 * k;
@@ -180,13 +165,13 @@ namespace core_sdk_api
                         position,
                         viewportSize);
 
+                    const Vector2f &controlBox = m_pCoreSDK->GetRegistry()->ControlBox;
                     if (IsPointInRect(position.x, position.y, Vector2f(ax.x, ax.y) - controlBox, Vector2f(ax.x, ax.y) + controlBox))
                     {
                         Vector planeNormal = cross(planeNormal, viewDirection, InvView._row1);
                         Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row0);
 
                         m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
-                        //m_SUserStartPosDisplace = (*m_SelectedList.begin())->GetTransformedWTM_().t - controllerPos;
                         m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
                         SetControlMode(SOEvent_ControlLockX);
@@ -342,17 +327,7 @@ namespace core_sdk_api
 
             const Vector &position = pos;
 
-            Vector CamStrafe(pCamera->GetStrafe());
-            Vector TransDelta(pCamera->GetTransformedWTM_().t - position);
-
-            CamStrafe.normalize();
-
-            float fCathetusOppositLen = TransDelta.Length() * ::tan(0.1f);
-            Vector vCathetusOpposit = TransDelta.Cross(Vector(0.f, 1.f, 0.f));
-            vCathetusOpposit.normalize();
-            vCathetusOpposit *= fCathetusOppositLen;
-
-            float k = CamStrafe.Dot(vCathetusOpposit);
+            float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, position);
 
             Matrix I;
             const Vector AxisX = I._row0 * k;
@@ -558,17 +533,7 @@ namespace core_sdk_api
             input.MousePos,
             viewportSize);
 
-        Vector camStrafe = Vector(m_ViewMatrix._11, m_ViewMatrix._21, m_ViewMatrix._31);
-        Vector transDelta(m_ViewPoint - ctrlPosition);
-
-        camStrafe.normalize();
-
-        float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
-        Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
-        vCathetusOpposit.normalize();
-        vCathetusOpposit *= fCathetusOppositLen;
-
-        float k = camStrafe.Dot(vCathetusOpposit); // projection length 
+        float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, ctrlPosition);
 
         Vector planeNormal;
 
@@ -602,5 +567,27 @@ namespace core_sdk_api
         out_mult = k;
 
         return out;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::UpdateSelectionState()
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    float ViewportInterface::GetControllerScaleMultiplicator(const Matrix &view, const Vector &viewPos, const Vector &pos) const
+    {
+        Vector camStrafe = Vector(view._11, view._21, view._31);
+        Vector transDelta(viewPos - pos);
+
+        camStrafe.normalize();
+
+        float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
+        Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
+        vCathetusOpposit.normalize();
+        vCathetusOpposit *= fCathetusOppositLen;
+
+        return camStrafe.Dot(vCathetusOpposit); // projection length 
     }
 }
