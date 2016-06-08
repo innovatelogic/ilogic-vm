@@ -11,6 +11,14 @@ namespace core_sdk_api
 {
     class CORESDK_API ViewportInterface
     {
+        struct SController
+        {
+            Vector displace;
+        };
+
+        // shrinked list of selected items & control info
+        using TMapSelection = std::map<IDrawInterface*, SController>;
+
     public:
         ViewportInterface(const CObjectAbstract *pParent);
         virtual ~ViewportInterface();
@@ -64,7 +72,7 @@ namespace core_sdk_api
         /*!
         * returns selected list
         */
-        const std::list<IDrawInterface*>& GetSelected() const { return m_SelectedList; }
+        const TMapSelection& GetSelected() const { return m_SelectedList; }
 
         /*!
         * process controller input
@@ -93,9 +101,9 @@ namespace core_sdk_api
         void                SetControllerState(EActorState state) { m_controllerState = state; }
 
     protected:
-        void DrawController(const Vector &pos) const;
+        void    DrawController(const Vector &pos) const;
 
-        bool GetControllerPos(Vector &out) const;
+        bool    GetControllerPos(Vector &out) const;
 
         void	ControllerTranslate(const Vector &pos, float k);
         void	ControllerRotateLocal(const MouseMoveInputData &input);
@@ -104,7 +112,6 @@ namespace core_sdk_api
         Vector  GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const;
 
     private:
-
         Matrix  m_ViewMatrix;
         Matrix  m_ProjMatrix;
         Matrix  m_CameraWTM;
@@ -114,17 +121,18 @@ namespace core_sdk_api
 
         TNodeMap<CActor, ViewportInterface> *m_pNode;
 
-        // shrinked list of selected items
-        std::list<IDrawInterface*> m_SelectedList;
-
+        // shrinked list of selected items & control info
+        TMapSelection m_SelectedList;
+        
         // controller input state
         EScrObjectEvent  m_controllerMode;
         EActorState	     m_controllerState;
 
         static Vector	 m_SUserStartMousePosition;
         static Vector	 m_SUserStartMouseDisplace;
+        static Vector	 m_SUserStartPosDisplace;
         static bool		 m_bSMiddleButtonPressed;
-
+        
         mutable CCoreSDK *m_pCoreSDK;
     };
 }

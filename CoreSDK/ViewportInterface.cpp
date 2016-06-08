@@ -18,6 +18,7 @@ namespace core_sdk_api
 {
     Vector	ViewportInterface::m_SUserStartMousePosition = Vector(0.f, 0.f, 0.f);
     Vector	ViewportInterface::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
+    Vector  ViewportInterface::m_SUserStartPosDisplace = Vector(0.f, 0.f, 0.f);
     bool	ViewportInterface::m_bSMiddleButtonPressed = false;
 
 //------------------------------------------------------------------------
@@ -66,11 +67,13 @@ namespace core_sdk_api
         Vector controllerPos;
         if (!m_SelectedList.empty())
         {
-            Bounds3f out((*m_SelectedList.begin())->GetCompositeBounds_());
+            IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-            for each (const IDrawInterface *var in m_SelectedList)
+            Bounds3f out(idraw->GetCompositeBounds_());
+
+            for each (const auto var in m_SelectedList)
             {
-                Bounds3f bound = var->GetBounds_();
+                Bounds3f bound = var.first->GetBounds_();
 
                 if (bound.IsValid())
                 {
@@ -92,22 +95,27 @@ namespace core_sdk_api
     {
         m_SelectedList.clear();
 
-        std::copy(selection.begin(), selection.end(), std::back_inserter(m_SelectedList));
+        for each (const auto &item in selection)
+        {
+            m_SelectedList.insert(std::make_pair(item, SController()));
+        }
+
+        //std::copy(selection.begin(), selection.end(), std::back_inserter(m_SelectedList));
     }
 
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::SetSelect(IDrawInterface *object)
     {
-        if (std::find(m_SelectedList.begin(), m_SelectedList.end(), object) == m_SelectedList.end())
+        if (m_SelectedList.find(object) == m_SelectedList.end())
         {
-            m_SelectedList.push_back(object);
+            m_SelectedList.insert(std::make_pair(object, SController()));
         }
     }
 
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::DropSelect(IDrawInterface *object)
     {
-        std::list<IDrawInterface*>::const_iterator iterFind = std::find(m_SelectedList.begin(), m_SelectedList.end(), object);
+        TMapSelection::const_iterator iterFind = m_SelectedList.find( object);
         if (iterFind != m_SelectedList.end())
         {
             m_SelectedList.erase(iterFind);
@@ -178,6 +186,7 @@ namespace core_sdk_api
                         Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row0);
 
                         m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                        //m_SUserStartPosDisplace = (*m_SelectedList.begin())->GetTransformedWTM_().t - controllerPos;
                         m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
                         SetControlMode(SOEvent_ControlLockX);
@@ -217,8 +226,8 @@ namespace core_sdk_api
 
             case MOUSE_MIDDLE:
             {
-                //            m_SUserStartMousePosition = Vector(InputData.MousePos.x, InputData.MousePos.y, 0.f);
-                //            m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
+                m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+                m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
                 return true;
             }break;
             };
@@ -464,11 +473,13 @@ namespace core_sdk_api
 
         if (!m_SelectedList.empty())
         {
-            Bounds3f bbox((*m_SelectedList.begin())->GetCompositeBounds_());
+            IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-            for each (const IDrawInterface *var in m_SelectedList)
+            Bounds3f bbox(idraw->GetCompositeBounds_());
+
+            for each (const auto var in m_SelectedList)
             {
-                Bounds3f bound = var->GetBounds_();
+                Bounds3f bound = (var.first)->GetBounds_();
 
                 if (bound.IsValid())
                 {
@@ -490,17 +501,22 @@ namespace core_sdk_api
 
         if (!m_SelectedList.empty())
         {
-            for each(auto *item in m_SelectedList)
+            for each (auto &item in m_SelectedList)
             {
                 Vector tpos;
 
-                item->GlobalToLocalTransform(tpos, pos - (m_SUserStartMouseDisplace * k));
+                IDrawInterface *idraw = item.first;
+                const SController &ctrl = item.second;
+
+                idraw->GlobalToLocalTransform(tpos, pos - (m_SUserStartMouseDisplace * k) + ctrl.displace);
                 
-                item->SetPosition_(tpos);
+                idraw->SetPosition_(tpos);
 
-                m_pCoreSDK->GetViewportManager()->RebuildTransform(const_cast<CActor*>(item->GetNode()->key()));
+                CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
 
-                const_cast<CActor*>(item->GetNode()->key())->BroadcastEvent(Event_OnChangePivot);
+                m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+
+                actor->BroadcastEvent(Event_OnChangePivot);
             }
         }
     }
