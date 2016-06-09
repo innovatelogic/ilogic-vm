@@ -151,7 +151,7 @@ namespace core_sdk_api
                     const Vector axisZ = I._row2 * k;
 
                     const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
-                        (float)input.pRenderContext->m_displayModeHeight);
+                                                (float)input.pRenderContext->m_displayModeHeight);
 
                     Vector ax, ay, az;
 
@@ -175,6 +175,8 @@ namespace core_sdk_api
                         m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
                         SetControlMode(SOEvent_ControlLockX);
+                        UpdateSelectionState(SOEvent_ControlLockX, controllerPos);
+
                         return true;
                     }
 
@@ -189,6 +191,8 @@ namespace core_sdk_api
                         m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
                         SetControlMode(SOEvent_ControlLockY);
+                        UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
+
                         return true;
                     }
 
@@ -203,6 +207,8 @@ namespace core_sdk_api
                         m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
                         SetControlMode(SOEvent_ControlLockZ);
+                        UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
+
                         return true;
                     }
                 }
@@ -570,9 +576,27 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void ViewportInterface::UpdateSelectionState()
+    void ViewportInterface::UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos)
     {
+        for (TMapSelection::iterator iter = m_SelectedList.begin(); iter != m_SelectedList.end(); ++iter)
+        {
+            const IDrawInterface *idraw = iter->first;
 
+            assert(idraw);
+
+            Vector &displace = iter->second.displace;
+            displace = idraw->GetTransformedWTM_().t - ctrlPos;
+        }
+
+       /* for each (auto &item in m_SelectedList)
+        {
+            const IDrawInterface *idraw = item.first;
+
+            assert(idraw);
+
+            Vector &displace = item.second.displace;
+            displace = ctrlPos - idraw->GetTransformedWTM_().t;
+        }*/
     }
 
     //----------------------------------------------------------------------------------------------

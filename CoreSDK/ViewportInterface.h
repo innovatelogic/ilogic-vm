@@ -111,7 +111,7 @@ namespace core_sdk_api
 
         Vector  GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const;
        
-        void    UpdateSelectionState();
+        void    UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos);
 
         float   GetControllerScaleMultiplicator(const Matrix &view, const Vector &viewPos, const Vector &pos) const;
 
