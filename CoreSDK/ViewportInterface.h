@@ -91,6 +91,16 @@ namespace core_sdk_api
         **/
         void ControllerRelease();
 
+        /*!
+        * Process mouse input  
+        */
+        void ProcessMouseInput(const MouseInputData &input);
+
+        /*!
+        * Process mouse move input
+        */
+        void ProcessMouseInput(const MouseMoveInputData &input);
+
         /**
         * [Editor] specific movement type.
         */

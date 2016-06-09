@@ -164,21 +164,26 @@ namespace core_sdk_api
         // TODO: get default viewport if nullptr
         assert(viewport);
 
+        ViewportInterface *ivprt = const_cast<ViewportInterface*>(viewport);
+
         switch (input.Code)
         {
         case MOUSE_LEFT:
         {
             if (input.event == MOUSE_Pressed)
             {
-                if (const_cast<ViewportInterface*>(viewport)->ProcessController(input))
+                if (ivprt->ProcessController(input))
                 {
-                    const_cast<ViewportInterface*>(viewport)->SetControllerState(ActorState_Locked);
+                    ivprt->SetControllerState(ActorState_Locked);
                 }
-
+                else
+                {
+                    ivprt->ProcessMouseInput(input);
+                }
             }
             else if (input.event == MOUSE_Released)
             {
-                const_cast<ViewportInterface*>(viewport)->ControllerRelease();
+                ivprt->ControllerRelease();
             }
         }break;
 
@@ -188,7 +193,7 @@ namespace core_sdk_api
 
         case MOUSE_MIDDLE:
         {
-            //ivprt->ProcessPress(input);
+            ivprt->ProcessMouseInput(input);
         }break;
 
         default:
@@ -203,7 +208,9 @@ namespace core_sdk_api
         // TODO: get default viewport if nullptr
         assert(viewport);
 
-        const_cast<ViewportInterface*>(viewport)->ProcessController(input);
+        ViewportInterface *ivprt = const_cast<ViewportInterface*>(viewport);
+
+        ivprt->ProcessController(input);
     }
 
     //----------------------------------------------------------------------------------------------

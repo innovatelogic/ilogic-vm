@@ -133,95 +133,88 @@ namespace core_sdk_api
 
         if (GetControllerState() == ActorState_None)
         {
-            switch (input.Code)
-            {
-            case MOUSE_LEFT:
-            {
-                Vector controllerPos;
+            Vector controllerPos;
 
-                if (GetControllerPos(controllerPos))
+            if (GetControllerPos(controllerPos))
+            {
+                Matrix InvView, I;
+                invert(InvView, m_ViewMatrix);
+
+                float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, controllerPos);
+
+                const Vector axisX = I._row0 * k;
+                const Vector axisY = I._row1 * k;
+                const Vector axisZ = I._row2 * k;
+
+                const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
+                                            (float)input.pRenderContext->m_displayModeHeight);
+
+                Vector ax, ay, az;
+
+                ProjectViewport(ax, controllerPos + axisX, m_ViewMatrix, m_ProjMatrix, viewportSize);
+                ProjectViewport(ay, controllerPos + axisY, m_ViewMatrix, m_ProjMatrix, viewportSize);
+                ProjectViewport(az, controllerPos + axisZ, m_ViewMatrix, m_ProjMatrix, viewportSize);
+
+                Vector viewDirection = UnprojectViewport(viewDirection,
+                    m_ProjMatrix,
+                    m_ViewMatrix,
+                    position,
+                    viewportSize);
+
+                const Vector2f &controlBox = m_pCoreSDK->GetRegistry()->ControlBox;
+                if (IsPointInRect(position.x, position.y, Vector2f(ax.x, ax.y) - controlBox, Vector2f(ax.x, ax.y) + controlBox))
                 {
-                    Matrix InvView, I;
-                    invert(InvView, m_ViewMatrix);
+                    Vector planeNormal = cross(planeNormal, viewDirection, InvView._row1);
+                    Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row0);
 
-                    float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, controllerPos);
+                    m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
-                    const Vector axisX = I._row0 * k;
-                    const Vector axisY = I._row1 * k;
-                    const Vector axisZ = I._row2 * k;
+                    SetControlMode(SOEvent_ControlLockX);
+                    UpdateSelectionState(SOEvent_ControlLockX, controllerPos);
 
-                    const Vector2f viewportSize((float)input.pRenderContext->m_displayModeWidth,
-                                                (float)input.pRenderContext->m_displayModeHeight);
+                    return true;
+                }
 
-                    Vector ax, ay, az;
+                if (IsPointInRect(position.x, position.y, Vector2f(ay.x, ay.y) - controlBox, Vector2f(ay.x, ay.y) + controlBox))
+                {
+                    Vector planeNormal;
+                    cross(planeNormal, viewDirection, InvView._row0);
 
-                    ProjectViewport(ax, controllerPos + axisX, m_ViewMatrix, m_ProjMatrix, viewportSize);
-                    ProjectViewport(ay, controllerPos + axisY, m_ViewMatrix, m_ProjMatrix, viewportSize);
-                    ProjectViewport(az, controllerPos + axisZ, m_ViewMatrix, m_ProjMatrix, viewportSize);
+                    Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row1);
 
-                    Vector viewDirection = UnprojectViewport(viewDirection,
-                        m_ProjMatrix,
-                        m_ViewMatrix,
-                        position,
-                        viewportSize);
+                    m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
-                    const Vector2f &controlBox = m_pCoreSDK->GetRegistry()->ControlBox;
-                    if (IsPointInRect(position.x, position.y, Vector2f(ax.x, ax.y) - controlBox, Vector2f(ax.x, ax.y) + controlBox))
-                    {
-                        Vector planeNormal = cross(planeNormal, viewDirection, InvView._row1);
-                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row0);
+                    SetControlMode(SOEvent_ControlLockY);
+                    UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
 
-                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
-                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+                    return true;
+                }
 
-                        SetControlMode(SOEvent_ControlLockX);
-                        UpdateSelectionState(SOEvent_ControlLockX, controllerPos);
+                if (IsPointInRect(position.x, position.y, Vector2f(az.x, az.y) - controlBox, Vector2f(az.x, az.y) + controlBox))
+                {
+                    Vector planeNormal;
+                    cross(planeNormal, viewDirection, InvView._row1);
 
-                        return true;
-                    }
+                    Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row2);
 
-                    if (IsPointInRect(position.x, position.y, Vector2f(ay.x, ay.y) - controlBox, Vector2f(ay.x, ay.y) + controlBox))
-                    {
-                        Vector planeNormal;
-                        cross(planeNormal, viewDirection, InvView._row0);
+                    m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
 
-                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row1);
+                    SetControlMode(SOEvent_ControlLockZ);
+                    UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
 
-                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
-                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
-
-                        SetControlMode(SOEvent_ControlLockY);
-                        UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
-
-                        return true;
-                    }
-
-                    if (IsPointInRect(position.x, position.y, Vector2f(az.x, az.y) - controlBox, Vector2f(az.x, az.y) + controlBox))
-                    {
-                        Vector planeNormal;
-                        cross(planeNormal, viewDirection, InvView._row1);
-
-                        Vector intersect = RayPlaneIntersect(m_ViewPoint, planeNormal, controllerPos, I._row2);
-
-                        m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
-                        m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
-
-                        SetControlMode(SOEvent_ControlLockZ);
-                        UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
-
-                        return true;
-                    }
+                    return true;
                 }
             }
-            break;
 
-            case MOUSE_MIDDLE:
-            {
-                m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
-                m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
-                return true;
-            }break;
-            };
+//            case MOUSE_MIDDLE:
+//            {
+//                m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+//                m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
+//                return true;
+//            }break;
         }
         return false;
     }
@@ -257,7 +250,7 @@ namespace core_sdk_api
             {
                 if (mode == EObjEditControlMode::ECM_Rotate) // rotate by x-axis
                 {
-                    //ProcessControllerRotateLocal(input);
+                    ControllerRotateLocal(input);
                 }
                 else if (mode == EObjEditControlMode::ECM_Scale) // scale by x-axis
                 {
@@ -321,6 +314,20 @@ namespace core_sdk_api
             SetControllerState(ActorState_None);
         }
     }
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ProcessMouseInput(const MouseInputData &input)
+    {
+        //case MOUSE_MIDDLE:
+        m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+        m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void ViewportInterface::ProcessMouseInput(const MouseMoveInputData &input)
+    {
+
+    }
+
 
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::DrawController(const Vector &pos) const
@@ -505,7 +512,91 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void ViewportInterface::ControllerRotateLocal(const MouseMoveInputData &input)
     {
+        Vector controllerPos;
 
+        if (GetControllerPos(controllerPos))
+        {
+            switch (m_controllerMode)
+            {
+            case SOEvent_ControlLockX:
+            {
+                Matrix InvView, I;
+                invert(InvView, m_ViewMatrix);
+
+                const Vector2f ViewportSize((float)input.pRenderContext->m_displayModeWidth,
+                                      (float)input.pRenderContext->m_displayModeHeight);
+
+                Vector ViewDirection = UnprojectViewport(ViewDirection,
+                    m_ProjMatrix,
+                    m_ViewMatrix,
+                    input.MousePos,
+                    ViewportSize);
+
+                Vector PrevViewDirection = UnprojectViewport(PrevViewDirection,
+                    m_ProjMatrix,
+                    m_ViewMatrix,
+                    Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
+                    ViewportSize);
+
+                Vector Intersect = RayPlaneIntersect(controllerPos, Vector(0.f, 0.f, 1.f), m_ViewPoint, ViewDirection);
+
+                Vector IntersectPrev = RayPlaneIntersect(controllerPos, Vector(0.f, 0.f, 1.f), m_ViewPoint, PrevViewDirection);
+
+                Vector d1 = Intersect - controllerPos;
+                Vector d2 = IntersectPrev - controllerPos;
+
+                d1.normalize();
+                d2.normalize();
+
+                float dot = d2.Dot(d1);
+
+                if (dot < 1.f)
+                {
+                    float sign1 = d1.Dot(Vector(1.f, 0.f, 0.f));
+                    float sign2 = d2.Dot(Vector(1.f, 0.f, 0.f));
+
+                    if (d1.y > 0.f)
+                    {
+                        sign1 *= -1.f;
+                        sign2 *= -1.f;
+                    }
+
+                    float fdelta = ((sign1 > sign2) ? 1.f : -1.f) * ::acosf(dot);
+
+                    //TMP
+                    IDrawInterface *idraw = m_SelectedList.begin()->first;
+
+                    idraw->AddYawPitchRoll(Vector(fdelta, 0.f, 0.f));
+
+                    Quaternion rot(0.f, 0.f, 0.f, 1.f);
+
+                    rot.set_rot(fdelta, 0.f, 0.f);
+
+                    Matrix M;
+                    rot.Normalize();
+                    rot.ToMatrix(&M);
+
+                    Matrix LTM = idraw->GetLTM_();
+                    Vector t = LTM.t;
+                    LTM.t.Set(0.f, 0.f, 0.f);
+                    LTM = LTM * M;
+                    LTM.t = t;
+                    idraw->SetLTM_(LTM);
+
+                    CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
+
+                    m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+
+                    actor->BroadcastEvent(Event_OnChangePivot);
+                }
+            }break;
+
+            default:
+                break;
+            };
+        }
+
+        
     }
 
     //----------------------------------------------------------------------------------------------

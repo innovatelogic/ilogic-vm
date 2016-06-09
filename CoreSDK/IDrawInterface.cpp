@@ -832,8 +832,11 @@ void IDrawInterface::ProcessControllerRotateLocal(const MouseMoveInputData &Inpu
 			{
 				case SOEvent_ControlLockX:
 				{
-					Vector Intersect = RayPlaneIntersect(WorldMatrixTransform.t, Vector(0.f, 0.f, 1.f), pCamera->GetTransformedWTM_().t, ViewDirection);
-					Vector IntersectPrev = RayPlaneIntersect(WorldMatrixTransform.t, Vector(0.f, 0.f, 1.f), pCamera->GetTransformedWTM_().t, PrevViewDirection);
+					Vector Intersect = RayPlaneIntersect(WorldMatrixTransform.t, Vector(0.f, 0.f, 1.f), 
+                                                         pCamera->GetTransformedWTM_().t, ViewDirection);
+
+					Vector IntersectPrev = RayPlaneIntersect(WorldMatrixTransform.t, Vector(0.f, 0.f, 1.f),
+                                                         pCamera->GetTransformedWTM_().t, PrevViewDirection);
 
 					Vector D1 = Intersect - WorldMatrixTransform.t;
 					Vector D2 = IntersectPrev - WorldMatrixTransform.t;

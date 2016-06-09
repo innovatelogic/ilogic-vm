@@ -136,6 +136,12 @@ public:
 	/** mouse input availability indicator */
 	virtual bool		IsHandleMouseInput() const { return true; }
 	
+    void AddYawPitchRoll(const Vector &ypr) { m_YawPitchRoll += ypr; }
+
+
+    /*!
+     * Hierarchy helper function
+     */
 	static bool	GetObjectAInLocalSpaceB(Matrix& outLTM, const IDrawInterface *pObjectA, const IDrawInterface *pObjectB);
 	static bool	TransformObjectAToObjectBLocalPos(CActor *pObjectA, const CActor *pObjectB, Vector &LocalBPos = Vector(0.f, 0.f, 0.f), bool bKeepAOrientation = true);
 
