@@ -5,9 +5,9 @@ REGISTER_CLASS(Explorer2D, UIScreenObject);
 //----------------------------------------------------------------------------------
 Explorer2D::Explorer2D(const CObjectAbstract *pParent)
 : Super(pParent)
-, ViewportInterface(pParent)
+, core_sdk_api::TIViewport(pParent)
 {
-    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
+    core_sdk_api::TIViewport::RegisterViewportInterface(this);
 
 	SetTransient(true);
 }

@@ -7,12 +7,12 @@ REGISTER_CLASS(CModelViewer, ActorAllocator);
 CModelViewer::CModelViewer(const CObjectAbstract *pParent)
 : Super(pParent)
 , IDrawInterface(pParent)
-, ViewportInterface(pParent)
+, core_sdk_api::TIViewport(pParent)
 , m_pRenderContext(nullptr)
 , m_pGenerated(nullptr)
 , m_pMeshComponent(nullptr)
 {
-    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
+    core_sdk_api::TIViewport::RegisterViewportInterface(this);
 	RegisterDrawInterface(this);
 
 	SetTransient(true);

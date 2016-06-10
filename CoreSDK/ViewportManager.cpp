@@ -30,7 +30,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    TNodeIView* CViewportManager::RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
+    TNodeIView* CViewportManager::RegisterViewport(const TIViewport *pSrc, const CActor *pKey, const CActor *pKeyParent)
     {
         return m_VecViewports.PushBack(pKey, pSrc, pKeyParent);
     }
@@ -42,9 +42,9 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    ViewportInterface* CViewportManager::GetVeiwportInterface(const CActor *key)
+    TIViewport* CViewportManager::GetVeiwportInterface(const CActor *key)
     {
-        ViewportInterface *out = nullptr;
+        TIViewport *out = nullptr;
 
         if (TNodeIView *node = m_VecViewports.begin())
         {
@@ -52,7 +52,7 @@ namespace core_sdk_api
             {
                 if (node->key() == key)
                 {
-                    out = const_cast<ViewportInterface*>(node->m_pValue);
+                    out = const_cast<TIViewport*>(node->m_pValue);
                 }
                 node = node->GetNext();
             } while (node);
@@ -61,9 +61,9 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    ViewportInterface* CViewportManager::GetViewportInterface(const IDrawInterface *pIObject) const
+    TIViewport* CViewportManager::GetViewportInterface(const IDrawInterface *pIObject) const
     {
-        ViewportInterface *outViewport = nullptr;
+        TIViewport *outViewport = nullptr;
 
         if (pIObject)
         {
@@ -92,11 +92,11 @@ namespace core_sdk_api
                 }
 
                 // find in view port array
-                TNodeMap<CActor, ViewportInterface> *pVNode = m_VecViewports.FindNodeByKey(pNodeObject->m_pKey);
+                TNodeMap<CActor, TIViewport> *pVNode = m_VecViewports.FindNodeByKey(pNodeObject->m_pKey);
 
                 assert(pVNode);
                 
-                outViewport = const_cast<ViewportInterface*>(pVNode->m_pValue);
+                outViewport = const_cast<TIViewport*>(pVNode->m_pValue);
             }
         }
         return outViewport;
@@ -159,12 +159,12 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::InputMouse(const MouseInputData &input, const ViewportInterface *viewport /*=nullptr*/)
+    void CViewportManager::InputMouse(const MouseInputData &input, const TIViewport *viewport /*=nullptr*/)
     {
         // TODO: get default viewport if nullptr
         assert(viewport);
 
-        ViewportInterface *ivprt = const_cast<ViewportInterface*>(viewport);
+        TIViewport *ivprt = const_cast<TIViewport*>(viewport);
 
         switch (input.Code)
         {
@@ -203,12 +203,12 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::InputMouse(const MouseMoveInputData &input, const ViewportInterface *viewport /*= nullptr*/)
+    void CViewportManager::InputMouse(const MouseMoveInputData &input, const TIViewport *viewport /*= nullptr*/)
     {
         // TODO: get default viewport if nullptr
         assert(viewport);
 
-        ViewportInterface *ivprt = const_cast<ViewportInterface*>(viewport);
+        TIViewport *ivprt = const_cast<TIViewport*>(viewport);
 
         ivprt->ProcessController(input);
     }
@@ -511,7 +511,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::SetSelect(const std::vector<std::string> &paths, ViewportInterface *viewport)
+    void CViewportManager::SetSelect(const std::vector<std::string> &paths, TIViewport *viewport)
     {
         assert(viewport);
 
@@ -575,7 +575,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void CViewportManager::SetSelectedImpl(IDrawInterface *pIObject, bool bFlag)
     {
-        ViewportInterface *viewport = GetViewportInterface(pIObject);
+        TIViewport *viewport = GetViewportInterface(pIObject);
 
         if (viewport)
         {

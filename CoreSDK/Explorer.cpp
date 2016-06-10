@@ -77,7 +77,7 @@ bool Explorer::IsBrushActivated()
 /*
 	for (TVecActorChildIterator Iter = ChildNodes.begin(); Iter != ChildNodes.end(); ++Iter) 
 	{
-		ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(*Iter);
+		TIViewport * VInterface = ActorAllocator::GetViewportInterface(*Iter);
 		if (VInterface)
 		{
 			ActorAllocator * AActor = dynamic_cast<ActorAllocator*>(*Iter);
@@ -138,7 +138,7 @@ bool Explorer::ProcessMouseWheel(float ds, int x, int y)
 
 	if (Focused != NULL)
 	{
-		ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(Focused);
+		TIViewport * VInterface = ActorAllocator::GetViewportInterface(Focused);
 		if (VInterface)
 		{
 			Matrix ViewMatrix = VInterface->GetViewportViewMatrix();

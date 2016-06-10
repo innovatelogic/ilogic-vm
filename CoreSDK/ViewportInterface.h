@@ -3,12 +3,14 @@
 #include "../Foundation/StdafxFoundation.h"
 #include "Actor.h"
 #include "game_types.h"
+#include "transform_traits.h"
 
 class CCoreSDK;
 class IDrawInterface;
 
 namespace core_sdk_api
 {
+    template<class TTranformTraits>
     class CORESDK_API ViewportInterface
     {
         struct SController
@@ -20,10 +22,27 @@ namespace core_sdk_api
         using TMapSelection = std::map<IDrawInterface*, SController>;
 
     public:
-        ViewportInterface(const CObjectAbstract *pParent);
-        virtual ~ViewportInterface();
+        //------------------------------------------------------------------------
+        ViewportInterface::ViewportInterface(const CObjectAbstract *pParent)
+            : m_pNode(nullptr)
+            , m_fNearPlane(0.f)
+            , m_fFarPlane(0.f)
+            , m_controllerMode(SOEvent_None)
+            , m_controllerState(ActorState_None)
+        {
+            if (pParent)
+            {
+                m_pCoreSDK = (CCoreSDK*)pParent->GetUserData();
+            }
+        }
 
-        void RegisterViewportInterface(const CActor *Src);
+        //------------------------------------------------------------------------
+        ~ViewportInterface()
+        {
+            UnregisterViewportInterface();
+        }
+
+        void RegisterViewportInterface(const CActor *src);
         void UnregisterViewportInterface();
 
         const Matrix&	GetViewportViewMatrix() const { return m_ViewMatrix; }
@@ -148,4 +167,8 @@ namespace core_sdk_api
         
         mutable CCoreSDK *m_pCoreSDK;
     };
+
+    typedef ViewportInterface<transform_traits> TIViewport;
 }
+
+#include "ViewportInterface.ipp"

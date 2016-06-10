@@ -8,7 +8,7 @@
 #include "UIScreenObject.h"
 #include "ViewportInterface.h"
 
-class CORESDK_API Explorer2D : public UIScreenObject , public core_sdk_api::ViewportInterface
+class CORESDK_API Explorer2D : public UIScreenObject , public core_sdk_api::TIViewport
 {
 	DECLARE_CLASS_SIMPLE(Explorer2D, UIScreenObject);
 

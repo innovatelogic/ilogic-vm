@@ -7,10 +7,10 @@
 
 namespace core_sdk_api
 {
-    using TTreeMapViewport = TTreeMap<CActor, ViewportInterface>;
+    using TTreeMapViewport = TTreeMap<CActor, TIViewport>;
     using TTreeMapDraw = TTreeMap<CActor, IDrawInterface>;
     using TNodeIDraw = TNodeMap<CActor, IDrawInterface>;
-    using TNodeIView = TNodeMap<CActor, ViewportInterface>;
+    using TNodeIView = TNodeMap<CActor, TIViewport>;
     
     class CORESDK_API CViewportManager
     {
@@ -29,19 +29,19 @@ namespace core_sdk_api
         TNodeIDraw* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void UnregisterObject(TNodeIDraw *pNode);
 
-        TNodeIView* RegisterViewport(const ViewportInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
+        TNodeIView* RegisterViewport(const TIViewport *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void UnregisterViewport(TNodeIView *pNode);
 
-        ViewportInterface* GetVeiwportInterface(const CActor *key);
-        ViewportInterface* GetViewportInterface(const IDrawInterface *pIObject) const;
+        TIViewport* GetVeiwportInterface(const CActor *key);
+        TIViewport* GetViewportInterface(const IDrawInterface *pIObject) const;
         
         bool IsRenderable(const CActor *key);
 
         void Draw();
         void DrawNode(TNodeIDraw *pNode);
 
-        void InputMouse(const MouseInputData &input, const ViewportInterface *viewport = nullptr);
-        void InputMouse(const MouseMoveInputData &input, const ViewportInterface *viewport = nullptr);
+        void InputMouse(const MouseInputData &input, const TIViewport *viewport = nullptr);
+        void InputMouse(const MouseMoveInputData &input, const TIViewport *viewport = nullptr);
 
         // OBSOLETE!! controller input
         void ProcessInputMouse(const MouseInputData &input, IDrawInterface *pIObjectMask = 0);
@@ -68,7 +68,7 @@ namespace core_sdk_api
         * set selection objects
         * [paths] array of actors full paths
         */
-        void            SetSelect(const std::vector<std::string> &paths, ViewportInterface *viewport);
+        void            SetSelect(const std::vector<std::string> &paths, TIViewport *viewport);
 
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;

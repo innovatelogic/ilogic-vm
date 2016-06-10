@@ -4,7 +4,7 @@
 #ifdef WIN32
 #pragma once
 #endif
-
+/*
 #include "ActorCollisionController.h"
 
 class ActorCollisionKinematicController : public ActorCollisionController
@@ -22,5 +22,5 @@ public:
 protected:
 private:
 };
-
+*/
 #endif//__actorcollisionkinematiccontroller_h__

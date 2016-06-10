@@ -1,4 +1,4 @@
-#include "coresdkafx.h"
+/*#include "coresdkafx.h"
 
 REGISTER_CLASS(ActorCollisionKinematicController, ActorCollisionController);
 
@@ -35,4 +35,4 @@ void ActorCollisionKinematicController::OnPropertyChanged(const char* PropertyNa
 void ActorCollisionKinematicController::Initialize()
 {
 	Super::Initialize();
-}
+}*/

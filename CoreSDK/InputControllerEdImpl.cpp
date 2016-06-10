@@ -27,7 +27,7 @@ namespace core_sdk_api
 
         if (pFocused)
         {
-            core_sdk_api::ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
+            core_sdk_api::TIViewport *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
 
             if (pInterface && pInterface == pCoreSDK->GetExplorerInstance()->GetExplorer2D())
             {
@@ -73,7 +73,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CInputControllerEdImpl::ProcessInputMouse2(const MouseInputData &InputData, const ViewportInterface *viewport)
+    void CInputControllerEdImpl::ProcessInputMouse2(const MouseInputData &InputData, const TIViewport *viewport)
     {
     }
 
@@ -143,7 +143,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    bool CInputControllerEdImpl::ProcessControllers2(const MouseInputData &input, const ViewportInterface *viewport)
+    bool CInputControllerEdImpl::ProcessControllers2(const MouseInputData &input, const TIViewport *viewport)
     {
         return false;
     }
@@ -160,7 +160,7 @@ namespace core_sdk_api
 
         if (pFocused)
         {
-            core_sdk_api::ViewportInterface *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
+            core_sdk_api::TIViewport *pInterface = pCoreSDK->GetViewportManager()->GetViewportInterface(pFocused);
 
             if (pInterface && pInterface == pCoreSDK->GetExplorerInstance()->GetExplorer2D())
             {

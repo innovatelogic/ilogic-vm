@@ -7,9 +7,9 @@ REGISTER_CLASS(Explorer3D, ActorAllocator);
 Explorer3D::Explorer3D(const CObjectAbstract * pParent)
 : Super(pParent)
 , IDrawInterface(pParent)
-, core_sdk_api::ViewportInterface(pParent)
+, core_sdk_api::TIViewport(pParent)
 {
-    core_sdk_api::ViewportInterface::RegisterViewportInterface(this);
+    core_sdk_api::TIViewport::RegisterViewportInterface(this);
 	RegisterDrawInterface(this);
 
 	SetTransient(true);
@@ -62,11 +62,11 @@ void Explorer3D::DoDraw()
 			adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.fFarPlane = farZ;
 			memcpy(&adjacency.__RT_VARIANT_NAME_1.__RT_VARIANT_NAME_2.viewPos, camPos.vec_array, 3 * sizeof(float));
 
-            core_sdk_api::ViewportInterface::SetViewportProjMatrix(projMat);
-            core_sdk_api::ViewportInterface::SetViewportViewMatrix(viewMat);
-            core_sdk_api::ViewportInterface::SetViewPoint(camPos);
-            core_sdk_api::ViewportInterface::SetNearPlane(nearZ);
-            core_sdk_api::ViewportInterface::SetFarPlane(farZ);
+            core_sdk_api::TIViewport::SetViewportProjMatrix(projMat);
+            core_sdk_api::TIViewport::SetViewportViewMatrix(viewMat);
+            core_sdk_api::TIViewport::SetViewPoint(camPos);
+            core_sdk_api::TIViewport::SetNearPlane(nearZ);
+            core_sdk_api::TIViewport::SetFarPlane(farZ);
 		}
 	}
 

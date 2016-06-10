@@ -273,7 +273,7 @@ set(SOURCE
 	UVModificator.h
 	UVModificator_Brush.cpp
 	UVModificator_Brush.h
-	ViewportInterface.cpp
+	ViewportInterface.ipp
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h

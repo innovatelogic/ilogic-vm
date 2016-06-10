@@ -10,7 +10,7 @@ LevitateVehicle::LevitateVehicle(const CObjectAbstract * Parent)
 , XRef("ufo.mat")
 {
 	NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_StaticMesh, "MeshComponent", this);
-	NEW_OBJECT_TRANSIENT_CHILD(CollisionController, ActorCollisionKinematicController, "CollisionController", this);
+//	NEW_OBJECT_TRANSIENT_CHILD(CollisionController, ActorCollisionKinematicController, "CollisionController", this);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ LevitateVehicle::LevitateVehicle(const LevitateVehicle & Source)
 	{
 		XRef = Source.XRef;
 		MeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.MeshComponent, Source.MeshComponent->GetName(), this);
-		CollisionController = CLONE_OBJECT(ActorCollisionKinematicController, Source.CollisionController, Source.CollisionController->GetName(), this);
+		//CollisionController = CLONE_OBJECT(ActorCollisionKinematicController, Source.CollisionController, Source.CollisionController->GetName(), this);
 	}
 }
 

@@ -9,7 +9,7 @@
 #include "ViewportInterface.h"
 
 class CORESDK_API Explorer3D : public ActorAllocator, 
-	public core_sdk_api::ViewportInterface,
+	public core_sdk_api::TIViewport,
 	public IDrawInterface
 {
 	DECLARE_CLASS_SIMPLE(Explorer3D, ActorAllocator);

@@ -315,7 +315,7 @@ namespace editors
         {
         public:
             CommandSetSelectActors(core_sdk_api::CViewportManager *manager,
-                core_sdk_api::ViewportInterface *ivprt,
+                core_sdk_api::TIViewport *ivprt,
                 const std::vector<CActor*> &actors,
                 const std::vector<CActor*> &old_actors)
                 : m_manager(manager)
@@ -336,7 +336,7 @@ namespace editors
             std::vector<std::string> m_new;
             std::vector<std::string> m_old;
             core_sdk_api::CViewportManager *m_manager;
-            core_sdk_api::ViewportInterface *m_ivprt;
+            core_sdk_api::TIViewport *m_ivprt;
         };
 
         // skip if nothing to select and deselect
@@ -345,7 +345,7 @@ namespace editors
             // hack
             Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
-            core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+            core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
             AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(manager, ivprt, actors, m_selectionList))));
 
@@ -371,7 +371,7 @@ namespace editors
 
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
-        core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+        core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
         manager->InputMouse(input, ivprt);
     }
@@ -403,7 +403,7 @@ namespace editors
             // hack
             Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
-            core_sdk_api::ViewportInterface *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+            core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
             manager->InputMouse(input, ivprt);
 

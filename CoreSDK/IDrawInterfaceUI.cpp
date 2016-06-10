@@ -104,7 +104,7 @@ void IDrawInterfaceUI::DrawController() const
 		{	
 			assert(m_pCoreSDK && m_pCoreSDK->GetRegistry());
 
-            core_sdk_api::ViewportInterface *pViewportInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
+            core_sdk_api::TIViewport *pViewportInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
 			
 			Matrix WorldMatrixTransform = GetTransformedWTM_();
 
@@ -210,7 +210,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseInputData &InputData)
 		{
 			if (m_pNode->m_pValue->IsFocused())
 			{
-                core_sdk_api::ViewportInterface *pInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
+                core_sdk_api::TIViewport *pInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
  
  				assert(pInterface);
 
@@ -432,7 +432,7 @@ void IDrawInterfaceUI::ProcessControllerRotateLocal(const MouseMoveInputData &In
 //----------------------------------------------------------------------------------------------
 void IDrawInterfaceUI::ProcessControllerScaleLocal(const MouseMoveInputData &InputData)
 {
-    core_sdk_api::ViewportInterface *pInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
+    core_sdk_api::TIViewport *pInterface = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
 
 	UIScreenObject *pNodeUI = (UIScreenObject*)m_pNode->m_pKey;
 	Vector2f DT;
