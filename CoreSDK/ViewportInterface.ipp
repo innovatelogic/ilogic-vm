@@ -610,7 +610,7 @@ namespace core_sdk_api
 
     }
 
-    //----------------------------------------------------------------------------------------------
+	    //----------------------------------------------------------------------------------------------
     template<class TTranformTraits>
     Vector ViewportInterface<TTranformTraits>::GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const
     {
@@ -695,22 +695,5 @@ namespace core_sdk_api
             Vector &displace = item.second.displace;
             displace = ctrlPos - idraw->GetTransformedWTM_().t;
         }*/
-    }
-
-    //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    float ViewportInterface<TTranformTraits>::GetControllerScaleMultiplicator(const Matrix &view, const Vector &viewPos, const Vector &pos) const
-    {
-        Vector camStrafe = Vector(view._11, view._21, view._31);
-        Vector transDelta(viewPos - pos);
-
-        camStrafe.normalize();
-
-        float fCathetusOppositLen = transDelta.Length() * ::tan(0.1f);
-        Vector vCathetusOpposit = transDelta.Cross(Vector(0.f, 1.f, 0.f));
-        vCathetusOpposit.normalize();
-        vCathetusOpposit *= fCathetusOppositLen;
-
-        return camStrafe.Dot(vCathetusOpposit); // projection length 
     }
 }

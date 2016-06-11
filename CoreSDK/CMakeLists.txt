@@ -277,6 +277,8 @@ set(SOURCE
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h
+	transform_traits.cpp
+	transform_traits.h
 	)
 
 

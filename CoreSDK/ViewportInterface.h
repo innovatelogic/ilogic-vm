@@ -10,8 +10,8 @@ class IDrawInterface;
 
 namespace core_sdk_api
 {
-    template<class TTranformTraits>
-    class CORESDK_API ViewportInterface
+    template<class TTransformTraits>
+    class CORESDK_API ViewportInterface : public TTransformTraits
     {
         struct SController
         {
@@ -141,8 +141,6 @@ namespace core_sdk_api
         Vector  GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const;
        
         void    UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos);
-
-        float   GetControllerScaleMultiplicator(const Matrix &view, const Vector &viewPos, const Vector &pos) const;
 
     private:
         Matrix  m_ViewMatrix;
