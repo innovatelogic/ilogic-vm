@@ -47,6 +47,8 @@ set(LIBRARIES CommonBase
 			  ${FREETYPE_LIBRARIES})
 
 set(SOURCE 
+	transform_traits.cpp
+	transform_traits.h
 	ActionBase.cpp
 	ActionBase.h
 	ActionEventUI.cpp
@@ -277,8 +279,6 @@ set(SOURCE
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h
-	transform_traits.cpp
-	transform_traits.h
 	)
 
 

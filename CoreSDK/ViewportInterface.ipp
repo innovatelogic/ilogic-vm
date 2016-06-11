@@ -73,6 +73,8 @@ namespace core_sdk_api
             }
             
             Matrix I;
+			//const Matrix mj;
+			//Foo(mj, mj.t, mj.t);
             I.Identitly();
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
