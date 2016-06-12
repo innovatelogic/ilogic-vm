@@ -73,13 +73,14 @@ namespace core_sdk_api
             }
             
             Matrix I;
-			//const Matrix mj;
-			//Foo(mj, mj.t, mj.t);
+
             I.Identitly();
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
 
-            DrawController(out.bound_min + ((out.bound_max - out.bound_min) * 0.5f));
+			Vector pos;
+			GetControllerPos(pos);
+            DrawController(pos);
         }
     }
 
@@ -465,7 +466,9 @@ namespace core_sdk_api
 
         if (!m_SelectedList.empty())
         {
-            IDrawInterface *idraw = m_SelectedList.begin()->first;
+			IDrawInterface *idraw = m_SelectedList.begin()->first;
+
+			out = idraw->GetTransformedWTM_().t;
 
             Bounds3f bbox(idraw->GetCompositeBounds_());
 
@@ -476,10 +479,10 @@ namespace core_sdk_api
                 if (bound.IsValid())
                 {
                     bbox += bound;
+					
+					out = bbox.bound_min + ((bbox.bound_max - bbox.bound_min) * 0.5f);
                 }
             }
-
-            out = bbox.bound_min + ((bbox.bound_max - bbox.bound_min) * 0.5f);
 
             bResult = true;
         }
@@ -594,6 +597,8 @@ namespace core_sdk_api
                     m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
 
                     actor->BroadcastEvent(Event_OnChangePivot);
+
+					m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
                 }
             }break;
 

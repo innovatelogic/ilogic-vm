@@ -30,6 +30,13 @@ class tinyxml2::XMLElement;
 #define H_Transform 0
 #define V_Transform 1
 
+enum EAxis
+{
+    EAxisNone = 0,
+    EAxisX = 1,
+    EAxisY = 2,
+    EAxisZ = 3
+};
 
 
 enum EScrObjectEvent
