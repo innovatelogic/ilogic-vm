@@ -20,6 +20,7 @@ namespace core_sdk_api
                                     const Vector2f ViewportSize,
                                     const Vector2f &mousePos,
                                     const Vector2f &mousePrev,
+                                    const Vector   &pivotPos,
                                     EAxis axis);
     };
 }

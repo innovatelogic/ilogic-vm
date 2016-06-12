@@ -1,4 +1,4 @@
-#include "RenderContext.h"
+﻿#include "RenderContext.h"
 #include "ViewportManager.h"
 #include "IDrawInterface.h"
 #include "CoreSDK.h"
@@ -529,77 +529,43 @@ namespace core_sdk_api
             {
             case SOEvent_ControlLockX:
             {
-                Matrix InvView, I;
-                invert(InvView, m_ViewMatrix);
+                float fdelta = GetDeltaRotationAngle(m_ViewMatrix, 
+														m_ProjMatrix,
+														m_ViewPoint, 
+														ViewportSize,
+														input.MousePos,
+														Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
+														controllerPos,
+														EAxisX);
 
-                const Vector2f ViewportSize((float)input.pRenderContext->m_displayModeWidth,
-                                      (float)input.pRenderContext->m_displayModeHeight);
+                //TMP
+                IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-                Vector ViewDirection = UnprojectViewport(ViewDirection,
-                    m_ProjMatrix,
-                    m_ViewMatrix,
-                    input.MousePos,
-                    ViewportSize);
+                idraw->AddYawPitchRoll(Vector(fdelta, 0.f, 0.f));
 
-                Vector PrevViewDirection = UnprojectViewport(PrevViewDirection,
-                    m_ProjMatrix,
-                    m_ViewMatrix,
-                    Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
-                    ViewportSize);
+                Quaternion rot(0.f, 0.f, 0.f, 1.f);
 
-                Vector Intersect = RayPlaneIntersect(controllerPos, Vector(0.f, 0.f, 1.f), m_ViewPoint, ViewDirection);
+                rot.set_rot(fdelta, 0.f, 0.f);
 
-                Vector IntersectPrev = RayPlaneIntersect(controllerPos, Vector(0.f, 0.f, 1.f), m_ViewPoint, PrevViewDirection);
+                Matrix M;
+                rot.Normalize();
+                rot.ToMatrix(&M);
 
-                Vector d1 = Intersect - controllerPos;
-                Vector d2 = IntersectPrev - controllerPos;
+                Matrix LTM = idraw->GetLTM_();
+                Vector t = LTM.t;
+                LTM.t.Set(0.f, 0.f, 0.f);
+                LTM = LTM * M;
+                LTM.t = t;
+                idraw->SetLTM_(LTM);
 
-                d1.normalize();
-                d2.normalize();
+                CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
 
-                float dot = d2.Dot(d1);
+                m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
 
-                if (dot < 1.f)
-                {
-                    float sign1 = d1.Dot(Vector(1.f, 0.f, 0.f));
-                    float sign2 = d2.Dot(Vector(1.f, 0.f, 0.f));
+                actor->BroadcastEvent(Event_OnChangePivot);
 
-                    if (d1.y > 0.f)
-                    {
-                        sign1 *= -1.f;
-                        sign2 *= -1.f;
-                    }
-
-                    float fdelta = ((sign1 > sign2) ? 1.f : -1.f) * ::acosf(dot);
-
-                    //TMP
-                    IDrawInterface *idraw = m_SelectedList.begin()->first;
-
-                    idraw->AddYawPitchRoll(Vector(fdelta, 0.f, 0.f));
-
-                    Quaternion rot(0.f, 0.f, 0.f, 1.f);
-
-                    rot.set_rot(fdelta, 0.f, 0.f);
-
-                    Matrix M;
-                    rot.Normalize();
-                    rot.ToMatrix(&M);
-
-                    Matrix LTM = idraw->GetLTM_();
-                    Vector t = LTM.t;
-                    LTM.t.Set(0.f, 0.f, 0.f);
-                    LTM = LTM * M;
-                    LTM.t = t;
-                    idraw->SetLTM_(LTM);
-
-                    CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
-
-                    m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
-
-                    actor->BroadcastEvent(Event_OnChangePivot);
-
-					m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
-                }
+				m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+                
             }break;
 
             default:
