@@ -492,7 +492,7 @@ namespace core_sdk_api
 
 			IDrawInterface *idraw = iter->first;
 
-			out = idraw->GetTransformedWTM_().t + Vector(6.f, 0.f, 0.f);
+			out = idraw->GetTransformedWTM_().t;// + Vector(6.f, 0.f, 0.f);
 
             Bounds3f bbox(idraw->GetCompositeBounds_());
 
