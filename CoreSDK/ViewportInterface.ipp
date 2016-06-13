@@ -23,6 +23,12 @@ namespace core_sdk_api
     Vector	ViewportInterface<TTranformTraits>::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
 
     template<class TTranformTraits>
+    Vector	ViewportInterface<TTranformTraits>::m_SUserStartControllerPos = Vector(0.f, 0.f, 0.f);
+
+    template<class TTranformTraits>
+    Vector	ViewportInterface<TTranformTraits>::m_SUserAccumRotation = Vector(0.f, 0.f, 0.f);
+    
+	template<class TTranformTraits>
     bool	ViewportInterface<TTranformTraits>::m_bSMiddleButtonPressed = false;
 
 //------------------------------------------------------------------------
@@ -78,8 +84,15 @@ namespace core_sdk_api
 
             m_pCoreSDK->GetRenderSDK()->DrawBounds(I, out, COLOR_GREEN);
 
+
 			Vector pos;
-			GetControllerPos(pos);
+			if (m_pCoreSDK->GetEditControlMode() == ECM_Rotate && m_controllerState == ActorState_Locked){
+				pos = m_SUserStartControllerPos;
+			}
+			else{
+				GetControllerPos(pos);
+			}
+			
             DrawController(pos);
         }
     }
@@ -168,6 +181,8 @@ namespace core_sdk_api
 
                     m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+					m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+					m_SUserStartControllerPos = controllerPos;
 
                     SetControlMode(SOEvent_ControlLockX);
                     UpdateSelectionState(SOEvent_ControlLockX, controllerPos);
@@ -184,6 +199,8 @@ namespace core_sdk_api
 
                     m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+					m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+					m_SUserStartControllerPos = controllerPos;
 
                     SetControlMode(SOEvent_ControlLockY);
                     UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
@@ -200,6 +217,8 @@ namespace core_sdk_api
 
                     m_SUserStartMouseDisplace = (intersect - controllerPos) * (1.f / k);
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+					m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+					m_SUserStartControllerPos = controllerPos;
 
                     SetControlMode(SOEvent_ControlLockZ);
                     UpdateSelectionState(SOEvent_ControlLockY, controllerPos);
@@ -235,9 +254,6 @@ namespace core_sdk_api
         {
             const EObjEditControlMode mode = m_pCoreSDK->GetEditControlMode();
 
-            float k = 0.f;
-            Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
-
             switch (m_controllerMode)
             {
                 // local object movement 
@@ -258,6 +274,8 @@ namespace core_sdk_api
                 }
                 else // move object by x-axis
                 {
+				    float k = 0.f;
+					Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
                     ControllerTranslate(intersect, k);
                 }
                 bResult = true;
@@ -275,6 +293,8 @@ namespace core_sdk_api
                 }
                 else
                 {
+					float k = 0.f;
+					Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
                     ControllerTranslate(intersect, k);
                 }
                 bResult = true;
@@ -292,6 +312,8 @@ namespace core_sdk_api
                 }
                 else
                 {	// move object by z-axis
+					float k = 0.f;
+					Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
                     ControllerTranslate(intersect, k);
                 }
                 bResult = true;
@@ -527,65 +549,68 @@ namespace core_sdk_api
     template<class TTranformTraits>
     void ViewportInterface<TTranformTraits>::ControllerRotateLocal(const MouseMoveInputData &input)
     {
-        Vector controllerPos;
-
-        if (GetControllerPos(controllerPos))
+        switch (m_controllerMode)
         {
-            switch (m_controllerMode)
-            {
-            case SOEvent_ControlLockX:
-            {
-                float fdelta = GetDeltaRotationAngle(m_ViewMatrix, 
-														m_ProjMatrix,
-														m_ViewPoint, 
-														Vector2f(input.pRenderContext->m_displayModeWidth, input.pRenderContext->m_displayModeWidth),
-														input.MousePos,
-														Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
-														controllerPos,
-														EAxisX);
+        case SOEvent_ControlLockX:
+        {
+            float fdelta = GetDeltaRotationAngle(m_ViewMatrix, 
+													m_ProjMatrix,
+													m_ViewPoint, 
+													Vector2f(input.pRenderContext->m_displayModeWidth, input.pRenderContext->m_displayModeHeight),
+													input.MousePos,
+													Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
+													m_SUserStartControllerPos,
+													EAxisX);
 
-                //TMP
-                IDrawInterface *idraw = m_SelectedList.begin()->first;
+			m_SUserAccumRotation.x += fdelta;
+            
+			//TMP
+            IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-                idraw->AddYawPitchRoll(Vector(0, 0.f, fdelta));
+            idraw->AddYawPitchRoll(Vector(0, 0.f, fdelta));
 
-                Quaternion rot(0.f, 0.f, 0.f, 1.f);
+            Quaternion rotTrans(0.f, 0.f, 0.f, 1.f);
+            rotTrans.set_rot(0.f, 0.f, m_SUserAccumRotation.x);
 
-                rot.set_rot(0.f, 0.f, fdelta);
+            Matrix localTransMat;
+            rotTrans.Normalize();
+            rotTrans.ToMatrix(&localTransMat);
 
-                Matrix M;
-                rot.Normalize();
-                rot.ToMatrix(&M);
+			Vector ltmpos = m_SelectedList.begin()->second.displace;
+			transform_coord(ltmpos, ltmpos, localTransMat);
 
-				Vector ltmpos = idraw->GetTransformedWTM_().t - controllerPos;
-				transform_coord(ltmpos, ltmpos, M);
+			Vector tpos;
+			idraw->GlobalToLocalTransform(tpos, m_SUserStartControllerPos + ltmpos);
 
-				Vector tpos;
-				idraw->GlobalToLocalTransform(tpos, controllerPos + ltmpos);
+            Matrix ltm = idraw->GetLTM_();
 
-                Matrix LTM = idraw->GetLTM_();
-                //Vector t = LTM.t;
-                //1LTM.t.Set(0.f, 0.f, 0.f);
-                //LTM = LTM * M;
-                LTM.t = tpos;
-                idraw->SetLTM_(LTM);
+			Quaternion localRot(0.f, 0.f, 0.f, 1.f);
+            localRot.set_rot(0.f, 0.f, fdelta);
 
-                CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
+			Matrix localRotMat;
+			localRot.Normalize();
+            localRot.ToMatrix(&localRotMat);
 
-                m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+            //Vector t = ltm.t;
+            ltm.t.Set(0.f, 0.f, 0.f);
+            ltm = ltm * localRotMat;
+            ltm.t = tpos;
+            idraw->SetLTM_(ltm);
 
-                actor->BroadcastEvent(Event_OnChangePivot);
+            CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
 
-				m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+            m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+
+            actor->BroadcastEvent(Event_OnChangePivot);
+
+			m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
                 
-            }break;
+        }break;
 
-            default:
-                break;
-            };
-        }
-
-        
+        default:
+            break;
+        };
+       
     }
 
     //----------------------------------------------------------------------------------------------

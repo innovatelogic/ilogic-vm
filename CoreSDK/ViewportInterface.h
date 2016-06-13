@@ -161,6 +161,8 @@ namespace core_sdk_api
 
         static Vector	 m_SUserStartMousePosition;
         static Vector	 m_SUserStartMouseDisplace;
+        static Vector    m_SUserStartControllerPos;
+        static Vector    m_SUserAccumRotation;
         static bool		 m_bSMiddleButtonPressed;
         
         mutable CCoreSDK *m_pCoreSDK;

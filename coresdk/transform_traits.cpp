@@ -47,9 +47,11 @@ namespace core_sdk_api
             view,
             mousePrev,
             viewportSize);
+        
+        const Vector secantPlaneN(0.f, 0.f, 1.f);
 
-        Vector intersect = RayPlaneIntersect(pivotPos, Vector(0.f, 0.f, 1.f), viewPos, viewDirection);
-        Vector intersectPrev = RayPlaneIntersect(pivotPos, Vector(0.f, 0.f, 1.f), viewPos, prevViewDirection);
+        Vector intersect = RayPlaneIntersect(pivotPos, secantPlaneN, viewPos, viewDirection);
+        Vector intersectPrev = RayPlaneIntersect(pivotPos, secantPlaneN, viewPos, prevViewDirection);
 
         Vector d1 = intersect - pivotPos;
         Vector d2 = intersectPrev - pivotPos;
@@ -58,6 +60,12 @@ namespace core_sdk_api
         d2.normalize();
 
         float dot = d2.Dot(d1);
+       // float lenSq1 = d1.LengthSqr();
+       // float lenSq2 = d2.LengthSqr();
+
+        return (GetHalfSpace(d2.Cross(secantPlaneN), pivotPos, intersect) >= 0 ? 1.f : -1.f) * ::acos(dot);
+
+       /* float dot = d2.Dot(d1);
 
         float sign1 = d1.Dot(Vector(1.f, 0.f, 0.f));
         float sign2 = d2.Dot(Vector(1.f, 0.f, 0.f));
@@ -66,8 +74,8 @@ namespace core_sdk_api
         {
             sign1 *= -1.f;
             sign2 *= -1.f;
-        }
+        }*/
 
-        return ((sign1 > sign2) ? 1.f : -1.f) * ::acosf(dot);
+       // return /*((sign1 > sign2) ? 1.f : -1.f) */ ::acosf(dot);
     }
 }
