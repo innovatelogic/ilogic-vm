@@ -466,15 +466,19 @@ namespace core_sdk_api
 
         if (!m_SelectedList.empty())
         {
-			IDrawInterface *idraw = m_SelectedList.begin()->first;
+			TMapSelection::const_iterator iter = m_SelectedList.begin();
 
-			out = idraw->GetTransformedWTM_().t;
+			IDrawInterface *idraw = iter->first;
+
+			out = idraw->GetTransformedWTM_().t + Vector(6.f, 0.f, 0.f);
 
             Bounds3f bbox(idraw->GetCompositeBounds_());
 
-            for each (const auto var in m_SelectedList)
+			++iter;
+
+			while (iter != m_SelectedList.end())
             {
-                Bounds3f bound = (var.first)->GetBounds_();
+                Bounds3f bound = (iter->first)->GetBounds_();
 
                 if (bound.IsValid())
                 {
@@ -482,6 +486,8 @@ namespace core_sdk_api
 					
 					out = bbox.bound_min + ((bbox.bound_max - bbox.bound_min) * 0.5f);
                 }
+
+				++iter;
             }
 
             bResult = true;
@@ -532,7 +538,7 @@ namespace core_sdk_api
                 float fdelta = GetDeltaRotationAngle(m_ViewMatrix, 
 														m_ProjMatrix,
 														m_ViewPoint, 
-														ViewportSize,
+														Vector2f(input.pRenderContext->m_displayModeWidth, input.pRenderContext->m_displayModeWidth),
 														input.MousePos,
 														Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y),
 														controllerPos,
@@ -541,21 +547,27 @@ namespace core_sdk_api
                 //TMP
                 IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-                idraw->AddYawPitchRoll(Vector(fdelta, 0.f, 0.f));
+                idraw->AddYawPitchRoll(Vector(0, 0.f, fdelta));
 
                 Quaternion rot(0.f, 0.f, 0.f, 1.f);
 
-                rot.set_rot(fdelta, 0.f, 0.f);
+                rot.set_rot(0.f, 0.f, fdelta);
 
                 Matrix M;
                 rot.Normalize();
                 rot.ToMatrix(&M);
 
+				Vector ltmpos = idraw->GetTransformedWTM_().t - controllerPos;
+				transform_coord(ltmpos, ltmpos, M);
+
+				Vector tpos;
+				idraw->GlobalToLocalTransform(tpos, controllerPos + ltmpos);
+
                 Matrix LTM = idraw->GetLTM_();
-                Vector t = LTM.t;
-                LTM.t.Set(0.f, 0.f, 0.f);
-                LTM = LTM * M;
-                LTM.t = t;
+                //Vector t = LTM.t;
+                //1LTM.t.Set(0.f, 0.f, 0.f);
+                //LTM = LTM * M;
+                LTM.t = tpos;
                 idraw->SetLTM_(LTM);
 
                 CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
