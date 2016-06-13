@@ -26,12 +26,48 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     float transform_traits::GetDeltaRotationAngle(const Matrix &view,
         const Matrix &proj,
-        const Vector &view_pos,
-        const Vector2f ViewportSize,
+        const Vector &viewPos,
+        const Vector2f viewportSize,
         const Vector2f &mousePos,
         const Vector2f &mousePrev,
+        const Vector   &pivotPos,
         EAxis axis)
     {
-        return 0;
+        Matrix invView, I;
+        invert(invView, view);
+
+        Vector viewDirection = UnprojectViewport(viewDirection,
+            proj,
+            view,
+            mousePos,
+            viewportSize);
+
+        Vector prevViewDirection = UnprojectViewport(prevViewDirection,
+            proj,
+            view,
+            mousePrev,
+            viewportSize);
+
+        Vector intersect = RayPlaneIntersect(pivotPos, Vector(0.f, 0.f, 1.f), viewPos, viewDirection);
+        Vector intersectPrev = RayPlaneIntersect(pivotPos, Vector(0.f, 0.f, 1.f), viewPos, prevViewDirection);
+
+        Vector d1 = intersect - pivotPos;
+        Vector d2 = intersectPrev - pivotPos;
+
+        d1.normalize();
+        d2.normalize();
+
+        float dot = d2.Dot(d1);
+
+        float sign1 = d1.Dot(Vector(1.f, 0.f, 0.f));
+        float sign2 = d2.Dot(Vector(1.f, 0.f, 0.f));
+
+        if (d1.y > 0.f)
+        {
+            sign1 *= -1.f;
+            sign2 *= -1.f;
+        }
+
+        return ((sign1 > sign2) ? 1.f : -1.f) * ::acosf(dot);
     }
 }
