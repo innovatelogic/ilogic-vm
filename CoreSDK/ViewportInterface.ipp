@@ -470,7 +470,7 @@ namespace core_sdk_api
 
 			IDrawInterface *idraw = iter->first;
 
-			out = idraw->GetTransformedWTM_().t;
+			out = idraw->GetTransformedWTM_().t + Vector(6.f, 0.f, 0.f);
 
             Bounds3f bbox(idraw->GetCompositeBounds_());
 
@@ -547,21 +547,27 @@ namespace core_sdk_api
                 //TMP
                 IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-                idraw->AddYawPitchRoll(Vector(fdelta, 0.f, 0.f));
+                idraw->AddYawPitchRoll(Vector(0, 0.f, fdelta));
 
                 Quaternion rot(0.f, 0.f, 0.f, 1.f);
 
-                rot.set_rot(fdelta, 0.f, 0.f);
+                rot.set_rot(0.f, 0.f, fdelta);
 
                 Matrix M;
                 rot.Normalize();
                 rot.ToMatrix(&M);
 
+				Vector ltmpos = idraw->GetTransformedWTM_().t - controllerPos;
+				transform_coord(ltmpos, ltmpos, M);
+
+				Vector tpos;
+				idraw->GlobalToLocalTransform(tpos, controllerPos + ltmpos);
+
                 Matrix LTM = idraw->GetLTM_();
-                Vector t = LTM.t;
-                LTM.t.Set(0.f, 0.f, 0.f);
-                LTM = LTM * M;
-                LTM.t = t;
+                //Vector t = LTM.t;
+                //1LTM.t.Set(0.f, 0.f, 0.f);
+                //LTM = LTM * M;
+                LTM.t = tpos;
                 idraw->SetLTM_(LTM);
 
                 CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
