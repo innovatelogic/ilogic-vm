@@ -93,7 +93,7 @@ set(SOURCE
 	Win32InputBox.cpp
 	Win32InputBox.h
 	Win32ItemsTree.h
-	Win32ObjectBrowserWidget.cpp
+	Win32ObjectBrowserWidget.ipp
 	Win32ObjectBrowserWidget.h
 	Win32ObjectToolbox.cpp
 	Win32ObjectToolbox.h
@@ -102,6 +102,7 @@ set(SOURCE
 	WTLItemsTree.h
 	WTLPlacementWidget.h
 	WTLPropertyGrid.h
+	MSelectTree.h
 	)
 
 IF(WIN32)

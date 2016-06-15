@@ -58,12 +58,10 @@ public:
 
 	BEGIN_MSG_MAP(CMainFrame)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
-
 		COMMAND_ID_HANDLER(ID_ASSET_IMPORT, OnAssetImport)
 		COMMAND_ID_HANDLER(ID_ASSET_SAVE, OnAssetSave)
 		COMMAND_ID_HANDLER(ID_ASSET_SAVE_AS, OnAssetSaveAs)
 		COMMAND_ID_HANDLER(ID_ASSET_CLOSE, OnAssetClose)
-
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_IMPORT, OnAssetImport);
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_SAVE, OnAssetSave);
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_UNDO, OnButtonUndo);
@@ -71,8 +69,8 @@ public:
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_MOVE, OnModeMove);
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_ROTATE, OnModeRotate);
 		COMMAND_ID_HANDLER(ID_BUTTON_AB_SCALE, OnModeScale);
-
 		CHAIN_MSG_MAP(CFrameWindowImpl<CAssetBrowserFrame<T_CLASS> >)
+        REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scene_editor_main.h"
+#include "MSelectTree.h"
 
 #define WM_USER_INSERTOBJECT				WM_APP+1
 #define WM_USER_REMOVEOBJECT_BRWSR			WM_APP+2
@@ -33,181 +34,30 @@ public:
 
 	HWND GetHWndTree() const { return m_hwndTree; }
 
-	Win32ObjectBrowserWidget(HWND hWndParent,
-							 pContextMenuFunction pfMenu,
-							 pContextMenuProcessor pfnMenuProcessor,
-							 pGetResourceIconIndex pfnGetResourceIconIndex,
-							 CALLBACK_FN pfnInvokeObject,
-							 CALLBACK_FN pfnDirectInvokeObject,
-							 CALLBACK_FN pfnClearObject,
-							 CALLBACK_FN pfnDirectClearObject,
-							 HIMAGELIST hImageList,
-							 SRenderContext *pRenderContext = 0)
-	: m_editor(nullptr)
-    , m_pRegistry(nullptr)
-	, m_hwndParent(hWndParent)
-	, m_pfnContextMenu(pfMenu)
-	, m_pfnContextMenuProcessor(pfnMenuProcessor)
-	, m_pfnGetResourceIconIndex(pfnGetResourceIconIndex)
-	, m_ActorPicked(0)
-	, m_bDragging(false)
-	, m_pfnInvokeObject(pfnInvokeObject)
-	, m_pfnDirectInvokeObject(pfnDirectInvokeObject)
-	, m_pfnClearObject(pfnClearObject)
-	, m_pfnDirectClearObject(pfnDirectClearObject)
-	, m_pRenderContext(pRenderContext)
-	{
-		RECT rect;
-		GetClientRect(hWndParent, &rect);
+    Win32ObjectBrowserWidget(HWND hWndParent,
+        pContextMenuFunction pfMenu,
+        pContextMenuProcessor pfnMenuProcessor,
+        pGetResourceIconIndex pfnGetResourceIconIndex,
+        CALLBACK_FN pfnInvokeObject,
+        CALLBACK_FN pfnDirectInvokeObject,
+        CALLBACK_FN pfnClearObject,
+        CALLBACK_FN pfnDirectClearObject,
+        HIMAGELIST hImageList,
+        SRenderContext *pRenderContext = 0);
 
-		int Width = rect.right - rect.left;
-		int Height = rect.bottom - rect.top;
+    ~Win32ObjectBrowserWidget();
 
-		m_hwndTree = CreateWindow(
-			WC_TREEVIEW,
-			NULL,
-			WS_CHILD | WS_BORDER | TVS_HASBUTTONS | TVS_HASLINES | TVS_SHOWSELALWAYS | WS_VISIBLE,
-			rect.left,
-			rect.top,
-			Width,
-			Height,
-			hWndParent,
-			NULL,
-			(HINSTANCE)GetWindowLong(hWndParent, GWL_HINSTANCE),
-			NULL);
+    void SetEditor(editors::TIEditor editor);
 
-		SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
-
-		TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
-
-		m_lpfnTreeProc = (WNDPROC) SetWindowLong(m_hwndTree, GWL_WNDPROC, (LONG)SubClassProcTree);
-
-		m_hCursHand = LoadCursor(NULL, IDC_HAND);
-		m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
-	}
-
-	//----------------------------------------------------------------------------------------------
-	~Win32ObjectBrowserWidget()
-	{
-
-	}
-    //----------------------------------------------------------------------------------------------
-    void SetEditor(editors::TIEditor editor) 
-    { 
-        m_editor = editor; 
-        m_pRegistry = editor->GetApp()->GetRegistry();
-    }
-
-	//----------------------------------------------------------------------------------------------
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
-	//----------------------------------------------------------------------------------------------
-	int InvokeActor(const T_CLASS *pSender)
-	{
-		int bResult = 0;
+    int InvokeActor(const T_CLASS *pSender);
 
-		//m_CS.enter();
+    void Update(const T_CLASS *pSender, ESystemEventID EventId);
 
-        if (m_pRegistry) // TODO: fragile code REDESIGN
-        {
-            if (m_pRegistry->IsEditorVisible(pSender->GetType()))
-            {
-                T_CLASS * pParent = pSender->GetParent();
+    bool ClearActor(const T_CLASS *pSender);
 
-                if ((m_ActorAddList.size() == 0) // initial enter
-                    ||
-                    (std::find(m_ActorAddList.begin(), m_ActorAddList.end(), pParent) != m_ActorAddList.end() ||
-                        m_TreeMap.find(pParent) != m_TreeMap.end())) // already or been added
-                {
-                    m_ActorAddList.push_back(const_cast<T_CLASS*>(pSender));
-                }
-
-                ::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
-
-                bResult = 1;
-            }
-        }
-
-		//m_CS.leave();
-
-		return bResult;
-	}
-
-	//----------------------------------------------------------------------------------------------
-	void Update(const CActor *pSender, ESystemEventID EventId)
-	{
-		switch (EventId)
-		{	
-		case Event_ObjectGenerated:
-			InvokeActor(pSender);
-			break;
-
-		case Event_PreRelease:
-		case Event_OnRemoveObject:
-			ClearActor(pSender);
-			break;
-
-		case Event_OnSelected:
-			SelectActor(pSender);
-			break;
-
-		case Event_ObjectRename:
-			RenameActor(pSender);
-			break;
-
-		case Event_MoveObjectUp:
-		case Event_MoveObjectDown:
-			MoveActor(pSender, EventId == Event_MoveObjectUp);
-			break;
-
-		case Event_ObjectReArranged:
-			RearrangeActor(pSender);
-			break;
-		};
-	}
-//----------------------------------------------------------------------------------------------
-bool ClearActor(const T_CLASS *pSender)
-{
-	m_CS.enter();
-
-	bool bPostMsg = false;
-
-	TTreeMapActorIterator IterFind = m_TreeMap.find(pSender);
-
-	if (IterFind != m_TreeMap.end())
-	{
-		m_HTreeClearList.push_back(IterFind->second);
-		m_TreeMap.erase(IterFind);
-		bPostMsg = true;
-	}
-
-	std::vector<T_CLASS*>::iterator Iter = std::find(m_ActorsRearrange.begin(), m_ActorsRearrange.end(), pSender);
-	if (Iter != m_ActorsRearrange.end()){
-		m_ActorsRearrange.erase(Iter);
-	}
-
-	if (bPostMsg) {
-		::PostMessage(m_hwndParent, WM_USER_REMOVEOBJECT_BRWSR, 0, 0);
-	}
-	m_CS.leave();
-
-	return bPostMsg;
-}
-
-//----------------------------------------------------------------------------------------------
-int SelectActor(const T_CLASS * Sender)
-{
-	m_CS.enter();
-
-	TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
-	m_HTreeSelected = (Iter != m_TreeMap.end()) ? Iter->second : NULL;
-	
-	::PostMessage(m_hwndParent, WM_USER_SELECTOBJECT_BRWSR, 0, 0);
-
-	m_CS.leave();
-
-	return 1;
-}
+    int SelectActor(const T_CLASS * Sender);
 
 //----------------------------------------------------------------------------------------------
 int RenameActor(const T_CLASS * Sender)
@@ -656,14 +506,14 @@ bool RenameTreeObject()
 		{
 		case WM_NOTIFY:
 			{
-				/*{
-					long lResult = HandleNotify(GetHWND(), (int)wParam, (LPNMHDR)lParam);
+				{
+					long lResult = HandleNotify(hwndDlg, (int)wParam, (LPNMHDR)lParam);
 					if (lResult > 0)
 					{
-						SetWindowLong(GetHWND(), DWL_MSGRESULT, lResult); 
+						SetWindowLong(hwndDlg, DWL_MSGRESULT, lResult);
 						return TRUE;
 					}
-				}*/
+				}
 
 				//case IDC_TREE1:
 				if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
@@ -1160,6 +1010,8 @@ private:
 	HWND m_hwndParent;
 	HWND m_hwndTree;
 
+    CMultiSelectTreeCtrl m_hwndLeft;
+
 	CriticalSection m_CS;
 
 	pContextMenuFunction	m_pfnContextMenu;
@@ -1180,3 +1032,5 @@ public:
 	CALLBACK_FN				m_pfnClearObject;
 	CALLBACK_FN				m_pfnDirectClearObject;
 };
+
+#include "Win32ObjectBrowserWidget.ipp"

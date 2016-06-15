@@ -1,5 +1,228 @@
-#include "LauncherStdAfx.h"
+#include "Win32ObjectBrowserWidget.h"
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
+							 pContextMenuFunction pfMenu,
+							 pContextMenuProcessor pfnMenuProcessor,
+							 pGetResourceIconIndex pfnGetResourceIconIndex,
+							 CALLBACK_FN pfnInvokeObject,
+							 CALLBACK_FN pfnDirectInvokeObject,
+							 CALLBACK_FN pfnClearObject,
+							 CALLBACK_FN pfnDirectClearObject,
+							 HIMAGELIST hImageList,
+							 SRenderContext *pRenderContext = 0)
+	: m_editor(nullptr)
+    , m_pRegistry(nullptr)
+	, m_hwndParent(hWndParent)
+	, m_pfnContextMenu(pfMenu)
+	, m_pfnContextMenuProcessor(pfnMenuProcessor)
+	, m_pfnGetResourceIconIndex(pfnGetResourceIconIndex)
+	, m_ActorPicked(0)
+	, m_bDragging(false)
+	, m_pfnInvokeObject(pfnInvokeObject)
+	, m_pfnDirectInvokeObject(pfnDirectInvokeObject)
+	, m_pfnClearObject(pfnClearObject)
+	, m_pfnDirectClearObject(pfnDirectClearObject)
+	, m_pRenderContext(pRenderContext)
+	{
+		RECT rect;
+		GetClientRect(hWndParent, &rect);
+
+		int Width = rect.right - rect.left;
+		int Height = rect.bottom - rect.top;
+
+		/*m_hwndTree = CreateWindow(
+			WC_TREEVIEW,
+			NULL,
+			WS_CHILD | WS_BORDER | TVS_HASBUTTONS | TVS_HASLINES | TVS_SHOWSELALWAYS | WS_VISIBLE,
+			rect.left,
+			rect.top,
+			Width,
+			Height,
+			hWndParent,
+			NULL,
+			(HINSTANCE)GetWindowLong(hWndParent, GWL_HINSTANCE),
+			NULL);*/
+
+     /*   RECT rc;
+        rc.left = rect.left;
+        rc.top = rect.top;
+        rc.left = Width;
+        rc.bottom = Height;*/
+
+        m_hwndTree = m_hwndLeft.Create(hWndParent, rect, NULL, 
+            WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | ES_READONLY | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE);
 /*
+        CMultiSelectTreeCtrl *pw = &m_hwndLeft;
+
+        //test
+        HTREEITEM hParent = pw->InsertItem(_T("Top Level 1.1"), 0, 1, TVI_ROOT, TVI_LAST);
+        pw->InsertItem(_T("Second Level 2.1"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Second Level 2.2"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        //pw->SelectItem(hParent);
+        hParent = pw->InsertItem(_T("Second Level 2.3"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Third Level 3.1"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Third Level 3.2"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        hParent = pw->InsertItem(_T("Third Level 3.3"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Fourth Level 4.1"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        hParent = pw->InsertItem(_T("Top Level 1.2"), 0, 1, TVI_ROOT, TVI_LAST);
+        pw->InsertItem(_T("Second Level 2.1"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Second Level 2.2"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        hParent = pw->InsertItem(_T("Second Level 2.3"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Third Level 3.1"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Third Level 3.2"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        hParent = pw->InsertItem(_T("Third Level 3.3"), 0, 1, hParent, TVI_LAST);
+        pw->InsertItem(_T("Fourth Level 4.1"), 0, 1, hParent, TVI_LAST);
+        pw->Expand(hParent, TVE_EXPAND);
+        //end test
+        */
+		SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
+
+		TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
+
+		//m_lpfnTreeProc = (WNDPROC) SetWindowLong(m_hwndTree, GWL_WNDPROC, (LONG)SubClassProcTree);
+
+		m_hCursHand = LoadCursor(NULL, IDC_HAND);
+		m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
+	}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+Win32ObjectBrowserWidget<T_CLASS>::~Win32ObjectBrowserWidget()
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::SetEditor(editors::TIEditor editor)
+{
+    m_editor = editor;
+    m_pRegistry = editor->GetApp()->GetRegistry();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
+{
+    int bResult = 0;
+
+    //m_CS.enter();
+
+    if (m_pRegistry) // TODO: fragile code REDESIGN
+    {
+        if (m_pRegistry->IsEditorVisible(pSender->GetType()))
+        {
+            T_CLASS * pParent = pSender->GetParent();
+
+            if ((m_ActorAddList.size() == 0) // initial enter
+                ||
+                (std::find(m_ActorAddList.begin(), m_ActorAddList.end(), pParent) != m_ActorAddList.end() ||
+                    m_TreeMap.find(pParent) != m_TreeMap.end())) // already or been added
+            {
+                m_ActorAddList.push_back(const_cast<T_CLASS*>(pSender));
+            }
+
+            ::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
+
+            bResult = 1;
+        }
+    }
+
+    //m_CS.leave();
+
+    return bResult;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::Update(const T_CLASS *pSender, ESystemEventID EventId)
+{
+    switch (EventId)
+    {
+    case Event_ObjectGenerated:
+        InvokeActor(pSender);
+        break;
+
+    case Event_PreRelease:
+    case Event_OnRemoveObject:
+        ClearActor(pSender);
+        break;
+
+    case Event_OnSelected:
+        SelectActor(pSender);
+        break;
+
+    case Event_ObjectRename:
+        RenameActor(pSender);
+        break;
+
+    case Event_MoveObjectUp:
+    case Event_MoveObjectDown:
+        MoveActor(pSender, EventId == Event_MoveObjectUp);
+        break;
+
+    case Event_ObjectReArranged:
+        RearrangeActor(pSender);
+        break;
+    };
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::ClearActor(const T_CLASS *pSender)
+{
+    m_CS.enter();
+
+    bool bPostMsg = false;
+
+    TTreeMapActorIterator IterFind = m_TreeMap.find(pSender);
+
+    if (IterFind != m_TreeMap.end())
+    {
+        m_HTreeClearList.push_back(IterFind->second);
+        m_TreeMap.erase(IterFind);
+        bPostMsg = true;
+    }
+
+    std::vector<T_CLASS*>::iterator Iter = std::find(m_ActorsRearrange.begin(), m_ActorsRearrange.end(), pSender);
+    if (Iter != m_ActorsRearrange.end()) {
+        m_ActorsRearrange.erase(Iter);
+    }
+
+    if (bPostMsg) {
+        ::PostMessage(m_hwndParent, WM_USER_REMOVEOBJECT_BRWSR, 0, 0);
+    }
+    m_CS.leave();
+
+    return bPostMsg;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::SelectActor(const T_CLASS * Sender)
+{
+    m_CS.enter();
+
+    TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
+    m_HTreeSelected = (Iter != m_TreeMap.end()) ? Iter->second : NULL;
+
+    ::PostMessage(m_hwndParent, WM_USER_SELECTOBJECT_BRWSR, 0, 0);
+
+    m_CS.leave();
+
+    return 1;
+}
+
+/*
+#include "LauncherStdAfx.h"
+
 #define WM_USER_INSERTOBJECT				WM_APP+1
 #define WM_USER_REMOVEOBJECT				WM_APP+2
 #define WM_USER_SELECTOBJECT				WM_APP+3
