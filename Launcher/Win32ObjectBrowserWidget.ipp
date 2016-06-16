@@ -637,925 +637,522 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
     return bResult;
 }
 
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::RenameTreeObject()
+{
+    bool bResult = false;
+
+    HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
+
+    T_CLASS* Actor = GetActorByData(hTreeItem);
+
+    if (Actor) // do not allow rename root node
+    {
+        wchar_t wbuf[100] = { 0 };
+        char ascii[100] = { 0 };
+
+        MultiByteToWideChar(CP_ACP, 0, Actor->GetName(), -1, wbuf, 100);
+
+        if (CWin32InputBox::InputBox(L"Rename", L"Please enter new name", wbuf, 100, false) == IDOK)
+        {
+            wcstombs(ascii, wbuf, wcslen(wbuf));
+            Actor->Rename(ascii);
+        }
+        bResult = true; // operation clear
+    }
+    return bResult;
+}
+
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::Copy(const HTREEITEM hTreeItem)
+{
+    bool bResult = false;
+
+    T_CLASS * ActorCopy = GetActorByData(hTreeItem);
+
+    if (ActorCopy) // do not allow rename root node
+    {
+        T_CLASS * RootNode = ActorCopy->GetRootNode();
+        if (RootNode)
+        {
+            RootNode->Copy(ActorCopy);
+        }
+    }
+    return bResult;
+}
+
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::Paste(const HTREEITEM hTreeItem)
+{
+    bool bResult = false;
+
+    T_CLASS * ActorPaste = GetActorByData(hTreeItem);
+
+    if (ActorPaste) // do not allow rename root node
+    {
+        T_CLASS * RootNode = ActorPaste->GetRootNode();
+        if (RootNode)
+        {
+            RootNode->Paste(ActorPaste);
+        }
+    }
+    return bResult;
+}
+
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::BeginDragTreeObject(const LPNMTREEVIEW lpnmtv)
+{
+    bool bResult = false;
+
+    if (lpnmtv != NULL)
+    {
+        HIMAGELIST hImg;
+        m_bDragging = true; // set global flag
+
+        hImg = TreeView_CreateDragImage(m_hwndTree, lpnmtv->itemNew.hItem);
+
+        ImageList_BeginDrag(hImg, 0, 0, 0);
+
+        ImageList_DragEnter(m_hwndTree, lpnmtv->ptDrag.x, lpnmtv->ptDrag.y);
+
+        SetCapture(m_hwndTree);
+        SetCursor(m_hCursHand);
+
+        m_ActorPicked = GetActorByData((HTREEITEM)lpnmtv->itemNew.hItem);
+    }
+    return bResult;
+}
+
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::MouseMoveTreeObject(const LPARAM lParam)
+{
+    bool bResult = false;
+
+    if (m_bDragging && lParam)
+    {
+        TVHITTESTINFO tvht;
+
+        POINTS Pos = MAKEPOINTS(lParam);
+
+        ImageList_DragMove(Pos.x + 16, Pos.y); // where to draw the drag from
+        ImageList_DragShowNolock(FALSE);
+
+        tvht.pt.x = Pos.x; // the highlight items should be as the same points as the drag
+        tvht.pt.y = Pos.y;
+
+        m_hitTarget = (HTREEITEM)SendMessage(m_hwndTree, TVM_HITTEST, NULL, (LPARAM)&tvht);
+        if (m_hitTarget) // if there is a hit
+        {
+            SendMessage(m_hwndTree, TVM_SELECTITEM, TVGN_DROPHILITE, (LPARAM)m_hitTarget);   // highlight it
+        }
+        ImageList_DragShowNolock(TRUE);
+    }
+    return bResult;
+}
+
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
+{
+    CCoreSDK *pCoreSDK = m_editor->GetApp();
+
+    SHORT CtrlPressed = GetAsyncKeyState(VK_LCONTROL);
+
+    if (m_bDragging)
+    {
+        HTREEITEM hTreeItem = TreeView_GetNextItem(m_hwndTree, 0, TVGN_DROPHILITE);
+
+        ImageList_DragLeave(m_hwndTree);
+        ImageList_EndDrag();
+
+        HTREEITEM Selected = TreeView_GetNextItem(m_hwndTree, 0, TVGN_DROPHILITE);
+        TreeView_Select(m_hwndTree, (LPARAM)Selected, TVGN_CARET);
+        TreeView_Select(m_hwndTree, NULL, TVGN_DROPHILITE);
+
+        ReleaseCapture();
+        SetCursor(m_hCursArrow);
+
+        T_CLASS * HitActor = m_ActorDrop = GetActorByData(hTreeItem);
+
+        if (m_ActorDrop && CtrlPressed) { // Plain move means get target actor parent
+            m_ActorDrop = m_ActorDrop->GetParent();
+        }
+
+        if (m_ActorDrop && m_ActorPicked && (m_ActorDrop != m_ActorPicked) && !m_ActorPicked->IsTransient())
+        {
+            T_CLASS * TempActor = m_ActorDrop->GetParent(); // Check ActorPicked not parent of ActorDrop
+            while (TempActor)
+            {
+                if (TempActor == m_ActorPicked) { // unable put parent object to child directly
+                    return false;
+                }
+                TempActor = TempActor->GetParent();
+            }
+
+            Matrix LTM;
+            /*if (T_CLASS::GetObjectAInLocalSpaceB(LTM, m_ActorDrop, m_ActorPicked))
+            {
+            // remove actor B from prev node and push to selected
+            m_ActorPicked->GetParent()->RemoveChildNode(m_ActorPicked);
+            m_ActorPicked->SetParent(m_ActorDrop);
+            m_ActorPicked->SetPivot(LTM);
+            m_ActorDrop->AddChildNode(m_ActorPicked);
+
+            InvokeActor(m_ActorPicked);
+
+            pCoreSDK->GetViewportManager()->RebuildTransform(m_ActorDrop);
+
+            if (CtrlPressed){
+            MoveObjectNearTo(m_ActorPicked, HitActor);
+            }
+
+            TTreeMapActorIterator Iter = m_TreeMap.find(m_ActorPicked);
+            if (Iter != m_TreeMap.end()){
+            TreeView_Select(m_hwndTree, Iter->second, TVGN_CARET);
+            }
+            }*/
+        }
+        m_ActorDrop = m_ActorPicked = NULL;
+        m_bDragging = false; // drop global flag
+    }
+    return true;
+}
+
+//------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::MoveObjectNearTo(T_CLASS * Picked, const T_CLASS * Target, bool Up /*= false*/)
+{
+    if (Picked && Target &&
+        Picked != Target &&
+        Picked->GetParent() == Target->GetParent()) // check objects are in same plane
+    {
+        T_CLASS * ParentObject = Picked->GetParent();
+
+        if (ParentObject != NULL)
+        {
+            TVecActorChildIterator IterActorMove = std::find(ParentObject->m_ChildNodes.begin(), ParentObject->m_ChildNodes.end(), Picked);
+            TVecActorChildIterator IterActorMoveTo = std::find(ParentObject->m_ChildNodes.begin(), ParentObject->m_ChildNodes.end(), Target);
+
+            if (IterActorMove != ParentObject->m_ChildNodes.end() &&
+                IterActorMoveTo != ParentObject->m_ChildNodes.end())
+            {
+                TVecActorChild::difference_type n = IterActorMoveTo - IterActorMove;
+
+                int CountNum = abs(int(n));
+                while (CountNum > 0)
+                {
+                    ActorAllocator::MoveObjectHierarchy(Picked, m_pRegistry, (n < 0));
+                    CountNum--;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::Redraw() const
+{
+    InvalidateRect(m_hwndTree, NULL, TRUE);
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::ProcessRightClick()
+{
+    POINT pt;
+    if (::GetCursorPos(&pt)) // address of structure for cursor position
+    {
+        TVHITTESTINFO tvht;
+        tvht.pt = pt;
+        ScreenToClient(m_hwndTree, &tvht.pt);
+
+        m_hitTarget = (HTREEITEM)SendMessage(m_hwndTree, TVM_HITTEST, NULL, (LPARAM)&tvht);
+        if (m_hitTarget != NULL) // if there is a hit
+        {
+            m_pfnContextMenu(m_hwndTree, pt, GetActorByData(m_hitTarget));
+        }
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
+{
+    SRenderContext *swapContext = 0;
+    if (m_pRenderContext) {
+        m_editor->GetApp()->GetRenderSDK()->GetRenderDriver()->PushContext(m_pRenderContext);
+    }
+
+    bool bResult = m_pfnContextMenuProcessor(hWnd, messg, wParam, lParam);
+
+    if (m_pRenderContext) {
+        m_editor->GetApp()->GetRenderSDK()->GetRenderDriver()->PopContext();
+    }
+    return bResult;
+}
+
+
 /*
-#include "LauncherStdAfx.h"
-
-#define WM_USER_INSERTOBJECT				WM_APP+1
-#define WM_USER_REMOVEOBJECT				WM_APP+2
-#define WM_USER_SELECTOBJECT				WM_APP+3
-#define WM_USER_RENAMEOBJECT				WM_APP+4
-#define WM_USER_MOVEOBJECT					WM_APP+5
-#define WM_USER_REARRANGE					WM_APP+6
-
 //----------------------------------------------------------------------------------------------
-Win32ObjectBrowserWidget::Win32ObjectBrowserWidget(HWND hWndParent,
-												   const CWindowManager *WMgr,
-												   pContextMenuFunction pfMenu,
-												   pContextMenuProcessor pfnMenuProcessor,
-												   pGetResourceIconIndex pfnGetResourceIconIndex,
-												   HIMAGELIST hImageList)
-: m_pWindowManager(WMgr)
-, m_hwndParent(hWndParent)
-, m_pfnContextMenu(pfMenu)
-, m_pfnContextMenuProcessor(pfnMenuProcessor)
-, m_pfnGetResourceIconIndex(pfnGetResourceIconIndex)
-, m_ActorPicked(0)
-, m_bDragging(false)
-
+virtual LRESULT WndProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	RECT rect;
-	GetClientRect(hWndParent, &rect);
+int bResult = 0;
 
-	int Width = rect.right - rect.left;
-	int Height = rect.bottom - rect.top;
-
-	m_hwndTree = CreateWindow(
-		WC_TREEVIEW,
-		NULL,
-		WS_CHILD | WS_BORDER | TVS_HASBUTTONS | TVS_HASLINES | TVS_SHOWSELALWAYS | WS_VISIBLE,
-		rect.left,
-		rect.top,
-		Width,
-		Height,
-		hWndParent,
-		NULL,
-		(HINSTANCE)GetWindowLong(hWndParent, GWL_HINSTANCE),
-		NULL);
-
-	SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
-
-	TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
-
-	m_lpfnTreeProc = (WNDPROC) SetWindowLong(m_hwndTree, GWL_WNDPROC, (LONG)SubClassProcTree);
-
-	m_hCursHand = LoadCursor(NULL, IDC_HAND);
-	m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
+switch (message)
+{
+case WM_NOTIFY:
+{
+{
+long lResult = HandleNotify(hwndDlg, (int)wParam, (LPNMHDR)lParam);
+if (lResult > 0)
+{
+SetWindowLong(hwndDlg, DWL_MSGRESULT, lResult);
+return TRUE;
+}
 }
 
-//----------------------------------------------------------------------------------------------
-Win32ObjectBrowserWidget::~Win32ObjectBrowserWidget()
+//case IDC_TREE1:
+if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
 {
-
+ProcessRightClick();
 }
 
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::InvokeActor(const CActor * Sender)
+if (((LPNMHDR)lParam)->code == TVN_KEYDOWN)
 {
-	int bResult = 0;
+LPNMTVKEYDOWN ptvkd = (LPNMTVKEYDOWN) lParam;
+switch ((DWORD)ptvkd->wVKey)
+{
+// move Up/Down
+//case 'U': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), true); } break;
+//case 'J': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), false); } break;
 
-	const Registry * Reg = m_pWindowManager->GetCoreSDK()->GetRegistry();
+case VK_DELETE:{
+//DeleteTreeObject((HTREEITEM)::SendDlgItemMessage(hwndDialogBrowser, IDC_TREE1, TVM_GETNEXTITEM, TVGN_CARET, 0));
+}break;
 
-	m_CS.enter();
-
-	if (!dynamic_cast<const Brush_AbstractInterface*>(Sender) && Reg->IsEditorVisible(Sender->GetType()))
-	{
-		CActor * pParent = Sender->GetParent();
-		
-		if (!pParent || 
-			(pParent &&	(std::find(m_ActorAddList.begin(), m_ActorAddList.end(), pParent) != m_ActorAddList.end() || 
-			m_TreeMap.find(pParent) != m_TreeMap.end())) // already or been added
-			)
-		{
-			m_ActorAddList.push_back(const_cast<CActor*>(Sender));
-		}
-
-		::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
-		bResult = 1;
-	}
-
-	m_CS.leave();
-
-	return bResult;
+case VK_F2:{
+RenameTreeObject();
+}break;
+}break;
 }
 
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::ClearActor(const CActor * Sender)
+// select item handler
+if (((LPNMHDR)lParam)->code == TVN_SELCHANGED)
 {
-	m_CS.enter();
+bool bSelChanged = SelChangedTreeObject();
 
-	TTreeMapActorIterator IterFind = m_TreeMap.find(Sender);
-	if (IterFind != m_TreeMap.end())
-	{
-		m_HTreeClearList.push_back(IterFind->second);
-		m_TreeMap.erase(IterFind);
-	}
+if (!bSelChanged)
+Update(0, Event_OnSelected);
 
-	std::vector<CActor*>::iterator Iter = std::find(m_ActorsRearrange.begin(), m_ActorsRearrange.end(), Sender);
-	if (Iter != m_ActorsRearrange.end()){
-		m_ActorsRearrange.erase(Iter);
-	}
-
-	::PostMessage(m_hwndParent, WM_USER_REMOVEOBJECT, 0, 0);
-
-	m_CS.leave();
-
-	return 1;
+return bSelChanged;
 }
 
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::SelectActor(const CActor * Sender)
+if (((LPNMHDR)lParam)->code == TVN_BEGINDRAG)
 {
-	m_CS.enter();
-
-	TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
-	m_HTreeSelected = (Iter != m_TreeMap.end()) ? Iter->second : NULL;
-	
-	::PostMessage(m_hwndParent, WM_USER_SELECTOBJECT, 0, 0);
-	m_CS.leave();
-
-	return 1;
+return BeginDragTreeObject((LPNMTREEVIEW)lParam);
 }
+}break;
 
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::RenameActor(const class CActor * Sender)
+case WM_SIZING:
+case WM_SIZE:
 {
-	m_CS.enter();
+}break;
 
-	TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
-	m_HTreeRename = (Iter != m_TreeMap.end()) ? Iter->second : NULL;
+case WM_MOUSEMOVE:
+{
+MouseMoveTreeObject(lParam);
+}break;
 
-	::PostMessage(m_hwndParent, WM_USER_RENAMEOBJECT, 0, 0);
-	m_CS.leave();
+case WM_LBUTTONUP:
+{
+EndDragTreeObject();
+}break;
 
-	return 1;
+case WM_COMMAND:
+// process context menu
+if (pfnContextMenuProcessor(GetHWND(), message, wParam, lParam)){
+break;
 }
-
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::MoveActor(const CActor * Sender, bool bUp)
+switch (LOWORD(wParam))
 {
-	m_CS.enter();
-
-	TTreeMapActorIterator IterMove = m_TreeMap.find(Sender);
-
-	if (IterMove != m_TreeMap.end())
-	{
-		SwapHTree Temp;
-		Temp.ActorMove = Sender;
-		Temp.bUp = bUp; 
-
-		m_TMapSwapTree.push_back(Temp);
-	}
-
-	::PostMessage(m_hwndParent, WM_USER_MOVEOBJECT, 0, 0);
-
-	m_CS.leave();
-
-	return 1;
+case IDOK:
+// Fall through.
+case IDCANCEL:
+//EndDialog(hwndDlg, wParam);
+return TRUE;
 }
+break;
 
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::RearrangeActor(const CActor * Sender)
+case WM_USER_REMOVEOBJECT:
 {
-	m_CS.enter();
+::LockWindowUpdate(hWnd);
 
-	std::vector<CActor*>::iterator IterFind = std::find(m_ActorsRearrange.begin(), m_ActorsRearrange.end(), Sender);
+WndRemoveObject();
 
-	if (IterFind == m_ActorsRearrange.end())
-	{
-		m_ActorsRearrange.push_back(const_cast<CActor*>(Sender));
-	}
+::LockWindowUpdate(0);
+}break;
 
-	::PostMessage(m_hwndParent, WM_USER_REARRANGE, 0, 0);
-
-	m_CS.leave();
-
-	return 1;
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndProcessInsertObject()
+case WM_USER_SELECTOBJECT:
 {
-	m_CS.enter();
+WndSelectObject();
+}break;
 
-	::LockWindowUpdate(m_hwndTree);
-
-	for (TVecActorChildIterator Iter = m_ActorAddList.begin(); Iter != m_ActorAddList.end(); ++Iter)
-	{
-		int IndexBitmap = m_pfnGetResourceIconIndex((*Iter)->GetType());
-
-		// add data to tree view
-		TTreeMapActorIterator Iterator = m_TreeMap.find((*Iter)->GetParent());
-
-		TV_INSERTSTRUCT tvinsert;													 // struct to config out tree control
-		tvinsert.hParent = (Iterator == m_TreeMap.end()) ? NULL : Iterator->second;	 // top most level no need handle
-		tvinsert.hInsertAfter = (Iterator == m_TreeMap.end()) ? TVI_ROOT : TVI_LAST;   // work as root level
-
-		std::wstring Name = ConvertStringToWideString((*Iter)->GetName());
-
-		tvinsert.item.mask = TVIF_TEXT;
-
-		if (IndexBitmap != INDEX_NONE)
-		{
-			tvinsert.item.mask |= TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-			tvinsert.item.iImage = IndexBitmap;
-			tvinsert.item.iSelectedImage = IndexBitmap;
-		}
-				
-		tvinsert.item.pszText = (LPWSTR)Name.c_str();
-		
-		HTREEITEM hItem = TreeView_InsertItem(m_hwndTree, &tvinsert);
-		
-		m_TreeMap.insert(std::make_pair(*Iter, hItem));	// cashe current
-
-		// update preview
-		TreeView_SelectDropTarget(m_hwndTree, hItem);
-		TreeView_SelectDropTarget(m_hwndTree, NULL);
-	}
-
-	m_ActorAddList.clear();
-
-	::LockWindowUpdate(NULL);
-
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndRemoveObject()
+case WM_USER_RENAMEOBJECT:
 {
-	m_CS.enter();
+WndRenameObject();
+}break;
 
-	::LockWindowUpdate(m_hwndTree);
-
-	for (std::vector<HTREEITEM>::iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
-	{
-		TreeView_DeleteItem(m_hwndTree, *Iter);
-	}
-
-	m_HTreeClearList.clear();
-
-	::LockWindowUpdate(NULL);
-
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndSelectObject()
+// old
+case WM_USER_INSERTOBJECT:
 {
-	m_CS.enter();
+WndProcessInsertObject();
+bResult = 1;
+}break;
 
-	TreeView_Select(m_hwndTree, m_HTreeSelected, TVGN_CARET);
-	TreeView_EnsureVisible(m_hwndTree, m_HTreeSelected);
-
-	m_HTreeSelected = NULL;
-
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndRenameObject()
+case WM_USER_REMOVEOBJECT_BRWSR:
 {
-	m_CS.enter();
+WndRemoveObject();
+bResult = 1;
+}break;
 
-	for (TTreeMapActorIterator Iter = m_TreeMap.begin(); Iter != m_TreeMap.end(); ++Iter)
-	{
-		if (Iter->second == m_HTreeRename)
-		{
-			TVITEMEX NodeItem;
-			NodeItem.hItem = Iter->second;
-			NodeItem.cchTextMax = 100;
-			NodeItem.pszText = 0;
-			NodeItem.mask = TVIF_TEXT;
-
-			if (TreeView_GetItem(m_hwndTree, &NodeItem))
-			{
-				std::wstring Name = ConvertStringToWideString(Iter->first->GetName());
-				NodeItem.pszText =(LPWSTR)Name.c_str();
-				TreeView_SetItem(m_hwndTree, &NodeItem);
-			}
-			break;
-		}
-	}
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndMoveObject()
+case WM_USER_SELECTOBJECT_BRWSR:
 {
-	m_CS.enter();
+WndSelectObject();
+bResult = 1;
+}break;
 
-	std::vector<SwapHTree>::iterator HIter = m_TMapSwapTree.begin();
-
-	while (HIter != m_TMapSwapTree.end())
-	{
-		TTreeMapActorIterator IterMove = m_TreeMap.find(HIter->ActorMove);
-
-		HTREEITEM HMoveTo = TreeView_GetNextItem(m_hwndTree, IterMove->second, (HIter->bUp) ? TVGN_PREVIOUS : TVGN_NEXT);
-		TTreeMapActorIterator IterMoveTo = m_TreeMap.find(GetActorByData(HMoveTo));
-
-		if (IterMove != m_TreeMap.end() && IterMoveTo != m_TreeMap.end())
-		{
-			wchar_t NameMove[100] = {0};
-			wchar_t NameMoveTo[100] = {0};
-
-			MultiByteToWideChar(CP_ACP, 0, IterMove->first->GetName(), -1, NameMove, 100);
-			MultiByteToWideChar(CP_ACP, 0, IterMoveTo->first->GetName(), -1, NameMoveTo, 100);
-
-			// prepare tree items directly
-			TVITEMEX NodeItemMove;
-			NodeItemMove.hItem = IterMove->second;
-			NodeItemMove.cchTextMax = 100;
-			NodeItemMove.pszText = (LPWSTR)NameMoveTo;
-			NodeItemMove.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-			NodeItemMove.iImage = m_pfnGetResourceIconIndex(IterMoveTo->first->GetType());
-			NodeItemMove.iSelectedImage = NodeItemMove.iImage;
-
-			TVITEMEX NodeItemMoveTo;
-			NodeItemMoveTo.hItem = IterMoveTo->second;
-			NodeItemMoveTo.cchTextMax = 100;
-			NodeItemMoveTo.pszText = (LPWSTR)NameMove;
-			NodeItemMoveTo.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-			NodeItemMoveTo.iImage = m_pfnGetResourceIconIndex(IterMove->first->GetType());
-			NodeItemMoveTo.iSelectedImage = NodeItemMoveTo.iImage;
-
-			BOOL b1 = TreeView_SetItem(m_hwndTree, &NodeItemMove);
-			BOOL b2 = TreeView_SetItem(m_hwndTree, &NodeItemMoveTo);
-
-			assert(b1 && b2);
-
-			// swap TreeMap HTREEITEMs
-			std::swap(IterMove->second, IterMoveTo->second);
-
-			// clear all child from tree
-			// update tree items directly
-			TVecActorChild ChildNodes_ActorMove	= IterMove->first->ChildNodes;
-			TVecActorChild ChildNodes_ActorMoveTo = IterMoveTo->first->ChildNodes;
-
-			for (size_t Index = 0; Index < ChildNodes_ActorMove.size(); ++Index){
-				ChildNodes_ActorMove[Index]->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectClearActor);
-			}
-			for (size_t Index = 0; Index < ChildNodes_ActorMoveTo.size(); ++Index){
-				ChildNodes_ActorMoveTo[Index]->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectClearActor);
-			}
-
-			// register again
-			for (size_t Index = 0; Index < ChildNodes_ActorMove.size(); ++Index){
-				ChildNodes_ActorMove[Index]->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectInvokeActor);
-			}
-			for (size_t Index = 0; Index < ChildNodes_ActorMoveTo.size(); ++Index){
-				ChildNodes_ActorMoveTo[Index]->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectInvokeActor);
-			}
-
-			// select at last
-			TreeView_SelectItem(m_hwndTree, IterMove->second);
-		}
-
-		HIter++;
-	}
-
-	m_TMapSwapTree.clear();
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::WndReArrange()
+case WM_USER_RENAMEOBJECT_BRWSR:
 {
-	m_CS.enter();
-	std::vector<CActor*>::iterator Iter = m_ActorsRearrange.begin();
+WndRenameObject();
+bResult = 1;
+}break;
 
-	while (Iter != m_ActorsRearrange.end())
-	{
-		// clear
-		for (std::vector<CActor*>::iterator IterChild = (*Iter)->ChildNodes.begin(); IterChild != (*Iter)->ChildNodes.end(); ++IterChild){
-			(*IterChild)->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectClearActor);
-		}
-
-		// register again
-		for (std::vector<CActor*>::iterator IterChild = (*Iter)->ChildNodes.begin(); IterChild != (*Iter)->ChildNodes.end(); ++IterChild){
-			(*IterChild)->ForeachTreeNodes(CWin32ObjectBrowser::CALLBACK_DirectInvokeActor);
-		}
-
-		++Iter;
-	}
-
-	m_ActorsRearrange.clear();
-	m_CS.leave();
-}
-
-//----------------------------------------------------------------------------------------------
-int Win32ObjectBrowserWidget::DirectInvokeActor(const CActor * Sender)
+case WM_USER_MOVEOBJECT:
 {
-	int OutResult = 0;
-	const Registry * Reg = m_pWindowManager->GetCoreSDK()->GetRegistry();
+WndMoveObject();
+bResult = 1;
+}break;
 
-	m_CS.enter();
-
-	if (m_hwndTree &&
-		!dynamic_cast<const Brush_AbstractInterface*>(Sender) &&
-		Reg->IsEditorVisible(Sender->GetType()))
-	{
-		int IndexBitmap = m_pfnGetResourceIconIndex(Sender->GetType());
-
-		// add data to tree view
-		TTreeMapActorIterator Iterator = m_TreeMap.find(Sender->GetParent());
-
-		TV_INSERTSTRUCT tvinsert;                                                  // struct to config out tree control
-		tvinsert.hParent = (Iterator == m_TreeMap.end()) ? NULL : Iterator->second;  // top most level no need handle
-		tvinsert.hInsertAfter = (Iterator == m_TreeMap.end()) ? TVI_ROOT : TVI_LAST; // work as root level
-
-		tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
-
-		std::wstring Name = ConvertStringToWideString(Sender->GetName());
-		tvinsert.item.pszText = (LPWSTR)Name.c_str();
-		tvinsert.item.iImage = IndexBitmap;
-		tvinsert.item.iSelectedImage = IndexBitmap;
-
-		HTREEITEM hItem = TreeView_InsertItem(m_hwndTree, &tvinsert);
-
-		// cashe current
-		m_TreeMap.insert(std::make_pair(Sender, hItem));
-
-		// update preview
-		TreeView_SelectDropTarget(m_hwndTree, hItem);
-		TreeView_SelectDropTarget(m_hwndTree, NULL);
-
-		OutResult = 1;
-	}
-
-	m_CS.leave();
-
-	return OutResult;
-}
-
-//----------------------------------------------------------------------------------------------
-int	Win32ObjectBrowserWidget::DirectClearActor(const CActor * Sender)
+case WM_USER_REARRANGE:
 {
-	m_CS.enter();
+WndReArrange();
+bResult = 1;
+}break;
 
-	TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
-
-	if (Iter != m_TreeMap.end())
-	{
-		TreeView_DeleteItem(m_hwndTree, Iter->second);
-		m_TreeMap.erase(Iter);
-	}
-
-	m_CS.leave();
-
-	return 1;
-}
-
-//----------------------------------------------------------------------------------------------
-CActor* Win32ObjectBrowserWidget::GetActorByData(const HTREEITEM lpnmtv)
-{
-	m_CS.enter();
-
-	CActor *pOutValue = NULL;
-
-	if (lpnmtv)
-	{
-		for (std::vector<HTREEITEM>::iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
-		{
-			if (*Iter == lpnmtv){
-				return 0;
-			}
-		}
-
-		TTreeMapActorConstIterator Iter = m_TreeMap.begin();
-		while (Iter != m_TreeMap.end())
-		{
-			if (Iter->second == lpnmtv)
-			{
-				pOutValue = const_cast<CActor*>(Iter->first);
-				break;
-			}
-			++Iter;
-		}
-	}
-	m_CS.leave();
-
-	return pOutValue;
-}
-
-//----------------------------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::SelChangedTreeObject()
-{
-	bool bResult = false;
-
-	m_CS.enter();
-
-	HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
-
-	TVITEMEX NodeItem;
-	NodeItem.hItem = hTreeItem;
-	NodeItem.cchTextMax = 100;
-	NodeItem.pszText = 0;
-	NodeItem.mask = TVIF_TEXT;
-	TreeView_GetItem(m_hwndTree, &NodeItem);
-
-	CCoreSDK *pCoreSDK = m_pWindowManager->GetCoreSDK();
-
-	CActor *pActor = GetActorByData(hTreeItem);
-
-	if (pActor) // find corresponding
-	{
-		IDrawInterface *pIFocused = pCoreSDK->GetViewportManager()->GetByActor(pActor);
-		if (pIFocused && !pIFocused->IsFocused())
-		{
-			pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
-		}
-		else
-		{
-			pCoreSDK->GetViewportManager()->SetFocus(0);
-		}
-
-		pActor->BroadcastEvent(Event_OnSelected);
-		bResult = true;
-	}
-
-	m_CS.leave();
-
-	return bResult;
+default:
+break;
+};
+return bResult;
 }
 
 //------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::RenameTreeObject()
+long HandleNotify(HWND hWndDlg, int nIDCtrl, LPNMHDR pNMHDR)
 {
-	bool bResult = false;
+if (pNMHDR->hwndFrom == m_hwndTree)
+{
+if (pNMHDR->code == NM_CUSTOMDRAW)
+{
+LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW) pNMHDR;
+HWND hWndTreeView = pNMHDR->hwndFrom;
 
-	HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
+return HandleCustomDraw(hWndTreeView, pNMTVCD);
+}
+}
+return 0;
+}
 
-	CActor* Actor = GetActorByData(hTreeItem);
+//------------------------------------------------------------------------
+long HandleCustomDraw(HWND hWndTreeView, LPNMTVCUSTOMDRAW pNMTVCD)
+{
+if (pNMTVCD == NULL){
+return -1;
+}
+switch (pNMTVCD->nmcd.dwDrawStage)
+{
+case CDDS_PREPAINT:
+return (CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYITEMDRAW);
 
-	if (Actor) // do not allow rename root node
-	{
-		wchar_t wbuf[100] = {0};
-		char ascii[100] = {0};
-
-		MultiByteToWideChar(CP_ACP, 0, Actor->GetName(), -1, wbuf, 100);
-
-		if (CWin32InputBox::InputBox(L"Rename", L"Please enter new name", wbuf, 100, false) == IDOK)
-		{
-			wcstombs(ascii, wbuf, wcslen(wbuf));
-			Actor->Rename(ascii);
-		}
-		bResult = true; // operation clear
-	}
-	return bResult;
+case CDDS_ITEMPREPAINT:
+{
+if (pNMTVCD->nmcd.uItemState & CDIS_SELECTED){ // selected
+pNMTVCD->clrTextBk = RGB(200, 200, 200);
+}
+return (CDRF_NOTIFYPOSTPAINT | CDRF_NEWFONT);
+}
+case CDDS_ITEMPOSTPAINT:
+{
+return CDRF_DODEFAULT;
+}
+break;
+default:
+break;
+}
+return 0;
 }
 
 //----------------------------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::WndProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
+static BOOL SubClassProcTree(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 {
-	bool bResult = false;
+Win32ObjectBrowserWidget *pBrowser = reinterpret_cast<Win32ObjectBrowserWidget*>(GetWindowLong(hWnd, GWL_USERDATA));
 
-	switch (message) 
-	{
-	case WM_USER_INSERTOBJECT:
-		{
-			WndProcessInsertObject();
-			bResult = true;
-		}break;
+switch (messg)
+{
+case WM_CREATE:
+{
+}break;
 
-	case WM_USER_REMOVEOBJECT:
-		{
-			WndRemoveObject();
-			bResult = true;
-		}break;
+case WM_COMMAND:
+{
+if (pBrowser->ContextMenuProcessor(hWnd, messg, wParam, lParam)){
+break;
+}
+}break;
 
-	case WM_USER_SELECTOBJECT:
-		{
-			WndSelectObject();
-			bResult = true;
-		}break;
+case WM_MOUSEWHEEL:
+case WM_VSCROLL:
+{
 
-	case WM_USER_RENAMEOBJECT:
-		{
-			WndRenameObject();
-			bResult = true;
-		}break;
+}break;
 
-	case WM_USER_MOVEOBJECT:
-		{
-			WndMoveObject();
-			bResult = true;
-		}break;
+case WM_MOUSEMOVE:
+{
+//pBrowser->MouseMoveTreeObject(lParam);
+}break;
 
-	case WM_USER_REARRANGE:
-		{
-			WndReArrange();
-			bResult = true;
-		}break;
+case WM_LBUTTONUP:
+{
+//pBrowser->EndDragTreeObject();
+}break;
 
-	default:
-		break;
-	};
-	return bResult;
+case WM_NOTIFY:
+{
+if (((LPNMHDR)lParam)->code == TVN_KEYDOWN)
+{
+LPNMTVKEYDOWN ptvkd = (LPNMTVKEYDOWN) lParam;
+switch ((DWORD)ptvkd->wVKey)
+{
+// move Up/Down
+//case 'U': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), true); } break;
+//case 'J': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), false); } break;
+
+case VK_DELETE:{
+//DeleteTreeObject((HTREEITEM)::SendDlgItemMessage(hwndDialogBrowser, IDC_TREE1, TVM_GETNEXTITEM, TVGN_CARET, 0));
+}break;
+
+case VK_F2:{
+pBrowser->RenameTreeObject();
+}break;
+}break;
+}
+}break;
 }
 
-//------------------------------------------------------------------------
-long Win32ObjectBrowserWidget::HandleNotify(HWND hWndDlg, int nIDCtrl, LPNMHDR pNMHDR)
-{
-	if (pNMHDR->hwndFrom == m_hwndTree)
-	{
-		if (pNMHDR->code == NM_CUSTOMDRAW)
-		{
-			LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW) pNMHDR;
-			HWND hWndTreeView = pNMHDR->hwndFrom;
-
-			return HandleCustomDraw(hWndTreeView, pNMTVCD);
-		}
-	}
-	return 0;
-}
-
-//------------------------------------------------------------------------
-long Win32ObjectBrowserWidget::HandleCustomDraw(HWND hWndTreeView, LPNMTVCUSTOMDRAW pNMTVCD)
-{
-	if (pNMTVCD == NULL){
-		return -1;
-	}
-	switch (pNMTVCD->nmcd.dwDrawStage)
-	{ 
-	case CDDS_PREPAINT:
-		return (CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYITEMDRAW);
-
-	case CDDS_ITEMPREPAINT:
-		{
-			if (pNMTVCD->nmcd.uItemState & CDIS_SELECTED){ // selected
-				pNMTVCD->clrTextBk = RGB(200, 200, 200);
-			}
-			return (CDRF_NOTIFYPOSTPAINT | CDRF_NEWFONT);
-		}
-	case CDDS_ITEMPOSTPAINT:
-		{
-			return CDRF_DODEFAULT;
-		}
-		break;
-	default:
-		break;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------------------------------------
-BOOL Win32ObjectBrowserWidget::SubClassProcTree(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
-{
-	Win32ObjectBrowserWidget * pBrowser = reinterpret_cast<Win32ObjectBrowserWidget*>(GetWindowLong(hWnd, GWL_USERDATA));
-
-	switch (messg) 
-	{
-	case WM_CREATE:
-		{
-		}break;
-
-	case WM_COMMAND:
-		{
-			if (pBrowser->m_pfnContextMenuProcessor(hWnd, messg, wParam, lParam)){
-				break;
-			}
-		}break;
-
-	case WM_MOUSEWHEEL:
-	case WM_VSCROLL:
-		{
-			
-		}break;
-
-	case WM_MOUSEMOVE:
-		{
-			pBrowser->MouseMoveTreeObject(lParam);
-		}break;
-
-	case WM_LBUTTONUP:
-		{
-			pBrowser->EndDragTreeObject();
-		}break;
-
-	case WM_NOTIFY:
-		{
-			if (((LPNMHDR)lParam)->code == TVN_KEYDOWN)
-			{
-				LPNMTVKEYDOWN ptvkd = (LPNMTVKEYDOWN) lParam;
-				switch ((DWORD)ptvkd->wVKey) 
-				{
-					// move Up/Down
-				//case 'U': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), true); } break;
-				//case 'J': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), false); } break;
-
-				case VK_DELETE:{
-						//DeleteTreeObject((HTREEITEM)::SendDlgItemMessage(hwndDialogBrowser, IDC_TREE1, TVM_GETNEXTITEM, TVGN_CARET, 0));
-					}break;
-
-				case VK_F2:{
-						pBrowser->RenameTreeObject();
-					}break;
-				}break;
-			}
-		}break;
-	}
-
-	// Call the original window procedure for default processing. 
-	return CallWindowProc(pBrowser->m_lpfnTreeProc, hWnd, messg, wParam, lParam);
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::Copy(const HTREEITEM hTreeItem)
-{
-	bool bResult = false;
-
-	CActor * ActorCopy = GetActorByData(hTreeItem);
-
-	if (ActorCopy) // do not allow rename root node
-	{
-		CActor * RootNode = ActorCopy->GetRootNode();
-		if (RootNode)
-		{
-			RootNode->Copy(ActorCopy);
-		}
-	}
-	return bResult;
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::Paste(const HTREEITEM hTreeItem)
-{
-	bool bResult = false;
-
-	CActor * ActorPaste = GetActorByData(hTreeItem);
-
-	if (ActorPaste) // do not allow rename root node
-	{
-		CActor * RootNode = ActorPaste->GetRootNode();
-		if (RootNode)
-		{
-			RootNode->Paste(ActorPaste);
-		}
-	}
-	return bResult;
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::BeginDragTreeObject(const LPNMTREEVIEW lpnmtv)
-{
-	bool bResult = false;
-
-	if (lpnmtv != NULL)
-	{
-		HIMAGELIST hImg;
-		m_bDragging = true; // set global flag
-
-		hImg = TreeView_CreateDragImage(m_hwndTree, lpnmtv->itemNew.hItem);
-
-		ImageList_BeginDrag(hImg, 0, 0, 0);
-
-		ImageList_DragEnter(m_hwndTree, lpnmtv->ptDrag.x, lpnmtv->ptDrag.y);
-
-		SetCapture(m_hwndTree);
-		SetCursor(m_hCursHand);
-
-		m_ActorPicked = GetActorByData((HTREEITEM)lpnmtv->itemNew.hItem);
-	}
-	return bResult;
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::MouseMoveTreeObject(const LPARAM lParam)
-{
-	bool bResult = false;
-
-	if (m_bDragging && lParam)
-	{
-		TVHITTESTINFO tvht;
-
-		POINTS Pos = MAKEPOINTS(lParam);
-
-		ImageList_DragMove(Pos.x + 16, Pos.y); // where to draw the drag from
-		ImageList_DragShowNolock(FALSE);
-
-		tvht.pt.x = Pos.x; // the highlight items should be as the same points as the drag
-		tvht.pt.y = Pos.y;
-
-		m_hitTarget = (HTREEITEM)SendMessage(m_hwndTree, TVM_HITTEST, NULL, (LPARAM)&tvht);
-		if (m_hitTarget) // if there is a hit
-		{
-			SendMessage(m_hwndTree, TVM_SELECTITEM, TVGN_DROPHILITE, (LPARAM)m_hitTarget);   // highlight it
-		}
-		ImageList_DragShowNolock(TRUE);
-	}
-	return bResult;
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::EndDragTreeObject()
-{
-	CCoreSDK *pCoreSDK = m_pWindowManager->GetCoreSDK();
-
-	SHORT CtrlPressed = GetAsyncKeyState(VK_LCONTROL);
-
-	if (m_bDragging) 
-	{	
-		HTREEITEM hTreeItem = TreeView_GetNextItem(m_hwndTree, 0, TVGN_DROPHILITE);
-		
-		ImageList_DragLeave(m_hwndTree);
-		ImageList_EndDrag();
-
-		HTREEITEM Selected = TreeView_GetNextItem(m_hwndTree, 0, TVGN_DROPHILITE);
-		TreeView_Select(m_hwndTree, (LPARAM)Selected, TVGN_CARET);
-		TreeView_Select(m_hwndTree, NULL, TVGN_DROPHILITE);
-
-		ReleaseCapture();
-		SetCursor(m_hCursArrow);
-
-		CActor * HitActor = m_ActorDrop = GetActorByData(hTreeItem);
-
-		if (m_ActorDrop && CtrlPressed){ // Plain move means get target actor parent
-			m_ActorDrop = m_ActorDrop->GetParent();
-		}
-
-		if (m_ActorDrop && m_ActorPicked && (m_ActorDrop != m_ActorPicked) && !m_ActorPicked->IsTransient())
-		{
-			CActor * TempActor = m_ActorDrop->GetParent(); // Check ActorPicked not parent of ActorDrop
-			while (TempActor)
-			{
-				if (TempActor == m_ActorPicked) { // unable put parent object to child directly
-					return false;
-				}
-				TempActor = TempActor->GetParent();
-			}
-
-			Matrix LTM;
-			//if (CActor::GetObjectAInLocalSpaceB(LTM, m_ActorDrop, m_ActorPicked))
-			//{
-			//	// remove actor B from prev node and push to selected
-			//	m_ActorPicked->GetParent()->RemoveChildNode(m_ActorPicked);
-			//	m_ActorPicked->SetParent(m_ActorDrop);
-			//	m_ActorPicked->SetPivot(LTM);
-			//	m_ActorDrop->AddChildNode(m_ActorPicked);
-
-			//	InvokeActor(m_ActorPicked);
-
-			//	pCoreSDK->GetViewportManager()->RebuildTransform(m_ActorDrop);
-
-			//	if (CtrlPressed){
-			//		MoveObjectNearTo(m_ActorPicked, HitActor);
-			//	}
-
-			//	TTreeMapActorIterator Iter = m_TreeMap.find(m_ActorPicked);
-			//	if (Iter != m_TreeMap.end()){
-			//		TreeView_Select(m_hwndTree, Iter->second, TVGN_CARET);
-			//	}
-			//}
-		}
-		m_ActorDrop = m_ActorPicked = NULL;
-		m_bDragging = false; // drop global flag
-	}
-	return true;
-}
-
-//------------------------------------------------------------------------
-bool Win32ObjectBrowserWidget::MoveObjectNearTo(CActor * Picked, const CActor * Target, bool Up)
-{
-	const Registry * Reg = m_pWindowManager->GetCoreSDK()->GetRegistry();
-	assert(Reg);
-
-	if (Picked && Target && 
-		Picked != Target && 
-		Picked->GetParent() == Target->GetParent()) // check objects are in same plane
-	{
-		CActor * ParentObject = Picked->GetParent();
-
-		if (ParentObject != NULL)
-		{
-			TVecActorChildIterator IterActorMove   = std::find(ParentObject->ChildNodes.begin(), ParentObject->ChildNodes.end(), Picked);
-			TVecActorChildIterator IterActorMoveTo = std::find(ParentObject->ChildNodes.begin(), ParentObject->ChildNodes.end(), Target);
-
-			if (IterActorMove != ParentObject->ChildNodes.end() && 
-				IterActorMoveTo != ParentObject->ChildNodes.end())
-			{
-				TVecActorChild::difference_type n = IterActorMoveTo - IterActorMove;
-
-				int CountNum = abs(int(n));
-				while (CountNum > 0)
-				{
-					ActorAllocator::MoveObjectHierarchy(Picked, Reg, (n < 0));
-					CountNum--;
-				}
-			}
-		}
-	}
-	return true;
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::Redraw() const
-{
-	InvalidateRect(m_hwndTree, NULL, TRUE);
-}
-
-//----------------------------------------------------------------------------------------------
-void Win32ObjectBrowserWidget::ProcessRightClick()
-{
-	POINT pt;
-	if (::GetCursorPos(&pt)) // address of structure for cursor position
-	{
-		TVHITTESTINFO tvht;
-		tvht.pt = pt;
-		ScreenToClient(m_hwndTree, &tvht.pt);
-
-		m_hitTarget = (HTREEITEM)SendMessage(m_hwndTree, TVM_HITTEST, NULL, (LPARAM)&tvht);
-		if (m_hitTarget != NULL) // if there is a hit
-		{
-			m_pfnContextMenu(m_hwndTree, pt, GetActorByData(m_hitTarget));
-		}
-	}
+// Call the original window procedure for default processing.
+return CallWindowProc(pBrowser->m_lpfnTreeProc, hWnd, messg, wParam, lParam);
 }*/
