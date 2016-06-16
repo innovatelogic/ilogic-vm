@@ -21,7 +21,9 @@ public:
 		MESSAGE_HANDLER(WM_USER_INSERTOBJECT, OnAppInsertObject)
 		MESSAGE_HANDLER(WM_USER_REMOVEOBJECT_BRWSR, OnAppRemoveObject)
 		MESSAGE_HANDLER(WM_USER_RENAMEOBJECT_BRWSR, OnAppRenameObject)
-		//MESSAGE_HANDLER(WM_NOTIFY, OnAppOnNotify)
+       // COMMAND_ID_HANDLER(TVN_ITEMSELECTED, OnTreeViewSelected)
+        //ON_NOTIFY(TVN_ITEMSELECTED, OnTreeViewSelected);
+		MESSAGE_HANDLER(WM_NOTIFY, OnAppOnNotify)
         //CHAIN_MSG_MAP_MEMBER(m_pTreeBrowser->GetHWndTree())
 		CHAIN_MSG_MAP(CPaneContainer)
 		REFLECT_NOTIFICATIONS()
@@ -121,23 +123,27 @@ public:
 	}
 
 	//----------------------------------------------------------------------------------------------
-	LRESULT OnAppOnNotify(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
+	LRESULT OnAppOnNotify(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&pResult)
 	{
 		// select item handler
-		if (((LPNMHDR)lParam)->code == TVN_SELCHANGED)
+        if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTING)
+        {
+            return 0;
+        }
+        else if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTED)
 		{
-			bool bSelChanged = m_pTreeBrowser->SelChangedTreeObject();
+		    bool bSelChanged = m_pTreeBrowser->SelChangedTreeObject();
 
-			if (!bSelChanged){
-				m_pTreeBrowser->Update(0, Event_OnSelected);
-			}
-			return bSelChanged;
+			//if (!bSelChanged){
+			//	m_pTreeBrowser->Update(0, Event_OnSelected);
+			//}
+            return 0;
 		}
-		else if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
+		/*else if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
 		{	
 			m_pTreeBrowser->ProcessRightClick();
-		}
-		return 0;
+		}*/
+		return CPaneContainer::OnNotify(iunt_, wParam, lParam, pResult);
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -148,6 +154,12 @@ public:
             m_pTreeBrowser->Update(pSender, EventId);
         }
 	}
+
+    //----------------------------------------------------------------------------------------------
+    LRESULT OnTreeViewSelected(WORD, WORD, HWND, BOOL&)
+    {
+        return 0;
+    }
 
 private:
 	Win32ObjectBrowserWidget<T_CLASS> *m_pTreeBrowser;

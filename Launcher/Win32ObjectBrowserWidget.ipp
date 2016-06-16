@@ -29,10 +29,10 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 		RECT rect;
 		GetClientRect(hWndParent, &rect);
 
-		int Width = rect.right - rect.left;
+		/*int Width = rect.right - rect.left;
 		int Height = rect.bottom - rect.top;
 
-		/*m_hwndTree = CreateWindow(
+		m_hwndTree = CreateWindow(
 			WC_TREEVIEW,
 			NULL,
 			WS_CHILD | WS_BORDER | TVS_HASBUTTONS | TVS_HASLINES | TVS_SHOWSELALWAYS | WS_VISIBLE,
@@ -49,44 +49,19 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
         rc.left = rect.left;
         rc.top = rect.top;
         rc.left = Width;
-        rc.bottom = Height;*/
+        rc.bottom = Height;
+        m_hwndLeft.SubclassWindow(hWndParent);*/
 
         m_hwndTree = m_hwndLeft.Create(hWndParent, rect, NULL, 
             WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | ES_READONLY | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE);
-/*
-        CMultiSelectTreeCtrl *pw = &m_hwndLeft;
 
-        //test
-        HTREEITEM hParent = pw->InsertItem(_T("Top Level 1.1"), 0, 1, TVI_ROOT, TVI_LAST);
-        pw->InsertItem(_T("Second Level 2.1"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Second Level 2.2"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        //pw->SelectItem(hParent);
-        hParent = pw->InsertItem(_T("Second Level 2.3"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Third Level 3.1"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Third Level 3.2"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        hParent = pw->InsertItem(_T("Third Level 3.3"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Fourth Level 4.1"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        hParent = pw->InsertItem(_T("Top Level 1.2"), 0, 1, TVI_ROOT, TVI_LAST);
-        pw->InsertItem(_T("Second Level 2.1"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Second Level 2.2"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        hParent = pw->InsertItem(_T("Second Level 2.3"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Third Level 3.1"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Third Level 3.2"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        hParent = pw->InsertItem(_T("Third Level 3.3"), 0, 1, hParent, TVI_LAST);
-        pw->InsertItem(_T("Fourth Level 4.1"), 0, 1, hParent, TVI_LAST);
-        pw->Expand(hParent, TVE_EXPAND);
-        //end test
-        */
+        //m_hwndLeft.SubclassWindow(m_hwndTree);
+
 		SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
 
 		TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
 
-		//m_lpfnTreeProc = (WNDPROC) SetWindowLong(m_hwndTree, GWL_WNDPROC, (LONG)SubClassProcTree);
+		m_lpfnTreeProc = (WNDPROC) GetWindowLong(m_hwndTree, GWL_WNDPROC);
 
 		m_hCursHand = LoadCursor(NULL, IDC_HAND);
 		m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
@@ -218,6 +193,448 @@ int Win32ObjectBrowserWidget<T_CLASS>::SelectActor(const T_CLASS * Sender)
     m_CS.leave();
 
     return 1;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::RenameActor(const T_CLASS * Sender)
+{
+    bool bReturn = false;
+
+    m_CS.enter();
+
+    TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
+    m_HTreeRename = (Iter != m_TreeMap.end()) ? Iter->second : NULL;
+
+    if (m_HTreeRename != NULL)
+    {
+        ::PostMessage(m_hwndParent, WM_USER_RENAMEOBJECT_BRWSR, 0, 0);
+        bReturn = true;
+    }
+    m_CS.leave();
+
+    return bReturn;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::MoveActor(const T_CLASS * Sender, bool bUp)
+{
+    m_CS.enter();
+
+    TTreeMapActorIterator IterMove = m_TreeMap.find(Sender);
+
+    if (IterMove != m_TreeMap.end())
+    {
+        SwapHTree Temp;
+        Temp.ActorMove = Sender;
+        Temp.bUp = bUp;
+
+        m_TMapSwapTree.push_back(Temp);
+    }
+
+    ::PostMessage(m_hwndParent, WM_USER_MOVEOBJECT, 0, 0);
+
+    m_CS.leave();
+
+    return 1;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::RearrangeActor(const T_CLASS * Sender)
+{
+    m_CS.enter();
+
+    std::vector<T_CLASS*>::iterator IterFind = std::find(m_ActorsRearrange.begin(), m_ActorsRearrange.end(), Sender);
+
+    if (IterFind == m_ActorsRearrange.end())
+    {
+        m_ActorsRearrange.push_back(const_cast<T_CLASS*>(Sender));
+    }
+
+    ::PostMessage(m_hwndParent, WM_USER_REARRANGE, 0, 0);
+
+    m_CS.leave();
+
+    return 1;
+}
+
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndProcessInsertObject()
+{
+    m_CS.enter();
+
+    ::LockWindowUpdate(m_hwndTree);
+
+    for (TVecActorChildIterator Iter = m_ActorAddList.begin(); Iter != m_ActorAddList.end(); ++Iter)
+    {
+        int IndexBitmap = m_pfnGetResourceIconIndex((*Iter)->GetType());
+
+        // add data to tree view
+        TTreeMapActorIterator Iterator = m_TreeMap.find((*Iter)->GetParent());
+
+        TV_INSERTSTRUCT tvinsert;													 // struct to config out tree control
+        tvinsert.hParent = (Iterator == m_TreeMap.end()) ? NULL : Iterator->second;	 // top most level no need handle
+        tvinsert.hInsertAfter = (Iterator == m_TreeMap.end()) ? TVI_ROOT : TVI_LAST;   // work as root level
+
+        std::wstring Name = ConvertStringToWideString((*Iter)->GetName());
+
+        tvinsert.item.mask = TVIF_TEXT;
+
+        if (IndexBitmap != INDEX_NONE)
+        {
+            tvinsert.item.mask |= TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+            tvinsert.item.iImage = IndexBitmap;
+            tvinsert.item.iSelectedImage = IndexBitmap;
+        }
+
+        tvinsert.item.pszText = (LPWSTR)Name.c_str();
+
+        HTREEITEM hItem = TreeView_InsertItem(m_hwndTree, &tvinsert);
+
+        m_TreeMap.insert(std::make_pair(*Iter, hItem));	// cashe current
+
+                                                        // update preview
+        TreeView_SelectDropTarget(m_hwndTree, hItem);
+        TreeView_SelectDropTarget(m_hwndTree, NULL);
+    }
+
+    m_ActorAddList.clear();
+
+    ::LockWindowUpdate(NULL);
+
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndRemoveObject()
+{
+    m_CS.enter();
+
+    ::LockWindowUpdate(m_hwndTree);
+
+    for (std::vector<HTREEITEM>::iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
+    {
+        TreeView_DeleteItem(m_hwndTree, *Iter);
+    }
+
+    m_HTreeClearList.clear();
+
+    ::LockWindowUpdate(NULL);
+
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndSelectObject()
+{
+    m_CS.enter();
+
+    TreeView_Select(m_hwndTree, m_HTreeSelected, TVGN_CARET);
+    TreeView_EnsureVisible(m_hwndTree, m_HTreeSelected);
+
+    m_HTreeSelected = NULL;
+
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndRenameObject()
+{
+    m_CS.enter();
+
+    for (TTreeMapActorIterator Iter = m_TreeMap.begin(); Iter != m_TreeMap.end(); ++Iter)
+    {
+        if (Iter->second == m_HTreeRename)
+        {
+            TVITEMEX NodeItem;
+            NodeItem.hItem = Iter->second;
+            NodeItem.cchTextMax = 100;
+            NodeItem.pszText = 0;
+            NodeItem.mask = TVIF_TEXT;
+
+            if (TreeView_GetItem(m_hwndTree, &NodeItem))
+            {
+                std::wstring Name = ConvertStringToWideString(Iter->first->GetName());
+                NodeItem.pszText = (LPWSTR)Name.c_str();
+                TreeView_SetItem(m_hwndTree, &NodeItem);
+            }
+            break;
+        }
+    }
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndMoveObject()
+{
+    m_CS.enter();
+
+    std::vector<SwapHTree>::iterator HIter = m_TMapSwapTree.begin();
+
+    while (HIter != m_TMapSwapTree.end())
+    {
+        TTreeMapActorIterator IterMove = m_TreeMap.find(HIter->ActorMove);
+
+        HTREEITEM HMoveTo = TreeView_GetNextItem(m_hwndTree, IterMove->second, (HIter->bUp) ? TVGN_PREVIOUS : TVGN_NEXT);
+        TTreeMapActorIterator IterMoveTo = m_TreeMap.find(GetActorByData(HMoveTo));
+
+        if (IterMove != m_TreeMap.end() && IterMoveTo != m_TreeMap.end())
+        {
+            wchar_t NameMove[100] = { 0 };
+            wchar_t NameMoveTo[100] = { 0 };
+
+            MultiByteToWideChar(CP_ACP, 0, IterMove->first->GetName(), -1, NameMove, 100);
+            MultiByteToWideChar(CP_ACP, 0, IterMoveTo->first->GetName(), -1, NameMoveTo, 100);
+
+            // prepare tree items directly
+            TVITEMEX NodeItemMove;
+            NodeItemMove.hItem = IterMove->second;
+            NodeItemMove.cchTextMax = 100;
+            NodeItemMove.pszText = (LPWSTR)NameMoveTo;
+            NodeItemMove.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+            NodeItemMove.iImage = m_pfnGetResourceIconIndex(IterMoveTo->first->GetType());
+            NodeItemMove.iSelectedImage = NodeItemMove.iImage;
+
+            TVITEMEX NodeItemMoveTo;
+            NodeItemMoveTo.hItem = IterMoveTo->second;
+            NodeItemMoveTo.cchTextMax = 100;
+            NodeItemMoveTo.pszText = (LPWSTR)NameMove;
+            NodeItemMoveTo.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+            NodeItemMoveTo.iImage = m_pfnGetResourceIconIndex(IterMove->first->GetType());
+            NodeItemMoveTo.iSelectedImage = NodeItemMoveTo.iImage;
+
+            BOOL b1 = TreeView_SetItem(m_hwndTree, &NodeItemMove);
+            BOOL b2 = TreeView_SetItem(m_hwndTree, &NodeItemMoveTo);
+
+            assert(b1 && b2);
+
+            // swap TreeMap HTREEITEMs
+            std::swap(IterMove->second, IterMoveTo->second);
+
+            // clear all child from tree
+            // update tree items directly
+            TVecActorChild ChildNodes_ActorMove = IterMove->first->m_ChildNodes;
+            TVecActorChild ChildNodes_ActorMoveTo = IterMoveTo->first->m_ChildNodes;
+
+            for (size_t Index = 0; Index < ChildNodes_ActorMove.size(); ++Index) {
+                ChildNodes_ActorMove[Index]->ForeachTreeNodes(m_pfnDirectClearObject);//GCALLBACK_DirectClearActor
+            }
+            for (size_t Index = 0; Index < ChildNodes_ActorMoveTo.size(); ++Index) {
+                ChildNodes_ActorMoveTo[Index]->ForeachTreeNodes(m_pfnDirectClearObject);//GCALLBACK_DirectClearActor
+            }
+
+            // register again
+            for (size_t Index = 0; Index < ChildNodes_ActorMove.size(); ++Index) {
+                ChildNodes_ActorMove[Index]->ForeachTreeNodes(m_pfnDirectInvokeObject);//GCALLBACK_DirectInvokeActor
+            }
+            for (size_t Index = 0; Index < ChildNodes_ActorMoveTo.size(); ++Index) {
+                ChildNodes_ActorMoveTo[Index]->ForeachTreeNodes(m_pfnDirectInvokeObject);//GCALLBACK_DirectInvokeActor
+            }
+
+            // select at last
+            TreeView_SelectItem(m_hwndTree, IterMove->second);
+        }
+
+        HIter++;
+    }
+
+    m_TMapSwapTree.clear();
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::WndReArrange()
+{
+    m_CS.enter();
+    std::vector<T_CLASS*>::iterator Iter = m_ActorsRearrange.begin();
+
+    while (Iter != m_ActorsRearrange.end())
+    {
+        // clear
+        for (std::vector<T_CLASS*>::iterator IterChild = (*Iter)->m_ChildNodes.begin(); IterChild != (*Iter)->m_ChildNodes.end(); ++IterChild) {
+            (*IterChild)->ForeachTreeNodes(m_pfnDirectClearObject); //CALLBACK_DirectClearActor
+        }
+
+        // register again
+        for (std::vector<T_CLASS*>::iterator IterChild = (*Iter)->m_ChildNodes.begin(); IterChild != (*Iter)->m_ChildNodes.end(); ++IterChild) {
+            (*IterChild)->ForeachTreeNodes(m_pfnDirectInvokeObject);//CALLBACK_DirectInvokeActor
+        }
+
+        ++Iter;
+    }
+
+    m_ActorsRearrange.clear();
+    m_CS.leave();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int Win32ObjectBrowserWidget<T_CLASS>::DirectInvokeActor(const T_CLASS * Sender)
+{
+    int OutResult = 0;
+
+    m_CS.enter();
+
+    if (m_hwndTree &&
+        !dynamic_cast<const Brush_AbstractInterface*>(Sender) && m_pRegistry->IsEditorVisible(Sender->GetType()))
+    {
+        int IndexBitmap = m_pfnGetResourceIconIndex(Sender->GetType());
+
+        // add data to tree view
+        TTreeMapActorIterator Iterator = m_TreeMap.find(Sender->GetParent());
+
+        TV_INSERTSTRUCT tvinsert;                                                  // struct to config out tree control
+        tvinsert.hParent = (Iterator == m_TreeMap.end()) ? NULL : Iterator->second;  // top most level no need handle
+        tvinsert.hInsertAfter = (Iterator == m_TreeMap.end()) ? TVI_ROOT : TVI_LAST; // work as root level
+
+        tvinsert.item.mask = TVIF_TEXT | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+
+        std::wstring Name = ConvertStringToWideString(Sender->GetName());
+        tvinsert.item.pszText = (LPWSTR)Name.c_str();
+        tvinsert.item.iImage = IndexBitmap;
+        tvinsert.item.iSelectedImage = IndexBitmap;
+
+        HTREEITEM hItem = TreeView_InsertItem(m_hwndTree, &tvinsert);
+
+        // cashe current
+        m_TreeMap.insert(std::make_pair(Sender, hItem));
+
+        // update preview
+        TreeView_SelectDropTarget(m_hwndTree, hItem);
+        TreeView_SelectDropTarget(m_hwndTree, NULL);
+
+        OutResult = 1;
+    }
+
+    m_CS.leave();
+
+    return OutResult;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+int	Win32ObjectBrowserWidget<T_CLASS>::DirectClearActor(const T_CLASS * Sender)
+{
+    m_CS.enter();
+
+    TTreeMapActorIterator Iter = m_TreeMap.find(Sender);
+
+    if (Iter != m_TreeMap.end())
+    {
+        TreeView_DeleteItem(m_hwndTree, Iter->second);
+        m_TreeMap.erase(Iter);
+    }
+
+    m_CS.leave();
+
+    return 1;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmtv)
+{
+    m_CS.enter();
+
+    T_CLASS *pOutValue = NULL;
+
+    if (lpnmtv)
+    {
+        for (std::vector<HTREEITEM>::iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
+        {
+            if (*Iter == lpnmtv) {
+                return 0;
+            }
+        }
+
+        TTreeMapActorConstIterator Iter = m_TreeMap.begin();
+        while (Iter != m_TreeMap.end())
+        {
+            if (Iter->second == lpnmtv)
+            {
+                pOutValue = const_cast<T_CLASS*>(Iter->first);
+                break;
+            }
+            ++Iter;
+        }
+    }
+    m_CS.leave();
+
+    return pOutValue;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
+{
+    bool bResult = false;
+
+    m_CS.enter();
+
+    std::vector<CActor*> actors;
+
+    for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+    {
+        if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+        {
+            T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
+
+            actors.push_back(actor);
+
+           // actor->BroadcastEvent(Event_OnSelected);
+        }
+    }
+
+    m_editor->SelectActors(actors);
+
+    
+
+    /*
+    HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
+
+    TVITEMEX NodeItem;
+    NodeItem.hItem = hTreeItem;
+    NodeItem.cchTextMax = 100;
+    NodeItem.pszText = 0;
+    NodeItem.mask = TVIF_TEXT;
+    TreeView_GetItem(m_hwndTree, &NodeItem);
+
+    CCoreSDK *pCoreSDK = m_editor->GetApp();
+
+    T_CLASS *pActor = GetActorByData(hTreeItem);
+
+    if (pActor) // find corresponding
+    {
+        //IDrawInterface *pIFocused = m_editor->GetByActor(pActor);
+
+        //if (pIFocused)
+        //{
+        //pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
+
+        std::vector<CActor*> actors = { pActor };
+        m_editor->SelectActors(actors);
+        //}
+        //else
+        //{
+        //pCoreSDK->GetViewportManager()->SetFocus(0);
+
+        //    m_editor->DeselectAll();
+        //}
+
+        pActor->BroadcastEvent(Event_OnSelected);
+        bResult = true;
+    }*/
+
+    m_CS.leave();
+
+    return bResult;
 }
 
 /*
