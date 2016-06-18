@@ -29,29 +29,6 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 		RECT rect;
 		GetClientRect(hWndParent, &rect);
 
-		/*int Width = rect.right - rect.left;
-		int Height = rect.bottom - rect.top;
-
-		m_hwndTree = CreateWindow(
-			WC_TREEVIEW,
-			NULL,
-			WS_CHILD | WS_BORDER | TVS_HASBUTTONS | TVS_HASLINES | TVS_SHOWSELALWAYS | WS_VISIBLE,
-			rect.left,
-			rect.top,
-			Width,
-			Height,
-			hWndParent,
-			NULL,
-			(HINSTANCE)GetWindowLong(hWndParent, GWL_HINSTANCE),
-			NULL);*/
-
-     /*   RECT rc;
-        rc.left = rect.left;
-        rc.top = rect.top;
-        rc.left = Width;
-        rc.bottom = Height;
-        m_hwndLeft.SubclassWindow(hWndParent);*/
-
         m_hwndTree = m_hwndLeft.Create(hWndParent, rect, NULL, 
             WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | ES_READONLY | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE);
 

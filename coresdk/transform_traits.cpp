@@ -48,7 +48,9 @@ namespace core_sdk_api
             mousePrev,
             viewportSize);
         
-        const Vector secantPlaneN(0.f, 0.f, 1.f);
+        const Vector secantPlaneN(axis == EAxisY ? 1.f : 0.f,
+                                  axis == EAxisZ ? 1.f : 0.f,
+                                  axis == EAxisX ? 1.f : 0.f);
 
         Vector intersect = RayPlaneIntersect(pivotPos, secantPlaneN, viewPos, viewDirection);
         Vector intersectPrev = RayPlaneIntersect(pivotPos, secantPlaneN, viewPos, prevViewDirection);
