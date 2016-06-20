@@ -32,8 +32,26 @@ namespace core_sdk_api
     bool	ViewportInterface<TTranformTraits>::m_bSMiddleButtonPressed = false;
 
 //------------------------------------------------------------------------
+    template<class TTranformTraits>
+    ViewportInterface<TTranformTraits>::ViewportInterface(const CObjectAbstract *pParent)
+        : m_pNode(nullptr)
+        , m_fNearPlane(0.f)
+        , m_fFarPlane(0.f)
+        , m_controllerMode(SOEvent_None)
+        , m_controllerState(ActorState_None)
+    {
+        if (pParent)
+        {
+            m_pCoreSDK = (CCoreSDK*)pParent->GetUserData();
+        }
+    }
 
-
+    //------------------------------------------------------------------------
+    template<class TTranformTraits>
+    ViewportInterface<TTranformTraits>::~ViewportInterface()
+    {
+        UnregisterViewportInterface();
+    }
     //----------------------------------------------------------------------------------------------
     template<class TTranformTraits>
     void ViewportInterface<TTranformTraits>::RegisterViewportInterface(const CActor *pSrc)
@@ -521,8 +539,6 @@ namespace core_sdk_api
     template<class TTranformTraits>
     void ViewportInterface<TTranformTraits>::ControllerTranslate(const Vector &pos, float k)
     {
-        bool bTransformed = false;
-
         if (!m_SelectedList.empty())
         {
             for each (auto &item in m_SelectedList)
@@ -565,58 +581,63 @@ namespace core_sdk_api
        Vector local(0.f, 0.f, 0.f);
         if  (m_controllerMode == SOEvent_ControlLockX)
         {
-             m_SUserAccumRotation.x += fdelta;
+             m_SUserAccumRotation.z += fdelta;
              local.z = fdelta;
         }
         else if (m_controllerMode == SOEvent_ControlLockY)
         {
             m_SUserAccumRotation.y += fdelta;
-            local.x = fdelta;
+            local.y = fdelta;
         }
         else 
         {
-            m_SUserAccumRotation.z += fdelta;
-            local.y = fdelta;
+            m_SUserAccumRotation.x += fdelta;
+            local.x = fdelta;
         }
-             
-		//TMP
-        IDrawInterface *idraw = m_SelectedList.begin()->first;
 
-        idraw->AddYawPitchRoll(local);
-        
-        Quaternion rotTrans(0.f, 0.f, 0.f, 1.f);
-        rotTrans.set_rot(local.x, local.y, local.z);
+        if (!m_SelectedList.empty())
+        {
+            for each (auto &item in m_SelectedList)
+            {
+                IDrawInterface *idraw = item.first;
 
-        Matrix localTransMat;
-        rotTrans.Normalize();
-        rotTrans.ToMatrix(&localTransMat);
+                idraw->AddYawPitchRoll(local);
 
-		Vector ltmpos = m_SelectedList.begin()->second.displace;
-		transform_coord(ltmpos, ltmpos, localTransMat);
+                Quaternion rotTrans(0.f, 0.f, 0.f, 1.f);
+                rotTrans.set_rot(m_SUserAccumRotation.x, m_SUserAccumRotation.y, m_SUserAccumRotation.z);
 
-		Vector tpos;
-		idraw->GlobalToLocalTransform(tpos, m_SUserStartControllerPos + ltmpos);
+                Matrix localTransMat;
+                rotTrans.Normalize();
+                rotTrans.ToMatrix(&localTransMat);
 
-        Matrix ltm = idraw->GetLTM_();
+                Vector ltmpos = item.second.displace;
+                transform_coord(ltmpos, ltmpos, localTransMat);
 
-		Quaternion localRot(0.f, 0.f, 0.f, 1.f);
-        localRot.set_rot(local.x, local.y, local.z);
+                Vector tpos;
+                idraw->GlobalToLocalTransform(tpos, m_SUserStartControllerPos + ltmpos);
 
-		Matrix localRotMat;
-		localRot.Normalize();
-        localRot.ToMatrix(&localRotMat);
+                Matrix ltm = idraw->GetLTM_();
 
-        //Vector t = ltm.t;
-        ltm.t.Set(0.f, 0.f, 0.f);
-        ltm = ltm * localRotMat;
-        ltm.t = tpos;
-        idraw->SetLTM_(ltm);
+                Quaternion localRotQuat(0.f, 0.f, 0.f, 1.f);
+                localRotQuat.set_rot(local.x, local.y, local.z);
 
-        CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
+                Matrix localRotMat;
+                localRotQuat.Normalize();
+                localRotQuat.ToMatrix(&localRotMat);
 
-        m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+                //Vector t = ltm.t;
+                ltm.t.Set(0.f, 0.f, 0.f);
+                ltm = ltm * localRotMat;
+                ltm.t = tpos;
+                idraw->SetLTM_(ltm);
 
-        actor->BroadcastEvent(Event_OnChangePivot);
+                CActor *actor = const_cast<CActor*>(idraw->GetNode()->key());
+
+                m_pCoreSDK->GetViewportManager()->RebuildTransform(actor);
+
+                actor->BroadcastEvent(Event_OnChangePivot);
+            }
+        }
 
 		m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
     }

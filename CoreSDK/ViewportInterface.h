@@ -23,24 +23,8 @@ namespace core_sdk_api
 
     public:
         //------------------------------------------------------------------------
-        ViewportInterface::ViewportInterface(const CObjectAbstract *pParent)
-            : m_pNode(nullptr)
-            , m_fNearPlane(0.f)
-            , m_fFarPlane(0.f)
-            , m_controllerMode(SOEvent_None)
-            , m_controllerState(ActorState_None)
-        {
-            if (pParent)
-            {
-                m_pCoreSDK = (CCoreSDK*)pParent->GetUserData();
-            }
-        }
-
-        //------------------------------------------------------------------------
-        ~ViewportInterface()
-        {
-            UnregisterViewportInterface();
-        }
+        ViewportInterface(const CObjectAbstract *pParent);
+        virtual ~ViewportInterface();
 
         void RegisterViewportInterface(const CActor *src);
         void UnregisterViewportInterface();
