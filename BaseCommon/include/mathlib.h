@@ -232,10 +232,19 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 									  const Vector2f &dimension);
 
 /** intersection tests */
+ COMMON_BASE_EXPORT inline_ Vector RayPlaneIntersect(const Vector &planePos,
+                                                     const Vector &planeNorm,
+                                                     const Vector &linePos,
+                                                     const Vector &lineDir,
+                                                     float &t);
+
  COMMON_BASE_EXPORT inline_ Vector RayPlaneIntersect( const Vector &planePos,
                                          const Vector &planeNorm,
                                          const Vector &linePos, 
                                          const Vector &lineDir);
+
+
+
 
 /** ray triangle intersection */
  COMMON_BASE_EXPORT inline_ int IntersectRayWithTriangle(const Vector &start,

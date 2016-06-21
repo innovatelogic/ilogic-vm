@@ -243,6 +243,61 @@ namespace core_sdk_api
 
                     return true;
                 }
+
+                // check plane origin hit
+                /** ray triangle intersection */
+                const float c = 0.3f;
+                float t = 0.f;
+
+                Vector P0 = (controllerPos + (axisX * c));
+                Vector P1 = (controllerPos + (axisX * c) + (axisY * c));
+                Vector P2 = (controllerPos + (axisY * c));
+
+                if ((IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P0, P1, &t) == 1) ||
+                    (IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P1, P2, &t) == 1))
+                {
+                    m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisX * c) + (axisY * c));
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+                    m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+                    m_SUserStartControllerPos = controllerPos;
+
+                    SetControlMode(SOEvent_ControlLockXY);
+                    UpdateSelectionState(SOEvent_ControlLockXY, controllerPos);
+
+                    return true;
+                }
+
+                P0 = (controllerPos + (axisZ * c));
+                P1 = (controllerPos + (axisZ * c) + (axisY * c));
+                P2 = (controllerPos + (axisY * c));
+
+                if ((IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P0, P1, &t) == 1) ||
+                    (IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P1, P2, &t) == 1))
+                {
+                    m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisY * c) + (axisZ * c));
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+
+                    SetControlMode(SOEvent_ControlLockYZ);
+                    UpdateSelectionState(SOEvent_ControlLockYZ, controllerPos);
+
+                    return true;
+                }
+
+                P0 = (controllerPos + (axisX * c));
+                P1 = (controllerPos + (axisX * c) + (axisZ * c));
+                P2 = (controllerPos + (axisZ * c));
+
+                if ((IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P0, P1, &t) == 1) ||
+                    (IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P1, P2, &t) == 1))
+                {
+                    m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisX * c) + (axisZ * c));
+                    m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+
+                    SetControlMode(SOEvent_ControlLockXZ);
+                    UpdateSelectionState(SOEvent_ControlLockXZ, controllerPos);
+
+                    return true;
+                }
             }
 
 //            case MOUSE_MIDDLE:
@@ -336,6 +391,21 @@ namespace core_sdk_api
                 }
                 bResult = true;
             }break;
+
+            case SOEvent_ControlLockXY:
+            case SOEvent_ControlLockYZ:
+            case SOEvent_ControlLockXZ:
+            {
+                if (mode == EObjEditControlMode::ECM_Move) 
+                {
+                    float k = 0.f;
+                    Vector intersect = GetIntersectPosition(input, m_controllerMode, k);
+                    ControllerTranslate(intersect, k);
+                }
+            }break;
+
+            default:
+                break;
             };
         }break;
         default:
@@ -446,11 +516,11 @@ namespace core_sdk_api
             pRenderer->DrawLine(position + (AxisX * c) + (AxisZ * c), position + (AxisZ * c), (Mode == SOEvent_ControlLockXZ) ? COLOR_YELLOW : COLOR_GREEN, false);
 
             // highlight control axis
-            if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
+            if (m_controllerState == ActorState_Locked)
             {
                 if (m_pCoreSDK->GetEditControlMode() == ECM_Move)
                 {
-                    switch (m_pNode->m_pKey->GetControlMode())
+                    switch (m_controllerMode)
                     {
                     case SOEvent_ControlLockX:
                     {
@@ -473,7 +543,7 @@ namespace core_sdk_api
                 }
                 else if (m_pCoreSDK->GetEditControlMode() == ECM_Rotate)
                 {
-                    switch (m_pNode->m_pKey->GetControlMode())
+                    switch (m_controllerMode)
                     {
                     case SOEvent_ControlLockX:
                     {
@@ -510,7 +580,7 @@ namespace core_sdk_api
 
 			IDrawInterface *idraw = iter->first;
 
-			out = idraw->GetTransformedWTM_().t;// + Vector(6.f, 0.f, 0.f);
+			out = idraw->GetTransformedWTM_().t;
 
             Bounds3f bbox(idraw->GetCompositeBounds_());
 
@@ -539,16 +609,48 @@ namespace core_sdk_api
     template<class TTranformTraits>
     void ViewportInterface<TTranformTraits>::ControllerTranslate(const Vector &pos, float k)
     {
+        Matrix I;
+        I.Identitly();
+
+        const float c = 0.3f;
+        const Vector axisX = I._row0 * k;
+        const Vector axisY = I._row1 * k;
+        const Vector axisZ = I._row2 * k;
+
         if (!m_SelectedList.empty())
         {
             for each (auto &item in m_SelectedList)
             {
-                Vector tpos;
-
                 IDrawInterface *idraw = item.first;
                 const SController &ctrl = item.second;
 
-                idraw->GlobalToLocalTransform(tpos, pos - (m_SUserStartMouseDisplace * k) + ctrl.displace);
+                Vector newpos = pos;
+                switch (m_controllerMode)
+                {
+                case SOEvent_ControlLockX:
+                case SOEvent_ControlLockY:
+                case SOEvent_ControlLockZ:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace * k) + ctrl.displace;
+                }break;
+                case SOEvent_ControlLockXY:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisX * c) + (axisY * c));
+                }break;
+                case SOEvent_ControlLockYZ:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisY * c) + (axisZ * c));
+                }break;
+                case SOEvent_ControlLockXZ:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisX * c) + (axisZ * c));
+                }break;
+                default:
+                    break;
+                };
+
+                Vector tpos;
+                idraw->GlobalToLocalTransform(tpos, newpos);
                 
                 idraw->SetPosition_(tpos);
 
@@ -678,7 +780,6 @@ namespace core_sdk_api
         float k = GetControllerScaleMultiplicator(m_ViewMatrix, m_ViewPoint, ctrlPosition);
 
         Vector planeNormal;
-
         switch (mode)
         {
         case SOEvent_ControlLockX:
@@ -698,7 +799,23 @@ namespace core_sdk_api
         case SOEvent_ControlLockZ:
         {
             cross(planeNormal, viewDirection, invView._row1);
+
             out = RayPlaneIntersect(m_ViewPoint, planeNormal, ctrlPosition, I._row2);
+        }break;
+
+        case SOEvent_ControlLockXY:
+        {
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row2, m_ViewPoint, viewDirection, k);
+        }break;
+
+        case SOEvent_ControlLockYZ:
+        {
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row0, m_ViewPoint, viewDirection, k);
+        }break;
+
+        case SOEvent_ControlLockXZ:
+        {
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row1, m_ViewPoint, viewDirection, k);
         }break;
 
         default:
