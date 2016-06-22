@@ -591,7 +591,7 @@ bool CPolygonMesh::ProcessController(const MouseInputData &InputData)
 		}
 	}
 	*/
-	return bResult ? true : IDrawInterface::ProcessController(InputData); // process default origin controller
+return bResult;// ? true : IDrawInterface::ProcessController(InputData); // process default origin controller
 }
 
 //----------------------------------------------------------------------------------------------
@@ -682,7 +682,7 @@ bool CPolygonMesh::ProcessController(const MouseMoveInputData &InputData)
 		}
 	}
 	*/
-	return !bResult ? IDrawInterface::ProcessController(InputData) : bResult;
+    return !bResult;// ? IDrawInterface::ProcessController(InputData) : bResult;
 }
 
 //----------------------------------------------------------------------------------------------

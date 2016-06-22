@@ -127,7 +127,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     bool CInputControllerEdImpl::ProcessControllers(const MouseInputData &InputData)
     {
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement)
+        /*if (TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -138,7 +138,7 @@ namespace core_sdk_api
                 }
                 pNode = m_pInterface->m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return false;
     }
 
@@ -151,7 +151,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     bool CInputControllerEdImpl::ProcessMoveControllers(const MouseMoveInputData &InputData)
     {
-        MouseMoveInputData TInputData = InputData;
+       /* MouseMoveInputData TInputData = InputData;
 
         CCoreSDK *pCoreSDK = m_pInterface->GetCoreSDK();
 
@@ -183,7 +183,7 @@ namespace core_sdk_api
                 pNode = m_pInterface->m_VecDrawList.GetNext(pNode);
             } while (pNode);
         }
-
+        */
         return false;
     }
     //----------------------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ namespace core_sdk_api
     {
         bool bProcessed = false;
 
-        MouseMoveInputData InputDataMod = InputData;
+       /* MouseMoveInputData InputDataMod = InputData;
         InputDataMod.bMiddleButtonPressed = IDrawInterface::GetMBPressed();
 
         TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
@@ -222,7 +222,7 @@ namespace core_sdk_api
             assert(pCam); // means at least one active camera should persist
 
             pCam->OnMouseMove(InputDataMod);
-        }
+        }*/
 
         return true;
     }
@@ -230,7 +230,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     bool CInputControllerEdImpl::ProcessPress(const MouseInputData &InputData)
     {
-        switch (InputData.Code)
+        /*switch (InputData.Code)
         {
         case MOUSE_MIDDLE:
         {
@@ -238,14 +238,14 @@ namespace core_sdk_api
             IDrawInterface::m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
             return true;
         }break;
-        };
+        };*/
         return false;
     }
 
     //----------------------------------------------------------------------------------------------
     bool CInputControllerEdImpl::ProcessRelease(const MouseInputData &InputData)
     {
-        TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
+       /* TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
 
         if (pNode)
         {
@@ -256,7 +256,7 @@ namespace core_sdk_api
                 }
                 pNode = m_pInterface->m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return false;
     }
 }

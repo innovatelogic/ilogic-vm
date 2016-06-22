@@ -66,7 +66,7 @@ void CPolygonImage::DoDraw()
 //----------------------------------------------------------------------------------------------
 bool CPolygonImage::ProcessController(const MouseMoveInputData &InputData)
 {
-	return IDrawInterface::ProcessController(InputData);
+    return false; //IDrawInterface::ProcessController(InputData);
 }
 
 //----------------------------------------------------------------------------------------------

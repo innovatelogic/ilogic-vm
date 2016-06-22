@@ -201,7 +201,7 @@ void IDrawInterfaceUI::DrawBounds() const
 bool IDrawInterfaceUI::ProcessController(const MouseInputData &InputData)
 {
 	bool bResult = false;
-
+/*
 	const Vector2f &Position = InputData.MousePos;
 
 	switch (InputData.Code)
@@ -216,7 +216,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseInputData &InputData)
 
 				Matrix WorldMatrixTransform = GetTransformedWTM_();
  
- 				/** calculate origin mouse position */
+ 				//calculate origin mouse position 
  				Vector2f IPosition = Position - WorldMatrixTransform.t2;
  
  				Matrix IWTM, ViewMatrix;
@@ -277,7 +277,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseInputData &InputData)
 			m_bSMiddleButtonPressed = (InputData.event == MOUSE_Pressed);
 		}break;
 	};
-	
+	*/
 	return bResult;
 }
 
@@ -355,7 +355,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseMoveInputData &InputData)
 //----------------------------------------------------------------------------------------------
 void IDrawInterfaceUI::ProcessControllerTranslate(const MouseMoveInputData &InputData)
 {
- 	Vector OutLocalPoint;
+ /*	Vector OutLocalPoint;
  	Vector2f WorldMousePosition = InputData.MousePos - Vector2f(m_SUserStartMouseDisplace.x, m_SUserStartMouseDisplace.y);
  
 	bool bTransformed = false;
@@ -392,13 +392,13 @@ void IDrawInterfaceUI::ProcessControllerTranslate(const MouseMoveInputData &Inpu
 
 			bTransformed = true;
  		}break;
- 	};
+ 	};*/
 }
 
 //----------------------------------------------------------------------------------------------
 void IDrawInterfaceUI::ProcessControllerRotateLocal(const MouseMoveInputData &InputData)
 {
-	Matrix WorldMatrixTransform = GetTransformedWTM_();
+	/*Matrix WorldMatrixTransform = GetTransformedWTM_();
 
  	Vector2f Mouse = InputData.MousePos - WorldMatrixTransform.t2;
  	Vector2f Prev = Vector2f(m_SUserStartMousePosition.x, m_SUserStartMousePosition.y) - WorldMatrixTransform.t2;
@@ -426,7 +426,7 @@ void IDrawInterfaceUI::ProcessControllerRotateLocal(const MouseMoveInputData &In
  	}
  
  	m_SUserStartMousePosition.x = InputData.MousePos.x;
- 	m_SUserStartMousePosition.y = InputData.MousePos.y;
+ 	m_SUserStartMousePosition.y = InputData.MousePos.y;*/
 }
 
 //----------------------------------------------------------------------------------------------

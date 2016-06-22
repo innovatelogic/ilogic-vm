@@ -58,12 +58,7 @@ public:
 	 */
 	void	SetVisualStates(unsigned int State) { m_VisualStates = State; }
 
-	virtual void DrawController() const;
 	virtual void DrawBounds() const;
-
-	virtual bool ProcessController(const MouseInputData &InputData);
-	virtual bool ProcessController(const MouseMoveInputData &InputData);
-	virtual bool ProcessControllerRelease(const MouseInputData &InputData);
 
 	virtual bool ProcessPress(const MouseInputData &InputData);
 	virtual bool ProcessRelease(const MouseInputData &InputData);
@@ -77,10 +72,6 @@ public:
 	virtual void SetMouseOver(bool bFlag = true);
 	virtual bool IsMouseOver() const { return (m_VisualStates & AS_MOUSE_OVER) != 0; }
 	
-	static bool	  GetMBPressed();
-	static Vector GetUserStartMousePos();
-	static Vector GetUserStartMouseDisplace();
-
 	bool	GetVisible() const { return m_bVisible; }
 	void	SetVisible(bool visible) { m_bVisible = visible; }
 
@@ -157,17 +148,8 @@ protected:
 	*/
 	virtual void	DoDraw() {}
 
-	virtual void	ProcessControllerTranslate(const MouseMoveInputData &InputData);
-	virtual void	ProcessControllerRotateLocal(const MouseMoveInputData &InputData);
-	virtual void	ProcessControllerScaleLocal(const MouseMoveInputData &InputData);
-
 	virtual bool	OnMouseMove(const MouseMoveInputData &InputData);
 	virtual bool	OnMouseWheel(float ds);
-
-public:
-	static Vector	 m_SUserStartMousePosition;
-	static Vector	 m_SUserStartMouseDisplace;
-	static bool		 m_bSMiddleButtonPressed;
 
 protected:
 	TNodeMap<CActor, IDrawInterface> *m_pNode;
