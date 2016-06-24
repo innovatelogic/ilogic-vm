@@ -19,7 +19,7 @@ namespace core_sdk_api
     {
         bool bResult = false;
 
-        CCoreSDK *pCoreSDK = m_pInterface->GetCoreSDK();
+       /* CCoreSDK *pCoreSDK = m_pInterface->GetCoreSDK();
 
         switch (InputData.event)
         {
@@ -43,7 +43,7 @@ namespace core_sdk_api
             bResult = ProcessRelease(InputData);
         }break;
         };
-
+        */
         return bResult;
     }
 
@@ -74,7 +74,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     bool CInputControllerImpl::ProcessInputMouseNode(const MouseMoveInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode)
     {
-        if (pNode->m_NumChilds > 0)
+       /* if (pNode->m_NumChilds > 0)
         {
             TNodeMap<CActor, IDrawInterface> *pChildNode = pNode->m_pNodeNext;
             for (size_t Index = 0; Index < pNode->m_NumChilds; ++Index)
@@ -85,7 +85,9 @@ namespace core_sdk_api
                 pChildNode = pChildNode->m_pNodeNextPlain;
             }
         }
-        return const_cast<IDrawInterface*>(pNode->m_pValue)->ProcessMouseMove(InputData);
+        return const_cast<IDrawInterface*>(pNode->m_pValue)->ProcessMouseMove(InputData);*/
+
+        return false;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -110,7 +112,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     bool CInputControllerImpl::ProcessPressNode(const MouseInputData &InputData, TNodeMap<CActor, IDrawInterface> *pNode)
     {
-        if (pNode->m_NumChilds > 0)
+        /*if (pNode->m_NumChilds > 0)
         {
             TNodeMap<CActor, IDrawInterface> *pChildNode = pNode->m_pNodeNext;
             for (size_t Index = 0; Index < pNode->m_NumChilds; ++Index)
@@ -121,13 +123,14 @@ namespace core_sdk_api
                 pChildNode = pChildNode->m_pNodeNextPlain;
             }
         }
-        return const_cast<IDrawInterface*>(pNode->m_pValue)->ProcessPress(InputData);
+        return const_cast<IDrawInterface*>(pNode->m_pValue)->ProcessPress(InputData);*/
+        return false;
     }
 
     //----------------------------------------------------------------------------------------------
     bool CInputControllerImpl::ProcessRelease(const MouseInputData &InputData)
     {
-        TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
+        /*TNodeMap<CActor, IDrawInterface> *pNode = m_pInterface->m_VecDrawList.m_pFirstElement;
 
         if (pNode)
         {
@@ -138,7 +141,7 @@ namespace core_sdk_api
                 }
                 pNode = m_pInterface->m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return false;
     }
 }

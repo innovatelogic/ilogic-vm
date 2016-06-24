@@ -136,13 +136,13 @@ void IDrawInterface::DrawBounds() const
 }
 
 //----------------------------------------------------------------------------------------------
-bool IDrawInterface::ProcessPress(const MouseInputData &InputData)
+/*bool IDrawInterface::ProcessPress(const MouseInputData &InputData)
 {
 	bool bResult = false;
 
 	if (!m_pNode->m_pKey->GetEnabled() || !GetVisible()){
 		return bResult;
-	}
+	}*/
 
 /*	if (!m_pNode->m_pValue->GetCompositeBounds().HitTest(InputData.MousePos)){
 		return false;
@@ -200,11 +200,11 @@ bool IDrawInterface::ProcessPress(const MouseInputData &InputData)
 		}break;
 	};
 	*/
-	return bResult;
-}
+/*	return bResult;
+}*/
 
 //----------------------------------------------------------------------------------------------
-bool IDrawInterface::ProcessRelease(const MouseInputData &InputData)
+/*bool IDrawInterface::ProcessRelease(const MouseInputData &InputData)
 {
 	bool bResult = false;
 
@@ -223,34 +223,10 @@ bool IDrawInterface::ProcessRelease(const MouseInputData &InputData)
 		bResult = true;
 	}
 	return bResult;
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
-bool IDrawInterface::ProcessMouseMove(const MouseMoveInputData &InputData)
-{
-	return OnMouseMove(InputData);
-}
-
-//----------------------------------------------------------------------------------------------
-bool IDrawInterface::ProcessMouseWheel(float ds)
-{
-	return OnMouseWheel(ds);
-}
-
-//----------------------------------------------------------------------------------------------
-bool IDrawInterface::OnMouseMove(const MouseMoveInputData &InputData)
-{
-	return false;
-}
-
-//----------------------------------------------------------------------------------------------
-bool IDrawInterface::OnMouseWheel(float ds)
-{
-	return false;
-}
-
-//----------------------------------------------------------------------------------------------
-void IDrawInterface::SetFocus(bool bFlag /*= true*/)
+/*void IDrawInterface::SetFocus(bool bFlag)
 {
 	if (bFlag)
 	{
@@ -265,7 +241,7 @@ void IDrawInterface::SetFocus(bool bFlag /*= true*/)
 }
 
 //----------------------------------------------------------------------------------------------
-void IDrawInterface::SetMouseOver(bool bFlag /*= true*/)
+void IDrawInterface::SetMouseOver(bool bFlag )
 {
 	if (bFlag)
 	{
@@ -273,7 +249,7 @@ void IDrawInterface::SetMouseOver(bool bFlag /*= true*/)
 	}else{
 		SetVisualStates(m_VisualStates &= ~AS_MOUSE_OVER);
 	}
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)

@@ -64,7 +64,7 @@ void CLevelPlaneActor::DoDraw()
 {
 	GetRenderComponent()->DrawObject(m_pMeshComponent);
 
-	if (IsFocused())
+/*	if (IsFocused())
 	{
 		Matrix Mat = GetTransformedWTM_() * m_pCollisionObject->GetLTM();
 
@@ -83,7 +83,7 @@ void CLevelPlaneActor::DoDraw()
 		m_pCoreSDK->GetRenderSDK()->DrawLine(VC1, VC1 - (AxisX * 2), COLOR_YELLOW, false);
 
 		m_pCoreSDK->GetRenderSDK()->DrawLine(Mat.t, Mat.t + AxisY, COLOR_YELLOW, false);
-	}
+	}*/
 }
 
 //----------------------------------------------------------------------------------------------

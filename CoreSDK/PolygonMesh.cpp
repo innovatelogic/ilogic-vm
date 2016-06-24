@@ -688,7 +688,7 @@ bool CPolygonMesh::ProcessController(const MouseMoveInputData &InputData)
 //----------------------------------------------------------------------------------------------
 bool CPolygonMesh::ProcessRelease(const MouseInputData &InputData)
 {
-	if (InputData.event == MOUSE_Released)
+	/*if (InputData.event == MOUSE_Released)
 	{
 		if (GetControlState() == ActorState_Locked)
 		{
@@ -701,7 +701,8 @@ bool CPolygonMesh::ProcessRelease(const MouseInputData &InputData)
 			}
 		}
 	}
-	return IDrawInterface::ProcessRelease(InputData);
+	return IDrawInterface::ProcessRelease(InputData);*/
+    return false;
 }
 
 //----------------------------------------------------------------------------------------------

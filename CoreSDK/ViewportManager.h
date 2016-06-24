@@ -42,11 +42,12 @@ namespace core_sdk_api
 
         void InputMouse(const MouseInputData &input, const TIViewport *viewport = nullptr);
         void InputMouse(const MouseMoveInputData &input, const TIViewport *viewport = nullptr);
+        void InputMouseWheel(float ds, int x, int y, const TIViewport *viewport = nullptr);
 
         // OBSOLETE!! controller input
-        void ProcessInputMouse(const MouseInputData &input, IDrawInterface *pIObjectMask = 0);
-        void ProcessInputMouse(const MouseMoveInputData &input, IDrawInterface *pIObjectMask = 0);
-        void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
+        //void ProcessInputMouse(const MouseInputData &input, IDrawInterface *pIObjectMask = 0);
+        //void ProcessInputMouse(const MouseMoveInputData &input, IDrawInterface *pIObjectMask = 0);
+        //void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
 
         int				SetFocus(IDrawInterface *pIObject, bool bFlag = true);
         int				SetFocusActor(CActor *pAObject, bool bFlag = true);

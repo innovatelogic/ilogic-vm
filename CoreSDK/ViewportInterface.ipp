@@ -256,7 +256,7 @@ namespace core_sdk_api
                 if ((IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P0, P1, &t) == 1) ||
                     (IntersectRayWithTriangle(m_ViewPoint, m_ViewPoint + viewDirection, controllerPos, P1, P2, &t) == 1))
                 {
-                    m_SUserStartMouseDisplace = controllerPos - (m_ViewPoint + viewDirection * t);// -(controllerPos + (axisX * c) + (axisY * c));
+                    m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisX * c) + (axisY * c));
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
                     m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
                     m_SUserStartControllerPos = controllerPos;
@@ -570,6 +570,14 @@ namespace core_sdk_api
     {
         if (!m_SelectedList.empty())
         {
+            Matrix InvView, I;
+            invert(InvView, m_ViewMatrix);
+
+            const Vector axisX = I._row0 * k;
+            const Vector axisY = I._row1 * k;
+            const Vector axisZ = I._row2 * k;
+            float c = 0.3f;
+
             for each (auto &item in m_SelectedList)
             {
                 IDrawInterface *idraw = item.first;
@@ -585,10 +593,17 @@ namespace core_sdk_api
                     newpos = pos - (m_SUserStartMouseDisplace * k) + ctrl.displace;
                 }break;
                 case SOEvent_ControlLockXY:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisX * c + axisY * c)) + ctrl.displace;
+                }break;
+
                 case SOEvent_ControlLockYZ:
+                {
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisY * c + axisZ * c)) + ctrl.displace;
+                }break;
                 case SOEvent_ControlLockXZ:
                 {
-                    newpos = pos - m_SUserStartMouseDisplace + ctrl.displace;
+                    newpos = pos - (m_SUserStartMouseDisplace + (axisX * c + axisZ * c)) + ctrl.displace;
                 }break;
 
                 default:
@@ -751,17 +766,17 @@ namespace core_sdk_api
 
         case SOEvent_ControlLockXY:
         {
-            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row2, m_ViewPoint, viewDirection, k);
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row2, m_ViewPoint, viewDirection);
         }break;
 
         case SOEvent_ControlLockYZ:
         {
-            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row0, m_ViewPoint, viewDirection, k);
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row0, m_ViewPoint, viewDirection);
         }break;
 
         case SOEvent_ControlLockXZ:
         {
-            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row1, m_ViewPoint, viewDirection, k);
+            out = RayPlaneIntersect(m_SUserStartControllerPos, I._row1, m_ViewPoint, viewDirection);
         }break;
 
         default:

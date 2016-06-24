@@ -147,7 +147,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask /*= 0*/)
+   /* void CViewportManager::ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask)
     {
         if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
         {
@@ -156,7 +156,7 @@ namespace core_sdk_api
         else {
             m_pInputControllerImpl->ProcessInputMouse(InputData, pIObjectMask);
         }
-    }
+    }*/
 
     //----------------------------------------------------------------------------------------------
     void CViewportManager::InputMouse(const MouseInputData &input, const TIViewport *viewport /*=nullptr*/)
@@ -214,7 +214,18 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask /*= 0*/)
+    void CViewportManager::InputMouseWheel(float ds, int x, int y, const TIViewport *viewport /*= nullptr*/)
+    {
+        // TODO: get default viewport if nullptr
+        assert(viewport);
+
+        TIViewport *ivprt = const_cast<TIViewport*>(viewport);
+
+        //ivprt->Mo
+    }
+
+    //----------------------------------------------------------------------------------------------
+    /*void CViewportManager::ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask)
     {
         if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
         {
@@ -226,7 +237,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::ProcessMouseWheel(float ds, SRenderContext *pRenderContext /*= 0*/)
+    void CViewportManager::ProcessMouseWheel(float ds, SRenderContext *pRenderContext)
     {
         if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
         {
@@ -235,7 +246,7 @@ namespace core_sdk_api
         else {
             m_pInputControllerImpl->ProcessMouseWheel(ds, pRenderContext);
         }
-    }
+    }*/
 
     //----------------------------------------------------------------------------------------------
     int CViewportManager::SetFocus(IDrawInterface *pIObject, bool bFlag /*= true*/)
@@ -243,7 +254,7 @@ namespace core_sdk_api
         SetSelectedImpl(pIObject, true);
 
         // kill focus
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -262,7 +273,7 @@ namespace core_sdk_api
 
         if (pIObject) {
             pIObject->SetFocus(bFlag);
-        }
+        }*/
         return 0;
     }
 
@@ -270,7 +281,7 @@ namespace core_sdk_api
     int	CViewportManager::SetFocusActor(CActor *pAObject, bool bFlag /*= true*/)
     {
         // kill focus
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -298,14 +309,14 @@ namespace core_sdk_api
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return 0;
     }
 
     //----------------------------------------------------------------------------------------------
     IDrawInterface* CViewportManager::GetFocused() const
     {
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+        /*if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -315,14 +326,14 @@ namespace core_sdk_api
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return 0;
     }
 
     //----------------------------------------------------------------------------------------------
     int	CViewportManager::SetMouseOver(IDrawInterface *pIObject, bool bFlag /*= true*/)
     {
-        if (pIObject)
+       /* if (pIObject)
         {
             if (bFlag)
             {
@@ -345,14 +356,14 @@ namespace core_sdk_api
             }
 
             pIObject->SetMouseOver(bFlag);
-        }
+        }*/
         return 0;
     }
 
     //----------------------------------------------------------------------------------------------
     IDrawInterface* CViewportManager::GetMouseOver() const
     {
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -362,14 +373,14 @@ namespace core_sdk_api
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return 0;
     }
 
     //----------------------------------------------------------------------------------------------
     CActor* CViewportManager::GetFocusedActor() const
     {
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+        /*if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -379,7 +390,7 @@ namespace core_sdk_api
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }
+        }*/
         return 0;
     }
 

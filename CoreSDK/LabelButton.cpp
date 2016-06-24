@@ -156,7 +156,7 @@ bool LabelButton::DoEventReleased(const MouseInputData& InputData)
 //----------------------------------------------------------------------------------------------
 void LabelButton::ResolveActiveState()
 {
-	bool bPressed = ((GetVisualStates() & AS_PRESSED) != AS_NONE);
+	/*bool bPressed = ((GetVisualStates() & AS_PRESSED) != AS_NONE);
 	bool bMouseOver = ((GetVisualStates() & AS_MOUSE_OVER) != AS_NONE);
 
 	EActiveState State = !GetEnabled() ? ActiveState_Disabled :
@@ -171,7 +171,7 @@ void LabelButton::ResolveActiveState()
 							);
 
 	ImageComponents->SetActiveState(State);
-	FontComponentState->SetActiveState(State);
+	FontComponentState->SetActiveState(State);*/
 }
 
 //----------------------------------------------------------------------------------------------

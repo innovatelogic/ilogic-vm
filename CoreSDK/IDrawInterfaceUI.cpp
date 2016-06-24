@@ -99,7 +99,7 @@ void IDrawInterfaceUI::DrawController() const
 	return;
 #ifndef FINAL_RELEASE
 	//if (GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
-	{
+	/*
 		if (m_pNode->m_pValue->IsFocused())
 		{	
 			assert(m_pCoreSDK && m_pCoreSDK->GetRegistry());
@@ -147,7 +147,7 @@ void IDrawInterfaceUI::DrawController() const
 												 WorldMatrixTransform.t2 + transform_coord(AY0, IWTM),
 												 WorldMatrixTransform.t2 + transform_coord(AY2, IWTM), (m_pNode->m_pKey->GetControlMode() == SOEvent_ControlLockY) ? COLOR_YELLOW : COLOR_BLUE);
 		}
-	}
+	*/
 #endif//FINAL_RELEASE
 }
 
@@ -158,7 +158,7 @@ void IDrawInterfaceUI::DrawBounds() const
 #ifndef FINAL_RELEASE
 	//if (GetAppMain()->IsAEditor() && !GetAppMain()->IsAGame())
 	{
-		if (m_pNode->m_pValue->IsFocused())
+/*		if (m_pNode->m_pValue->IsFocused())
 		{
 			Matrix WorldMatrixTransform = GetTransformedWTM_();
 					
@@ -192,7 +192,7 @@ void IDrawInterfaceUI::DrawBounds() const
 				Matrix I;
 				m_pCoreSDK->GetRenderSDK()->DrawBounds2f(I, CompositeBounds, COLOR_GREEN);
 			}
-		}
+		}*/
 	}
 #endif//FINAL_RELEASE*/
 }

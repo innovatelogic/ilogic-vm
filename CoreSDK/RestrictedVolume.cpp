@@ -62,7 +62,7 @@ void CRestrictedVolume::Initialize()
 //----------------------------------------------------------------------------------------------
 void CRestrictedVolume::DoDraw()
 {
-	if (IsFocused())
+	/*if (IsFocused())
 	{
 		const float k = 20.f;
 
@@ -128,7 +128,7 @@ void CRestrictedVolume::DoDraw()
 
 			m_pCoreSDK->GetRenderSDK()->DrawLine(Mat.t, Mat.t + AxisY, COLOR_YELLOW, false);
 		}
-	}
+	}*/
 }
 
 //----------------------------------------------------------------------------------------------

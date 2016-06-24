@@ -230,7 +230,7 @@ public:
 			float xDRel = (wndWidth > 0.f) ? ((DX / (float)wndWidth) * vprtWidth) : 0.f;
 			float yDRel = (wndHeight > 0.f) ? ((DY / (float)wndHeight) * vprtHeight) : 0.f;
 
-			m_pAppMain->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, context);
+			//m_pAppMain->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, context);
 
 			m_MousePosPrevX = PosX;
 			m_MousePosPrevY = PosY;

@@ -124,7 +124,14 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::MouseWheel(float ds, int x, int y)
     {
-        m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
+        //m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
+
+        core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
+
+        Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
+        core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+
+        manager->InputMouseWheel(ds, x, y);
     }
 
     //----------------------------------------------------------------------------------------------

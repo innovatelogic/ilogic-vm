@@ -1,14 +1,12 @@
-#ifndef __idrawinterface_h__
-#define __idrawinterface_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "IBaseInterface.h"
 #include "../Foundation/StdafxFoundation.h"
 
 class CObjectAbstract;
+class CCoreSDK;
+class IDrawInterface;
+class CActor;
 
 class CORESDK_API IDrawInterface : public IBaseInterface
 {
@@ -22,15 +20,15 @@ public:
 	virtual void RegisterDrawInterface(const CActor *pSrc, int SrcParent = 1);
 	virtual void UnregisterDrawInterface();
 
-	inline_ class CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
-	void					SetCoreSDK(class CCoreSDK* pCoreSDK) const { m_pCoreSDK = pCoreSDK; }
+	inline_ CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
+	void	SetCoreSDK(CCoreSDK* pCoreSDK) const { m_pCoreSDK = pCoreSDK; }
 
-    TNodeMap<class CActor, class IDrawInterface>* GetNode() const { return m_pNode; }
+    TNodeMap<CActor, IDrawInterface>* GetNode() const { return m_pNode; }
 
 	virtual bool	DoVisibilityTest_() const;
 	
-	virtual bool PrePropertyChangeIntf(const char *PropertyName);
-	virtual void OnPropertyChangedIntf(const char *PropertyName);
+	virtual bool PrePropertyChangeIntf(const char *propertyName);
+	virtual void OnPropertyChangedIntf(const char *propertyName);
 	
 	/** 
 	 * Calls in main thread to fill render instructions for render thread.
@@ -39,14 +37,6 @@ public:
 	void Draw();
 
 	/** 
-	 *	AS_NONE,
-	 *	AS_ENABLED
-	 *	AS_VISIBLE
-	 *	AS_FOCUSED
-	 *	AS_LOCKED
-	 *	AS_PRESSED
-	 *	AS_MOUSE_OVER
-	 *
 	 * @return VisualStates value.
 	 */
 	unsigned int	GetVisualStates() const { return m_VisualStates; }
@@ -56,22 +46,10 @@ public:
 	 *
 	 * @param [in] State - new state value.
 	 */
-	void	SetVisualStates(unsigned int State) { m_VisualStates = State; }
+	void	SetVisualStates(unsigned int state) { m_VisualStates = state; }
 
 	virtual void DrawBounds() const;
 
-	virtual bool ProcessPress(const MouseInputData &InputData);
-	virtual bool ProcessRelease(const MouseInputData &InputData);
-
-	virtual bool ProcessMouseMove(const MouseMoveInputData &InputData);
-	virtual bool ProcessMouseWheel(float ds);
-
-	virtual void SetFocus(bool bFlag = true);
-	virtual bool IsFocused() const { return (m_VisualStates & AS_FOCUSED) != 0; }
-
-	virtual void SetMouseOver(bool bFlag = true);
-	virtual bool IsMouseOver() const { return (m_VisualStates & AS_MOUSE_OVER) != 0; }
-	
 	bool	GetVisible() const { return m_bVisible; }
 	void	SetVisible(bool visible) { m_bVisible = visible; }
 
@@ -123,9 +101,6 @@ public:
 	virtual Matrix		CalcWorldTransform() const;
 
 	virtual bool		IsValidBounds() { return m_Bounds.IsValid(); }
-
-	/** mouse input availability indicator */
-	virtual bool		IsHandleMouseInput() const { return true; }
 	
     void AddYawPitchRoll(const Vector &ypr) { m_YawPitchRoll += ypr; }
 
@@ -148,13 +123,10 @@ protected:
 	*/
 	virtual void	DoDraw() {}
 
-	virtual bool	OnMouseMove(const MouseMoveInputData &InputData);
-	virtual bool	OnMouseWheel(float ds);
-
 protected:
 	TNodeMap<CActor, IDrawInterface> *m_pNode;
 
-	mutable class CCoreSDK *m_pCoreSDK;
+	mutable CCoreSDK *m_pCoreSDK;
 
 protected:
 	unsigned int		m_VisualStates;
@@ -179,5 +151,3 @@ protected:
 	Bounds3f			m_Bounds;
 	Bounds3f			m_CompositeBounds;
 };
-
-#endif//__idrawinterface_h__

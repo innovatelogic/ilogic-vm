@@ -90,14 +90,14 @@ void UIScreenObject::SetEnabled(bool enable)
 //----------------------------------------------------------------------------------------------
 void UIScreenObject::SetFocus(bool bFlag)
 {
-	IDrawInterface::SetFocus(bFlag);
+//	IDrawInterface::SetFocus(bFlag);
 	ResolveActiveState();
 }
 
 //----------------------------------------------------------------------------------------------
 void UIScreenObject::SetMouseOver(bool bFlag /*= true*/)
 {
-	IDrawInterface::SetMouseOver(bFlag);
+	//IDrawInterface::SetMouseOver(bFlag);
 	ResolveActiveState();
 }
 
@@ -116,7 +116,7 @@ bool UIScreenObject::DoVisibilityTest_()
 //----------------------------------------------------------------------------------------------
 bool UIScreenObject::UIEditor_ProcessDelete()
 {
-	if (IsFocused())
+/*	if (IsFocused())
 	{
 		Release();
 		return true;
@@ -127,7 +127,7 @@ bool UIScreenObject::UIEditor_ProcessDelete()
 		if ((*Iter)->UIEditor_ProcessDelete()){
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 
