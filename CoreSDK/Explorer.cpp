@@ -157,13 +157,13 @@ bool Explorer::ProcessMouseWheel(float ds, int x, int y)
 //----------------------------------------------------------------------------------
 bool Explorer::UIEditor_ProcessDelete()
 {
-	for (TVecActorChildIterator Iter = m_ChildNodes.begin(); Iter != m_ChildNodes.end(); ++Iter) 
+	/*for (TVecActorChildIterator Iter = m_ChildNodes.begin(); Iter != m_ChildNodes.end(); ++Iter) 
 	{
 		if ((*Iter)->UIEditor_ProcessDelete())
 		{
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 

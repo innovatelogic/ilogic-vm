@@ -99,9 +99,9 @@ void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 //----------------------------------------------------------------------------------------------
 bool ActorAllocator::DoEventReleased(const MouseInputData& InputData)
 {
-	//UserStartMousePosition = Vector(0.f, 0.f, 0.f);
+	//return Super::DoEventReleased(InputData);
 
-	return Super::DoEventReleased(InputData);
+    return false;
 }
 
 

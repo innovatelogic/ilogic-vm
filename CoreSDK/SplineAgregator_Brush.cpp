@@ -69,7 +69,7 @@ bool SplineAgregator_Brush::GenerateKey(const Vector2f& MousePos)
 
 	GetAppMain()->EnterDrawCS();
 
-	TVecActorChildIterator Iter = std::find_if(m_ChildNodes.begin(), m_ChildNodes.end(), boost::bind<bool>(&CActor::HitTest, _1, MousePos));
+/*	TVecActorChildIterator Iter = std::find_if(m_ChildNodes.begin(), m_ChildNodes.end(), boost::bind<bool>(&CActor::HitTest, _1, MousePos));
 
 	if (Iter != m_ChildNodes.end() && Iter == GetChildIteratorNext(m_ChildNodes.end(), GetKeyTypeGenerated().c_str()))
 	{
@@ -85,31 +85,8 @@ bool SplineAgregator_Brush::GenerateKey(const Vector2f& MousePos)
 	}
 	else
 	{
-/*		CActor * SubObject = static_cast<CActor*>(GENERATE_OBJECT_SDK(GetKeyTypeGenerated().c_str(), CActor::ResolveName(GetKeyTypeGenerated(), this).c_str(), this));
 
-		if (SubObject)
-		{
-			SubObject->Initialize();
-
- 			Vector OutLocalPoint;
- 			SubObject->GlobalToLocalTransform(OutLocalPoint, Vector(MousePos.x, MousePos.y, 0.f));
-
- 			SubObject->SetPosition(OutLocalPoint);
-
-			AddChildNode(SubObject);
-			
-			BuildSplineList(PreRenderSpline);
-
-			if (GetControlState() == ActorState_Locked)
-			{
-				SetControlState(ActorState_None, true); // unlock object free movement
-			}
-
-			RebuildTransform();
-
-			bResult = true;
-		}*/
-	}
+	}*/
 
 	GetAppMain()->LeaveDrawCS();
 

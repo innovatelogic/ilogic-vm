@@ -11,9 +11,7 @@ END_REGISTER_CLASS_PURE(CActor, CObjectAbstract);
 CActor::CActor(const CObjectAbstract *pParent /*= NULL*/)
 : Super(pParent)
 , m_pParentActor(const_cast<CActor*>(static_cast<const CActor*>(pParent))) // TODO: make more smart
-, ActorState(ActorState_None)
 , bEnabled(V_TRUE)
-, Locked(false)
 , bMarkerDeleteFlag(false)
 , ControlEvent(SOEvent_None)
 {
@@ -22,7 +20,6 @@ CActor::CActor(const CObjectAbstract *pParent /*= NULL*/)
 //----------------------------------------------------------------------------------------------
 CActor::CActor(const CActor &Source)
 : Super(Source)
-, ActorState(ActorState_None)
 , bMarkerDeleteFlag(false)
 , ControlEvent(SOEvent_None)
 {
@@ -30,7 +27,6 @@ CActor::CActor(const CActor &Source)
 	{	
 		m_pParentActor = Source.m_pParentActor;
 		bEnabled  = Source.bEnabled;
-		Locked		= Source.Locked;
 		InterruptKeys = Source.InterruptKeys;
 	}
 }
@@ -657,9 +653,9 @@ CActor * CActor::FindActorByPath(const std::string &Path)
 	}	
 	return IterActor;
 }
-
+/*
 //----------------------------------------------------------------------------------------------
-void CActor::SetControlState(EActorState State, bool IsIterative /*= false*/, bool bIterateUp /*= true*/)
+void CActor::SetControlState(EActorState State, bool IsIterative, bool bIterateUp )
 {
 	 ActorState = State; // set state to current
 }
@@ -696,7 +692,7 @@ bool CActor::DoEventMove(const MouseMoveInputData& InputData)
 {	
 	return true;
 }
-
+*/
 //----------------------------------------------------------------------------------------------
 void CActor::UpdateEntitiesChangeWorldPos(const Matrix &World)
 {

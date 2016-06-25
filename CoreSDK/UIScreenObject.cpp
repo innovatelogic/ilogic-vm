@@ -84,7 +84,7 @@ bool UIScreenObject::HitTest(const Vector2f &Position)
 //----------------------------------------------------------------------------------------------
 void UIScreenObject::SetEnabled(bool enable)
 {
-	Super::SetEnabled(enable);
+//	Super::SetEnabled(enable);
 	ResolveActiveState();
 }
 //----------------------------------------------------------------------------------------------
@@ -237,7 +237,8 @@ void UIScreenObject::PopClipBound()
 // DoEventPressed() called when user activate object by pressing mouse button
 bool UIScreenObject::DoEventPressed(const MouseInputData& InputData)
 {
-	return Super::DoEventPressed(InputData);
+	//return Super::DoEventPressed(InputData);
+    return false;
 }
 
 //----------------------------------------------------------------------------------------------

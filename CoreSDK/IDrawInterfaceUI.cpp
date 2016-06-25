@@ -286,7 +286,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseMoveInputData &InputData)
 {
 	bool bResult = false;
 
-	if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
+	/*if (m_pNode->m_pKey->GetControlState() == ActorState_Locked)
 	{
 		switch (m_pNode->m_pKey->GetControlMode())
  		{
@@ -348,7 +348,7 @@ bool IDrawInterfaceUI::ProcessController(const MouseMoveInputData &InputData)
 			m_pCoreSDK->GetViewportManager()->RebuildTransform(const_cast<CActor*>(m_pNode->m_pKey));
 			const_cast<CActor*>(m_pNode->m_pKey)->BroadcastEvent(Event_OnChangePivot);
 		}
-	}
+	}*/
 	return bResult;
 }
 
@@ -512,7 +512,7 @@ void IDrawInterfaceUI::ProcessControllerScaleLocal(const MouseMoveInputData &Inp
 //----------------------------------------------------------------------------------------------
 bool IDrawInterfaceUI::OnMouseMove(const MouseMoveInputData &InputData)
 {
-	CActor *pActor = const_cast<CActor*>(m_pNode->m_pKey);
+	/*CActor *pActor = const_cast<CActor*>(m_pNode->m_pKey);
 
 	if (pActor->HitTest(InputData.MousePos))
 	{
@@ -521,7 +521,7 @@ bool IDrawInterfaceUI::OnMouseMove(const MouseMoveInputData &InputData)
 			m_pCoreSDK->GetViewportManager()->SetMouseOver(const_cast<IDrawInterface*>(m_pNode->m_pValue));
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -536,7 +536,7 @@ bool IDrawInterfaceUI::ProcessPress(const MouseInputData &InputData)
 	//	return false;
 	//}
 
-	CActor *pActor = const_cast<CActor*>(m_pNode->m_pKey);
+	/*CActor *pActor = const_cast<CActor*>(m_pNode->m_pKey);
 
 	if (pActor->HitTest(InputData.MousePos)) // top most widget hit test
 	{
@@ -549,7 +549,7 @@ bool IDrawInterfaceUI::ProcessPress(const MouseInputData &InputData)
 		pActor->DoEventPressed(InputData); 
 		
 		bResult = true;
-	}
+	}*/
 
 	return bResult;
 }
@@ -559,7 +559,7 @@ bool IDrawInterfaceUI::ProcessRelease(const MouseInputData &InputData)
 {
 	bool bResult = false;
 
-	unsigned int State = m_pNode->m_pValue->GetVisualStates();
+	/*unsigned int State = m_pNode->m_pValue->GetVisualStates();
 
 	if (State & AS_PRESSED)
 	{
@@ -576,7 +576,7 @@ bool IDrawInterfaceUI::ProcessRelease(const MouseInputData &InputData)
 			pActor->DoEventReleased(InputData);
 		}
 		bResult = true;
-	}
+	}*/
 	return bResult;
 }
 

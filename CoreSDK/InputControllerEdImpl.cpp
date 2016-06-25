@@ -18,7 +18,7 @@ namespace core_sdk_api
     //----------------------------------------------------------------------------------------------
     void CInputControllerEdImpl::ProcessInputMouse(const MouseInputData &InputData)
     {
-        MouseInputData TInputData = InputData;
+        /*MouseInputData TInputData = InputData;
 
         CCoreSDK *pCoreSDK = m_pInterface->GetCoreSDK();
 
@@ -69,7 +69,7 @@ namespace core_sdk_api
         {
             ProcessPress(InputData);
         }break;
-        };
+        };*/
     }
 
     //----------------------------------------------------------------------------------------------

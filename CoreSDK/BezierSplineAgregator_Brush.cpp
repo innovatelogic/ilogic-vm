@@ -73,7 +73,7 @@ void Bezier_SplineAgregator_Brush::DoDraw()
 //---------------------------------------------------------------------
 bool Bezier_SplineAgregator_Brush::DoEventMove(const MouseMoveInputData& InputData)
 {
-	if (bPointEdit)
+	/*if (bPointEdit)
 	{
 		TVecActorChildIterator Iter = GetChildIteratorPrev(m_ChildNodes.end(), GetKeyTypeGenerated().c_str());
 		if (Iter != m_ChildNodes.end())
@@ -93,7 +93,8 @@ bool Bezier_SplineAgregator_Brush::DoEventMove(const MouseMoveInputData& InputDa
 			}
 		}
 	}
-	return CActor::DoEventMove(InputData);
+	return CActor::DoEventMove(InputData);*/
+    return false;
 }
 
 //----------------------------------------------------------------------------------

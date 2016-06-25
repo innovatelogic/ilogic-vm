@@ -1,9 +1,4 @@
-#ifndef __actor_h__
-#define __actor_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "ObjectAbstract.h"
 
@@ -199,44 +194,9 @@ public:
 	TVecActorChildIterator	GetChildIteratorNext(const TVecActorChildIterator& Iterator, std::string CLASS_TYPE = "");
 	TVecActorChildIterator	GetChildIteratorPrev(const TVecActorChildIterator& Iterator, std::string CLASS_TYPE = "");
 
-	inline_ virtual bool	HitTest(const Vector2f& Position) { return false; }
 
-	/** 
-	 *	Enabled and disable object stay visible. Not enabled object's disable from input.
-	 *
-	 *	@return true if object enabled otherwise false.
-	 */
-	bool					GetEnabled() const { return bEnabled; }
-
-	/** 
-	 *	Enable or disable object. object stay visible but disables for input.
-	 *
-	 *	@param true for enable object false to disable.
-	 */
-
-	virtual void			SetEnabled(bool enable) { bEnabled = enable; }
-
-	/** non movable static object */
-	virtual void			SetLocked(bool locked) { Locked = locked; }
-	virtual bool			GetLocked() { return Locked; }
-
-	/** Editor functions */
-	virtual bool			UIEditor_ProcessDelete() { return false; }
-
-	void					BroadcastEvent(ESystemEventID Id);
-	void					BroadcastEvent(ESystemEventID Id, CActor *pParam);
-
-	// [Editor]
-	/**
-		editor specific state Unlocked Locked
-		specified for object Drug&Drop handling.
-	*/
-	void				SetControlState(EActorState state, bool IsIterative = false, bool bIterateUp = true);
-	EActorState			GetControlState() const { return ActorState; }
-
-	virtual bool		DoEventPressed(const MouseInputData &InputData);
-	virtual bool		DoEventReleased(const MouseInputData &InputData);
-	virtual bool		DoEventMove(const MouseMoveInputData &InputData);
+	void	BroadcastEvent(ESystemEventID Id);
+	void	BroadcastEvent(ESystemEventID Id, CActor *pParam);
 
 	/**
 	* Update all registered entities object's World position was changed
@@ -331,13 +291,8 @@ public:
 	TVecActorChild		m_ChildNodes;
 
 private:
-	/** control state */
-	mutable bool		Locked;
-	
 	/** enable state flag */
 	bool				bEnabled;
-
-	mutable EActorState	ActorState;
 
 public:
 	/** user event delegates*/
@@ -346,8 +301,6 @@ public:
 	/** key bindings */
 	TVecInterruptKeys	InterruptKeys; 
 
-	/** helper flag to simplifly tree navigation*/
+	/** helper flag to simplify tree navigation*/
 	bool				bMarkerDeleteFlag;
 };
-
-#endif //__actor_h__
