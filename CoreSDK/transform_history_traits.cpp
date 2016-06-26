@@ -9,6 +9,6 @@ namespace core_sdk_api
 
     void transform_history_traits::CommitState()
     {
-
+        m_transform_callback();
     }
 }

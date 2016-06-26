@@ -33,6 +33,15 @@ namespace editors
     void SceneEditorMain::Initialize()
     {
         m_pApi->Deserialize("3d_scene_controller.xml", NULL);
+
+        core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
+        Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
+        core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+
+        ivprt->SetTransformCallback([&]() {
+        
+            int k = 0;
+        });
     }
 
     //----------------------------------------------------------------------------------------------
