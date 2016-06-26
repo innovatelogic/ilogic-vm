@@ -49,6 +49,8 @@ set(LIBRARIES CommonBase
 set(SOURCE 
 	transform_traits.cpp
 	transform_traits.h
+	transform_history_traits.cpp
+	transform_history_traits.h
 	ActionBase.cpp
 	ActionBase.h
 	ActionEventUI.cpp

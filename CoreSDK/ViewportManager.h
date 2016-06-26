@@ -5,6 +5,8 @@
 #include "IDrawInterface.h"
 #include "game_types.h"
 
+class CCoreSDK;
+
 namespace core_sdk_api
 {
     using TTreeMapViewport = TTreeMap<CActor, TIViewport>;
@@ -21,10 +23,10 @@ namespace core_sdk_api
         CViewportManager& operator=(const CViewportManager&) = delete;
 
     public:
-        CViewportManager(class CCoreSDK *pSDK);
+        explicit CViewportManager(CCoreSDK *pSDK);
         virtual ~CViewportManager();
 
-        inline_ class CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
+        inline_ CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
 
         TNodeIDraw* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void UnregisterObject(TNodeIDraw *pNode);
@@ -43,11 +45,6 @@ namespace core_sdk_api
         void InputMouse(const MouseInputData &input, const TIViewport *viewport = nullptr);
         void InputMouse(const MouseMoveInputData &input, const TIViewport *viewport = nullptr);
         void InputMouseWheel(float ds, int x, int y, const TIViewport *viewport = nullptr);
-
-        // OBSOLETE!! controller input
-        //void ProcessInputMouse(const MouseInputData &input, IDrawInterface *pIObjectMask = 0);
-        //void ProcessInputMouse(const MouseMoveInputData &input, IDrawInterface *pIObjectMask = 0);
-        //void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
 
         int				SetFocus(IDrawInterface *pIObject, bool bFlag = true);
         int				SetFocusActor(CActor *pAObject, bool bFlag = true);
@@ -83,9 +80,9 @@ namespace core_sdk_api
         TTreeMapViewport m_VecViewports;
         TTreeMapDraw	 m_VecDrawList;
 
-        class CInputControllerImpl	 *m_pInputControllerImpl;
-        class CInputControllerEdImpl *m_pInputControllerEdImpl;
+        CInputControllerImpl	 *m_pInputControllerImpl;
+        CInputControllerEdImpl *m_pInputControllerEdImpl;
 
-        class CCoreSDK* m_pCoreSDK;
+        CCoreSDK* m_pCoreSDK;
     };
 }

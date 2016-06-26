@@ -4,14 +4,15 @@
 #include "Actor.h"
 #include "game_types.h"
 #include "transform_traits.h"
+#include "transform_history_traits.h"
 
 class CCoreSDK;
 class IDrawInterface;
 
 namespace core_sdk_api
 {
-    template<class TTransformTraits>
-    class CORESDK_API ViewportInterface : public TTransformTraits
+    template<class TTransformTraits, class TTransformHistory>
+    class CORESDK_API ViewportInterface : public TTransformTraits, public TTransformHistory
     {
         struct SController
         {
@@ -22,7 +23,6 @@ namespace core_sdk_api
         using TMapSelection = std::map<IDrawInterface*, SController>;
 
     public:
-        //------------------------------------------------------------------------
         ViewportInterface(const CObjectAbstract *pParent);
         virtual ~ViewportInterface();
 
@@ -152,7 +152,7 @@ namespace core_sdk_api
         mutable CCoreSDK *m_pCoreSDK;
     };
 
-    typedef ViewportInterface<transform_traits> TIViewport;
+    typedef ViewportInterface<transform_traits, transform_history_traits> TIViewport;
 }
 
 #include "ViewportInterface.ipp"

@@ -16,24 +16,24 @@
 
 namespace core_sdk_api
 {
-    template<class TTranformTraits>
-    Vector	ViewportInterface<TTranformTraits>::m_SUserStartMousePosition = Vector(0.f, 0.f, 0.f);
+    template<class TTranformTraits, class TTransformHistory>
+    Vector	ViewportInterface<TTranformTraits, TTransformHistory>::m_SUserStartMousePosition = Vector(0.f, 0.f, 0.f);
 
-    template<class TTranformTraits>
-    Vector	ViewportInterface<TTranformTraits>::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
+    template<class TTranformTraits, class TTransformHistory>
+    Vector	ViewportInterface<TTranformTraits, TTransformHistory>::m_SUserStartMouseDisplace = Vector(0.f, 0.f, 0.f);
 
-    template<class TTranformTraits>
-    Vector	ViewportInterface<TTranformTraits>::m_SUserStartControllerPos = Vector(0.f, 0.f, 0.f);
+    template<class TTranformTraits, class TTransformHistory>
+    Vector	ViewportInterface<TTranformTraits, TTransformHistory>::m_SUserStartControllerPos = Vector(0.f, 0.f, 0.f);
 
-    template<class TTranformTraits>
-    Vector	ViewportInterface<TTranformTraits>::m_SUserAccumRotation = Vector(0.f, 0.f, 0.f);
+    template<class TTranformTraits, class TTransformHistory>
+    Vector	ViewportInterface<TTranformTraits, TTransformHistory>::m_SUserAccumRotation = Vector(0.f, 0.f, 0.f);
     
-	template<class TTranformTraits>
-    bool	ViewportInterface<TTranformTraits>::m_bSMiddleButtonPressed = false;
+	template<class TTranformTraits, class TTransformHistory>
+    bool	ViewportInterface<TTranformTraits, TTransformHistory>::m_bSMiddleButtonPressed = false;
 
 //------------------------------------------------------------------------
-    template<class TTranformTraits>
-    ViewportInterface<TTranformTraits>::ViewportInterface(const CObjectAbstract *pParent)
+    template<class TTranformTraits, class TTransformHistory>
+    ViewportInterface<TTranformTraits, TTransformHistory>::ViewportInterface(const CObjectAbstract *pParent)
         : m_pNode(nullptr)
         , m_fNearPlane(0.f)
         , m_fFarPlane(0.f)
@@ -47,14 +47,14 @@ namespace core_sdk_api
     }
 
     //------------------------------------------------------------------------
-    template<class TTranformTraits>
-    ViewportInterface<TTranformTraits>::~ViewportInterface()
+    template<class TTranformTraits, class TTransformHistory>
+    ViewportInterface<TTranformTraits, TTransformHistory>::~ViewportInterface()
     {
         UnregisterViewportInterface();
     }
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::RegisterViewportInterface(const CActor *pSrc)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::RegisterViewportInterface(const CActor *pSrc)
     {
         assert(m_pCoreSDK && pSrc);
 
@@ -66,8 +66,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::UnregisterViewportInterface()
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::UnregisterViewportInterface()
     {
         assert(m_pCoreSDK && m_pNode);
 
@@ -75,8 +75,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::DrawViewport() const
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::DrawViewport() const
     {
         Vector controllerPos;
 
@@ -116,8 +116,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::SetSelection(const std::vector<IDrawInterface*> &selection)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::SetSelection(const std::vector<IDrawInterface*> &selection)
     {
         m_SelectedList.clear();
 
@@ -128,8 +128,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::SetSelect(IDrawInterface *object)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::SetSelect(IDrawInterface *object)
     {
         if (m_SelectedList.find(object) == m_SelectedList.end())
         {
@@ -138,8 +138,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::DropSelect(IDrawInterface *object)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::DropSelect(IDrawInterface *object)
     {
         TMapSelection::const_iterator iterFind = m_SelectedList.find( object);
         if (iterFind != m_SelectedList.end())
@@ -149,15 +149,15 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::UnselectAll()
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::UnselectAll()
     {
         m_SelectedList.clear();
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    bool ViewportInterface<TTranformTraits>::ProcessController(const MouseInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    bool ViewportInterface<TTranformTraits, TTransformHistory>::ProcessController(const MouseInputData &input)
     {
         const Vector2f &position = input.MousePos;
 
@@ -311,8 +311,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    bool ViewportInterface<TTranformTraits>::ProcessController(const MouseMoveInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    bool ViewportInterface<TTranformTraits, TTransformHistory>::ProcessController(const MouseMoveInputData &input)
     {
         bool bResult = false;
 
@@ -380,8 +380,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ControllerRelease()
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ControllerRelease()
     {
         if (GetControllerState() == ActorState_Locked)
         {
@@ -390,8 +390,8 @@ namespace core_sdk_api
         }
     }
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ProcessMouseInput(const MouseInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ProcessMouseInput(const MouseInputData &input)
     {
         //case MOUSE_MIDDLE:
         m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
@@ -399,16 +399,16 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ProcessMouseInput(const MouseMoveInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ProcessMouseInput(const MouseMoveInputData &input)
     {
 
     }
 
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::DrawController(const Vector &pos) const
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::DrawController(const Vector &pos) const
     {
         EScrObjectEvent mode = m_controllerMode;
 
@@ -528,8 +528,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    bool ViewportInterface<TTranformTraits>::GetControllerPos(Vector &out) const
+    template<class TTranformTraits, class TTransformHistory>
+    bool ViewportInterface<TTranformTraits, TTransformHistory>::GetControllerPos(Vector &out) const
     {
         bool bResult = false;
 
@@ -565,8 +565,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ControllerTranslate(const Vector &pos, float k)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ControllerTranslate(const Vector &pos, float k)
     {
         if (!m_SelectedList.empty())
         {
@@ -628,8 +628,8 @@ namespace core_sdk_api
 //#define _TRENARY (VAL, C0, R0, C1, R1, RDEF) (VAL == C0 ? R0 : (_TRENARY0(VAL, C1, R1, RDEF))
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ControllerRotateLocal(const MouseMoveInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ControllerRotateLocal(const MouseMoveInputData &input)
     {
         float fdelta = GetDeltaRotationAngle(m_ViewMatrix,
             m_ProjMatrix,
@@ -706,15 +706,15 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::ControllerScaleLocal(const MouseMoveInputData &input)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::ControllerScaleLocal(const MouseMoveInputData &input)
     {
 
     }
 
 	    //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    Vector ViewportInterface<TTranformTraits>::GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const
+    template<class TTranformTraits, class TTransformHistory>
+    Vector ViewportInterface<TTranformTraits, TTransformHistory>::GetIntersectPosition(const MouseMoveInputData &input, EScrObjectEvent mode, float &out_mult) const
     {
         Vector out;
 
@@ -790,8 +790,8 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    template<class TTranformTraits>
-    void ViewportInterface<TTranformTraits>::UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos)
+    template<class TTranformTraits, class TTransformHistory>
+    void ViewportInterface<TTranformTraits, TTransformHistory>::UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos)
     {
         for (TMapSelection::iterator iter = m_SelectedList.begin(); iter != m_SelectedList.end(); ++iter)
         {
