@@ -54,7 +54,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 			if (/*InputData.CtrlPressed &&*/ bPaused)
 			{
                 core_sdk_api::CViewportManager *pMgr = m_pCoreSDK->GetViewportManager();
-				pMgr->SetFocus(pMgr->GetFocused(), false);
+				//pMgr->SetFocus(pMgr->GetFocused(), false);
 
 				m_pCoreSDK->SaveState();
 
@@ -73,7 +73,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 		}break;
 	};
 
-	if (CActor *pFocused = m_pCoreSDK->GetViewportManager()->GetFocusedActor())
+	/*if (CActor *pFocused = m_pCoreSDK->GetViewportManager()->GetFocusedActor())
 	{
 		TNodeMap<CActor, IInputInterface> *pNode = m_VecInputList.m_pFirstElement;
 
@@ -91,7 +91,7 @@ void CInputManager::ProcessInputKey(const EventInput &InputData)
 
 			} while(pNode);
 		}
-	}
+	}*/
 }
 
 //----------------------------------------------------------------------------------------------

@@ -46,9 +46,6 @@ namespace core_sdk_api
         void InputMouse(const MouseMoveInputData &input, const TIViewport *viewport = nullptr);
         void InputMouseWheel(float ds, int x, int y, const TIViewport *viewport = nullptr);
 
-        int				SetFocus(IDrawInterface *pIObject, bool bFlag = true);
-        int				SetFocusActor(CActor *pAObject, bool bFlag = true);
-
         IDrawInterface* GetFocused() const;
         CActor*			GetFocusedActor() const;
 

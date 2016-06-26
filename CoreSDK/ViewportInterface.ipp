@@ -387,6 +387,8 @@ namespace core_sdk_api
         {
             SetControlMode(SOEvent_None);
             SetControllerState(ActorState_None);
+
+            CommitState();
         }
     }
     //----------------------------------------------------------------------------------------------
@@ -802,6 +804,8 @@ namespace core_sdk_api
             Vector &displace = iter->second.displace;
             displace = idraw->GetTransformedWTM_().t - ctrlPos;
         }
+
+        SaveState();
 
        /* for each (auto &item in m_SelectedList)
         {

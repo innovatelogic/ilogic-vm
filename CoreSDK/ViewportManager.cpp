@@ -249,12 +249,12 @@ namespace core_sdk_api
     }*/
 
     //----------------------------------------------------------------------------------------------
-    int CViewportManager::SetFocus(IDrawInterface *pIObject, bool bFlag /*= true*/)
+   /* int CViewportManager::SetFocus(IDrawInterface *pIObject, bool bFlag)
     {
         SetSelectedImpl(pIObject, true);
 
         // kill focus
-       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -273,15 +273,15 @@ namespace core_sdk_api
 
         if (pIObject) {
             pIObject->SetFocus(bFlag);
-        }*/
+        }
         return 0;
-    }
+    }*/
 
     //----------------------------------------------------------------------------------------------
-    int	CViewportManager::SetFocusActor(CActor *pAObject, bool bFlag /*= true*/)
+   /* int	CViewportManager::SetFocusActor(CActor *pAObject, bool bFlag )
     {
         // kill focus
-       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
+        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
         {
             do
             {
@@ -309,9 +309,9 @@ namespace core_sdk_api
                 }
                 pNode = m_VecDrawList.GetNext(pNode);
             } while (pNode);
-        }*/
+        }
         return 0;
-    }
+    }*/
 
     //----------------------------------------------------------------------------------------------
     IDrawInterface* CViewportManager::GetFocused() const
@@ -356,40 +356,6 @@ namespace core_sdk_api
             }
 
             pIObject->SetMouseOver(bFlag);
-        }*/
-        return 0;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    IDrawInterface* CViewportManager::GetMouseOver() const
-    {
-       /* if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
-        {
-            do
-            {
-                if (pNode->m_pValue->IsMouseOver())
-                {
-                    return const_cast<IDrawInterface*>(pNode->m_pValue);
-                }
-                pNode = m_VecDrawList.GetNext(pNode);
-            } while (pNode);
-        }*/
-        return 0;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    CActor* CViewportManager::GetFocusedActor() const
-    {
-        /*if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
-        {
-            do
-            {
-                if (pNode->m_pValue->IsFocused())
-                {
-                    return const_cast<CActor*>(pNode->key());
-                }
-                pNode = m_VecDrawList.GetNext(pNode);
-            } while (pNode);
         }*/
         return 0;
     }
