@@ -132,11 +132,15 @@ public:
         }
         else if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTED)
 		{
-		    bool bSelChanged = m_pTreeBrowser->SelChangedTreeObject();
+            const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
+            if (nmt->itemNew.state == TVIS_SELECTED)
+            {
+                bool bSelChanged = m_pTreeBrowser->SelChangedTreeObject();
 
-			//if (!bSelChanged){
-			//	m_pTreeBrowser->Update(0, Event_OnSelected);
-			//}
+                //if (!bSelChanged){
+                //	m_pTreeBrowser->Update(0, Event_OnSelected);
+                //}
+            }
             return 0;
 		}
 		/*else if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu

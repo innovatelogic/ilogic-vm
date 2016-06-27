@@ -159,24 +159,11 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetWireframeMode(bool flag)
     {
-        SRenderContext *context = GetRenderContext();
-
-        class CommandSetWireframe : public ICommand
-        {
-        public:
-            CommandSetWireframe(CCoreSDK *api, bool value)
-                : m_value(value)
-                , m_api(api) { }
-
-            void Execute() override { m_api->SetWireframeMode(nullptr, m_value); }
-            void ExecuteUndo() override { m_api->SetWireframeMode(nullptr, !m_value); }
-            
-        private:
-            bool m_value;
-            CCoreSDK *m_api;
-        };
-
-        AddCommand(std::move(std::shared_ptr<CommandSetWireframe>(new CommandSetWireframe(m_pApi, flag))), true);
+        AddCommand(std::move(
+            std::shared_ptr<CommandBase_>(new CommandBase_(
+                [&, flag]() { m_pApi->SetWireframeMode(nullptr, flag); },
+                [&, flag]() { m_pApi->SetWireframeMode(nullptr,!flag); }))
+        ));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -188,22 +175,6 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetObjectBoundsVisible(bool flag)
     {
-        class CommandSetBBox : public ICommand
-        {
-        public:
-            CommandSetBBox(CCoreSDK *api, bool value)
-                : m_value(value)
-                , m_api(api) {
-            }
-
-            void Execute() override { m_api->SetObjectBoundsVisible(m_value); }
-            void ExecuteUndo() override { m_api->SetObjectBoundsVisible(!m_value); }
-
-        private:
-            bool m_value;
-            CCoreSDK *m_api;
-        };
-
         AddCommand(std::move(
             std::shared_ptr<CommandBase_>(new CommandBase_(
                 [&, flag]() { m_pApi->SetObjectBoundsVisible(flag); },
@@ -232,22 +203,11 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetGridVisible(bool flag)
     {
-        class CommandSetShowGrid : public ICommand
-        {
-        public:
-            CommandSetShowGrid(CCoreSDK *api, bool value)
-                : m_value(value)
-                , m_api(api) {}
-
-            void Execute() override { m_api->SetShowGrid(m_value); }
-            void ExecuteUndo() override { m_api->SetShowGrid(!m_value); }
-
-        private:
-            bool m_value;
-            CCoreSDK *m_api;
-        };
-
-        AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, flag))));
+        AddCommand(std::move(
+            std::shared_ptr<CommandBase_>(new CommandBase_(
+                [&, flag]() { m_pApi->SetShowGrid(flag); },
+                [&, flag]() { m_pApi->SetShowGrid(!flag); }))
+        ));
     }
 
     //----------------------------------------------------------------------------------------------
@@ -271,28 +231,14 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SetEditControlMode(EObjEditControlMode mode)
     {
-        // Command
-        class CommandSetShowGrid : public ICommand
-        {
-        public:
-            CommandSetShowGrid(CCoreSDK *api,  EObjEditControlMode vNew, EObjEditControlMode vOld)
-                : m_new(vNew)
-                , m_old(vOld)
-                , m_api(api) {}
-            void Execute() override { m_api->SetEditControlMode(m_new); }
-            void ExecuteUndo() override { m_api->SetEditControlMode(m_old); }
-
-        private:
-            EObjEditControlMode m_new;
-            EObjEditControlMode m_old;
-            CCoreSDK *m_api;
-        };
-        // End Command
-
         EObjEditControlMode oldMode = GetEditControlMode();
         if (oldMode != mode)
         {
-            AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, mode, oldMode))), true);
+            AddCommand(std::move(
+                std::shared_ptr<CommandBase_>(new CommandBase_(
+                    [&, mode]() { m_pApi->SetEditControlMode(mode); },
+                    [&, oldMode]() { m_pApi->SetShowGrid(!oldMode); }))
+            ));
         }
     }
 
@@ -327,33 +273,6 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SelectActors(const std::vector<CActor*> &actors)
     {
-        class CommandSetSelectActors : public ICommand
-        {
-        public:
-            CommandSetSelectActors(core_sdk_api::CViewportManager *manager,
-                core_sdk_api::TIViewport *ivprt,
-                const std::vector<CActor*> &actors,
-                const std::vector<CActor*> &old_actors)
-                : m_manager(manager)
-                , m_ivprt(ivprt)
-            {
-                for each(auto *actor in actors) {
-                    m_new.push_back(CActor::GetFullPathID(actor)); // fill new selection
-                }
-                for each(auto *actor in old_actors) {
-                    m_old.push_back(CActor::GetFullPathID(actor)); // fill old selection
-                }
-            }
-            void Execute() override { m_manager->SetSelect(m_new, m_ivprt); }
-            void ExecuteUndo() override { m_manager->SetSelect(m_old, m_ivprt); }
-
-        private:
-            std::vector<std::string> m_new;
-            std::vector<std::string> m_old;
-            core_sdk_api::CViewportManager *m_manager;
-            core_sdk_api::TIViewport *m_ivprt;
-        };
-
         // skip if nothing to select and deselect
         if (!m_selectionList.empty() || !actors.empty())
         {
@@ -362,9 +281,29 @@ namespace editors
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
             core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
-            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(manager, ivprt, actors, m_selectionList))), true);
+            std::vector<CActor*> old = m_selectionList;
 
-            m_selectionList = actors;
+            AddCommand(std::move(
+                std::shared_ptr<CommandBase_>(new CommandBase_(
+            [&, manager, ivprt, actors]()
+            {
+                std::vector<std::string> ids;
+                for each(auto *actor in actors) {
+                    ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
+                }
+                manager->SetSelect(ids, ivprt);
+                m_selectionList = actors;
+            },
+            [&, manager, ivprt, old]()
+            {
+                std::vector<std::string> ids;
+                for each(auto *actor in old) {
+                    ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
+                }
+                manager->SetSelect(ids, ivprt);
+                m_selectionList = old;
+            }))
+            ));
         }
     }
 
