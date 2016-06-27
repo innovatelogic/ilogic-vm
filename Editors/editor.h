@@ -19,7 +19,7 @@ public:
     bool Undo() override;
     bool Redo() override;
 
-    void AddCommand(ICommandPtr command) override;
+    void AddCommand(ICommandPtr command, bool execute = true) override;
     void AddCommandBatch(ICommandPtrList &vector) override;
 	
     ICommandBuffer* GetCommandBuffer() const { return m_CommandBuffer; }

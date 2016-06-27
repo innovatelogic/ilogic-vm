@@ -15,7 +15,7 @@ class DLLEXPORT ICommandBuffer
 public:
 	virtual	~ICommandBuffer() = 0 {};
 	
-	virtual void AddCommand(ICommandPtr command) = 0;
+	virtual void AddCommand(ICommandPtr command, bool execute = true) = 0;
 	virtual void AddCommands(ICommandPtrList &commands) = 0;
 
 	virtual void Clear() = 0;

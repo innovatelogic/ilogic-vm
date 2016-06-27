@@ -23,7 +23,7 @@ public:
     CommandBuffer(const CommandBuffer& other) = delete;
     CommandBuffer operator= (const CommandBuffer& other) = delete;
 
-    void AddCommand(ICommandPtr command);
+    void AddCommand(ICommandPtr command, bool execute = true);
     void AddCommands(ICommandPtrList &commands) override;
 
     void Clear() override;

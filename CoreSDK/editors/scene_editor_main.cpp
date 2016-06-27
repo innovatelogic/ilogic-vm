@@ -165,7 +165,7 @@ namespace editors
         public:
             CommandSetWireframe(CCoreSDK *api, bool value)
                 : m_value(value)
-                , m_api(api) { Execute(); }
+                , m_api(api) { }
 
             void Execute() override { m_api->SetWireframeMode(nullptr, m_value); }
             void ExecuteUndo() override { m_api->SetWireframeMode(nullptr, !m_value); }
@@ -175,7 +175,7 @@ namespace editors
             CCoreSDK *m_api;
         };
 
-        AddCommand(std::move(std::shared_ptr<CommandSetWireframe>(new CommandSetWireframe(m_pApi, flag))));
+        AddCommand(std::move(std::shared_ptr<CommandSetWireframe>(new CommandSetWireframe(m_pApi, flag))), true);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -193,7 +193,6 @@ namespace editors
             CommandSetBBox(CCoreSDK *api, bool value)
                 : m_value(value)
                 , m_api(api) {
-                Execute();
             }
 
             void Execute() override { m_api->SetObjectBoundsVisible(m_value); }
@@ -203,6 +202,22 @@ namespace editors
             bool m_value;
             CCoreSDK *m_api;
         };
+
+
+        /*class CommandSetBBox : public CommandBase
+        {
+        public:
+            CommandSetBBox(CCoreSDK *api, bool value)
+                : CommandBase([&]() { m_api->SetObjectBoundsVisible(m_value); },
+                              [&]() { m_api->SetObjectBoundsVisible(!m_value); })
+                , m_value(value)
+                , m_api(api) 
+            {
+            }
+        private:
+            bool m_value;
+            CCoreSDK *m_api;
+        };*/
 
         AddCommand(std::move(std::shared_ptr<CommandSetBBox>(new CommandSetBBox(m_pApi, flag))));
     }
@@ -233,9 +248,7 @@ namespace editors
         public:
             CommandSetShowGrid(CCoreSDK *api, bool value)
                 : m_value(value)
-                , m_api(api) {
-                Execute();
-            }
+                , m_api(api) {}
 
             void Execute() override { m_api->SetShowGrid(m_value); }
             void ExecuteUndo() override { m_api->SetShowGrid(!m_value); }
@@ -276,9 +289,7 @@ namespace editors
             CommandSetShowGrid(CCoreSDK *api,  EObjEditControlMode vNew, EObjEditControlMode vOld)
                 : m_new(vNew)
                 , m_old(vOld)
-                , m_api(api) {
-                Execute();
-            }
+                , m_api(api) {}
             void Execute() override { m_api->SetEditControlMode(m_new); }
             void ExecuteUndo() override { m_api->SetEditControlMode(m_old); }
 
@@ -292,7 +303,7 @@ namespace editors
         EObjEditControlMode oldMode = GetEditControlMode();
         if (oldMode != mode)
         {
-            AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, mode, oldMode))));
+            AddCommand(std::move(std::shared_ptr<CommandSetShowGrid>(new CommandSetShowGrid(m_pApi, mode, oldMode))), true);
         }
     }
 
@@ -343,7 +354,6 @@ namespace editors
                 for each(auto *actor in old_actors) {
                     m_old.push_back(CActor::GetFullPathID(actor)); // fill old selection
                 }
-                Execute();
             }
             void Execute() override { m_manager->SetSelect(m_new, m_ivprt); }
             void ExecuteUndo() override { m_manager->SetSelect(m_old, m_ivprt); }
@@ -363,7 +373,7 @@ namespace editors
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
             core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
-            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(manager, ivprt, actors, m_selectionList))));
+            AddCommand(std::move(std::shared_ptr<CommandSetSelectActors>(new CommandSetSelectActors(manager, ivprt, actors, m_selectionList))), true);
 
             m_selectionList = actors;
         }

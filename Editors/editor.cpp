@@ -38,11 +38,11 @@ bool EditorBase::Redo()
 }
 
 //----------------------------------------------------------------------------------------------
-void EditorBase::AddCommand(ICommandPtr command)
+void EditorBase::AddCommand(ICommandPtr command, bool execute /*= true*/)
 {
     assert(m_CommandBuffer);
 
-    m_CommandBuffer->AddCommand(std::move(command));
+    m_CommandBuffer->AddCommand(std::move(command), execute);
 }
 
 //----------------------------------------------------------------------------------------------

@@ -795,6 +795,8 @@ namespace core_sdk_api
     template<class TTranformTraits, class TTransformHistory>
     void ViewportInterface<TTranformTraits, TTransformHistory>::UpdateSelectionState(EScrObjectEvent state, const Vector &ctrlPos)
     {
+        TVecObjects vec;
+
         for (TMapSelection::iterator iter = m_SelectedList.begin(); iter != m_SelectedList.end(); ++iter)
         {
             const IDrawInterface *idraw = iter->first;
@@ -803,9 +805,11 @@ namespace core_sdk_api
 
             Vector &displace = iter->second.displace;
             displace = idraw->GetTransformedWTM_().t - ctrlPos;
+
+            vec.push_back(idraw);
         }
 
-        SaveState();
+        SaveState(vec);
 
        /* for each (auto &item in m_SelectedList)
         {

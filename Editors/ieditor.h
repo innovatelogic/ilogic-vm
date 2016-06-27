@@ -22,7 +22,7 @@ public:
     virtual bool    Undo() = 0;
     virtual bool    Redo() = 0;
 
-    virtual void    AddCommand(ICommandPtr command) = 0;
+    virtual void    AddCommand(ICommandPtr command, bool execute = true) = 0;
     virtual void    AddCommandBatch(ICommandPtrList &vector) = 0;
 
     virtual size_t  GetUndoCommandBatchSize(size_t index) const = 0;

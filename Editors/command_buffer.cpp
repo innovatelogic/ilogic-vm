@@ -15,8 +15,13 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBuffer::AddCommand(ICommandPtr command)
+    void CommandBuffer::AddCommand(ICommandPtr command, bool execute /*= true*/)
     {
+        if (execute)
+        {
+            command->Execute();
+        }
+
         SCommandBatch cmd;
 
         cmd.batch.push_back(std::move(command));

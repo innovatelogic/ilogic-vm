@@ -6,7 +6,7 @@ namespace editors
     class DLLEXPORT MockCommandBuffer : public ICommandBuffer
     {
     public:
-        MOCK_METHOD1(AddCommand, void(ICommandPtr command));
+        MOCK_METHOD2(AddCommand, void(ICommandPtr command, bool execute));
         MOCK_METHOD1(AddCommands, void(ICommandPtrList &commands));
 
         MOCK_METHOD0(Undo, void());

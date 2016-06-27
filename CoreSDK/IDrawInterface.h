@@ -5,7 +5,6 @@
 
 class CObjectAbstract;
 class CCoreSDK;
-class IDrawInterface;
 class CActor;
 
 class CORESDK_API IDrawInterface : public IBaseInterface
