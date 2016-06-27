@@ -6,6 +6,7 @@
 #include "../CameraManager.h"
 #include "../Explorer.h"
 #include "../Explorer3D.h"
+#include "command_base.h"
 #include <memory>
 #include <algorithm>
 
@@ -203,23 +204,11 @@ namespace editors
             CCoreSDK *m_api;
         };
 
-
-        /*class CommandSetBBox : public CommandBase
-        {
-        public:
-            CommandSetBBox(CCoreSDK *api, bool value)
-                : CommandBase([&]() { m_api->SetObjectBoundsVisible(m_value); },
-                              [&]() { m_api->SetObjectBoundsVisible(!m_value); })
-                , m_value(value)
-                , m_api(api) 
-            {
-            }
-        private:
-            bool m_value;
-            CCoreSDK *m_api;
-        };*/
-
-        AddCommand(std::move(std::shared_ptr<CommandSetBBox>(new CommandSetBBox(m_pApi, flag))));
+        AddCommand(std::move(
+            std::shared_ptr<CommandBase_>(new CommandBase_(
+                [&, flag]() { m_pApi->SetObjectBoundsVisible(flag); },
+                [&, flag]() { m_pApi->SetObjectBoundsVisible(!flag); }))
+            ));
     }
 
     //----------------------------------------------------------------------------------------------

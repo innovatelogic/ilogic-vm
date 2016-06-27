@@ -5,12 +5,12 @@
 
 namespace editors
 {
-    class DLLEXPORT CommandBase : public ICommand
+    class DLLEXPORT CommandBase_ : public ICommand
     {
     public:
-        CommandBase();
-        CommandBase(const std::function<void()> &op, const std::function<void()> &undo);
-        virtual ~CommandBase();
+        CommandBase_();
+        CommandBase_(const std::function<void()> &op, const std::function<void()> &undo);
+        virtual ~CommandBase_();
 
         void Execute() override;
         void ExecuteUndo() override;

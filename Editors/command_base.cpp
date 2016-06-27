@@ -3,13 +3,13 @@
 namespace editors
 {
     //----------------------------------------------------------------------------------------------
-    CommandBase::CommandBase()
+    CommandBase_::CommandBase_()
     {
 
     }
 
     //----------------------------------------------------------------------------------------------
-    CommandBase::CommandBase(const std::function<void()> &op, const std::function<void()> &undo)
+    CommandBase_::CommandBase_(const std::function<void()> &op, const std::function<void()> &undo)
         : m_fOp(op)
         , m_fUndo(undo)
     {
@@ -17,13 +17,13 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    CommandBase::~CommandBase()
+    CommandBase_::~CommandBase_()
     {
 
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBase::Execute()
+    void CommandBase_::Execute()
     {
         if (m_fOp)
         {
@@ -32,7 +32,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void CommandBase::ExecuteUndo()
+    void CommandBase_::ExecuteUndo()
     {
         if (m_fUndo)
         {
