@@ -377,7 +377,7 @@ namespace core_sdk_api
                 } while (pNode);
             }
         }
-        return 0;
+        return nullptr;
     }
 
     //----------------------------------------------------------------------------------------------
@@ -523,6 +523,37 @@ namespace core_sdk_api
                 m_pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
             }
         }*/
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void CViewportManager::ApplyStateCast(const TMapState &state)
+    {
+        for each (auto &item in state)
+        {
+            TNodeIDraw *pNode = m_VecDrawList.begin();
+
+            if (pNode)
+            {
+                do
+                {
+                    if (pNode->key()->GetUID() == item.first)
+                    {
+                        pNode->value()->SetLTM_(item.second.LTM);
+                        pNode->value()->SetSTM_(item.second.STM);
+                        //pNode->value()->SetRotator(item.second.YPR);
+
+                        CActor *actor = const_cast<CActor*>(pNode->key());
+
+                        RebuildTransform(actor);
+
+                        actor->BroadcastEvent(Event_OnChangePivot);
+                        
+                        break;
+                    }
+                    pNode = m_VecDrawList.next(pNode);
+                } while (pNode);
+            }
+        }
     }
 
     //----------------------------------------------------------------------------------------------

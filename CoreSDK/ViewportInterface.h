@@ -53,7 +53,7 @@ namespace core_sdk_api
         * sets selection
         * @selection - vector of pointers to draw interface
         */
-        void SetSelection(const std::vector<IDrawInterface*> &selection);
+        void    SetSelection(const std::vector<IDrawInterface*> &selection);
 
         /*!
          * adds selection to list
@@ -107,11 +107,11 @@ namespace core_sdk_api
         /**
         * [Editor] specific movement type.
         */
-        EScrObjectEvent		GetControlMode() const { return m_controllerMode; }
-        void				SetControlMode(EScrObjectEvent mode) { m_controllerMode = mode; }
+        EScrObjectEvent	GetControlMode() const { return m_controllerMode; }
+        void			SetControlMode(EScrObjectEvent mode) { m_controllerMode = mode; }
 
-        EActorState         GetControllerState() const { return m_controllerState;  }
-        void                SetControllerState(EActorState state) { m_controllerState = state; }
+        EActorState     GetControllerState() const { return m_controllerState;  }
+        void            SetControllerState(EActorState state) { m_controllerState = state; }
 
     protected:
         void    DrawController(const Vector &pos) const;

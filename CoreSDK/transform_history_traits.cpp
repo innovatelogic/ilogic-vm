@@ -25,8 +25,25 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void transform_history_traits::CommitState()
+    void transform_history_traits::CommitState(const TVecObjects &vec)
     {
-        m_transform_callback();
+        TMapState m_stateNew;
+
+        for each (auto &item in vec)
+        {
+            const CActor *actor = item->GetNode()->key();
+
+            assert(actor);
+
+            SState state;
+
+            state.LTM = item->GetLTM_();
+            state.STM = item->GetSTM_();
+            state.YPR = item->GetRotator();
+
+            m_stateNew.insert(std::make_pair(actor->GetUID(), state));
+        }
+
+        m_transform_callback(m_state, m_stateNew);
     }
 }

@@ -388,7 +388,18 @@ namespace core_sdk_api
             SetControlMode(SOEvent_None);
             SetControllerState(ActorState_None);
 
-            CommitState();
+            TVecObjects vec;
+
+            for (TMapSelection::iterator iter = m_SelectedList.begin(); iter != m_SelectedList.end(); ++iter)
+            {
+                const IDrawInterface *idraw = iter->first;
+
+                assert(idraw);
+
+                vec.push_back(idraw);
+            }
+
+            CommitState(vec);
         }
     }
     //----------------------------------------------------------------------------------------------
@@ -406,7 +417,6 @@ namespace core_sdk_api
     {
 
     }
-
 
     //----------------------------------------------------------------------------------------------
     template<class TTranformTraits, class TTransformHistory>

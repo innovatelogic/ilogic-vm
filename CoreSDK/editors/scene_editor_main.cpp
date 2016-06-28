@@ -7,6 +7,7 @@
 #include "../Explorer.h"
 #include "../Explorer3D.h"
 #include "command_base.h"
+#include "../transform_history_traits.h"
 #include <memory>
 #include <algorithm>
 
@@ -39,9 +40,13 @@ namespace editors
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
         core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
-        ivprt->SetTransformCallback([&]() {
-        
-            int k = 0;
+        ivprt->SetTransformCallback([&](core_sdk_api::TMapState &prevState, core_sdk_api::TMapState &newState)
+        {
+            AddCommand(std::move(
+                std::shared_ptr<CommandBase_>(new CommandBase_(
+                    [&, newState]() { m_pApi->GetViewportManager()->ApplyStateCast(newState); },
+                    [&, prevState]() { m_pApi->GetViewportManager()->ApplyStateCast(prevState); }))
+                ), false);
         });
     }
 

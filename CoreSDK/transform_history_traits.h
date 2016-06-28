@@ -10,28 +10,30 @@
 
 namespace core_sdk_api
 {
+    struct SState
+    {
+        oes::common_base::Matrix LTM;
+        oes::common_base::Matrix3f STM;
+        oes::common_base::Vector YPR;
+    };
+    using TMapState = std::map<long, SState>;
+
+    //----------------------------------------------------------------------------------------------
+    //
+    //----------------------------------------------------------------------------------------------
     class CORESDK_API transform_history_traits
     {
-        struct SState
-        {
-            oes::common_base::Matrix LTM;
-            oes::common_base::Matrix3f STM;
-            oes::common_base::Vector YPR;
-        };
-    
     public:
         using TVecObjects = std::vector<const IDrawInterface*>;
-        using TMapState = std::map<long, SState>;
-
-    public:
+        
         void SaveState(const TVecObjects &vec);
 
-        void CommitState();
+        void CommitState(const TVecObjects &vec);
 
-        void SetTransformCallback(const std::function<void()> &fn) { m_transform_callback = fn; }
+        void SetTransformCallback(const std::function<void(TMapState &prevState, TMapState &newState)> &fn) { m_transform_callback = fn; }
 
     private:
-        std::function<void()>   m_transform_callback;
+        std::function<void(TMapState &prevState, TMapState &newState)>  m_transform_callback;
 
         TMapState m_state;
     };

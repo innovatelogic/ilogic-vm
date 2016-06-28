@@ -65,6 +65,11 @@ namespace core_sdk_api
         */
         void            SetSelect(const std::vector<std::string> &paths, TIViewport *viewport);
 
+        /**
+        * apply cast
+        */
+        void    ApplyStateCast(const TMapState &state);
+
     protected:
         TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
         
