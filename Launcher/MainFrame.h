@@ -229,6 +229,8 @@ public:
 		m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer2D(), ESystemEventID::Event_ObjectGenerated);
 		m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer3D(), ESystemEventID::Event_ObjectGenerated);
 
+        InitCallbacks();
+
 		return 0;
 	}
 
@@ -824,6 +826,14 @@ public:
 
         m_editor->Render();
 	}
+
+    //----------------------------------------------------------------------------------------------
+    void InitCallbacks()
+    {
+        m_editor->SetNotifyFunc([]() {
+            int k = 0;
+        });
+    }
 };
 
 #endif // !defined(AFX_MAINFRM_H__BBA5DFCA_6C1A_11D6_B657_0048548B09C5__INCLUDED_)

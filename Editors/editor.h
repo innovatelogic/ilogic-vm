@@ -27,7 +27,11 @@ public:
     size_t GetUndoCommandBatchSize(size_t index) const override;
     size_t GetRedoCommandBatchSize(size_t index) const override;
 
+    void SetNotifyFunc(const std::function<void()> &func) override { m_notifyFunc = func; }
+
 protected:
+    std::function<void()>   m_notifyFunc;
+
 private:
     ICommandBuffer *m_CommandBuffer;
 

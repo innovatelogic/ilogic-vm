@@ -29,10 +29,10 @@ namespace core_sdk_api
         inline_ CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
 
         TNodeIDraw* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
-        void UnregisterObject(TNodeIDraw *pNode);
+        void        UnregisterObject(TNodeIDraw *pNode);
 
         TNodeIView* RegisterViewport(const TIViewport *pSrc, const CActor *pKey, const CActor *pKeyParent);
-        void UnregisterViewport(TNodeIView *pNode);
+        void        UnregisterViewport(TNodeIView *pNode);
 
         TIViewport* GetVeiwportInterface(const CActor *key);
         TIViewport* GetViewportInterface(const IDrawInterface *pIObject) const;
@@ -54,16 +54,16 @@ namespace core_sdk_api
 
         IDrawInterface* GetByActor(const CActor *pAObject) const;
 
-        void			RebildWorldTransform();
-        void			RebuildSizeTransform();
+        void	RebildWorldTransform();
+        void	RebuildSizeTransform();
 
-        void			RebuildTransform(CActor *pAObject = nullptr);
+        void	RebuildTransform(CActor *pAObject = nullptr);
         
         /*!
         * set selection objects
         * [paths] array of actors full paths
         */
-        void            SetSelect(const std::vector<std::string> &paths, TIViewport *viewport);
+        void    SetSelect(const std::vector<std::string> &paths, TIViewport *viewport);
 
         /**
         * apply cast
@@ -71,19 +71,16 @@ namespace core_sdk_api
         void    ApplyStateCast(const TMapState &state);
 
     protected:
-        TNodeIDraw*     GetNodeByKey(CActor *pAObject) const;
+        TNodeIDraw* GetNodeByKey(CActor *pAObject) const;
         
     private:
-        void			SetSelectedImpl(IDrawInterface *pIObject, bool bFlag);
+        void	SetSelectedImpl(IDrawInterface *pIObject, bool bFlag);
 
-        void            DrawController() const;
+        void    DrawController() const;
 
     private:
         TTreeMapViewport m_VecViewports;
         TTreeMapDraw	 m_VecDrawList;
-
-        CInputControllerImpl	 *m_pInputControllerImpl;
-        CInputControllerEdImpl *m_pInputControllerEdImpl;
 
         CCoreSDK* m_pCoreSDK;
     };

@@ -6,15 +6,11 @@ namespace core_sdk_api
     CViewportManager::CViewportManager(class CCoreSDK* pSDK)
         : m_pCoreSDK(pSDK)
     {
-        m_pInputControllerImpl = new CInputControllerImpl(this);
-        m_pInputControllerEdImpl = new CInputControllerEdImpl(this);
     }
 
     //----------------------------------------------------------------------------------------------
     CViewportManager::~CViewportManager()
     {
-        SAFE_DELETE(m_pInputControllerImpl);
-        SAFE_DELETE(m_pInputControllerEdImpl);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -68,7 +64,7 @@ namespace core_sdk_api
         if (pIObject)
         {
             // find in draw array
-            TNodeIDraw *pNodeObject = 0;
+            TNodeIDraw *pNodeObject = nullptr;
             if (TNodeIDraw *pNode = m_VecDrawList.begin())
             {
                 do
@@ -147,18 +143,6 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-   /* void CViewportManager::ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask)
-    {
-        if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
-        {
-            m_pInputControllerEdImpl->ProcessInputMouse(InputData);
-        }
-        else {
-            m_pInputControllerImpl->ProcessInputMouse(InputData, pIObjectMask);
-        }
-    }*/
-
-    //----------------------------------------------------------------------------------------------
     void CViewportManager::InputMouse(const MouseInputData &input, const TIViewport *viewport /*=nullptr*/)
     {
         // TODO: get default viewport if nullptr
@@ -223,95 +207,6 @@ namespace core_sdk_api
 
         //ivprt->Mo
     }
-
-    //----------------------------------------------------------------------------------------------
-    /*void CViewportManager::ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask)
-    {
-        if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
-        {
-            m_pInputControllerEdImpl->ProcessInputMouse(InputData);
-        }
-        else {
-            m_pInputControllerImpl->ProcessInputMouse(InputData);
-        }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    void CViewportManager::ProcessMouseWheel(float ds, SRenderContext *pRenderContext)
-    {
-        if (m_pCoreSDK->IsAEditor() && !m_pCoreSDK->IsAGame())
-        {
-            m_pInputControllerEdImpl->ProcessMouseWheel(ds, pRenderContext);
-        }
-        else {
-            m_pInputControllerImpl->ProcessMouseWheel(ds, pRenderContext);
-        }
-    }*/
-
-    //----------------------------------------------------------------------------------------------
-   /* int CViewportManager::SetFocus(IDrawInterface *pIObject, bool bFlag)
-    {
-        SetSelectedImpl(pIObject, true);
-
-        // kill focus
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
-        {
-            do
-            {
-                if (bool bFocused = pNode->m_pValue->IsFocused())
-                {
-                    if (pIObject && (bFocused == bFlag && pIObject == pNode->m_pValue)) {
-                        return 1; // do not need change
-                    }
-
-                    const_cast<IDrawInterface*>(pNode->m_pValue)->SetFocus(false);
-                    break;
-                }
-                pNode = m_VecDrawList.GetNext(pNode);
-            } while (pNode);
-        }
-
-        if (pIObject) {
-            pIObject->SetFocus(bFlag);
-        }
-        return 0;
-    }*/
-
-    //----------------------------------------------------------------------------------------------
-   /* int	CViewportManager::SetFocusActor(CActor *pAObject, bool bFlag )
-    {
-        // kill focus
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
-        {
-            do
-            {
-                if (bool bFocused = pNode->m_pValue->IsFocused())
-                {
-                    if (pAObject && (bFocused == bFlag && pAObject == pNode->m_pKey)) {
-                        return 1; // do not need change
-                    }
-                    const_cast<IDrawInterface*>(pNode->m_pValue)->SetFocus(false);
-                    break;
-                }
-                pNode = m_VecDrawList.GetNext(pNode);
-            } while (pNode);
-        }
-
-        // set focus
-        if (TNodeMap<CActor, IDrawInterface> *pNode = m_VecDrawList.m_pFirstElement)
-        {
-            do
-            {
-                if (pAObject == pNode->m_pKey)
-                {
-                    const_cast<IDrawInterface*>(pNode->m_pValue)->SetFocus(true);
-                    break;
-                }
-                pNode = m_VecDrawList.GetNext(pNode);
-            } while (pNode);
-        }
-        return 0;
-    }*/
 
     //----------------------------------------------------------------------------------------------
     IDrawInterface* CViewportManager::GetFocused() const

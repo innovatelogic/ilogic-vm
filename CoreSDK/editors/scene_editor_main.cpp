@@ -34,7 +34,7 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::Initialize()
     {
-        m_pApi->Deserialize("3d_scene_controller.xml", NULL);
+        m_pApi->Deserialize("3d_scene_controller.xml", nullptr);
 
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
@@ -298,6 +298,8 @@ namespace editors
                 }
                 manager->SetSelect(ids, ivprt);
                 m_selectionList = actors;
+
+                m_notifyFunc();
             },
             [&, manager, ivprt, old]()
             {
@@ -307,6 +309,8 @@ namespace editors
                 }
                 manager->SetSelect(ids, ivprt);
                 m_selectionList = old;
+
+                m_notifyFunc();
             }))
             ));
         }

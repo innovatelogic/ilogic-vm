@@ -571,44 +571,6 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
 
     m_editor->SelectActors(actors);
 
-    
-
-    /*
-    HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
-
-    TVITEMEX NodeItem;
-    NodeItem.hItem = hTreeItem;
-    NodeItem.cchTextMax = 100;
-    NodeItem.pszText = 0;
-    NodeItem.mask = TVIF_TEXT;
-    TreeView_GetItem(m_hwndTree, &NodeItem);
-
-    CCoreSDK *pCoreSDK = m_editor->GetApp();
-
-    T_CLASS *pActor = GetActorByData(hTreeItem);
-
-    if (pActor) // find corresponding
-    {
-        //IDrawInterface *pIFocused = m_editor->GetByActor(pActor);
-
-        //if (pIFocused)
-        //{
-        //pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
-
-        std::vector<CActor*> actors = { pActor };
-        m_editor->SelectActors(actors);
-        //}
-        //else
-        //{
-        //pCoreSDK->GetViewportManager()->SetFocus(0);
-
-        //    m_editor->DeselectAll();
-        //}
-
-        pActor->BroadcastEvent(Event_OnSelected);
-        bResult = true;
-    }*/
-
     m_CS.leave();
 
     return bResult;
