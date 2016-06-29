@@ -74,6 +74,7 @@ set(SOURCE
 	ListViewCombobox.h
 	ListViewEditResource.h
 	MainFrame.h
+	MainFrame.ipp
 	PaneListView.h
 	PanePropertyContainer.h
 	PaneTreeContainer.h
