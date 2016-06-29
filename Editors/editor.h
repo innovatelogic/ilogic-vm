@@ -29,8 +29,12 @@ public:
 
     void SetNotifyFunc(const std::function<void()> &func) override { m_notifyFunc = func; }
 
+    const std::vector<CActor*>& GetSelected() const override { return m_selectionList; }
+
 protected:
     std::function<void()>   m_notifyFunc;
+
+    std::vector<CActor*> m_selectionList;
 
 private:
     ICommandBuffer *m_CommandBuffer;

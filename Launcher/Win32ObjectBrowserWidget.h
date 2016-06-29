@@ -100,6 +100,9 @@ public:
     void ProcessRightClick();
     bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam);
 
+    // notificatofs
+    void OnNotifySelected();
+
 //----------------------------------------------------------------------------------------------
 private:
 	class Registry			*m_pRegistry;
@@ -144,6 +147,9 @@ public:
 	CALLBACK_FN				m_pfnDirectInvokeObject;
 	CALLBACK_FN				m_pfnClearObject;
 	CALLBACK_FN				m_pfnDirectClearObject;
+
+private:
+    bool bLockUpdate;
 };
 
 #include "Win32ObjectBrowserWidget.ipp"

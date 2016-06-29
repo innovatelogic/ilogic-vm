@@ -830,8 +830,9 @@ public:
     //----------------------------------------------------------------------------------------------
     void InitCallbacks()
     {
-        m_editor->SetNotifyFunc([]() {
-            int k = 0;
+        m_editor->SetNotifyFunc([&]() 
+        {
+            m_pRightBottomPane->OnObjectSelected();
         });
     }
 };

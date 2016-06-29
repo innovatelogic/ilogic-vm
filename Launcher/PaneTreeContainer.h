@@ -165,6 +165,12 @@ public:
         return 0;
     }
 
+    //----------------------------------------------------------------------------------------------
+    void OnObjectSelected()
+    {
+        m_pTreeBrowser->OnNotifySelected();
+    }
+
 private:
 	Win32ObjectBrowserWidget<T_CLASS> *m_pTreeBrowser;
 

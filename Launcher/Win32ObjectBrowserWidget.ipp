@@ -25,6 +25,7 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 	, m_pfnClearObject(pfnClearObject)
 	, m_pfnDirectClearObject(pfnDirectClearObject)
 	, m_pRenderContext(pRenderContext)
+    , bLockUpdate(false)
 	{
 		RECT rect;
 		GetClientRect(hWndParent, &rect);
@@ -237,6 +238,7 @@ int Win32ObjectBrowserWidget<T_CLASS>::RearrangeActor(const T_CLASS * Sender)
     return 1;
 }
 
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::WndProcessInsertObject()
 {
@@ -553,30 +555,29 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
 {
     bool bResult = false;
 
-    m_CS.enter();
-
-    std::vector<CActor*> actors;
-
-    for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+    if (!bLockUpdate)
     {
-        if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+        std::vector<CActor*> actors;
+
+        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
         {
-            T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
+            if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+            {
+                T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
 
-            actors.push_back(actor);
+                actors.push_back(actor);
 
-           // actor->BroadcastEvent(Event_OnSelected);
+                // actor->BroadcastEvent(Event_OnSelected);
+            }
         }
+
+        m_editor->SelectActors(actors);
     }
-
-    m_editor->SelectActors(actors);
-
-    m_CS.leave();
 
     return bResult;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::RenameTreeObject()
 {
@@ -603,7 +604,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::RenameTreeObject()
     return bResult;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::Copy(const HTREEITEM hTreeItem)
 {
@@ -622,7 +623,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::Copy(const HTREEITEM hTreeItem)
     return bResult;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::Paste(const HTREEITEM hTreeItem)
 {
@@ -641,6 +642,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::Paste(const HTREEITEM hTreeItem)
     return bResult;
 }
 
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::BeginDragTreeObject(const LPNMTREEVIEW lpnmtv)
 {
@@ -665,7 +667,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::BeginDragTreeObject(const LPNMTREEVIEW l
     return bResult;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::MouseMoveTreeObject(const LPARAM lParam)
 {
@@ -693,7 +695,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::MouseMoveTreeObject(const LPARAM lParam)
     return bResult;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
 {
@@ -715,7 +717,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
         ReleaseCapture();
         SetCursor(m_hCursArrow);
 
-        T_CLASS * HitActor = m_ActorDrop = GetActorByData(hTreeItem);
+        T_CLASS *HitActor = m_ActorDrop = GetActorByData(hTreeItem);
 
         if (m_ActorDrop && CtrlPressed) { // Plain move means get target actor parent
             m_ActorDrop = m_ActorDrop->GetParent();
@@ -761,7 +763,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
     return true;
 }
 
-//------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::MoveObjectNearTo(T_CLASS * Picked, const T_CLASS * Target, bool Up /*= false*/)
 {
@@ -836,262 +838,68 @@ bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT mes
     return bResult;
 }
 
-
-/*
 //----------------------------------------------------------------------------------------------
-virtual LRESULT WndProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 {
-int bResult = 0;
+    bLockUpdate = true;
 
-switch (message)
-{
-case WM_NOTIFY:
-{
-{
-long lResult = HandleNotify(hwndDlg, (int)wParam, (LPNMHDR)lParam);
-if (lResult > 0)
-{
-SetWindowLong(hwndDlg, DWL_MSGRESULT, lResult);
-return TRUE;
+    const std::vector<CActor*> &selected = m_editor->GetSelected();
+
+    std::vector<CActor*> actorsWidget;
+
+    bool equal = false;
+
+    if (selected.size() == m_hwndLeft.m_aData.GetSize())
+    {
+        equal = true;
+
+        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+        {
+            if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+            {
+                T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
+
+                if (std::find(selected.begin(), selected.end(), actor) == selected.end())
+                {
+                    equal = false;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!equal)
+    {
+        // unselect all
+        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+        {
+            if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+            {
+                m_hwndLeft.SelectItem(m_hwndLeft.m_aData.GetValueAt(i).hItem, false);
+            }
+        }
+
+        for each (auto actor in selected)
+        {
+            bool bFind = false;
+
+            TTreeMapActorConstIterator iter = m_TreeMap.begin();
+            while (iter != m_TreeMap.end())
+            {
+                if (iter->first == actor)
+                {
+                    m_hwndLeft.SelectItem(iter->second, true);
+
+                    bFind = true;
+                    break;
+                }
+                ++iter;
+            }
+
+            assert(bFind);
+        }
+    }
+
+    bLockUpdate = false;
 }
-}
-
-//case IDC_TREE1:
-if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
-{
-ProcessRightClick();
-}
-
-if (((LPNMHDR)lParam)->code == TVN_KEYDOWN)
-{
-LPNMTVKEYDOWN ptvkd = (LPNMTVKEYDOWN) lParam;
-switch ((DWORD)ptvkd->wVKey)
-{
-// move Up/Down
-//case 'U': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), true); } break;
-//case 'J': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), false); } break;
-
-case VK_DELETE:{
-//DeleteTreeObject((HTREEITEM)::SendDlgItemMessage(hwndDialogBrowser, IDC_TREE1, TVM_GETNEXTITEM, TVGN_CARET, 0));
-}break;
-
-case VK_F2:{
-RenameTreeObject();
-}break;
-}break;
-}
-
-// select item handler
-if (((LPNMHDR)lParam)->code == TVN_SELCHANGED)
-{
-bool bSelChanged = SelChangedTreeObject();
-
-if (!bSelChanged)
-Update(0, Event_OnSelected);
-
-return bSelChanged;
-}
-
-if (((LPNMHDR)lParam)->code == TVN_BEGINDRAG)
-{
-return BeginDragTreeObject((LPNMTREEVIEW)lParam);
-}
-}break;
-
-case WM_SIZING:
-case WM_SIZE:
-{
-}break;
-
-case WM_MOUSEMOVE:
-{
-MouseMoveTreeObject(lParam);
-}break;
-
-case WM_LBUTTONUP:
-{
-EndDragTreeObject();
-}break;
-
-case WM_COMMAND:
-// process context menu
-if (pfnContextMenuProcessor(GetHWND(), message, wParam, lParam)){
-break;
-}
-switch (LOWORD(wParam))
-{
-case IDOK:
-// Fall through.
-case IDCANCEL:
-//EndDialog(hwndDlg, wParam);
-return TRUE;
-}
-break;
-
-case WM_USER_REMOVEOBJECT:
-{
-::LockWindowUpdate(hWnd);
-
-WndRemoveObject();
-
-::LockWindowUpdate(0);
-}break;
-
-case WM_USER_SELECTOBJECT:
-{
-WndSelectObject();
-}break;
-
-case WM_USER_RENAMEOBJECT:
-{
-WndRenameObject();
-}break;
-
-// old
-case WM_USER_INSERTOBJECT:
-{
-WndProcessInsertObject();
-bResult = 1;
-}break;
-
-case WM_USER_REMOVEOBJECT_BRWSR:
-{
-WndRemoveObject();
-bResult = 1;
-}break;
-
-case WM_USER_SELECTOBJECT_BRWSR:
-{
-WndSelectObject();
-bResult = 1;
-}break;
-
-case WM_USER_RENAMEOBJECT_BRWSR:
-{
-WndRenameObject();
-bResult = 1;
-}break;
-
-case WM_USER_MOVEOBJECT:
-{
-WndMoveObject();
-bResult = 1;
-}break;
-
-case WM_USER_REARRANGE:
-{
-WndReArrange();
-bResult = 1;
-}break;
-
-default:
-break;
-};
-return bResult;
-}
-
-//------------------------------------------------------------------------
-long HandleNotify(HWND hWndDlg, int nIDCtrl, LPNMHDR pNMHDR)
-{
-if (pNMHDR->hwndFrom == m_hwndTree)
-{
-if (pNMHDR->code == NM_CUSTOMDRAW)
-{
-LPNMTVCUSTOMDRAW pNMTVCD = (LPNMTVCUSTOMDRAW) pNMHDR;
-HWND hWndTreeView = pNMHDR->hwndFrom;
-
-return HandleCustomDraw(hWndTreeView, pNMTVCD);
-}
-}
-return 0;
-}
-
-//------------------------------------------------------------------------
-long HandleCustomDraw(HWND hWndTreeView, LPNMTVCUSTOMDRAW pNMTVCD)
-{
-if (pNMTVCD == NULL){
-return -1;
-}
-switch (pNMTVCD->nmcd.dwDrawStage)
-{
-case CDDS_PREPAINT:
-return (CDRF_NOTIFYPOSTPAINT | CDRF_NOTIFYITEMDRAW);
-
-case CDDS_ITEMPREPAINT:
-{
-if (pNMTVCD->nmcd.uItemState & CDIS_SELECTED){ // selected
-pNMTVCD->clrTextBk = RGB(200, 200, 200);
-}
-return (CDRF_NOTIFYPOSTPAINT | CDRF_NEWFONT);
-}
-case CDDS_ITEMPOSTPAINT:
-{
-return CDRF_DODEFAULT;
-}
-break;
-default:
-break;
-}
-return 0;
-}
-
-//----------------------------------------------------------------------------------------------
-static BOOL SubClassProcTree(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
-{
-Win32ObjectBrowserWidget *pBrowser = reinterpret_cast<Win32ObjectBrowserWidget*>(GetWindowLong(hWnd, GWL_USERDATA));
-
-switch (messg)
-{
-case WM_CREATE:
-{
-}break;
-
-case WM_COMMAND:
-{
-if (pBrowser->ContextMenuProcessor(hWnd, messg, wParam, lParam)){
-break;
-}
-}break;
-
-case WM_MOUSEWHEEL:
-case WM_VSCROLL:
-{
-
-}break;
-
-case WM_MOUSEMOVE:
-{
-//pBrowser->MouseMoveTreeObject(lParam);
-}break;
-
-case WM_LBUTTONUP:
-{
-//pBrowser->EndDragTreeObject();
-}break;
-
-case WM_NOTIFY:
-{
-if (((LPNMHDR)lParam)->code == TVN_KEYDOWN)
-{
-LPNMTVKEYDOWN ptvkd = (LPNMTVKEYDOWN) lParam;
-switch ((DWORD)ptvkd->wVKey)
-{
-// move Up/Down
-//case 'U': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), true); } break;
-//case 'J': { MoveObjectTree(TreeView_GetSelection(::GetDlgItem(hwndDialogBrowser, IDC_TREE1)), false); } break;
-
-case VK_DELETE:{
-//DeleteTreeObject((HTREEITEM)::SendDlgItemMessage(hwndDialogBrowser, IDC_TREE1, TVM_GETNEXTITEM, TVGN_CARET, 0));
-}break;
-
-case VK_F2:{
-pBrowser->RenameTreeObject();
-}break;
-}break;
-}
-}break;
-}
-
-// Call the original window procedure for default processing.
-return CallWindowProc(pBrowser->m_lpfnTreeProc, hWnd, messg, wParam, lParam);
-}*/

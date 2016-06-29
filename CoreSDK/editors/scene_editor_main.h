@@ -62,8 +62,6 @@ namespace editors
 
     protected:
     private:
-        std::vector<CActor*> m_selectionList;
-
         unsigned int m_MousePosPrevX;
         unsigned int m_MousePosPrevY;
 

@@ -72,6 +72,8 @@ public:
     */
     virtual void    SelectActors(const std::vector<CActor*> &actors) = 0;
 
+    virtual const std::vector<CActor*>& GetSelected() const = 0;
+
     /*!
     * commits deselect command. 
     * does not have effect if no previous actors selected
