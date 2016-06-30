@@ -276,6 +276,8 @@ namespace core_sdk_api
                 {
                     m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisY * c) + (axisZ * c));
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+                    m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+                    m_SUserStartControllerPos = controllerPos;
 
                     SetControlMode(SOEvent_ControlLockYZ);
                     UpdateSelectionState(SOEvent_ControlLockYZ, controllerPos);
@@ -292,6 +294,8 @@ namespace core_sdk_api
                 {
                     m_SUserStartMouseDisplace = (m_ViewPoint + viewDirection * t) - (controllerPos + (axisX * c) + (axisZ * c));
                     m_SUserStartMousePosition = Vector(position.x, position.y, 0.f);
+                    m_SUserAccumRotation.Set(0.f, 0.f, 0.f);
+                    m_SUserStartControllerPos = controllerPos;
 
                     SetControlMode(SOEvent_ControlLockXZ);
                     UpdateSelectionState(SOEvent_ControlLockXZ, controllerPos);

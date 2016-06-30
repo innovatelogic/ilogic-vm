@@ -33,8 +33,6 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
         m_hwndTree = m_hwndLeft.Create(hWndParent, rect, NULL, 
             WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | ES_READONLY | ES_AUTOHSCROLL | ES_AUTOVSCROLL | ES_MULTILINE);
 
-        //m_hwndLeft.SubclassWindow(m_hwndTree);
-
 		SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
 
 		TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
@@ -842,6 +840,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT mes
 template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 {
+    // TODO: optimize
     bLockUpdate = true;
 
     const std::vector<CActor*> &selected = m_editor->GetSelected();
@@ -900,6 +899,12 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
             assert(bFind);
         }
     }
-
     bLockUpdate = false;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::MoveWindow(int x, int y, int width, int height)
+{
+    m_hwndLeft.MoveWindow(x, y, width, height);
 }

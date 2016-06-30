@@ -109,6 +109,7 @@ public:
 		SAFE_DELETE(m_pMenuCtrl);
 	}
 
+    //----------------------------------------------------------------------------------------------
     void SetAppMain(CCoreSDK *app) 
     { 
         m_pPropGrid->SetAppMain(app);

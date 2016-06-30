@@ -77,9 +77,9 @@ public:
 
     void WndReArrange();
 
-    int DirectInvokeActor(const T_CLASS * Sender);
+    int DirectInvokeActor(const T_CLASS *sender);
 
-    int	DirectClearActor(const T_CLASS * Sender);
+    int	DirectClearActor(const T_CLASS *sender);
 
     T_CLASS* GetActorByData(const HTREEITEM lpnmtv);
 
@@ -102,6 +102,8 @@ public:
 
     // notificatofs
     void OnNotifySelected();
+
+    void MoveWindow(int x, int y, int width, int height);
 
 //----------------------------------------------------------------------------------------------
 private:
