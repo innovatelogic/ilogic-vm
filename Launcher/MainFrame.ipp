@@ -97,6 +97,7 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     m_pRightTopPane->SetAppMain(m_pAppMain);
     m_pAssetBrowserFrame->SetAppMain(m_pAppMain);
 
+    // create central pane
     m_hWndClient = CreateClient();
 
     m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
