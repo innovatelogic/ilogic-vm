@@ -138,21 +138,25 @@ namespace editors
         return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
     }
 
+    //----------------------------------------------------------------------------------------------
     bool EditorScene3D::GetWireframeMode() const
     {
         return false;// TODO
     }
 
+    //----------------------------------------------------------------------------------------------
     void EditorScene3D::SetWireframeMode(bool flag)
     {
         // TODO
     }
 
+    //----------------------------------------------------------------------------------------------
     bool EditorScene3D::GetObjectBoundsVisible() const
     {
         return false;
     }
 
+    //----------------------------------------------------------------------------------------------
     void EditorScene3D::SetObjectBoundsVisible(bool flag)
     {
 

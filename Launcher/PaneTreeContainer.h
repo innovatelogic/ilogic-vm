@@ -21,10 +21,8 @@ public:
 		MESSAGE_HANDLER(WM_USER_INSERTOBJECT, OnAppInsertObject)
 		MESSAGE_HANDLER(WM_USER_REMOVEOBJECT_BRWSR, OnAppRemoveObject)
 		MESSAGE_HANDLER(WM_USER_RENAMEOBJECT_BRWSR, OnAppRenameObject)
-       // COMMAND_ID_HANDLER(TVN_ITEMSELECTED, OnTreeViewSelected)
-        //ON_NOTIFY(TVN_ITEMSELECTED, OnTreeViewSelected);
+        MESSAGE_HANDLER(WM_SIZE, OnSize)
 		MESSAGE_HANDLER(WM_NOTIFY, OnAppOnNotify)
-        //CHAIN_MSG_MAP_MEMBER(m_pTreeBrowser->GetHWndTree())
 		CHAIN_MSG_MAP(CPaneContainer)
 		REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
@@ -83,6 +81,9 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
+        RECT rcDefault = { 0, 25, 200, 200 };
+        m_pTabCtrl.Create(m_hWnd, rcDefault, 0, WS_CHILD | WS_VISIBLE);
+
         m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
             m_hWnd,
             m_pfnContextMenu,
@@ -97,6 +98,8 @@ public:
 
         // assign the edit to the bottom container
         SetClient(m_pTreeBrowser->GetHWndTree());
+
+        AddTabPage("Aspect", 0); // add by default
 
 		return 0;
 	}
@@ -171,7 +174,42 @@ public:
         m_pTreeBrowser->OnNotifySelected();
     }
 
+    //----------------------------------------------------------------------------------------------
+    bool AddTabPage(const char *name, int index /*= 0*/)
+    {
+        wchar_t wbuf[256] = { 0 }; // temp buffers
+        char ascii[256] = { 0 };
+
+        MultiByteToWideChar(CP_ACP, 0, name, INDEX_NONE, wbuf, 256);
+
+        TCITEM tc = { 0 };
+        tc.mask = TCIF_TEXT;
+        tc.pszText = wbuf;
+        m_pTabCtrl.InsertItem(index, &tc);
+
+        return true;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    LRESULT OnSize(UINT, WPARAM, LPARAM, BOOL& bHendled)
+    {
+        const int tabHeight = 40;
+
+        RECT rc;
+        GetClientRect(&rc);
+
+        const int width = rc.right - rc.top;
+        const int height = rc.bottom - rc.top;
+
+        m_pTabCtrl.MoveWindow(0, 0, width, tabHeight);
+        m_pTreeBrowser->MoveWindow(0, tabHeight, width, height - tabHeight);
+
+        bHendled = TRUE;
+        return 0;
+    }
+
 private:
+    CTabCtrl    m_pTabCtrl;
 	Win32ObjectBrowserWidget<T_CLASS> *m_pTreeBrowser;
 
 	pContextMenuFunction	m_pfnContextMenu;
