@@ -78,6 +78,7 @@ set(SOURCE
 	PaneListView.h
 	PanePropertyContainer.h
 	PaneTreeContainer.h
+	PaneTreeContainer.ipp
 	PaneTreeView.h
 	PaneViewAssetContainer.h
 	PaneViewContrainer.h

@@ -10,6 +10,8 @@
 #define WM_USER_MOVEOBJECT					WM_APP+5
 #define WM_USER_REARRANGE					WM_APP+6
 
+class Registry;
+
 template<class T_CLASS>
 class Win32ObjectBrowserWidget
 {
@@ -105,9 +107,15 @@ public:
 
     void MoveWindow(int x, int y, int width, int height);
 
+    void SetRoot(T_CLASS  *root) { m_pRoot = root;  }
+
+    bool IsChildOfRoot(const T_CLASS  *root);
+
 //----------------------------------------------------------------------------------------------
 private:
-	class Registry			*m_pRegistry;
+
+    const T_CLASS           *m_pRoot;
+	Registry			    *m_pRegistry;
 
 	TVecActorChild			m_ActorAddList;
 	std::vector<HTREEITEM>	m_HTreeClearList;
@@ -144,7 +152,6 @@ private:
     std::shared_ptr<editors::IEditor> m_editor;
 
 public:
-	WNDPROC					m_lpfnTreeProc;
 	CALLBACK_FN				m_pfnInvokeObject;
 	CALLBACK_FN				m_pfnDirectInvokeObject;
 	CALLBACK_FN				m_pfnClearObject;

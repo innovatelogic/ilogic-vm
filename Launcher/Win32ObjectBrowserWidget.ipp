@@ -12,7 +12,8 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 							 CALLBACK_FN pfnDirectClearObject,
 							 HIMAGELIST hImageList,
 							 SRenderContext *pRenderContext = 0)
-	: m_editor(nullptr)
+	: m_pRoot(nullptr)
+    , m_editor(nullptr)
     , m_pRegistry(nullptr)
 	, m_hwndParent(hWndParent)
 	, m_pfnContextMenu(pfMenu)
@@ -36,8 +37,6 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 		SetWindowLong(m_hwndTree, GWL_USERDATA, (LONG)this);
 
 		TreeView_SetImageList(m_hwndTree, hImageList, TVSIL_NORMAL);
-
-		m_lpfnTreeProc = (WNDPROC) GetWindowLong(m_hwndTree, GWL_WNDPROC);
 
 		m_hCursHand = LoadCursor(NULL, IDC_HAND);
 		m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
@@ -64,11 +63,9 @@ int Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
 {
     int bResult = 0;
 
-    //m_CS.enter();
-
     if (m_pRegistry) // TODO: fragile code REDESIGN
     {
-        if (m_pRegistry->IsEditorVisible(pSender->GetType()))
+        if (IsChildOfRoot(pSender) && m_pRegistry->IsEditorVisible(pSender->GetType()))
         {
             T_CLASS * pParent = pSender->GetParent();
 
@@ -85,8 +82,6 @@ int Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
             bResult = 1;
         }
     }
-
-    //m_CS.leave();
 
     return bResult;
 }
@@ -459,8 +454,7 @@ int Win32ObjectBrowserWidget<T_CLASS>::DirectInvokeActor(const T_CLASS * Sender)
 
     m_CS.enter();
 
-    if (m_hwndTree &&
-        !dynamic_cast<const Brush_AbstractInterface*>(Sender) && m_pRegistry->IsEditorVisible(Sender->GetType()))
+    if (m_hwndTree && m_pRegistry->IsEditorVisible(Sender->GetType()))
     {
         int IndexBitmap = m_pfnGetResourceIconIndex(Sender->GetType());
 
@@ -907,4 +901,11 @@ template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::MoveWindow(int x, int y, int width, int height)
 {
     m_hwndLeft.MoveWindow(x, y, width, height);
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+bool Win32ObjectBrowserWidget<T_CLASS>::IsChildOfRoot(const T_CLASS *actor)
+{
+    return m_pRoot && (m_pRoot != actor) && CActor::IsChildOf(m_pRoot, actor);
 }
