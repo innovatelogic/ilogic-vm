@@ -242,6 +242,12 @@ public:
 
     static CActor* GetActorByFullPath(const std::string &paht, const CActor *root);
 
+    /*!  @brief actor's child
+     *   expose actor's child for internal use only  
+     *   @return const reference to child array
+    */
+    const TVecActorChild& childs() const { return m_ChildNodes; }
+
 private:
 	template <class T> void SerializeImpl(T &stream, bool bSaveAsExternal = false)
 	{

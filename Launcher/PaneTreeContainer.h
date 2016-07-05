@@ -63,8 +63,11 @@ public:
 
 private:
     CTabCtrl    m_pTabCtrl;
+
+public:
 	Win32ObjectBrowserWidget<T_CLASS> *m_pTreeBrowser;
 
+private:
 	pContextMenuFunction	m_pfnContextMenu;
 	pContextMenuProcessor	m_pfnContextMenuProcessor;
 	pGetResourceIconIndex	m_pfnGetResourceIconIndex;
@@ -77,8 +80,9 @@ private:
 
 	HIMAGELIST m_hImageList;
 
+public:
 	class SRenderContext *m_pRenderContext;
-
+private:
     std::shared_ptr<editors::IEditor> m_editor;
 };
 

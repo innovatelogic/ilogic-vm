@@ -53,7 +53,7 @@ public:
 
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
-    int InvokeActor(const T_CLASS *pSender);
+    void InvokeActor(const T_CLASS *pSender);
 
     void Update(const T_CLASS *pSender, ESystemEventID EventId);
 
@@ -111,6 +111,12 @@ public:
 
     bool IsChildOfRoot(const T_CLASS  *root);
 
+    // model management
+    void ClearModel();
+    void FillModel();
+
+    void LockModel(bool lock) { m_bLockModel = lock;  }
+
 //----------------------------------------------------------------------------------------------
 private:
 
@@ -150,6 +156,8 @@ private:
 	SRenderContext			*m_pRenderContext;
 
     std::shared_ptr<editors::IEditor> m_editor;
+
+    bool m_bLockModel;
 
 public:
 	CALLBACK_FN				m_pfnInvokeObject;

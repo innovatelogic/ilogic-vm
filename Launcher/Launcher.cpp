@@ -148,7 +148,9 @@ int CALLBACK_ActorSubscribeEvents(const CActor *pSender)
 //------------------------------------------------------------------------
 int GCALLBACK_InvokeActor(const CActor *pSender)
 {
-	return pGTreeBrowser->InvokeActor(pSender);
+	pGTreeBrowser->InvokeActor(pSender);
+
+    return 0;
 }
 
 //------------------------------------------------------------------------

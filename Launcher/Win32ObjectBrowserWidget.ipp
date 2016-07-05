@@ -27,6 +27,7 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 	, m_pfnDirectClearObject(pfnDirectClearObject)
 	, m_pRenderContext(pRenderContext)
     , bLockUpdate(false)
+    , m_bLockModel(true)
 	{
 		RECT rect;
 		GetClientRect(hWndParent, &rect);
@@ -59,13 +60,11 @@ void Win32ObjectBrowserWidget<T_CLASS>::SetEditor(editors::TIEditor editor)
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-int Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
+void Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
 {
-    int bResult = 0;
-
     if (m_pRegistry) // TODO: fragile code REDESIGN
     {
-        if (IsChildOfRoot(pSender) && m_pRegistry->IsEditorVisible(pSender->GetType()))
+        if (!m_bLockModel && IsChildOfRoot(pSender) && m_pRegistry->IsEditorVisible(pSender->GetType()))
         {
             T_CLASS * pParent = pSender->GetParent();
 
@@ -78,12 +77,8 @@ int Win32ObjectBrowserWidget<T_CLASS>::InvokeActor(const T_CLASS *pSender)
             }
 
             ::PostMessage(m_hwndParent, WM_USER_INSERTOBJECT, 0, 0);
-
-            bResult = 1;
         }
     }
-
-    return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -907,5 +902,43 @@ void Win32ObjectBrowserWidget<T_CLASS>::MoveWindow(int x, int y, int width, int 
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::IsChildOfRoot(const T_CLASS *actor)
 {
-    return m_pRoot && (m_pRoot != actor) && CActor::IsChildOf(m_pRoot, actor);
+    return m_pRoot && (m_pRoot != actor) && T_CLASS::IsChildOf(m_pRoot, actor);
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::ClearModel()
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::FillModel()
+{
+    ClearModel();
+
+    if (!m_bLockModel && m_pRoot)
+    {
+        std::stack<const T_CLASS*> astack;
+
+        for each (const T_CLASS *item in m_pRoot->childs())
+        {
+            astack.push(item);
+        }
+
+        while (!astack.empty())
+        {
+            const T_CLASS *top = astack.top();
+
+            astack.pop();
+
+            InvokeActor(top);
+
+            for each (const auto *item in top->childs())
+            {
+                astack.push(item);
+            }
+        }
+    }
 }

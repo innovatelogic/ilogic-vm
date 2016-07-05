@@ -296,7 +296,13 @@ LRESULT CMainFrame<T_CLASS>::OnFileOpen(WORD, WORD, HWND, BOOL&)
 
     if (GetOpenFileName(&ofn))
     {
+        m_pRightBottomPane->m_pTreeBrowser->LockModel(true);
+
         m_editor->Open(szFileName);
+        
+        m_pRightBottomPane->m_pTreeBrowser->LockModel(false);
+
+        m_pRightBottomPane->m_pTreeBrowser->FillModel();
     }
     return 0;
 }
