@@ -1,13 +1,15 @@
 
 #pragma once
 
+#include "module.h"
 #include "editor.h"
-#include "../game_types.h"
-#include "../CoreSDK.h"
+
+class CActor;
+class CCoreSDK;
 
 namespace editors
 {
-    class CORESDK_API SceneEditorMain : public EditorBase
+    class DLLEXPORT SceneEditorMain : public EditorBase
     {
     public:
         SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer);

@@ -1,9 +1,10 @@
-#include "scene_editor.h"
+
+#include "RenderSDK.h"
 #include "ModelViewer.h"
 #include "Camera.h"
 #include "CoreSDK.h"
-#include "RenderSDK.h"
 #include "CameraManager.h"
+#include "scene_editor.h"
 
 namespace editors
 {
@@ -19,6 +20,24 @@ namespace editors
     EditorScene3D::~EditorScene3D()
     {
 
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::Initialize()
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::Update(float deltaTime)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    CCoreSDK* EditorScene3D::GetApp() const
+    {
+        return m_pViewer->GetAppMain();
     }
 
     //----------------------------------------------------------------------------------------------
@@ -83,7 +102,25 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void EditorScene3D::MouseMove(size_t dx, size_t dy, int ModifKey)
+    void EditorScene3D::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey /*= 0*/)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::MouseWheel(float ds, int x, int y)
+    {
+        //m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::InputKey(const EventInput &InputData)
     {
 
     }
@@ -100,5 +137,83 @@ namespace editors
             actor->GetAppMain()->GetFnOnCreate()(actor, ESystemEventID::Event_ObjectGenerated);
         }
         return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetWireframeMode() const
+    {
+        return false;// TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetWireframeMode(bool flag)
+    {
+        // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetObjectBoundsVisible() const
+    {
+        return false;
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetObjectBoundsVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetSpartialSubdivisionVisible() const
+    {
+        return m_pViewer->GetAppMain()->GetSparitalSubdivisionVisible();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetSpartialSubdivisionVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetGridVisible() const
+    {
+        return m_pViewer->GetAppMain()->GetShowGrid();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetGridVisible(bool flag)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    bool EditorScene3D::GetCollisionDebugVisible() const
+    {
+        return false; // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetCollisionDebugVisible(bool flag)
+    {
+        // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    EObjEditControlMode	EditorScene3D::GetEditControlMode() const
+    {
+        return m_pViewer->GetAppMain()->GetEditControlMode();
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void EditorScene3D::SetEditControlMode(EObjEditControlMode mode)
+    {
+        // TODO
+    }
+
+    //----------------------------------------------------------------------------------------------
+    IDrawInterface* EditorScene3D::GetByActor(const CActor *actor) const
+    {
+        return nullptr;
     }
 }

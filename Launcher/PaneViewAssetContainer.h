@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "editors/scene_editor.h"
+#include "scene_editor.h"
 
 //----------------------------------------------------------------------------------------------
 //

@@ -1,15 +1,17 @@
-#include "scene_editor_main.h"
+
 #include "D3DDriver.h"
-#include "RenderSDK.h"
-#include "../ViewportInterface.h"
-#include "../ViewportManager.h"
-#include "../CameraManager.h"
-#include "../Explorer.h"
-#include "../Explorer3D.h"
+//#include "RenderSDK.h"
+#include "ViewportInterface.h"
+#include "ViewportManager.h"
+#include "CameraManager.h"
+#include "Explorer.h"
+#include "Explorer3D.h"
 #include "command_base.h"
-#include "../transform_history_traits.h"
+#include "transform_history_traits.h"
+#include "CoreSDK.h"
 #include <memory>
 #include <algorithm>
+#include "scene_editor_main.h"
 
 namespace editors
 {

@@ -6,6 +6,7 @@ add_definitions(-DUNICODE -D_UNICODE)
 
 set(BULLET_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/common/SDK/bullet/bullet3-2.83.6/src/)
 
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${BULLET_INCLUDE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
@@ -41,7 +42,6 @@ set(LIBRARIES CommonBase
 			  Foundation
 			  RenderSDK
 			  nv_math
-			  Editors
 			  ${BULLET_LIBRARIES}
 			  ${TINY_XML_LIBRARY}
 			  ${FREETYPE_LIBRARIES})
@@ -290,16 +290,9 @@ set(SOURCE_API
 	include/NpActorTemplate.h
 )
 
-set(SOURCE_EDITORS 
-	editors/scene_editor.h
-	editors/scene_editor.cpp
-	editors/scene_editor_main.h
-	editors/scene_editor_main.cpp)
-
 source_group("API" FILES ${SOURCE_API})
-source_group("Editors" FILES ${SOURCE_EDITORS})
 	
-add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API} ${SOURCE_EDITORS})
+add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API})
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 

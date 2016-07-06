@@ -4,8 +4,8 @@
 #include "../command_base.h"
 #include "../command_buffer.h"
 #include "../editor.h"
-//#include "../scene_editor.h"
-/*
+//#include "scene_editor.h"
+
 #include "Actor.h"
 
 #include <gmock/gmock.h>
@@ -16,10 +16,10 @@ using ::testing::Return;
 
 using namespace editors;
 //----------------------------------------------------------------------------------------------
-TEST(EditorTest, TestUndoRedoCall)
+/*TEST(EditorTest, TestUndoRedoCall)
 {
     MockCommandBuffer buffer;
-    EditorScene3D editor(nullptr, &buffer);
+    editors::EditorScene3D editor(nullptr, &buffer);
 
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Undo()).Times(AtLeast(1));
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Redo()).Times(AtLeast(1));

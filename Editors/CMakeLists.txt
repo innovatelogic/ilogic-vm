@@ -7,6 +7,7 @@ add_definitions(-DLIB_COMPILE)
 add_definitions(-DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 include_directories(${COMMON_SDK_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googlemock/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
@@ -29,18 +30,27 @@ set(SOURCE ieditor.h
 			command_base.h
 			)
 
+set(SOURCE_EDITORS 
+	scene_editor.h
+	scene_editor.cpp
+	scene_editor_main.h
+	scene_editor_main.cpp)
+
 set(LIBRARIES	CommonBase
-				Foundation 
+				Foundation
 				D3DDriver
 				RenderSDK
+				CoreSDK
 				)
+
+source_group("Editors" FILES ${SOURCE_EDITORS})
 
 #TODO: add optional linking
 set(LIBRARIES ${LIBRARIES} ${GTEST_BOTH_LIBRARIES} ${GMOCK_BOTH_LIBRARIES})
 
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCE})
+add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_EDITORS})
 	
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${FREETYPE_LIBRARIES})
 	

@@ -5,7 +5,7 @@
 
 #include "IAssetBrowserFrame.h"
 #include "ToolbarControl.h"
-#include "editors/scene_editor.h"
+#include "scene_editor.h"
 
 //template<class T_CLASS> class CVoid {};
 //template<class T_CLASS> struct CVoid_ {}; 

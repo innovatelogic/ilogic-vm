@@ -1,7 +1,7 @@
 #pragma once
 
+#include "module.h" 
 #include "editor.h"
-#include "../game_types.h" 
 
 class SRenderContext;
 class CComp_EnvSceneInfo;
@@ -17,7 +17,7 @@ namespace editors
         EEditorScene2D,
     };
 
-    class CORESDK_API EditorScene3D : public EditorBase
+    class DLLEXPORT EditorScene3D : public EditorBase
     {
     public:
         EditorScene3D(CModelViewer *viewer, ICommandBuffer *buffer);
