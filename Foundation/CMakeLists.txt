@@ -49,6 +49,7 @@ set(SOURCE
 	UtContainer.h
 	UtMemory.h
 	xmlparser.h
+	IEventManager.h
 )
 
 set(SOURCE_API

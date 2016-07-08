@@ -11,7 +11,6 @@ public:
 	 * Constructor / Destructor
 	 */
     CActor(const CObjectAbstract *pParent);
-	CActor(const CActor &Source);
     virtual ~CActor();
 
 	virtual bool OnPrePropertyChange(const char *PropertyName);
@@ -194,7 +193,9 @@ public:
 	TVecActorChildIterator	GetChildIteratorNext(const TVecActorChildIterator& Iterator, std::string CLASS_TYPE = "");
 	TVecActorChildIterator	GetChildIteratorPrev(const TVecActorChildIterator& Iterator, std::string CLASS_TYPE = "");
 
-
+    /*!
+    *
+    */
 	void	BroadcastEvent(ESystemEventID Id);
 	void	BroadcastEvent(ESystemEventID Id, CActor *pParam);
 

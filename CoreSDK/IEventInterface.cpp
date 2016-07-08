@@ -14,4 +14,16 @@ namespace core_sdk_api
     {
 
     }
+
+    //----------------------------------------------------------------------------------------------
+    void IEventInterface::RegisterEventInterface(const CObjectAbstract *src, const CObjectAbstract *parent)
+    {
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+    void IEventInterface::UnregisterEventInterface()
+    {
+
+    }
 }

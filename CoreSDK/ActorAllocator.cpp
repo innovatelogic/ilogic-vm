@@ -24,35 +24,6 @@ ActorAllocator::ActorAllocator(const CObjectAbstract *parent)
 }
 
 //----------------------------------------------------------------------------------------------
-/*ActorAllocator::ActorAllocator(const ActorAllocator& Source)
-: Super(Source)
-, RenderSDKInterface(((CCoreSDK*)Source.GetUserData())->GetRenderSDK())
-{
-	if (this != &Source)
-	{
-        m_pAppMain = Source.m_pAppMain;
-
-		// copy childs
-		TVecActorChild::const_iterator Iter = Source.m_ChildNodes.begin();
-
-		while (Iter != Source.m_ChildNodes.end())
-		{
-			if (!(*Iter)->IsTransient())
-			{
-				CActor * NewObject = CLONE_OBJECT(CActor, *Iter, (*Iter)->GetName(), this);
-
-				if (NewObject)
-				{
-					NewObject->SetParent(this);
-					AddChildNode(NewObject);
-				}
-			}
-			Iter++;
-		}
-	}
-}*/
-
-//----------------------------------------------------------------------------------------------
 ActorAllocator::~ActorAllocator()
 {
     ;//
@@ -86,13 +57,16 @@ void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 }
 
 //----------------------------------------------------------------------------------------------
-/*bool ActorAllocator::DoEventReleased(const MouseInputData &input)
+/*void ActorAllocator::OnEventNotify(unsigned int id)
 {
-	//return Super::DoEventReleased(InputData);
 
-    return false;
+}
+
+//----------------------------------------------------------------------------------------------
+void ActorAllocator::OnEventNotify(unsigned int Id, IObjectAbstract *param)
+{
+
 }*/
-
 
 //----------------------------------------------------------------------------------------------
 /*

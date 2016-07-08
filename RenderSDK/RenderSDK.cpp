@@ -9,9 +9,8 @@
 // }
 
 //----------------------------------------------------------------------------------------------
-CRenderSDK::CRenderSDK(const CObjectAbstract *pParent)
-: Super(pParent)
-, m_pRenderDriver(new D3DDriver())
+CRenderSDK::CRenderSDK()
+: m_pRenderDriver(new D3DDriver())
 , ActiveStack(0)
 , bFlagSwapStack(false)
 , RenderCPS(0)

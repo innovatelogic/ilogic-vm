@@ -22,6 +22,7 @@
 #include "Property.h"
 #include "ObjectFactory.h"
 #include "IObjectAbstract.h"
+#include "IEventManager.h"
 
 class EXPORT CObjectAbstract : public IObjectAbstract
 {
@@ -33,8 +34,7 @@ public:
 	/** 
 	 * Constructor/Destructor
 	 */
-	CObjectAbstract(const CObjectAbstract *Parent);
-	CObjectAbstract(const CObjectAbstract &Source);
+	CObjectAbstract(const CObjectAbstract *parent);
 	virtual ~CObjectAbstract();
 	
 	/** 
@@ -247,9 +247,6 @@ public:
 	bool			RegisterCollisionEntity(class ICollisionInterface *pPtr);
 	bool			UnregisterCollisionEntity(class ICollisionInterface *pPtr);
 
-// 	void SetScriptObject(luabind::adl::object *LuaObject);
-// 	luabind::adl::object *GetScriptObject();
-
 	void			SetPlainDeserializationPos(unsigned int Value) { m_nPlainDeserializationPos = Value; }
 	unsigned int	GetPlainDeserializationPos() const { return m_nPlainDeserializationPos; }
 
@@ -317,6 +314,8 @@ public:
 
 private:
 	class IListener		*m_pListener;
+
+    oes::foundation::IEventManager *m_pEventManager;
 };
 
 //------------------------------------------------------------------------

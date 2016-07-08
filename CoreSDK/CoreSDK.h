@@ -18,9 +18,9 @@
 #pragma once
 
 #include "game_types.h"
-#include "../Foundation/StdafxFoundation.h"
+#include "StdafxFoundation.h"
 #include "ObjectAbstract.h"
-
+#include "IEventManager.h"
 #include "include/api/BaseActor.h"
 #include "include/api/PxCamera.h"
 
@@ -178,6 +178,7 @@ private:
 	class CUISceneManager			*m_pUISceneManager;
 	class CSceneManager				*m_pSceneManager;
 	class CRemoteControlManager		*m_pRemoteControlMgr;
+    std::shared_ptr<oes::foundation::IEventManager>  m_eventManager;
 
 	TVCommandList					ListCommands;
 	TVCommandList					ListSubCommands;

@@ -55,6 +55,18 @@ void CRenderObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 }
 
 //----------------------------------------------------------------------------------------------
+/*void CRenderObject::OnEventNotify(unsigned int id)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+void CRenderObject::OnEventNotify(unsigned int Id, IObjectAbstract *param)
+{
+
+}*/
+
+//----------------------------------------------------------------------------------------------
 void CRenderObject::Render() const
 {
 

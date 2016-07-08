@@ -125,10 +125,10 @@ CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 , m_nPlainDeserializationPos(0)
 , m_bExternal(V_FALSE)
 , m_FilenameTag("")
-, m_pUserData(0)
-, m_pListener(0)
+, m_pUserData(nullptr)
+, m_pListener(nullptr)
+, m_pEventManager(nullptr)
 {
-
     static long g_uID = 0;
     m_uID = g_uID++;
 
@@ -137,34 +137,10 @@ CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 	if (parent)
 	{
 		m_pUserData			= parent->m_pUserData;
-
 		m_pArrayUserData[0] = parent->m_pArrayUserData[0];
 		m_pArrayUserData[1] = parent->m_pArrayUserData[1];
 		m_pArrayUserData[2] = parent->m_pArrayUserData[2];
-	}
-}
-
-//----------------------------------------------------------------------------------------------
-CObjectAbstract::CObjectAbstract(const CObjectAbstract &Source)
-: m_bPendingToDelete(false)
-, m_bIsInitialize(false)
-, m_bGenerationFinished(0)
-, m_nPlainDeserializationPos(0)
-, m_pListener(0)
-{  
-	if (this != &Source)
-	{
-		m_TypeId	= Source.GetTypeId();
-		m_Type		= Source.GetType();
-		m_Name		= Source.m_Name;
-		m_bTransient= Source.m_bTransient;
-		m_bExternal	= Source.m_bExternal;
-		m_FilenameTag = Source.m_FilenameTag;
-		m_pUserData = Source.m_pUserData;
-
-		m_pArrayUserData[0] = Source.m_pArrayUserData[0];
-		m_pArrayUserData[1] = Source.m_pArrayUserData[1];
-		m_pArrayUserData[2] = Source.m_pArrayUserData[2];
+        m_pEventManager     = parent->m_pEventManager;
 	}
 }
 
@@ -617,12 +593,6 @@ void CObjectAbstract::PostLink()
 }
 
 //----------------------------------------------------------------------------------------------
-/*NObjectFactory::TClassFactory * CObjectAbstract::GetClassFactory()
-{
-	return NObjectFactory::TGlobalClassFactory::GetInstance();
-}*/
-
-//----------------------------------------------------------------------------------------------
 bool CObjectAbstract::IsNameEqual(const char *Value)
 {
 	return !strcmp(Value, m_Name.c_str());
@@ -662,28 +632,6 @@ void* CObjectAbstract::GetUserData(unsigned int Index /*= INDEX_NONE*/)	const
 	}
 	return ptrOut;
 }
-
-// //----------------------------------------------------------------------------------------------
-// void CObjectAbstract::SetScriptObject(luabind::adl::object *LuaObject)
-// {
-// 	m_ScriptObject = LuaObject; 
-// }
-//----------------------------------------------------------------------------------------------
-// luabind::adl::object * CObjectAbstract::GetScriptObject()
-// {
-// 	if( m_ScriptObject == 0 )
-// 	{
-// 		m_ScriptObject = NScriptObjectCaster::Cast(m_TypeId,this);
-// 	}
-// 
-// 	return m_ScriptObject;
-// }
-
-//----------------------------------------------------------------------------------------------
-// ScriptDriver * CObjectAbstract::GetObjectScriptDriver()
-// {
-//    return NULL;
-// }
 
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::Release()
@@ -772,20 +720,3 @@ bool CObjectAbstract::UnregisterCollisionEntity(ICollisionInterface *pPtr)
 	}
 	return bResult;
 }
-
-//----------------------------------------------------------------------------------------------
-// 
-// void CObjectAbstract::SetScriptObject(luabind::adl::object *LuaObject)
-// {
-// 	m_ScriptObject = LuaObject; 
-// }
-// //////////////////////////////////////////////////////////////////////////
-// luabind::adl::object * CObjectAbstract::GetScriptObject()
-// {
-// 	if( m_ScriptObject == 0 )
-// 	{
-// 		m_ScriptObject = NScriptObjectCaster::Cast(m_TypeId,this);
-// 	}
-// 
-// 	return m_ScriptObject;
-// }

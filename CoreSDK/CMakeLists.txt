@@ -124,6 +124,8 @@ set(SOURCE
 	Explorer2D.h
 	Explorer3D.cpp
 	Explorer3D.h
+	EventManager.h
+	EventManager.cpp
 	GameInfoManager.cpp
 	GameInfoManager.h
 	GameRealmInfo.cpp

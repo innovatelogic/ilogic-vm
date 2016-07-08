@@ -18,20 +18,6 @@ CActor::CActor(const CObjectAbstract *pParent /*= NULL*/)
 }
 
 //----------------------------------------------------------------------------------------------
-CActor::CActor(const CActor &Source)
-: Super(Source)
-, bMarkerDeleteFlag(false)
-, ControlEvent(SOEvent_None)
-{
-	if (this != &Source)
-	{	
-		m_pParentActor = Source.m_pParentActor;
-		bEnabled  = Source.bEnabled;
-		InterruptKeys = Source.InterruptKeys;
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CActor::~CActor()
 {	
 	

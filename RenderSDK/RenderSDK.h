@@ -10,7 +10,7 @@
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
-class EXPORT CRenderSDK : public CObjectAbstract
+class EXPORT CRenderSDK
 {
 	DECLARE_CLASS_SIMPLE(CRenderSDK, CObjectAbstract);
 
@@ -28,7 +28,7 @@ class EXPORT CRenderSDK : public CObjectAbstract
 	typedef std::vector<RenderQuevueAdjacency>		TRenderAdjacencyQuevue;
 
 public:
-	CRenderSDK(const CObjectAbstract *pParent = NULL);
+	CRenderSDK();
 	virtual ~CRenderSDK();
 	
 	__forceinline class CFXMatManager*	GetFXManager() const { return m_pFXManager; }

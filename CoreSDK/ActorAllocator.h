@@ -30,7 +30,8 @@ public:
 	inline_ void			SetAppMain(CCoreSDK *app);
 	inline_ CCoreSDK*       GetAppMain() const { return m_pAppMain; }
 
-	//virtual bool	DoEventReleased(const MouseInputData &input);
+    //void	OnEventNotify(unsigned int id) override;
+    //void	OnEventNotify(unsigned int Id, IObjectAbstract *param) override;
 
 public:
 	static bool		MoveObjectHierarchy(CActor *actorMove, const Registry *reg, bool Up = true, bool bMoveEditorVisible = false);
