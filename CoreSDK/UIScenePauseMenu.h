@@ -12,8 +12,7 @@ class CORESDK_API UIScenePauseMenu : public UIScene
 	DECLARE_CLASS_SIMPLE(UIScenePauseMenu, UIScene);
 
 public:
-	UIScenePauseMenu(const CObjectAbstract * Parent);
-	UIScenePauseMenu(const UIScenePauseMenu & Source);
+	UIScenePauseMenu(const CObjectAbstract *parent);
 	virtual ~UIScenePauseMenu();
 
 	virtual void	Initialize();

@@ -11,13 +11,6 @@ Brush_LevelActor::Brush_LevelActor(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-Brush_LevelActor::Brush_LevelActor(const Brush_LevelActor & Source)
-: Super(Source)
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
 Brush_LevelActor::~Brush_LevelActor()
 {
 
@@ -34,13 +27,6 @@ Brush_TriggerObject::Brush_TriggerObject(const CObjectAbstract * Parent)
 : Super(Parent)
 {
 	SetTransient(true);
-}
-
-//----------------------------------------------------------------------------------------------
-Brush_TriggerObject::Brush_TriggerObject(const Brush_TriggerObject & Source)
-: Super(Source)
-{
-
 }
 
 //----------------------------------------------------------------------------------------------

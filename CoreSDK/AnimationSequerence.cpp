@@ -10,16 +10,6 @@ AnimationSequerence::AnimationSequerence(const CObjectAbstract* Parent)
 }
 
 //----------------------------------------------------------------------------------
-AnimationSequerence::AnimationSequerence(const AnimationSequerence& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 AnimationSequerence::~AnimationSequerence()
 {
 

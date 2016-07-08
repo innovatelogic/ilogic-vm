@@ -16,28 +16,6 @@ PointBezier2D::PointBezier2D(const CObjectAbstract * Parent)
 }
 
 //---------------------------------------------------------------------
-PointBezier2D::PointBezier2D(const PointBezier2D& Source)
-: Super(Source)
-, Point1(NULL)
-, Point2(NULL)
-{
-	if (this != &Source)
-	{
-		if (Source.Point1 != NULL)
-		{
-			Point1 = CLONE_OBJECT(Point2D, Source.Point1, "Point1", this);
-			//REGISTER_EVENT_(Point1, this, boost::bind<bool>(&PointBezier2D::KeyUpdated, this, _1, _2), Event_PreRelease);
-		}
-	
-		if (Source.Point2 != NULL)
-		{
-			Point2 = CLONE_OBJECT(Point2D, Source.Point2, "Point2", this);
-			//REGISTER_EVENT_(Point2, this, boost::bind<bool>(&PointBezier2D::KeyUpdated, this, _1, _2), Event_PreRelease);
-		}
-	}
-}
-
-//---------------------------------------------------------------------
 PointBezier2D::~PointBezier2D()
 {
 

@@ -34,7 +34,6 @@ public:
 
 public:
 	CCamera(const CObjectAbstract *pParent);
-    CCamera(const CCamera &object);
 	virtual ~CCamera();
 
 	virtual void			Initialize();

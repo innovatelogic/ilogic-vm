@@ -14,7 +14,6 @@ class CORESDK_API CPolygonImage : public ActorAllocator, public IDrawInterface
 public:
 	// Constructor/Destructor
 	CPolygonImage(const CObjectAbstract * Parent);
-	CPolygonImage(const CPolygonImage &Source);
 	virtual ~CPolygonImage();
 
 	virtual void	Initialize();

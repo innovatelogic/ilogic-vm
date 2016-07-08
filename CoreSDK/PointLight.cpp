@@ -12,12 +12,7 @@ PointLight::PointLight(const CObjectAbstract * Parent)
 	perspective(LightProjMatrix, 90.f, 1.f, 1.f, 5000.f);
 	//ortho(LightProjMatrix, 0.f, 1000.f, 1000.f, 0.f, 1.f, MAX_FLOAT);
 }
-//----------------------------------------------------------------------------------
-PointLight::PointLight(const PointLight &Source)
-: Super(Source)
-{
 
-}
 //----------------------------------------------------------------------------------
 PointLight::~PointLight()
 {

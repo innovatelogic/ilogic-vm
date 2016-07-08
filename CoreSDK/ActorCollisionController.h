@@ -11,8 +11,7 @@ class ActorCollisionController : public CollisionController
 {
 	DECLARE_CLASS_SIMPLE(ActorCollisionController, CollisionController);
 public:
-	ActorCollisionController(const CObjectAbstract *pParent);
-	ActorCollisionController(const ActorCollisionController &Source);
+	ActorCollisionController(const CObjectAbstract *parent);
 	virtual ~ActorCollisionController();
 
 	virtual void			OnPropertyChanged(const char *pPropertyName);

@@ -13,7 +13,6 @@ class EXPORT LabelButton : public UIScreenObject
 
 public:
 	LabelButton(const CObjectAbstract * Parent);
-	LabelButton(const LabelButton & Source);
 	virtual ~LabelButton();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

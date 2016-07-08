@@ -10,16 +10,6 @@ UVModificator::UVModificator(const CObjectAbstract * Parent)
 }
 
 //------------------------------------------------------------------------
-UVModificator::UVModificator(const UVModificator& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		;//
-	}
-}
-
-//------------------------------------------------------------------------
 UVModificator::~UVModificator()
 {
 	;//

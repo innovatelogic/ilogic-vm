@@ -10,16 +10,6 @@ Point2D::Point2D(const CObjectAbstract * Parent)
 }
 
 //---------------------------------------------------------------------
-Point2D::Point2D(const Point2D& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//---------------------------------------------------------------------
 Point2D::~Point2D()
 {
     ;//

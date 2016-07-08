@@ -62,15 +62,7 @@ static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract
 }\
 static IObjectAbstract* CopyGenerator##CLASS(const IObjectAbstract *Source, const IObjectAbstract *pParent)\
 {\
-	CObjectAbstract *pObject = new CLASS(*static_cast<const CLASS*>(Source));\
-	CActor *pAParent = const_cast<CActor*>(static_cast<const CActor*>(pParent));\
-	if (pAParent != nullptr && static_cast<const CActor*>(pObject))\
-	{\
-		const_cast<CActor*>(static_cast<const CActor*>(pObject))->SetParent(pAParent);\
-		pAParent->AddChildNode(const_cast<CActor*>(static_cast<const CActor*>(pObject)));\
-		pObject->FinishGeneration();\
-	}\
-	return static_cast<CObjectAbstract*>(pObject);\
+	return nullptr;\
 }
 
 //----------------------------------------------------------------------------------------------

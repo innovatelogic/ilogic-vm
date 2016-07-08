@@ -10,16 +10,6 @@ BaseModificator::BaseModificator(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-BaseModificator::BaseModificator(const BaseModificator& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 BaseModificator::~BaseModificator()
 {
 	;//

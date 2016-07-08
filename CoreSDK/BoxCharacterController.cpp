@@ -17,18 +17,6 @@ BoxCharacterController::BoxCharacterController(const CObjectAbstract * Parent /*
 }
 
 //------------------------------------------------------------------------
-BoxCharacterController::BoxCharacterController(const BoxCharacterController &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		Extends = Source.Extends;
-		UpForce = Source.UpForce;
-		MoveSpeed = Source.MoveSpeed;
-	}
-}
-
-//------------------------------------------------------------------------
 BoxCharacterController::~BoxCharacterController()
 {
 	assert(GetParent());

@@ -13,7 +13,6 @@ class SplineCollision2DModificator : public BaseModificator
 
 public:
 	SplineCollision2DModificator(const CObjectAbstract * Parent);
-	SplineCollision2DModificator(const SplineCollision2DModificator &Source);
 	virtual ~SplineCollision2DModificator();
 
 	//virtual void Serialize(std::ofstream& Stream);

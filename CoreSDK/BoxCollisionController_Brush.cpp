@@ -12,16 +12,6 @@ BoxCollisionController_Brush::BoxCollisionController_Brush(const CObjectAbstract
 }
 
 //----------------------------------------------------------------------------------
-BoxCollisionController_Brush::BoxCollisionController_Brush(const BoxCollisionController_Brush &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 BoxCollisionController_Brush::~BoxCollisionController_Brush()
 {
 

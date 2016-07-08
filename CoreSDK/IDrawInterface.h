@@ -12,8 +12,8 @@ class CORESDK_API IDrawInterface : public IBaseInterface
 	DECLARE_INTERFACE_CLASS(IDrawInterface);
 
 public:
-	IDrawInterface(const CObjectAbstract *pParent);
-	IDrawInterface(const IDrawInterface &Source);
+	IDrawInterface(const CObjectAbstract *parent);
+	IDrawInterface(const IDrawInterface &source);
 	virtual ~IDrawInterface();
 
 	virtual void RegisterDrawInterface(const CActor *pSrc, int SrcParent = 1);

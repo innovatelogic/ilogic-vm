@@ -12,16 +12,6 @@ ActorCollisionController::ActorCollisionController(const CObjectAbstract *pParen
 }
 
 //----------------------------------------------------------------------------------
-ActorCollisionController::ActorCollisionController(const ActorCollisionController &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		m_XRef = Source.m_XRef;
-	}
-}
-
-//----------------------------------------------------------------------------------
 ActorCollisionController::~ActorCollisionController()
 {
 	//GetPhysicsEngine()->ReleaseObject(this);

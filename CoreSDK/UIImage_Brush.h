@@ -14,7 +14,6 @@ class UIImage_Brush : public UIImage, public Brush_AbstractInterface
 
 public:
 	UIImage_Brush(const CObjectAbstract * Parent);
-	UIImage_Brush(const UIImage_Brush& Source);
 	virtual ~UIImage_Brush();
 	
 	virtual bool		DoEventPressed(const MouseInputData& InputData);

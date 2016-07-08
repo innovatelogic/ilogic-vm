@@ -12,24 +12,25 @@ namespace
 }
 
 //----------------------------------------------------------------------------------------------
-ActorAllocator::ActorAllocator(const CObjectAbstract *Parent)
-: Super(Parent)
-, RenderSDKInterface(Parent ? ((CCoreSDK*)Parent->GetUserData())->GetRenderSDK() : 0)
-, AppMain(NULL)
+ActorAllocator::ActorAllocator(const CObjectAbstract *parent)
+: Super(parent)
+, RenderSDKInterface(parent ? ((CCoreSDK*)parent->GetUserData())->GetRenderSDK() : nullptr)
+, IEventInterface(parent)
+, m_pAppMain(nullptr)
 {
-	if (Parent){
-		SetAppMain((CCoreSDK*)Parent->GetUserData());
+	if (parent){
+		SetAppMain((CCoreSDK*)parent->GetUserData());
 	}
 }
 
 //----------------------------------------------------------------------------------------------
-ActorAllocator::ActorAllocator(const ActorAllocator& Source)
+/*ActorAllocator::ActorAllocator(const ActorAllocator& Source)
 : Super(Source)
 , RenderSDKInterface(((CCoreSDK*)Source.GetUserData())->GetRenderSDK())
 {
 	if (this != &Source)
 	{
-		AppMain = Source.AppMain;
+        m_pAppMain = Source.m_pAppMain;
 
 		// copy childs
 		TVecActorChild::const_iterator Iter = Source.m_ChildNodes.begin();
@@ -49,7 +50,7 @@ ActorAllocator::ActorAllocator(const ActorAllocator& Source)
 			Iter++;
 		}
 	}
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 ActorAllocator::~ActorAllocator()
@@ -58,23 +59,11 @@ ActorAllocator::~ActorAllocator()
 }
 
 //----------------------------------------------------------------------------------------------
-void ActorAllocator::SetAppMain(CCoreSDK * App) 
+void ActorAllocator::SetAppMain(CCoreSDK *app) 
 { 
-	AppMain = App;
-	SetRenderComponent(AppMain->GetRenderSDK());
+    m_pAppMain = app;
+	SetRenderComponent(m_pAppMain->GetRenderSDK());
 }
-
-//----------------------------------------------------------------------------------------------
-/*IPhysicsEngine* ActorAllocator::GetPhysicsEngine() const
-{
-	return  GetAppMain()->GetPhysicsEngine();
-}*/
-
-//----------------------------------------------------------------------------------------------
-// ScriptDriver* ActorAllocator::GetObjectScriptDriver()
-// {
-//    return NULL;//AppMain->GetScriptDriver();
-// }
 
 //----------------------------------------------------------------------------------------------
 void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
@@ -97,12 +86,12 @@ void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 }
 
 //----------------------------------------------------------------------------------------------
-bool ActorAllocator::DoEventReleased(const MouseInputData& InputData)
+/*bool ActorAllocator::DoEventReleased(const MouseInputData &input)
 {
 	//return Super::DoEventReleased(InputData);
 
     return false;
-}
+}*/
 
 
 //----------------------------------------------------------------------------------------------
@@ -156,10 +145,3 @@ Matrix ActorAllocator::CalcWorldTransform() const
 
 	return OutMatrix;
 }*/
-
-//----------------------------------------------------------------------------------------------
-bool ActorAllocator::IsBrushActivated()
-{
-	bool bResult = false;
-	return bResult;
-}

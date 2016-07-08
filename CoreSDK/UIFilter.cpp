@@ -10,13 +10,6 @@ UIFilter::UIFilter(const CObjectAbstract * Parent)
 }
 
 //---------------------------------------------------------------------
-UIFilter::UIFilter(const UIFilter& Source)
-: Super(Source)
-{
-
-}
-
-//---------------------------------------------------------------------
 UIFilter::~UIFilter()
 {
 

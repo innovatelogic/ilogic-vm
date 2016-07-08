@@ -13,7 +13,6 @@ class CORESDK_API BaseSplineAgregator : public UIScreenObject
 
 public:
 	BaseSplineAgregator(const CObjectAbstract * Parent);
-	BaseSplineAgregator(const BaseSplineAgregator &Source);
 	virtual ~BaseSplineAgregator();
 	
 	virtual void	Initialize();

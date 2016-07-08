@@ -6,6 +6,7 @@
 #endif
 
 #include "ActorAllocator.h"
+#include "physicsafx.h"
 
 class CORESDK_API TriggerObject : public ActorAllocator
 {
@@ -13,7 +14,6 @@ class CORESDK_API TriggerObject : public ActorAllocator
 public:
 	// Constructor/Destructor
 	TriggerObject(const CObjectAbstract * Parent);
-	TriggerObject(const TriggerObject &Source);
 	virtual ~TriggerObject();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

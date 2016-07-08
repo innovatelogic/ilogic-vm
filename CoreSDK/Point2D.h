@@ -13,7 +13,6 @@ class Point2D : public UIScreenObject
 
 public:
 	Point2D(const CObjectAbstract * Parent);
-	Point2D(const Point2D& Source);
 	virtual ~Point2D();
 
 	virtual bool ProcessUserController(const MouseMoveInputData& InputData);

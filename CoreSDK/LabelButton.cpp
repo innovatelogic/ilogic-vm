@@ -40,15 +40,6 @@ LabelButton::LabelButton(const CObjectAbstract * Parent /*= NULL*/)
 }
 
 //----------------------------------------------------------------------------------------------
-LabelButton::LabelButton(const LabelButton & Source)
-: Super(Source)
-{
-	if (&Source != this)
-	{	
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 LabelButton::~LabelButton()
 {
 	ScriptDriver * Driver = GetAppMain()->GetScriptDriver();

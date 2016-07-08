@@ -14,18 +14,6 @@ LevitateVehicle::LevitateVehicle(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-LevitateVehicle::LevitateVehicle(const LevitateVehicle & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		XRef = Source.XRef;
-		MeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.MeshComponent, Source.MeshComponent->GetName(), this);
-		//CollisionController = CLONE_OBJECT(ActorCollisionKinematicController, Source.CollisionController, Source.CollisionController->GetName(), this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 LevitateVehicle::~LevitateVehicle()
 {
 

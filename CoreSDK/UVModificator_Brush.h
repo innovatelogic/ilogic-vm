@@ -14,7 +14,6 @@ class UVModificator_Brush : public UVModificator, public Brush_AbstractInterface
 
 public:
 	UVModificator_Brush(const CObjectAbstract * Parent);
-	UVModificator_Brush(const UVModificator_Brush& Source);
 	virtual ~UVModificator_Brush();
 
 protected:

@@ -10,16 +10,6 @@ SplineCollision2DModificator_Brush::SplineCollision2DModificator_Brush(const COb
 }
 
 //----------------------------------------------------------------------------------
-SplineCollision2DModificator_Brush::SplineCollision2DModificator_Brush(const SplineCollision2DModificator_Brush& Source)
-: Super(Source)
-{
-	if (&Source != this)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 SplineCollision2DModificator_Brush::~SplineCollision2DModificator_Brush()
 {
 

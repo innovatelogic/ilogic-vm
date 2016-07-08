@@ -13,7 +13,6 @@ class BoxCollisionController : public CollisionController
 
 public:
  	BoxCollisionController(const CObjectAbstract * Parent);
- 	BoxCollisionController(const BoxCollisionController& Source);
  	virtual ~BoxCollisionController();
 
 	virtual void		OnPropertyChanged(const char* PropertyName);

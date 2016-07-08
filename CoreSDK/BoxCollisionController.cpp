@@ -13,16 +13,6 @@ BoxCollisionController::BoxCollisionController(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-BoxCollisionController::BoxCollisionController(const BoxCollisionController& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		Extends = Source.Extends;
-	}
-}
-
-//----------------------------------------------------------------------------------
 BoxCollisionController::~BoxCollisionController()
 {
 	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);

@@ -13,7 +13,6 @@ class UVModificator: public BaseModificatorUI
 
 public:
 	UVModificator(const CObjectAbstract * Parent);
-	UVModificator(const UVModificator& Source);
 	virtual ~UVModificator();
 
 	/** Overloaded */

@@ -10,16 +10,6 @@ Bezier_SplineAgregator::Bezier_SplineAgregator(const CObjectAbstract * Parent)
 }
 
 //---------------------------------------------------------------------
-Bezier_SplineAgregator::Bezier_SplineAgregator(const Bezier_SplineAgregator& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//---------------------------------------------------------------------
 Bezier_SplineAgregator::~Bezier_SplineAgregator()
 {
 

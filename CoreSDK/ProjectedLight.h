@@ -13,7 +13,6 @@ class CORESDK_API ProjectedLight : public CCamera
 
 public:
 	ProjectedLight(const CObjectAbstract *Parent);
-	ProjectedLight(const ProjectedLight & Source);
 	virtual ~ProjectedLight();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

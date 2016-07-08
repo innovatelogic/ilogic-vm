@@ -41,17 +41,6 @@ CPolygonMesh::CPolygonMesh(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-CPolygonMesh::CPolygonMesh(const CPolygonMesh &Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CPolygonMesh::~CPolygonMesh()
 {
 

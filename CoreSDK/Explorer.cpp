@@ -20,15 +20,6 @@ Explorer::Explorer(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------
-Explorer::Explorer(const Explorer& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-	}
-}
-
-//----------------------------------------------------------------------------------
 Explorer::~Explorer()
 {
 	DELETESINGLE(BufferDataObject);
@@ -68,28 +59,6 @@ void Explorer::Release()
 
 	// do not release itself
 	std::for_each(m_ChildNodes.begin(), m_ChildNodes.end(), std::mem_fun(&CActor::Release));
-}
-
-//----------------------------------------------------------------------------------
-bool Explorer::IsBrushActivated()
-{
-	bool bResult = false;
-/*
-	for (TVecActorChildIterator Iter = ChildNodes.begin(); Iter != ChildNodes.end(); ++Iter) 
-	{
-		TIViewport * VInterface = ActorAllocator::GetViewportInterface(*Iter);
-		if (VInterface)
-		{
-			ActorAllocator * AActor = dynamic_cast<ActorAllocator*>(*Iter);
-
-			if (AActor && AActor->IsBrushActivated())
-			{
-				bResult = true;
-				break;
-			}
-		}
-	}*/
-	return bResult;
 }
 
 //----------------------------------------------------------------------------------

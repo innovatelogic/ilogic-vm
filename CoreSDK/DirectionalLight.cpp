@@ -10,13 +10,6 @@ DirectionalLight::DirectionalLight(const class CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-DirectionalLight::DirectionalLight(const DirectionalLight & Source)
-: Super(Source)
-{
-
-}
-
-//----------------------------------------------------------------------------------
 DirectionalLight::~DirectionalLight()
 {
 

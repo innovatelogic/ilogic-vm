@@ -13,7 +13,6 @@ class CORESDK_API CImageProjection : public ActorAllocator
 
 public:
 	CImageProjection(const CObjectAbstract *Parent);
-	CImageProjection(const CImageProjection &Source);
 	virtual ~CImageProjection();
 
 protected:

@@ -10,16 +10,6 @@ Point2DBezierKey::Point2DBezierKey(const CObjectAbstract * Parent)
 }
 
 //---------------------------------------------------------------------
-Point2DBezierKey::Point2DBezierKey(const Point2DBezierKey& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//---------------------------------------------------------------------
 Point2DBezierKey::~Point2DBezierKey()
 {
 

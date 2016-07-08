@@ -33,30 +33,6 @@ SplineAgregator::SplineAgregator(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-SplineAgregator::SplineAgregator(const SplineAgregator& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		AdaptiveDetail	= Source.AdaptiveDetail;
-		Detail			= Source.Detail;
-		Color			= Source.Color;
-		SplineClosed	= Source.SplineClosed;
-		bBorder			= Source.bBorder;
-		BorderSize		= Source.BorderSize;
-		BorderColor		= Source.BorderColor;
-		InternalPreUpdateShiftTranslate = Source.InternalPreUpdateShiftTranslate;
-		DiffuseTex		= Source.DiffuseTex;
-
-		MeshComponent		= CLONE_OBJECT(Comp_StaticMesh, Source.MeshComponent, "SplineAgregator_MeshComponent", this);
-		BorderMeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.BorderMeshComponent, "SplineAgregator_MeshComponent", this);
-
-		MaterialEffect = CLONE_OBJECT(Comp_MaterialEffect, Source.MaterialEffect, "UICompDrawImage_MaterialEffect", this);
-		MaterialEffectBorder = CLONE_OBJECT(Comp_MaterialEffect, Source.MaterialEffectBorder, "UICompDrawImage_MaterialEffect", this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 SplineAgregator::~SplineAgregator()
 {
 

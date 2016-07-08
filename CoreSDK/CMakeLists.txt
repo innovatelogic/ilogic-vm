@@ -140,6 +140,8 @@ set(SOURCE
 	IInputController.h
 	IInputInterface.cpp
 	IInputInterface.h
+	IEventInterface.h
+	IEventInterface.cpp
 	ImageProjection.cpp
 	ImageProjection.h
 	InputControllerEdImpl.cpp

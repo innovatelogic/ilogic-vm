@@ -15,7 +15,6 @@ class EXPORT Explorer : public ActorAllocator
 public:
 	//Constructor/Destructor
 	Explorer(const CObjectAbstract *parent);
-	Explorer(const Explorer& Source);
 	virtual ~Explorer();
 
 	virtual void		SuperDeserializer(tinyxml2::XMLElement *xml_current_tree);
@@ -33,9 +32,6 @@ public:
 	virtual void		Paste(CActor * InPlaceActor = NULL);
 
 	virtual bool		UIEditor_ProcessDelete();
-
-	/** brush painting */
-	virtual bool		IsBrushActivated();
 
 	/** scene manager input */
 	virtual bool		ProcessMouseWheel(float ds, int x, int y);

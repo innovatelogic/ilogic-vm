@@ -20,18 +20,6 @@ CPolygonImage::CPolygonImage(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-CPolygonImage::CPolygonImage(const CPolygonImage &Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-	if (this != &Source)
-	{
-		m_pMeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.m_pMeshComponent, "MeshComponent", this);
-		m_pMaterialEffect = CLONE_OBJECT(Comp_MaterialEffect, Source.m_pMaterialEffect, "UICompDrawImage_MaterialEffect", this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CPolygonImage::~CPolygonImage()
 {
 

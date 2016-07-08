@@ -13,7 +13,6 @@ class CORESDK_API LevitateVehicle : public ActorAllocator
 
 public:
 	LevitateVehicle(const CObjectAbstract * Parent);
-	LevitateVehicle(const LevitateVehicle & Source);
 	virtual ~LevitateVehicle();
 
 	virtual void		OnPropertyChanged(const char* PropertyName);

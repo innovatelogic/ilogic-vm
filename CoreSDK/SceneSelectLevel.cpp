@@ -10,13 +10,6 @@ CSceneSelectLevel::CSceneSelectLevel(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-CSceneSelectLevel::CSceneSelectLevel(const CSceneSelectLevel &Source)
-: Super(Source)
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
 CSceneSelectLevel::~CSceneSelectLevel()
 {
 

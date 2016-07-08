@@ -10,15 +10,6 @@ CUISceneLogin::CUISceneLogin(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-CUISceneLogin::CUISceneLogin(const CUISceneLogin & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CUISceneLogin::~CUISceneLogin()
 {
 

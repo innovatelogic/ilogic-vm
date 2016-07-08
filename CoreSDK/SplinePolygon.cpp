@@ -11,17 +11,6 @@ SplinePolygon::SplinePolygon(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-SplinePolygon::SplinePolygon(const SplinePolygon & Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 SplinePolygon::~SplinePolygon()
 {
 

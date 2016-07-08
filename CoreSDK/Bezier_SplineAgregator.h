@@ -13,7 +13,6 @@ class Bezier_SplineAgregator : public SplineAgregator
 public:
 	/**constructor destructor*/
 	Bezier_SplineAgregator(const CObjectAbstract * Parent);
-	Bezier_SplineAgregator(const Bezier_SplineAgregator& Source);
 	virtual ~Bezier_SplineAgregator();
 
 	virtual void				BuildSplineList(TVecIndexedPoint2f& OutSpline);

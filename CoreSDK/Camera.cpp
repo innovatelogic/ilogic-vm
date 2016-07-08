@@ -56,17 +56,6 @@ CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)
 }
 
 //----------------------------------------------------------------------------------------------
-CCamera::CCamera(const CCamera &Source)
-    : Super(Source)
-    , IDrawInterface(Source)
-    , IUpdateInterface(Source)
-    , IInputInterface(Source)
-    , m_pRenderContext(nullptr)
-{
-   
-}
-
-//----------------------------------------------------------------------------------------------
 CCamera::~CCamera()
 {
 	GetAppMain()->GetCameraManager()->UnregisterCamera(this);

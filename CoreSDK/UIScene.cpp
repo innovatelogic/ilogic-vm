@@ -10,25 +10,14 @@ REGISTER_CLASS_A(UIScene, UIScreenObject)
 END_REGISTER_CLASS(UIScene, UIScreenObject)
 
 //----------------------------------------------------------------------------------------------
-UIScene::UIScene(const CObjectAbstract * Parent)
-: Super(Parent)
-, IUIInputController(Parent)
+UIScene::UIScene(const CObjectAbstract *parent)
+: Super(parent)
+, IUIInputController(parent)
 , m_eInputMode(INPUTMODE_ActiveOnly)
 , m_eHandleInputKey(DefInputKeyMode)
 , m_eHandleInputMouse(DefInputMouseMode)
 {
 	RegisterUIInputInterface(this);
-}
-
-//----------------------------------------------------------------------------------------------
-UIScene::UIScene(const UIScene &Source)
-: Super(Source)
-, IUIInputController(Source)
-{
-	if (this != &Source)
-	{
-
-	}
 }
 
 //----------------------------------------------------------------------------------------------

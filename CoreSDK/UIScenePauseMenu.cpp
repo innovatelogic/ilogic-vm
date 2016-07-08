@@ -13,19 +13,6 @@ UIScenePauseMenu::UIScenePauseMenu(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-UIScenePauseMenu::UIScenePauseMenu(const UIScenePauseMenu & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		//ButtonResume = CLONE_OBJECT(LabelButton, Source.ButtonResume, "ButtonResume", this);
-		//ButtonSaveLoad = CLONE_OBJECT(LabelButton, Source.ButtonSaveLoad, "ButtonSaveLoad", this);
-		//ButtonOptions = CLONE_OBJECT(LabelButton, Source.ButtonOptions, "ButtonOption", this);
-		//ButtonExit = CLONE_OBJECT(LabelButton, Source.ButtonExit, "ButtonExit", this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 UIScenePauseMenu::~UIScenePauseMenu()
 {
 

@@ -14,7 +14,6 @@ class SphereCollisionController_Brush : public CSphereCollisionController, publi
 
 public:
 	SphereCollisionController_Brush(const class CObjectAbstract * Parent);
-	SphereCollisionController_Brush(const SphereCollisionController_Brush & Source);
 	~SphereCollisionController_Brush();
 
 protected:

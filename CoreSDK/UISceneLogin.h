@@ -18,7 +18,6 @@ class CUISceneLogin : public UIScene
 
 public:
 	CUISceneLogin(const CObjectAbstract *pParent);
-	CUISceneLogin(const CUISceneLogin &Source);
 	virtual ~CUISceneLogin();
 
 	virtual void		Initialize();

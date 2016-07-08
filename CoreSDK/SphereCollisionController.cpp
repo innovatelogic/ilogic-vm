@@ -13,16 +13,6 @@ CSphereCollisionController::CSphereCollisionController(const CObjectAbstract *pP
 }
 
 //------------------------------------------------------------------------
-CSphereCollisionController::CSphereCollisionController(const CSphereCollisionController &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		m_fRadius = Source.m_fRadius;
-	}
-}
-
-//------------------------------------------------------------------------
 CSphereCollisionController::~CSphereCollisionController()
 {
 	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);

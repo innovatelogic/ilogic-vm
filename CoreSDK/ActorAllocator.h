@@ -1,16 +1,16 @@
-#ifndef __actorallocator_h__
-#define __actorallocator_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "Actor.h"
 #include "CoreSDK.h"
-#include "IPhysicsEngine.h"
+#include "IEventInterface.h"
 #include "RenderSDKInterface.h"
 
-class CORESDK_API ActorAllocator : public CActor, public RenderSDKInterface
+class CCoreSDK;
+
+class CORESDK_API ActorAllocator : 
+    public CActor, 
+    public RenderSDKInterface, 
+    public core_sdk_api::IEventInterface
 {
 	DECLARE_CLASS_SIMPLE(ActorAllocator, CActor);
 
@@ -18,35 +18,24 @@ public:
 	/** 
 	* Constructor & destruction
 	*/
-	ActorAllocator(const CObjectAbstract * Parent);
-	ActorAllocator(const ActorAllocator& Source);
+	ActorAllocator(const CObjectAbstract *parent);
+	ActorAllocator(const ActorAllocator &source) = delete;
 	virtual ~ActorAllocator();
 
    /**
     *  Deserialize from XML file
     */
-	virtual void	SuperDeserializer(tinyxml2::XMLElement *Tree);
+	virtual void	SuperDeserializer(tinyxml2::XMLElement *tree);
 
-	inline_ void			SetAppMain(class CCoreSDK * App);
-	inline_ class CCoreSDK* GetAppMain() const { return AppMain; }
-	
-   /** 
-	*  helper accessors component management. 
-	*/
-	//inline_ virtual ScriptDriver*	GetObjectScriptDriver() const;
+	inline_ void			SetAppMain(CCoreSDK *app);
+	inline_ CCoreSDK*       GetAppMain() const { return m_pAppMain; }
 
-	//inline_ IPhysicsEngine*	GetPhysicsEngine() const;
-
-	virtual bool	DoEventReleased(const MouseInputData& InputData);
-
-	virtual bool	IsBrushActivated();
+	//virtual bool	DoEventReleased(const MouseInputData &input);
 
 public:
-	static bool		MoveObjectHierarchy(CActor * ActorMove, const Registry * Reg, bool Up = true, bool bMoveEditorVisible = false);
+	static bool		MoveObjectHierarchy(CActor *actorMove, const Registry *reg, bool Up = true, bool bMoveEditorVisible = false);
 
 protected:
 protected:
-	class CCoreSDK * AppMain;
+	CCoreSDK *m_pAppMain;
 };
-
-#endif//__actorallocator_h__

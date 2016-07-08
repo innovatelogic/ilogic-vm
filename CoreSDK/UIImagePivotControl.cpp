@@ -12,12 +12,6 @@ UIImagePivotControl::UIImagePivotControl(const CObjectAbstract *Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-UIImagePivotControl::UIImagePivotControl(const UIImagePivotControl &Source)
-: Super(Source)
-{
-}
-
-//----------------------------------------------------------------------------------------------
 UIImagePivotControl::~UIImagePivotControl()
 {
 	//m_pImageComponent->SetRenderTarget(0);

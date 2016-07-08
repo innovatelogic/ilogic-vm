@@ -12,8 +12,7 @@ class UIFilter : public UIScreenObject
 	DECLARE_CLASS_SIMPLE(UIFilter, UIScreenObject);
 
 public:
-	UIFilter(const CObjectAbstract * Parent);
-	UIFilter(const UIFilter& Source);
+	UIFilter(const CObjectAbstract *parent);
 	virtual ~UIFilter();
 
 	virtual bool  HitTest(const Vector2f& Position) { return false; }

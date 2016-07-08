@@ -13,7 +13,6 @@ class BaseModificatorUI : public UIScreenObject
 
 public:
 	BaseModificatorUI(const CObjectAbstract * Parent);
-	BaseModificatorUI(const BaseModificatorUI& Source);
 	virtual ~BaseModificatorUI();
 
 	virtual bool Apply(const CActor * Sender) { return false; }

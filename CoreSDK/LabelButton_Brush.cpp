@@ -11,13 +11,6 @@ LabelButton_Brush::LabelButton_Brush(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-LabelButton_Brush::LabelButton_Brush(const LabelButton_Brush & Source)
-: Super(Source)
-{
-
-}
-
-//----------------------------------------------------------------------------------------------
 LabelButton_Brush::~LabelButton_Brush()
 {
 

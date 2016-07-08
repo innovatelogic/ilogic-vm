@@ -11,15 +11,6 @@ SplineCollision2DModificator::SplineCollision2DModificator(const CObjectAbstract
 }
 
 //------------------------------------------------------------------------
-SplineCollision2DModificator::SplineCollision2DModificator(const SplineCollision2DModificator &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-	}
-}
-
-//------------------------------------------------------------------------
 SplineCollision2DModificator::~SplineCollision2DModificator()
 {
 	UNREGISTER_EVENT(GetParent(), this, Event_Updated);

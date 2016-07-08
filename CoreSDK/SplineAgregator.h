@@ -16,7 +16,6 @@ class SplineAgregator : public UIScreenObject
 public:
 	/**constructor destructor*/
 	SplineAgregator(const CObjectAbstract * Parent);
-	SplineAgregator(const SplineAgregator & Source);
 	virtual ~SplineAgregator();
 
 	/** Init */

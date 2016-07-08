@@ -13,7 +13,6 @@ class CORESDK_API DummyObject : public ActorAllocator
 
 public:
 	DummyObject(const CObjectAbstract * Parent);
-	DummyObject(const DummyObject & Sender);
 	~DummyObject();
 
 	virtual void		DoDraw();

@@ -13,7 +13,6 @@ class CORESDK_API CLevelPlaneActor : public ActorAllocator, IDrawInterface
 
 public:
 	CLevelPlaneActor(const CObjectAbstract *pParent);
-	CLevelPlaneActor(const CLevelPlaneActor &Source);
 	virtual ~CLevelPlaneActor();
 
 	virtual void	OnPropertyChanged(const char *pPropertyName);

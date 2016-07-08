@@ -18,19 +18,6 @@ CLevelPlaneActor::CLevelPlaneActor(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-CLevelPlaneActor::CLevelPlaneActor(const CLevelPlaneActor &Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-	if (this != &Source)
-	{
-		m_XRef = Source.m_XRef;
-		m_pMeshComponent = CLONE_OBJECT(Comp_StaticMesh, Source.m_pMeshComponent, "MeshComponent", this);
-		m_pCollisionObject = CLONE_OBJECT(CPlaneCollisionController, Source.m_pCollisionObject, "CollisionObject", this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 CLevelPlaneActor::~CLevelPlaneActor()
 {
 

@@ -10,16 +10,6 @@ UISprite::UISprite(const CObjectAbstract * Parent /*= NULL*/)
 }
 
 //----------------------------------------------------------------------------------
-UISprite::UISprite(const UISprite &Source)
-: Super(Source)
-{
-	if (&Source != this)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 UISprite::~UISprite()
 {
 

@@ -13,7 +13,6 @@ class EXPORT UIViewPivotControl : public ActorAllocator, public IDrawInterface
 
 public:
 	UIViewPivotControl(const CObjectAbstract * Parent);
-	UIViewPivotControl(const UIViewPivotControl& Source);
 	virtual ~UIViewPivotControl();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

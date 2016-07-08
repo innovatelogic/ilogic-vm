@@ -13,7 +13,6 @@ class Point2DBezierKey : public Point2D
 
 public:
 	Point2DBezierKey(const CObjectAbstract * Parent);
-	Point2DBezierKey(const Point2DBezierKey& Source);
 	virtual ~Point2DBezierKey();
 
 	virtual void DoDraw();

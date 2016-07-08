@@ -8,12 +8,7 @@ DummyObject::DummyObject(const CObjectAbstract * Parent)
 {
 
 }
-//----------------------------------------------------------------------------------
-DummyObject::DummyObject(const DummyObject &Source)
-: Super(Source)
-{
 
-}
 //----------------------------------------------------------------------------------
 DummyObject::~DummyObject()
 {

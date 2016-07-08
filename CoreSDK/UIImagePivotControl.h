@@ -13,7 +13,6 @@ class UIImagePivotControl : public UIImage
 
 public:
 	UIImagePivotControl(const CObjectAbstract * Parent);
-	UIImagePivotControl(const UIImagePivotControl & Source);
 	virtual ~UIImagePivotControl();
 
 	virtual bool	DoEventPressed(const MouseInputData& InputData);

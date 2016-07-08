@@ -13,7 +13,6 @@ class CORESDK_API DirectionalLight : public ActorAllocator
 
 public:
 	DirectionalLight(const class CObjectAbstract *pParent);
-	DirectionalLight(const DirectionalLight &Source);
 	~DirectionalLight();
 
 protected:

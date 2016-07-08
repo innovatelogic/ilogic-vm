@@ -18,24 +18,6 @@ UISceneBaseHud::UISceneBaseHud(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-UISceneBaseHud::UISceneBaseHud(const UISceneBaseHud & Source)
-: Super(Source)
-, bBlink_LabelMessageLT(false)
-, bBlink_LabelMessage1C(false)
-, bBlink_LabelMessage2C(false)
-, AnimTimeLT(0.f)
-, AnimTime1C(0.f)
-, AnimTime2C(0.f)
-{
-	if (this != &Source)
-	{
-		LabelMessageLT = CLONE_OBJECT(Label, Source.LabelMessageLT, "LabelMessageLT", this);
-		LabelMessage1C = CLONE_OBJECT(Label, Source.LabelMessage1C, "LabelMessage1C", this);
-		LabelMessage2C = CLONE_OBJECT(Label, Source.LabelMessage2C, "LabelMessage2C", this);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 UISceneBaseHud::~UISceneBaseHud()
 {
 

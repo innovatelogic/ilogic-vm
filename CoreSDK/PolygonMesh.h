@@ -32,7 +32,6 @@ public:
 	 * Constructor / Destructor
 	 */
 	CPolygonMesh(const CObjectAbstract *pParent);
-	CPolygonMesh(const CPolygonMesh &Source);
 	virtual ~CPolygonMesh();
 
 	/** Init */

@@ -11,16 +11,6 @@ UVModificator_Brush::UVModificator_Brush(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-UVModificator_Brush::UVModificator_Brush(const UVModificator_Brush& Source)
-: Super(Source)
-{
-	if (&Source != this)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 UVModificator_Brush::~UVModificator_Brush()
 {
 

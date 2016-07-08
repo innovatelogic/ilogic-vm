@@ -13,7 +13,6 @@ class CORESDK_API PointLight : public ActorAllocator
 
 public:
 	PointLight(const CObjectAbstract * Parent);
-	PointLight(const PointLight & Sender);
 	virtual ~PointLight();
 
 	virtual void			DoDraw();

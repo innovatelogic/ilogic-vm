@@ -12,8 +12,7 @@ class CORESDK_API CSceneSelectLevel : public UIScene
 	DECLARE_CLASS_SIMPLE(CSceneSelectLevel, UIScene);
 
 public:
-	CSceneSelectLevel(const CObjectAbstract *pParent);
-	CSceneSelectLevel(const CSceneSelectLevel &Source);
+	CSceneSelectLevel(const CObjectAbstract *parent);
 	virtual ~CSceneSelectLevel();
 
 	virtual void	Initialize();

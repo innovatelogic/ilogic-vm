@@ -10,16 +10,6 @@ MeshCollisionComponent::MeshCollisionComponent(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-MeshCollisionComponent::MeshCollisionComponent(const MeshCollisionComponent & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 MeshCollisionComponent::~MeshCollisionComponent()
 {
 

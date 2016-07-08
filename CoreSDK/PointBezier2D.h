@@ -13,7 +13,6 @@ class PointBezier2D : public Point2D
 
 public:
 	PointBezier2D(const CObjectAbstract * Parent);
-	PointBezier2D(const PointBezier2D& Source);
 	virtual ~PointBezier2D();
 
 	virtual void	DoDraw();

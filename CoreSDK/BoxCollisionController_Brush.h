@@ -14,7 +14,6 @@ class BoxCollisionController_Brush : public BoxCollisionController, public Brush
 
 public:
 	BoxCollisionController_Brush(const class CObjectAbstract * Parent);
-	BoxCollisionController_Brush(const BoxCollisionController_Brush & Source);
 	~BoxCollisionController_Brush();
 
 protected:

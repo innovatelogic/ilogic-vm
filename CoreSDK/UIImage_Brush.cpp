@@ -11,15 +11,6 @@ UIImage_Brush::UIImage_Brush(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-UIImage_Brush::UIImage_Brush(const UIImage_Brush& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-	}
-}
-
-//----------------------------------------------------------------------------------
 UIImage_Brush::~UIImage_Brush()
 {
 

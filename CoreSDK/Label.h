@@ -15,7 +15,6 @@ class EXPORT Label : public UIScreenObject
 
 public:
 	Label(const CObjectAbstract * Parent);
-	Label(const Label & Source);
 	virtual ~Label();
 
 	virtual void DoDraw();

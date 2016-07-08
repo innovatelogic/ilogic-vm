@@ -8,16 +8,6 @@ BaseModificatorUI::BaseModificatorUI(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-BaseModificatorUI::BaseModificatorUI(const BaseModificatorUI& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 BaseModificatorUI::~BaseModificatorUI()
 {
 	;//

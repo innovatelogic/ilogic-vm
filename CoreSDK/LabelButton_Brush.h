@@ -13,7 +13,6 @@ class LabelButton_Brush : public LabelButton, public Brush_AbstractInterface
 	DECLARE_CLASS_SIMPLE(LabelButton_Brush, LabelButton);
 public:
 	LabelButton_Brush(const CObjectAbstract * Parent);
-	LabelButton_Brush(const LabelButton_Brush & Source);
 	~LabelButton_Brush();
 
 	virtual bool		DoEventPressed(const MouseInputData& InputData);

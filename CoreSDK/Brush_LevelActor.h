@@ -18,7 +18,6 @@ class Brush_LevelActor : public CLevelActor, public Brush_AbstractInterface
 
 public:
 	Brush_LevelActor(const CObjectAbstract * Parent);
-	Brush_LevelActor(const Brush_LevelActor & Source);
 	virtual ~Brush_LevelActor();
 
 	virtual bool	DoEventPressed(const MouseInputData& InputData);
@@ -36,7 +35,6 @@ class Brush_TriggerObject : public TriggerObject, public Brush_AbstractInterface
 
 public:
 	Brush_TriggerObject(const CObjectAbstract * Parent);
-	Brush_TriggerObject(const Brush_TriggerObject & Source);
 	virtual ~Brush_TriggerObject();
 
 	virtual bool	DoEventPressed(const MouseInputData& InputData);

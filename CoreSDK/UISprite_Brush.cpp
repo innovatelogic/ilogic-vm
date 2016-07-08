@@ -11,16 +11,6 @@ UISprite_Brush::UISprite_Brush(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------
-UISprite_Brush::UISprite_Brush(const UISprite_Brush& Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 UISprite_Brush::~UISprite_Brush()
 {
 

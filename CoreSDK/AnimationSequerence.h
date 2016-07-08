@@ -41,7 +41,7 @@ class AnimationSequerence : public ActorAllocator
 
 public:
 	AnimationSequerence(const CObjectAbstract* Parent);
-	AnimationSequerence(const AnimationSequerence& Source);
+	AnimationSequerence(const AnimationSequerence &source) = delete;
 	~AnimationSequerence();
 
 protected:

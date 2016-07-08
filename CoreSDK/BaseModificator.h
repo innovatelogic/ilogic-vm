@@ -12,8 +12,8 @@ class BaseModificator : public ActorAllocator
 	DECLARE_CLASS_SIMPLE(BaseModificator, ActorAllocator);
 
 public:
-	BaseModificator(const CObjectAbstract * Parent);
-	BaseModificator(const BaseModificator& Source);
+	BaseModificator(const CObjectAbstract *parent);
+	BaseModificator(const BaseModificator &source) = delete;
 	virtual ~BaseModificator();
 
 protected:

@@ -22,19 +22,6 @@ ProjectedLight::ProjectedLight(const CObjectAbstract *Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-ProjectedLight::ProjectedLight(const ProjectedLight & Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		CompRenderTarget = CLONE_OBJECT(Comp_RenderTarget, Source.CompRenderTarget, "RenderTarget", this);
-		Color = Source.Color;
-		bTestAdapt = Source.bTestAdapt;
-		IndexTest = Source.IndexTest;
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 ProjectedLight::~ProjectedLight()
 {
 

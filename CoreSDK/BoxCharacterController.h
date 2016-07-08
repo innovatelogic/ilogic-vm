@@ -12,8 +12,7 @@ class BoxCharacterController : public BaseModificator
 	DECLARE_CLASS_SIMPLE(BoxCharacterController, BaseModificator);
 
 public:
-	BoxCharacterController(const CObjectAbstract * Parent);
-	BoxCharacterController(const BoxCharacterController &Source);
+	BoxCharacterController(const CObjectAbstract *parent);
 	virtual ~BoxCharacterController();
 
 	virtual void		OnPropertyChanged(const char* PropertyName);

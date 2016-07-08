@@ -14,7 +14,6 @@ class UISprite_Brush : public UISprite, public Brush_AbstractInterface
 
 public:
 	UISprite_Brush(const CObjectAbstract * Parent);
-	UISprite_Brush(const UISprite_Brush &Source);
 	virtual ~UISprite_Brush();
 
 	virtual bool		DoEventPressed(const MouseInputData& InputData);

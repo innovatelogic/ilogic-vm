@@ -14,16 +14,7 @@ BaseSplineAgregator::BaseSplineAgregator(const CObjectAbstract * Parent /*= NULL
 {
 
 }
-//----------------------------------------------------------------------------------------------
-BaseSplineAgregator::BaseSplineAgregator(const BaseSplineAgregator &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		SplineDetail = Source.SplineDetail;
-		SplineClosed = Source.SplineClosed;
-	}
-}
+
 //----------------------------------------------------------------------------------------------
 BaseSplineAgregator::~BaseSplineAgregator()
 {

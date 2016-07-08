@@ -12,16 +12,6 @@ SphereCollisionController_Brush::SphereCollisionController_Brush(const CObjectAb
 }
 
 //----------------------------------------------------------------------------------
-SphereCollisionController_Brush::SphereCollisionController_Brush(const SphereCollisionController_Brush &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-
-	}
-}
-
-//----------------------------------------------------------------------------------
 SphereCollisionController_Brush::~SphereCollisionController_Brush()
 {
 

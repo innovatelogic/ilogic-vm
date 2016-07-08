@@ -13,7 +13,6 @@ class EXPORT UIImage : public UIScreenObject
 
 public:
 	UIImage(const CObjectAbstract * Parent);
-	UIImage(const UIImage& Source);
 	virtual ~UIImage();
 
 	virtual void		DoDraw();

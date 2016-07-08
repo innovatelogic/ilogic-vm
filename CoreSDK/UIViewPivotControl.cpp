@@ -221,13 +221,6 @@ UIViewPivotControl::UIViewPivotControl(const CObjectAbstract *pParent)
 }
 
 //----------------------------------------------------------------------------------------------
-UIViewPivotControl::UIViewPivotControl(const UIViewPivotControl &Source)
-: Super(Source)
-, IDrawInterface(Source)
-{
-}
-
-//----------------------------------------------------------------------------------------------
 UIViewPivotControl::~UIViewPivotControl()
 {
 

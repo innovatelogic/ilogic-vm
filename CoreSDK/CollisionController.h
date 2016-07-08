@@ -15,7 +15,6 @@ class CollisionController : public BaseModificator,
 
 public:
 	CollisionController(const CObjectAbstract *pParent);
-	CollisionController(const CollisionController &Source);
 	virtual ~CollisionController();
 
 	virtual void		OnPropertyChanged(const char *PropertyName);

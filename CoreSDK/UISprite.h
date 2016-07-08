@@ -13,7 +13,6 @@ class UISprite : public UIImage
 
 public:
 	UISprite(const CObjectAbstract * Parent);
-	UISprite(const UISprite &Source);
 	virtual ~UISprite();
 
 	virtual bool		HitTest(const Vector2f &Position);

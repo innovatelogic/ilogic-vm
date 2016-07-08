@@ -14,7 +14,6 @@ class SplineCollision2DModificator_Brush : public SplineCollision2DModificator, 
 
 public:
 	SplineCollision2DModificator_Brush(const CObjectAbstract * Parent);
-	SplineCollision2DModificator_Brush(const SplineCollision2DModificator_Brush& Source);
 	virtual ~SplineCollision2DModificator_Brush();
 
 protected:

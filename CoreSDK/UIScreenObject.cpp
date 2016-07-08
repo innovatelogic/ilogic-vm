@@ -27,18 +27,6 @@ UIScreenObject::UIScreenObject(const CObjectAbstract *Parent/* = NULL*/)
 }
 
 //----------------------------------------------------------------------------------------------
-UIScreenObject::UIScreenObject(const UIScreenObject &Source)
-: Super(Source)
-, IDrawInterfaceUI(Source)
-{
-	if (this != &Source)
-	{
-		ActiveState	= ActiveState_Normal;
-		Opacity		= Source.Opacity;
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 UIScreenObject::~UIScreenObject()
 {
    ;//
@@ -244,7 +232,8 @@ bool UIScreenObject::DoEventPressed(const MouseInputData& InputData)
 //----------------------------------------------------------------------------------------------
 bool UIScreenObject::DoEventReleased(const MouseInputData& InputData)
 {
-	return Super::DoEventReleased(InputData);
+	//return Super::DoEventReleased(InputData);
+    return false;
 }
 
 //----------------------------------------------------------------------------------------------

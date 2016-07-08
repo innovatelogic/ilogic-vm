@@ -13,7 +13,6 @@ class CORESDK_API UISceneBaseHud : public UIScene
 
 public:
 	UISceneBaseHud(const CObjectAbstract * Parent);
-	UISceneBaseHud(const UISceneBaseHud & Source);
 	virtual ~UISceneBaseHud();
 
 	virtual void		Initialize();

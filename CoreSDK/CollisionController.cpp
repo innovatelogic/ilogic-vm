@@ -42,27 +42,7 @@ CollisionController::CollisionController(const CObjectAbstract* Parent)
 {
 
 }
-//----------------------------------------------------------------------------------
-CollisionController::CollisionController(const CollisionController &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-		bStatic = Source.bStatic;
-		Desteny = Source.Desteny;
-		b2DMode = Source.b2DMode;
-		DISABLE_GRAVITY = Source.DISABLE_GRAVITY;
-		FROZEN_POS_X = Source.FROZEN_POS_X;
-		FROZEN_POS_Y = Source.FROZEN_POS_Y;
-		FROZEN_POS_Z = Source.FROZEN_POS_Z;
-		FROZEN_ROT_X = Source.FROZEN_ROT_X;
-		FROZEN_ROT_Y = Source.FROZEN_ROT_Y;
-		FROZEN_ROT_Z = Source.FROZEN_ROT_Z;
-		FROZEN_POS = Source.FROZEN_POS;
-		FROZEN_ROT = Source.FROZEN_ROT;
-		KINEMATIC = Source.KINEMATIC;
-	}
-}
+
 //----------------------------------------------------------------------------------
 CollisionController::~CollisionController()
 {

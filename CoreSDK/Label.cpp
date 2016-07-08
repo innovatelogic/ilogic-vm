@@ -14,18 +14,6 @@ Label::Label(const CObjectAbstract * Parent /*= NULL*/)
 }
 
 //----------------------------------------------------------------------------------
-Label::Label(const Label & Source)
-: Super(Source)
-{
-	if (&Source != this)
-	{
-		FontComponent = CLONE_OBJECT(UIComp_DrawFont, Source.FontComponent, Source.FontComponent->GetName(), this);
-
-		Text = Source.Text;
-	}
-}
-
-//----------------------------------------------------------------------------------
 Label::~Label()
 {
 	;//

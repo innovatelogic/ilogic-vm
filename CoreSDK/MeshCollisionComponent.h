@@ -12,8 +12,7 @@ class MeshCollisionComponent : public CollisionController
 	DECLARE_CLASS_SIMPLE(MeshCollisionComponent, CollisionController);
 
 public:
-	MeshCollisionComponent(const CObjectAbstract * Parent);
-	MeshCollisionComponent(const MeshCollisionComponent & Source);
+	MeshCollisionComponent(const CObjectAbstract *parent);
 	~MeshCollisionComponent();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

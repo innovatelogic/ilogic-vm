@@ -8,8 +8,7 @@ class CORESDK_API UIScene : public UIScreenObject, public IUIInputController
 	DECLARE_CLASS_SIMPLE(UIScene, UIScreenObject);
 
 public:
-	UIScene(const CObjectAbstract * Parent);
-	UIScene(const UIScene &Source);
+	UIScene(const CObjectAbstract *parent);
 	virtual ~UIScene();
 
 	virtual void	OnPropertyChanged(const char* PropertyName);

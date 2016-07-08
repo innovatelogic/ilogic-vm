@@ -19,7 +19,6 @@ class CORESDK_API UIScreenObject :
 public:
 	// constructor & destructor
     UIScreenObject(const CObjectAbstract *Parent);
-	UIScreenObject(const UIScreenObject &Source);
 	virtual ~UIScreenObject();
 	
 	/* properties */

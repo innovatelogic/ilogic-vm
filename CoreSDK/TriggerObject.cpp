@@ -31,25 +31,6 @@ TriggerObject::TriggerObject(const CObjectAbstract * Parent)
 }
 
 //----------------------------------------------------------------------------------------------
-TriggerObject::TriggerObject(const TriggerObject &Source)
-: Super(Source)
-{
-	if (this != &Source)
-	{
-// 		Extends = Source.Extends;
-// 		OnEnter = Source.OnEnter;
-// 		OnStay  = Source.OnStay;
-// 		OnLeave = Source.OnLeave;
-// 
-// 		ActionEvent	= CLONE_OBJECT(ActionTrigger, Source.ActionEvent, Source.ActionEvent->GetName());
-// 
-// 		ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
-// 
-// 		Driver->RegisterAction(ActionEvent);
-	}
-}
-
-//----------------------------------------------------------------------------------------------
 TriggerObject::~TriggerObject()
 {
 	UNREGISTER_EVENT(this, this, Event_OnChangePivot);

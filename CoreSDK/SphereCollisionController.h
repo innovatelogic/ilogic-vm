@@ -12,8 +12,7 @@ class CSphereCollisionController : public CollisionController
 	DECLARE_CLASS_SIMPLE(CSphereCollisionController, CollisionController);
 
 public:
-	CSphereCollisionController(const class CObjectAbstract *pParent);
-	CSphereCollisionController(const CSphereCollisionController &Source);
+	CSphereCollisionController(const class CObjectAbstract *parent);
 	~CSphereCollisionController();
 
 	virtual void		OnPropertyChanged(const char *PropertyName);
