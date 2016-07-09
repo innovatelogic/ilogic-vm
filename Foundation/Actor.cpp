@@ -73,12 +73,12 @@ void CActor::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 	if (bNeedSort)
 	{
 		std::sort(m_ChildNodes.begin(), m_ChildNodes.end(), CObjectAbstract::CompByPlainPos);
-		CALL_EVENT_DELEGATE(Event_ObjectReArranged);
+		BroadcastEvent(Event_ObjectReArranged);
 	}
 #endif//FINAL_RELEASE
 	
-	CALL_EVENT_DELEGATE(Event_PostLoad);
-	CALL_EVENT_DELEGATE(Event_Updated);
+    BroadcastEvent(Event_PostLoad);
+    BroadcastEvent(Event_Updated);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -381,110 +381,20 @@ void CActor::PreRelease()
 { 
     BroadcastEvent(Event_PreRelease);
 
-	//for_each(m_VEvents.begin(), m_VEvents.end(), DeleteVectorFntor());
-
-	for (TVecConstEventsIterator Iter = m_VEvents.begin(); Iter != m_VEvents.end(); ++Iter)
-	{
-		delete *Iter;
-	}
-
-	//m_VEvents.clear();
 	InterruptKeys.clear();
 
 	Super::PreRelease();
 }
 
 //----------------------------------------------------------------------------------------------
-/**
-*	RebuildChildCompoziteBound build child's spatial subdivision
-*/
-/*void CActor::RebuildChildCompoziteBound()
-{
-	if (Bounds.IsValid())
-	{
-		CompositeBounds = Bounds3f(Vector(WorldMatrixTransform.t + Bounds.bound_min), 
-								   Vector(WorldMatrixTransform.t + Bounds.bound_max));
-	}
-
-	for_each(ChildNodes.begin(), ChildNodes.end(), std::mem_fun(&CActor::RebuildChildCompoziteBound));
-
-	// set current composite boundering box as a sum of corresponding child
-	for (TVecActorChild::iterator IterChild = ChildNodes.begin(); IterChild != ChildNodes.end(); ++IterChild)
-	{
-		if (!(*IterChild)->CompositeBounds.IsValid()){
-			continue;
-		}
-		CompositeBounds += (*IterChild)->CompositeBounds;
-	}
-}*/
-
-//----------------------------------------------------------------------------------------------
-//void CActor::DoRebuildBounds()
-//{
-// 	Vector AxisX(1.f, 0.f, 0.f);
-// 	Vector AxisY(0.f, 1.f, 0.f);
-// 	Vector AxisZ(0.f, 0.f, 1.f);
-// 	
-// 	float px0 = WorldMatrixTransform._row0.Dot(AxisX);
-// 	float px1 = WorldMatrixTransform._row1.Dot(AxisX);
-// 	float px2 = WorldMatrixTransform._row2.Dot(AxisX);
-// 	
-// 	float py0 = WorldMatrixTransform._row0.Dot(AxisY);
-// 	float py1 = WorldMatrixTransform._row1.Dot(AxisY);
-// 	float py2 = WorldMatrixTransform._row2.Dot(AxisY);
-// 	
-// 	float pz0 = WorldMatrixTransform._row0.Dot(AxisZ);
-// 	float pz1 = WorldMatrixTransform._row1.Dot(AxisZ);
-// 	float pz2 = WorldMatrixTransform._row2.Dot(AxisZ);
-// 	
-// 	float LeftX = 0.f;
-// 	float LeftY = 0.f;
-// 	float LeftZ = 0.f;
-// 	
-// 	Vector D = Vector(fabs(px0 * MatrixScale.x) + fabs(px1 * MatrixScale.y) + fabs(px2 * MatrixScale.z), 
-// 						fabs(py0 * MatrixScale.x) + fabs(py1 * MatrixScale.y) + fabs(py2 * MatrixScale.z),
-// 						fabs(pz0 * MatrixScale.x) + fabs(pz1 * MatrixScale.y) + fabs(pz2 * MatrixScale.z));
-// 	
-// 	Vector HalfD = Vector(D.x * 0.5f, D.y * 0.5f, D.z * 0.5f);
-// 	
-// 	Bounds.SetBounds(-HalfD, HalfD);
-//}
-
-//----------------------------------------------------------------------------------------------
-/*void CActor::DoRebuildRootsCompoziteBox()
-{
- 	// add to all top level 
- 	CActor * IterParent = GetParent();
- 
- 	while (IterParent)
- 	{
-		IterParent->CompositeBounds = Bounds3f(Vector(IterParent->WorldMatrixTransform.t + IterParent->Bounds.bound_min), 
-											   Vector(IterParent->WorldMatrixTransform.t + IterParent->Bounds.bound_max));
-  		// add to all parent's child
- 		for (TVecActorChild::iterator IterChild = IterParent->ChildNodes.begin(); IterChild != IterParent->ChildNodes.end(); ++IterChild)
- 		{
- 			if ((*IterChild)->CompositeBounds.bound_min.x == V_FLT_MAX){
- 				continue;
- 			}
- 			IterParent->CompositeBounds += (*IterChild)->CompositeBounds;
- 		}
-		IterParent = IterParent->GetParent();
- 	}
-}*/
-
-//----------------------------------------------------------------------------------------------
 void CActor::BroadcastEvent(ESystemEventID id)
 {
-	CALL_EVENT_DELEGATE(id);
-
-    m_pEventManager->BroadcastEvent(id);
+    m_pEventManager->BroadcastEvent(id, this);
 }
 
 //----------------------------------------------------------------------------------------------
 void CActor::BroadcastEvent(ESystemEventID id, const CActor *pParam)
 {
-	CALL_EVENT_DELEGATE_SENDER(pParam, id);
-
     m_pEventManager->BroadcastEvent(id, pParam);
 }
 
@@ -636,46 +546,7 @@ CActor * CActor::FindActorByPath(const std::string &Path)
 	}	
 	return IterActor;
 }
-/*
-//----------------------------------------------------------------------------------------------
-void CActor::SetControlState(EActorState State, bool IsIterative, bool bIterateUp )
-{
-	 ActorState = State; // set state to current
-}
 
-//----------------------------------------------------------------------------------------------
-bool CActor::DoEventPressed(const MouseInputData& InputData)
-{
-	CALL_EVENT_DELEGATE(Event_OnPressed); // call pressed delegate
-	SetControlMode(SOEvent_FreeMove);
-
-	return true;
-}
-
-//----------------------------------------------------------------------------------------------
-bool CActor::DoEventReleased(const MouseInputData& InputData)
-{
-	CALL_EVENT_DELEGATE(Event_OnPressReleased); // call unpressed delegate
-
-	if (GetControlState() == ActorState_Locked)
-	{
-		//RebuildTransform();
-
-		//CALL_EVENT_DELEGATE(Event_PropertyChanged); // call unpressed delegate
-		CALL_EVENT_DELEGATE(Event_OnChangePivot);
-	}
-	//
-	SetControlMode(SOEvent_None);
-
-	return true;
-}
-
-//----------------------------------------------------------------------------------------------
-bool CActor::DoEventMove(const MouseMoveInputData& InputData)
-{	
-	return true;
-}
-*/
 //----------------------------------------------------------------------------------------------
 void CActor::UpdateEntitiesChangeWorldPos(const Matrix &World)
 {

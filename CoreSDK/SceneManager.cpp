@@ -17,29 +17,25 @@ CSceneManager::~CSceneManager()
 //----------------------------------------------------------------------------------------------
 void CSceneManager::Command_LoadScene(const char *strFileName)
 {
-	std::vector<class CommandBase*> ArrayCmd;
-
-	//ArrayCmd.push_back(new Command<CCoreSDK, CCoreSDK>(&CCoreSDK::EnterDrawCS, m_pCoreSDK));
+/*	std::vector<class CommandBase*> ArrayCmd;
 
 	ArrayCmd.push_back(new CommandBOOL_ValRef<CSceneManager, CSceneManager, std::string>(&CSceneManager::LoadFromFile, this, strFileName));
 
-	//ArrayCmd.push_back(new Command<CCoreSDK, CCoreSDK>(&CCoreSDK::LeaveDrawCS, m_pCoreSDK));
+	m_pCoreSDK->AddCommandsArray(ArrayCmd);*/
 
-	m_pCoreSDK->AddCommandsArray(ArrayCmd);
+    LoadFromFile(strFileName);
 }
 
 //----------------------------------------------------------------------------------------------
 void CSceneManager::Command_InitializeScene(const char *strFileName)
 {
-	std::vector<class CommandBase*> ArrayCmd;
-
-	//ArrayCmd.push_back(new Command<CCoreSDK, CCoreSDK>(&CCoreSDK::EnterDrawCS, m_pCoreSDK));
+	/*std::vector<class CommandBase*> ArrayCmd;
 
 	ArrayCmd.push_back(new Command<CSceneManager, CSceneManager>(&CSceneManager::Initialize, this));
 
-	//ArrayCmd.push_back(new Command<CCoreSDK, CCoreSDK>(&CCoreSDK::LeaveDrawCS, m_pCoreSDK));
+	m_pCoreSDK->AddCommandsArray(ArrayCmd);*/
 
-	m_pCoreSDK->AddCommandsArray(ArrayCmd);
+    Initialize();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -48,7 +44,9 @@ void CSceneManager::Command_CloseScene(const CScene *pScene)
 	TVecSceneIter IterFind = std::find(m_VecScenes.begin(), m_VecScenes.end(), pScene);
 	if (IterFind != m_VecScenes.end())
 	{
-		m_pCoreSDK->AddCommand(new Command<CScene, CScene>(&CScene::Release, *IterFind));
+		//m_pCoreSDK->AddCommand(new Command<CScene, CScene>(&CScene::Release, *IterFind));
+
+        (*IterFind)->Release();
 		m_VecScenes.erase(IterFind);
 	}
 }
@@ -60,7 +58,9 @@ void CSceneManager::Command_CloseAll()
 	TVecSceneIter Iter = m_VecScenes.begin();
 	while (Iter != m_VecScenes.end())
 	{
-		m_pCoreSDK->AddCommand(new Command<CScene, CScene>(&CScene::Release, *Iter));
+		//m_pCoreSDK->AddCommand(new Command<CScene, CScene>(&CScene::Release, *Iter));
+
+        (*Iter)->Release();
 		++Iter;			
 	}
 	m_VecScenes.clear();

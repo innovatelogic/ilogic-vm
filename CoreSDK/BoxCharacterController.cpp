@@ -21,7 +21,7 @@ BoxCharacterController::~BoxCharacterController()
 {
 	assert(GetParent());
 
-	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
+//	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 	//UNREGISTER_EVENT_PROXY_INPUT(GetParent(), this);
 
 	//GetPhysicsEngine()->ReleaseObject(this);
@@ -43,7 +43,7 @@ void BoxCharacterController::Initialize()
 {	
 	Super::Initialize();
 
-	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&BoxCharacterController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
+//	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&BoxCharacterController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
 
 	CreatePhysActor();
 }

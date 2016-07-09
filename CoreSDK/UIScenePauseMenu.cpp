@@ -24,16 +24,16 @@ void UIScenePauseMenu::Initialize()
 	Super::Initialize();
 
 	if (CActor * pButtonResume = FindActor(("ButtonResume"))) {
-		REGISTER_EVENT_(pButtonResume, this, boost::bind<void>(&UIScenePauseMenu::OnButtonResume, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonResume, this, boost::bind<void>(&UIScenePauseMenu::OnButtonResume, this, _1, _2), Event_OnPressed);
 	}
 	if (CActor * pButtonSaveLoad = FindActor(("ButtonSaveLoad"))) {
-		REGISTER_EVENT_(pButtonSaveLoad, this, boost::bind<void>(&UIScenePauseMenu::OnButtonSaveLoad, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonSaveLoad, this, boost::bind<void>(&UIScenePauseMenu::OnButtonSaveLoad, this, _1, _2), Event_OnPressed);
 	}
 	if (CActor * pButtonOptions = FindActor(("ButtonOptions"))) {
-		REGISTER_EVENT_(pButtonOptions, this, boost::bind<void>(&UIScenePauseMenu::OnButtonOptions, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonOptions, this, boost::bind<void>(&UIScenePauseMenu::OnButtonOptions, this, _1, _2), Event_OnPressed);
 	}
 	if (CActor * pButtonExit = FindActor(("ButtonExit"))) {
-		REGISTER_EVENT_(pButtonExit, this, boost::bind<void>(&UIScenePauseMenu::OnButtonExit, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonExit, this, boost::bind<void>(&UIScenePauseMenu::OnButtonExit, this, _1, _2), Event_OnPressed);
 	}
 
 	SetVisible(false);				// initially hide

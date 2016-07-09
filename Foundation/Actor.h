@@ -297,9 +297,6 @@ private:
 	bool				bEnabled;
 
 public:
-	/** user event delegates*/
-	TVecEvents			m_VEvents;
-
 	/** key bindings */
 	TVecInterruptKeys	InterruptKeys; 
 

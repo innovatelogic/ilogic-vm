@@ -56,6 +56,16 @@ void Win32ObjectBrowserWidget<T_CLASS>::SetEditor(editors::TIEditor editor)
 {
     m_editor = editor;
     m_pRegistry = editor->GetApp()->GetRegistry();
+
+    oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
+
+    if (mgr) 
+    {
+        mgr->RegisterFunc([&](ESystemEventID id, const CObjectAbstract *param) 
+        { 
+            Update((T_CLASS*)param, id);
+        });
+    }
 }
 
 //----------------------------------------------------------------------------------------------

@@ -21,10 +21,10 @@ void CUISceneLogin::Initialize()
 	Super::Initialize();
 
 	if (CActor * pButtonPlay = FindActor(("ButtonPlay"))) {
-		REGISTER_EVENT_(pButtonPlay, this, boost::bind<void>(&CUISceneLogin::OnButtonPlayPressed, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonPlay, this, boost::bind<void>(&CUISceneLogin::OnButtonPlayPressed, this, _1, _2), Event_OnPressed);
 	}
 	if (CActor * pButtonQuit = FindActor(("ButtonQuit"))) {
-		REGISTER_EVENT_(pButtonQuit, this, boost::bind<void>(&CUISceneLogin::OnButtonQuitPressed, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(pButtonQuit, this, boost::bind<void>(&CUISceneLogin::OnButtonQuitPressed, this, _1, _2), Event_OnPressed);
 	}
 }
 

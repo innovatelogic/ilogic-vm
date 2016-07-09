@@ -36,7 +36,13 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::Initialize()
     {
+        // HACK: set default context
+        D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
+        pDriver->PushContext(GetRenderContext());
+
         m_pApi->Deserialize("3d_scene_controller.xml", nullptr);
+
+        pDriver->PopContext();
 
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
@@ -96,7 +102,14 @@ namespace editors
         CHAR chFileName[MAX_PATH] = "";
         if (ConvertWideStringToAnsiCch(chFileName, path.c_str(), MAX_PATH))
         {
+            // HACK: set default context
+            D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
+            pDriver->PushContext(GetRenderContext());
+
             m_pApi->Deserialize(chFileName, nullptr);
+            
+            pDriver->PopContext();
+
             bResult = true;
         }
         return bResult;

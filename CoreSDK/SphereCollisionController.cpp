@@ -15,7 +15,7 @@ CSphereCollisionController::CSphereCollisionController(const CObjectAbstract *pP
 //------------------------------------------------------------------------
 CSphereCollisionController::~CSphereCollisionController()
 {
-	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
+//	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 	//UNREGISTER_EVENT_PROXY_INPUT(GetParent(), this);
 
 //	GetPhysicsEngine()->ReleaseObject(this);
@@ -36,7 +36,7 @@ void CSphereCollisionController::Initialize()
 {	
 	assert(GetParent());
 
-	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&CSphereCollisionController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
+//	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&CSphereCollisionController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
 	//REGISTER_EVENT_PROXY_INPUT(GetParent(), this, boost::bind<bool>(&SphereCollisionController::ProxyProcessInputKey, this, _1, _2));
 
 	Super::Initialize();

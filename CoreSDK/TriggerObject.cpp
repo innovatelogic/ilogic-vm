@@ -33,7 +33,7 @@ TriggerObject::TriggerObject(const CObjectAbstract * Parent)
 //----------------------------------------------------------------------------------------------
 TriggerObject::~TriggerObject()
 {
-	UNREGISTER_EVENT(this, this, Event_OnChangePivot);
+//	UNREGISTER_EVENT(this, this, Event_OnChangePivot);
 
 	//GetPhysicsEngine()->ReleaseObject(this);
 

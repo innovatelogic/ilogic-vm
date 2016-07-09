@@ -134,7 +134,7 @@ namespace editors
 
             actor->Initialize();
 
-            actor->GetAppMain()->GetFnOnCreate()(actor, ESystemEventID::Event_ObjectGenerated);
+            //actor->BroadcastEvent(actor, ESystemEventID::Event_ObjectGenerated);
         }
         return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
     }

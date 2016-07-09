@@ -21,10 +21,10 @@ void CSceneSelectLevel::Initialize()
 	Super::Initialize();
 
 	if (CActor *m_ButtonLevel0 = FindActor(("ButtonLevel0"))) {
-		REGISTER_EVENT_(m_ButtonLevel0, this, boost::bind<void>(&CSceneSelectLevel::OnButtonPlayPressed, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(m_ButtonLevel0, this, boost::bind<void>(&CSceneSelectLevel::OnButtonPlayPressed, this, _1, _2), Event_OnPressed);
 	}
 	if (CActor *m_ButtonBack = FindActor(("ButtonBack"))) {
-		REGISTER_EVENT_(m_ButtonBack, this, boost::bind<void>(&CSceneSelectLevel::OnButtonQuitPressed, this, _1, _2), Event_OnPressed);
+//		REGISTER_EVENT_(m_ButtonBack, this, boost::bind<void>(&CSceneSelectLevel::OnButtonQuitPressed, this, _1, _2), Event_OnPressed);
 	}
 }
 

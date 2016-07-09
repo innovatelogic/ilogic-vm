@@ -15,21 +15,25 @@ CUISceneManager::~CUISceneManager()
 //----------------------------------------------------------------------------------------------
 void CUISceneManager::Command_LoadScene(const char *strFileName)
 {
-	std::vector<class CommandBase*> ArrayCmd;
+	//std::vector<class CommandBase*> ArrayCmd;
  
-	ArrayCmd.push_back(new CommandBOOL_ValRef<CUISceneManager, CUISceneManager, std::string>(&CUISceneManager::LoadFromFile, this, strFileName));
+	//ArrayCmd.push_back(new CommandBOOL_ValRef<CUISceneManager, CUISceneManager, std::string>(&CUISceneManager::LoadFromFile, this, strFileName));
  
-	m_pCoreSDK->AddCommandsArray(ArrayCmd);
+	//m_pCoreSDK->AddCommandsArray(ArrayCmd);
+
+    LoadFromFile(strFileName);
 }
 
 //----------------------------------------------------------------------------------------------
 void CUISceneManager::Command_InitializeScene(const char *strFileName)
 {
-	std::vector<class CommandBase*> ArrayCmd;
+	//std::vector<class CommandBase*> ArrayCmd;
 
-	ArrayCmd.push_back(new Command<CUISceneManager, CUISceneManager>(&CUISceneManager::Initialize, this));
+	//ArrayCmd.push_back(new Command<CUISceneManager, CUISceneManager>(&CUISceneManager::Initialize, this));
 
-	m_pCoreSDK->AddCommandsArray(ArrayCmd);
+	//m_pCoreSDK->AddCommandsArray(ArrayCmd);
+
+    Initialize();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -38,7 +42,9 @@ void CUISceneManager::Command_CloseScene(UIScene *pScene)
 	TVecUISceneIter IterFind = std::find(m_VecUIScenes.begin(), m_VecUIScenes.end(), pScene);
 	if (IterFind != m_VecUIScenes.end())
 	{
-		m_pCoreSDK->AddCommand(new Command<UIScene, UIScene>(&UIScene::Release, *IterFind));
+		//m_pCoreSDK->AddCommand(new Command<UIScene, UIScene>(&UIScene::Release, *IterFind));
+
+        (*IterFind)->Release();
 		m_VecUIScenes.erase(IterFind);
 	}
 }
@@ -46,11 +52,14 @@ void CUISceneManager::Command_CloseScene(UIScene *pScene)
 //----------------------------------------------------------------------------------------------
 void CUISceneManager::Command_CloseAll()
 {
-	TVecUISceneIter Iter = m_VecUIScenes.begin();
-	while (Iter != m_VecUIScenes.end())
+	TVecUISceneIter iter = m_VecUIScenes.begin();
+	while (iter != m_VecUIScenes.end())
 	{
-		m_pCoreSDK->AddCommand(new Command<UIScene, UIScene>(&UIScene::Release, *Iter));
-		++Iter;			
+		//m_pCoreSDK->AddCommand(new Command<UIScene, UIScene>(&UIScene::Release, *Iter));
+
+        (*iter)->Release();
+
+		++iter;			
 	}
 }
 

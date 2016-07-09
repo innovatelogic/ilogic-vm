@@ -15,7 +15,7 @@ BoxCollisionController::BoxCollisionController(const CObjectAbstract * Parent)
 //----------------------------------------------------------------------------------
 BoxCollisionController::~BoxCollisionController()
 {
-	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
+//	UNREGISTER_EVENT(GetParent(), this, Event_OnChangePivot);
 	//UNREGISTER_EVENT_PROXY_INPUT(GetParent(), this);
 
 #ifdef PHYS_ENABLED
@@ -38,7 +38,7 @@ void BoxCollisionController::Initialize()
 {	
 	assert(GetParent());
 
-	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&BoxCollisionController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
+//	REGISTER_EVENT_(GetParent(), this, boost::bind<void>(&BoxCollisionController::OnChangePivot, this, _1, _2), Event_OnChangePivot);
 	//REGISTER_EVENT_PROXY_INPUT(GetParent(), this, boost::bind<bool>(&BoxCollisionController::ProxyProcessInputKey, this, _1, _2));
 
 	Super::Initialize();

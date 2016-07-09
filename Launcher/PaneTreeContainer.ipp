@@ -142,7 +142,7 @@ void CTreePaneContainer<T_CLASS>::Update(const T_CLASS *pSender, ESystemEventID 
 {
     if (m_pTreeBrowser)
     {
-        m_pTreeBrowser->Update(pSender, EventId);
+        //m_pTreeBrowser->Update(pSender, EventId);
     }
 }
 

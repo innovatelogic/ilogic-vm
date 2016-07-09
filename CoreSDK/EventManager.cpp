@@ -19,15 +19,24 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
-        void EventManager::BroadcastEvent(ESystemEventID Id)
+        void EventManager::BroadcastEvent(ESystemEventID id)
         {
-
+            assert(false);
         }
 
         //----------------------------------------------------------------------------------------------
-        void EventManager::BroadcastEvent(ESystemEventID Id, const CObjectAbstract *pParam)
+        void EventManager::BroadcastEvent(ESystemEventID id, const CObjectAbstract *pParam)
         {
+            for each (auto &item in m_funcs)
+            {
+                item(id, pParam);
+            }
+        }
 
+        //----------------------------------------------------------------------------------------------
+        void EventManager::RegisterFunc(const std::function<void(ESystemEventID, const CObjectAbstract*)> &func)
+        {
+            m_funcs.push_back(func);
         }
     }
 }

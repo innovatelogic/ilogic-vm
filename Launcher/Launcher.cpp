@@ -117,7 +117,7 @@ void		UpdateFrame();
 //----------------------------------------------------------------------------------------------
 void OnActor_EventUpdated(const CActor *pSender, ESystemEventID EventId)
 {
-	assert(pSender);
+	/*assert(pSender);
 
 	if (EventId == Event_ObjectGenerated)
 	{
@@ -129,19 +129,19 @@ void OnActor_EventUpdated(const CActor *pSender, ESystemEventID EventId)
 
     if (wndMain) {
         wndMain->Update(pSender, EventId);
-    }
+    }*/
 }
 
 //----------------------------------------------------------------------------------------------
 int CALLBACK_ActorSubscribeEvents(const CActor *pSender)
 {	
-	assert(pSender);
+	/*assert(pSender);
 
 	// subscribe user function to all to all actor events sender
 	for (int EIndex = Event_ObjectGenerated; EIndex < Event_MAX; EIndex++) 
 	{
 		REGISTER_EVENT_(const_cast<CActor*>(pSender), NULL, boost::bind<void>(&OnActor_EventUpdated, _1, _2), (ESystemEventID)EIndex);
-	}
+	}*/
 	return 0;
 }
 

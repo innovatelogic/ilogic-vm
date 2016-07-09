@@ -101,8 +101,7 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     m_hWndClient = CreateClient();
 
     m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
-    m_editor->Initialize();
-
+    
     m_pRightBottomPane->SetEditor(m_editor);
     m_ViewCtrl.SetEditor(m_editor);
 
@@ -118,10 +117,13 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 
     m_pAssetBrowserFrame->ShowWindow(1);
     m_pAssetBrowserFrame->InitViewport();
-
-    m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance(), ESystemEventID::Event_ObjectGenerated);
-    m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer2D(), ESystemEventID::Event_ObjectGenerated);
-    m_pfnOnEventUpdate(m_pAppMain->GetExplorerInstance()->GetExplorer3D(), ESystemEventID::Event_ObjectGenerated);
+    
+    m_editor->Initialize();
+    
+    Explorer *root = m_pAppMain->GetExplorerInstance();
+    root->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
+    root->GetExplorer2D()->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
+    root->GetExplorer3D()->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
 
     InitCallbacks();
 

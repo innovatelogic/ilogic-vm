@@ -39,13 +39,13 @@ bool ActorAllocator::MoveObjectHierarchy(CActor * ActorMove, const Registry * Re
 			std::swap(*IterActorMove, *IterActorMoveTo);
 
 			// signal call
-			for (TVecEventsIterator Iter = ActorMove->m_VEvents.begin(); Iter != ActorMove->m_VEvents.end(); ++Iter)
+			/*for (TVecEventsIterator Iter = ActorMove->m_VEvents.begin(); Iter != ActorMove->m_VEvents.end(); ++Iter)
 			{
 				if ((Up == true ? Event_MoveObjectUp : Event_MoveObjectDown) == (*Iter)->EventId)
 				{
 					(*Iter)->CallEvent(ActorMove);
 				}
-			}
+			}*/
 			bResult = true;
 		}
 	}
