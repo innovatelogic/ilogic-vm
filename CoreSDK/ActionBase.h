@@ -86,11 +86,6 @@ public:
 	virtual void	Initialize();
 
 	/** 
-	* Post deserialization's linkage object by indexes.
-	*/
-	virtual void	PostLink();
-
-	/** 
 	 * Append new child object to parent. Or optionally place it in specific position.
 	 *
 	 * @param [in] actor - pointer to object.

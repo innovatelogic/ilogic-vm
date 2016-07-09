@@ -37,11 +37,6 @@ public:
 	virtual void			Initialize();
 
 	/** 
-	* Post deserialization's linkage object by indexes.
-	*/
-	virtual void			PostLink();
-
-	/** 
 	 * Reset initialize flag.
 	 * 
 	 */
@@ -197,7 +192,7 @@ public:
     *
     */
 	void	BroadcastEvent(ESystemEventID Id);
-	void	BroadcastEvent(ESystemEventID Id, CActor *pParam);
+	void	BroadcastEvent(ESystemEventID Id, const CActor *pParam);
 
 	/**
 	* Update all registered entities object's World position was changed

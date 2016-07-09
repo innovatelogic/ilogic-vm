@@ -431,7 +431,7 @@ void ActionBase::Initialize()
 }
 
 //----------------------------------------------------------------------------------------------
-void ActionBase::PostLink()
+/*void ActionBase::PostLink()
 {
 	size_t Index = 0;
 	for (size_t IndexSocket = 0; IndexSocket < VecSockets.size() && !TempLinkIndexes.empty(); ++IndexSocket)
@@ -459,7 +459,7 @@ void ActionBase::PostLink()
 	std::for_each(ChildNodes.begin(), ChildNodes.end(), std::mem_fun(&ActionBase::PostLink));
 
 	Super::PostLink();
-}
+}*/
 
 //----------------------------------------------------------------------------------------------
 bool ActionBase::AddChildNode(const ActionBase * Object, int Index /*= INDEX_NONE*/)

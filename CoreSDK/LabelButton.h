@@ -18,7 +18,6 @@ public:
 	virtual void	OnPropertyChanged(const char* PropertyName);
 
 	virtual void	Initialize();
-	virtual void	PostLink();
 
 	virtual void	DoDraw();
 

@@ -123,15 +123,7 @@ void CActor::Initialize()
 	
 	Super::Initialize();
 
-	CALL_EVENT_DELEGATE(Event_PostInitialize);
-}
-
-//----------------------------------------------------------------------------------------------
-void CActor::PostLink()
-{
-	std::for_each(m_ChildNodes.begin(), m_ChildNodes.end(), std::mem_fun(&CActor::PostLink));
-
-	Super::PostLink();
+    BroadcastEvent(Event_PostInitialize);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -149,7 +141,7 @@ bool CActor::Rename(const char* name)
 	if (strcmp(GetName(), name) != 0)
 	{
 		SetName(name);
-		CALL_EVENT_DELEGATE(Event_ObjectRename);
+        BroadcastEvent(Event_ObjectRename);
 		bResult = true;
 	}
 	return bResult;
@@ -376,8 +368,8 @@ bool CActor::ProcessRelease(bool ForceOperation /*= false*/)
 		{
 			m_ChildNodes.erase(std::remove(m_ChildNodes.begin(), m_ChildNodes.end(), static_cast<CActor*>(nullptr)), m_ChildNodes.end());
 
-			CALL_EVENT_DELEGATE(Event_PostRelease);
-			CALL_EVENT_DELEGATE(Event_Updated);
+            BroadcastEvent(Event_PostRelease);
+            BroadcastEvent(Event_Updated);
 		}
 	}
 
@@ -387,7 +379,7 @@ bool CActor::ProcessRelease(bool ForceOperation /*= false*/)
 //----------------------------------------------------------------------------------------------
 void CActor::PreRelease() 
 { 
-	CALL_EVENT_DELEGATE(Event_PreRelease);
+    BroadcastEvent(Event_PreRelease);
 
 	//for_each(m_VEvents.begin(), m_VEvents.end(), DeleteVectorFntor());
 
@@ -481,33 +473,37 @@ void CActor::PreRelease()
 }*/
 
 //----------------------------------------------------------------------------------------------
-void CActor::BroadcastEvent(ESystemEventID Id)
+void CActor::BroadcastEvent(ESystemEventID id)
 {
-	CALL_EVENT_DELEGATE(Id);
+	CALL_EVENT_DELEGATE(id);
+
+    m_pEventManager->BroadcastEvent(id);
 }
 
 //----------------------------------------------------------------------------------------------
-void CActor::BroadcastEvent(ESystemEventID Id, CActor *pParam)
+void CActor::BroadcastEvent(ESystemEventID id, const CActor *pParam)
 {
-	CALL_EVENT_DELEGATE_SENDER(pParam, Id);
+	CALL_EVENT_DELEGATE_SENDER(pParam, id);
+
+    m_pEventManager->BroadcastEvent(id, pParam);
 }
 
 //----------------------------------------------------------------------------------------------
-void CActor::SetParent(const CActor * Parent)
+void CActor::SetParent(const CActor *parent)
 {
-	m_pParentActor = const_cast<CActor*>(Parent);
+	m_pParentActor = const_cast<CActor*>(parent);
 }
 
 //----------------------------------------------------------------------------------------------
-bool CActor::AddChildNode(const CActor * Actor, int Index /*= INDEX_NONE*/)
+bool CActor::AddChildNode(const CActor *actor, int Index /*= INDEX_NONE*/)
 {
 	bool bResult = false;
 
-	if (Actor != nullptr && std::find(m_ChildNodes.begin(), m_ChildNodes.end(), Actor) == m_ChildNodes.end())
+	if (actor != nullptr && std::find(m_ChildNodes.begin(), m_ChildNodes.end(), actor) == m_ChildNodes.end())
 	{
 		if (Index == INDEX_NONE)
 		{
-			m_ChildNodes.push_back(const_cast<CActor*>(Actor));
+			m_ChildNodes.push_back(const_cast<CActor*>(actor));
 		}
 		else
 		{
@@ -515,27 +511,28 @@ bool CActor::AddChildNode(const CActor * Actor, int Index /*= INDEX_NONE*/)
 			std::advance(IterPlaceTo, Index);
 
 			if (IterPlaceTo != m_ChildNodes.end()){
-				m_ChildNodes.insert(IterPlaceTo, const_cast<CActor*>(Actor));
+				m_ChildNodes.insert(IterPlaceTo, const_cast<CActor*>(actor));
 			}
 			else{
-				m_ChildNodes.push_back(const_cast<CActor*>(Actor));
+				m_ChildNodes.push_back(const_cast<CActor*>(actor));
 			}
 		}
 
-		CALL_EVENT_DELEGATE_SENDER(Actor, Event_AddObjectChild);
+        BroadcastEvent(Event_AddObjectChild, actor);
+
 		bResult = true;
 	}
 	return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
-bool CActor::RemoveChildNode(CActor * Actor)
+bool CActor::RemoveChildNode(CActor *actor)
 {
-	TVecActorChildIterator IterFind = std::find(m_ChildNodes.begin(), m_ChildNodes.end(), Actor);
+	TVecActorChildIterator IterFind = std::find(m_ChildNodes.begin(), m_ChildNodes.end(), actor);
 	if (IterFind != m_ChildNodes.end())
 	{
         m_ChildNodes.erase(IterFind);
-		CALL_EVENT_DELEGATE_SENDER(Actor, Event_OnRemoveObject);
+        BroadcastEvent(Event_OnRemoveObject, actor);
 	}
 	return true;
 }

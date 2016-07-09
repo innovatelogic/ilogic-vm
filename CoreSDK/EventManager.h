@@ -15,6 +15,9 @@ namespace oes
             EventManager(CCoreSDK *api);
             virtual ~EventManager();
 
+            void	BroadcastEvent(ESystemEventID id) override;
+            void    BroadcastEvent(ESystemEventID id, const CObjectAbstract *pParam) override;
+
         protected:
         private:
             CCoreSDK *m_pApi;

@@ -17,5 +17,17 @@ namespace oes
         {
 
         }
+
+        //----------------------------------------------------------------------------------------------
+        void EventManager::BroadcastEvent(ESystemEventID Id)
+        {
+
+        }
+
+        //----------------------------------------------------------------------------------------------
+        void EventManager::BroadcastEvent(ESystemEventID Id, const CObjectAbstract *pParam)
+        {
+
+        }
     }
 }

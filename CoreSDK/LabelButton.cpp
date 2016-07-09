@@ -84,15 +84,6 @@ void LabelButton::Initialize()
 }
 
 //----------------------------------------------------------------------------------------------
-void LabelButton::PostLink()
-{
-	ActionPress->PostLink();
-	ActionRelease->PostLink();
-
-	Super::PostLink();
-}
-
-//----------------------------------------------------------------------------------------------
 void LabelButton::DoDraw()
 {
 	ImageComponents->DrawImage();

@@ -86,19 +86,6 @@ public:
 	 */
 	virtual void	Initialize();
 
-	/** 
-	* Post deserialization's linkage object by indexes.
-	*/
-	virtual void	PostLink();
-
-	//NObjectFactory::TClassFactory* GetClassFactory();
-	
-	static NObjectFactory::TClassFactory* GetClassFactoryStatic()
-	{
-		DbgAllocCall();
-		return NObjectFactory::TGlobalClassFactory::GetInstance();
-	}
-
 	/**
 	* Set object the name.
 	* 
@@ -192,21 +179,7 @@ public:
     */
     long    GetUID() const { return m_uID; }
 
-protected:
-	/** 
-	* Release object.
-	*/
-	virtual void	DoRelease() {}
-	
-	/** 
-	* Internal child serializer / deserializer
-	*/
-	virtual void	SuperDeserializerInternal(tinyxml2::XMLElement *pTree) {}
-	virtual bool	SuperSerializerInternal(std::ofstream &stream) { return false; }
-	virtual bool	SuperSerializerInternal(std::stringstream &stream) { return false; }
-
-public:
-	/** 
+    /** 
 	 * @return true if object already initialized (flag m_bIsInitialize).
 	 */
 	bool			IsInitialized() const { return m_bIsInitialize; }
@@ -250,11 +223,6 @@ public:
 	void			SetPlainDeserializationPos(unsigned int Value) { m_nPlainDeserializationPos = Value; }
 	unsigned int	GetPlainDeserializationPos() const { return m_nPlainDeserializationPos; }
 
-	static bool	CompByPlainPos(const CObjectAbstract * A1, const CObjectAbstract * A2)
-	{
-		return A1->m_nPlainDeserializationPos < A2->m_nPlainDeserializationPos;
-	}
-
 	/** object's externality */
 	void			SetExternal(bool Flag) { m_bExternal = Flag; }
 	bool			GetExternal() const { return m_bExternal; }
@@ -263,6 +231,32 @@ public:
 	void			SetFilenameTag(const char *filename) { m_FilenameTag = filename; }
 
 	static void		DbgAllocCall();
+
+    static void SetEventMgr(oes::foundation::IEventManager *mgr);
+
+    static bool	CompByPlainPos(const CObjectAbstract * A1, const CObjectAbstract * A2)
+    {
+        return A1->m_nPlainDeserializationPos < A2->m_nPlainDeserializationPos;
+    }
+
+    static NObjectFactory::TClassFactory* GetClassFactoryStatic()
+    {
+        DbgAllocCall();
+        return NObjectFactory::TGlobalClassFactory::GetInstance();
+    }
+
+protected:
+        /**
+        * Release object.
+        */
+        virtual void	DoRelease() {}
+
+        /**
+        * Internal child serializer / deserializer
+        */
+        virtual void	SuperDeserializerInternal(tinyxml2::XMLElement *pTree) {}
+        virtual bool	SuperSerializerInternal(std::ofstream &stream) { return false; }
+        virtual bool	SuperSerializerInternal(std::stringstream &stream) { return false; }
 
 private:
 	/** Resource name */
@@ -275,9 +269,7 @@ private:
     /** unique id until process session */
     volatile long   m_uID;
 
-//	luabind::adl::object *	m_ScriptObject;	
-
-	volatile LONG	m_bGenerationFinished;
+    volatile LONG	m_bGenerationFinished;
 	bool			m_bIsInitialize;
 	bool			m_bPendingToDelete;
 
@@ -305,17 +297,13 @@ public:
 	std::vector<class ICollisionInterface*> m_VecCollisionEntities;
 
 public:
-	/** 
-	 * Link info
-	 */
-	std::vector<int> TempLinkIndexes;
-
 	static int			DbgAllocNumber;
 
 private:
 	class IListener		*m_pListener;
 
-    oes::foundation::IEventManager *m_pEventManager;
+protected:
+    static oes::foundation::IEventManager *m_pEventManager;
 };
 
 //------------------------------------------------------------------------
@@ -354,7 +342,6 @@ extern "C"
 	EXTERN_EXPORT void* __cdecl	memory_new(size_t Size);
 	EXTERN_EXPORT void	__cdecl memory_delete(void* Ptr);
 }
-
 
 //
 // C++ style memory allocation.

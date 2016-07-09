@@ -103,6 +103,13 @@ extern "C"
    }*/
 }
 
+oes::foundation::IEventManager* CObjectAbstract::m_pEventManager = nullptr;
+
+void CObjectAbstract::SetEventMgr(oes::foundation::IEventManager *mgr)
+{
+    CObjectAbstract::m_pEventManager = mgr;
+}
+
 //----------------------------------------------------------------------------------------------
 // Properties
 //----------------------------------------------------------------------------------------------
@@ -116,7 +123,6 @@ END_REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
 //----------------------------------------------------------------------------------------------
 CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 : m_bPendingToDelete(false)
-//, m_ScriptObject(0)
 , m_Type("")
 , m_Name("")
 , m_bGenerationFinished(0)
@@ -127,7 +133,6 @@ CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 , m_FilenameTag("")
 , m_pUserData(nullptr)
 , m_pListener(nullptr)
-, m_pEventManager(nullptr)
 {
     static long g_uID = 0;
     m_uID = g_uID++;
@@ -140,7 +145,6 @@ CObjectAbstract::CObjectAbstract(const CObjectAbstract *parent /*= NULL*/)
 		m_pArrayUserData[0] = parent->m_pArrayUserData[0];
 		m_pArrayUserData[1] = parent->m_pArrayUserData[1];
 		m_pArrayUserData[2] = parent->m_pArrayUserData[2];
-        m_pEventManager     = parent->m_pEventManager;
 	}
 }
 
@@ -374,10 +378,9 @@ bool IsNestedBy(ClassNode *pNode, const char *pTypeBase)
 			pNode = pNode->GetRootNode();
 		}
 	}
-	
+
 	return bResult;
 }
-
 
 //----------------------------------------------------------------------------------------------
 std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAsExternal /*= false*/) const
@@ -582,14 +585,6 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 void CObjectAbstract::Initialize()
 {
 	m_bIsInitialize = true;
-
-	PostLink();
-}
-
-//----------------------------------------------------------------------------------------------
-void CObjectAbstract::PostLink()
-{
-	TempLinkIndexes.clear();
 }
 
 //----------------------------------------------------------------------------------------------

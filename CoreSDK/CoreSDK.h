@@ -81,13 +81,13 @@ public:
 	class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
 	class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
 	class GameRealmInfo*			GetRealmInfo()		const { return m_pGameRealmInfo; }
-	
-    core_sdk_api::CViewportManager*			GetViewportManager() const { return m_pViewportManager; }
-	
     class CInputManager*			GetInputManager() const { return m_pInputManager; }
 	class CUISceneManager*			GetUISceneManager() const { return m_pUISceneManager; }
 	class CSceneManager*			GetSceneManager() const { return m_pSceneManager; }
 	class CRemoteControlManager*	GetRemoteControlMgr() const { return m_pRemoteControlMgr; }
+
+    core_sdk_api::CViewportManager*	GetViewportManager() const { return m_pViewportManager; }
+    oes::foundation::IEventManager* GetEventManager() const { return m_eventManager; }
 
 	void	Draw();
 	void	ProcessInputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0, class SRenderContext *pRenderContext = 0);
@@ -178,7 +178,7 @@ private:
 	class CUISceneManager			*m_pUISceneManager;
 	class CSceneManager				*m_pSceneManager;
 	class CRemoteControlManager		*m_pRemoteControlMgr;
-    std::shared_ptr<oes::foundation::IEventManager>  m_eventManager;
+    oes::foundation::IEventManager  *m_eventManager;
 
 	TVCommandList					ListCommands;
 	TVCommandList					ListSubCommands;

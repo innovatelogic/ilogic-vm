@@ -1,6 +1,9 @@
 #pragma once
 
 #include "platform_specific.h"
+#include "StdafxFoundation.h"
+
+class CObjectAbstract;
 
 namespace oes
 {
@@ -10,6 +13,9 @@ namespace oes
         {
         public:
             virtual ~IEventManager() = 0 {};
+
+            virtual void	BroadcastEvent(ESystemEventID id) = 0;
+            virtual void    BroadcastEvent(ESystemEventID id, const CObjectAbstract *pParam) = 0;
         };
     }
 }
