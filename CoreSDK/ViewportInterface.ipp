@@ -410,9 +410,14 @@ namespace core_sdk_api
     template<class TTranformTraits, class TTransformHistory>
     void ViewportInterface<TTranformTraits, TTransformHistory>::ProcessMouseInput(const MouseInputData &input)
     {
-        //case MOUSE_MIDDLE:
-        m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
-        m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
+        switch (input.Code)
+        {
+        case MOUSE_MIDDLE:
+        {
+            m_SUserStartMousePosition = Vector(input.MousePos.x, input.MousePos.y, 0.f);
+            m_bSMiddleButtonPressed = (input.event == MOUSE_Pressed);
+        }break;
+        };
     }
 
     //----------------------------------------------------------------------------------------------

@@ -194,7 +194,19 @@ namespace core_sdk_api
 
         TIViewport *ivprt = const_cast<TIViewport*>(viewport);
 
-        ivprt->ProcessController(input);
+        if (!ivprt->ProcessController(input))
+        {
+            CameraManager *pMgr = m_pCoreSDK->GetCameraManager();
+            assert(pMgr);
+
+            CCamera *pCam = pMgr->GetActiveCamera(input.pRenderContext);
+            assert(pCam); // means at least one active camera should persist
+
+            MouseMoveInputData inputMod = input;
+            inputMod.bMiddleButtonPressed = ivprt->GetMiddleButtonPressed();
+
+            pCam->OnMouseMove(inputMod);
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -401,23 +413,6 @@ namespace core_sdk_api
         }
 
         viewport->SetSelection(objects);
-
-        /*
-        m_pCoreSDK->GetViewportManager()->SetFocus(0);
-
-        if (!paths.empty())
-        {
-            CActor *actor = CActor::GetActorByFullPath(paths[0], m_pCoreSDK->GetRootActor());
-            
-            assert(actor);
-
-            IDrawInterface *pIFocused = m_pCoreSDK->GetViewportManager()->GetByActor(actor);
-
-            if (pIFocused)
-            {
-                m_pCoreSDK->GetViewportManager()->SetFocus(pIFocused); // set focused state
-            }
-        }*/
     }
 
     //----------------------------------------------------------------------------------------------

@@ -113,6 +113,8 @@ namespace core_sdk_api
         EActorState     GetControllerState() const { return m_controllerState;  }
         void            SetControllerState(EActorState state) { m_controllerState = state; }
 
+        bool    GetMiddleButtonPressed() { return m_bSMiddleButtonPressed; }
+
     protected:
         void    DrawController(const Vector &pos) const;
 
