@@ -210,14 +210,15 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::InputMouseWheel(float ds, int x, int y, const TIViewport *viewport /*= nullptr*/)
+    void CViewportManager::InputMouseWheel(float ds, int x, int y, SRenderContext *context/*= nullptr*/)
     {
-        // TODO: get default viewport if nullptr
-        assert(viewport);
+        CameraManager *pMgr = m_pCoreSDK->GetCameraManager();
+        assert(pMgr);
 
-        TIViewport *ivprt = const_cast<TIViewport*>(viewport);
+        CCamera *pCam = pMgr->GetActiveCamera(context);
+        assert(pCam); // means at least one active camera should persist
 
-        //ivprt->Mo
+        pCam->OnMouseWheel(ds);
     }
 
     //----------------------------------------------------------------------------------------------

@@ -26,9 +26,7 @@
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
-typedef int	      (*CALLBACK_DialogInputText) (LPCTSTR szTitle, LPCTSTR szPrompt, LPTSTR szResult, DWORD nResultSize, bool bMultiLine);
 typedef void	  (*FnStopModule) (void);
-typedef void	  (*FnStartExplorerOnCreate) (const class CActor *pSender, ESystemEventID EventId);
 
 namespace core_sdk_api
 {
@@ -41,7 +39,7 @@ class CORESDK_API CCoreSDK
 
 public:
 	// Construction / destruction 
-	CCoreSDK(const class ValueParser &Value, FnStopModule pfn = 0, FnStartExplorerOnCreate pfn1 = 0);
+	CCoreSDK(const ValueParser &Value, FnStopModule pfn = 0);
 	virtual ~CCoreSDK();
 	
 	bool	Deserialize(const char *filename, class CActor *pParent = NULL);
@@ -90,12 +88,10 @@ public:
     oes::foundation::IEventManager* GetEventManager() const { return m_eventManager; }
 
 	void	Draw();
-	void	ProcessInputMouse(Event event, MouseCode code, int x, int y, int ModifKey = 0, class SRenderContext *pRenderContext = 0);
-	void	ProcessMouseMove(float x, float y, float dx, float dy, int ModifKey, class SRenderContext *pRenderContext = 0);
-	void	ProcessMouseWheel(float ds, int x, int y, class SRenderContext *pRenderContext = 0);
-	void	ProcessInputKey(const EventInput& InputData);
 	
-	/** Copy/Paste system events */
+    void	ProcessInputKey(const EventInput& InputData);
+
+    /** Copy/Paste system events */
 	void	ProcessEventCopy();
 	void	ProcessEventPaste();
 
@@ -144,11 +140,9 @@ public:
 
 
     //////////////////////////////////////////////////////////////////////////
-    // API Section
+    // Public API Section
 
     core_sdk_api::PxCamera* getCamera();
-
-    FnStartExplorerOnCreate		GetFnOnCreate() const { return m_pfnStartExplorerOnCreate; }
 
     bool    GetWireframeMode(SRenderContext *ctxt) const;
     void    SetWireframeMode(SRenderContext *ctxt, bool value);
@@ -197,7 +191,6 @@ private:
 	volatile LONG					bProcessCommndsState;
 
 	FnStopModule					m_pfnStopModule;
-	FnStartExplorerOnCreate			m_pfnStartExplorerOnCreate;
 
 	std::stringstream				m_StreamStateHolder;
 

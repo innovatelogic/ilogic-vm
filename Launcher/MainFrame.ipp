@@ -61,7 +61,7 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
     wcscpy(m_szAppSplashName, TEXT("Splash"));
 
     // start core root process
-    m_pAppMain = new CCoreSDK(cmd, 0, m_pfnOnEventUpdate);
+    m_pAppMain = new CCoreSDK(cmd, nullptr);
 }
 
 //----------------------------------------------------------------------------------------------

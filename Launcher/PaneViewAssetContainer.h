@@ -129,7 +129,7 @@ public:
 
         SRenderContext *context = m_editor->GetRenderContext();
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, context);
+//		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, context);
 
 		SetCapture();
 
@@ -156,7 +156,7 @@ public:
 		unsigned int vprtWidth = context->m_displayModeWidth;
 		unsigned int vprtHeight = context->m_displayModeHeight;
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, context);
+//		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, context);
 
 		ReleaseCapture();
 
@@ -168,8 +168,7 @@ public:
 	{
         SRenderContext *context = m_editor->GetRenderContext();
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_MIDDLE, 
-            GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
+		//m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
 
 		SetCapture();
 
@@ -183,8 +182,7 @@ public:
 	{
         SRenderContext *context = m_editor->GetRenderContext();
 
-		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_MIDDLE,
-										GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
+		//m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
 
 		ReleaseCapture();
 
@@ -245,7 +243,7 @@ public:
 
         SRenderContext *context = m_editor->GetRenderContext();
 
-		m_pAppMain->ProcessMouseWheel((float)zDelta, 0, 0, context);
+		//m_pAppMain->ProcessMouseWheel((float)zDelta, 0, 0, context);
 
 		bHandled = TRUE;
 		return 0;
