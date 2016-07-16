@@ -152,18 +152,21 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
             return 0;
         }
     }
+    else if (((LPNMHDR)lParam)->code == NM_CLICK)
+    {
+        if (((LPNMHDR)lParam)->hwndFrom == m_pTabCtrl.m_hWnd)
+        {
+            int selectedGroup = m_pTabCtrl.GetCurSel();
+
+            ToggleAspectView(selectedGroup);
+        }
+    }
+
     /*else if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
     {
     m_pTreeBrowser->ProcessRightClick();
     }*/
     return CPaneContainer::OnNotify(iunt_, wParam, lParam, pResult);
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T_CLASS>
-void CTreePaneContainer<T_CLASS>::Update(const T_CLASS *pSender, ESystemEventID EventId)
-{
-
 }
 
 //----------------------------------------------------------------------------------------------

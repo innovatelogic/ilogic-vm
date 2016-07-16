@@ -50,9 +50,6 @@ public:
     LRESULT OnAppRemoveObject(UINT, WPARAM, LPARAM, BOOL&);
     LRESULT OnAppRenameObject(UINT, WPARAM, LPARAM, BOOL&);
     LRESULT OnAppOnNotify(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&pResult);
-
-    void Update(const T_CLASS *pSender, ESystemEventID EventId);
-
     LRESULT OnTreeViewSelected(WORD, WORD, HWND, BOOL&);
 
     void OnObjectSelected();
