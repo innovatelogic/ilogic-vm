@@ -57,7 +57,7 @@ public:
 
     void OnObjectSelected();
 
-    bool AddTabPage(const char *name, int index /*= 0*/);
+    bool AddAspectTab(const char *name, T_CLASS *aspect, Win32ObjectBrowserWidget<T_CLASS> *presenter);
 
     LRESULT OnSize(UINT, WPARAM, LPARAM, BOOL& bHendled);
 
@@ -84,6 +84,8 @@ public:
 	class SRenderContext *m_pRenderContext;
 private:
     std::shared_ptr<editors::IEditor> m_editor;
+
+    std::map<T_CLASS*, Win32ObjectBrowserWidget<T_CLASS>*> m_aspectsView;
 };
 
 #include "PaneTreeContainer.ipp"

@@ -41,6 +41,9 @@ template<class T_CLASS>
 void CTreePaneContainer<T_CLASS>::SetEditor(std::shared_ptr<editors::IEditor> &editor)
 {
     m_editor = editor;
+
+    AddAspectTab("Aspect", m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D(), m_pTreeBrowser); // add by default
+
     m_pTreeBrowser->SetEditor(m_editor);
     m_pTreeBrowser->SetRoot(m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D());
 }
@@ -63,6 +66,7 @@ LRESULT CTreePaneContainer<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     RECT rcDefault = { 0, 25, 200, 200 };
     m_pTabCtrl.Create(m_hWnd, rcDefault, 0, WS_CHILD | WS_VISIBLE);
 
+    // default widget
     m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
         m_hWnd,
         m_pfnContextMenu,
@@ -76,9 +80,7 @@ LRESULT CTreePaneContainer<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
         m_pRenderContext);
 
     // assign the edit to the bottom container
-    SetClient(m_pTreeBrowser->GetHWndTree());
-
-    AddTabPage("Aspect", 0); // add by default
+//    SetClient(m_pTreeBrowser->GetHWndTree());
 
     return 0;
 }
@@ -162,18 +164,25 @@ void CTreePaneContainer<T_CLASS>::OnObjectSelected()
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-bool CTreePaneContainer<T_CLASS>::AddTabPage(const char *name, int index /*= 0*/)
+bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect, Win32ObjectBrowserWidget<T_CLASS> *presenter)
 {
-    wchar_t wbuf[256] = { 0 }; // temp buffers
-    char ascii[256] = { 0 };
+    bool bResult = false;
 
-    MultiByteToWideChar(CP_ACP, 0, name, INDEX_NONE, wbuf, 256);
+    if (name && presenter)
+    {
+        wchar_t wbuf[256] = { 0 }; // temp buffers
+        char ascii[256] = { 0 };
 
-    TCITEM tc = { 0 };
-    tc.mask = TCIF_TEXT;
-    tc.pszText = wbuf;
-    m_pTabCtrl.InsertItem(index, &tc);
+        MultiByteToWideChar(CP_ACP, 0, name, INDEX_NONE, wbuf, 256);
 
+        TCITEM tc = { 0 };
+        tc.mask = TCIF_TEXT;
+        tc.pszText = wbuf;
+        m_pTabCtrl.AddItem(&tc);
+
+        m_aspectsView.insert(std::make_pair(aspect, presenter));
+        bResult = true;
+    }
     return true;
 }
 
