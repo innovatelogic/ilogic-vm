@@ -57,15 +57,21 @@ public:
 
     void OnObjectSelected();
 
-    bool AddAspectTab(const char *name, T_CLASS *aspect, Win32ObjectBrowserWidget<T_CLASS> *presenter);
+    bool AddAspectTab(const char *name, T_CLASS *aspect);
 
     LRESULT OnSize(UINT, WPARAM, LPARAM, BOOL& bHendled);
+
+    void LockModel(bool flag);
+    void FillModel();
+
+    bool ToggleAspectView(size_t index);
 
 private:
     CTabCtrl    m_pTabCtrl;
 
-public:
-	Win32ObjectBrowserWidget<T_CLASS> *m_pTreeBrowser;
+    CFont			m_Font;
+    LPCTSTR			m_TypeFace;
+    int				m_PointSize;
 
 private:
 	pContextMenuFunction	m_pfnContextMenu;

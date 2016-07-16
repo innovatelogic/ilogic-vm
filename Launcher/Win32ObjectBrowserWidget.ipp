@@ -895,7 +895,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
                 ++iter;
             }
 
-            assert(bFind);
+            //assert(bFind);
         }
     }
     bLockUpdate = false;

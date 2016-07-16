@@ -194,7 +194,6 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 							GCALLBACK_DirectInvokeActor,
 							GCALLBACK_ClearActor,
 							GCALLBACK_DirectClearActor,
-							OnActor_EventUpdated,
 							cmd,
 							hTypeImageList);
 

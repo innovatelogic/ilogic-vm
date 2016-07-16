@@ -24,7 +24,8 @@ CTreePaneContainer<T_CLASS>::CTreePaneContainer(
     , m_hImageList(hImageList)
     , m_pRenderContext(pRenderContext)
     , m_editor(nullptr)
-    , m_pTreeBrowser(nullptr)
+    , m_PointSize(90)
+    , m_TypeFace(_T("MS Shell Dlg 2"))
 {
 
 }
@@ -33,7 +34,10 @@ CTreePaneContainer<T_CLASS>::CTreePaneContainer(
 template<class T_CLASS>
 CTreePaneContainer<T_CLASS>::~CTreePaneContainer()
 {
-    delete m_pTreeBrowser;
+    for each (auto pair in m_aspectsView)
+    {
+        delete pair.second;
+    }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -42,10 +46,10 @@ void CTreePaneContainer<T_CLASS>::SetEditor(std::shared_ptr<editors::IEditor> &e
 {
     m_editor = editor;
 
-    AddAspectTab("Aspect", m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D(), m_pTreeBrowser); // add by default
+    AddAspectTab("Main", m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D());
+    AddAspectTab("Flat", m_editor->GetApp()->GetExplorerInstance()->GetExplorer2D());
 
-    m_pTreeBrowser->SetEditor(m_editor);
-    m_pTreeBrowser->SetRoot(m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D());
+    ToggleAspectView(0);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -54,9 +58,10 @@ void CTreePaneContainer<T_CLASS>::SetRenderContext(SRenderContext *pRenderContex
 {
     m_pRenderContext = pRenderContext;
 
-    assert(m_pTreeBrowser);
-
-    m_pTreeBrowser->SetRenderContext(pRenderContext);
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->SetRenderContext(pRenderContext);
+    }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -66,18 +71,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     RECT rcDefault = { 0, 25, 200, 200 };
     m_pTabCtrl.Create(m_hWnd, rcDefault, 0, WS_CHILD | WS_VISIBLE);
 
-    // default widget
-    m_pTreeBrowser = new Win32ObjectBrowserWidget<T_CLASS>(
-        m_hWnd,
-        m_pfnContextMenu,
-        m_pfnContextMenuProcessor,
-        m_pfnGetResourceIconIndex,
-        m_pfnInvokeObject,
-        m_pfnDirectInvokeObject,
-        m_pfnClearObject,
-        m_pfnDirectClearObject,
-        m_hImageList,
-        m_pRenderContext);
+    // Create the listview and edit control font
+    m_Font.CreatePointFont(m_PointSize, m_TypeFace);
+
+    m_pTabCtrl.SetFont(m_Font);
 
     // assign the edit to the bottom container
 //    SetClient(m_pTreeBrowser->GetHWndTree());
@@ -89,7 +86,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 template<class T_CLASS>
 LRESULT CTreePaneContainer<T_CLASS>::OnAppInsertObject(UINT, WPARAM, LPARAM, BOOL&)
 {
-    m_pTreeBrowser->WndProcessInsertObject();
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->WndProcessInsertObject();
+    }
     return 0;
 }
 
@@ -97,7 +97,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppInsertObject(UINT, WPARAM, LPARAM, BOO
 template<class T_CLASS>
 LRESULT CTreePaneContainer<T_CLASS>::OnAppRemoveObject(UINT, WPARAM, LPARAM, BOOL&)
 {
-    m_pTreeBrowser->WndRemoveObject();
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->WndRemoveObject();
+    }
     return 0;
 }
 
@@ -105,7 +108,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppRemoveObject(UINT, WPARAM, LPARAM, BOO
 template<class T_CLASS>
 LRESULT CTreePaneContainer<T_CLASS>::OnAppRenameObject(UINT, WPARAM, LPARAM, BOOL&)
 {
-    m_pTreeBrowser->WndRenameObject();
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->WndRenameObject();
+    }
     return 0;
 }
 
@@ -120,16 +126,31 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
     }
     else if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTED)
     {
-        const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
-        if (nmt->itemNew.state == TVIS_SELECTED)
-        {
-            bool bSelChanged = m_pTreeBrowser->SelChangedTreeObject();
+        HWND hwndFrom = ((LPNMHDR)lParam)->hwndFrom;
 
-            //if (!bSelChanged){
-            //	m_pTreeBrowser->Update(0, Event_OnSelected);
-            //}
+        Win32ObjectBrowserWidget<T_CLASS> *presenter = nullptr;
+        for each(auto item in m_aspectsView)
+        {
+            if (hwndFrom == item.second->GetHWndTree())
+            {
+                presenter = item.second;
+                break;
+            }
         }
-        return 0;
+
+        if (presenter)
+        {
+            const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
+            if (nmt->itemNew.state == TVIS_SELECTED)
+            {
+                bool bSelChanged = presenter->SelChangedTreeObject();
+
+                //if (!bSelChanged){
+                //	m_pTreeBrowser->Update(0, Event_OnSelected);
+                //}
+            }
+            return 0;
+        }
     }
     /*else if (((LPNMHDR)lParam)->code == NM_RCLICK) // context menu
     {
@@ -142,10 +163,7 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
 template<class T_CLASS>
 void CTreePaneContainer<T_CLASS>::Update(const T_CLASS *pSender, ESystemEventID EventId)
 {
-    if (m_pTreeBrowser)
-    {
-        //m_pTreeBrowser->Update(pSender, EventId);
-    }
+
 }
 
 //----------------------------------------------------------------------------------------------
@@ -159,16 +177,19 @@ LRESULT CTreePaneContainer<T_CLASS>::OnTreeViewSelected(WORD, WORD, HWND, BOOL&)
 template<class T_CLASS>
 void CTreePaneContainer<T_CLASS>::OnObjectSelected()
 {
-    m_pTreeBrowser->OnNotifySelected();
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->OnNotifySelected();
+    }
 }
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect, Win32ObjectBrowserWidget<T_CLASS> *presenter)
+bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect)
 {
     bool bResult = false;
 
-    if (name && presenter)
+    if (name)
     {
         wchar_t wbuf[256] = { 0 }; // temp buffers
         char ascii[256] = { 0 };
@@ -179,6 +200,21 @@ bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect
         tc.mask = TCIF_TEXT;
         tc.pszText = wbuf;
         m_pTabCtrl.AddItem(&tc);
+
+        Win32ObjectBrowserWidget<T_CLASS> *presenter = new Win32ObjectBrowserWidget<T_CLASS>(
+            m_hWnd,
+            m_pfnContextMenu,
+            m_pfnContextMenuProcessor,
+            m_pfnGetResourceIconIndex,
+            m_pfnInvokeObject,
+            m_pfnDirectInvokeObject,
+            m_pfnClearObject,
+            m_pfnDirectClearObject,
+            m_hImageList,
+            m_pRenderContext);
+
+        presenter->SetEditor(m_editor);
+        presenter->SetRoot(aspect);
 
         m_aspectsView.insert(std::make_pair(aspect, presenter));
         bResult = true;
@@ -199,8 +235,51 @@ LRESULT CTreePaneContainer<T_CLASS>::OnSize(UINT, WPARAM, LPARAM, BOOL& bHendled
     const int height = rc.bottom - rc.top;
 
     m_pTabCtrl.MoveWindow(0, 0, width, tabHeight);
-    m_pTreeBrowser->MoveWindow(0, tabHeight, width, height - tabHeight);
+
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->MoveWindow(0, tabHeight, width, height - tabHeight);
+    }
 
     bHendled = TRUE;
     return 0;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void CTreePaneContainer<T_CLASS>::LockModel(bool flag)
+{
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->LockModel(flag);
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void CTreePaneContainer<T_CLASS>::FillModel()
+{
+    for each (auto iter in m_aspectsView)
+    {
+        iter.second->FillModel();
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+bool CTreePaneContainer<T_CLASS>::ToggleAspectView(size_t index)
+{
+    if (index >= m_aspectsView.size()) {
+        return false;
+    }
+
+    m_pTabCtrl.SetCurSel(index);
+
+    size_t counter = 0;
+
+    for each (auto iter in m_aspectsView)
+    {
+        ::ShowWindow(iter.second->GetHWndTree(), counter == index);
+        ++counter;
+    }
 }

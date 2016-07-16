@@ -10,7 +10,6 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
     CALLBACK_FN pfnDirectInvokeObject,
     CALLBACK_FN pfnClearObject,
     CALLBACK_FN pfnDirectClearObject,
-    CALLBACK_EV pfnOnEventUpdate,
     ValueParser &cmd,
     HIMAGELIST hImageList)
     : CFrameWindowImpl<CMainFrame<T_CLASS> >()
@@ -22,7 +21,6 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
     , m_pfnDirectInvokeObject(pfnDirectInvokeObject)
     , m_pfnClearObject(pfnClearObject)
     , m_pfnDirectClearObject(pfnDirectClearObject)
-    , m_pfnOnEventUpdate(pfnOnEventUpdate)
     , m_hImageList(hImageList)
     , m_hWndSplash(nullptr)
     , m_hSplashBitmap(nullptr)
@@ -42,7 +40,7 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
         m_pfnDirectInvokeObject,
         m_pfnClearObject,
         m_pfnDirectClearObject,
-        m_pfnOnEventUpdate,
+        nullptr,
         m_hImageList);
 
     m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(
@@ -53,7 +51,7 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
         m_pfnDirectInvokeObject,
         m_pfnClearObject,
         m_pfnDirectClearObject,
-        m_pfnOnEventUpdate,
+        nullptr,
         m_hImageList);
 
     m_pRightTopPane = new CPanePropertyContainer<T_CLASS>();
@@ -298,13 +296,13 @@ LRESULT CMainFrame<T_CLASS>::OnFileOpen(WORD, WORD, HWND, BOOL&)
 
     if (GetOpenFileName(&ofn))
     {
-        m_pRightBottomPane->m_pTreeBrowser->LockModel(true);
+        m_pRightBottomPane->LockModel(true);
 
         m_editor->Open(szFileName);
         
-        m_pRightBottomPane->m_pTreeBrowser->LockModel(false);
+        m_pRightBottomPane->LockModel(false);
 
-        m_pRightBottomPane->m_pTreeBrowser->FillModel();
+        m_pRightBottomPane->FillModel();
     }
     return 0;
 }

@@ -64,7 +64,6 @@ public:
 	CALLBACK_FN				m_pfnDirectInvokeObject;
 	CALLBACK_FN				m_pfnClearObject;
 	CALLBACK_FN				m_pfnDirectClearObject;
-	CALLBACK_EV				m_pfnOnEventUpdate;
 
 	HIMAGELIST				m_hImageList;
 	CImageList				m_ToolbarImagesDisabled;
@@ -111,7 +110,6 @@ public:
             CALLBACK_FN pfnDirectInvokeObject,
             CALLBACK_FN pfnClearObject,
             CALLBACK_FN pfnDirectClearObject,
-            CALLBACK_EV pfnOnEventUpdate,
             ValueParser &cmd,
             HIMAGELIST hImageList);
 
