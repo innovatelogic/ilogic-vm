@@ -52,31 +52,6 @@ void CActor::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	Super::SuperDeserializer(xml_current_tree);
 
-#ifndef FINAL_RELEASE
-	bool bNeedSort = false;
-	TVecActorChildIterator IterFirst = m_ChildNodes.begin();
-
-	while (IterFirst != m_ChildNodes.end() && !bNeedSort)
-	{
-		TVecActorChildIterator Iter = IterFirst + 1;
-		while (Iter != m_ChildNodes.end())
-		{
-			if (CObjectAbstract::CompByPlainPos(*IterFirst, *Iter))	{
-				bNeedSort = true;
-				break;
-			}
-			++Iter;
-		}
-		++IterFirst;
-	}
-
-	if (bNeedSort)
-	{
-		std::sort(m_ChildNodes.begin(), m_ChildNodes.end(), CObjectAbstract::CompByPlainPos);
-		BroadcastEvent(Event_ObjectReArranged);
-	}
-#endif//FINAL_RELEASE
-	
     BroadcastEvent(Event_PostLoad);
     BroadcastEvent(Event_Updated);
 }

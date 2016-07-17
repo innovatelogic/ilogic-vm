@@ -63,6 +63,8 @@ namespace editors
         void    DeselectAll() override;
 
     protected:
+        std::vector<CActor*> AdjustActorsToRoot(CActor *root, const std::vector<CActor*> &actors);
+
     private:
         unsigned int m_MousePosPrevX;
         unsigned int m_MousePosPrevY;

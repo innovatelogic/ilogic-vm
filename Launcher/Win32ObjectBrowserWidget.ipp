@@ -563,12 +563,12 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
                 T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
 
                 actors.push_back(actor);
-
-                // actor->BroadcastEvent(Event_OnSelected);
             }
         }
 
         m_editor->SelectActors(actors);
+
+        bResult = true;
     }
 
     return bResult;

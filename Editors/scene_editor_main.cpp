@@ -307,8 +307,10 @@ namespace editors
                 std::shared_ptr<CommandBase_>(new CommandBase_(
             [&, manager, ivprt, actors]()
             {
+                std::vector<CActor*> actors_filtered = AdjustActorsToRoot(nullptr, actors);
+
                 std::vector<std::string> ids;
-                for each(auto *actor in actors) {
+                for each(auto *actor in actors_filtered) {
                     ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
                 }
                 manager->SetSelect(ids, ivprt);
@@ -316,10 +318,12 @@ namespace editors
 
                 m_notifyFunc();
             },
-            [&, manager, ivprt, old]()
-            {
+            [&, manager, ivprt, old](){
+            
+                std::vector<CActor*> actors_filtered = AdjustActorsToRoot(nullptr, old);
+
                 std::vector<std::string> ids;
-                for each(auto *actor in old) {
+                for each(auto *actor in actors_filtered) {
                     ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
                 }
                 manager->SetSelect(ids, ivprt);
@@ -388,5 +392,35 @@ namespace editors
             m_MousePosPrevX = x;
             m_MousePosPrevY = y;
         }
+    }
+
+    //----------------------------------------------------------------------------------------------
+    std::vector<CActor*> SceneEditorMain::AdjustActorsToRoot(CActor *root, const std::vector<CActor*> &actors)
+    {
+        std::vector<CActor*> out;
+
+        //if (root)
+        {
+            for each (auto actor in actors)
+            {
+                if (actor->GetExternal())
+                {
+                    while (actor)
+                    {
+                        if (!actor->GetExternal()) {
+                            break;
+                        }
+
+                        actor = actor->GetParent();
+                    }
+                }
+
+                if (actor && std::find(out.begin(), out.end(), actor) == out.end())
+                {
+                    out.push_back(actor);
+                }
+            }
+        }
+        return out;
     }
 }

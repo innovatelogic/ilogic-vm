@@ -274,14 +274,13 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 	XML_DEF_ATTRIBUTES_NODE(Transient);\
 	XML_DEF_ATTRIBUTES_NODE(Value);\
 	ValueParser ValueStore(Value);\
-	if (Transient == "0" || Transient == "" || External != "")\
+	if (Transient == "0" || !Transient.empty() || !External.empty())\
 	{\
 		TYPE_FAMILY_BASE *pNewObject = static_cast<TYPE_FAMILY_BASE*>(GENERATE_OBJECT_SDK(TYPE_NAME, ValueStore.GetValueString("Name").c_str(), PARENT));\
 		if (pNewObject)\
 		{\
-			pNewObject->SetPlainDeserializationPos(PlainElementIndex++);\
 			PARENT->AddChildNode(pNewObject);\
-			if (External == "")\
+			if (External.empty())\
 			{\
 				pNewObject->SuperDeserializer(XML_CURRENT_NODE);\
 			}\
@@ -299,7 +298,6 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 			if (PARENT->m_ChildNodes[Index]->IsTransient() &&\
 				PARENT->m_ChildNodes[Index]->GetName() == ValueStore.GetValueString("Name"))\
 			{\
-				PARENT->m_ChildNodes[Index]->SetPlainDeserializationPos(PlainElementIndex++);\
 				PARENT->m_ChildNodes[Index]->SuperDeserializer(XML_CURRENT_NODE);\
 				break;\
 			}\

@@ -4,8 +4,7 @@ REGISTER_CLASS(Explorer, ActorAllocator);
 
 //----------------------------------------------------------------------------------
 Explorer::Explorer(const CObjectAbstract *pParent)
-: Super(0)
-, bMiddleButtonPressed(false)
+: Super(nullptr)
 , BufferDataObject(NULL)
 {
 	SetTransient(true);
@@ -35,21 +34,6 @@ void Explorer::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 void Explorer::Initialize()
 {
 	Super::Initialize();
-}
-
-//----------------------------------------------------------------------------------
-void Explorer::InitializeBrushes()
-{
-	for (TVecActorChildIterator Iter = m_ChildNodes.begin(); Iter != m_ChildNodes.end(); ++Iter) 
-	{
-		if (dynamic_cast<Explorer2D*>(*Iter)){
-			dynamic_cast<Explorer2D*>(*Iter)->InitializeBrushes();
-		}
-
-		if (dynamic_cast<Explorer3D*>(*Iter)){
-			dynamic_cast<Explorer3D*>(*Iter)->InitializeBrushes();
-		}
-	}
 }
 
 //----------------------------------------------------------------------------------
@@ -98,42 +82,6 @@ void Explorer::Paste(CActor *pInPlaceActor /*= NULL*/)
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------------------------
-bool Explorer::ProcessMouseWheel(float ds, int x, int y)
-{
-/*	const CActor * Focused = GetFocused();
-
-	if (Focused != NULL)
-	{
-		TIViewport * VInterface = ActorAllocator::GetViewportInterface(Focused);
-		if (VInterface)
-		{
-			Matrix ViewMatrix = VInterface->GetViewportViewMatrix();
-
-			// interpolate zoom to target point
-			ViewMatrix.t += (Vector((float)x, (float)y, 0.f) - ViewMatrix.t) * (1.f - ds);
-			ViewMatrix.a00 *= ds;
-			ViewMatrix.a11 *= ds;
-
-			VInterface->SetViewportViewMatrix(ViewMatrix);
-		}
-	}*/
-	return true;
-}
-
-//----------------------------------------------------------------------------------
-bool Explorer::UIEditor_ProcessDelete()
-{
-	/*for (TVecActorChildIterator Iter = m_ChildNodes.begin(); Iter != m_ChildNodes.end(); ++Iter) 
-	{
-		if ((*Iter)->UIEditor_ProcessDelete())
-		{
-			return true;
-		}
-	}*/
-	return false;
 }
 
 //----------------------------------------------------------------------------------------------

@@ -138,19 +138,15 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
             }
         }
 
-        if (presenter)
-        {
-            const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
-            if (nmt->itemNew.state == TVIS_SELECTED)
-            {
-                bool bSelChanged = presenter->SelChangedTreeObject();
+        assert(presenter);
 
-                //if (!bSelChanged){
-                //	m_pTreeBrowser->Update(0, Event_OnSelected);
-                //}
-            }
-            return 0;
+        const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
+        if (nmt->itemNew.state == TVIS_SELECTED)
+        {
+            presenter->SelChangedTreeObject();
         }
+        return 0;
+
     }
     else if (((LPNMHDR)lParam)->code == NM_CLICK)
     {

@@ -7,7 +7,7 @@ bool CActor::LoadFromFile(const char *filename, bool bLoadAsExternal /*= false*/
 {
 	bool bResult = false;
 
-	SetExternal(bLoadAsExternal);
+	//SetExternal(bLoadAsExternal);
 
 	std::string sFilename;  
 
@@ -22,6 +22,30 @@ bool CActor::LoadFromFile(const char *filename, bool bLoadAsExternal /*= false*/
 				SuperDeserializer(XML_CURRENT_NODE);
 			}	
 		}
+
+        // mark all child as external
+        std::stack<CActor*> actors;
+
+        for each (auto *child in childs())
+        {
+            actors.push(child);
+        }
+
+        while (!actors.empty())
+        {
+            CActor *top = actors.top();
+
+            top->SetExternal(true);
+
+            actors.pop();
+
+            for each (auto *child in top->childs())
+            {
+                actors.push(child);
+            }
+        }
+
+
 		bResult = true;
 	}
 	return bResult;
