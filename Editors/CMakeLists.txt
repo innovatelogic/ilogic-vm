@@ -28,6 +28,7 @@ set(SOURCE ieditor.h
 			command_buffer.cpp
 			command_base.cpp
 			command_base.h
+			selection_container.h
 			)
 
 set(SOURCE_EDITORS 
@@ -77,7 +78,9 @@ if (${ENABLE_TESTING})
 		moc/moc_command_base.cxx
 	)
 
-	set(SOURCE_UT ut/ut_editor.cpp
+	set(SOURCE_UT 
+	ut/ut_editor.cpp
+	ut/ut_selection_component.cpp
 	)
 
 	source_group("Moc Files" FILES ${SOURCE_MOC})
