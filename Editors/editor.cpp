@@ -68,4 +68,20 @@ size_t EditorBase::GetRedoCommandBatchSize(size_t index) const
 
     return m_CommandBuffer->GetRedoCommandBatchSize(index);
 }
+
+//----------------------------------------------------------------------------------------------
+const CActor* EditorBase::GetEditorRelatedActor(const CActor *actor)
+{
+    if (actor && actor->GetExternal())
+    {
+        while (actor)
+        {
+            if (!actor->GetExternal()){
+                break; // found
+            }
+            actor = actor->GetParent();
+        }
+    }
+    return actor;
+}
 }

@@ -5,6 +5,7 @@
 #include "icommand.h"
 #include "icommand_buffer.h"
 #include "command_buffer.h"
+#include "selection_container.h"
 
 class CActor;
 
@@ -32,9 +33,16 @@ public:
     const std::vector<CActor*>& GetSelected() const override { return m_selectionList; }
 
 protected:
+    /*!
+     *  Returns a lowest editor-root related to input actor
+     */
+    const CActor* GetEditorRelatedActor(const CActor *actor);
+
+protected:
     std::function<void()>   m_notifyFunc;
 
-    std::vector<CActor*> m_selectionList;
+    oes::editors::SelectionContainer<CActor> m_selection;
+    std::vector<CActor*> m_selectionList; // TODO replace with new
 
 private:
     ICommandBuffer *m_CommandBuffer;

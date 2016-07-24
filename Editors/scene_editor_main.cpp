@@ -302,25 +302,27 @@ namespace editors
             core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
             std::vector<CActor*> old = m_selectionList;
+            oes::editors::SelectionContainer<CActor> _old = m_selection;
 
             AddCommand(std::move(
                 std::shared_ptr<CommandBase_>(new CommandBase_(
             [&, manager, ivprt, actors]()
             {
-                std::vector<CActor*> actors_filtered = AdjustActorsToRoot(nullptr, actors);
+                std::vector<const CActor*> actors_filtered = AdjustActorsToRoot(actors);
 
                 std::vector<std::string> ids;
                 for each(auto *actor in actors_filtered) {
                     ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
                 }
                 manager->SetSelect(ids, ivprt);
+
                 m_selectionList = actors;
 
                 m_notifyFunc();
             },
             [&, manager, ivprt, old](){
             
-                std::vector<CActor*> actors_filtered = AdjustActorsToRoot(nullptr, old);
+                std::vector<const CActor*> actors_filtered = AdjustActorsToRoot(old);
 
                 std::vector<std::string> ids;
                 for each(auto *actor in actors_filtered) {
@@ -395,29 +397,45 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    std::vector<CActor*> SceneEditorMain::AdjustActorsToRoot(CActor *root, const std::vector<CActor*> &actors)
+    std::vector<const CActor*> SceneEditorMain::AdjustActorsToRoot(const std::vector<CActor*> &actors)
     {
-        std::vector<CActor*> out;
+        TVecConstActor out;
 
-        //if (root)
+        for each (auto actor in actors)
         {
-            for each (auto actor in actors)
+            const auto *actorEd = GetEditorRelatedActor(actor);
+
+            if (actorEd && std::find(out.begin(), out.end(), actor) == out.end())
             {
-                if (actor->GetExternal())
-                {
-                    while (actor)
-                    {
-                        if (!actor->GetExternal()) {
-                            break;
-                        }
+                out.push_back(actorEd);
+            }
+        }
+       return out;
+    }
 
-                        actor = actor->GetParent();
-                    }
-                }
+    //----------------------------------------------------------------------------------------------
+    SceneEditorMain::TMapActorVec SceneEditorMain::AdjustActorsToEditorRoot(const std::vector<CActor*> &actors)
+    {
+        std::map<const CActor*, std::vector<CActor*>> out;
 
-                if (actor && std::find(out.begin(), out.end(), actor) == out.end())
+        for each (auto actor in actors)
+        {
+            const auto *key = GetEditorRelatedActor(actor);
+
+            assert(key);
+
+            const auto iterFind = out.find(key);
+            if (iterFind == out.end())
+            {
+                out[key] = { actor };
+            }
+            else
+            {
+                std::vector<CActor*> &refVec = iterFind->second;
+
+                if (std::find(refVec.begin(), refVec.end(), actor) == refVec.end())
                 {
-                    out.push_back(actor);
+                    refVec.push_back(actor);
                 }
             }
         }

@@ -11,6 +11,9 @@ namespace editors
 {
     class DLLEXPORT SceneEditorMain : public EditorBase
     {
+        using TVecConstActor = std::vector<const CActor*>;
+        using TMapActorVec = std::map<const CActor*, std::vector<CActor*>>;
+
     public:
         SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer);
         virtual ~SceneEditorMain();
@@ -63,8 +66,14 @@ namespace editors
         void    DeselectAll() override;
 
     protected:
-        std::vector<CActor*> AdjustActorsToRoot(CActor *root, const std::vector<CActor*> &actors);
+        TVecConstActor AdjustActorsToRoot(const std::vector<CActor*> &actors);
 
+        /*!
+        * return correspondence map where a key actor is in root's space explicitly, 
+        * values in vector arbitrary implicit scope of selected actors
+        */
+        TMapActorVec AdjustActorsToEditorRoot(const std::vector<CActor*> &actors);
+    
     private:
         unsigned int m_MousePosPrevX;
         unsigned int m_MousePosPrevY;
