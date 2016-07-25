@@ -26,7 +26,7 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 	, m_pfnClearObject(pfnClearObject)
 	, m_pfnDirectClearObject(pfnDirectClearObject)
 	, m_pRenderContext(pRenderContext)
-    , bLockUpdate(false)
+    , m_bLockUpdate(false)
     , m_bLockModel(true)
 	{
 		RECT rect;
@@ -552,7 +552,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
 {
     bool bResult = false;
 
-    if (!bLockUpdate)
+    if (!m_bLockUpdate)
     {
         std::vector<CActor*> actors;
 
@@ -839,11 +839,9 @@ bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT mes
 template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 {
-    bLockUpdate = true;
+    m_bLockUpdate = true;
 
-    std::vector<const CActor*> &selected = m_editor->GetSelected();
-
-    std::vector<CActor*> actorsWidget;
+    std::vector<const CActor*> selected = m_editor->GetSelected();
 
     bool equal = false;
 
@@ -868,14 +866,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 
     if (!equal)
     {
-        // unselect all
-        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
-        {
-            if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
-            {
-                m_hwndLeft.SelectItem(m_hwndLeft.m_aData.GetValueAt(i).hItem, false);
-            }
-        }
+        UnselectTreeAll();
 
         for each (auto actor in selected)
         {
@@ -897,7 +888,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
             //assert(bFind);
         }
     }
-    bLockUpdate = false;
+    m_bLockUpdate = false;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -948,6 +939,19 @@ void Win32ObjectBrowserWidget<T_CLASS>::FillModel()
             {
                 astack.push(item);
             }
+        }
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T_CLASS>
+void Win32ObjectBrowserWidget<T_CLASS>::UnselectTreeAll()
+{
+    for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+    {
+        if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
+        {
+            m_hwndLeft.SelectItem(m_hwndLeft.m_aData.GetValueAt(i).hItem, false);
         }
     }
 }

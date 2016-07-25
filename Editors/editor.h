@@ -30,7 +30,7 @@ public:
 
     void SetNotifyFunc(const std::function<void()> &func) override { m_notifyFunc = func; }
 
-    std::vector<const CActor*> GetSelected() const override { return m_selection.Keys(); }
+    std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
 
 protected:
     /*!

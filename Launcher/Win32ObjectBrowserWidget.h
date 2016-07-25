@@ -117,6 +117,9 @@ public:
 
     void LockModel(bool lock) { m_bLockModel = lock;  }
 
+protected:
+    void UnselectTreeAll();
+
 //----------------------------------------------------------------------------------------------
 private:
 
@@ -166,7 +169,7 @@ public:
 	CALLBACK_FN				m_pfnDirectClearObject;
 
 private:
-    bool bLockUpdate;
+    bool m_bLockUpdate;
 };
 
 #include "Win32ObjectBrowserWidget.ipp"

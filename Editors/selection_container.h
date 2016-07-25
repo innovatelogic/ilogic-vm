@@ -140,6 +140,13 @@ namespace oes
                 }
             }
 
+            //----------------------------------------------------------------------------------------------
+            std::vector<const T_CLASS*> Values() const
+            {
+                std::vector<const T_CLASS*> out;
+                GetAllElements(out);
+                return out;
+            }
         private:
             TMapContainer m_container;
         };

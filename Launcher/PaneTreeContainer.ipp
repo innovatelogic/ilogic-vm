@@ -140,11 +140,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
 
         assert(presenter);
 
-        const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
-        if (nmt->itemNew.state == TVIS_SELECTED)
-        {
-            presenter->SelChangedTreeObject();
-        }
+        //const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
+        //if (nmt->itemNew.state == TVIS_SELECTED)  
+
+        presenter->SelChangedTreeObject(); // TODO: inc-decremental selection
         return 0;
 
     }
