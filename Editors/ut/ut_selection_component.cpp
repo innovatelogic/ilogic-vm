@@ -126,7 +126,7 @@ TEST(SelectionContainer, FetchKeys)
     EXPECT_TRUE(container.AddItem(&keys[1], &values2[0]));
     EXPECT_TRUE(container.AddItem(&keys[1], &values2[1]));
 
-    std::vector<int*> vkeys = container.Keys();
+    std::vector<const int*> vkeys = container.Keys();
     
     EXPECT_EQ(vkeys.size(), 2);
     EXPECT_EQ(*vkeys[0], 1);
@@ -152,7 +152,7 @@ TEST(SelectionContainer, FetchValues)
     EXPECT_TRUE(container.AddItem(&keys[1], &values2[0]));
     EXPECT_TRUE(container.AddItem(&keys[1], &values2[1]));
 
-    std::vector<int*> values;
+    std::vector<const int*> values;
     
     container.GetAllElements(values);
 

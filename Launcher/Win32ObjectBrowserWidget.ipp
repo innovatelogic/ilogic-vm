@@ -839,10 +839,9 @@ bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT mes
 template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 {
-    // TODO: optimize
     bLockUpdate = true;
 
-    const std::vector<CActor*> &selected = m_editor->GetSelected();
+    std::vector<const CActor*> &selected = m_editor->GetSelected();
 
     std::vector<CActor*> actorsWidget;
 

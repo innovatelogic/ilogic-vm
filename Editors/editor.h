@@ -30,7 +30,7 @@ public:
 
     void SetNotifyFunc(const std::function<void()> &func) override { m_notifyFunc = func; }
 
-    const std::vector<CActor*>& GetSelected() const override { return m_selectionList; }
+    std::vector<const CActor*> GetSelected() const override { return m_selection.Keys(); }
 
 protected:
     /*!
@@ -42,7 +42,6 @@ protected:
     std::function<void()>   m_notifyFunc;
 
     oes::editors::SelectionContainer<CActor> m_selection;
-    std::vector<CActor*> m_selectionList; // TODO replace with new
 
 private:
     ICommandBuffer *m_CommandBuffer;

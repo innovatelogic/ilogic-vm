@@ -11,7 +11,7 @@ namespace oes
         template<class T_CLASS>
         class SelectionContainer final
         {
-            using TMapContainer = std::map<T_CLASS*, std::vector<T_CLASS*>>;
+            using TMapContainer = std::map<const T_CLASS*, std::vector<const T_CLASS*>>;
 
         public:
             //----------------------------------------------------------------------------------------------
@@ -27,7 +27,13 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            bool AddItem(T_CLASS *key, T_CLASS *item)
+            bool IsEmpty() const
+            {
+                return m_container.empty();
+            }
+
+            //----------------------------------------------------------------------------------------------
+            bool AddItem(const T_CLASS *key, const T_CLASS *item)
             {
                 bool bResult = false;
                 if (key && item)
@@ -57,7 +63,7 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            bool RemoveItem(T_CLASS *key, T_CLASS *item = nullptr)
+            bool RemoveItem(const T_CLASS *key, const T_CLASS *item = nullptr)
             {
                 bool bResult = false;
                 if (key)
@@ -91,7 +97,7 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            size_t Size()
+            size_t Size() const
             {
                 size_t out = 0;
                 for (auto iter = m_container.begin(); iter != m_container.end(); ++iter)
@@ -108,19 +114,19 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            std::vector<T_CLASS*> Keys()
+            std::vector<const T_CLASS*> Keys() const
             {
-                std::vector<T_CLASS*> out;
+                std::vector<const T_CLASS*> out;
                 for each (auto item in m_container)
                 {
-                    T_CLASS *key = item.first;
+                    const T_CLASS *key = item.first;
                     out.push_back(key);
                 }
                 return out;
             }
 
             //----------------------------------------------------------------------------------------------
-            void GetAllElements(std::vector<T_CLASS*> &out)
+            void GetAllElements(std::vector<const T_CLASS*> &out) const
             {
                 out.resize(Size()); 
                 size_t idx = 0;

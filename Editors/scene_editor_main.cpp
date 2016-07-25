@@ -271,65 +271,62 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::AddSelected(CActor *actor)
     {
-        std::vector<CActor*>::const_iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
-
-        if (iterFind == m_selectionList.end())
-        {
-            m_selectionList.push_back(actor);
-        }
+        assert(false);
     }
 
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::DelSelected(CActor *actor)
     {
-        std::vector<CActor*>::iterator iterFind = std::find(m_selectionList.begin(), m_selectionList.end(), actor);
-
-        if (iterFind != m_selectionList.end())
-        {
-            m_selectionList.erase(iterFind);
-        }
+        assert(false);
     }
 
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::SelectActors(const std::vector<CActor*> &actors)
     {
         // skip if nothing to select and deselect
-        if (!m_selectionList.empty() || !actors.empty())
+        if (!m_selection.IsEmpty() || !actors.empty())
         {
             // hack
             Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
             core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
 
-            std::vector<CActor*> old = m_selectionList;
-            oes::editors::SelectionContainer<CActor> _old = m_selection;
+            oes::editors::SelectionContainer<CActor> old = m_selection;
 
             AddCommand(std::move(
                 std::shared_ptr<CommandBase_>(new CommandBase_(
             [&, manager, ivprt, actors]()
             {
-                std::vector<const CActor*> actors_filtered = AdjustActorsToRoot(actors);
+                TMapActorVec mapActors = AdjustActorsToEditorRoot(actors);
+
+                m_selection.Empty();
 
                 std::vector<std::string> ids;
-                for each(auto *actor in actors_filtered) {
-                    ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
+                for each(auto item in mapActors) 
+                {
+                    ids.push_back(CActor::GetFullPathID(item.first)); // fill new selection
+
+                    for each (auto value in item.second){
+                        m_selection.AddItem(item.first, value);
+                    }
                 }
                 manager->SetSelect(ids, ivprt);
-
-                m_selectionList = actors;
-
+ 
                 m_notifyFunc();
             },
             [&, manager, ivprt, old](){
             
-                std::vector<const CActor*> actors_filtered = AdjustActorsToRoot(old);
+                m_selection.Empty();
 
                 std::vector<std::string> ids;
-                for each(auto *actor in actors_filtered) {
-                    ids.push_back(CActor::GetFullPathID(actor)); // fill new selection
+
+                auto keys = old.Keys();
+                for each(auto item in keys){
+                    ids.push_back(CActor::GetFullPathID(item)); // fill new selection
                 }
+
                 manager->SetSelect(ids, ivprt);
-                m_selectionList = old;
+                m_selection = old;
 
                 m_notifyFunc();
             }))

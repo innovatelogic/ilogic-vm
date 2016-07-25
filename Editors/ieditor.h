@@ -72,7 +72,7 @@ public:
     */
     virtual void    SelectActors(const std::vector<CActor*> &actors) = 0;
 
-    virtual const std::vector<CActor*>& GetSelected() const = 0;
+    virtual std::vector<const CActor*>  GetSelected() const = 0;
 
     /*!
     * commits deselect command. 
