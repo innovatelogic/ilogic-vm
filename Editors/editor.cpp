@@ -192,7 +192,7 @@ void EditorBase::MouseWheel(float ds, int x, int y)
     core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
     core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(RootEntity());
 
-    manager->InputMouseWheel(ds, x, y);
+    manager->InputMouseWheel(ds, x, y, GetRenderContext());
 }
 
 //----------------------------------------------------------------------------------------------
