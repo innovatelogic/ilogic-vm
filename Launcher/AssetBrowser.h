@@ -132,7 +132,10 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-        m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer", m_pAppMain->GetExplorerInstance(), editors::EEditorType::EEditorDefault);
+        m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer",
+            m_pAppMain,
+            m_pAppMain->GetExplorerInstance(),
+            editors::EEditorType::EEditorDefault);
 
         m_pPropertyGridPane->SetAppMain(m_editor->GetApp());
 

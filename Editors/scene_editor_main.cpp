@@ -17,12 +17,8 @@ namespace editors
 {
     //----------------------------------------------------------------------------------------------
     SceneEditorMain::SceneEditorMain(CCoreSDK *pInstance, ICommandBuffer *buffer)
-        : EditorBase(static_cast<CActor*>(pInstance->GetRootActor()), buffer)
+        : EditorBase(pInstance, static_cast<CActor*>(pInstance->GetExplorerInstance()->GetExplorer3D()), buffer)
         , m_pApi(pInstance)
-        , m_MousePosPrevX(0)
-        , m_MousePosPrevY(0)
-        , m_bShiftPressed(false)
-        , m_bCtrlPressed(false)
     {
 
     }
@@ -152,21 +148,15 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::MouseWheel(float ds, int x, int y)
+    /*void SceneEditorMain::MouseWheel(float ds, int x, int y)
     {
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
-
-        Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
-        core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+        core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(RootEntity());
 
         manager->InputMouseWheel(ds, x, y);
-    }
+    }*/
 
-    //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::InputKey(const EventInput &InputData)
-    {
-        m_pApi->ProcessInputKey(InputData);
-    }
+   
 
     //----------------------------------------------------------------------------------------------
     bool SceneEditorMain::GetWireframeMode() const
@@ -279,15 +269,14 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::SelectActors(const std::vector<CActor*> &actors)
+   /* void SceneEditorMain::SelectActors(const std::vector<CActor*> &actors)
     {
         // skip if nothing to select and deselect
         if (!m_selection.IsEmpty() || !actors.empty())
         {
             // hack
-            Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
             core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
-            core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(root->GetExplorer3D());
+            core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(RootEntity());
 
             oes::editors::SelectionContainer<CActor> old = m_selection;
 
@@ -330,16 +319,12 @@ namespace editors
             }))
             ));
         }
-    }
+    }*/
+
+
 
     //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::DeselectAll()
-    {
-        SelectActors({});
-    }
-
-    //----------------------------------------------------------------------------------------------
-    void SceneEditorMain::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
+ /*   void SceneEditorMain::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey)
     {
         MouseInputData input;
         input.Code = code;
@@ -389,5 +374,5 @@ namespace editors
             m_MousePosPrevX = x;
             m_MousePosPrevY = y;
         }
-    }
+    }*/
 }

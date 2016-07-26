@@ -9,8 +9,8 @@
 namespace editors
 {
     //----------------------------------------------------------------------------------------------
-    EditorScene3D::EditorScene3D(CModelViewer *viewer, ICommandBuffer *buffer)
-        : EditorBase(static_cast<CActor*>(viewer), buffer)
+    EditorScene3D::EditorScene3D(CCoreSDK *pInstance, CModelViewer *viewer, ICommandBuffer *buffer)
+        : EditorBase(pInstance, static_cast<CActor*>(viewer), buffer)
         , m_pViewer(viewer)
     {
 
@@ -102,31 +102,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    void EditorScene3D::InputMouse(Event event, MouseCode code, int x, int y, int ModifKey /*= 0*/)
-    {
-
-    }
-
-    //----------------------------------------------------------------------------------------------
-    void EditorScene3D::MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey /*= 0*/)
-    {
-
-    }
-
-    //----------------------------------------------------------------------------------------------
-    void EditorScene3D::MouseWheel(float ds, int x, int y)
-    {
-        //m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
-    }
-
-    //----------------------------------------------------------------------------------------------
-    void EditorScene3D::InputKey(const EventInput &InputData)
-    {
-
-    }
-
-    //----------------------------------------------------------------------------------------------
-    TIEditor EditorScene3D::CreateEdtior(const char *name, CActor *root, EEditorType type)
+    TIEditor EditorScene3D::CreateEdtior(const char *name, CCoreSDK *pInstance, CActor *root, EEditorType type)
     {
         CModelViewer *actor = nullptr;
         {
@@ -136,7 +112,7 @@ namespace editors
 
             //actor->BroadcastEvent(actor, ESystemEventID::Event_ObjectGenerated);
         }
-        return std::move(TIEditor(new editors::EditorScene3D(actor, new CommandBuffer)));
+        return std::move(TIEditor(new editors::EditorScene3D(pInstance, actor, new CommandBuffer)));
     }
 
     //----------------------------------------------------------------------------------------------

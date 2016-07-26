@@ -20,7 +20,7 @@ using namespace editors;
 TEST(EditorTest, TestUndoRedoCall)
 {
     MockCommandBuffer buffer;
-    editors::EditorScene3D editor(nullptr, &buffer);
+    editors::EditorScene3D editor(nullptr, nullptr, &buffer);
 
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Undo()).Times(AtLeast(1));
     EXPECT_CALL(*reinterpret_cast<editors::MockCommandBuffer*>(editor.GetCommandBuffer()), Redo()).Times(AtLeast(1));
@@ -35,7 +35,7 @@ TEST(EditorTest, TestCommandAdd)
     const int NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorScene3D editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, nullptr, &buffer);
 
     std::shared_ptr<CommandBase_> command0(new CommandBase_([] {}, [] {}));
     std::shared_ptr<CommandBase_> command1(new CommandBase_([] {}, [] {}));
@@ -54,7 +54,7 @@ TEST(EditorTest, TestCommandUndoRedo)
     const int NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorScene3D editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, nullptr, &buffer);
 
     std::shared_ptr<MockCommandBase> command0(new MockCommandBase());
     std::shared_ptr<MockCommandBase> command1(new MockCommandBase());
@@ -109,7 +109,7 @@ TEST(EditorTest, TestCommandBatchAdd)
   const size_t NUM_COMMANDS = 3;
 
     CommandBuffer buffer;
-    EditorScene3D editor(nullptr, &buffer);
+    EditorScene3D editor(nullptr, nullptr, &buffer);
 
     ICommandPtrList command_batch0 = {
         std::shared_ptr<CommandBase_>(new CommandBase_([] {}, [] {})),

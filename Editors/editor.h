@@ -17,7 +17,7 @@ public:
     using TVecConstActor = std::vector<const CActor*>;
     using TMapActorVec = std::map<const CActor*, std::vector<CActor*>>;
 
-    EditorBase(CActor *actor, ICommandBuffer *buffer);
+    EditorBase(CCoreSDK *pInstance, CActor *actor, ICommandBuffer *buffer);
 	virtual ~EditorBase();
 
     bool Undo() override;
@@ -35,6 +35,15 @@ public:
 
     std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
 
+    void SelectActors(const std::vector<CActor*> &actors);
+    void DeselectAll() override;
+
+    // input
+    void	InputMouse(Event event, MouseCode code, int x, int y, int modifKey = 0) override;
+    void	MouseMove(int x, int y, const size_t wndx, const size_t wndy, int modifKey = 0) override;
+    void	MouseWheel(float ds, int x, int y) override;
+    void	InputKey(const EventInput &input) override;
+
 protected:
     /*!
      *  Returns a lowest editor-root related to input actor
@@ -47,14 +56,25 @@ protected:
     */
     TMapActorVec AdjustActorsToEditorRoot(const std::vector<CActor*> &actors);
 
+    CActor* RootEntity() const { return m_pEditorRoot; }
+
+    CCoreSDK* GetApp() const override { return m_pApi; }
+
 protected:
     std::function<void()>   m_notifyFunc;
 
     oes::editors::SelectionContainer<CActor> m_selection;
 
 private:
+    unsigned int m_MousePosPrevX;
+    unsigned int m_MousePosPrevY;
+    bool m_bShiftPressed;
+    bool m_bCtrlPressed;
+
     ICommandBuffer *m_CommandBuffer;
 
     CActor *m_pEditorRoot;
+
+    CCoreSDK *m_pApi;
 };
 }

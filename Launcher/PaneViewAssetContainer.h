@@ -129,7 +129,7 @@ public:
 
         SRenderContext *context = m_editor->GetRenderContext();
 
-//		m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey, context);
+        m_editor->InputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey);
 
 		SetCapture();
 
@@ -156,9 +156,9 @@ public:
 		unsigned int vprtWidth = context->m_displayModeWidth;
 		unsigned int vprtHeight = context->m_displayModeHeight;
 
-//		m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0, context);
+        m_editor->InputMouse(MOUSE_Released, MOUSE_LEFT, (int)(xPosRel * vprtWidth), (int)(yPosRel * vprtHeight), 0);
 
-		ReleaseCapture();
+        ReleaseCapture();
 
 		return 0;
 	}
@@ -168,8 +168,8 @@ public:
 	{
         SRenderContext *context = m_editor->GetRenderContext();
 
-		//m_pAppMain->ProcessInputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
-
+        m_editor->InputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
+		
 		SetCapture();
 
 		SetFocus();
@@ -182,7 +182,7 @@ public:
 	{
         SRenderContext *context = m_editor->GetRenderContext();
 
-		//m_pAppMain->ProcessInputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0, context);
+        m_editor->InputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
 
 		ReleaseCapture();
 
@@ -228,7 +228,7 @@ public:
 			float xDRel = (wndWidth > 0.f) ? ((DX / (float)wndWidth) * vprtWidth) : 0.f;
 			float yDRel = (wndHeight > 0.f) ? ((DY / (float)wndHeight) * vprtHeight) : 0.f;
 
-			//m_pAppMain->ProcessMouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey, context);
+            m_editor->MouseMove(xPosRel * vprtWidth, yPosRel * vprtHeight, xDRel, yDRel, ModifKey);
 
 			m_MousePosPrevX = PosX;
 			m_MousePosPrevY = PosY;
@@ -243,7 +243,7 @@ public:
 
         SRenderContext *context = m_editor->GetRenderContext();
 
-		//m_pAppMain->ProcessMouseWheel((float)zDelta, 0, 0, context);
+        m_editor->MouseWheel((float)zDelta, 0, 0);
 
 		bHandled = TRUE;
 		return 0;
