@@ -28,8 +28,8 @@ namespace core_sdk_api
 
         inline_ CCoreSDK*	GetCoreSDK() const { return m_pCoreSDK; }
 
-        TNodeIDraw* RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
-        void        UnregisterObject(TNodeIDraw *pNode);
+        TNodeIDraw* Register(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent);
+        void        Unregister(TNodeIDraw *pNode);
 
         TNodeIView* RegisterViewport(const TIViewport *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void        UnregisterViewport(TNodeIView *pNode);

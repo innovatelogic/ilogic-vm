@@ -84,4 +84,33 @@ const CActor* EditorBase::GetEditorRelatedActor(const CActor *actor)
     }
     return actor;
 }
+
+//----------------------------------------------------------------------------------------------
+EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<CActor*> &actors)
+{
+    std::map<const CActor*, std::vector<CActor*>> out;
+
+    for each (auto actor in actors)
+    {
+        const auto *key = GetEditorRelatedActor(actor);
+
+        assert(key);
+
+        const auto iterFind = out.find(key);
+        if (iterFind == out.end())
+        {
+            out[key] = { actor };
+        }
+        else
+        {
+            std::vector<CActor*> &refVec = iterFind->second;
+
+            if (std::find(refVec.begin(), refVec.end(), actor) == refVec.end())
+            {
+                refVec.push_back(actor);
+            }
+        }
+    }
+    return out;
+}
 }

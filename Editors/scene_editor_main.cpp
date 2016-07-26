@@ -154,8 +154,6 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void SceneEditorMain::MouseWheel(float ds, int x, int y)
     {
-        //m_pApi->ProcessMouseWheel(ds, 0, 0, GetRenderContext());
-
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
 
         Explorer *root = reinterpret_cast<Explorer*>(m_pApi->GetRootActor());
@@ -391,51 +389,5 @@ namespace editors
             m_MousePosPrevX = x;
             m_MousePosPrevY = y;
         }
-    }
-
-    //----------------------------------------------------------------------------------------------
-    std::vector<const CActor*> SceneEditorMain::AdjustActorsToRoot(const std::vector<CActor*> &actors)
-    {
-        TVecConstActor out;
-
-        for each (auto actor in actors)
-        {
-            const auto *actorEd = GetEditorRelatedActor(actor);
-
-            if (actorEd && std::find(out.begin(), out.end(), actor) == out.end())
-            {
-                out.push_back(actorEd);
-            }
-        }
-       return out;
-    }
-
-    //----------------------------------------------------------------------------------------------
-    SceneEditorMain::TMapActorVec SceneEditorMain::AdjustActorsToEditorRoot(const std::vector<CActor*> &actors)
-    {
-        std::map<const CActor*, std::vector<CActor*>> out;
-
-        for each (auto actor in actors)
-        {
-            const auto *key = GetEditorRelatedActor(actor);
-
-            assert(key);
-
-            const auto iterFind = out.find(key);
-            if (iterFind == out.end())
-            {
-                out[key] = { actor };
-            }
-            else
-            {
-                std::vector<CActor*> &refVec = iterFind->second;
-
-                if (std::find(refVec.begin(), refVec.end(), actor) == refVec.end())
-                {
-                    refVec.push_back(actor);
-                }
-            }
-        }
-        return out;
     }
 }

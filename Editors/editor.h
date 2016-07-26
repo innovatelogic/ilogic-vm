@@ -14,6 +14,9 @@ namespace editors
 class DLLEXPORT EditorBase : public IEditor
 {
 public:
+    using TVecConstActor = std::vector<const CActor*>;
+    using TMapActorVec = std::map<const CActor*, std::vector<CActor*>>;
+
     EditorBase(CActor *actor, ICommandBuffer *buffer);
 	virtual ~EditorBase();
 
@@ -37,6 +40,12 @@ protected:
      *  Returns a lowest editor-root related to input actor
      */
     const CActor* GetEditorRelatedActor(const CActor *actor);
+
+    /*!
+    * return correspondence map where a key actor is in root's space explicitly,
+    * values in vector arbitrary implicit scope of selected actors
+    */
+    TMapActorVec AdjustActorsToEditorRoot(const std::vector<CActor*> &actors);
 
 protected:
     std::function<void()>   m_notifyFunc;

@@ -66,8 +66,13 @@ void IDrawInterface::RegisterDrawInterface(const CActor *pSrc, int SrcParent /*=
 {
 	const_cast<CActor*>(pSrc)->RegisterInterfaceImpl(this);
 
-	if (m_pCoreSDK){
-		m_pNode = m_pCoreSDK->GetViewportManager()->RegisterObject(this, pSrc, (SrcParent == 1) ? pSrc->GetParent() : nullptr );
+	if (m_pCoreSDK)
+    {
+        core_sdk_api::CViewportManager *manager = m_pCoreSDK->GetViewportManager();
+
+        assert(manager);
+
+		m_pNode = manager->Register(this, pSrc, (SrcParent == 1) ? pSrc->GetParent() : nullptr );
 	}
 }
 
@@ -76,7 +81,11 @@ void IDrawInterface::UnregisterDrawInterface()
 {
 	if (m_pCoreSDK && m_pNode)
 	{
-		m_pCoreSDK->GetViewportManager()->UnregisterObject(m_pNode);
+        core_sdk_api::CViewportManager *manager = m_pCoreSDK->GetViewportManager();
+
+        assert(manager);
+
+        manager->Unregister(m_pNode);
 	}
 }
 

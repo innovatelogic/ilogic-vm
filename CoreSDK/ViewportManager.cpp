@@ -14,13 +14,13 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    TNodeIDraw* CViewportManager::RegisterObject(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
+    TNodeIDraw* CViewportManager::Register(const IDrawInterface *pSrc, const CActor *pKey, const CActor *pKeyParent)
     {
         return m_VecDrawList.PushBack(pKey, pSrc, pKeyParent);
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::UnregisterObject(TNodeIDraw *pNode)
+    void CViewportManager::Unregister(TNodeIDraw *pNode)
     {
         m_VecDrawList.Erase(pNode);
     }
