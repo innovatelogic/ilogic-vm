@@ -104,6 +104,7 @@ set(SOURCE
 	WTLItemsTree.h
 	WTLPlacementWidget.h
 	WTLPropertyGrid.h
+	wtlpropertygrid.ipp
 	MSelectTree.h
 	)
 
