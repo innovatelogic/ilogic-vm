@@ -15,8 +15,8 @@
 template<class T_CLASS>
 class CPanePropertyContainer : public CPaneContainer
 {
-	template<typename T_CLASS>
-	class CToolbarContainer : public CWindowImpl<CToolbarContainer<T_CLASS> >
+	template<typename U>
+	class CToolbarContainer : public CWindowImpl<CToolbarContainer<U>>
 	{
 	public:
 		BEGIN_MSG_MAP(CToolbarContainer)
@@ -25,59 +25,9 @@ class CPanePropertyContainer : public CPaneContainer
 			REFLECT_NOTIFICATIONS()
 		END_MSG_MAP()
 
-		CToolbarContainer(CPanePropertyContainer<T_CLASS> *pOwner)
-			: m_pOwner(pOwner)
-		{
-		}
-
-		//----------------------------------------------------------------------------------------------
-		LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
-		{
-			CRect rc(0, 0, 100, 100);
-
-			//CReBarCtrl m_bar;
-			//m_bar.Create(m_hWnd, rc, TEXT("Rebar"), WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|CCS_TOP|RBS_BANDBORDERS|CCS_NODIVIDER, 0);
-
-			CImageList img;
-			CToolBarCtrl m_navigationBar; //CCS_NODIVIDER|CCS_NOPARENTALIGN|CCS_NORESIZE|WS_CHILD|WS_VISIBLE|TBSTYLE_FLAT|TBSTYLE_TRANSPARENT|TBSTYLE_TOOLTIPS
-			m_navigationBar.Create(m_hWnd, rc, NULL,
-				CCS_NODIVIDER | CCS_NOPARENTALIGN | CCS_NORESIZE | WS_CHILD | WS_VISIBLE | TBSTYLE_FLAT /*| TBSTYLE_TRANSPARENT */| TBSTYLE_TOOLTIPS);
-
-			HIMAGELIST hBitmapProp = ::ImageList_LoadImage(::GetModuleHandle(NULL), L"resources/properties.bmp", 16, 4, CLR_NONE, IMAGE_BITMAP, LR_SHARED|LR_DEFAULTSIZE|LR_LOADFROMFILE);
-			img.Attach(hBitmapProp);
-
-			m_navigationBar.SetBitmapSize(16, 16);
-			m_navigationBar.SetButtonSize(20, 20);
-			m_navigationBar.SetImageList(img);
-
-			TBBUTTON CustomButtons []=
-			{
-				{0, ID_BUTTON_CATEGORIZED_A, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0L, 0, 0, 0},
-				{1, ID_BUTTON_SORTED, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0L, 0, 0, 0},
-				{-1, 0, 0, TBSTYLE_SEP, 0L, 0, 0, 0},
-			};
-
-			m_navigationBar.AddButtons(2, CustomButtons);
-
-			img.Detach();
-
-			return 0;
-		}
-
-		//----------------------------------------------------------------------------------------------
-		LRESULT OnLBClick(UINT, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
-		{
-			INT_PTR buttonId = LOWORD(wParam);
-			if (buttonId == ID_BUTTON_CATEGORIZED_A)
-			{
-				m_pOwner->SetGridViewStyle(EGV_Categorized);
-			}
-			else if (buttonId == ID_BUTTON_SORTED)
-			{
-				m_pOwner->SetGridViewStyle(EGV_SortByName);
-			}
-			return 0;
-		}
+        CToolbarContainer(CPanePropertyContainer<T_CLASS> *pOwner);
+        LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&);
+        LRESULT OnLBClick(UINT, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 	private:
 		CPanePropertyContainer<T_CLASS>  *m_pOwner;
@@ -292,5 +242,5 @@ public:
 	class CWTLPropertyGrid<T_CLASS> *m_pPropGrid;
 };
 
-
+#include "pane_property_container.ipp"
 #endif//__panepropertycontainer_h__
