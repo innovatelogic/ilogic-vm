@@ -992,11 +992,10 @@ void CWTLPropertyGrid<T>::UpdatePreview()
 
 //----------------------------------------------------------------------------------------------
 
-//wchar_t wbuf_[256];
 template<class T>
 BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 {
-/*    m_PropertyCS.enter();
+    m_PropertyCS.enter();
     
     TCHAR	szText[256];
 
@@ -1023,8 +1022,8 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
             {
             case 0:
             {
-                MultiByteToWideChar(CP_ACP, 0, OutClass->ClassName.c_str(), -1, wbuf_, 255);
-                pItem->pszText = (LPSTR)wbuf_;
+                MultiByteToWideChar(CP_ACP, 0, OutClass->ClassName.c_str(), -1, wbuf, 255);
+                pItem->pszText = (LPSTR)wbuf;
 
                 bool bCollapsed = IsClassAllowed(OutClass->ClassName);
                 pItem->iImage = !bCollapsed ? 2 : 3;
@@ -1036,7 +1035,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     }
 
     m_PropertyCS.leave();
-    */
+    
     return FALSE;
 }
 

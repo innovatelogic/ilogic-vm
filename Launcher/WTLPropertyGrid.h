@@ -146,157 +146,69 @@ public:
 	
 	void AdjustColumnsSize();
 
-	//----------------------------------------------------------------------------------------------
-/*	LRESULT OnKeydown(UINT uMsg, WPARAM wParam, LPARAM, BOOL&)
-	{
-		switch(uMsg)
-		{
-		case WM_KEYDOWN:
-			switch ((DWORD)wParam) 
-			{
-			case VK_RETURN:
-				{
-					m_PropertyCS.enter();
-
-					TCHAR	szText[256];
-					int SelectedGroup = 0; //TabCtrl_GetCurSel(pGrid->GetHWNDTab());
-
-					TCITEM tc;
-					tc.mask = TCIF_TEXT;
-					tc.pszText = szText;
-					tc.cchTextMax = 255;
-
-					SPropertyClass *OutClass = 0;
-					Property_Base *OutProperty = 0;
-					int OutMemoryOffset = 0;
-
-					if (GetPropertyByIndex(m_EditingPropertyIndex, SelectedGroup, &OutClass, &OutProperty, OutMemoryOffset))
-					{
-						if (OutProperty && OutClass)
-						{
-							wchar_t wbuf[256] = {0};
-							char ascii[256] = {0};
-
-							m_Edit->SendMessage(WM_GETTEXT, 256, (LPARAM)wbuf);
-							WideCharToMultiByte(CP_ACP, 0, wbuf, 256, ascii, 256, NULL, NULL);
-
-							int MemoryOffsetOverride = 0;
-							if (OutClass->nOverrideByteShift != -1){ // interface relative shift
-								MemoryOffsetOverride = OutClass->nOverrideByteShift;
-							}
-
-							OutProperty->SetProperty((BYTE*)OutClass->pDataObject + OutMemoryOffset, ascii, MemoryOffsetOverride); // set new value
-						}
-					}
-
-					m_PropertyCS.leave();
-					m_EditingPropertyIndex = INDEX_NONE;
-					m_MemoryOffset = 0;
-					HideChildControls();
-					UpdatePreview();
-				}break;
-			}break;
-		};
-		return 0;
-	}*/
-
-	//----------------------------------------------------------------------------------------------
     LRESULT OnDeleteAll(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
 
-	//----------------------------------------------------------------------------------------------
     LRESULT OnFillProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
 
-	//----------------------------------------------------------------------------------------------
     LRESULT OnUpdateProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
 
-	//----------------------------------------------------------------------------------------------
     LRESULT OnAdjustColumnWidth(UINT msg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
-	//----------------------------------------------------------------------------------------------
     LRESULT OnBeginTrack(int idCtrl, LPNMHDR pnmh, BOOL& bHandled);
 
-	//----------------------------------------------------------------------------------------------
     virtual LRESULT OnLVEndLabelEdit(WPARAM wParam);
 
-	//----------------------------------------------------------------------------------------------
     LRESULT OnLVCustomDraw(int, LPNMHDR pNMHDR, BOOL&);
 
-	//----------------------------------------------------------------------------------------------
     long HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD);
 
-	//----------------------------------------------------------------------------------------------
     void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/);
 
-	//----------------------------------------------------------------------------------------------
     void FillPropertyTabs();
 
-	//----------------------------------------------------------------------------------------------
     void FillPropertyData(T *pActor);
 
-	//----------------------------------------------------------------------------------------------
     SPropertyGroup* GetGroupByName(const std::string &name) const;
 
-	//----------------------------------------------------------------------------------------------
     bool IsClassAllowed(const std::string& name) const;
 
-	//----------------------------------------------------------------------------------------------
     bool IsDisclosed(const std::string &name) const;
 
-	//----------------------------------------------------------------------------------------------
     BOOL FillListProperties();
 
-	//----------------------------------------------------------------------------------------------
-    void FillPropertyDataTransient(T *pActor);
+	void FillPropertyDataTransient(T *pActor);
 
-	//----------------------------------------------------------------------------------------------
-    void UpdatePreview();
+	void UpdatePreview();
 
-	//----------------------------------------------------------------------------------------------
-	wchar_t wbuf[256];
     BOOL GETDISPINFO_FillList(LVITEMA *pItem);
 
-	//----------------------------------------------------------------------------------------------
     bool GetPropertyByIndex(int InPlainIndex, int IndexGroup, struct SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const;
 
-	//----------------------------------------------------------------------------------------------
     BOOL FillListParam(LVITEMA *pItem, const SPropertyClass* PropClass, const Property_Base* Prop, int MemOffset/*= 0*/);
 
-	//----------------------------------------------------------------------------------------------
     bool IsPropertyBOOL(const Property_Base * Prop);
 
-	//----------------------------------------------------------------------------------------------
     void _Update(const T *pSender, ESystemEventID EventId);
 
-	//----------------------------------------------------------------------------------------------
     void ClearListProperties();
 	
-	//----------------------------------------------------------------------------------------------
     BOOL ClickListProperties(LPNMLISTVIEW plvdi);
 
-	//----------------------------------------------------------------------------------------------
     BOOL ProcessClickListProperties(LPNMLISTVIEW plvdi, SPropertyClass *Class, Property_Base* Prop, int MemOffset /*= 0*/);
 
-	//----------------------------------------------------------------------------------------------
     BOOL ClickListComboProperties(LPNMLISTVIEW plvdi);
 
-	//----------------------------------------------------------------------------------------------
     void HideChildControls();
 
-	//----------------------------------------------------------------------------------------------
 	const TVecPropertyGroup& GetPropertyGroups() const { return m_PropertyGroups; }
 
 	void SetSelectedGroup(int group) { m_nSelectedGroup = group; }
 
-	//----------------------------------------------------------------------------------------------
     void SetGridViewStyle(EGridView Value);
 
-	//----------------------------------------------------------------------------------------------
     void LoadHelperImageList();
 
-	//----------------------------------------------------------------------------------------------
-    void PushContext();
-
-	//----------------------------------------------------------------------------------------------
+	void PushContext();
     void PopContext();
 
 protected:
@@ -327,6 +239,8 @@ private:
 
 	CCoreSDK		*m_pAppMain;
 	SRenderContext	*m_pRenderContext;
+
+    wchar_t wbuf[256];
 };
 
 #include "wtlpropertygrid.ipp"
