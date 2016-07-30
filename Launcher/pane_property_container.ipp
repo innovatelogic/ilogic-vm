@@ -84,6 +84,23 @@ void CPanePropertyContainer<T>::SetAppMain(CCoreSDK *app)
 
 //----------------------------------------------------------------------------------------------
 template<class T>
+void CPanePropertyContainer<T>::SetEditor(editors::TIEditor editor)
+{
+    m_editor = editor;
+
+    oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
+
+    if (mgr)
+    {
+        mgr->RegisterFunc([&](ESystemEventID id, const CObjectAbstract *param)
+        {
+            Update((T*)(param), id);
+        });
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
 void CPanePropertyContainer<T>::SetRenderContext(SRenderContext *pContext)
 {
     assert(m_pPropGrid);

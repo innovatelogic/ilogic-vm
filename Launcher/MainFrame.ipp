@@ -101,6 +101,8 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
     
     m_pRightBottomPane->SetEditor(m_editor);
+    m_pRightTopPane->SetEditor(m_editor);
+
     m_ViewCtrl.SetEditor(m_editor);
 
     InitViewport();
@@ -118,11 +120,6 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
     
     m_editor->Initialize();
     
-    Explorer *root = m_pAppMain->GetExplorerInstance();
-    root->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
-    root->GetExplorer2D()->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
-    root->GetExplorer3D()->BroadcastEvent(ESystemEventID::Event_ObjectGenerated);
-
     InitCallbacks();
 
     return 0;

@@ -843,9 +843,10 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
 
     std::vector<const CActor*> selected = m_editor->GetSelected();
 
+    // check models consistentcy
     bool equal = false;
 
-    if (selected.size() == m_hwndLeft.m_aData.GetSize())
+    if (selected.size() == m_hwndLeft.GetSelectedCount())
     {
         equal = true;
 
@@ -863,6 +864,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
             }
         }
     }
+
 
     if (!equal)
     {

@@ -46,6 +46,9 @@ public:
 	~CPanePropertyContainer();
 
     void SetAppMain(CCoreSDK *app);
+
+    void SetEditor(editors::TIEditor editor);
+
     void SetRenderContext(SRenderContext *pContext);
 
     void Update(const T_CLASS *pSender, ESystemEventID EventId);
@@ -75,6 +78,8 @@ public:
 
 	CToolBarCtrl m_ToolBar;
 	class CWTLPropertyGrid<T_CLASS> *m_pPropGrid;
+
+    std::shared_ptr<editors::IEditor> m_editor;
 };
 
 #include "pane_property_container.ipp"

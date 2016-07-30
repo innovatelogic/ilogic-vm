@@ -117,7 +117,6 @@ public:
 
 	 LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&);
 
-	
      HWND CreateClient();
 
      void CreatePaneGrid();
