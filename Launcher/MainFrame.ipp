@@ -751,8 +751,9 @@ void CMainFrame<T_CLASS>::Render()
 template<class T_CLASS>
 void CMainFrame<T_CLASS>::InitCallbacks()
 {
-    m_editor->SetNotifyFunc([&]()
+    m_editor->SetNotifySelectFunc([&]()
     {
+        m_pRightTopPane->OnObjectSelected();
         m_pRightBottomPane->OnObjectSelected();
     });
 }

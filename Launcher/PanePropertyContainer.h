@@ -54,22 +54,18 @@ public:
     void Update(const T_CLASS *pSender, ESystemEventID EventId);
 
     LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&);
-
     LRESULT OnNotify(UINT, WPARAM, LPARAM lParam, BOOL& bHandled);
-
 	LRESULT OnSize(UINT, WPARAM, LPARAM, BOOL& bHendled);
-
 	LRESULT OnDeleteAll(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
-
 	LRESULT OnFilledProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
-
 	LRESULT OnUpdateProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
 
 	bool AddTabPage(const char *name, int Index = 0);
-
 	bool ClearTabPages();
 
 	void SetGridViewStyle(EGridView Value);
+    
+    void OnObjectSelected();
 
 protected:
 public:

@@ -108,7 +108,7 @@ void EditorBase::SelectActors(const std::vector<CActor*> &actors)
             }
             manager->SetSelect(ids, ivprt);
 
-            m_notifyFunc();
+            m_notifySelectFunc();
         },
                 [&, manager, ivprt, old]() {
 
@@ -124,7 +124,7 @@ void EditorBase::SelectActors(const std::vector<CActor*> &actors)
             manager->SetSelect(ids, ivprt);
             m_selection = old;
 
-            m_notifyFunc();
+            m_notifySelectFunc();
         }))
             ));
     }

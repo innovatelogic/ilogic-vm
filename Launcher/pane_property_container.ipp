@@ -277,3 +277,10 @@ void CPanePropertyContainer<T>::SetGridViewStyle(EGridView Value)
 {
     m_pPropGrid->SetGridViewStyle(Value);
 }
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CPanePropertyContainer<T>::OnObjectSelected()
+{
+
+}

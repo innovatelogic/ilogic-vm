@@ -124,7 +124,7 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
     {
         return 0;
     }
-    else if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTED)
+    else if (((LPNMHDR)lParam)->code == TVN_ITEMSELECTFINISHED)
     {
         HWND hwndFrom = ((LPNMHDR)lParam)->hwndFrom;
 
@@ -141,7 +141,7 @@ LRESULT CTreePaneContainer<T_CLASS>::OnAppOnNotify(UINT iunt_, WPARAM wParam, LP
         assert(presenter);
 
         const NMTREEVIEW *nmt = (NMTREEVIEW*)(lParam);
-        if (nmt->itemNew.state == TVIS_SELECTED)
+//        if (nmt->itemNew.state == TVIS_SELECTED)
         {
             presenter->SelChangedTreeObject(); // TODO: inc-decremental selection
         }

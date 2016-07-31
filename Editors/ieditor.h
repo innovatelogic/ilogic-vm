@@ -80,7 +80,7 @@ public:
     */
     virtual void    DeselectAll() = 0;
 
-    virtual void    SetNotifyFunc(const std::function<void()> &func) = 0;
+    virtual void    SetNotifySelectFunc(const std::function<void()> &func) = 0;
 
 protected:
 private:

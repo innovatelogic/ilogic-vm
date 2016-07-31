@@ -39,7 +39,7 @@
 // New control notifications
 #define TVN_ITEMSELECTING 0x0001
 #define TVN_ITEMSELECTED  0x0002
-
+#define TVN_ITEMSELECTFINISHED  0x0003
 
 template< class T, class TBase = CTreeViewCtrl, class TWinTraits = CControlWinTraits >
 class ATL_NO_VTABLE CMultiSelectTreeImpl : 
@@ -415,7 +415,10 @@ public:
       }
       else {
          // Remove current selection and replace it with clicked item
-         for( int i = 0; i < m_aData.GetSize(); i++ ) _SelectItem(i, i == iIndex, TVC_BYMOUSE);
+          for (int i = 0; i < m_aData.GetSize(); i++) {
+              _SelectItem(i, i == iIndex, TVC_BYMOUSE);
+          }
+         SelectionFinished();
       }
       return 0;
    }
@@ -516,6 +519,15 @@ public:
          dwRet = CDRF_NEWFONT;
       }
       return dwRet;
+   }
+
+   void SelectionFinished()
+   {
+       NMTREEVIEW nmtv = { 0 };
+       nmtv.hdr.code = TVN_ITEMSELECTFINISHED;
+       nmtv.hdr.hwndFrom = m_hWnd;
+       nmtv.hdr.idFrom = GetDlgCtrlID();
+       ::SendMessage(GetParent(), WM_NOTIFY, nmtv.hdr.idFrom, (LPARAM)&nmtv);
    }
 };
 

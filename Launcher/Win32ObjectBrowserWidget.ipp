@@ -515,15 +515,13 @@ int	Win32ObjectBrowserWidget<T_CLASS>::DirectClearActor(const T_CLASS * Sender)
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmtv)
+T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmtv) const
 {
-    m_CS.enter();
-
     T_CLASS *pOutValue = NULL;
 
     if (lpnmtv)
     {
-        for (std::vector<HTREEITEM>::iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
+        for (std::vector<HTREEITEM>::const_iterator Iter = m_HTreeClearList.begin(); Iter != m_HTreeClearList.end(); ++Iter)
         {
             if (*Iter == lpnmtv) {
                 return 0;
@@ -541,17 +539,13 @@ T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmt
             ++Iter;
         }
     }
-    m_CS.leave();
-
     return pOutValue;
 }
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
+void Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
 {
-    bool bResult = false;
-
     if (!m_bLockUpdate)
     {
         std::vector<CActor*> actors;
@@ -567,11 +561,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
         }
 
         m_editor->SelectActors(actors);
-
-        bResult = true;
     }
-
-    return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -836,40 +826,18 @@ bool Win32ObjectBrowserWidget<T_CLASS>::ContextMenuProcessor(HWND hWnd, UINT mes
 }
 
 //----------------------------------------------------------------------------------------------
-template<class T_CLASS>
-void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
+template<class T>
+void Win32ObjectBrowserWidget<T>::OnNotifySelected()
 {
-    m_bLockUpdate = true;
+    m_bLockUpdate = true; // lock self calling
 
-    std::vector<const CActor*> selected = m_editor->GetSelected();
+    std::vector<const T*> selected;
+    std::vector<const T*> deselected;
 
-    // check models consistentcy
-    bool equal = false;
-
-    if (selected.size() == m_hwndLeft.GetSelectedCount())
+    GetSelectionModelsDiff(selected, deselected);
+    
+    if (!selected.empty() || !deselected.empty())
     {
-        equal = true;
-
-        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
-        {
-            if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
-            {
-                T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
-
-                if (std::find(selected.begin(), selected.end(), actor) == selected.end())
-                {
-                    equal = false;
-                    break;
-                }
-            }
-        }
-    }
-
-
-    if (!equal)
-    {
-        UnselectTreeAll();
-
         for each (auto actor in selected)
         {
             bool bFind = false;
@@ -877,17 +845,33 @@ void Win32ObjectBrowserWidget<T_CLASS>::OnNotifySelected()
             TTreeMapActorConstIterator iter = m_TreeMap.begin();
             while (iter != m_TreeMap.end())
             {
+                bFind = iter->first == actor;
                 if (iter->first == actor)
                 {
                     m_hwndLeft.SelectItem(iter->second, true);
-
-                    bFind = true;
                     break;
                 }
                 ++iter;
             }
+            assert(bFind);
+        }
 
-            //assert(bFind);
+        for each (auto actor in deselected)
+        {
+            bool bFind = false;
+
+            TTreeMapActorConstIterator iter = m_TreeMap.begin();
+            while (iter != m_TreeMap.end())
+            {
+                bFind = iter->first == actor;
+                if (bFind)
+                {
+                    m_hwndLeft.SelectItem(iter->second, false);
+                    break;
+                }
+                ++iter;
+            }
+            assert(bFind);
         }
     }
     m_bLockUpdate = false;
@@ -954,6 +938,56 @@ void Win32ObjectBrowserWidget<T_CLASS>::UnselectTreeAll()
         if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
         {
             m_hwndLeft.SelectItem(m_hwndLeft.m_aData.GetValueAt(i).hItem, false);
+        }
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+// TODO: move to lib / ut
+template<class T>
+void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
+    std::vector<const T*> &new_selected,
+    std::vector<const T*> &new_deselected) const
+{
+    new_selected.clear();
+    new_deselected.clear();
+
+    std::vector<const CActor*> selected = m_editor->GetSelected();
+
+    const size_t uiDataSize = m_hwndLeft.m_aData.GetSize();
+
+    // check newly selected object by comparison with most complete UI data model
+    for each (auto &item in selected)
+    {
+        bool bFind = false;
+        for (size_t index = 0; index < uiDataSize; index++)
+        {
+            const CMultiSelectTreeCtrl::tagTVDATA &uidata = m_hwndLeft.m_aData.GetValueAt(index);
+
+            T *actor = GetActorByData(uidata.hItem);
+            assert(actor);
+
+            bFind = item == actor;
+            if (bFind && !uidata.bSelected)
+            {
+                new_selected.push_back(item); // object not selected in ui model -> add
+                break;
+            }
+        }
+        //assert(bFind);
+    }
+
+    // fetch deselected elements from most complete model
+    for (size_t index = 0; index < uiDataSize; index++)
+    {
+        const CMultiSelectTreeCtrl::tagTVDATA &uidata = m_hwndLeft.m_aData.GetValueAt(index);
+
+        T *actor = GetActorByData(uidata.hItem);
+
+        if (uidata.bSelected && std::find(selected.begin(), selected.end(), actor) == selected.end())
+        {
+            new_deselected.push_back(actor);
+            break;
         }
     }
 }

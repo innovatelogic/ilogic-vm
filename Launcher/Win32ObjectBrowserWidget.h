@@ -83,9 +83,9 @@ public:
 
     int	DirectClearActor(const T_CLASS *sender);
 
-    T_CLASS* GetActorByData(const HTREEITEM lpnmtv);
+    T_CLASS* GetActorByData(const HTREEITEM lpnmtv) const;
 
-    bool SelChangedTreeObject();
+    void SelChangedTreeObject();
 
     /** object rename operation*/
     bool RenameTreeObject();
@@ -102,7 +102,7 @@ public:
     void ProcessRightClick();
     bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam);
 
-    // notificatofs
+    // notification
     void OnNotifySelected();
 
     void MoveWindow(int x, int y, int width, int height);
@@ -119,6 +119,16 @@ public:
 
 protected:
     void UnselectTreeAll();
+
+    /*!
+     * Compare two models (editor vs widget) and returns arrays of difference
+     * input arrays would be clear.
+     * returns empty array if no difference
+     * new_selected [out] - array of newly selected
+     * new_deselected [out] - array of newly deselected
+     */
+    void GetSelectionModelsDiff(std::vector<const T_CLASS*> &new_selected,
+                                std::vector<const T_CLASS*> &new_deselected) const;
 
 //----------------------------------------------------------------------------------------------
 private:

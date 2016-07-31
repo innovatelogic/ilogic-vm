@@ -31,7 +31,10 @@ public:
     size_t GetUndoCommandBatchSize(size_t index) const override;
     size_t GetRedoCommandBatchSize(size_t index) const override;
 
-    void SetNotifyFunc(const std::function<void()> &func) override { m_notifyFunc = func; }
+    /*!
+    * Set callback selection
+    */
+    void SetNotifySelectFunc(const std::function<void()> &func) override { m_notifySelectFunc = func; }
 
     std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
 
@@ -61,7 +64,7 @@ protected:
     CCoreSDK* GetApp() const override { return m_pApi; }
 
 protected:
-    std::function<void()>   m_notifyFunc;
+    std::function<void()>   m_notifySelectFunc;
 
     oes::editors::SelectionContainer<CActor> m_selection;
 
