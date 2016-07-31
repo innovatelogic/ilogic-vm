@@ -81,7 +81,19 @@ size_t EditorBase::GetRedoCommandBatchSize(size_t index) const
 void EditorBase::SelectActors(const std::vector<CActor*> &actors)
 {
     // skip if nothing to select and deselect
-    if (!m_selection.IsEmpty() || !actors.empty())
+
+    std::vector<const CActor*> keys = m_selection.Keys();
+
+    bool bDiff = false;
+    for each (auto actor in actors)
+    {
+        if (std::find(keys.begin(), keys.end(), actor) == keys.end()) {
+            bDiff = true;
+            break;
+        }
+    }
+
+    if (bDiff)
     {
         // hack
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
@@ -110,7 +122,7 @@ void EditorBase::SelectActors(const std::vector<CActor*> &actors)
 
             m_notifySelectFunc();
         },
-                [&, manager, ivprt, old]() {
+        [&, manager, ivprt, old]() {
 
             m_selection.Empty();
 
@@ -126,7 +138,7 @@ void EditorBase::SelectActors(const std::vector<CActor*> &actors)
 
             m_notifySelectFunc();
         }))
-            ));
+       ));
     }
 }
 

@@ -327,6 +327,7 @@ public:
             if( rcItem1.top > rcItem2.top ) _SelectTree(hItem, m_hExtSelStart, TVC_BYKEYBOARD);
             else _SelectTree(m_hExtSelStart, hItem, TVC_BYKEYBOARD);
             _SelectItem(hItem, true, TVC_BYKEYBOARD);
+            SelectionFinished();
          }
       }
       bHandled = FALSE;
@@ -408,10 +409,12 @@ public:
          // Select from current item to item where SHIFT was pressed
          if( rcItem1.top > rcItem2.top ) _SelectTree(hItem, m_hExtSelStart, TVC_BYMOUSE);
          else _SelectTree(m_hExtSelStart, hItem, TVC_BYMOUSE);
+         SelectionFinished();
       }
       else if( ::GetAsyncKeyState(VK_CONTROL) < 0 ) {
          // Just toggle item
          _SelectItem(iIndex, !data.bSelected, TVC_BYMOUSE);
+         SelectionFinished();
       }
       else {
          // Remove current selection and replace it with clicked item
@@ -424,6 +427,7 @@ public:
    }
    LRESULT OnLButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
    {
+      //SelectionFinished();
       if( m_bMarquee ) ReleaseCapture();
       bHandled = FALSE;
       return 0;
@@ -448,6 +452,7 @@ public:
       if( m_bMarquee ) {
          _DrawDragRect(m_ptDragOld);
          m_bMarquee = false;
+         SelectionFinished();
       }
       bHandled = FALSE;
       return 0;
