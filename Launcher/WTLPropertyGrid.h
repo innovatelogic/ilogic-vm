@@ -135,11 +135,8 @@ public:
     LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL& bHandled);
 
     LRESULT OnNotify(UINT msg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
 	LRESULT OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandled);
-
 	LRESULT OnShowWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
-
 	LRESULT OnScrollWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled);
 
 	void ScrollWindow();
@@ -147,13 +144,9 @@ public:
 	void AdjustColumnsSize();
 
     LRESULT OnDeleteAll(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
-
     LRESULT OnFillProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
-
     LRESULT OnUpdateProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
-
     LRESULT OnAdjustColumnWidth(UINT msg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
     LRESULT OnBeginTrack(int idCtrl, LPNMHDR pnmh, BOOL& bHandled);
 
     virtual LRESULT OnLVEndLabelEdit(WPARAM wParam);
@@ -163,6 +156,8 @@ public:
     long HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD);
 
     void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/);
+
+    void FillPropertyGrid(std::vector<const T*> &actors);
 
     void FillPropertyTabs();
 

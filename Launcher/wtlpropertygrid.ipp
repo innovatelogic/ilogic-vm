@@ -560,6 +560,13 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPr
 
 //----------------------------------------------------------------------------------------------
 template<class T>
+void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
+{
+    
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
 void CWTLPropertyGrid<T>::FillPropertyTabs()
 {
     m_PropertyCS.enter();
@@ -956,8 +963,7 @@ void CWTLPropertyGrid<T>::UpdatePreview()
     if (SelectedGroup != INDEX_NONE)
     {
         std::string StrGroupName = m_PropertyGroups[m_nSelectedGroup]->GroupName; //ConvertWideStringToString(szText);
-
-                                                                                  // find group
+                                                                          // find group
         SPropertyGroup *pGroup = GetGroupByName(StrGroupName);
         assert(pGroup);
 
@@ -991,7 +997,6 @@ void CWTLPropertyGrid<T>::UpdatePreview()
 }
 
 //----------------------------------------------------------------------------------------------
-
 template<class T>
 BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 {
