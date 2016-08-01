@@ -987,7 +987,6 @@ void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
         if (uidata.bSelected && std::find(selected.begin(), selected.end(), actor) == selected.end())
         {
             new_deselected.push_back(actor);
-            break;
         }
     }
 }
