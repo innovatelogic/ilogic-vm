@@ -407,8 +407,14 @@ public:
          GetItemRect(m_hExtSelStart, &rcItem1, TRUE);
          GetItemRect(hItem, &rcItem2, TRUE);
          // Select from current item to item where SHIFT was pressed
-         if( rcItem1.top > rcItem2.top ) _SelectTree(hItem, m_hExtSelStart, TVC_BYMOUSE);
-         else _SelectTree(m_hExtSelStart, hItem, TVC_BYMOUSE);
+         if (rcItem1.top > rcItem2.top)
+         {
+             _SelectTree(hItem, m_hExtSelStart, TVC_BYMOUSE);
+         }
+         else
+         {
+             _SelectTree(m_hExtSelStart, hItem, TVC_BYMOUSE);
+         }
          SelectionFinished();
       }
       else if( ::GetAsyncKeyState(VK_CONTROL) < 0 ) {
@@ -428,7 +434,7 @@ public:
    LRESULT OnLButtonUp(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
    {
       //SelectionFinished();
-      if( m_bMarquee ) ReleaseCapture();
+       if (m_bMarquee) { ReleaseCapture(); }
       bHandled = FALSE;
       return 0;
    }

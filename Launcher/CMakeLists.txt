@@ -25,6 +25,8 @@ include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK)
 include_directories(${CMAKE_SOURCE_DIR}/CoreSDK/editors)
 include_directories(${CMAKE_SOURCE_DIR}/Editors)
+include_directories(${CMAKE_SOURCE_DIR}/Launcher/src)
+
 
 #link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
 link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
@@ -107,6 +109,8 @@ set(SOURCE
 	WTLPropertyGrid.h
 	wtlpropertygrid.ipp
 	MSelectTree.h
+	src/property_reactor.h
+	src/property_reactor.ipp
 	)
 
 IF(WIN32)

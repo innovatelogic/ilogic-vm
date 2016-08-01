@@ -10,6 +10,7 @@
 #include "ListVeiwEdit.h"
 #include "ListViewCombobox.h"
 #include "ListViewEditResource.h"
+#include "property_reactor.h"
 
 #define WM_ADJUST_COLUMN_WIDTH 1001
 
@@ -107,7 +108,6 @@ public:
 	END_MSG_MAP()
 
 	CWTLPropertyGrid();
-
     ~CWTLPropertyGrid();
 
     void SetAppMain(CCoreSDK *app) { m_pAppMain = app; }
@@ -133,16 +133,10 @@ public:
         LPVOID lpCreateParam = NULL);
 
     LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL& bHandled);
-
     LRESULT OnNotify(UINT msg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnShowWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 	LRESULT OnScrollWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled);
-
-	void ScrollWindow();
-	
-	void AdjustColumnsSize();
-
     LRESULT OnDeleteAll(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
     LRESULT OnFillProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
     LRESULT OnUpdateProps(UINT msg, WPARAM wParam, LPARAM lParam, BOOL&);
@@ -150,28 +144,27 @@ public:
     LRESULT OnBeginTrack(int idCtrl, LPNMHDR pnmh, BOOL& bHandled);
 
     virtual LRESULT OnLVEndLabelEdit(WPARAM wParam);
-
     LRESULT OnLVCustomDraw(int, LPNMHDR pNMHDR, BOOL&);
+
+    void ScrollWindow();
+
+    void AdjustColumnsSize();
 
     long HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD);
 
     void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/);
 
     void FillPropertyGrid(std::vector<const T*> &actors);
-
     void FillPropertyTabs();
-
     void FillPropertyData(T *pActor);
 
     SPropertyGroup* GetGroupByName(const std::string &name) const;
 
     bool IsClassAllowed(const std::string& name) const;
-
     bool IsDisclosed(const std::string &name) const;
 
     BOOL FillListProperties();
-
-	void FillPropertyDataTransient(T *pActor);
+    void FillPropertyDataTransient(T *pActor);
 
 	void UpdatePreview();
 

@@ -562,7 +562,13 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPr
 template<class T>
 void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 {
-    
+    if (!actors.empty())
+    {
+        SetSelected(const_cast<T*>(actors.at(0)));
+
+        PostMessage(WM_USER_DELETE_ALL, 0, 0);
+        PostMessage(WM_USER_FILL_PROPS, 0, 0);
+    }
 }
 
 //----------------------------------------------------------------------------------------------
