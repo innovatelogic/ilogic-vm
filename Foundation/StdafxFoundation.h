@@ -38,7 +38,6 @@ enum EAxis
     EAxisZ = 3
 };
 
-
 enum EScrObjectEvent
 {
 	SOEvent_None      = 0,
@@ -153,9 +152,6 @@ typedef TVecProperty::const_iterator			TVecPropertyConstIterator;
 typedef std::vector<struct SInterfaceDecl*>	TVecInterfaceDecl;
 typedef TVecInterfaceDecl::iterator			TVecInterfaceDeclIter;
 typedef TVecInterfaceDecl::const_iterator	TVecInterfaceDeclConstIter;
-
-// typename class EventAbstract<int>*				TypeEventAbstract;
-// typename class EventKeyInputProxy<int>*		TypeEventKeyInputProxy;
 
 template<class T> class EventAbstract;
 template<class T> class EventKeyInputProxy;
@@ -463,11 +459,11 @@ struct SPropertyClass
 	std::string			ClassName;
 	TVecPropertyBase	InheritProperties;
 	int					nOverrideByteShift; // overrides byte shift for interface 
-	void				*pDataObject; // pointer to actor
+	void				*pDataObject;       // pointer to actor
 
-	SPropertyClass(const char *Name, void *pData, int shift = -1)
+	SPropertyClass(const char *Name, void *object, int shift = -1)
 		: ClassName(Name)
-		, pDataObject(pData)
+		, pDataObject(object)
 		, nOverrideByteShift(shift)
 	{
 	}
