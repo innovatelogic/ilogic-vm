@@ -164,10 +164,11 @@ class CPaneListView : public CPaneContainer
 	END_MSG_MAP()
 
 public:
-	CPaneListView(IAssetBrowserFrame *pOwner)
+	CPaneListView(IAssetBrowserFrame *pOwner, editors::TIEditor &editor)
 		: m_pOwner(pOwner)
 	{
 		m_pList = new CWTLList<T_NODE>();
+        m_editor = editor;
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -175,9 +176,6 @@ public:
 	{
 		delete m_pList;
 	}
-
-    //----------------------------------------------------------------------------------------------
-    void SetEditor(editors::TIEditor editor) { m_editor = editor; }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&bHendled)

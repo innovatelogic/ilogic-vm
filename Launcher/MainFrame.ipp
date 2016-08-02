@@ -27,6 +27,8 @@ CMainFrame<T_CLASS>::CMainFrame(CCoreSDK *api,
 {
     m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
 
+    m_ViewCtrl = new CViewContainer(m_editor);
+
     m_pPlacementCtrl = new CWTLPlacementWidget<T_CLASS>();
 
     m_pAssetBrowserFrame = new CAssetBrowserFrame<T_CLASS>(
@@ -52,13 +54,14 @@ CMainFrame<T_CLASS>::CMainFrame(CCoreSDK *api,
         nullptr,
         m_hImageList);
 
-    m_pRightTopPane = new CPanePropertyContainer<T_CLASS>();
+    m_pRightTopPane = new CPanePropertyContainer<T_CLASS>(m_editor);
 }
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 CMainFrame<T_CLASS>::~CMainFrame()
 {
+    delete m_ViewCtrl;
     delete m_pPlacementCtrl;
     delete m_pRightBottomPane;
     delete m_pAssetBrowserFrame;
@@ -83,16 +86,8 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 
     CreateSimpleStatusBar();
 
-    m_ViewCtrl.m_pApp = m_pAppMain;
-    m_pRightTopPane->SetAppMain(m_pAppMain);
-
     // create central pane
     m_hWndClient = CreateClient();
-   
-    m_pRightBottomPane->SetEditor(m_editor);
-    m_pRightTopPane->SetEditor(m_editor);
-
-    m_ViewCtrl.SetEditor(m_editor);
 
     InitViewport();
 
@@ -120,13 +115,13 @@ HWND CMainFrame<T_CLASS>::CreateClient()
 {
     CreatePaneGrid();
 
-    if (m_ViewCtrl.Create(m_CentralPane.m_hWnd) == NULL)
+    if (m_ViewCtrl->Create(m_CentralPane.m_hWnd) == NULL)
     {
         ATLTRACE(_T("View window creation failed!\n"));
         return 0;
     }
 
-    m_hViewWnd = m_ViewCtrl.m_hWnd;
+    m_hViewWnd = m_ViewCtrl->m_hWnd;
 
     // assign the edit to the bottom container
     m_CentralPane.SetClient(m_hViewWnd);
@@ -525,7 +520,7 @@ void CMainFrame<T_CLASS>::InitViewport()
         rectWindows.right - rectWindows.left,
         rectWindows.bottom - rectWindows.top);
 
-    m_ViewCtrl.m_pRenderContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
+    m_ViewCtrl->m_pRenderContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
 
     UpdateFlagsState();
 

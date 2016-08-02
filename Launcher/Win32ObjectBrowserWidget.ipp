@@ -2,7 +2,8 @@
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
+Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(editors::TIEditor &editor,
+                             HWND hWndParent,
 							 pContextMenuFunction pfMenu,
 							 pContextMenuProcessor pfnMenuProcessor,
 							 pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -28,7 +29,10 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 	, m_pRenderContext(pRenderContext)
     , m_bLockUpdate(false)
     , m_bLockModel(true)
-	{
+{
+        m_editor = editor;
+        m_pRegistry = editor->GetApp()->GetRegistry();
+
 		RECT rect;
 		GetClientRect(hWndParent, &rect);
 
@@ -41,6 +45,16 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(HWND hWndParent,
 
 		m_hCursHand = LoadCursor(NULL, IDC_HAND);
 		m_hCursArrow = LoadCursor(NULL, IDC_ARROW);
+
+        oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
+
+        if (mgr)
+        {
+            mgr->RegisterFunc([&](ESystemEventID id, const CObjectAbstract *param)
+            {
+                Update((T_CLASS*)param, id);
+            });
+        }
 	}
 
 //----------------------------------------------------------------------------------------------
@@ -48,24 +62,6 @@ template<class T_CLASS>
 Win32ObjectBrowserWidget<T_CLASS>::~Win32ObjectBrowserWidget()
 {
 
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T_CLASS>
-void Win32ObjectBrowserWidget<T_CLASS>::SetEditor(editors::TIEditor editor)
-{
-    m_editor = editor;
-    m_pRegistry = editor->GetApp()->GetRegistry();
-
-    oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
-
-    if (mgr) 
-    {
-        mgr->RegisterFunc([&](ESystemEventID id, const CObjectAbstract *param) 
-        { 
-            Update((T_CLASS*)param, id);
-        });
-    }
 }
 
 //----------------------------------------------------------------------------------------------

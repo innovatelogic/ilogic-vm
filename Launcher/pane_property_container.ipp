@@ -61,32 +61,13 @@ LRESULT CPanePropertyContainer<T>::CToolbarContainer<U>::OnLBClick(UINT, WPARAM 
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-CPanePropertyContainer<T>::CPanePropertyContainer()
-{
-    m_pPropGrid = new CWTLPropertyGrid<T>();
-    m_pMenuCtrl = new CToolbarContainer<T>(this);
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T>
-CPanePropertyContainer<T>::~CPanePropertyContainer()
-{
-    SAFE_DELETE(m_pPropGrid);
-    SAFE_DELETE(m_pMenuCtrl);
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T>
-void CPanePropertyContainer<T>::SetAppMain(CCoreSDK *app)
-{
-    m_pPropGrid->SetAppMain(app);
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T>
-void CPanePropertyContainer<T>::SetEditor(editors::TIEditor editor)
+CPanePropertyContainer<T>::CPanePropertyContainer(editors::TIEditor &editor)
 {
     m_editor = editor;
+    m_pPropGrid = new CWTLPropertyGrid<T>();
+    m_pMenuCtrl = new CToolbarContainer<T>(this);
+
+    m_pPropGrid->SetAppMain(m_editor->GetApp());
 
     oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
 
@@ -97,6 +78,14 @@ void CPanePropertyContainer<T>::SetEditor(editors::TIEditor editor)
             Update((T*)(param), id);
         });
     }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+CPanePropertyContainer<T>::~CPanePropertyContainer()
+{
+    SAFE_DELETE(m_pPropGrid);
+    SAFE_DELETE(m_pMenuCtrl);
 }
 
 //----------------------------------------------------------------------------------------------

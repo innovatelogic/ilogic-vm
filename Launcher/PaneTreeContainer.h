@@ -42,8 +42,6 @@ public:
 
     ~CTreePaneContainer();
 
-    void SetEditor(std::shared_ptr<editors::IEditor> &editor);
-
     void SetRenderContext(SRenderContext *pRenderContext);
 
     LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&);

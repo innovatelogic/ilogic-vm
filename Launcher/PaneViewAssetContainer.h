@@ -24,14 +24,15 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CViewAssetContainer()
+	CViewAssetContainer(editors::TIEditor &editor)
 		: m_MousePosPrevX(0)
 		, m_MousePosPrevY(0)
 		, m_bPush(false)
         , m_pAppMain(nullptr)
         , m_editor(nullptr)
 	{
-		
+        m_editor = editor; 
+        m_pAppMain = editor->GetApp();
 	}
 
 	//----------------------------------------------------------------------------------------------
@@ -39,9 +40,6 @@ public:
 	{
 
 	}
-
-    //----------------------------------------------------------------------------------------------
-    void SetEditor(editors::TIEditor editor) { m_editor = editor; m_pAppMain = editor->GetApp(); }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnActivate(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)

@@ -93,11 +93,11 @@ public:
             m_pAppMain->GetExplorerInstance(),
             editors::EEditorType::EEditorDefault);
 
-		m_pViewCtrl = new CViewAssetContainer();
+		m_pViewCtrl = new CViewAssetContainer(m_editor);
 
 		m_pPaneTreeView = new TPaneTreeView(this);
 
-		m_pPaneListView = new TPaneListView(this);
+		m_pPaneListView = new TPaneListView(this, m_editor);
 
 		m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(m_editor,
 			pfMenu, 
@@ -110,7 +110,7 @@ public:
 			pfnOnEventUpdate,
 			hImageList);
 
-		m_pPropertyGridPane = new CPanePropertyContainer<T_CLASS>();
+		m_pPropertyGridPane = new CPanePropertyContainer<T_CLASS>(m_editor);
 
 		std::wstring new_path = BuildFolderPath(L"data\\$cashe");
 
@@ -138,8 +138,6 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-        m_pPropertyGridPane->SetAppMain(m_editor->GetApp());
-
 		CreateSimpleToolBar();
 
 		// set flat toolbar style
@@ -154,12 +152,8 @@ public:
 		CreateSimpleStatusBar();
 
 		m_hWndClient = CreateClient();
-        m_pViewCtrl->SetEditor(m_editor);
-        m_pRightBottomPane->SetEditor(m_editor);
-		m_pPaneTreeView->FillTree(m_TreeMapNodes);
 
-        m_pViewCtrl->SetEditor(m_editor);
-        m_pPaneListView->SetEditor(m_editor);
+		m_pPaneTreeView->FillTree(m_TreeMapNodes);
 
 		m_pRightBottomPane->SetRenderContext(m_editor->GetRenderContext());
 		m_pPropertyGridPane->SetRenderContext(m_editor->GetRenderContext());

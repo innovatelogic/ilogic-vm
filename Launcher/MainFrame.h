@@ -31,7 +31,7 @@ public:
 	CTreePaneContainer<T_CLASS>		*m_pRightBottomPane;
 	CPaneContainer					m_BottomPane;
 
-	CViewContainer					m_ViewCtrl;
+	CViewContainer					*m_ViewCtrl;
 	CWTLPlacementWidget<T_CLASS>	*m_pPlacementCtrl;
 
 	HWND m_hViewWnd;

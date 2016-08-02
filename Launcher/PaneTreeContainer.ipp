@@ -43,12 +43,6 @@ CTreePaneContainer<T_CLASS>::~CTreePaneContainer()
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-void CTreePaneContainer<T_CLASS>::SetEditor(std::shared_ptr<editors::IEditor> &editor)
-{
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T_CLASS>
 void CTreePaneContainer<T_CLASS>::SetRenderContext(SRenderContext *pRenderContext)
 {
     m_pRenderContext = pRenderContext;
@@ -200,6 +194,7 @@ bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect
         m_pTabCtrl.AddItem(&tc);
 
         Win32ObjectBrowserWidget<T_CLASS> *presenter = new Win32ObjectBrowserWidget<T_CLASS>(
+            m_editor,
             m_hWnd,
             m_pfnContextMenu,
             m_pfnContextMenuProcessor,
@@ -211,7 +206,6 @@ bool CTreePaneContainer<T_CLASS>::AddAspectTab(const char *name, T_CLASS *aspect
             m_hImageList,
             m_pRenderContext);
 
-        presenter->SetEditor(m_editor);
         presenter->SetRoot(aspect);
 
         m_aspectsView.insert(std::make_pair(aspect, presenter));

@@ -42,12 +42,8 @@ public:
 		REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
 
-	CPanePropertyContainer();
+	CPanePropertyContainer(editors::TIEditor &editor);
 	~CPanePropertyContainer();
-
-    void SetAppMain(CCoreSDK *app);
-
-    void SetEditor(editors::TIEditor editor);
 
     void SetRenderContext(SRenderContext *pContext);
 

@@ -1,8 +1,9 @@
-#ifndef __paneviewcontainer_h__
-#define __paneviewcontainer_h__
-
 #pragma once
 
+#include "scene_editor_main.h"
+
+//----------------------------------------------------------------------------------------------
+//
 //----------------------------------------------------------------------------------------------
 class CViewContainer : public CWindowImpl<CPaneContainer>
 {
@@ -43,21 +44,16 @@ private:
 
 public:
 	//----------------------------------------------------------------------------------------------
-	CViewContainer()
+	CViewContainer(editors::TIEditor &editor)
 		: m_MousePosPrevX(0)
 		, m_MousePosPrevY(0)
 		, m_pApp(0)
 		, m_bPush(false)
 		, m_pRenderContext(0)
 	{
-
-	}
-
-    //----------------------------------------------------------------------------------------------
-    void SetEditor(std::shared_ptr<editors::IEditor> &editor)
-    {
         m_editor = editor;
-    }
+        m_pApp = editor->GetApp();
+	}
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnActivate(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
@@ -388,5 +384,3 @@ private:
 		}
 	}
 };
-
-#endif//__paneviewcontainer_h__

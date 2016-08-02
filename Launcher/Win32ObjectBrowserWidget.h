@@ -36,7 +36,8 @@ public:
 
 	HWND GetHWndTree() const { return m_hwndTree; }
 
-    Win32ObjectBrowserWidget(HWND hWndParent,
+    Win32ObjectBrowserWidget(editors::TIEditor &editor, 
+        HWND hWndParent,
         pContextMenuFunction pfMenu,
         pContextMenuProcessor pfnMenuProcessor,
         pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -48,8 +49,6 @@ public:
         SRenderContext *pRenderContext = 0);
 
     ~Win32ObjectBrowserWidget();
-
-    void SetEditor(editors::TIEditor editor);
 
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
