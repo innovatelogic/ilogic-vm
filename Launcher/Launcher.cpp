@@ -18,6 +18,7 @@
 
 #include "LauncherStdAfx.h"
 #include "scene_editor_main.h"
+#include "src/splash_window.h"
 
 //#define _CRTDBG_MAP_ALLOC
 
@@ -174,6 +175,9 @@ int GCALLBACK_DirectClearActor(const CActor *pSender)
 //----------------------------------------------------------------------------------------------
 int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 {
+    oes::nmLauncher::SplashWindow splash;
+    splash.CreateSplashWindow();
+
 	CGameLoop theLoop(UpdateFrame);
 
 	_Module.AddMessageLoop(&theLoop);
@@ -197,7 +201,7 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 							cmd,
 							hTypeImageList);
 
-	wndMain->CreateSplashWindow();
+	//wndMain->CreateSplashWindow();
 
 	GRootProcess = wndMain->m_pAppMain;
 
@@ -210,9 +214,8 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 	}
 
 	// logging
-	wndMain->OutWindowMessageLog("Initialization completed");
-
-	wndMain->CloseSplash();
+    splash.OutWindowMessageLog("Initialization completed");
+    splash.CloseSplash();
 
     //editors::TIEditor editor = GRootProcess->CreateEdtior("TestEditor");
 

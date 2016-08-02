@@ -13,6 +13,7 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid()
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
+    m_propReactor = std::make_shared<oes::nmLauncher::PropertyReactor<T>>();
     m_pEdit = new TEdit(this);
     m_pComboBox = new TComboBox(this);
     m_pResourceEdit = new TResourceEdit(this);

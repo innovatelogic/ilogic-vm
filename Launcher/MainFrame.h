@@ -41,21 +41,6 @@ public:
     std::shared_ptr<editors::IEditor> m_editor;
 	CCoreSDK *m_pAppMain;
 
-	WNDCLASSEX  m_wcAppSplash;
-	WCHAR       m_szAppSplashName[255];
-	HWND		m_hWndSplash;
-
-	HBITMAP		m_hSplashBitmap;
-	HBITMAP		m_hSplashLogo;
-
-	unsigned int m_SplWidth;
-	unsigned int m_SplHeight;
-
-	unsigned int m_LogoWidth;
-	unsigned int m_LogoHeight;
-
-	std::string	 m_SplashScreenMessage;
-
 	pContextMenuFunction	m_pfnContextMenu;
 	pContextMenuProcessor	m_pfnContextMenuProcessor;
 	pGetResourceIconIndex	m_pfnGetResourceIconIndex;
@@ -159,29 +144,9 @@ public:
 
     void Update(const T_CLASS *pSender, ESystemEventID EventId);
 
-    int InitclassexSplash();
+    void InitViewport();
 
-    int CreateSplashWindow();
-
-     void ShowSplash();
-
-     void CloseSplash();
-
-	HBITMAP		 GetSplashBitmap() const { return m_hSplashBitmap; }
-	unsigned int GetSplashWidth()  const { return m_SplWidth; }
-	unsigned int GetSplashHeight() const { return m_SplHeight; }
-
-	HBITMAP		 GetSplashLogo() const { return m_hSplashLogo; }
-	unsigned int GetLogoWidth()  const { return m_LogoWidth; }
-	unsigned int GetLogoHeight() const { return m_LogoHeight; }
-
-   void OutWindowMessageLog(char* str);
-
-   static LRESULT CALLBACK SplashWndProcMain(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam);
-
-   void InitViewport();
-
-   void Update(float deltaTime);
+    void Update(float deltaTime);
 
     void Render();
 

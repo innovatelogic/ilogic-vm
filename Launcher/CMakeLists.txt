@@ -111,6 +111,8 @@ set(SOURCE
 	MSelectTree.h
 	src/property_reactor.h
 	src/property_reactor.ipp
+	src/splash_window.h
+	src/splash_window.cpp
 	)
 
 IF(WIN32)
