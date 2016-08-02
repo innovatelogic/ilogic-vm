@@ -64,10 +64,8 @@ template<class T>
 CPanePropertyContainer<T>::CPanePropertyContainer(editors::TIEditor &editor)
 {
     m_editor = editor;
-    m_pPropGrid = new CWTLPropertyGrid<T>();
+    m_pPropGrid = new CWTLPropertyGrid<T>(editor);
     m_pMenuCtrl = new CToolbarContainer<T>(this);
-
-    m_pPropGrid->SetAppMain(m_editor->GetApp());
 
     oes::foundation::IEventManager *mgr = editor->GetApp()->GetEventManager();
 

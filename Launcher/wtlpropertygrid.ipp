@@ -2,7 +2,7 @@
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-CWTLPropertyGrid<T>::CWTLPropertyGrid()
+CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     : m_bInit(FALSE)
     , m_GridViewStyle(EGV_Categorized)
     , m_EditingPropertyIndex(INDEX_NONE)
@@ -13,6 +13,9 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid()
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
+    m_editor = editor;
+    m_pAppMain = editor->GetApp();
+
     m_propReactor = std::make_shared<oes::nmLauncher::PropertyReactor<T>>();
     m_pEdit = new TEdit(this);
     m_pComboBox = new TComboBox(this);

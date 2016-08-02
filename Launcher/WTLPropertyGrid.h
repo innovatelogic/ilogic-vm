@@ -107,10 +107,8 @@ public:
 		DEFAULT_REFLECTION_HANDLER()
 	END_MSG_MAP()
 
-	CWTLPropertyGrid();
+	CWTLPropertyGrid(editors::TIEditor &editor);
     ~CWTLPropertyGrid();
-
-    void SetAppMain(CCoreSDK *app) { m_pAppMain = app; }
 
 	//----------------------------------------------------------------------------------------------
 	BOOL PreTranslateMessage(MSG* pMsg) { pMsg; return FALSE; }
@@ -120,10 +118,7 @@ public:
 
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
-	//----------------------------------------------------------------------------------------------
-	//
-	//----------------------------------------------------------------------------------------------
-	// Used with Views: Overridden create function sets required listview styles
+    // Used with Views: Overridden create function sets required listview styles
     HWND Create(HWND hWndParent, 
         ATL::_U_RECT rect = NULL,
         LPCTSTR szWindowName = NULL,
@@ -231,6 +226,8 @@ private:
     std::shared_ptr<oes::nmLauncher::IPropertyReactor> m_propReactor;
 
     wchar_t wbuf[256];
+
+    editors::TIEditor m_editor;
 };
 
 #include "wtlpropertygrid.ipp"
