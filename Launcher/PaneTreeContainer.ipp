@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
 CTreePaneContainer<T_CLASS>::CTreePaneContainer(
+    editors::TIEditor &editor,
     pContextMenuFunction pfMenu,
     pContextMenuProcessor pfnMenuProcessor,
     pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -27,7 +28,7 @@ CTreePaneContainer<T_CLASS>::CTreePaneContainer(
     , m_PointSize(90)
     , m_TypeFace(_T("MS Shell Dlg 2"))
 {
-
+    m_editor = editor;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -44,12 +45,6 @@ CTreePaneContainer<T_CLASS>::~CTreePaneContainer()
 template<class T_CLASS>
 void CTreePaneContainer<T_CLASS>::SetEditor(std::shared_ptr<editors::IEditor> &editor)
 {
-    m_editor = editor;
-
-    AddAspectTab("Main", m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D());
-    AddAspectTab("Flat", m_editor->GetApp()->GetExplorerInstance()->GetExplorer2D());
-
-    ToggleAspectView(0);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -78,6 +73,10 @@ LRESULT CTreePaneContainer<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 
     // assign the edit to the bottom container
 //    SetClient(m_pTreeBrowser->GetHWndTree());
+
+    AddAspectTab("Main", m_editor->GetApp()->GetExplorerInstance()->GetExplorer3D());
+    AddAspectTab("Flat", m_editor->GetApp()->GetExplorerInstance()->GetExplorer2D());
+    ToggleAspectView(0);
 
     return 0;
 }

@@ -87,7 +87,7 @@ void D3DDriver::ReleaseDriver(void)
 		++IterMesh;
 	}
 
-	PopContext();
+    assert(m_stackContext.empty()); // ensure no remain active contexts
 
 	delete this;
 }

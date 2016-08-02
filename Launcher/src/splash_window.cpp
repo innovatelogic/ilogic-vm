@@ -127,10 +127,6 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         LRESULT SplashWindow::SplashWndProcMain(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
         {
-            SplashWindow * wnd = reinterpret_cast<SplashWindow*>(::GetWindowLong(hWnd, GWL_USERDATA));
-
-            assert(wnd);
-
             switch (messg)
             {
             case WM_PAINT:
@@ -160,6 +156,8 @@ namespace oes
                     ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
                     DEFAULT_QUALITY, DEFAULT_PITCH,
                     L"Verdana");
+
+                SplashWindow * wnd = reinterpret_cast<SplashWindow*>(::GetWindowLong(hWnd, GWL_USERDATA));
 
                 if (hdc)
                 {

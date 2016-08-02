@@ -107,10 +107,6 @@ namespace editors
         CModelViewer *actor = nullptr;
         {
             NEW_OBJECT_TRANSIENT_CHILD(actor, CModelViewer, name, root);
-
-            actor->Initialize();
-
-            //actor->BroadcastEvent(actor, ESystemEventID::Event_ObjectGenerated);
         }
         return std::move(TIEditor(new editors::EditorScene3D(pInstance, actor, new CommandBuffer)));
     }

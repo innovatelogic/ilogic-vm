@@ -87,7 +87,8 @@ public:
         REFLECT_NOTIFICATIONS()
 	END_MSG_MAP()
 
-	CMainFrame(Registry *pRegistry,
+	CMainFrame(CCoreSDK *api, 
+            Registry *pRegistry,
             pContextMenuFunction pfMenu,
             pContextMenuProcessor pfnMenuProcessor,
             pGetResourceIconIndex pfnGetResourceIconIndex,

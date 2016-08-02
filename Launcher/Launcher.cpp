@@ -33,7 +33,7 @@ namespace nmLauncher
 	typedef std::map<std::string, int> TIconRefs;
 	
 	/** root process */
-	CCoreSDK		*GRootProcess = NULL;
+	CCoreSDK		*gRootProcess = NULL;
 
 	CMainFrame<CActor>	*wndMain = NULL;
 
@@ -178,6 +178,8 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
     oes::nmLauncher::SplashWindow splash;
     splash.CreateSplashWindow();
 
+    gRootProcess = new CCoreSDK(cmd, nullptr);
+
 	CGameLoop theLoop(UpdateFrame);
 
 	_Module.AddMessageLoop(&theLoop);
@@ -190,7 +192,8 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 
 	InitializeImageData(pRegistryInstance.get());
 
-	wndMain = new CMainFrame<CActor>(pRegistryInstance.get(),
+	wndMain = new CMainFrame<CActor>(gRootProcess,
+                            pRegistryInstance.get(),
 							HandlePopupContextMenu,
 							ContextMenuProcessor,
 							GetImageResource,
@@ -200,10 +203,6 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 							GCALLBACK_DirectClearActor,
 							cmd,
 							hTypeImageList);
-
-	//wndMain->CreateSplashWindow();
-
-	GRootProcess = wndMain->m_pAppMain;
 
 	// size of window to create
 	CRect rc = CRect(0, 0, 1024, 768);
@@ -224,6 +223,8 @@ int Run(ValueParser &cmd, LPTSTR = NULL, int nCmdShow = SW_SHOWDEFAULT)
 	int nRet = theLoop.Run();
 
 	_Module.RemoveMessageLoop();
+
+    delete gRootProcess;
 
 	return nRet;
 }
@@ -378,7 +379,7 @@ void Thread_TimerFunction()
 //----------------------------------------------------------------------------------------------
 void Thread_ResourceStreaming()
 {
-	GRootProcess->GetRenderSDK()->ProcessStreaming();
+	gRootProcess->GetRenderSDK()->ProcessStreaming();
 }
 
 //----------------------------------------------------------------------------------------------
@@ -606,10 +607,10 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			bResult = DeleteObject();
 			break;
 		case ID_BROWSER_CONTEXT_MOVEUP:
-			bResult = ActorAllocator::MoveObjectHierarchy(SelectedActor, GRootProcess->GetRegistry(), true, true);
+			bResult = ActorAllocator::MoveObjectHierarchy(SelectedActor, gRootProcess->GetRegistry(), true, true);
 			break;
 		case ID_BROWSER_CONTEXT_MOVEDOWN:
-			bResult = ActorAllocator::MoveObjectHierarchy(SelectedActor, GRootProcess->GetRegistry(), false, true);
+			bResult = ActorAllocator::MoveObjectHierarchy(SelectedActor, gRootProcess->GetRegistry(), false, true);
 			break;
 		case ID_BROWSER_CONTEXT_MOVETOP:
 			bResult = CActor::MoveObjectHierarchyBound(SelectedActor, true);
@@ -619,7 +620,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_BROWSER_CONTEXT_HIDE_UNHIDE:
 			{
-				IDrawInterface *pIFocused = GRootProcess->GetViewportManager()->GetByActor(SelectedActor);
+				IDrawInterface *pIFocused = gRootProcess->GetViewportManager()->GetByActor(SelectedActor);
 				if (pIFocused){
 					pIFocused->SetVisible(!pIFocused->GetVisible());
 				}
@@ -644,7 +645,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				CHAR chFileName[MAX_PATH] = "";
 				if (GetSaveFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
 				{
-					GRootProcess->SerializeActor(chFileName, SelectedActor, true);
+					gRootProcess->SerializeActor(chFileName, SelectedActor, true);
 				}
 			}break;
 
@@ -664,7 +665,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				CHAR chFileName[MAX_PATH] = "";
 				if (GetOpenFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
 				{
- 					GRootProcess->DeserializeActor(chFileName, SelectedActor, true);
+ 					gRootProcess->DeserializeActor(chFileName, SelectedActor, true);
 				}
 			}break;
 		}
@@ -713,7 +714,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				{
 					pInterface->SetVisible(true);
 
-					if (IDrawInterface *pIActorSelected = GRootProcess->GetViewportManager()->GetByActor(SelectedActor))
+					if (IDrawInterface *pIActorSelected = gRootProcess->GetViewportManager()->GetByActor(SelectedActor))
 					{
 						Matrix NewLTM;
 						if (IDrawInterface::GetObjectAInLocalSpaceB(NewLTM, pInterface, pIActorSelected))
@@ -729,7 +730,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 			pNewObject->Initialize();
 
-			GRootProcess->GetViewportManager()->RebuildTransform(pNewObject);
+			gRootProcess->GetViewportManager()->RebuildTransform(pNewObject);
 
 			/*ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(SelectedActor);
 
@@ -969,6 +970,6 @@ void UpdateCallsPerSecond(int milliseconds)
 //----------------------------------------------------------------------------------------------
 void ProcessUpdate(float DeltaTime)
 {
-	GRootProcess->LoopWindow(DeltaTime);
+	gRootProcess->LoopWindow(DeltaTime);
 }
 

@@ -74,7 +74,8 @@ public:
 	END_MSG_MAP()
 
 	//----------------------------------------------------------------------------------------------
-	CAssetBrowserFrame(pContextMenuFunction pfMenu,
+	CAssetBrowserFrame(CCoreSDK *api,
+        pContextMenuFunction pfMenu,
 		pContextMenuProcessor pfnMenuProcessor,
 		pGetResourceIconIndex pfnGetResourceIconIndex,
 		CALLBACK_FN pfnInvokeObject,
@@ -84,15 +85,21 @@ public:
 		CALLBACK_EV pfnOnEventUpdate,
 		HIMAGELIST hImageList)
 		: CFrameWindowImpl<CAssetBrowserFrame<T_CLASS> >()
+        , m_pAppMain(api)
 		, m_hImageList(hImageList)
 	{
+        m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer",
+            m_pAppMain,
+            m_pAppMain->GetExplorerInstance(),
+            editors::EEditorType::EEditorDefault);
+
 		m_pViewCtrl = new CViewAssetContainer();
 
 		m_pPaneTreeView = new TPaneTreeView(this);
 
 		m_pPaneListView = new TPaneListView(this);
 
-		m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(
+		m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(m_editor,
 			pfMenu, 
 			pfnMenuProcessor,
 			pfnGetResourceIconIndex,
@@ -127,16 +134,10 @@ public:
 	}
 
 	virtual CCoreSDK* GetAppMain() const { return m_pAppMain; }
-    virtual void SetAppMain(CCoreSDK* app) { m_pAppMain = app; }
 
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 	{
-        m_editor = editors::EditorScene3D::CreateEdtior("scene_viewer",
-            m_pAppMain,
-            m_pAppMain->GetExplorerInstance(),
-            editors::EEditorType::EEditorDefault);
-
         m_pPropertyGridPane->SetAppMain(m_editor->GetApp());
 
 		CreateSimpleToolBar();

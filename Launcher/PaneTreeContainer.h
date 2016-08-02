@@ -28,6 +28,7 @@ public:
 	END_MSG_MAP()
 
 	CTreePaneContainer(
+        editors::TIEditor &editor,
         pContextMenuFunction pfMenu,
         pContextMenuProcessor pfnMenuProcessor,
         pGetResourceIconIndex pfnGetResourceIconIndex,

@@ -2,7 +2,8 @@
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
+CMainFrame<T_CLASS>::CMainFrame(CCoreSDK *api, 
+    Registry *pRegistry,
     pContextMenuFunction pfMenu,
     pContextMenuProcessor pfnMenuProcessor,
     pGetResourceIconIndex pfnGetResourceIconIndex,
@@ -13,6 +14,7 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
     ValueParser &cmd,
     HIMAGELIST hImageList)
     : CFrameWindowImpl<CMainFrame<T_CLASS> >()
+    , m_pAppMain(api)
     , m_pRegistry(pRegistry)
     , m_pfnContextMenu(pfMenu)
     , m_pfnContextMenuProcessor(pfnMenuProcessor)
@@ -23,9 +25,12 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
     , m_pfnDirectClearObject(pfnDirectClearObject)
     , m_hImageList(hImageList)
 {
+    m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
+
     m_pPlacementCtrl = new CWTLPlacementWidget<T_CLASS>();
 
     m_pAssetBrowserFrame = new CAssetBrowserFrame<T_CLASS>(
+        m_pAppMain,
         m_pfnContextMenu,
         m_pfnContextMenuProcessor,
         m_pfnGetResourceIconIndex,
@@ -36,7 +41,7 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
         nullptr,
         m_hImageList);
 
-    m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(
+    m_pRightBottomPane = new CTreePaneContainer<T_CLASS>(m_editor,
         m_pfnContextMenu,
         m_pfnContextMenuProcessor,
         m_pfnGetResourceIconIndex,
@@ -48,9 +53,6 @@ CMainFrame<T_CLASS>::CMainFrame(Registry *pRegistry,
         m_hImageList);
 
     m_pRightTopPane = new CPanePropertyContainer<T_CLASS>();
-
-    // start core root process
-    m_pAppMain = new CCoreSDK(cmd, nullptr);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -62,7 +64,6 @@ CMainFrame<T_CLASS>::~CMainFrame()
     delete m_pAssetBrowserFrame;
     delete m_pRightTopPane;
     delete m_pToolbarControl;
-    delete m_pAppMain;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -84,13 +85,10 @@ LRESULT CMainFrame<T_CLASS>::OnCreate(UINT, WPARAM, LPARAM, BOOL&)
 
     m_ViewCtrl.m_pApp = m_pAppMain;
     m_pRightTopPane->SetAppMain(m_pAppMain);
-    m_pAssetBrowserFrame->SetAppMain(m_pAppMain);
 
     // create central pane
     m_hWndClient = CreateClient();
-
-    m_editor.reset(new editors::SceneEditorMain(m_pAppMain, new editors::CommandBuffer));
-    
+   
     m_pRightBottomPane->SetEditor(m_editor);
     m_pRightTopPane->SetEditor(m_editor);
 
