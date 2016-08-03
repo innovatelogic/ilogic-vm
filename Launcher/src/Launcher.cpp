@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //-------------------------------------------------------------------------------------
 
-#include "LauncherStdAfx.h"
+#include "../LauncherStdAfx.h"
 #include "scene_editor_main.h"
-#include "src/splash_window.h"
+#include "splash_window.h"
 
 //#define _CRTDBG_MAP_ALLOC
 

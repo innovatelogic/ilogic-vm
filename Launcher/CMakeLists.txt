@@ -62,14 +62,14 @@ set(LIBRARIES	CommonBase
 				${FREETYPE_LIBRARIES})
 
 set(SOURCE 
-	AssetBrowser.h
-	DragDropSource.h
-	GameLoop.h
-	IAssetBrowserFrame.h
+	src/AssetBrowser.h
+	src/DragDropSource.h
+	src/GameLoop.h
+	src/IAssetBrowserFrame.h
 	icon1.ico
-	ImageBitmap.cpp
-	ImageBitmap.h
-	Launcher.cpp
+	src/ImageBitmap.cpp
+	src/ImageBitmap.h
+	src/Launcher.cpp
 	LauncherStdAfx.h
 	Licence.txt
 	ListVeiwEdit.h

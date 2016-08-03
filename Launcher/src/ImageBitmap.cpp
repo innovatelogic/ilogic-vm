@@ -1,4 +1,4 @@
-#include "LauncherStdAfx.h"
+#include "../LauncherStdAfx.h"
 
 //----------------------------------------------------------------------------------------------
 CImageBitmap::CImageBitmap()
