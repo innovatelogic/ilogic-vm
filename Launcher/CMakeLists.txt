@@ -108,10 +108,10 @@ set(SOURCE
 	WTLPlacementWidget.h
 	WTLPropertyGrid.h
 	wtlpropertygrid.ipp
-	MSelectTree.h
-	iproperty_reactor.h
-	property_reactor.h
-	property_reactor.ipp
+	src/MSelectTree.h
+	src/iproperty_reactor.h
+	src/property_reactor.h
+	src/property_reactor.ipp
 	src/splash_window.h
 	src/splash_window.cpp
 	)
