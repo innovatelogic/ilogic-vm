@@ -104,10 +104,10 @@ set(SOURCE
 	Win32ObjectToolbox.h
 	Win32ThreadMonitor.cpp
 	Win32ThreadMonitor.h
-	WTLItemsTree.h
-	WTLPlacementWidget.h
-	WTLPropertyGrid.h
-	wtlpropertygrid.ipp
+	src/WTLItemsTree.h
+	src/WTLPlacementWidget.h
+	src/WTLPropertyGrid.h
+	src/wtlpropertygrid.ipp
 	src/MSelectTree.h
 	src/iproperty_reactor.h
 	src/property_reactor.h
