@@ -564,6 +564,13 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPr
 
 //----------------------------------------------------------------------------------------------
 template<class T>
+void CWTLPropertyGrid<T>::FillModel()
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
 void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 {
     if (!actors.empty())

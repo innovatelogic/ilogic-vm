@@ -149,6 +149,8 @@ public:
 
     void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/);
 
+    void FillModel();
+
     void FillPropertyGrid(std::vector<const T*> &actors);
     void FillPropertyTabs();
     void FillPropertyData(T *pActor);

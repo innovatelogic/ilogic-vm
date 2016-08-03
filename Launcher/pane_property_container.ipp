@@ -269,5 +269,6 @@ void CPanePropertyContainer<T>::SetGridViewStyle(EGridView Value)
 template<class T>
 void CPanePropertyContainer<T>::OnObjectSelected()
 {
+    m_pPropGrid->FillModel();
     m_pPropGrid->FillPropertyGrid(m_editor->GetSelected());
 }

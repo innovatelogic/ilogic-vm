@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ieditor.h"
+
 namespace oes
 {
     namespace nmLauncher
@@ -18,13 +20,25 @@ namespace oes
 
         class IPropertyReactor
         {
+        public:
+            virtual ~IPropertyReactor() = 0 {};
 
+            virtual void Build() = 0;
+            virtual void Clear() = 0;
         };
 
         template<class T>
         class PropertyReactor : public IPropertyReactor
         {
+        public:
+            PropertyReactor();
+            virtual ~PropertyReactor();
+            
+            void Build() override;
+            void Clear() override;
 
+        private:
+            //editors::TIEditor m_editor;
         };
     }
 }
