@@ -225,7 +225,7 @@ private:
 	CCoreSDK		*m_pAppMain;
 	SRenderContext	*m_pRenderContext;
 
-    std::shared_ptr<oes::nmLauncher::IPropertyReactor> m_propReactor;
+    std::shared_ptr<IPropertyReactor> m_propReactor;
 
     wchar_t wbuf[256];
 

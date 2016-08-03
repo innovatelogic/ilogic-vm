@@ -1,14 +1,14 @@
 #include "property_reactor.h"
 
-namespace oes
-{
-    namespace nmLauncher
-    {
+//namespace oes
+//{
+  //  namespace nmLauncher
+    //{
         //----------------------------------------------------------------------------------------------
         template<class T>
-        PropertyReactor<T>::PropertyReactor()
+        PropertyReactor<T>::PropertyReactor(const editors::TIEditor &editor)
         {
-            //editors::TIEditor m_editor;
+            m_editor = editor;
         }
         //----------------------------------------------------------------------------------------------
         template<class T>
@@ -30,5 +30,5 @@ namespace oes
         {
 
         }
-    }
-}
+    //}
+//}
