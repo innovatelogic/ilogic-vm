@@ -5,18 +5,20 @@
 
 //namespace oes
 //{
-//    namespace nmLauncher
-//    {
-        /*struct SPropertyGroup
+    namespace nmLauncher
+    {
+        struct SClassNode
         {
-            std::string name;
-            TVecPropertyClass vecPropertyClasses; // property inheritance structure
-
-            SPropertyGroup(const std::string &_name)
+            std::string			name;
+            TVecPropertyBase	inheritProperties;
+            int					nOverrideByteShift; // overrides byte shift for interface 
+         
+            SClassNode(const std::string &_name, int shift = -1)
                 : name(_name)
+                , nOverrideByteShift(shift)
             {
             }
-        };*/
+        };
 
         template<class T>
         class PropertyReactor : public IPropertyReactor
@@ -29,9 +31,14 @@
             void Clear() override;
 
         private:
+            void BuildObject(const T *object);
+
+        private:
             editors::TIEditor m_editor;
+        
+            std::vector<SClassNode> m_propertyClasses;
         };
- //   }
+    }
 //}
 
 #include "property_reactor.ipp"

@@ -900,6 +900,8 @@ void Win32ObjectBrowserWidget<T_CLASS>::FillModel()
 {
     ClearModel();
 
+    
+
     if (!m_bLockModel && m_pRoot)
     {
         std::stack<const T_CLASS*> astack;

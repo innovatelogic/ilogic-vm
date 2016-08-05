@@ -2,8 +2,8 @@
 
 //namespace oes
 //{
-  //  namespace nmLauncher
-    //{
+    namespace nmLauncher
+    {
         class IPropertyReactor
         {
         public:
@@ -13,5 +13,5 @@
             virtual void Clear() = 0;
         };
 
-    //}
+    }
 //}
