@@ -44,20 +44,73 @@
         {
             AppClassTree &classTree = NObjectFactory::GetClassTree();
 
-            if (ClassNode *pClassNode = classTree.Find(object->GetType()))
-            {
-                while (pClassNode)
-                {
-                    TVecPropertyConstIterator iterProp = pClassNode->PropertyMap.begin();
+            bool bInitialInit = m_propertyClasses.empty();
 
-                    while (iterProp != pClassNode->PropertyMap.end())
+            if (ClassNode *classNode = classTree.Find(object->GetType()))
+            {
+                while (classNode)
+                {
+                    TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
+
+                    while (iterProp != classNode->PropertyMap.end())
                     {
-                        m_propertyClasses.push_back(SClassNode((*iterProp)->GetClassName()));
+                        const std::string className = (*iterProp)->GetClassName();
+                        if (bInitialInit)
+                        {
+                            m_propertyClasses.push_back(SClassNode(className));
+                        }
+                        else // sieve
+                        {
+                            std::vector<SClassNode>::iterator itFind = std::find_if(
+                                m_propertyClasses.begin(),
+                                m_propertyClasses.end(),
+                                [&](SClassNode &s) { return className == s.name; });
+
+                            if (itFind == m_propertyClasses.end()) {
+                                m_propertyClasses.erase(itFind);
+                            }
+                        }
                         
                         ++iterProp;
                     }
 
-                    pClassNode = pClassNode->GetRootNode();
+                    // add interface properties
+                    ClassNode::TVecInterfaceIter iterIntf = classNode->m_VecInterfaces.begin();
+
+                    while (iterIntf != classNode->m_VecInterfaces.end())
+                    {
+                        ClassNode *nodeInterface = classTree.FindInterface((*iterIntf)->strType);
+
+                        assert(nodeInterface);
+
+                        TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
+
+                        while (iterPropIntf != nodeInterface->PropertyMap.end())
+                        {
+                            const std::string className = (*iterPropIntf)->GetClassName();
+                            const int shift = (*iterIntf)->byteShift;
+
+                            if (bInitialInit)
+                            {
+                                m_propertyClasses.push_back(SClassNode(className, shift));
+                            }
+                            else
+                            {
+                                std::vector<SClassNode>::iterator itFind = std::find_if(
+                                    m_propertyClasses.begin(),
+                                    m_propertyClasses.end(),
+                                    [&](SClassNode &s) { return className == s.name; });
+
+                                if (itFind == m_propertyClasses.end()){
+                                    m_propertyClasses.erase(itFind);
+                                }
+                            }
+                            ++iterPropIntf;
+                        }
+                        ++iterIntf;
+                    }
+
+                    classNode = classNode->GetRootNode();
                 }
             }
         }
