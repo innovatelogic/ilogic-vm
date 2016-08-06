@@ -47,6 +47,7 @@ public:
 						*iterFindInRoot = nullptr;
 
 						pBase->AddChild(pSiblin);
+                        pSiblin->SetRootNode(pBase);
 					}
 					else
 					{

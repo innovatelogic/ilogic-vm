@@ -45,33 +45,32 @@
             AppClassTree &classTree = NObjectFactory::GetClassTree();
 
             bool bInitialInit = m_propertyClasses.empty();
+            std::vector<std::string> matchClasses;
 
             if (ClassNode *classNode = classTree.Find(object->GetType()))
             {
                 while (classNode)
                 {
-                    TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
+                    const std::string className = classNode->GetName();
 
-                    while (iterProp != classNode->PropertyMap.end())
+                    if (bInitialInit)
                     {
-                        const std::string className = (*iterProp)->GetClassName();
-                        if (bInitialInit)
-                        {
-                            m_propertyClasses.push_back(SClassNode(className));
-                        }
-                        else // sieve
-                        {
-                            std::vector<SClassNode>::iterator itFind = std::find_if(
-                                m_propertyClasses.begin(),
-                                m_propertyClasses.end(),
-                                [&](SClassNode &s) { return className == s.name; });
+                        m_propertyClasses.insert(std::make_pair(className, SClassNode(className)));
 
-                            if (itFind == m_propertyClasses.end()) {
-                                m_propertyClasses.erase(itFind);
-                            }
+                        TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
+
+                        while (iterProp != classNode->PropertyMap.end())
+                        {
+                            ++iterProp;
                         }
-                        
-                        ++iterProp;
+                    }
+                    else // sieve
+                    {
+                        auto itFind = m_propertyClasses.find(className);
+                        if (itFind != m_propertyClasses.end())
+                        {
+                            matchClasses.push_back(className);
+                        }
                     }
 
                     // add interface properties
@@ -82,35 +81,52 @@
                         ClassNode *nodeInterface = classTree.FindInterface((*iterIntf)->strType);
 
                         assert(nodeInterface);
-
-                        TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
-
-                        while (iterPropIntf != nodeInterface->PropertyMap.end())
+                                                
+                        const std::string className = nodeInterface->GetName();
+                            
+                        if (bInitialInit)
                         {
-                            const std::string className = (*iterPropIntf)->GetClassName();
                             const int shift = (*iterIntf)->byteShift;
+                            m_propertyClasses.insert(std::make_pair(className, SClassNode(className, shift)));
 
-                            if (bInitialInit)
-                            {
-                                m_propertyClasses.push_back(SClassNode(className, shift));
-                            }
-                            else
-                            {
-                                std::vector<SClassNode>::iterator itFind = std::find_if(
-                                    m_propertyClasses.begin(),
-                                    m_propertyClasses.end(),
-                                    [&](SClassNode &s) { return className == s.name; });
+                            TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
 
-                                if (itFind == m_propertyClasses.end()){
-                                    m_propertyClasses.erase(itFind);
-                                }
+                            while (iterPropIntf != nodeInterface->PropertyMap.end())
+                            {
+                                ++iterPropIntf;
                             }
-                            ++iterPropIntf;
                         }
+                        else
+                        {
+                            auto itFind = m_propertyClasses.find(className);
+                            if (itFind != m_propertyClasses.end())
+                            {
+                                matchClasses.push_back(className);
+                            }
+                        }
+                            
+                        
                         ++iterIntf;
                     }
-
                     classNode = classNode->GetRootNode();
+                }
+            }
+
+            // sieve
+            if (!matchClasses.empty())
+            {
+                for (auto it = m_propertyClasses.begin(); it != m_propertyClasses.end();)
+                {
+                    const std::string &name = it->first;
+
+                    if (std::find(matchClasses.begin(), matchClasses.end(), name) != matchClasses.end())
+                    {
+                        m_propertyClasses.erase(it++);
+                    }
+                    else
+                    {
+                        ++it;
+                    }
                 }
             }
         }

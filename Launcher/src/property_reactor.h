@@ -36,7 +36,7 @@
         private:
             editors::TIEditor m_editor;
         
-            std::vector<SClassNode> m_propertyClasses;
+            std::map<std::string, SClassNode> m_propertyClasses;
         };
     }
 //}

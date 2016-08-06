@@ -81,6 +81,7 @@ if (${ENABLE_TESTING})
 	set(SOURCE_UT 
 	ut/ut_editor.cpp
 	ut/ut_selection_component.cpp
+	ut/ut_property_reactor.cpp
 	)
 
 	source_group("Moc Files" FILES ${SOURCE_MOC})
