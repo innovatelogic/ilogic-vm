@@ -42,7 +42,7 @@
         template<class T>
         void PropertyReactor<T>::BuildObject(const T *object)
         {
-            AppClassTree &classTree = NObjectFactory::GetClassTree();
+            AppClassTree &classTree = oes::common_base::GetClassTree();
 
             bool bInitialInit = m_propertyClasses.empty();
             std::vector<std::string> matchClasses;
@@ -104,8 +104,7 @@
                                 matchClasses.push_back(className);
                             }
                         }
-                            
-                        
+                                       
                         ++iterIntf;
                     }
                     classNode = classNode->GetRootNode();

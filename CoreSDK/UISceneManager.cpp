@@ -95,7 +95,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 
 	std::string sFilename;
 
-	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 	Explorer2D * SourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
 
@@ -107,8 +107,8 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 
 			Utility::CClassFactory<
 				IObjectAbstract,
-				NObjectFactory::TGenFunction,
-				NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+                oes::common_base::TGenFunction,
+                oes::common_base::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 			for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 			{

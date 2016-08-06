@@ -49,7 +49,7 @@ public:
 			}
 
 			// Register
-			volatile static NObjectFactory::CAuto<SFontState, void> Type_FontState("SFontState", pPropsBase, nSize);
+			volatile static oes::common_base::CAuto<SFontState, void> Type_FontState("SFontState", pPropsBase, nSize);
 		}
 	}
 }AutoRegisterPropsInst;
@@ -61,7 +61,7 @@ class AutoRegisterPropsUIComp_DrawFontState
 public:
 	AutoRegisterPropsUIComp_DrawFontState()
 	{
-		AppClassTree &classTree = NObjectFactory::GetClassTree();
+		AppClassTree &classTree = oes::common_base::GetClassTree();
 		ClassNode* pFontState = classTree.Find("SFontState");
 
 		Property_Base** raw = pFontState->GetPropsRaw();
@@ -90,7 +90,7 @@ public:
 			*(pProps + Index) = *(PropArray + Index);
 		}
 
-		volatile static NObjectFactory::CAuto<UIComp_DrawFontState, CRenderObject> Type_Array("UIComp_DrawFontState", pProps, nSize);
+		volatile static oes::common_base::CAuto<UIComp_DrawFontState, CRenderObject> Type_Array("UIComp_DrawFontState", pProps, nSize);
 	}
 }AutoRegAutoProps_UIComp_DrawFontState;
 

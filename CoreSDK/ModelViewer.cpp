@@ -132,7 +132,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 		m_pMaterialEffect = nullptr;
 	}
 
-	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 	std::string sFilename;
 
@@ -175,7 +175,7 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 		}
 		else // try to load compound xml
 		{
-			NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+            oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 			std::string inFilename = ConvertWideStringToString(pFilename);
 			std::string sFilename;
@@ -188,8 +188,8 @@ bool CModelViewer::GenerateObjectView(const wchar_t *pFilename)
 
 					Utility::CClassFactory<
 						IObjectAbstract,
-						NObjectFactory::TGenFunction,
-						NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+                        oes::common_base::TGenFunction,
+                        oes::common_base::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 					for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 					{

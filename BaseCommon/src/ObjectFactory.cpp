@@ -10,10 +10,13 @@ extern "C"
 }*/
 
 //----------------------------------------------------------------------------------------------
-namespace NObjectFactory
+namespace oes
 {
-    NObjectFactory::TClassFactory* GetClassFactoryA()
+    namespace common_base
     {
-    return NObjectFactory::TGlobalClassFactory::GetInstance();
+        oes::common_base::TClassFactory* GetClassFactoryA()
+        {
+            return oes::common_base::TGlobalClassFactory::GetInstance();
+        }
     }
 }

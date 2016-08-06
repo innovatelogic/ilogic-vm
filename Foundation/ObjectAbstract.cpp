@@ -4,7 +4,7 @@
 //AllocWindows*	GAllocMemory = NULL;
 
 AllocWindows	AllocMemory;
-//NObjectFactory::TClassFactory*	GClassFactory = NULL;
+
 /*
 #ifdef WIN32
 #pragma data_seg("Shared")
@@ -67,13 +67,13 @@ extern "C"
 {
    EXTERN_EXPORT CObjectAbstract* GENERATE_OBJECT_SDK(const char *Type, const char *Name, CObjectAbstract *pParent /*= NULL*/)
    {
-		return static_cast<CObjectAbstract*>(NObjectFactory::GenObject(Type, Name, pParent));
+		return static_cast<CObjectAbstract*>(oes::common_base::GenObject(Type, Name, pParent));
    }
 
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract * CLONE_OBJECT_SDK(const CObjectAbstract *pSource, const char* Name /*= NULL*/, CObjectAbstract *pNewParent /*= NULL*/)
    {
-		CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(NObjectFactory::CloneObject(pSource, pNewParent));
+		CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::common_base::CloneObject(pSource, pNewParent));
 	
 		if (Name){
 			NewObject->SetName(Name);
@@ -85,22 +85,16 @@ extern "C"
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract* SLICE_CLONE_OBJECT(const CObjectAbstract *pSource, const char *NewType, const char *Name /*= NULL*/)
    {
-	   CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(NObjectFactory::SliceCloneObject(pSource, NewType));
+	   CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::common_base::SliceCloneObject(pSource, NewType));
 
 	   NewObject->SetType(NewType);
-	   NewObject->SetTypeId(NObjectFactory::GetId(NewType));
+	   NewObject->SetTypeId(oes::common_base::GetId(NewType));
 
 	   if (Name){
 		   NewObject->SetName(Name);
 	   }
 	   return NewObject;
    }
-
-   //----------------------------------------------------------------------------------------------
-   /*EXTERN_EXPORT NObjectFactory::TClassFactory* GetClassFactoryA()
-   {
-		return CObjectAbstract::GetClassFactoryStatic();
-   }*/
 }
 
 oes::foundation::IEventManager* CObjectAbstract::m_pEventManager = nullptr;
@@ -170,7 +164,7 @@ bool CObjectAbstract::IsGenerationFinished()
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	if (ClassNode *pCNode = CTree.Find(GetType()))
 	{
@@ -264,7 +258,7 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_current_tree)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	if (ClassNode *pCNode = CTree.Find(GetType()))
 	{
@@ -362,7 +356,7 @@ bool IsNestedBy(ClassNode *pNode, const char *pTypeBase)
 
 	if (pTypeBase)
 	{
-		AppClassTree &CTree = NObjectFactory::GetClassTree();
+		AppClassTree &CTree = oes::common_base::GetClassTree();
 
 		ClassNode *pBaseType = CTree.Find(pTypeBase);
 
@@ -387,7 +381,7 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 {
 	typedef std::pair<std::string, std::string> TPairString;
 
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	std::map<std::string, std::string> ValueMap;
 

@@ -7,7 +7,7 @@
 
 namespace 
 {
-	volatile static NObjectFactory::CAuto<ActorAllocator, CActor>
+	volatile static oes::common_base::CAuto<ActorAllocator, CActor>
 		ClassRegistrationActorAllocator("ActorAllocator", 0,  0, "ActorAllocator", "CActor");
 }
 
@@ -39,11 +39,11 @@ void ActorAllocator::SetAppMain(CCoreSDK *app)
 //----------------------------------------------------------------------------------------------
 void ActorAllocator::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory * classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory * classFactory = oes::common_base::GetClassFactoryA();
 
 	XML_FOR_EACH_TREE(xml_current_tree)
 	{
-		NObjectFactory::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+        oes::common_base::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 		for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 		{

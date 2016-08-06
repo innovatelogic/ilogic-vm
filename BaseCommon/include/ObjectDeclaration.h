@@ -54,7 +54,7 @@ static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract
 	{\
 		pObject->SetName(Name);\
 		pObject->SetType(#CLASS);\
-		pObject->SetTypeId(NObjectFactory::GetId(#CLASS));\
+		pObject->SetTypeId(oes::common_base::GetId(#CLASS));\
 		pObject->FinishGeneration();\
 		return static_cast<CObjectAbstract*>(pObject);\
 	}\
@@ -137,7 +137,7 @@ private:\
 //----------------------------------------------------------------------------------------------
 #define CLASS_INSTANCE(CLASS, BASE_CLASS)\
 namespace {\
-volatile static NObjectFactory::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
+volatile static oes::common_base::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
 	Generator##CLASS,\
 	CopyGenerator##CLASS,\
 	CLASS::ThisClassName(),\
@@ -148,14 +148,14 @@ volatile static NObjectFactory::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLAS
 #define CLASS_INSTANCE_INTERFACE(CLASS)\
 namespace\
 {\
-	volatile static NObjectFactory::CAutoInterface<CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS);\
+	volatile static oes::common_base::CAutoInterface<CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS);\
 }
 
 //----------------------------------------------------------------------------------------------
 #define CLASS_INSTANCE_EX(CLASS, BASE_CLASS)\
 namespace\
 {\
-volatile static NObjectFactory::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+volatile static oes::common_base::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 									 Generator##CLASS,\
 									 CopyGenerator##CLASS,\
 									 CLASS::ThisClassName(),\
@@ -166,7 +166,7 @@ volatile static NObjectFactory::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CL
 #define CLASS_INSTANCE_PURE(CLASS, BASE_CLASS)\
 namespace\
 {\
-	volatile static NObjectFactory::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+	volatile static oes::common_base::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	nullptr,\
 	CLASS::ThisClassName(),\
@@ -177,7 +177,7 @@ namespace\
 #define CLASS_INSTANCE_PURE_NOBASE(CLASS)\
 	namespace\
 {\
-	volatile static NObjectFactory::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+	volatile static oes::common_base::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	nullptr,\
 	CLASS::ThisClassName(),\
@@ -193,7 +193,7 @@ static CObjectAbstract * Generator##CLASS(const char *Name, const CObjectAbstrac
 	{\
 		Object->SetName(Name);\
 		Object->SetType(#CLASS);\
-		Object->SetTypeId(NObjectFactory::GetId(#CLASS));\
+		Object->SetTypeId(oes::common_base::GetId(#CLASS));\
 		Object->FinishGeneration();\
 		return Object;\
 	}\

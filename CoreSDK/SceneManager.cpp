@@ -71,7 +71,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 {
 	bool bResult = false;
 
-	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 	Explorer3D * SourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer3D();
 
@@ -85,8 +85,8 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 
 			Utility::CClassFactory<
 				IObjectAbstract,
-				NObjectFactory::TGenFunction,
-				NObjectFactory::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+                oes::common_base::TGenFunction,
+                oes::common_base::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 			for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 			{
@@ -128,7 +128,7 @@ bool CSceneManager::LoadFromFile(const std::string &filename)
 //----------------------------------------------------------------------------------------------
 bool CSceneManager::LoadFromXML(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 	Explorer3D *pSourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer3D();
 

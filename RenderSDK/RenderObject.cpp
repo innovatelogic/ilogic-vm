@@ -38,13 +38,13 @@ CRenderObject::~CRenderObject()
 //----------------------------------------------------------------------------------------------
 void CRenderObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	NObjectFactory::TClassFactory * classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory * classFactory = oes::common_base::GetClassFactoryA();
 
 	int PlainElementIndex = 0;
 
 	XML_FOR_EACH_TREE(xml_current_tree)
 	{
-		NObjectFactory::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+        oes::common_base::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 		for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 		{

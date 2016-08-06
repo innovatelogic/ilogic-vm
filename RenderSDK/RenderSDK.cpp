@@ -55,9 +55,9 @@ CRenderSDK::~CRenderSDK()
 }
 
 //----------------------------------------------------------------------------------------------
-NObjectFactory::TClassFactory * CRenderSDK::GetClassFactory()
+oes::common_base::TClassFactory * CRenderSDK::GetClassFactory()
 {
-    return NObjectFactory::TGlobalClassFactory::GetInstance();
+    return oes::common_base::TGlobalClassFactory::GetInstance();
 }
 
 //----------------------------------------------------------------------------------------------

@@ -30,7 +30,7 @@ Property_Base::Property_Base(const char *name,
 , m_pNodePrev(prev)
 , m_pNodeNext(next)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 	m_ClassNodePtr = CTree.Find(classname);
 
 	if (!m_ClassNodePtr){
@@ -79,7 +79,7 @@ bool PropertyINT::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyINT::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -139,7 +139,7 @@ bool PropertyUINT::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyUINT::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -199,7 +199,7 @@ bool PropertyFLOAT::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyFLOAT::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree & CTree = NObjectFactory::GetClassTree();
+	AppClassTree & CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -260,7 +260,7 @@ bool PropertyBYTE::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyBYTE::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -321,7 +321,7 @@ bool PropertyBOOL::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyBOOL::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -383,7 +383,7 @@ bool PropertyString::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyString::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -445,7 +445,7 @@ bool PropertyStringW::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyStringW::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -505,7 +505,7 @@ bool PropertyVector2f::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyVector2f::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -571,7 +571,7 @@ bool PropertyVector::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyVector::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -644,7 +644,7 @@ bool PropertyVector4f::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyVector4f::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -734,7 +734,7 @@ bool PropertyMatrix3x3::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyMatrix3x3::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -841,7 +841,7 @@ bool PropertyMatrix::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyMatrix::DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -936,7 +936,7 @@ bool PropertyBounds3f::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyBounds3f::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -1033,7 +1033,7 @@ bool PropertyPixelTransform::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyPixelTransform::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -1127,7 +1127,7 @@ bool PropertySceneInputmode::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertySceneInputmode::DoSetProperty(const void  *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -1217,7 +1217,7 @@ bool PropertyEHandleInputKey::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyEHandleInputKey::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){
@@ -1308,7 +1308,7 @@ bool PropertyEHandleInputMouse::GetDefaultValue(char *pOutBuffer) const
 //----------------------------------------------------------------------------------------------
 void PropertyEHandleInputMouse::DoSetProperty(const void *Ptr, const char *Value, unsigned int byteOffset /*= 0*/, bool bSilent /*= false*/)
 {
-	AppClassTree &CTree = NObjectFactory::GetClassTree();
+	AppClassTree &CTree = oes::common_base::GetClassTree();
 
 	ClassNode *pClassNode = CTree.Find(GetClassName());
 	if (!pClassNode){

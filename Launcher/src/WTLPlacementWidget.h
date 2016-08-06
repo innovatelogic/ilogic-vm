@@ -223,7 +223,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void FillProperties()
 	{
-		AppClassTree &classTree = NObjectFactory::GetClassTree();
+		AppClassTree &classTree = oes::common_base::GetClassTree();
 
 		if (ClassNode *pClassNode = classTree.Find(m_pSelectedActor->GetType()))
 		{

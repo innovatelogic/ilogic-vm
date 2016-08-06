@@ -540,7 +540,7 @@ void HandlePopupContextMenu(HWND hwnd, POINT pt, CActor * Selected)
 */
 	
 	std::vector<const ClassNode*> vecNodes;
-	AppClassTree &classTree = NObjectFactory::GetClassTree();
+	AppClassTree &classTree = oes::common_base::GetClassTree();
 
 	CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
 
@@ -693,7 +693,7 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 		// process brushes
 		if ((INT)(wParam) >= 5000 && (INT)(wParam) < 6000)
 		{
-			AppClassTree &classTree = NObjectFactory::GetClassTree();
+			AppClassTree &classTree = oes::common_base::GetClassTree();
 
 			std::vector<const ClassNode*> vecNodes;
 

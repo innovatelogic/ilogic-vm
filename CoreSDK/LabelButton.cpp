@@ -159,7 +159,7 @@ void LabelButton::ResolveActiveState()
 //----------------------------------------------------------------------------------------------
 void LabelButton::SuperDeserializerInternal(tinyxml2::XMLElement *pTree)
 {
-	NObjectFactory::TClassFactory *classFactory = NObjectFactory::GetClassFactoryA();
+    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
 
 	XML_FOR_EACH_TREE(pTree)
 	{

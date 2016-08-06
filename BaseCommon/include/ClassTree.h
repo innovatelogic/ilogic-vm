@@ -6,84 +6,91 @@
 #include <vector>
 #include <list>
 
-class COMMON_BASE_EXPORT AppClassTree
+namespace oes
 {
-public:
-	typedef std::vector<ClassNode*>			        TVecClassNodeInterface;
-	typedef TVecClassNodeInterface::iterator		TVecClassNodeInterfaceIter;
-	typedef TVecClassNodeInterface::const_iterator	TVecClassNodeInterfaceConstIter;
+    namespace common_base
+    {
 
-	AppClassTree();
-	virtual ~AppClassTree();
-
-    AppClassTree(const AppClassTree &other) = delete;
-    AppClassTree& operator=(const AppClassTree &other) = delete;
-
-	bool Add(const char *type, const char *baseType);
-	bool Add(const char *type, const Property_Base **arr, int count);
-    bool Add(const char *type, const IPropertiesAllocator * PropAlloc);
-
-	void AddInterface(ClassNode *pInterface);
-	
-	ClassNode*	Find(const char *type);
-	ClassNode*	FindInterface(const char *type) const;
-
-	// returns parent node
-	ClassNode*	RemoveNode(ClassNode *pNode);
-
-	void		Release();
-
-	const TVecClassNodeInterface& GetInterfaces() const { return m_VecInterfaces; }
-
-    const CAutoTree<ClassNode> &GetTree() const { return m_tree;  }
-
-private:
-	TVecClassNodeInterface m_VecInterfaces;	
-
-    CAutoTree<ClassNode> m_tree;
-};
-
-//----------------------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------------------
-template<typename T>
-struct COMMON_BASE_EXPORT CEnumerateChildTypeStrategy
-{
-	CEnumerateChildTypeStrategy(const char *InterfaceName, const CAutoTree<ClassNode> &tree, T &pStoreType)
-	{
-		assert(InterfaceName);
-
-        const auto &roots = tree.GetRoots();
-
-        for (const auto item : roots)
+        class COMMON_BASE_EXPORT AppClassTree
         {
-            if (item)
+        public:
+            typedef std::vector<ClassNode*>			        TVecClassNodeInterface;
+            typedef TVecClassNodeInterface::iterator		TVecClassNodeInterfaceIter;
+            typedef TVecClassNodeInterface::const_iterator	TVecClassNodeInterfaceConstIter;
+
+            AppClassTree();
+            virtual ~AppClassTree();
+
+            AppClassTree(const AppClassTree &other) = delete;
+            AppClassTree& operator=(const AppClassTree &other) = delete;
+
+            bool Add(const char *type, const char *baseType);
+            bool Add(const char *type, const Property_Base **arr, int count);
+            bool Add(const char *type, const IPropertiesAllocator * PropAlloc);
+
+            void AddInterface(ClassNode *pInterface);
+
+            ClassNode*	Find(const char *type);
+            ClassNode*	FindInterface(const char *type) const;
+
+            // returns parent node
+            ClassNode*	RemoveNode(ClassNode *pNode);
+
+            void		Release();
+
+            const TVecClassNodeInterface& GetInterfaces() const { return m_VecInterfaces; }
+
+            const CAutoTree<ClassNode> &GetTree() const { return m_tree; }
+
+        private:
+            TVecClassNodeInterface m_VecInterfaces;
+
+            CAutoTree<ClassNode> m_tree;
+        };
+
+        //----------------------------------------------------------------------------------------------
+        //
+        //----------------------------------------------------------------------------------------------
+        template<typename T>
+        struct COMMON_BASE_EXPORT CEnumerateChildTypeStrategy
+        {
+            CEnumerateChildTypeStrategy(const char *InterfaceName, const CAutoTree<ClassNode> &tree, T &pStoreType)
             {
-                std::stack<const ClassNode*> stack;
+                assert(InterfaceName);
 
-                stack.push(item);
+                const auto &roots = tree.GetRoots();
 
-                while (!stack.empty())
+                for (const auto item : roots)
                 {
-                    const ClassNode *pTop = stack.top();
-
-                    stack.pop();
-
-                    for (ClassNode::TVecClassNode::const_iterator Iter = pTop->GetChilds().begin(), IterEnd = pTop->GetChilds().end(); Iter != IterEnd; ++Iter)
+                    if (item)
                     {
-                        const ClassNode::TVecInterfaces& refInterfaces = (*Iter)->GetInterfaces();
+                        std::stack<const ClassNode*> stack;
 
-                        for (ClassNode::TVecInterfaceConstIter IterItf = refInterfaces.begin(), IterItfEnd = refInterfaces.end(); IterItf != IterItfEnd; ++IterItf)
+                        stack.push(item);
+
+                        while (!stack.empty())
                         {
-                            if (!strcmp(InterfaceName, (*IterItf)->strType))
+                            const ClassNode *pTop = stack.top();
+
+                            stack.pop();
+
+                            for (ClassNode::TVecClassNode::const_iterator Iter = pTop->GetChilds().begin(), IterEnd = pTop->GetChilds().end(); Iter != IterEnd; ++Iter)
                             {
-                                pStoreType.push_back(*Iter);
+                                const ClassNode::TVecInterfaces& refInterfaces = (*Iter)->GetInterfaces();
+
+                                for (ClassNode::TVecInterfaceConstIter IterItf = refInterfaces.begin(), IterItfEnd = refInterfaces.end(); IterItf != IterItfEnd; ++IterItf)
+                                {
+                                    if (!strcmp(InterfaceName, (*IterItf)->strType))
+                                    {
+                                        pStoreType.push_back(*Iter);
+                                    }
+                                }
+                                stack.push(*Iter);
                             }
-                        }
-                        stack.push(*Iter);
+                        };
                     }
-                };
+                }
             }
-        }
-	}
-};
+        };
+    }
+}
