@@ -26,9 +26,6 @@ TEST(TestAutoTree, RegisterBroadTree)
     oes::common_base::permutate<std::pair<std::string, std::string>>(arr,
     [&](const std::vector<std::pair<std::string, std::string>> &res)
     {
-        if (count == 1782) {
-            int k = 0;
-        }
         tree.Add(res[0].first.c_str(), res[0].second.c_str());
         tree.Add(res[1].first.c_str(), res[1].second.c_str());
         tree.Add(res[2].first.c_str(), res[2].second.c_str());
