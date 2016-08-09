@@ -48,14 +48,14 @@ namespace oes
                             std::vector<T_CLASS*>::iterator iterFindInRoot = std::find(m_VRoots.begin(), m_VRoots.end(), pSiblin);
                             if (iterFindInRoot != m_VRoots.end())
                             {
-                                *iterFindInRoot = nullptr;
+                                m_VRoots.erase(iterFindInRoot);
 
                                 pBase->AddChild(pSiblin);
                                 pSiblin->SetRootNode(pBase);
                             }
                             else
                             {
-                                assert(false); // WTF?
+                                assert(false); // Exception
                             }
                         }
 
@@ -132,6 +132,7 @@ namespace oes
                 return nullptr;
             }
 
+            //----------------------------------------------------------------------------------------------
             T_CLASS* AddPure(const char *type, const Property_Base **arr, int count)
             {
                 T_CLASS *pBase = Find(type);
@@ -172,6 +173,19 @@ namespace oes
                         {
                             return FindNode;
                         }
+                    }
+                }
+                return nullptr;
+            }
+
+            //----------------------------------------------------------------------------------------------
+            T_CLASS* GetRoot(const char *type) const
+            {
+                for each (auto item in m_VRoots)
+                {
+                    if (std::string(item->GetName()).compare(type) == 0)
+                    {
+                        return item;
                     }
                 }
                 return nullptr;

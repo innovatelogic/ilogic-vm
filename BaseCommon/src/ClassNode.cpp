@@ -136,6 +136,19 @@ void ClassNode::SetProprties(const IPropertiesAllocator *pPropAlloc)
 }
 
 //----------------------------------------------------------------------------------------------
+ClassNode* ClassNode::GetChild(char *type) const
+{
+    for each (auto item in Childs)
+    {
+        if (std::string(item->GetName()).compare(type) == 0)
+        {
+            return item;
+        }
+    }
+    return nullptr;
+}
+
+//----------------------------------------------------------------------------------------------
 void ClassNode::SetProprties(const Property_Base** Arr, int Count)
 {
 	m_pPropsRaw = const_cast<Property_Base**>(Arr);
