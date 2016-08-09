@@ -39,6 +39,7 @@ include/ObjectDeclaration.h
 include/ValueParser.h
 include/UtFile.h
 include/TArray.h
+include/permutations.h
 )
 
 set(SRC
