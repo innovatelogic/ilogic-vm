@@ -41,6 +41,20 @@
 
         //----------------------------------------------------------------------------------------------
         template<class T>
+        void PropertyReactor<T>::FetchGroups(std::vector<std::string> &groups)
+        {
+
+        }
+
+        //----------------------------------------------------------------------------------------------
+        template<class T>
+        void PropertyReactor<T>::FetchProperties(const std::string &group, TMapClassData &out)
+        {
+
+        }
+
+        //----------------------------------------------------------------------------------------------
+        template<class T>
         void PropertyReactor<T>::BuildObject(const T *object)
         {
             AppClassTree &classTree = oes::common_base::GetClassTree();

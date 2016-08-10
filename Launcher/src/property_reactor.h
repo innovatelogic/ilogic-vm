@@ -7,30 +7,18 @@
 //{
     namespace nmLauncher
     {
-        struct SClassNode
-        {
-            std::string			name;
-            TVecPropertyBase	inheritProperties;
-            int					nOverrideByteShift; // overrides byte shift for interface 
-         
-            SClassNode(const std::string &_name, int shift = -1)
-                : name(_name)
-                , nOverrideByteShift(shift)
-            {
-            }
-        };
-
         template<class T>
         class PropertyReactor : public IPropertyReactor
         {
-            using TMapClassData = std::map<std::string, SClassNode>;
-
         public:
             PropertyReactor(const editors::TIEditor &editor);
             virtual ~PropertyReactor();
             
             void Build() override;
             void Clear() override;
+
+            void FetchGroups(std::vector<std::string> &groups) override;
+            void FetchProperties(const std::string &group, TMapClassData &out) override;
 
         private:
             void BuildObject(const T *object);
