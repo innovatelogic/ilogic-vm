@@ -23,6 +23,8 @@
         template<class T>
         class PropertyReactor : public IPropertyReactor
         {
+            using TMapClassData = std::map<std::string, SClassNode>;
+
         public:
             PropertyReactor(const editors::TIEditor &editor);
             virtual ~PropertyReactor();
@@ -36,7 +38,7 @@
         private:
             editors::TIEditor m_editor;
         
-            std::map<std::string, SClassNode> m_propertyClasses;
+            TMapClassData m_propertyClasses;
         };
     }
 //}

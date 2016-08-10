@@ -10,6 +10,7 @@
         {
             m_editor = editor;
         }
+
         //----------------------------------------------------------------------------------------------
         template<class T>
         PropertyReactor<T>::~PropertyReactor()
@@ -55,12 +56,14 @@
 
                     if (bInitialInit)
                     {
-                        m_propertyClasses.insert(std::make_pair(className, SClassNode(className)));
+                        std::pair<TMapClassData::iterator, bool> iterClass =
+                            m_propertyClasses.insert(std::make_pair(className, SClassNode(className)));
 
                         TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
 
                         while (iterProp != classNode->PropertyMap.end())
                         {
+                            iterClass.first->second.inheritProperties.push_back(*iterProp);
                             ++iterProp;
                         }
                     }
@@ -87,12 +90,17 @@
                         if (bInitialInit)
                         {
                             const int shift = (*iterIntf)->byteShift;
-                            m_propertyClasses.insert(std::make_pair(className, SClassNode(className, shift)));
+
+                            std::pair<TMapClassData::iterator, bool> iterClass =
+                                m_propertyClasses.insert(std::make_pair(className, SClassNode(className, shift)));
+
+                            iterClass.first->second.nOverrideByteShift = shift;
 
                             TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
 
                             while (iterPropIntf != nodeInterface->PropertyMap.end())
                             {
+                                iterClass.first->second.inheritProperties.push_back(*iterPropIntf);
                                 ++iterPropIntf;
                             }
                         }

@@ -16,10 +16,11 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     m_editor = editor;
     m_pAppMain = editor->GetApp();
 
-    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>(m_editor);
     m_pEdit = new TEdit(this);
     m_pComboBox = new TComboBox(this);
     m_pResourceEdit = new TResourceEdit(this);
+
+    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>(m_editor);
 }
 
 //----------------------------------------------------------------------------------------------
