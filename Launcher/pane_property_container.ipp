@@ -213,14 +213,13 @@ LRESULT CPanePropertyContainer<T>::OnFilledProps(UINT msg, WPARAM wParam, LPARAM
 {
     ClearTabPages();
 
-    const TVecPropertyGroup &groups = m_pPropGrid->GetPropertyGroups();
+    std::vector<std::string> groups;
+    m_pPropGrid->GetPropertyGroups(groups);
 
-    int IndexGroup = 0;
-    TVecPropertyGroupConstIter IterGroup = groups.begin();
-    while (IterGroup != groups.end())
+    int idx = 0;
+    for each (const auto &str in groups)
     {
-        AddTabPage((*IterGroup)->GroupName.c_str(), IndexGroup++);
-        ++IterGroup;
+        AddTabPage(str.c_str(), idx++);
     }
     return 0;
 }

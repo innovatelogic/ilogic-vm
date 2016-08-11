@@ -43,14 +43,41 @@
         template<class T>
         void PropertyReactor<T>::FetchGroups(std::vector<std::string> &groups)
         {
+            groups.clear();
 
+            for each(auto &item in m_propertyClasses)
+            {
+                for each (auto &prop in item.second.inheritProperties)
+                {
+                    const std::string name = prop->GetGroupName();
+
+                    if (std::find(groups.begin(), groups.end(), name) == groups.end()) {
+                        groups.push_back(name);
+                    }
+                }
+            }
         }
 
         //----------------------------------------------------------------------------------------------
         template<class T>
         void PropertyReactor<T>::FetchProperties(const std::string &group, TMapClassData &out)
         {
+            out.clear();
 
+            for each(auto &item in m_propertyClasses)
+            {
+                SClassNode node(item.second.name, item.second.nOverrideByteShift);
+
+                for each (auto &prop in item.second.inheritProperties)
+                {
+                    const std::string name = prop->GetGroupName();
+
+                    if (name == group)
+                    {
+                        node.inheritProperties.push_back(prop);
+                    }
+                }
+            }
         }
 
         //----------------------------------------------------------------------------------------------

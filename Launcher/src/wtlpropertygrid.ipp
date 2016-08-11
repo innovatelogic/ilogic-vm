@@ -589,14 +589,10 @@ void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 template<class T>
 void CWTLPropertyGrid<T>::FillPropertyTabs()
 {
-    m_PropertyCS.enter();
-
     if (T *pSelected = GetSelected())
     {
         FillPropertyData(pSelected);
     }
-
-    m_PropertyCS.leave();
 }
 
 //----------------------------------------------------------------------------------------------

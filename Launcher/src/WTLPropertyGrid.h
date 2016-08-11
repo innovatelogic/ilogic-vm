@@ -186,6 +186,8 @@ public:
     void HideChildControls();
 
 	const TVecPropertyGroup& GetPropertyGroups() const { return m_PropertyGroups; }
+    
+    void GetPropertyGroups(std::vector<std::string> &groups) const { return m_propReactor->FetchGroups(groups); }
 
 	void SetSelectedGroup(int group) { m_nSelectedGroup = group; }
 
