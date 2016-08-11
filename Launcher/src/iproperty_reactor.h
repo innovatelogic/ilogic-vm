@@ -23,7 +23,7 @@
         class IPropertyReactor
         {
         public:
-            using TMapClassData = std::map<std::string, SClassNode>;
+            using TMapClassData = std::vector<SClassNode>;
 
             virtual ~IPropertyReactor() = 0 {};
 

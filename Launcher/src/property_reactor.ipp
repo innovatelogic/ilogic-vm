@@ -45,9 +45,11 @@
         {
             groups.clear();
 
+            groups.push_back("Value"); // by default
+
             for each(auto &item in m_propertyClasses)
             {
-                for each (auto &prop in item.second.inheritProperties)
+                for each (auto &prop in item.inheritProperties)
                 {
                     const std::string name = prop->GetGroupName();
 
@@ -66,9 +68,9 @@
 
             for each(auto &item in m_propertyClasses)
             {
-                SClassNode node(item.second.name, item.second.nOverrideByteShift);
+                SClassNode node(item.name, item.nOverrideByteShift);
 
-                for each (auto &prop in item.second.inheritProperties)
+                for each (auto &prop in item.inheritProperties)
                 {
                     const std::string name = prop->GetGroupName();
 
@@ -76,6 +78,10 @@
                     {
                         node.inheritProperties.push_back(prop);
                     }
+                }
+
+                if (node.inheritProperties.size() > 0) {
+                    out.push_back(node);
                 }
             }
         }
@@ -97,21 +103,27 @@
 
                     if (bInitialInit)
                     {
-                        std::pair<TMapClassData::iterator, bool> iterClass =
-                            m_propertyClasses.insert(std::make_pair(className, SClassNode(className)));
+                        SClassNode node(className);
 
                         TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
 
                         while (iterProp != classNode->PropertyMap.end())
                         {
-                            iterClass.first->second.inheritProperties.push_back(*iterProp);
+                            node.inheritProperties.push_back(*iterProp);
                             ++iterProp;
                         }
+
+                        m_propertyClasses.push_back(node);
                     }
                     else // sieve
                     {
-                        auto itFind = m_propertyClasses.find(className);
-                        if (itFind != m_propertyClasses.end())
+                        TMapClassData::iterator it = std::find_if(m_propertyClasses.begin(), m_propertyClasses.end(), 
+                            [&className](const SClassNode &v)
+                        {
+                            return className == v.name;
+                        });
+
+                        if (it != m_propertyClasses.end())
                         {
                             matchClasses.push_back(className);
                         }
@@ -132,23 +144,24 @@
                         {
                             const int shift = (*iterIntf)->byteShift;
 
-                            std::pair<TMapClassData::iterator, bool> iterClass =
-                                m_propertyClasses.insert(std::make_pair(className, SClassNode(className, shift)));
-
-                            iterClass.first->second.nOverrideByteShift = shift;
+                            SClassNode node(className, shift);
 
                             TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
 
                             while (iterPropIntf != nodeInterface->PropertyMap.end())
                             {
-                                iterClass.first->second.inheritProperties.push_back(*iterPropIntf);
+                                node.inheritProperties.push_back(*iterPropIntf);
                                 ++iterPropIntf;
                             }
+
+                            m_propertyClasses.push_back(node);
                         }
                         else
                         {
-                            auto itFind = m_propertyClasses.find(className);
-                            if (itFind != m_propertyClasses.end())
+                            TMapClassData::iterator it = std::find_if(m_propertyClasses.begin(), m_propertyClasses.end(),
+                                [&className](const SClassNode &v) { return className == v.name; });
+
+                            if (it != m_propertyClasses.end())
                             {
                                 matchClasses.push_back(className);
                             }
@@ -160,22 +173,21 @@
                 }
             }
 
-            // sieve
-            if (!matchClasses.empty())
+            if (!bInitialInit)
             {
-                for (auto it = m_propertyClasses.begin(); it != m_propertyClasses.end();)
+                // sieve erase non common nodes
+                if (!matchClasses.empty())
                 {
-                    const std::string &name = it->first;
-
-                    if (std::find(matchClasses.begin(), matchClasses.end(), name) != matchClasses.end())
+                    m_propertyClasses.erase(std::remove_if(m_propertyClasses.begin(), m_propertyClasses.end(),
+                        [matchClasses](const SClassNode &item)
                     {
-                        m_propertyClasses.erase(it++);
-                    }
-                    else
-                    {
-                        ++it;
-                    }
+                        return std::find(matchClasses.begin(), matchClasses.end(), item.name) == matchClasses.end();
+                    }), m_propertyClasses.end());
                 }
+            }
+            else
+            {
+                std::reverse(m_propertyClasses.begin(), m_propertyClasses.end());
             }
         }
     }

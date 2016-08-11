@@ -771,8 +771,6 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
 {
     BOOL bResult = FALSE;
 
-    m_PropertyCS.enter();
-
     HideChildControls();
 
     wchar_t wGroupBuff[256] = { 0 };
@@ -783,18 +781,71 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
 
     if (SelectedGroup != INDEX_NONE)
     {
-        std::string strGroupName = m_PropertyGroups[SelectedGroup]->GroupName;//"Value";//ConvertWideStringToString(szText);
-                                                                              // find or alloc group
-        SPropertyGroup *pGroup = GetGroupByName(strGroupName);
+        std::vector<std::string> groups;
+        m_propReactor->FetchGroups(groups);
+        std::string strGroupName = groups.at(SelectedGroup); // TODO: catch exp
+                                                                            
+        nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
+        m_propReactor->FetchProperties(strGroupName, fetchClasses);
 
-        if (pGroup)
+        //SPropertyGroup *pGroup = GetGroupByName(strGroupName);
+        //if (pGroup)
         {
             // selected object property
-            int PropertyListIndex = 0;
+            int propertyListIndex = 0;
 
             if (m_GridViewStyle == EGV_Categorized)
             {
-                for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
+                for each (auto &item in fetchClasses)
+                {
+                    // selection query
+                    bool bAllowClass = IsClassAllowed(item.name);
+
+                    for each (const auto &prop in item.inheritProperties)
+                    {
+                        LVITEM lvI;
+                        memset(&lvI, 0, sizeof(LVITEM));
+
+                        lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                        lvI.iSubItem = 0;
+                        lvI.pszText = LPSTR_TEXTCALLBACK;
+                        lvI.iImage = I_IMAGECALLBACK;
+                        lvI.iItem = propertyListIndex++;
+                        lvI.iIndent = 0;
+
+                        InsertItem(&lvI);
+
+                        // fill array 
+                        if (prop->GetCtrl() == CTRL_ARRAY && IsDisclosed(prop->GetName()))
+                        {
+                            int size = prop->GetSize();
+                            while (size)
+                            {
+                                // go through child nodes
+                                Property_Base *childProp = prop->GetNext();
+                                while (childProp)
+                                {
+                                    LVITEM chlvI;
+                                    memset(&chlvI, 0, sizeof(LVITEM));
+
+                                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                                    lvI.iSubItem = 0;
+                                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                                    lvI.iImage = I_IMAGECALLBACK;
+                                    lvI.iItem = propertyListIndex++;
+                                    lvI.iIndent = 0;
+
+                                    InsertItem(&lvI);
+
+                                    childProp = childProp->GetNext();
+                                }
+                                --size;
+                            }
+                        }
+                    }
+                }
+
+                /*for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
                 {
                     // selection query
                     bool bAllowClass = IsClassAllowed((*IterClass)->ClassName);
@@ -808,7 +859,7 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                         lvI.iSubItem = 0;
                         lvI.pszText = LPSTR_TEXTCALLBACK;
                         lvI.iImage = I_IMAGECALLBACK;
-                        lvI.iItem = PropertyListIndex++;
+                        lvI.iItem = propertyListIndex++;
                         lvI.iIndent = 0;
 
                         InsertItem(&lvI);
@@ -845,12 +896,12 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                             break;
                         }
                     }
-                }
+                }*/
             }
             else if (m_GridViewStyle == EGV_SortByName)
             {
                 // selected object property
-                int PropertyListIndex = 0;
+               /* int PropertyListIndex = 0;
                 for (TVecPropertyWrapperIter Iter = m_VSortedProperties.begin(); Iter != m_VSortedProperties.end(); ++Iter)
                 {
                     if ((*Iter)->pProp->GetGroupName() == pGroup->GroupName)
@@ -895,12 +946,10 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                             }
                         }
                     }
-                }
+                }*/
             }
         }
     }
-
-    m_PropertyCS.leave();
 
     return TRUE;
 }
