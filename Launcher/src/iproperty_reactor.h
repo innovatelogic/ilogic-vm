@@ -4,10 +4,12 @@
 //{
     namespace nmLauncher
     {
+        using TMapProperties = std::map<int, Property_Base*>;
+
         struct SClassNode
         {
             std::string			name;
-            TVecPropertyBase	inheritProperties;
+            TMapProperties      properties;
             int					nOverrideByteShift; // overrides byte shift for interface 
 
             SClassNode(const std::string &_name, int shift = -1)

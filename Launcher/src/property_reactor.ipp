@@ -49,9 +49,9 @@
 
             for each(auto &item in m_propertyClasses)
             {
-                for each (auto &prop in item.inheritProperties)
+                for each (auto &prop in item.properties)
                 {
-                    const std::string name = prop->GetGroupName();
+                    const std::string name = prop.second->GetGroupName();
 
                     if (std::find(groups.begin(), groups.end(), name) == groups.end()) {
                         groups.push_back(name);
@@ -70,17 +70,14 @@
             {
                 SClassNode node(item.name, item.nOverrideByteShift);
 
-                for each (auto &prop in item.inheritProperties)
+                for each (auto &prop in item.properties)
                 {
-                    const std::string name = prop->GetGroupName();
-
-                    if (name == group)
-                    {
-                        node.inheritProperties.push_back(prop);
+                    if (prop.second->GetGroupName() == group){
+                        node.properties.insert(std::make_pair(prop.first, prop.second));
                     }
                 }
 
-                if (node.inheritProperties.size() > 0) {
+                if (node.properties.size() > 0) {
                     out.push_back(node);
                 }
             }
@@ -91,6 +88,8 @@
         void PropertyReactor<T>::BuildObject(const T *object)
         {
             AppClassTree &classTree = oes::common_base::GetClassTree();
+
+            int id = 0;
 
             bool bInitialInit = m_propertyClasses.empty();
             std::vector<std::string> matchClasses;
@@ -109,7 +108,25 @@
 
                         while (iterProp != classNode->PropertyMap.end())
                         {
-                            node.inheritProperties.push_back(*iterProp);
+                            node.properties.insert(std::make_pair(id++, *iterProp));
+
+                            // array
+                            if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
+                            {
+                                int size = (*iterProp)->GetSize();
+                                while (size)
+                                {
+                                    // go through child nodes
+                                    Property_Base *childProp = (*iterProp)->GetNext();
+                                    while (childProp)
+                                    {
+                                        node.properties.insert(std::make_pair(id++, childProp));
+                                        childProp = childProp->GetNext();
+                                    }
+                                    --size;
+                                }
+                            }
+
                             ++iterProp;
                         }
 
@@ -150,7 +167,26 @@
 
                             while (iterPropIntf != nodeInterface->PropertyMap.end())
                             {
-                                node.inheritProperties.push_back(*iterPropIntf);
+                                node.properties.insert(std::make_pair(id++, *iterPropIntf));
+
+                                // array
+                                if ((*iterPropIntf)->GetCtrl() == CTRL_ARRAY)
+                                {
+                                    int size = (*iterPropIntf)->GetSize();
+                                    while (size)
+                                    {
+                                        // go through child nodes
+                                        Property_Base *childProp = (*iterPropIntf)->GetNext();
+                                        while (childProp)
+                                        {
+                                            node.properties.insert(std::make_pair(id++, childProp));
+                                            childProp = childProp->GetNext();
+                                        }
+                                        --size;
+                                    }
+                                }
+
+
                                 ++iterPropIntf;
                             }
 

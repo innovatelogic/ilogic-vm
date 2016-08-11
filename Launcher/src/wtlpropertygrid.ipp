@@ -788,166 +788,176 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
         nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
         m_propReactor->FetchProperties(strGroupName, fetchClasses);
 
-        //SPropertyGroup *pGroup = GetGroupByName(strGroupName);
-        //if (pGroup)
+        // selected object property
+        int propertyListIndex = 0;
+
+        if (m_GridViewStyle == EGV_Categorized)
+        {
+            for each (auto &item in fetchClasses)
+            {          
+                // selection query
+                bool bAllowClass = IsClassAllowed(item.name);
+
+                {
+                    LVITEM lvI;
+                    memset(&lvI, 0, sizeof(LVITEM));
+
+                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                    lvI.iSubItem = 0;
+                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                    lvI.iImage = I_IMAGECALLBACK;
+                    lvI.iItem = 0;
+                    lvI.iIndent = 0;
+
+                    InsertItem(&lvI);
+                }
+
+                for each (const auto &prop in item.properties)
+                {
+                    LVITEM lvI;
+                    memset(&lvI, 0, sizeof(LVITEM));
+
+                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                    lvI.iSubItem = 0;
+                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                    lvI.iImage = I_IMAGECALLBACK;
+                    lvI.iItem = prop.first;
+                    lvI.iIndent = 0;
+
+                    InsertItem(&lvI);
+
+                    // fill array 
+                    /*if (prop.second->GetCtrl() == CTRL_ARRAY)
+                    {
+                        int size = prop.second->GetSize();
+                        while (size)
+                        {
+                            // go through child nodes
+                            Property_Base *childProp = prop.second->GetNext();
+                            while (childProp)
+                            {
+                                LVITEM chlvI;
+                                memset(&chlvI, 0, sizeof(LVITEM));
+
+                                lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                                lvI.iSubItem = 0;
+                                lvI.pszText = LPSTR_TEXTCALLBACK;
+                                lvI.iImage = I_IMAGECALLBACK;
+                                lvI.iItem = 0;
+                                lvI.iIndent = 0;
+
+                                InsertItem(&lvI);
+
+                                childProp = childProp->GetNext();
+                            }
+                            --size;
+                        }
+                    }*/
+                }
+            }
+
+            /*for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
+            {
+                // selection query
+                bool bAllowClass = IsClassAllowed((*IterClass)->ClassName);
+
+                for (TVecPropertyBaseIter IterProp = (*IterClass)->InheritProperties.begin(); IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
+                {
+                    LVITEM lvI;
+                    memset(&lvI, 0, sizeof(LVITEM));
+
+                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                    lvI.iSubItem = 0;
+                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                    lvI.iImage = I_IMAGECALLBACK;
+                    lvI.iItem = propertyListIndex++;
+                    lvI.iIndent = 0;
+
+                    InsertItem(&lvI);
+
+                    // fill array 
+                    if ((*IterProp) && (*IterProp)->GetCtrl() == CTRL_ARRAY && IsDisclosed((*IterProp)->GetName()))
+                    {
+                        int Dimension = (*IterProp)->GetSize();
+                        while (Dimension > 0)
+                        {
+                            // go through child nodes
+                            Property_Base * ChildProp = (*IterProp)->GetNext();
+                            while (ChildProp)
+                            {
+                                LVITEM chlvI;
+                                memset(&chlvI, 0, sizeof(LVITEM));
+
+                                lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                                lvI.iSubItem = 0;
+                                lvI.pszText = LPSTR_TEXTCALLBACK;
+                                lvI.iImage = I_IMAGECALLBACK;
+                                lvI.iItem = PropertyListIndex++;
+                                lvI.iIndent = 0;
+
+                                InsertItem(&lvI);
+
+                                ChildProp = ChildProp->GetNext();
+                            }
+                            --Dimension;
+                        }
+                    }
+
+                    if (!bAllowClass && !*IterProp) {
+                        break;
+                    }
+                }
+            }*/
+        }
+        else if (m_GridViewStyle == EGV_SortByName)
         {
             // selected object property
-            int propertyListIndex = 0;
-
-            if (m_GridViewStyle == EGV_Categorized)
+            /* int PropertyListIndex = 0;
+            for (TVecPropertyWrapperIter Iter = m_VSortedProperties.begin(); Iter != m_VSortedProperties.end(); ++Iter)
             {
-                for each (auto &item in fetchClasses)
+                if ((*Iter)->pProp->GetGroupName() == pGroup->GroupName)
                 {
-                    // selection query
-                    bool bAllowClass = IsClassAllowed(item.name);
+                    LVITEM lvI;
+                    memset(&lvI, 0, sizeof(LVITEM));
 
-                    for each (const auto &prop in item.inheritProperties)
+                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                    lvI.iSubItem = 0;
+                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                    lvI.iImage = I_IMAGECALLBACK;
+                    lvI.iItem = PropertyListIndex++;
+                    lvI.iIndent = 0;
+
+                    InsertItem(&lvI);
+
+                    // fill array 
+                    if ((*Iter) && (*Iter)->pProp->GetCtrl() == CTRL_ARRAY && IsDisclosed((*Iter)->pProp->GetName()))
                     {
-                        LVITEM lvI;
-                        memset(&lvI, 0, sizeof(LVITEM));
-
-                        lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                        lvI.iSubItem = 0;
-                        lvI.pszText = LPSTR_TEXTCALLBACK;
-                        lvI.iImage = I_IMAGECALLBACK;
-                        lvI.iItem = propertyListIndex++;
-                        lvI.iIndent = 0;
-
-                        InsertItem(&lvI);
-
-                        // fill array 
-                        if (prop->GetCtrl() == CTRL_ARRAY && IsDisclosed(prop->GetName()))
+                        int Dimension = (*Iter)->pProp->GetSize();
+                        while (Dimension > 0)
                         {
-                            int size = prop->GetSize();
-                            while (size)
+                            // go through child nodes
+                            Property_Base * ChildProp = (*Iter)->pProp->GetNext();
+                            while (ChildProp)
                             {
-                                // go through child nodes
-                                Property_Base *childProp = prop->GetNext();
-                                while (childProp)
-                                {
-                                    LVITEM chlvI;
-                                    memset(&chlvI, 0, sizeof(LVITEM));
+                                LVITEM chlvI;
+                                memset(&chlvI, 0, sizeof(LVITEM));
 
-                                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                                    lvI.iSubItem = 0;
-                                    lvI.pszText = LPSTR_TEXTCALLBACK;
-                                    lvI.iImage = I_IMAGECALLBACK;
-                                    lvI.iItem = propertyListIndex++;
-                                    lvI.iIndent = 0;
+                                lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
+                                lvI.iSubItem = 0;
+                                lvI.pszText = LPSTR_TEXTCALLBACK;
+                                lvI.iImage = I_IMAGECALLBACK;
+                                lvI.iItem = PropertyListIndex++;
+                                lvI.iIndent = 0;
 
-                                    InsertItem(&lvI);
+                                InsertItem(&lvI);
 
-                                    childProp = childProp->GetNext();
-                                }
-                                --size;
+                                ChildProp = ChildProp->GetNext();
                             }
+                            --Dimension;
                         }
                     }
                 }
-
-                /*for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
-                {
-                    // selection query
-                    bool bAllowClass = IsClassAllowed((*IterClass)->ClassName);
-
-                    for (TVecPropertyBaseIter IterProp = (*IterClass)->InheritProperties.begin(); IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
-                    {
-                        LVITEM lvI;
-                        memset(&lvI, 0, sizeof(LVITEM));
-
-                        lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                        lvI.iSubItem = 0;
-                        lvI.pszText = LPSTR_TEXTCALLBACK;
-                        lvI.iImage = I_IMAGECALLBACK;
-                        lvI.iItem = propertyListIndex++;
-                        lvI.iIndent = 0;
-
-                        InsertItem(&lvI);
-
-                        // fill array 
-                        if ((*IterProp) && (*IterProp)->GetCtrl() == CTRL_ARRAY && IsDisclosed((*IterProp)->GetName()))
-                        {
-                            int Dimension = (*IterProp)->GetSize();
-                            while (Dimension > 0)
-                            {
-                                // go through child nodes
-                                Property_Base * ChildProp = (*IterProp)->GetNext();
-                                while (ChildProp)
-                                {
-                                    LVITEM chlvI;
-                                    memset(&chlvI, 0, sizeof(LVITEM));
-
-                                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                                    lvI.iSubItem = 0;
-                                    lvI.pszText = LPSTR_TEXTCALLBACK;
-                                    lvI.iImage = I_IMAGECALLBACK;
-                                    lvI.iItem = PropertyListIndex++;
-                                    lvI.iIndent = 0;
-
-                                    InsertItem(&lvI);
-
-                                    ChildProp = ChildProp->GetNext();
-                                }
-                                --Dimension;
-                            }
-                        }
-
-                        if (!bAllowClass && !*IterProp) {
-                            break;
-                        }
-                    }
-                }*/
-            }
-            else if (m_GridViewStyle == EGV_SortByName)
-            {
-                // selected object property
-               /* int PropertyListIndex = 0;
-                for (TVecPropertyWrapperIter Iter = m_VSortedProperties.begin(); Iter != m_VSortedProperties.end(); ++Iter)
-                {
-                    if ((*Iter)->pProp->GetGroupName() == pGroup->GroupName)
-                    {
-                        LVITEM lvI;
-                        memset(&lvI, 0, sizeof(LVITEM));
-
-                        lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                        lvI.iSubItem = 0;
-                        lvI.pszText = LPSTR_TEXTCALLBACK;
-                        lvI.iImage = I_IMAGECALLBACK;
-                        lvI.iItem = PropertyListIndex++;
-                        lvI.iIndent = 0;
-
-                        InsertItem(&lvI);
-
-                        // fill array 
-                        if ((*Iter) && (*Iter)->pProp->GetCtrl() == CTRL_ARRAY && IsDisclosed((*Iter)->pProp->GetName()))
-                        {
-                            int Dimension = (*Iter)->pProp->GetSize();
-                            while (Dimension > 0)
-                            {
-                                // go through child nodes
-                                Property_Base * ChildProp = (*Iter)->pProp->GetNext();
-                                while (ChildProp)
-                                {
-                                    LVITEM chlvI;
-                                    memset(&chlvI, 0, sizeof(LVITEM));
-
-                                    lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                                    lvI.iSubItem = 0;
-                                    lvI.pszText = LPSTR_TEXTCALLBACK;
-                                    lvI.iImage = I_IMAGECALLBACK;
-                                    lvI.iItem = PropertyListIndex++;
-                                    lvI.iIndent = 0;
-
-                                    InsertItem(&lvI);
-
-                                    ChildProp = ChildProp->GetNext();
-                                }
-                                --Dimension;
-                            }
-                        }
-                    }
-                }*/
-            }
+            }*/
         }
     }
 
@@ -1075,6 +1085,13 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     tc.cchTextMax = 255;
 
     int SelectedGroup = m_nSelectedGroup;
+
+    std::vector<std::string> groups;
+    m_propReactor->FetchGroups(groups);
+    std::string strGroupName = groups.at(SelectedGroup); // TODO: catch exp
+
+    nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
+    m_propReactor->FetchProperties(strGroupName, fetchClasses);
 
     SPropertyClass * OutClass = 0;
     Property_Base * OutProperty = 0;
