@@ -26,6 +26,7 @@
         {
         public:
             using TMapClassData = std::vector<SClassNode>;
+            using TClassDataPtr = std::vector<SClassNode*>;
 
             virtual ~IPropertyReactor() = 0 {};
 
@@ -34,6 +35,9 @@
 
             virtual void FetchGroups(std::vector<std::string> &groups) = 0;
             virtual void FetchProperties(const std::string &group, TMapClassData &out) = 0;
+
+            virtual const TMapClassData& GetClasses() const = 0;
+            virtual TMapClassData& GetClasses() = 0;
         };
 
     }

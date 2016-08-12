@@ -17,6 +17,9 @@
             void Build() override;
             void Clear() override;
 
+            const TMapClassData& GetClasses() const override { return m_propertyClasses; }
+            TMapClassData& GetClasses() override { return m_propertyClasses; }
+
             void FetchGroups(std::vector<std::string> &groups) override;
             void FetchProperties(const std::string &group, TMapClassData &out) override;
 

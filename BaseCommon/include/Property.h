@@ -72,6 +72,8 @@ struct COMMON_BASE_EXPORT SInterfaceDecl
 	{}
 };
 
+class ClassNode;
+
 //----------------------------------------------------------------------------------------------
 class COMMON_BASE_EXPORT Property_Base
 {
@@ -93,30 +95,31 @@ public:
 	/**
 	 * @return property's name.
 	 */
-	virtual const char* GetName() const { return m_Name.c_str(); }
+	const char* GetName() const { return m_Name.c_str(); }
 	
+    ClassNode*	GetClass() const { return m_ClassNodePtr; }
 	/**
 	 * @return property's class group name.
 	 */
-	virtual const char* GetClassName() const { return m_ClassName.c_str(); }
+	const char* GetClassName() const { return m_ClassName.c_str(); }
 
 	/**
 	 * @return property's policy: NO_READ_WRITE, READ_ONLY, WRITE_ONLY, READ_WRITE etc..
 	 */
-	virtual int			GetPolicy() const { return m_Policy; }
+	int			GetPolicy() const { return m_Policy; }
 
 	/**
 	 * @return UI related data etc..
 	 */
-	virtual int			GetCtrl() const { return m_Ctrl; }
+	int			GetCtrl() const { return m_Ctrl; }
 
-	virtual bool		IsSerializable() const { return m_bSerializable; }
-	virtual bool		IsCommonValue() const { return m_bCommonValue; }
+	bool		IsSerializable() const { return m_bSerializable; }
+	bool		IsCommonValue() const { return m_bCommonValue; }
 
 	/**
 	 * data set
 	 */
-	virtual void		SetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { DoSetProperty(Ptr, Value, byteOffset, bSilent); }
+	void		SetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { DoSetProperty(Ptr, Value, byteOffset, bSilent); }
 	virtual char*		GetProperty(const void * Ptr, char * OutBuffer) const { return ""; }
 
 	virtual void		DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { assert(false); }
@@ -186,7 +189,7 @@ public:
 
 	std::vector<std::string> PredefinedValues;
 
-	class ClassNode		*m_ClassNodePtr;
+	ClassNode		    *m_ClassNodePtr;
 
 protected:
 	// double linked list for aggregated types

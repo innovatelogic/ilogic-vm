@@ -1,5 +1,8 @@
 #include "WTLPropertyGrid.h"
 
+#define LIST_CLASS_ELEMENT 0
+#define LIST_PROP_ELEMENT 1
+
 //----------------------------------------------------------------------------------------------
 template<class T>
 CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
@@ -567,7 +570,28 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPr
 template<class T>
 void CWTLPropertyGrid<T>::FillModel()
 {
-    
+    m_cacheDataAll.clear();
+
+    nmLauncher::IPropertyReactor::TMapClassData &classes = m_propReactor->GetClasses();
+
+    // fetch data
+    for each (auto &item in classes)
+    {
+        SFetchData classx;
+        classx.id = LIST_CLASS_ELEMENT;
+        classx.pclass = &item;
+        classx.property = nullptr;
+        m_cacheDataAll.push_back(classx);
+
+        for each (auto prop in item.properties)
+        {
+            SFetchData propx;
+            classx.id = LIST_PROP_ELEMENT;
+            classx.pclass = &item;
+            classx.property = prop.second;
+            m_cacheDataAll.push_back(classx);
+        }
+    }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -575,6 +599,8 @@ template<class T>
 void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 {
     m_propReactor->Build();
+
+    FillModel();
 
     if (!actors.empty())
     {
@@ -785,15 +811,83 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
         m_propReactor->FetchGroups(groups);
         std::string strGroupName = groups.at(SelectedGroup); // TODO: catch exp
                                                                             
-        nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
-        m_propReactor->FetchProperties(strGroupName, fetchClasses);
-
         // selected object property
-        int propertyListIndex = 0;
+        m_cacheFill.clear();
 
         if (m_GridViewStyle == EGV_Categorized)
         {
-            for each (auto &item in fetchClasses)
+            m_cacheFill.clear();
+
+            // arrange data by indexes
+            std::vector<SFetchData>::iterator iter = m_cacheDataAll.begin();
+            while (iter != m_cacheDataAll.end())
+            {
+                assert(iter->id == LIST_CLASS_ELEMENT);
+
+                SFetchData classX;
+                classX.id = LIST_CLASS_ELEMENT;
+                classX.pclass = iter->pclass;
+                classX.property = nullptr;
+
+                std::vector<SFetchData> propsX;
+                std::vector<SFetchData>::iterator iterProp = ++iter;
+                while (iterProp != m_cacheDataAll.end() && iterProp->id != LIST_CLASS_ELEMENT)
+                {
+                    if (iterProp->property->GetGroupName() == strGroupName) 
+                    {
+                        SFetchData propX;
+                        propX.id = LIST_PROP_ELEMENT;
+                        propX.pclass = iter->pclass;
+                        propX.property = iterProp->property;
+                        propsX.push_back(propX);
+                    }
+                    ++iterProp;
+                }
+
+                if (propsX.size() > 0)
+                {
+                    m_cacheFill.push_back(classX);
+                    m_cacheFill.insert(m_cacheFill.end(), propsX.begin(), propsX.end());
+                }
+                iter = iterProp;
+            }
+
+            int listIndex = 0;
+            // populate
+            for each (auto &item in m_cacheFill)
+            {
+                LVITEM lvI;
+                memset(&lvI, 0, sizeof(LVITEM));
+
+                lvI.mask = LVIF_TEXT | LVIF_IMAGE;
+                lvI.iSubItem = 0;
+                lvI.pszText = LPSTR_TEXTCALLBACK;
+                lvI.iImage = I_IMAGECALLBACK;
+                lvI.iItem = listIndex++;
+                lvI.iIndent = 0;
+
+                InsertItem(&lvI);
+
+              /* for each (const auto *prop in item.properties)
+                {
+                    LVITEM lvI;
+                    memset(&lvI, 0, sizeof(LVITEM));
+
+                    lvI.mask = LVIF_TEXT | LVIF_IMAGE;
+                    lvI.iSubItem = 0;
+                    lvI.pszText = LPSTR_TEXTCALLBACK;
+                    lvI.iImage = I_IMAGECALLBACK;
+                    lvI.iItem =  listIndex++;
+
+                    lvI.lParam = MAKELPARAM((WORD)&item.pclass, (WORD)&prop);
+                    lvI.iIndent = 0;
+
+                    InsertItem(&lvI);
+                }*/
+            }
+
+
+           /* for each (auto &item in fetchClasses)
             {          
                 // selection query
                 bool bAllowClass = IsClassAllowed(item.name);
@@ -806,9 +900,9 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                     lvI.iSubItem = 0;
                     lvI.pszText = LPSTR_TEXTCALLBACK;
                     lvI.iImage = I_IMAGECALLBACK;
-                    lvI.iItem = 0;
+                    lvI.iItem = LIST_CLASS_ELEMENT;
+                    lvI.lParam = &item;
                     lvI.iIndent = 0;
-
                     InsertItem(&lvI);
                 }
 
@@ -821,40 +915,12 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                     lvI.iSubItem = 0;
                     lvI.pszText = LPSTR_TEXTCALLBACK;
                     lvI.iImage = I_IMAGECALLBACK;
-                    lvI.iItem = prop.first;
+                    lvI.iItem = LIST_PROP_ELEMENT;
                     lvI.iIndent = 0;
 
                     InsertItem(&lvI);
-
-                    // fill array 
-                    /*if (prop.second->GetCtrl() == CTRL_ARRAY)
-                    {
-                        int size = prop.second->GetSize();
-                        while (size)
-                        {
-                            // go through child nodes
-                            Property_Base *childProp = prop.second->GetNext();
-                            while (childProp)
-                            {
-                                LVITEM chlvI;
-                                memset(&chlvI, 0, sizeof(LVITEM));
-
-                                lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
-                                lvI.iSubItem = 0;
-                                lvI.pszText = LPSTR_TEXTCALLBACK;
-                                lvI.iImage = I_IMAGECALLBACK;
-                                lvI.iItem = 0;
-                                lvI.iIndent = 0;
-
-                                InsertItem(&lvI);
-
-                                childProp = childProp->GetNext();
-                            }
-                            --size;
-                        }
-                    }*/
                 }
-            }
+            }*/
 
             /*for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
             {
@@ -1084,16 +1150,52 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     tc.pszText = szText;
     tc.cchTextMax = 255;
 
-    int SelectedGroup = m_nSelectedGroup;
+    SFetchData &data = m_cacheFill.at(pItem->iItem);
 
-    std::vector<std::string> groups;
+    switch (data.id)
+    {
+    case LIST_CLASS_ELEMENT:
+    {
+        const nmLauncher::SClassNode *pclass = data.pclass;
+        
+        switch (pItem->iSubItem)
+        {
+        case 0:
+        {
+            MultiByteToWideChar(CP_ACP, 0, pclass->name.c_str(), -1, wbuf, 255);
+            pItem->pszText = (LPSTR)wbuf;
+
+            bool bCollapsed = IsClassAllowed(pclass->name);
+            pItem->iImage = !bCollapsed ? 2 : 3;
+        }break;
+        default:
+            break;
+        };
+    }break;
+
+    case LIST_PROP_ELEMENT:
+    {
+        const nmLauncher::SClassNode *pclass = data.pclass;
+        Property_Base *prop = data.property;
+
+        //FillListParam(pItem, pclass, prop, data.pclass->nOverrideByteShift);
+    }break;
+
+    default:
+        break;
+    }
+ 
+
+    /* int SelectedGroup = m_nSelectedGroup;
+
+   std::vector<std::string> groups;
     m_propReactor->FetchGroups(groups);
     std::string strGroupName = groups.at(SelectedGroup); // TODO: catch exp
 
     nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
-    m_propReactor->FetchProperties(strGroupName, fetchClasses);
+    m_propReactor->FetchProperties(strGroupName, fetchClasses);*/
 
-    SPropertyClass * OutClass = 0;
+  /*  SPropertyClass * OutClass = 0;
     Property_Base * OutProperty = 0;
     int OutMemoryOffset = 0;
 
@@ -1103,23 +1205,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
         {
             FillListParam(pItem, OutClass, OutProperty, OutMemoryOffset);
         }
-        else if (OutClass) // class name selector
-        {
-            switch (pItem->iSubItem)
-            {
-            case 0:
-            {
-                MultiByteToWideChar(CP_ACP, 0, OutClass->ClassName.c_str(), -1, wbuf, 255);
-                pItem->pszText = (LPSTR)wbuf;
-
-                bool bCollapsed = IsClassAllowed(OutClass->ClassName);
-                pItem->iImage = !bCollapsed ? 2 : 3;
-            }break;
-            default:
-                break;
-            };
-        }
-    }
+    }*/
 
     m_PropertyCS.leave();
     

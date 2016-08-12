@@ -89,6 +89,15 @@ class CWTLPropertyGrid : public CWindowImpl<CWTLPropertyGrid<T>, CListViewCtrl, 
 	typedef CListViewComboBox<IGridImpl> TComboBox;
 	typedef CListViewEditResource<IGridImpl> TResourceEdit;
 
+    // proxy plain stuff to getdispdata routine
+    struct SFetchData 
+    {
+        int id;
+        const nmLauncher::SClassNode *pclass;
+        Property_Base *property;
+    };
+    
+
 public:
 	DECLARE_WND_SUPERCLASS(NULL, WC_LISTVIEW)
 
@@ -228,6 +237,10 @@ private:
 	SRenderContext	*m_pRenderContext;
 
     std::shared_ptr<nmLauncher::IPropertyReactor> m_propReactor;
+
+    // cache data
+    std::vector<SFetchData> m_cacheDataAll;
+    std::vector<SFetchData> m_cacheFill;
 
     wchar_t wbuf[256];
 
