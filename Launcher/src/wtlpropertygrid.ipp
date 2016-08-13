@@ -1174,16 +1174,33 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 
         case 1:
         {
-            std::string str_val = m_editor->GetProperty(m_editor->GetSelected()[0], prop);
+            // disable property if value differ in different objects
+            std::string str_val;
+
+            auto selected = m_editor->GetSelected();
+            if (!selected.empty())
+            {
+                std::vector<const T*>::const_iterator iter = selected.begin();
+
+                str_val = m_editor->GetProperty(*iter, prop);
+                iter++;
+
+                while (iter != selected.end())
+                {
+                    if (m_editor->GetProperty(*iter, prop) != str_val){
+                        str_val = "";
+                        break;
+                    }
+                    ++iter;
+                }
+            }
             MultiByteToWideChar(CP_ACP, 0, str_val.c_str(), -1, wbuf, 255);
             pItem->pszText = (LPSTR)wbuf;
         }break;
         default:
             break;
         }
-        
 
-        //FillListParam(pItem, pclass, prop, data.pclass->nOverrideByteShift);
     }break;
 
     default:
