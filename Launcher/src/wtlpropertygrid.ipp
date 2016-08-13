@@ -588,7 +588,7 @@ void CWTLPropertyGrid<T>::FillModel()
             SFetchData propx;
             classx.id = LIST_PROP_ELEMENT;
             classx.pclass = &item;
-            classx.property = prop.second;
+            classx.property = prop;
             m_cacheDataAll.push_back(classx);
         }
     }
@@ -867,23 +867,6 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
                 lvI.iIndent = 0;
 
                 InsertItem(&lvI);
-
-              /* for each (const auto *prop in item.properties)
-                {
-                    LVITEM lvI;
-                    memset(&lvI, 0, sizeof(LVITEM));
-
-                    lvI.mask = LVIF_TEXT | LVIF_IMAGE;
-                    lvI.iSubItem = 0;
-                    lvI.pszText = LPSTR_TEXTCALLBACK;
-                    lvI.iImage = I_IMAGECALLBACK;
-                    lvI.iItem =  listIndex++;
-
-                    lvI.lParam = MAKELPARAM((WORD)&item.pclass, (WORD)&prop);
-                    lvI.iIndent = 0;
-
-                    InsertItem(&lvI);
-                }*/
             }
 
 
@@ -1157,7 +1140,8 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     case LIST_CLASS_ELEMENT:
     {
         const nmLauncher::SClassNode *pclass = data.pclass;
-        
+        assert(pclass);
+
         switch (pItem->iSubItem)
         {
         case 0:
@@ -1177,6 +1161,27 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     {
         const nmLauncher::SClassNode *pclass = data.pclass;
         Property_Base *prop = data.property;
+
+        assert(pclass && prop);
+
+        switch (pItem->iSubItem)
+        {
+        case 0:
+        {
+            MultiByteToWideChar(CP_ACP, 0, prop->GetName(), -1, wbuf, 255);
+            pItem->pszText = (LPSTR)wbuf;
+        }break;
+
+        case 1:
+        {
+            std::string str_val = m_editor->GetProperty(m_editor->GetSelected()[0], prop);
+            MultiByteToWideChar(CP_ACP, 0, str_val.c_str(), -1, wbuf, 255);
+            pItem->pszText = (LPSTR)wbuf;
+        }break;
+        default:
+            break;
+        }
+        
 
         //FillListParam(pItem, pclass, prop, data.pclass->nOverrideByteShift);
     }break;

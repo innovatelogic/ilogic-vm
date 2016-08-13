@@ -4,7 +4,7 @@
 //{
     namespace nmLauncher
     {
-        using TMapProperties = std::map<int, Property_Base*>;
+        using TMapProperties = std::vector<Property_Base*>;
 
         struct SClassNode
         {

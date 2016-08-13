@@ -51,7 +51,7 @@
             {
                 for each (auto &prop in item.properties)
                 {
-                    const std::string name = prop.second->GetGroupName();
+                    const std::string name = prop->GetGroupName();
 
                     if (std::find(groups.begin(), groups.end(), name) == groups.end()) {
                         groups.push_back(name);
@@ -72,8 +72,8 @@
 
                 for each (auto &prop in item.properties)
                 {
-                    if (prop.second->GetGroupName() == group){
-                        node.properties.insert(std::make_pair(prop.first, prop.second));
+                    if (prop->GetGroupName() == group){
+                        node.properties.push_back(prop);
                     }
                 }
 
@@ -108,7 +108,7 @@
 
                         while (iterProp != classNode->PropertyMap.end())
                         {
-                            node.properties.insert(std::make_pair(id++, *iterProp));
+                            node.properties.push_back(*iterProp);
 
                             // array
                             if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
@@ -120,13 +120,12 @@
                                     Property_Base *childProp = (*iterProp)->GetNext();
                                     while (childProp)
                                     {
-                                        node.properties.insert(std::make_pair(id++, childProp));
+                                        node.properties.push_back(childProp);
                                         childProp = childProp->GetNext();
                                     }
                                     --size;
                                 }
                             }
-
                             ++iterProp;
                         }
 
@@ -167,7 +166,7 @@
 
                             while (iterPropIntf != nodeInterface->PropertyMap.end())
                             {
-                                node.properties.insert(std::make_pair(id++, *iterPropIntf));
+                                node.properties.push_back(*iterPropIntf);
 
                                 // array
                                 if ((*iterPropIntf)->GetCtrl() == CTRL_ARRAY)
@@ -179,7 +178,7 @@
                                         Property_Base *childProp = (*iterPropIntf)->GetNext();
                                         while (childProp)
                                         {
-                                            node.properties.insert(std::make_pair(id++, childProp));
+                                            node.properties.push_back(childProp);
                                             childProp = childProp->GetNext();
                                         }
                                         --size;

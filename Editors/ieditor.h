@@ -74,6 +74,8 @@ public:
 
     virtual std::vector<const CActor*>  GetSelected() const = 0;
 
+    virtual std::string GetProperty(const CObjectAbstract* object, const Property_Base *prop) const = 0;
+
     /*!
     * commits deselect command. 
     * does not have effect if no previous actors selected

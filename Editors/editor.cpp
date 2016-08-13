@@ -3,6 +3,7 @@
 #include "ViewportInterface.h"
 #include "ViewportManager.h"
 #include "command_base.h"
+#include "Property.h"
 
 namespace editors
 {
@@ -211,6 +212,63 @@ void EditorBase::MouseWheel(float ds, int x, int y)
 void EditorBase::InputKey(const EventInput &InputData)
 {
     m_pApi->ProcessInputKey(InputData);
+}
+
+//----------------------------------------------------------------------------------------------
+std::string EditorBase::GetProperty(const CObjectAbstract* object, const Property_Base *prop) const
+{
+    std::string out;
+    if (object && prop)
+    {
+        size_t memoryOffset = 0;
+
+        ClassNode *classNode = prop->GetClass();
+
+        assert(classNode);
+
+        TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
+
+        while (iterProp != classNode->PropertyMap.end())
+        {
+            if (*iterProp == prop)
+            {
+                memoryOffset = 0;
+
+                char buff[1024] = { 0 };
+
+                prop->GetProperty((BYTE*)object, buff);
+
+                out = buff;
+                return out;
+            }
+
+            // array
+            if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
+            {
+                size_t size = (*iterProp)->GetSize();
+                int ElementSize = (*iterProp)->GetElementSize();
+                int MemOffset = (*iterProp)->m_MemOffset;
+
+                while (size)
+                {
+                    // go through child nodes
+                    Property_Base *childProp = (*iterProp)->GetNext();
+                    while (childProp)
+                    {
+                        if (childProp == prop)
+                        {
+                            memoryOffset = (*iterProp)->m_MemOffset + (ElementSize * ((*iterProp)->GetSize() - size));
+                            return out;
+                        }
+                        childProp = childProp->GetNext();
+                    }
+                    --size;
+                }
+            }
+            ++iterProp;
+        }
+    }
+    return out;
 }
 
 //----------------------------------------------------------------------------------------------

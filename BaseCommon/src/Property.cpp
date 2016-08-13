@@ -30,12 +30,12 @@ Property_Base::Property_Base(const char *name,
 , m_pNodePrev(prev)
 , m_pNodeNext(next)
 {
-	AppClassTree &CTree = oes::common_base::GetClassTree();
+	/*AppClassTree &CTree = oes::common_base::GetClassTree();
 	m_ClassNodePtr = CTree.Find(classname);
 
 	if (!m_ClassNodePtr){
 		m_ClassNodePtr = CTree.FindInterface(classname);
-	}
+	}*/
 }
 
 //----------------------------------------------------------------------------------------------

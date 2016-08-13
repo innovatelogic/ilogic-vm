@@ -4,9 +4,9 @@
 //----------------------------------------------------------------------------------------------
 ClassNode::ClassNode(const char * name)
 : Name(name)
-, m_pRootNode(0)
-, m_pPropAlloc(0)
-, m_pPropsRaw(0)
+, m_pRootNode(nullptr)
+, m_pPropAlloc(nullptr)
+, m_pPropsRaw(nullptr)
 , m_PropsSize(0)
 {
 }
@@ -123,6 +123,7 @@ void ClassNode::SetProprties(const IPropertiesAllocator *pPropAlloc)
 	
 	for (unsigned int Index = 0; Index < m_PropsSize; ++Index)
 	{
+        const_cast<Property_Base*>(*(m_pPropsRaw + Index))->m_ClassNodePtr = this;
 		PropertyMap.push_back(const_cast<Property_Base*>(*(m_pPropsRaw + Index)));
 	}
 

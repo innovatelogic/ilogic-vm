@@ -47,6 +47,8 @@ public:
     void	MouseWheel(float ds, int x, int y) override;
     void	InputKey(const EventInput &input) override;
 
+    std::string GetProperty(const CObjectAbstract* object, const Property_Base *prop) const override;
+
 protected:
     /*!
      *  Returns a lowest editor-root related to input actor
