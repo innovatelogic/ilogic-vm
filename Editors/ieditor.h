@@ -74,7 +74,23 @@ public:
 
     virtual std::vector<const CActor*>  GetSelected() const = 0;
 
-    virtual std::string GetProperty(const CObjectAbstract* object, const Property_Base *prop) const = 0;
+    /*!
+    * retrieve object attribute
+    * [object] object to retrieve from
+    * [prop] property object
+    */
+    virtual std::string GetProperty(const CObjectAbstract* object,
+        const Property_Base *prop,
+        size_t index = 0,
+        const Property_Base *holder_array = nullptr) const = 0;
+
+    /*!
+    * set object property
+    * [value] value converter to string
+    * [object] object to set to
+    * [prop] property object
+    */
+    virtual void SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop) = 0;
 
     /*!
     * commits deselect command. 

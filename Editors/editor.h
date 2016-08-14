@@ -47,7 +47,13 @@ public:
     void	MouseWheel(float ds, int x, int y) override;
     void	InputKey(const EventInput &input) override;
 
-    std::string GetProperty(const CObjectAbstract* object, const Property_Base *prop) const override;
+    std::string GetProperty(
+        const CObjectAbstract* object, 
+        const Property_Base *prop,
+        size_t index = 0,
+        const Property_Base *holder_array = nullptr) const override;
+
+    void SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop) override;
 
 protected:
     /*!

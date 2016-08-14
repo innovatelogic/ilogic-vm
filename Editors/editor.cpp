@@ -82,7 +82,6 @@ size_t EditorBase::GetRedoCommandBatchSize(size_t index) const
 void EditorBase::SelectActors(const std::vector<CActor*> &actors)
 {
     // skip if nothing to select and deselect
-
     std::vector<const CActor*> keys = m_selection.Keys();
 
     bool bDiff = false;
@@ -215,7 +214,10 @@ void EditorBase::InputKey(const EventInput &InputData)
 }
 
 //----------------------------------------------------------------------------------------------
-std::string EditorBase::GetProperty(const CObjectAbstract* object, const Property_Base *prop) const
+std::string EditorBase::GetProperty(const CObjectAbstract* object, 
+                                    const Property_Base *prop,
+                                    size_t index /*= 0*/,
+                                    const Property_Base *holder_array /*= nullptr*/) const
 {
     std::string out;
     if (object && prop)
@@ -235,7 +237,6 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object, const Propert
                 memoryOffset = 0;
 
                 char buff[1024] = { 0 };
-
                 prop->GetProperty((BYTE*)object, buff);
 
                 out = buff;
@@ -269,6 +270,50 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object, const Propert
         }
     }
     return out;
+}
+
+//----------------------------------------------------------------------------------------------
+void EditorBase::SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop)
+{
+    /*AddCommand(std::move(
+        std::shared_ptr<CommandBase_>(new CommandBase_(
+            [&, manager, ivprt, actors]()
+    {
+        TMapActorVec mapActors = AdjustActorsToEditorRoot(actors);
+
+        m_selection.Empty();
+
+        std::vector<std::string> ids;
+        for each(auto item in mapActors)
+        {
+            ids.push_back(CActor::GetFullPathID(item.first)); // fill new selection
+
+            for each (auto value in item.second) {
+                m_selection.AddItem(item.first, value);
+            }
+        }
+        manager->SetSelect(ids, ivprt);
+
+        m_notifySelectFunc();
+    },
+            [&, manager, ivprt, old]() {
+
+        m_selection.Empty();
+
+        std::vector<std::string> ids;
+
+        auto keys = old.Keys();
+        for each(auto item in keys) {
+            ids.push_back(CActor::GetFullPathID(item)); // fill new selection
+        }
+
+        manager->SetSelect(ids, ivprt);
+        m_selection = old;
+
+        m_notifySelectFunc();
+    }))
+        ));
+}*/
 }
 
 //----------------------------------------------------------------------------------------------

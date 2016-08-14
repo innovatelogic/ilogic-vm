@@ -16,14 +16,14 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
+    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>(editor);
+
     m_editor = editor;
     m_pAppMain = editor->GetApp();
 
     m_pEdit = new TEdit(this);
     m_pComboBox = new TComboBox(this);
     m_pResourceEdit = new TResourceEdit(this);
-
-    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>(m_editor);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -476,8 +476,7 @@ long CWTLPropertyGrid<T>::HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD)
     case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
     {
         CustomDrawProperty(pNMLVCD);
-
-        return (CDRF_NEWFONT);// | CDRF_NOTIFYPOSTPAINT);
+        return (CDRF_NEWFONT); // | CDRF_NOTIFYPOSTPAINT);
     }break;
 
     case CDDS_ITEMPOSTPAINT:
@@ -528,18 +527,18 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
                 if (GetPropertySelectedBatch(data.property, value))
                 {
                     //assert(value.size() == 4);
-
                     DWORD buffer = MAKELONG(MAKEWORD(value[4], value[3]), MAKEWORD(value[2], value[1]));
                     pNMLVCD->clrText = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
                     pNMLVCD->clrTextBk = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
                 }
-
-           }break;
+            }break;
 
             case CTRL_COMBO:
             {
-                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
+                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel.
             }break;
+            default:
+                break;
             }
         }
 
@@ -547,54 +546,6 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
     default:
         break;
     }
-
-    /*
-    if (Prop == NULL || Prop->GetCtrl() == CTRL_ARRAY)
-    {
-        pNMLVCD->clrText = 0x00000011; // 0x00bbggrr
-        pNMLVCD->clrTextBk = RGB(220, 220, 220);
-        pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
-    }
-    else
-    {
-        int Policy = Prop->GetPolicy();
-
-        if (Policy == READ_ONLY || Policy == NO_READ_WRITE || Prop->GetCtrl() == CTRL_ARRAY)
-        {
-            pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
-            pNMLVCD->clrText = RGB(128, 128, 128);
-        }
-
-        if (pNMLVCD->iSubItem == 1)
-        {
-            switch (Prop->GetCtrl()) // switch property type
-            {
-            case CTRL_COLOR:
-            {
-                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
-
-                char ascii[256] = { 0 };
-
-                int MemoryOffsetOverride = 0;
-                if (PropClass->nOverrideByteShift != -1) { // interface relative shift
-                    MemoryOffsetOverride = PropClass->nOverrideByteShift;
-                }
-
-                Prop->GetProperty((BYTE*)PropClass->pDataObject + MemoryOffset + MemoryOffsetOverride, ascii);
-
-
-                DWORD Buffer = MAKELONG(MAKEWORD(ascii[4], ascii[3]), MAKEWORD(ascii[2], ascii[1]));  //0;// boost::lexical_cast<DWORD>(ascii);
-                pNMLVCD->clrText = RGB(GetBValue(Buffer), GetGValue(Buffer), GetRValue(Buffer)); // 0x00rrggbb -> 0x00bbggrr
-                pNMLVCD->clrTextBk = RGB(GetBValue(Buffer), GetGValue(Buffer), GetRValue(Buffer)); // 0x00rrggbb -> 0x00bbggrr
-            }break;
-
-            case CTRL_COMBO:
-            {
-                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
-            }break;
-            }
-        }
-    }*/
 }
 
 //----------------------------------------------------------------------------------------------
@@ -633,13 +584,12 @@ void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 
     FillModel();
 
-    if (!actors.empty())
-    {
+    if (!actors.empty()){
         SetSelected(const_cast<T*>(actors.at(0)));
-
-        PostMessage(WM_USER_DELETE_ALL, 0, 0);
-        PostMessage(WM_USER_FILL_PROPS, 0, 0);
     }
+
+    PostMessage(WM_USER_DELETE_ALL, 0, 0);
+    PostMessage(WM_USER_FILL_PROPS, 0, 0);
 }
 
 //----------------------------------------------------------------------------------------------

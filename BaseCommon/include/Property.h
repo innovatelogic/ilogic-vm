@@ -119,10 +119,10 @@ public:
 	/**
 	 * data set
 	 */
-	void		SetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { DoSetProperty(Ptr, Value, byteOffset, bSilent); }
-	virtual char*		GetProperty(const void * Ptr, char * OutBuffer) const { return ""; }
+	void		    SetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { DoSetProperty(Ptr, Value, byteOffset, bSilent); }
+	virtual char*   GetProperty(const void * Ptr, char * OutBuffer) const { return ""; }
 
-	virtual void		DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { assert(false); }
+	virtual void	DoSetProperty(const void * Ptr, const char* Value, unsigned int byteOffset = 0, bool bSilent = false) { assert(false); }
 
 	// return one property by default
 	virtual size_t		GetSize() const { return m_ElementDim; }
