@@ -156,7 +156,7 @@ public:
 
     long HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD);
 
-    void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/);
+    void CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD);
 
     void FillModel();
 
@@ -206,6 +206,8 @@ public:
 
 	void PushContext();
     void PopContext();
+
+    bool GetPropertySelectedBatch(Property_Base *prop, std::string &out);
 
 protected:
 private:

@@ -470,33 +470,12 @@ long CWTLPropertyGrid<T>::HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD)
 
     case CDDS_ITEMPREPAINT:
     {
-        DWORD CDResult = CDRF_NOTIFYSUBITEMDRAW;
-        return CDResult;
+        return CDRF_NOTIFYSUBITEMDRAW;
     }break;
 
     case CDDS_SUBITEM | CDDS_ITEMPREPAINT:
     {
-        m_PropertyCS.enter();
-
-        TCHAR	szText[256];
-
-        TCITEM tc;
-        tc.mask = TCIF_TEXT;
-        tc.pszText = szText;
-        tc.cchTextMax = 255;
-
-        int SelectedGroup = m_nSelectedGroup;
-
-        SPropertyClass * OutClass = 0;
-        Property_Base * OutProperty = 0;
-        int OutMemoryOffset = 0;
-
-        if (GetPropertyByIndex((int)pNMLVCD->nmcd.dwItemSpec, SelectedGroup, &OutClass, &OutProperty, OutMemoryOffset))
-        {
-            CustomDrawProperty(pNMLVCD, OutClass, OutProperty, OutMemoryOffset);
-        }
-
-        m_PropertyCS.leave();
+        CustomDrawProperty(pNMLVCD);
 
         return (CDRF_NEWFONT);// | CDRF_NOTIFYPOSTPAINT);
     }break;
@@ -508,16 +487,68 @@ long CWTLPropertyGrid<T>::HandleCustomDraw(LPNMLVCUSTOMDRAW pNMLVCD)
     break;
 
     default:
-    {
-    }break;
+    break;
     }
     return CDRF_DODEFAULT;
 }
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPropertyClass *PropClass, const Property_Base *Prop, int MemoryOffset /*= 0*/)
+void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
 {
+    SFetchData &data = m_cacheFill.at((int)pNMLVCD->nmcd.dwItemSpec);
+
+    switch (data.id)
+    {
+    case LIST_CLASS_ELEMENT:
+    {
+        pNMLVCD->clrText = 0x00000011; // 0x00bbggrr
+        pNMLVCD->clrTextBk = RGB(220, 220, 220);
+        pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel.
+    }break;
+    case LIST_PROP_ELEMENT:
+    {
+        int policy = data.property->GetPolicy();
+
+        if (policy == READ_ONLY || policy == NO_READ_WRITE || data.property->GetCtrl() == CTRL_ARRAY)
+        {
+            pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
+            pNMLVCD->clrText = RGB(128, 128, 128);
+        }
+
+        if (pNMLVCD->iSubItem == 1)
+        {
+            switch (data.property->GetCtrl()) // switch property type
+            {
+            case CTRL_COLOR:
+            {
+                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel.
+
+                std::string value;
+                if (GetPropertySelectedBatch(data.property, value))
+                {
+                    //assert(value.size() == 4);
+
+                    DWORD buffer = MAKELONG(MAKEWORD(value[4], value[3]), MAKEWORD(value[2], value[1]));
+                    pNMLVCD->clrText = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
+                    pNMLVCD->clrTextBk = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
+                }
+
+           }break;
+
+            case CTRL_COMBO:
+            {
+                pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel
+            }break;
+            }
+        }
+
+    }break;
+    default:
+        break;
+    }
+
+    /*
     if (Prop == NULL || Prop->GetCtrl() == CTRL_ARRAY)
     {
         pNMLVCD->clrText = 0x00000011; // 0x00bbggrr
@@ -563,7 +594,7 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD, const SPr
             }break;
             }
         }
-    }
+    }*/
 }
 
 //----------------------------------------------------------------------------------------------
@@ -853,17 +884,19 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
             }
 
             int listIndex = 0;
+
             // populate
             for each (auto &item in m_cacheFill)
             {
                 LVITEM lvI;
                 memset(&lvI, 0, sizeof(LVITEM));
 
-                lvI.mask = LVIF_TEXT | LVIF_IMAGE;
+                lvI.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
                 lvI.iSubItem = 0;
                 lvI.pszText = LPSTR_TEXTCALLBACK;
                 lvI.iImage = I_IMAGECALLBACK;
                 lvI.iItem = listIndex++;
+                lvI.lParam = reinterpret_cast<LPARAM>(&item);
                 lvI.iIndent = 0;
 
                 InsertItem(&lvI);
@@ -1124,8 +1157,6 @@ void CWTLPropertyGrid<T>::UpdatePreview()
 template<class T>
 BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 {
-    m_PropertyCS.enter();
-    
     TCHAR	szText[256];
 
     TCITEM tc;
@@ -1176,24 +1207,10 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
         {
             // disable property if value differ in different objects
             std::string str_val;
-
-            auto selected = m_editor->GetSelected();
-            if (!selected.empty())
-            {
-                std::vector<const T*>::const_iterator iter = selected.begin();
-
-                str_val = m_editor->GetProperty(*iter, prop);
-                iter++;
-
-                while (iter != selected.end())
-                {
-                    if (m_editor->GetProperty(*iter, prop) != str_val){
-                        str_val = "";
-                        break;
-                    }
-                    ++iter;
-                }
+            if (!GetPropertySelectedBatch(prop, str_val)){
+                str_val = "...";
             }
+
             MultiByteToWideChar(CP_ACP, 0, str_val.c_str(), -1, wbuf, 255);
             pItem->pszText = (LPSTR)wbuf;
         }break;
@@ -1228,9 +1245,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
             FillListParam(pItem, OutClass, OutProperty, OutMemoryOffset);
         }
     }*/
-
-    m_PropertyCS.leave();
-    
+   
     return FALSE;
 }
 
@@ -1855,4 +1870,34 @@ void CWTLPropertyGrid<T>::PopContext()
     if (m_pRenderContext) {
         m_pAppMain->GetRenderSDK()->GetRenderDriver()->PopContext();
     }
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(Property_Base *prop, std::string &out)
+{
+    bool bResult = false;
+
+    // disable property if value differ in different objects
+    auto selected = m_editor->GetSelected();
+    if (!selected.empty())
+    {
+        bResult = true;
+        std::vector<const T*>::const_iterator iter = selected.begin();
+
+        out = m_editor->GetProperty(*iter, prop);
+        iter++;
+
+        while (iter != selected.end())
+        {
+            if (m_editor->GetProperty(*iter, prop) != out)
+            {
+                out = "";
+                bResult = false;
+                break;
+            }
+            ++iter;
+        }
+    }
+    return bResult;
 }
