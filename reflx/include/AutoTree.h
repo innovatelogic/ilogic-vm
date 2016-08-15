@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include "Property.h"
 #include <algorithm>
 #include <functional>
@@ -12,7 +12,7 @@ namespace oes
     namespace common_base
     {
         template<class T_CLASS>
-        class COMMON_BASE_EXPORT CAutoTree
+        class REFLX_EXPORT CAutoTree
         {
         public:
             CAutoTree()

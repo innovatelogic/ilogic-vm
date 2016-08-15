@@ -5,17 +5,18 @@ project(RenderSDK)
 add_definitions(-DUNICODE -D_UNICODE)
 add_definitions(-DLIB_COMPILE)
 
-include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK)
 include_directories(${CMAKE_SOURCE_DIR}/common/SDK/glew-1.13.0/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
+link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
+include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
+include_directories(${CMAKE_SOURCE_DIR}/reflx/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/FreeType-2.1.4-lib/lib)
-link_directories(${CMAKE_SOURCE_DIR}/common/SDK/nv_math/lib)
-
-set(LIBRARIES CommonBase 
+set(LIBRARIES CommonBase
+			  reflx
 			  Foundation
 			  D3DDriver
 			  nv_math)

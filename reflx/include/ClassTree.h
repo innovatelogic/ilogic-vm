@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include "ClassNode.h"
 #include "AutoTree.h"
 #include <vector>
@@ -11,7 +11,7 @@ namespace oes
     namespace common_base
     {
 
-        class COMMON_BASE_EXPORT AppClassTree
+        class REFLX_EXPORT AppClassTree
         {
         public:
             typedef std::vector<ClassNode*>			        TVecClassNodeInterface;
@@ -52,7 +52,7 @@ namespace oes
         //
         //----------------------------------------------------------------------------------------------
         template<typename T>
-        struct COMMON_BASE_EXPORT CEnumerateChildTypeStrategy
+        struct REFLX_EXPORT CEnumerateChildTypeStrategy
         {
             CEnumerateChildTypeStrategy(const char *InterfaceName, const CAutoTree<ClassNode> &tree, T &pStoreType)
             {

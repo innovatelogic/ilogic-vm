@@ -1,10 +1,10 @@
 #pragma once
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include "ClassNode.h"
 
 template<typename T>
-class COMMON_BASE_EXPORT ClassNodeType : public ClassNode
+class REFLX_EXPORT ClassNodeType : public ClassNode
 {
 	typedef T OwnerClass;
 

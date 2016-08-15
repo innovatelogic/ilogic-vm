@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include <string>
 #include "mathlib.h"
 #include "BaseTypes.h"
@@ -54,14 +54,14 @@ using namespace oes::common_base;
 #define INT_PROP			false
 
 //----------------------------------------------------------------------------------------------
-struct COMMON_BASE_EXPORT StructDataMapping
+struct REFLX_EXPORT StructDataMapping
 {
 	std::string Name;
 	size_t		SubOffset;
 };
 
 //----------------------------------------------------------------------------------------------
-struct COMMON_BASE_EXPORT SInterfaceDecl
+struct REFLX_EXPORT SInterfaceDecl
 {
 	const char	*strType;
 	unsigned int byteShift;
@@ -75,7 +75,7 @@ struct COMMON_BASE_EXPORT SInterfaceDecl
 class ClassNode;
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT Property_Base
+class REFLX_EXPORT Property_Base
 {
 public:
 	Property_Base(const char *name,
@@ -198,7 +198,7 @@ protected:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT IPropertiesAllocator
+class REFLX_EXPORT IPropertiesAllocator
 {
 public:
     virtual const Property_Base** GetProps() const = 0;
@@ -209,7 +209,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyImpl : public Property_Base
+class REFLX_EXPORT PropertyImpl : public Property_Base
 {
 public:
 	PropertyImpl(const char *name, int offset, const char *classname, const char *group,
@@ -222,7 +222,7 @@ public:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyINT : public Property_Base
+class REFLX_EXPORT PropertyINT : public Property_Base
 {
 public:
 	PropertyINT(const char *name,
@@ -250,7 +250,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyUINT : public Property_Base
+class REFLX_EXPORT PropertyUINT : public Property_Base
 {
 public:
 	PropertyUINT(const char *name,
@@ -281,7 +281,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyFLOAT : public Property_Base
+class REFLX_EXPORT PropertyFLOAT : public Property_Base
 {
 public:
 	PropertyFLOAT(const char *name,
@@ -309,7 +309,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyBYTE : public Property_Base
+class REFLX_EXPORT PropertyBYTE : public Property_Base
 {
 public:
 	PropertyBYTE(const char *name,
@@ -337,7 +337,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyBOOL : public Property_Base
+class REFLX_EXPORT PropertyBOOL : public Property_Base
 {
 public:
 	PropertyBOOL(const char *name, 
@@ -365,7 +365,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyString : public Property_Base
+class REFLX_EXPORT PropertyString : public Property_Base
 {
 public:
 	PropertyString(const char *name, 
@@ -393,7 +393,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyStringW : public Property_Base
+class REFLX_EXPORT PropertyStringW : public Property_Base
 {
 public:
 	PropertyStringW(const char *name,
@@ -421,7 +421,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyVector2f : public Property_Base
+class REFLX_EXPORT PropertyVector2f : public Property_Base
 {
 public:
 	PropertyVector2f(const char *name,
@@ -449,7 +449,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyVector : public Property_Base
+class REFLX_EXPORT PropertyVector : public Property_Base
 {
 public:
 	PropertyVector(const char *name,
@@ -477,7 +477,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyVector4f : public Property_Base
+class REFLX_EXPORT PropertyVector4f : public Property_Base
 {
 public:
 	PropertyVector4f(const char *name,
@@ -505,7 +505,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyMatrix3x3 : public Property_Base
+class REFLX_EXPORT PropertyMatrix3x3 : public Property_Base
 {
 public:
 	PropertyMatrix3x3(const char *name,
@@ -533,7 +533,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyMatrix : public Property_Base
+class REFLX_EXPORT PropertyMatrix : public Property_Base
 {
 public:
 	PropertyMatrix(const char *name,
@@ -561,7 +561,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyBounds3f : public Property_Base
+class REFLX_EXPORT PropertyBounds3f : public Property_Base
 {
 public:
 	PropertyBounds3f(const char *name,
@@ -589,7 +589,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyPixelTransform : public Property_Base
+class REFLX_EXPORT PropertyPixelTransform : public Property_Base
 {
 public:
 	PropertyPixelTransform(const char *name,
@@ -617,7 +617,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertySceneInputmode : public Property_Base
+class REFLX_EXPORT PropertySceneInputmode : public Property_Base
 {
 public:
 	PropertySceneInputmode(const char *name, 
@@ -645,7 +645,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyEHandleInputKey : public Property_Base
+class REFLX_EXPORT PropertyEHandleInputKey : public Property_Base
 {
 public:
 	PropertyEHandleInputKey(const char *name, 
@@ -673,7 +673,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyEHandleInputMouse : public Property_Base
+class REFLX_EXPORT PropertyEHandleInputMouse : public Property_Base
 {
 public:
 	PropertyEHandleInputMouse(const char *name, 
@@ -701,7 +701,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyArrayStatic : public Property_Base
+class REFLX_EXPORT PropertyArrayStatic : public Property_Base
 {
 public:
 	PropertyArrayStatic(const char *name, 
@@ -728,7 +728,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-class COMMON_BASE_EXPORT PropertyArray : public Property_Base
+class REFLX_EXPORT PropertyArray : public Property_Base
 {
 public:
 	PropertyArray(const char *name,

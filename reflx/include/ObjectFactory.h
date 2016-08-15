@@ -23,7 +23,7 @@
 #pragma once
 #endif
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include "classfactory.h"
 #include "IObjectAbstract.h"
 #include <assert.h>
@@ -51,7 +51,7 @@ namespace oes
 
         extern "C"
         {
-            COMMON_BASE_EXPORT oes::common_base::TClassFactory* GetClassFactoryA();
+            REFLX_EXPORT oes::common_base::TClassFactory* GetClassFactoryA();
         }
 
         //----------------------------------------------------------------------------------------------

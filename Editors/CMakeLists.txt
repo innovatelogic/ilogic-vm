@@ -12,6 +12,7 @@ include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googlemock/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
+include_directories(${CMAKE_SOURCE_DIR}/reflx/include)
 include_directories(${CMAKE_SOURCE_DIR}/D3DDrv)
 include_directories(${CMAKE_SOURCE_DIR}/Foundation)
 include_directories(${CMAKE_SOURCE_DIR}/RenderSDK)
@@ -38,6 +39,7 @@ set(SOURCE_EDITORS
 	scene_editor_main.cpp)
 
 set(LIBRARIES	CommonBase
+				reflx
 				Foundation
 				D3DDriver
 				RenderSDK

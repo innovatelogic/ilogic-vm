@@ -19,7 +19,7 @@
 #ifndef __classfactory_h__
 #define __classfactory_h__
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include "ClassTree.h"
 #include "ClassNode.h"
 #include "ClassNodeInterface.h"
@@ -48,7 +48,7 @@ namespace Utility
 		class T_COPY_FUNCTION,
 		template<class> class T_POLICE_DEFAULT = CPoliceNullPtr	
 		> 
-	class COMMON_BASE_EXPORT CClassFactory
+	class REFLX_EXPORT CClassFactory
 	{
 		typedef T_BASE          TBase;
 		typedef T_GEN_FUNCTION  TGenFunction;

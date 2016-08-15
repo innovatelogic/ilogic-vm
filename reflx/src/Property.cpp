@@ -1,6 +1,5 @@
 #include "Property.h"
 #include "ObjectFactory.h"
-//#include "ObjectAbstract.h"
 #include "ClassTree.h"
 #include "StringUtility.h"
 
@@ -30,12 +29,6 @@ Property_Base::Property_Base(const char *name,
 , m_pNodePrev(prev)
 , m_pNodeNext(next)
 {
-	/*AppClassTree &CTree = oes::common_base::GetClassTree();
-	m_ClassNodePtr = CTree.Find(classname);
-
-	if (!m_ClassNodePtr){
-		m_ClassNodePtr = CTree.FindInterface(classname);
-	}*/
 }
 
 //----------------------------------------------------------------------------------------------

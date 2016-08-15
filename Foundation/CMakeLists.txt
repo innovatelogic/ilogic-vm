@@ -13,6 +13,7 @@ if(Boost_FOUND)
 endif()
 
 include_directories(${COMMON_SDK_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/reflx/include)
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 
@@ -58,7 +59,7 @@ set(SOURCE_API
 
 source_group("API" FILES ${SOURCE_API})
 
-set(LIBRARIES CommonBase)
+set(LIBRARIES CommonBase reflx)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API})
 

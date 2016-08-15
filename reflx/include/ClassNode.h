@@ -1,9 +1,9 @@
 #pragma once
 
-#include "OEMBase.h"
+#include "defexport.h"
 #include <vector>
 
-class COMMON_BASE_EXPORT ClassNode
+class REFLX_EXPORT ClassNode
 {
 public:
 	typedef std::vector<ClassNode*>		        TVecClassNode;
