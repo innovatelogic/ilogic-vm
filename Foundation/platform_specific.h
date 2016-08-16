@@ -227,7 +227,6 @@ private:
 #define BYTE_OFFSET_CPP(name) \
 		(BYTE*)&((ThisClass*)nullptr)->name - (BYTE*)nullptr
 
-#define ARRAY_COUNT_SIZE( array ) \
-	( sizeof(array) / sizeof((array)[0]) )
+
 
 //----------------------------------------------------------------------------------------------

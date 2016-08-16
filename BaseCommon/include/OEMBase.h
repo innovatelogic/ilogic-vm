@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stddef.h"
+#include <cstdint>
 
 // 
 #ifdef _MSC_VER
@@ -48,6 +49,12 @@
 #else
 #define inline_   inline
 #endif
+
+#define DATAFIELD_OFFSET(TYPE, FIELD) (uint8_t*)&((TYPE*)nullptr)->FIELD - (uint8_t*)nullptr
+
+#define ARRAY_COUNT_SIZE( array ) \
+	( sizeof(array) / sizeof((array)[0]) )
+
 
 namespace common_base
 {

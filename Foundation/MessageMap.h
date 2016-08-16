@@ -11,31 +11,7 @@
 #define VAR_NAME(Var) #Var
 #define VAR_NAME2(Var1, Var2) VAR_NAME(Var1)##";"##VAR_NAME(Var2)
 
-//---------------------------------------------------------------------------------------------
-#define DECLARE_CLASS_SIMPLE( className, baseClassName ) \
-	typedef baseClassName Super;\
-	typedef baseClassName BaseClass;\
-	typedef className ThisClass;\
-	friend class AutoRegisterProps##className;\
-public:\
-	static char const* GetPanelClassName() { return #className; }\
-	static char const* GetPanelBaseClassName() { return #baseClassName; }\
-	static char const* ThisClassName() { return #className; }
 
-#define DECLARE_CLASS_SIMPLE_NOBASE( className )\
-	typedef className ThisClass;\
-	friend class AutoRegisterProps##className;\
-public:\
-	static char const* GetPanelClassName() { return #className; }\
-	static char const* GetPanelBaseClassName() { return nullptr; }\
-	static char const* ThisClassName() { return #className; }
-
-#define DECLARE_INTERFACE_CLASS( className )\
-	typedef className ThisClass;\
-	friend class AutoRegisterProps##className;\
-public:\
-	static char const* ThisClassName() { return #className; }\
-	byte ___startObjectMarker##className;
 
 //---------------------------------------------------------------------------------------------
 enum EActorState

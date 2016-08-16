@@ -1,9 +1,4 @@
-#ifndef __coresdkafx_h__
-#define __coresdkafx_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "game_types.h"
 #include "StdafxFoundation.h"
@@ -22,11 +17,7 @@
 
 #include "Property.h"
 
-#ifndef __scenegamearcanoid_h__
 #include "SceneGameArcanoid.h"
-#endif
-
-#define DATAFIELD_OFFSET(TYPE, FIELD) (BYTE*)&((TYPE*)nullptr)->FIELD - (BYTE*)nullptr
 
 //----------------------------------------------------------------------------------------------
 //
@@ -416,5 +407,3 @@ public:
 		(TParam->*pfn_RI)(Param);
 	}
 };
-
-#endif//__coresdkafx_h__

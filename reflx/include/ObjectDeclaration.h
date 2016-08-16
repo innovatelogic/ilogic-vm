@@ -305,3 +305,30 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 	}\
 }
  
+
+
+//---------------------------------------------------------------------------------------------
+#define DECLARE_CLASS_SIMPLE( className, baseClassName ) \
+	typedef baseClassName Super;\
+	typedef baseClassName BaseClass;\
+	typedef className ThisClass;\
+	friend class AutoRegisterProps##className;\
+public:\
+	static char const* GetPanelClassName() { return #className; }\
+	static char const* GetPanelBaseClassName() { return #baseClassName; }\
+	static char const* ThisClassName() { return #className; }
+
+#define DECLARE_CLASS_SIMPLE_NOBASE( className )\
+	typedef className ThisClass;\
+	friend class AutoRegisterProps##className;\
+public:\
+	static char const* GetPanelClassName() { return #className; }\
+	static char const* GetPanelBaseClassName() { return nullptr; }\
+	static char const* ThisClassName() { return #className; }
+
+#define DECLARE_INTERFACE_CLASS( className )\
+	typedef className ThisClass;\
+	friend class AutoRegisterProps##className;\
+public:\
+	static char const* ThisClassName() { return #className; }\
+	byte ___startObjectMarker##className;

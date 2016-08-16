@@ -57,6 +57,7 @@ if (${ENABLE_TESTING})
 	add_executable( ${PROJECT_TEST_NAME}
 					ut/ut_appclasstree.cpp
 					ut/ut_autotree.cpp
+					ut/ut_classtree.cpp
 					ut/main.cpp )
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
