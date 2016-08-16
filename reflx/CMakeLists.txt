@@ -58,6 +58,8 @@ if (${ENABLE_TESTING})
 					ut/ut_appclasstree.cpp
 					ut/ut_autotree.cpp
 					ut/ut_classtree.cpp
+					ut/ut_classtree_fixture.h
+					ut/ut_classtree_fixture.cpp
 					ut/main.cpp )
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})

@@ -12,21 +12,25 @@
 		BEGIN_AUTO_CLASS(CLASS)
 
 #define END_REGISTER_CLASS(CLASS, BASE_CLASS)\
-		END_AUTO_CLASS(CLASS)\
+		END_AUTO_CLASS()\
 		CLASS_INSTANCE_EX(CLASS, BASE_CLASS)
 
 #define REGISTER_CLASS_PURE(CLASS, BASE_CLASS)\
 		BEGIN_AUTO_CLASS(CLASS)
 
 #define END_REGISTER_CLASS_PURE(CLASS, BASE_CLASS)\
-		END_AUTO_CLASS(CLASS)\
+		END_AUTO_CLASS()\
+		CLASS_INSTANCE_PURE(CLASS, BASE_CLASS)
+
+#define END_REGISTER_CLASS_PURE_()\
+		END_AUTO_CLASS()\
 		CLASS_INSTANCE_PURE(CLASS, BASE_CLASS)
 
 #define REGISTER_CLASS_PURE_NOBASE(CLASS)\
 		BEGIN_AUTO_CLASS(CLASS)
 
 #define END_REGISTER_CLASS_PURE_NOBASE(CLASS)\
-		END_AUTO_CLASS(CLASS)\
+		END_AUTO_CLASS()\
 		CLASS_INSTANCE_PURE_NOBASE(CLASS)
 
 //----------------------------------------------------------------------------------------------
@@ -71,7 +75,7 @@ const Property_Base* Arr[] = {
 
 
 //----------------------------------------------------------------------------------------------
-#define ASSEMBLE_PROPS(CLASS)\
+#define ASSEMBLE_PROPS()\
 };\
 	if (ARRAY_COUNT_SIZE(Arr))\
 {\
@@ -117,11 +121,11 @@ if (ARRAY_COUNT_SIZE(ArrIntf))\
 
 //----------------------------------------------------------------------------------------------
 #define END_AUTO_CLASS(CLASS)\
-ASSEMBLE_PROPS(CLASS)\
-CLASS_ENDL(CLASS)
+ASSEMBLE_PROPS()\
+CLASS_ENDL()
 
 //----------------------------------------------------------------------------------------------
-#define CLASS_ENDL(CLASS)\
+#define CLASS_ENDL()\
 	}\
 	virtual const Property_Base** GetProps() const { return m_pProps; }\
 	virtual unsigned int GetSize() const { return m_nSize; }\
