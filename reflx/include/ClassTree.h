@@ -8,9 +8,8 @@
 
 namespace oes
 {
-    namespace common_base
+    namespace rflex
     {
-
         class REFLX_EXPORT AppClassTree
         {
         public:

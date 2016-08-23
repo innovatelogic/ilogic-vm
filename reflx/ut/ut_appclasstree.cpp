@@ -50,7 +50,7 @@ struct SNode
 //----------------------------------------------------------------------------------------------
 TEST(TestUtils, BuildTreeTest)
 {
-	CAutoTree<SNode> foo;
+	oes::rflex::CAutoTree<SNode> foo;
 
 	foo.Add("6", "2");
 	foo.Add("5", "2");
@@ -58,7 +58,6 @@ TEST(TestUtils, BuildTreeTest)
 	foo.Add("4", "1");
 	foo.Add("1", "0");
 	foo.Add("2", "0");
-
 }
 
 //----------------------------------------------------------------------------------------------

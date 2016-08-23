@@ -16,12 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
 
-#ifndef __h_object_factory__
-#define __h_object_factory__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "defexport.h"
 #include "classfactory.h"
@@ -33,25 +28,21 @@
  */
 namespace oes
 {
-    namespace common_base
+    namespace rflex
     {
         // define generate function declaration
         typedef class IObjectAbstract* (*TGenFunction) (const char *pName, const IObjectAbstract *pParent);
         typedef class IObjectAbstract* (*TCloneFunction) (const IObjectAbstract *pSource, const IObjectAbstract *pParent);
 
         // define class factory with specified types
-        typedef Utility::CClassFactory <
-            IObjectAbstract,
-            oes::common_base::TGenFunction,
-            oes::common_base::TCloneFunction
-        > TClassFactory;
+        using TClassFactory = CClassFactory<IObjectAbstract, TGenFunction, TCloneFunction>;
 
         // define specified global class factory
-        typedef TClassFactory::TGlobalFactory TGlobalClassFactory;
+        typedef TClassFactory::CAuto::TGlobalFactory TGlobalClassFactory;
 
         extern "C"
         {
-            REFLX_EXPORT oes::common_base::TClassFactory* GetClassFactoryA();
+            REFLX_EXPORT TClassFactory* GetClassFactoryA();
         }
 
         //----------------------------------------------------------------------------------------------
@@ -85,7 +76,7 @@ namespace oes
         template <typename CLASS_T, typename CLASS_BASE>
         static void GlobalRegisterPure2(const char *TypeName, const class IPropertiesAllocator * PropAlloc)
         {
-            TClassFactory * classFactory = GetClassFactoryA();
+            TClassFactory *classFactory = GetClassFactoryA();
 
             classFactory->RegisterPure2<CLASS_T, CLASS_BASE>(TypeName, PropAlloc);
         }
@@ -100,7 +91,7 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
-        static IObjectAbstract* GenObject(const char *Type, const char *Name, IObjectAbstract * Parent = 0)
+        static IObjectAbstract* GenObject(const char *Type, const char *Name, IObjectAbstract * Parent = nullptr)
         {
             TClassFactory *classFactory = GetClassFactoryA();
 
@@ -142,7 +133,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         static AppClassTree& GetClassTree()
         {
-            TClassFactory * classFactory = GetClassFactoryA();
+            TClassFactory *classFactory = GetClassFactoryA();
             return classFactory->GetClassTree();
         }
 
@@ -154,12 +145,12 @@ namespace oes
         public:
             CAuto(const char *Key, TGenFunction Func, TCloneFunction CopyFunc, const char * ClassName, const char * BaseClassName)
             {
-                oes::common_base::GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
+                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
             }
 
             CAuto(const char* TypeName, const class Property_Base** Arr, int Count)
             {
-                oes::common_base::GlobalRegisterPure<CLASS_T, CLASS_BASE>(TypeName, Arr, Count);
+                GlobalRegisterPure<CLASS_T, CLASS_BASE>(TypeName, Arr, Count);
             }
         };
 
@@ -171,13 +162,13 @@ namespace oes
         public:
             CAutoEx(const char *Key, TGenFunction Func, TCloneFunction CopyFunc, const char * ClassName, const char * BaseClassName)
             {
-                oes::common_base::GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
+                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
 
                 T_PROPERTY_CLASS* pPropertyClass = new T_PROPERTY_CLASS();
 
                 assert(pPropertyClass);
 
-                oes::common_base::GlobalRegisterPure2<CLASS_T, CLASS_BASE>(Key, pPropertyClass);
+                GlobalRegisterPure2<CLASS_T, CLASS_BASE>(Key, pPropertyClass);
             }
         };
 
@@ -191,7 +182,7 @@ namespace oes
 
                 assert(pPropertyClass);
 
-                oes::common_base::GlobalRegisterPure2<CLASS_T, CLASS_BASE>(Key, pPropertyClass);
+                GlobalRegisterPure2<CLASS_T, CLASS_BASE>(Key, pPropertyClass);
             }
         };
 
@@ -205,10 +196,8 @@ namespace oes
 
                 assert(pPropertyClass);
 
-                oes::common_base::GlobalRegisterInterface<CLASS_T>(pKey, pPropertyClass);
+                GlobalRegisterInterface<CLASS_T>(pKey, pPropertyClass);
             }
         };
     }
 }
-
-#endif //__h_object_factory__

@@ -122,7 +122,7 @@ public:
 	/** 
 	 * @return self class name.
 	 */
-	std::string		GetThisClassName() { return oes::common_base::GetThisClassName(m_TypeId); }
+	std::string		GetThisClassName() { return oes::rflex::GetThisClassName(m_TypeId); }
 
 	/** 
 	 * Set unique class type id.
@@ -239,10 +239,10 @@ public:
         return A1->m_nPlainDeserializationPos < A2->m_nPlainDeserializationPos;
     }
 
-    static oes::common_base::TClassFactory* GetClassFactoryStatic()
+    static oes::rflex::TClassFactory* GetClassFactoryStatic()
     {
         DbgAllocCall();
-        return oes::common_base::TGlobalClassFactory::GetInstance();
+        return oes::rflex::TGlobalClassFactory::GetInstance();
     }
 
 protected:

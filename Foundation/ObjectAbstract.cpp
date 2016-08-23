@@ -67,13 +67,13 @@ extern "C"
 {
    EXTERN_EXPORT CObjectAbstract* GENERATE_OBJECT_SDK(const char *Type, const char *Name, CObjectAbstract *pParent /*= NULL*/)
    {
-		return static_cast<CObjectAbstract*>(oes::common_base::GenObject(Type, Name, pParent));
+		return static_cast<CObjectAbstract*>(oes::rflex::GenObject(Type, Name, pParent));
    }
 
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract * CLONE_OBJECT_SDK(const CObjectAbstract *pSource, const char* Name /*= NULL*/, CObjectAbstract *pNewParent /*= NULL*/)
    {
-		CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::common_base::CloneObject(pSource, pNewParent));
+		CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::rflex::CloneObject(pSource, pNewParent));
 	
 		if (Name){
 			NewObject->SetName(Name);
@@ -85,10 +85,10 @@ extern "C"
    //----------------------------------------------------------------------------------------------
    EXTERN_EXPORT CObjectAbstract* SLICE_CLONE_OBJECT(const CObjectAbstract *pSource, const char *NewType, const char *Name /*= NULL*/)
    {
-	   CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::common_base::SliceCloneObject(pSource, NewType));
+	   CObjectAbstract * NewObject = static_cast<CObjectAbstract*>(oes::rflex::SliceCloneObject(pSource, NewType));
 
 	   NewObject->SetType(NewType);
-	   NewObject->SetTypeId(oes::common_base::GetId(NewType));
+	   NewObject->SetTypeId(oes::rflex::GetId(NewType));
 
 	   if (Name){
 		   NewObject->SetName(Name);
@@ -164,7 +164,7 @@ bool CObjectAbstract::IsGenerationFinished()
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	AppClassTree &CTree = oes::common_base::GetClassTree();
+	oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
 	if (ClassNode *pCNode = CTree.Find(GetType()))
 	{
@@ -258,7 +258,7 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_current_tree)
 {
-	AppClassTree &CTree = oes::common_base::GetClassTree();
+    oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
 	if (ClassNode *pCNode = CTree.Find(GetType()))
 	{
@@ -356,7 +356,7 @@ bool IsNestedBy(ClassNode *pNode, const char *pTypeBase)
 
 	if (pTypeBase)
 	{
-		AppClassTree &CTree = oes::common_base::GetClassTree();
+		oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
 		ClassNode *pBaseType = CTree.Find(pTypeBase);
 
@@ -381,7 +381,7 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 {
 	typedef std::pair<std::string, std::string> TPairString;
 
-	AppClassTree &CTree = oes::common_base::GetClassTree();
+    oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
 	std::map<std::string, std::string> ValueMap;
 

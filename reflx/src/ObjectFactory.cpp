@@ -12,11 +12,11 @@ extern "C"
 //----------------------------------------------------------------------------------------------
 namespace oes
 {
-    namespace common_base
+    namespace rflex
     {
-        oes::common_base::TClassFactory* GetClassFactoryA()
+        TClassFactory* GetClassFactoryA()
         {
-            return oes::common_base::TGlobalClassFactory::GetInstance();
+            return TGlobalClassFactory::GetInstance();
         }
     }
 }

@@ -16,8 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //----------------------------------------------------------------------------------------------
 
-#ifndef __classfactory_h__
-#define __classfactory_h__
+#pragma once
 
 #include "defexport.h"
 #include "ClassTree.h"
@@ -27,193 +26,190 @@
 #include "singleton.h"
 #include <map>
 
-#ifdef _WIN32
-#pragma once
-#endif
-
-namespace Utility
+namespace oes
 {
-	template<class T> 
-	struct CPoliceNullPtr
-	{
-		static T Police()
-		{
-			return static_cast<T>(0);
-		}
-	};
+    namespace rflex
+    {
+        template<class T>
+        struct CPoliceNullPtr
+        {
+            static T Police()
+            {
+                return static_cast<T>(0);
+            }
+        };
 
-	template < 
-		class T_BASE,
-		class T_GEN_FUNCTION,
-		class T_COPY_FUNCTION,
-		template<class> class T_POLICE_DEFAULT = CPoliceNullPtr	
-		> 
-	class REFLX_EXPORT CClassFactory
-	{
-		typedef T_BASE          TBase;
-		typedef T_GEN_FUNCTION  TGenFunction;
-		typedef T_COPY_FUNCTION TCloneFunction;
+        template <
+            class T_BASE,
+            class T_GEN_FUNCTION,
+            class T_COPY_FUNCTION,
+            template<class> class T_POLICE_DEFAULT = CPoliceNullPtr
+        >
+        class REFLX_EXPORT CClassFactory
+        {
+            typedef T_BASE          TBase;
+            typedef T_GEN_FUNCTION  TGenFunction;
+            typedef T_COPY_FUNCTION TCloneFunction;
 
-		class AutoManager
-		{
-		public:
-			AutoManager(TGenFunction gen, TCloneFunction clone)
-				: GenFunc(gen)
-				, CloneFunc(clone)
-			{
-			}
-			TGenFunction	GenFunc;
-			TCloneFunction	CloneFunc;
-		};
+            class AutoManager
+            {
+            public:
+                AutoManager(TGenFunction gen, TCloneFunction clone)
+                    : GenFunc(gen)
+                    , CloneFunc(clone)
+                {
+                }
+                TGenFunction	GenFunc;
+                TCloneFunction	CloneFunc;
+            };
 
-	public:
-		typedef std::map<std::string, AutoManager>		TMapGenerator;
-		typedef std::map<std::string, size_t>			TMapId;
+        public:
+            class CAuto
+            {
+            public:
+                using TGlobalFactory = Utility::CSingleton<CClassFactory, CAuto>;
 
-		void Release()
-		{
-			ClassTree.Release();
-		}
+                CAuto(const char *key, TGenFunction func, TCloneFunction cloneFunc, const char *className, const char *baseClassName)
+                {
+                    TGlobalFactory::GetInstance()->Register(key, func, cloneFunc, className, baseClassName);
+                }
 
-		void _erase(const char* name)
-		{
-			m_MapGenerator.erase(name);
-		}
+                CAuto(const char *Key, std::vector<class Property_Base*> &VecPropInfo)
+                {
+                    TGlobalFactory::GetInstance()->RegisterPure(Key, VecPropInfo);
+                }
+            };
 
-		template <typename T_CLASS, typename CLASS_BASE>
-		size_t Register(const char* Key, TGenFunction GenFunc, TCloneFunction CloneFunc, const char * ClassName, const char * BaseClassName)
-		{
-			TMapGenerator::iterator Iter = m_MapGenerator.find(Key);
+        public:
+            typedef std::map<std::string, AutoManager>		TMapGenerator;
+            typedef std::map<std::string, size_t>			TMapId;
 
-			if (Iter == m_MapGenerator.end()){
-				m_MapGenerator.insert(std::make_pair(Key, AutoManager(GenFunc, CloneFunc)));
-			}
+            void Release()
+            {
+                ClassTree.Release();
+            }
 
-            ClassTree.Add(ClassName, BaseClassName);
+            void _erase(const char* name)
+            {
+                m_MapGenerator.erase(name);
+            }
 
-			return m_MapGenerator.size();
-		}
-	
-//----------------------------------------------------------------------------------------------
-		template <typename T_CLASS, typename CLASS_BASE>
-		void RegisterPure(const char* typeName, const Property_Base** arr, int count)
-		{
-            ClassTree.Add(typeName, arr, count);
-		}
+            template <typename T_CLASS, typename CLASS_BASE>
+            size_t Register(const char* Key, TGenFunction GenFunc, TCloneFunction CloneFunc, const char * ClassName, const char * BaseClassName)
+            {
+                TMapGenerator::iterator Iter = m_MapGenerator.find(Key);
 
-//----------------------------------------------------------------------------------------------
-		template <typename T_CLASS, typename CLASS_BASE>
-		void RegisterPure2(const char *type, const IPropertiesAllocator *prop)
-		{
-            ClassTree.Add(type, prop);
-		}
+                if (Iter == m_MapGenerator.end()) {
+                    m_MapGenerator.insert(std::make_pair(Key, AutoManager(GenFunc, CloneFunc)));
+                }
 
-//----------------------------------------------------------------------------------------------
-		template <typename T_CLASS>
-		void RegisterInterface(const char *TypeName, const IPropertiesAllocator *PropAlloc)
-		{
-			ClassNode *pInterface = ClassTree.FindInterface(TypeName);
+                ClassTree.Add(ClassName, BaseClassName);
 
-			if (!pInterface)
-			{
-				pInterface = new CClassNodeInterface<T_CLASS>(TypeName);
+                return m_MapGenerator.size();
+            }
 
-				assert(pInterface);
+            //----------------------------------------------------------------------------------------------
+            template <typename T_CLASS, typename CLASS_BASE>
+            void RegisterPure(const char* typeName, const Property_Base** arr, int count)
+            {
+                ClassTree.Add(typeName, arr, count);
+            }
 
-				ClassTree.AddInterface(pInterface);
-			}
-			pInterface->SetProprties(PropAlloc);
-		}
+            //----------------------------------------------------------------------------------------------
+            template <typename T_CLASS, typename CLASS_BASE>
+            void RegisterPure2(const char *type, const IPropertiesAllocator *prop)
+            {
+                ClassTree.Add(type, prop);
+            }
 
-//----------------------------------------------------------------------------------------------
-		inline TBase* Generation(const char *Type, const char* Name, TBase* Parent) const
-		{
-			typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(Type);
+            //----------------------------------------------------------------------------------------------
+            template <typename T_CLASS>
+            void RegisterInterface(const char *TypeName, const IPropertiesAllocator *PropAlloc)
+            {
+                ClassNode *pInterface = ClassTree.FindInterface(TypeName);
 
-			if (it_f != m_MapGenerator.end()){
-				return it_f->second.GenFunc(Name, Parent);
-			}
-			return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
-		}
-//----------------------------------------------------------------------------------------------
-		inline TBase* Clone(TBase* Source, TBase* Parent) const
-		{
-			typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(Source->GetType());
+                if (!pInterface)
+                {
+                    pInterface = new CClassNodeInterface<T_CLASS>(TypeName);
 
-			if (it_f != m_MapGenerator.end()){
-				return it_f->second.CloneFunc(Source, Parent);
-			}
-			return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
-		}
-//----------------------------------------------------------------------------------------------
-		inline TBase* SliceClone(TBase* Source, const char *NewType)
-		{
-			typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(NewType);
+                    assert(pInterface);
 
-			if (it_f != m_MapGenerator.end())
-			{
-				TBase *NewObject = it_f->second.CloneFunc(Source, nullptr);
-				return NewObject;
-			}
+                    ClassTree.AddInterface(pInterface);
+                }
+                pInterface->SetProprties(PropAlloc);
+            }
 
-			return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
-		}
-//----------------------------------------------------------------------------------------------
-		inline size_t GetId(const char* Key)
-		{
-			static size_t Id = 0;
+            //----------------------------------------------------------------------------------------------
+            inline TBase* Generation(const char *Type, const char* Name, TBase* Parent) const
+            {
+                typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(Type);
 
-			TMapId::const_iterator IterFind = MapId.lower_bound(Key);
+                if (it_f != m_MapGenerator.end()) {
+                    return it_f->second.GenFunc(Name, Parent);
+                }
+                return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
+            }
+            //----------------------------------------------------------------------------------------------
+            inline TBase* Clone(TBase* Source, TBase* Parent) const
+            {
+                typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(Source->GetType());
 
-			if (IterFind == MapId.end())
-			 {
-				 MapId.insert(std::make_pair(Key,++Id));
-				 return Id;
-			 }
-			return IterFind->second;
-		}
-//----------------------------------------------------------------------------------------------
-		inline std::string GetThisClassName(size_t id) const
-		{
-			TMapId::const_iterator Iter = MapId.begin();
+                if (it_f != m_MapGenerator.end()) {
+                    return it_f->second.CloneFunc(Source, Parent);
+                }
+                return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
+            }
+            //----------------------------------------------------------------------------------------------
+            inline TBase* SliceClone(TBase* Source, const char *NewType)
+            {
+                typename TMapGenerator::const_iterator it_f = m_MapGenerator.find(NewType);
 
-			while (Iter != MapId.end())
-			{
-				if (Iter->second == id)
-				{
-					return Iter->first;
-				}
-				++Iter;
-			}
-			return "UNDEF_CLASS";
-		}
-//----------------------------------------------------------------------------------------------
-		inline AppClassTree & GetClassTree() { return ClassTree; }
+                if (it_f != m_MapGenerator.end())
+                {
+                    TBase *NewObject = it_f->second.CloneFunc(Source, nullptr);
+                    return NewObject;
+                }
 
-//----------------------------------------------------------------------------------------------
-	public:
- 		class CAuto
- 		{
- 			typedef CSingleton<CClassFactory, CAuto> TGlobalFactory;
- 
- 		public:
- 			CAuto(const char *Key, TGenFunction Func, TCloneFunction CloneFunc, const char * ClassName, const char * BaseClassName)
- 			{
- 				TGlobalFactory::GetInstance()->Register(Key, Func, CloneFunc, ClassName, BaseClassName);
- 			}
+                return static_cast<TBase*>(T_POLICE_DEFAULT<TBase*>::Police());
+            }
+            //----------------------------------------------------------------------------------------------
+            inline size_t GetId(const char* Key)
+            {
+                static size_t Id = 0;
 
-			CAuto(const char *Key, std::vector<class Property_Base*> &VecPropInfo)
-			{
-				TGlobalFactory::GetInstance()->RegisterPure(Key, VecPropInfo);
-			}
- 		};
+                TMapId::const_iterator IterFind = MapId.lower_bound(Key);
 
-		typedef CSingleton<CClassFactory, CAuto> TGlobalFactory;
+                if (IterFind == MapId.end())
+                {
+                    MapId.insert(std::make_pair(Key, ++Id));
+                    return Id;
+                }
+                return IterFind->second;
+            }
+            //----------------------------------------------------------------------------------------------
+            inline std::string GetThisClassName(size_t id) const
+            {
+                TMapId::const_iterator Iter = MapId.begin();
 
-	//private:
-		TMapGenerator	m_MapGenerator;
-		AppClassTree	ClassTree;
-		TMapId			MapId;
-	};
+                while (Iter != MapId.end())
+                {
+                    if (Iter->second == id)
+                    {
+                        return Iter->first;
+                    }
+                    ++Iter;
+                }
+                return "UNDEF_CLASS";
+            }
+            //----------------------------------------------------------------------------------------------
+            inline AppClassTree& GetClassTree() { return ClassTree; }
+
+            //----------------------------------------------------------------------------------------------
+        public:
+            //private:
+            TMapGenerator	m_MapGenerator;
+            AppClassTree	ClassTree;
+            TMapId			MapId;
+        };
+    }
 }
-#endif//__classfactory_h__

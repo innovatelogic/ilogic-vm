@@ -4,7 +4,7 @@
 //----------------------------------------------------------------------------------------------
 TEST_F(TestClassTree, ValidateClassTree)
 {
-    AppClassTree &classTree = oes::common_base::GetClassTree();
+    oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
     
 
 }

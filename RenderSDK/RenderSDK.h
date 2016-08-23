@@ -37,7 +37,7 @@ public:
 	bool					EnterCS() { return m_CriticalSection.enter(); }
 	bool					LeaveCS() { return m_CriticalSection.leave(); }
 
-    oes::common_base::TClassFactory* GetClassFactory();
+    oes::rflex::TClassFactory* GetClassFactory();
 
 	void					Initialize(void *canvas, size_t width, size_t height, void *driver = NULL);
 

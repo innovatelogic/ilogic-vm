@@ -223,7 +223,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	void FillProperties()
 	{
-		AppClassTree &classTree = oes::common_base::GetClassTree();
+		oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
 		if (ClassNode *pClassNode = classTree.Find(m_pSelectedActor->GetType()))
 		{

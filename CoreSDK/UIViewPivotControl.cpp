@@ -260,8 +260,7 @@ void UIViewPivotControl::DoDraw()
 
 	const CameraManager *pMgr = GetAppMain()->GetCameraManager();
 	assert(pMgr);
-
-
+    
 	const CCamera *buildCamera = pMgr->GetActiveCamera();
 	assert(buildCamera);
 

@@ -87,7 +87,7 @@
         template<class T>
         void PropertyReactor<T>::BuildObject(const T *object)
         {
-            AppClassTree &classTree = oes::common_base::GetClassTree();
+            oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
             int id = 0;
 

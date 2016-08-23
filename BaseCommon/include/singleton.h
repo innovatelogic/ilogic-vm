@@ -1,9 +1,4 @@
-#ifndef  _h_utility_singleton_
-#define  _h_utility_singleton_
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 namespace Utility
 {
@@ -30,17 +25,17 @@ public:
 		CSingleton::Instance(value);
 	}
 
-	T_VALUE * operator->()
+	T_VALUE* operator->()
 	{
 		return CSingleton::GetInstance();
 	}
 
-    T_VALUE & operator* ()
+    T_VALUE& operator* ()
 	{
 		return *CSingleton::GetInstance();
 	}
     
-	static T_VALUE * GetInstance(const T_VALUE& value)
+	static T_VALUE* GetInstance(const T_VALUE& value)
 	{
 		CSingleton::Instance(value);
 		return CSingleton::m_Value;
@@ -57,7 +52,7 @@ public:
 		if (CSingleton::m_Value)
 		{
 			delete CSingleton::m_Value;
-			CSingleton::m_Value = 0;
+			CSingleton::m_Value = nullptr;
 		}
 	}
 
@@ -72,29 +67,25 @@ public:
 	}
 
 private:
-	
 	static void Instance()
 	{
-		if (CSingleton::m_Value == 0)
-		{
+		if (CSingleton::m_Value == nullptr){
 			CSingleton::m_Value = new T_VALUE();
 		}
 	}
 
-    static void Instance(const T_VALUE & value)
+    static void Instance(const T_VALUE& value)
 	{
-		if (CSingleton::m_Value == 0)
-		{
+		if (CSingleton::m_Value == nullptr){
              CSingleton::m_Value = new T_VALUE(value);
 		}
 	}
-	static T_VALUE * m_Value;
+	static T_VALUE *m_Value;
 };
 
 template<
 	class T_VALUE, 
 	class T_NAMESPACE
->T_VALUE * CSingleton<T_VALUE,T_NAMESPACE>::m_Value = 0;
+>T_VALUE* CSingleton<T_VALUE,T_NAMESPACE>::m_Value = 0;
 
 }
-#endif //_h_utility_singleton_

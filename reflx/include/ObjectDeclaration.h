@@ -58,7 +58,7 @@ static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract
 	{\
 		pObject->SetName(Name);\
 		pObject->SetType(#CLASS);\
-		pObject->SetTypeId(oes::common_base::GetId(#CLASS));\
+		pObject->SetTypeId(oes::rflex::GetId(#CLASS));\
 		pObject->FinishGeneration();\
 		return static_cast<CObjectAbstract*>(pObject);\
 	}\
@@ -77,13 +77,14 @@ const Property_Base* Arr[] = {
 //----------------------------------------------------------------------------------------------
 #define ASSEMBLE_PROPS()\
 };\
-	if (ARRAY_COUNT_SIZE(Arr))\
+const size_t count = ARRAY_COUNT_SIZE(Arr);\
+if (count)\
 {\
-	m_nSize = ARRAY_COUNT_SIZE(Arr);\
+	m_nSize = count;\
 	m_pProps = new const Property_Base*[m_nSize];\
-	for (unsigned int Index = 0; Index < m_nSize; ++Index)\
+	for (unsigned int index = 0; index < m_nSize; ++index)\
 	{\
-		*(m_pProps + Index) = *(Arr + Index);\
+		*(m_pProps + index) = *(Arr + index);\
 	}\
 }
 
@@ -141,7 +142,7 @@ private:\
 //----------------------------------------------------------------------------------------------
 #define CLASS_INSTANCE(CLASS, BASE_CLASS)\
 namespace {\
-volatile static oes::common_base::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
+volatile static oes::rflex::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
 	Generator##CLASS,\
 	CopyGenerator##CLASS,\
 	CLASS::ThisClassName(),\
@@ -152,14 +153,14 @@ volatile static oes::common_base::CAuto<CLASS, BASE_CLASS> ClassRegistration##CL
 #define CLASS_INSTANCE_INTERFACE(CLASS)\
 namespace\
 {\
-	volatile static oes::common_base::CAutoInterface<CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS);\
+	volatile static oes::rflex::CAutoInterface<CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS);\
 }
 
 //----------------------------------------------------------------------------------------------
 #define CLASS_INSTANCE_EX(CLASS, BASE_CLASS)\
 namespace\
 {\
-volatile static oes::common_base::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 									 Generator##CLASS,\
 									 CopyGenerator##CLASS,\
 									 CLASS::ThisClassName(),\
@@ -170,7 +171,7 @@ volatile static oes::common_base::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##
 #define CLASS_INSTANCE_PURE(CLASS, BASE_CLASS)\
 namespace\
 {\
-	volatile static oes::common_base::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+	volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	nullptr,\
 	CLASS::ThisClassName(),\
@@ -181,7 +182,7 @@ namespace\
 #define CLASS_INSTANCE_PURE_NOBASE(CLASS)\
 	namespace\
 {\
-	volatile static oes::common_base::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
+	volatile static oes::rflex::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	nullptr,\
 	CLASS::ThisClassName(),\
@@ -197,7 +198,7 @@ static CObjectAbstract * Generator##CLASS(const char *Name, const CObjectAbstrac
 	{\
 		Object->SetName(Name);\
 		Object->SetType(#CLASS);\
-		Object->SetTypeId(oes::common_base::GetId(#CLASS));\
+		Object->SetTypeId(oes::rflex::GetId(#CLASS));\
 		Object->FinishGeneration();\
 		return Object;\
 	}\

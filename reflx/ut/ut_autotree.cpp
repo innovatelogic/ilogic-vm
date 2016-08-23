@@ -6,7 +6,7 @@
 //----------------------------------------------------------------------------------------------
 TEST(TestAutoTree, RegisterBroadTree)
 {
-    oes::common_base::CAutoTree<ClassNode> tree;
+    oes::rflex::CAutoTree<ClassNode> tree;
 
     //    A       I
     //  B   C     K

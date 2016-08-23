@@ -95,7 +95,7 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 
 	std::string sFilename;
 
-    oes::common_base::TClassFactory *classFactory = oes::common_base::GetClassFactoryA();
+    oes::rflex::TClassFactory *classFactory = oes::rflex::GetClassFactoryA();
 
 	Explorer2D * SourceObject = m_pCoreSDK->GetExplorerInstance()->GetExplorer2D();
 
@@ -105,10 +105,10 @@ bool CUISceneManager::LoadFromFile(const std::string &filename)
 		{
 			std::string V = std::string(xml_current_tree->Value());
 
-			Utility::CClassFactory<
+			oes::rflex::CClassFactory<
 				IObjectAbstract,
-                oes::common_base::TGenFunction,
-                oes::common_base::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+                oes::rflex::TGenFunction,
+                oes::rflex::TCloneFunction>::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 			for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 			{

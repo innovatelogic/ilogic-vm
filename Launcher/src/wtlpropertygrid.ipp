@@ -611,7 +611,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
     m_pSelectedActor = pActor;
     m_nSelectedGroup = 0; // total reinit clear value
 
-    AppClassTree &classTree = oes::common_base::GetClassTree();
+    oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
     if (ClassNode *pClassNode = classTree.Find(pActor->GetType()))
     {
@@ -1000,7 +1000,7 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
 template<class T>
 void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
 {
-    AppClassTree &CTree = oes::common_base::GetClassTree();
+    oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
     if (ClassNode *pCNode = CTree.Find(pActor->GetType()))
     {

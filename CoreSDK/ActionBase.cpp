@@ -277,11 +277,11 @@ void ActionBase::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 	}
 
 	int PlainElementIndex = 0;
-	oes::common_base::TClassFactory * classFactory = GetClassFactoryA();
+	oes::rflex::TClassFactory * classFactory = GetClassFactoryA();
 	
 	XML_FOR_EACH_TREE(xml_current_tree)
 	{
-		oes::common_base::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
+		oes::rflex::TClassFactory::TMapGenerator::const_iterator Iter = classFactory->m_MapGenerator.begin();
 
 		for (;Iter != classFactory->m_MapGenerator.end(); ++Iter)
 		{

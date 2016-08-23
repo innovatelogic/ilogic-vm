@@ -5,7 +5,7 @@ REGISTER_CLASS(UIComp_DrawImageState, CRenderObject);
 namespace 
 {
 	// register child type
-	volatile static oes::common_base::CAuto<ImageState, UIComp_DrawImageState>
+	volatile static oes::rflex::CAuto<ImageState, UIComp_DrawImageState>
 		ClassRegistrationImageState("ImageState", 0,  0, "ImageState", "UIComp_DrawImageState");
 }
 
@@ -47,7 +47,7 @@ public:
 			}
 			
 			// fill registered type with sub childs
-			volatile static oes::common_base::CAuto<ImageState, void> Type_ImageState("ImageState", pPropsBase, nSize);
+			volatile static oes::rflex::CAuto<ImageState, void> Type_ImageState("ImageState", pPropsBase, nSize);
 
 			// Scope Init2
 			{
@@ -75,7 +75,7 @@ public:
 					*(pProps + Index) = *(PropArray + Index);
 				}
 		
-				volatile static oes::common_base::CAuto<UIComp_DrawImageState, CRenderObject> Type_Array("UIComp_DrawImageState", pProps, nSize);
+				volatile static oes::rflex::CAuto<UIComp_DrawImageState, CRenderObject> Type_Array("UIComp_DrawImageState", pProps, nSize);
 			}
 		}
 	}

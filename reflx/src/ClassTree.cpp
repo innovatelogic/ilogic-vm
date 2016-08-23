@@ -6,7 +6,7 @@
 
 namespace oes
 {
-    namespace common_base
+    namespace rflex
     {
         //----------------------------------------------------------------------------------------------
         AppClassTree::AppClassTree()

@@ -9,7 +9,7 @@
 //----------------------------------------------------------------------------------------------
 namespace oes
 {
-    namespace common_base
+    namespace rflex
     {
         template<class T_CLASS>
         class REFLX_EXPORT CAutoTree
