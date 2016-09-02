@@ -6,9 +6,8 @@
     {
         //----------------------------------------------------------------------------------------------
         template<class T>
-        PropertyReactor<T>::PropertyReactor(const editors::TIEditor &editor)
+        PropertyReactor<T>::PropertyReactor()
         {
-            m_editor = editor;
         }
 
         //----------------------------------------------------------------------------------------------
@@ -20,13 +19,11 @@
 
         //----------------------------------------------------------------------------------------------
         template<class T>
-        void PropertyReactor<T>::Build()
+        void PropertyReactor<T>::Build(std::vector<const T*> &objects)
         {
             Clear();
 
-            std::vector<const T*> selected = m_editor->GetSelected();
-
-            for each (const T *item in selected)
+            for each (const T *item in objects)
             {
                 BuildObject(item);
             }

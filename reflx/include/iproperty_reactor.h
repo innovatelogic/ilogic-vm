@@ -30,7 +30,7 @@
 
             virtual ~IPropertyReactor() = 0 {};
 
-            virtual void Build() = 0;
+            // virtual void Build() = 0;
             virtual void Clear() = 0;
 
             virtual void FetchGroups(std::vector<std::string> &groups) = 0;

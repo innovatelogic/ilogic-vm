@@ -239,7 +239,7 @@ private:
 	CCoreSDK		*m_pAppMain;
 	SRenderContext	*m_pRenderContext;
 
-    std::shared_ptr<nmLauncher::IPropertyReactor> m_propReactor;
+    std::shared_ptr<nmLauncher::PropertyReactor<T>> m_propReactor;
 
     // cache data
     std::vector<SFetchData> m_cacheDataAll;

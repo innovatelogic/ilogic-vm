@@ -24,6 +24,8 @@ set(INCLUDES
 	include/AutoTree.h
 	include/classinfo.h
 	include/iproperty_reactor.h
+	include/property_reactor.h
+	include/property_reactor.ipp
 	include/reflx.h	
 )
 

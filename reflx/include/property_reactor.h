@@ -11,10 +11,10 @@
         class PropertyReactor : public IPropertyReactor
         {
         public:
-            PropertyReactor(const editors::TIEditor &editor);
+            PropertyReactor();
             virtual ~PropertyReactor();
             
-            void Build() override;
+            void Build(std::vector<const T*> &objects);
             void Clear() override;
 
             const TMapClassData& GetClasses() const override { return m_propertyClasses; }

@@ -16,7 +16,7 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
-    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>(editor);
+    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>();
 
     m_editor = editor;
     m_pAppMain = editor->GetApp();
@@ -580,7 +580,7 @@ void CWTLPropertyGrid<T>::FillModel()
 template<class T>
 void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
 {
-    m_propReactor->Build();
+    m_propReactor->Build(m_editor->GetSelected());
 
     FillModel();
 
