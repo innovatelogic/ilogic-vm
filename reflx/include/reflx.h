@@ -5,3 +5,4 @@
 #include "Property.h"
 #include "ClassNode.h"
 #include "ObjectFactory.h"
+#include "classinfo.h"

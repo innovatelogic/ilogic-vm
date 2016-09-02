@@ -7,6 +7,7 @@
 #include <atlmisc.h>
 #include <atlctrls.h>
 
+#include "reflx.h"
 #include "ListVeiwEdit.h"
 #include "ListViewCombobox.h"
 #include "ListViewEditResource.h"

@@ -22,7 +22,9 @@ set(INCLUDES
 	include/ClassTree.h
 	include/ClassNodeInterface.h
 	include/AutoTree.h
-	include/reflx.h
+	include/classinfo.h
+	include/iproperty_reactor.h
+	include/reflx.h	
 )
 
 set(SRC

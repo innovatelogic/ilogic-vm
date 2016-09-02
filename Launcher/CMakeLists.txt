@@ -111,7 +111,6 @@ set(SOURCE
 	src/WTLPropertyGrid.h
 	src/wtlpropertygrid.ipp
 	src/MSelectTree.h
-	src/iproperty_reactor.h
 	src/property_reactor.h
 	src/property_reactor.ipp
 	src/splash_window.h
