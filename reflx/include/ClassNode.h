@@ -46,7 +46,7 @@ public:
 	virtual bool	PrePropertyChange(const void *pPrt, class Property_Base *pProp);
 	virtual void	PostPropertyChange(const void *pPrt, class Property_Base *pProp);
 
-	const char* GetName() const { return Name.c_str(); }
+	const char* GetName() const { return m_name.c_str(); }
 
 	Property_Base** GetPropsRaw() const { return m_pPropsRaw; }
 	unsigned int	GetPropsSize() const { return m_PropsSize; }
@@ -63,7 +63,7 @@ public:
 	const TVecInterfaces&	GetInterfaces() const { return m_VecInterfaces; }
 
 public:
-	std::string				Name;
+	std::string				m_name;
 
 	TVecClassNode			Childs;
 	TVecInterfaces			m_VecInterfaces;

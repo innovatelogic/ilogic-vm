@@ -1004,7 +1004,7 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
 
     if (ClassNode *pCNode = CTree.Find(pActor->GetType()))
     {
-        SPropertyClass *pClassRoot = new SPropertyClass(pCNode->Name.c_str(), (void*)pActor);
+        SPropertyClass *pClassRoot = new SPropertyClass(pCNode->GetName(), (void*)pActor);
         pClassRoot->InheritProperties.push_back(NULL);
 
         SPropertyGroup *pGroupValue = GetGroupByName("Value");
@@ -1026,7 +1026,7 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
                     if (!pGroup)
                     {
                         pGroup = new SPropertyGroup((*IterProp)->GetGroupName());
-                        pClass = new SPropertyClass(pCNode->Name.c_str(), (void*)pActor);
+                        pClass = new SPropertyClass(pCNode->GetName(), (void*)pActor);
 
                         pGroup->VecPropertyClasses.push_back(pClass);
                         pClass->InheritProperties.push_back(NULL);

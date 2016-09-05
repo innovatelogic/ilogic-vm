@@ -94,9 +94,9 @@ class AutoRegisterProps##CLASS : public IPropertiesAllocator\
 {\
 public:\
 	AutoRegisterProps##CLASS()\
-	: m_pProps(0)\
+	: m_pProps(nullptr)\
 	, m_nSize(0)\
-	, m_pInterfaces(0)\
+	, m_pInterfaces(nullptr)\
 	, m_nIntfSize(0)\
 	{\
 		BEGIN_PROPS_DECLARATION(CLASS)
@@ -114,9 +114,9 @@ if (ARRAY_COUNT_SIZE(ArrIntf))\
 {\
 	m_nIntfSize = ARRAY_COUNT_SIZE(ArrIntf);\
 	m_pInterfaces = new const SInterfaceDecl*[m_nIntfSize];\
-	for (unsigned int Index = 0; Index < m_nIntfSize; ++Index)\
+	for (unsigned int index = 0; index < m_nIntfSize; ++index)\
 	{\
-		*(m_pInterfaces + Index) = *(ArrIntf + Index);\
+		*(m_pInterfaces + index) = *(ArrIntf + index);\
 	}\
 }
 

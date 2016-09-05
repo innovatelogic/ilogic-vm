@@ -3,7 +3,7 @@
 
 //----------------------------------------------------------------------------------------------
 ClassNode::ClassNode(const char * name)
-: Name(name)
+: m_name(name)
 , m_pRootNode(nullptr)
 , m_pPropAlloc(nullptr)
 , m_pPropsRaw(nullptr)
@@ -47,7 +47,7 @@ void ClassNode::Release()
 //----------------------------------------------------------------------------------------------
 ClassNode* ClassNode::Find(const char * Type)
 {
-	if (Name.compare(Type) == 0){
+	if (m_name.compare(Type) == 0){
 		return this;
 	}
 	else
@@ -121,10 +121,10 @@ void ClassNode::SetProprties(const IPropertiesAllocator *pPropAlloc)
 	m_pPropsRaw = const_cast<Property_Base**>(pPropAlloc->GetProps());
 	m_PropsSize = m_pPropAlloc->GetSize();
 	
-	for (unsigned int Index = 0; Index < m_PropsSize; ++Index)
+	for (unsigned int index = 0; index < m_PropsSize; ++index)
 	{
-        const_cast<Property_Base*>(*(m_pPropsRaw + Index))->m_ClassNodePtr = this;
-		PropertyMap.push_back(const_cast<Property_Base*>(*(m_pPropsRaw + Index)));
+        const_cast<Property_Base*>(*(m_pPropsRaw + index))->m_ClassNodePtr = this;
+		PropertyMap.push_back(const_cast<Property_Base*>(*(m_pPropsRaw + index)));
 	}
 
 	m_pInterfaces = const_cast<SInterfaceDecl**>(pPropAlloc->GetInterfaces());
@@ -194,7 +194,7 @@ bool ClassNode::IsInheritBaseClass(const char* pName) const
 {
 	bool bResult = false;
 
-	if (!strcmp(Name.c_str(), pName)){
+	if (!strcmp(m_name.c_str(), pName)){
 		return true;
 	}
 

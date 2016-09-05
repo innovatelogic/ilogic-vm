@@ -86,50 +86,22 @@
         {
             oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
-            int id = 0;
-
             bool bInitialInit = m_propertyClasses.empty();
+            
             std::vector<std::string> matchClasses;
 
             if (ClassNode *classNode = classTree.Find(object->GetType()))
             {
                 while (classNode)
                 {
-                    const std::string className = classNode->GetName();
-
                     if (bInitialInit)
                     {
-                        SClassNode node(className);
-
-                        TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
-
-                        while (iterProp != classNode->PropertyMap.end())
-                        {
-                            node.properties.push_back(*iterProp);
-
-                            // array
-                            if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
-                            {
-                                int size = (*iterProp)->GetSize();
-                                while (size)
-                                {
-                                    // go through child nodes
-                                    Property_Base *childProp = (*iterProp)->GetNext();
-                                    while (childProp)
-                                    {
-                                        node.properties.push_back(childProp);
-                                        childProp = childProp->GetNext();
-                                    }
-                                    --size;
-                                }
-                            }
-                            ++iterProp;
-                        }
-
-                        m_propertyClasses.push_back(node);
+                        FillClassProperties(classNode, -1, m_propertyClasses); // TODO replace -1 artifact
                     }
                     else // sieve
                     {
+                        const std::string className = classNode->GetName();
+
                         TMapClassData::iterator it = std::find_if(m_propertyClasses.begin(), m_propertyClasses.end(), 
                             [&className](const SClassNode &v)
                         {
@@ -151,45 +123,15 @@
 
                         assert(nodeInterface);
                                                 
-                        const std::string className = nodeInterface->GetName();
-                            
                         if (bInitialInit)
                         {
                             const int shift = (*iterIntf)->byteShift;
-
-                            SClassNode node(className, shift);
-
-                            TVecPropertyConstIterator iterPropIntf = nodeInterface->PropertyMap.begin();
-
-                            while (iterPropIntf != nodeInterface->PropertyMap.end())
-                            {
-                                node.properties.push_back(*iterPropIntf);
-
-                                // array
-                                if ((*iterPropIntf)->GetCtrl() == CTRL_ARRAY)
-                                {
-                                    int size = (*iterPropIntf)->GetSize();
-                                    while (size)
-                                    {
-                                        // go through child nodes
-                                        Property_Base *childProp = (*iterPropIntf)->GetNext();
-                                        while (childProp)
-                                        {
-                                            node.properties.push_back(childProp);
-                                            childProp = childProp->GetNext();
-                                        }
-                                        --size;
-                                    }
-                                }
-
-
-                                ++iterPropIntf;
-                            }
-
-                            m_propertyClasses.push_back(node);
+                            FillClassProperties(nodeInterface, shift, m_propertyClasses);
                         }
                         else
                         {
+                            const std::string className = nodeInterface->GetName();
+
                             TMapClassData::iterator it = std::find_if(m_propertyClasses.begin(), m_propertyClasses.end(),
                                 [&className](const SClassNode &v) { return className == v.name; });
 
@@ -220,6 +162,43 @@
             else
             {
                 std::reverse(m_propertyClasses.begin(), m_propertyClasses.end());
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
+        template<class T>
+        void nmLauncher::PropertyReactor<T>::FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out)
+        {
+            if (classNode)
+            {
+                SClassNode node(classNode->GetName(), shift);
+
+                TVecPropertyConstIterator iterProp = classNode->GetProperties().begin();
+
+                while (iterProp != classNode->GetProperties().end())
+                {
+                    node.properties.push_back(*iterProp);
+
+                    // array
+                    if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
+                    {
+                        int size = (*iterProp)->GetSize();
+                        while (size)
+                        {
+                            // go through child nodes
+                            Property_Base *childProp = (*iterProp)->GetNext();
+                            while (childProp)
+                            {
+                                node.properties.push_back(childProp);
+                                childProp = childProp->GetNext();
+                            }
+                            --size;
+                        }
+                    }
+                    ++iterProp;
+                }
+
+                out.push_back(node);
             }
         }
     }

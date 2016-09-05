@@ -26,6 +26,8 @@
         private:
             void BuildObject(const T *object);
 
+            void FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out);
+
         private:
             editors::TIEditor m_editor;
         
