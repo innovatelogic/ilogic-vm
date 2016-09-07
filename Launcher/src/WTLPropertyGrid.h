@@ -93,6 +93,11 @@ class CWTLPropertyGrid : public CWindowImpl<CWTLPropertyGrid<T>, CListViewCtrl, 
     // proxy plain stuff to getdispdata routine
     struct SFetchData 
     {
+        SFetchData(int _id, const nmLauncher::SClassNode * _class, Property_Base *_prop) 
+            : id(_id)
+            , pclass(_class)
+            , property(_prop){}
+
         int id;
         const nmLauncher::SClassNode *pclass;
         Property_Base *property;
@@ -179,8 +184,6 @@ public:
 
     bool GetPropertyByIndex(int InPlainIndex, int IndexGroup, struct SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const;
 
-    BOOL FillListParam(LVITEMA *pItem, const SPropertyClass* PropClass, const Property_Base* Prop, int MemOffset/*= 0*/);
-
     bool IsPropertyBOOL(const Property_Base * Prop);
 
     void _Update(const T *pSender, ESystemEventID EventId);
@@ -189,6 +192,7 @@ public:
 	
     BOOL ClickListProperties(LPNMLISTVIEW plvdi);
 
+    
     BOOL ProcessClickListProperties(LPNMLISTVIEW plvdi, SPropertyClass *Class, Property_Base* Prop, int MemOffset /*= 0*/);
 
     BOOL ClickListComboProperties(LPNMLISTVIEW plvdi);
@@ -208,9 +212,22 @@ public:
 	void PushContext();
     void PopContext();
 
-    bool GetPropertySelectedBatch(Property_Base *prop, std::string &out);
-
+    
 protected:
+
+private:
+       void ClickProperty(int index);
+
+       /*!
+        * returns true if selected elements have a similar value
+        otherwise if selected elements are empty or different value return false
+        */
+        bool GetPropertySelectedBatch(Property_Base *prop, std::string &out);
+
+        void ShowEditWindowControl(int index, SFetchData &data, const std::wstring &value);
+        void ShowEditResourceControl(int index, SFetchData &data, const std::wstring &value);
+        void ShowEditColorControl(int index, const std::wstring &value);
+        void ShowEditComboControl(int index, const std::wstring &value);
 private:
 	TEdit						*m_pEdit;
 	TComboBox					*m_pComboBox;
@@ -241,7 +258,7 @@ private:
 
     std::shared_ptr<nmLauncher::PropertyReactor<T>> m_propReactor;
 
-    // cache data
+    // cache data all fields in plain array
     std::vector<SFetchData> m_cacheDataAll;
     std::vector<SFetchData> m_cacheFill;
 

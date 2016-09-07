@@ -449,8 +449,7 @@ LRESULT CWTLPropertyGrid<T>::OnLVEndLabelEdit(WPARAM wParam)
 template<class T>
 LRESULT CWTLPropertyGrid<T>::OnLVCustomDraw(int, LPNMHDR pNMHDR, BOOL&)
 {
-    LPNMLVCUSTOMDRAW pNMTVCD = (LPNMLVCUSTOMDRAW)pNMHDR;
-    return HandleCustomDraw(pNMTVCD);
+    return HandleCustomDraw((LPNMLVCUSTOMDRAW)pNMHDR);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -505,8 +504,13 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
         pNMLVCD->clrTextBk = RGB(220, 220, 220);
         pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel.
     }break;
+
     case LIST_PROP_ELEMENT:
     {
+        std::string value;
+
+        bool editable = GetPropertySelectedBatch(data.property, value);
+        
         int policy = data.property->GetPolicy();
 
         if (policy == READ_ONLY || policy == NO_READ_WRITE || data.property->GetCtrl() == CTRL_ARRAY)
@@ -537,13 +541,16 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
             {
                 pNMLVCD->nmcd.uItemState &= ~CDIS_SELECTED; // kill sys sel.
             }break;
+
             default:
+                //assert(false);
                 break;
             }
         }
 
     }break;
     default:
+        assert(false);
         break;
     }
 }
@@ -559,19 +566,11 @@ void CWTLPropertyGrid<T>::FillModel()
     // fetch data
     for each (auto &item in classes)
     {
-        SFetchData classx;
-        classx.id = LIST_CLASS_ELEMENT;
-        classx.pclass = &item;
-        classx.property = nullptr;
-        m_cacheDataAll.push_back(classx);
+        m_cacheDataAll.push_back(SFetchData(LIST_CLASS_ELEMENT, &item, nullptr));
 
         for each (auto prop in item.properties)
         {
-            SFetchData propx;
-            classx.id = LIST_PROP_ELEMENT;
-            classx.pclass = &item;
-            classx.property = prop;
-            m_cacheDataAll.push_back(classx);
+            m_cacheDataAll.push_back(SFetchData(LIST_PROP_ELEMENT, &item, prop));
         }
     }
 }
@@ -805,27 +804,20 @@ BOOL CWTLPropertyGrid<T>::FillListProperties()
             {
                 assert(iter->id == LIST_CLASS_ELEMENT);
 
-                SFetchData classX;
-                classX.id = LIST_CLASS_ELEMENT;
-                classX.pclass = iter->pclass;
-                classX.property = nullptr;
-
                 std::vector<SFetchData> propsX;
+
+                SFetchData classX(LIST_CLASS_ELEMENT, iter->pclass, nullptr);
+                
                 std::vector<SFetchData>::iterator iterProp = ++iter;
                 while (iterProp != m_cacheDataAll.end() && iterProp->id != LIST_CLASS_ELEMENT)
                 {
-                    if (iterProp->property->GetGroupName() == strGroupName) 
-                    {
-                        SFetchData propX;
-                        propX.id = LIST_PROP_ELEMENT;
-                        propX.pclass = iter->pclass;
-                        propX.property = iterProp->property;
-                        propsX.push_back(propX);
+                    if (iterProp->property->GetGroupName() == strGroupName){
+                        propsX.push_back(SFetchData(LIST_PROP_ELEMENT, iter->pclass, iterProp->property));
                     }
                     ++iterProp;
                 }
 
-                if (propsX.size() > 0)
+                if (!propsX.empty())
                 {
                     m_cacheFill.push_back(classX);
                     m_cacheFill.insert(m_cacheFill.end(), propsX.begin(), propsX.end());
@@ -1157,8 +1149,16 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
         {
             // disable property if value differ in different objects
             std::string str_val;
-            if (!GetPropertySelectedBatch(prop, str_val)){
+            if (!GetPropertySelectedBatch(prop, str_val))
+            {
                 str_val = "...";
+            }
+            else
+            {
+                if (IsPropertyBOOL(prop) && (pItem->mask & LVIF_IMAGE))
+                {
+                    pItem->iImage = (str_val == "true") ? 1 : 0;
+                }
             }
 
             MultiByteToWideChar(CP_ACP, 0, str_val.c_str(), -1, wbuf, 255);
@@ -1174,28 +1174,6 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
         break;
     }
  
-
-    /* int SelectedGroup = m_nSelectedGroup;
-
-   std::vector<std::string> groups;
-    m_propReactor->FetchGroups(groups);
-    std::string strGroupName = groups.at(SelectedGroup); // TODO: catch exp
-
-    nmLauncher::IPropertyReactor::TMapClassData fetchClasses;
-    m_propReactor->FetchProperties(strGroupName, fetchClasses);*/
-
-  /*  SPropertyClass * OutClass = 0;
-    Property_Base * OutProperty = 0;
-    int OutMemoryOffset = 0;
-
-    if (GetPropertyByIndex((int)(pItem->iItem), SelectedGroup, &OutClass, &OutProperty, OutMemoryOffset))
-    {
-        if (OutProperty) // ordinary property
-        {
-            FillListParam(pItem, OutClass, OutProperty, OutMemoryOffset);
-        }
-    }*/
-   
     return FALSE;
 }
 
@@ -1332,54 +1310,11 @@ bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex, int IndexGroup, s
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-BOOL CWTLPropertyGrid<T>::FillListParam(LVITEMA *pItem, const SPropertyClass* PropClass, const Property_Base* Prop, int MemOffset/*= 0*/)
+bool CWTLPropertyGrid<T>::IsPropertyBOOL(const Property_Base *prop)
 {
-    switch (pItem->iSubItem)
-    {
-    case 0:
-    {
-        MultiByteToWideChar(CP_ACP, 0, Prop->GetName(), -1, wbuf, 255);
-        pItem->pszText = (LPSTR)wbuf;
-    }break;
-
-    case 1:
-    {
-        char Buff[1024] = { 0 };
-
-        int MemoryOffsetOverride = 0;
-        if (PropClass->nOverrideByteShift != -1) { // interface relative shift
-            MemoryOffsetOverride = PropClass->nOverrideByteShift;
-        }
-
-        Prop->GetProperty((BYTE*)PropClass->pDataObject + MemOffset + MemoryOffsetOverride, Buff);
-
-        if (IsPropertyBOOL(Prop) && (pItem->mask & LVIF_IMAGE))
-        {
-            pItem->iImage = strcmp(Buff, "true") ? 1 : 0;
-        }
-        else if (pItem->mask & LVIF_TEXT)
-        {
-            MultiByteToWideChar(CP_ACP, 0, Buff, -1, wbuf, 1024);
-            pItem->pszText = (LPSTR)wbuf;
-        }
-    }break;
-    default:
-        break;
-    };
-    return TRUE;
-}
-
-//----------------------------------------------------------------------------------------------
-template<class T>
-bool CWTLPropertyGrid<T>::IsPropertyBOOL(const Property_Base * Prop)
-{
-    if (Prop->PredefinedValues.size() >= 2 &&
-        Prop->PredefinedValues[0] == "true" &&
-        Prop->PredefinedValues[1] == "false")
-    {
-        return true;
-    }
-    return false;
+    return prop->PredefinedValues.size() == 2 &&
+        prop->PredefinedValues[0] == "true" &&
+        prop->PredefinedValues[1] == "false";
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1430,8 +1365,44 @@ void CWTLPropertyGrid<T>::ClearListProperties()
 template<class T>
 BOOL CWTLPropertyGrid<T>::ClickListProperties(LPNMLISTVIEW plvdi)
 {
-    m_PropertyCS.enter();
+    SFetchData &data = m_cacheFill.at((int)plvdi->iItem);
 
+    switch (data.id)
+    {
+    case LIST_CLASS_ELEMENT:
+    {
+        const std::string &className = data.pclass->name;
+        std::vector<std::string>::iterator IterCollapsedClass =
+            std::find(m_VCollapsedClassNames.begin(), m_VCollapsedClassNames.end(), className);
+
+        if (IterCollapsedClass != m_VCollapsedClassNames.end()) {
+            m_VCollapsedClassNames.erase(IterCollapsedClass);
+        }
+        else {
+            m_VCollapsedClassNames.push_back(className);
+        }
+
+        m_EditingPropertyIndex = INDEX_NONE;
+        m_MemoryOffset = 0;
+
+        DeleteAllItems();
+
+        HideChildControls();
+        FillListProperties();
+    }break;
+
+    case LIST_PROP_ELEMENT:
+    {
+        m_EditingPropertyIndex = (int)plvdi->iItem;
+
+        ClickProperty((int)plvdi->iItem);
+    }break;
+
+    default:
+        assert(false);
+        break;
+    };
+    /*
     TCHAR	szText[256];
 
     TCITEM tc;
@@ -1453,28 +1424,60 @@ BOOL CWTLPropertyGrid<T>::ClickListProperties(LPNMLISTVIEW plvdi)
         }
         else if (OutClass) // Class filter
         {
-            std::vector<std::string>::iterator IterCollapsedClass = std::find(m_VCollapsedClassNames.begin(), m_VCollapsedClassNames.end(), OutClass->ClassName);
-
-            if (IterCollapsedClass != m_VCollapsedClassNames.end()) {
-                m_VCollapsedClassNames.erase(IterCollapsedClass);
-            }
-            else {
-                m_VCollapsedClassNames.push_back(OutClass->ClassName);
-            }
-
-            m_EditingPropertyIndex = INDEX_NONE;
-            m_MemoryOffset = 0;
-
-            DeleteAllItems();
-
-            HideChildControls();
-            FillListProperties();
+           
         }
     }
-
-    m_PropertyCS.leave();
-
+    */
     return TRUE;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CWTLPropertyGrid<T>::ClickProperty(int index)
+{
+    SFetchData &data = m_cacheFill.at(index);
+
+    assert(data.property);
+
+    std::string value;
+    if (GetPropertySelectedBatch(data.property, value))
+    {
+        switch ((data.property->GetCtrl())) // switch property type
+        {
+        case CTRL_ARRAY:
+        {
+        }break;
+
+        case CTRL_VECTOR:
+        case CTRL_VECTOR2f:
+        case CTRL_VECTOR4f:
+        case CTRL_MATRIX16:
+        case CTRL_MATRIX9:
+        case CTRL_EDIT:
+        {
+            ShowEditWindowControl(index, data, ConvertStringToWideString(value));
+        }break;
+
+        case CTRL_EDIT_RESOURCE:
+        {
+            ShowEditResourceControl(index, data, ConvertStringToWideString(value));
+        }break;
+
+        case CTRL_COMBO:
+        {
+            ShowEditComboControl(data.id, ConvertStringToWideString(value));
+        }break;
+
+        case CTRL_COLOR:
+        {
+            ShowEditColorControl(data.id, ConvertStringToWideString(value));
+        }break;
+
+        default:
+            assert(false);
+            break;
+        }
+    }
 }
 
 //----------------------------------------------------------------------------------------------
@@ -1833,9 +1836,11 @@ bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(Property_Base *prop, std::str
     if (!selected.empty())
     {
         bResult = true;
+
         std::vector<const T*>::const_iterator iter = selected.begin();
 
         out = m_editor->GetProperty(*iter, prop);
+        
         iter++;
 
         while (iter != selected.end())
@@ -1850,4 +1855,74 @@ bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(Property_Base *prop, std::str
         }
     }
     return bResult;
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CWTLPropertyGrid<T>::ShowEditWindowControl(int index, SFetchData &data, const std::wstring &value)
+{
+    assert(data.property);
+
+    POINT point;
+
+    GetItemPosition(data.id, &point);
+    
+    const unsigned int width01 = GetColumnWidth(0);
+    const unsigned int width02 = GetColumnWidth(1);
+
+    RECT irect;
+    GetItemRect(data.id, &irect, 0);
+
+    m_pEdit->MoveWindow(point.x + width01, point.y, width02, irect.bottom - irect.top, TRUE);
+
+    m_pEdit->ShowWindow(SW_SHOW);
+    m_pEdit->SendMessage(WM_SETTEXT, 0, (LPARAM)value.c_str());
+    m_pEdit->SendMessage(EM_SETREADONLY, (WPARAM)(BOOL)data.property->GetPolicy() == READ_ONLY, 0);
+
+    m_pEdit->SetFocus();
+    m_pEdit->ShowCaret();
+
+    m_pEdit->SetSel(0, INDEX_NONE); // select all text and move cursor at the end
+    m_pEdit->SetSel(INDEX_NONE); //  remove selection
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CWTLPropertyGrid<T>::ShowEditResourceControl(int index, SFetchData &data, const std::wstring &value)
+{
+    assert(data.property);
+
+    POINT point;
+
+    GetItemPosition(index, &point);
+
+    const unsigned int width01 = GetColumnWidth(0);
+    const unsigned int width02 = GetColumnWidth(1);
+
+    RECT irect;
+    GetItemRect(data.id, &irect, 0);
+    int row_height = irect.bottom - irect.top;
+
+    m_pResourceEdit->MoveWindow(point.x + width01, point.y, width02 - (row_height * 2), row_height, TRUE);
+    m_pResourceEdit->SendMessage(WM_SETTEXT, 0, (LPARAM)value.c_str());
+
+    m_pResourceEdit->GetButtonClear()->MoveWindow(point.x + width01 + width02 - (row_height * 2), point.y, row_height, row_height, TRUE);
+    m_pResourceEdit->GetButtonBrowse()->MoveWindow(point.x + width01 + width02 - (row_height * 1), point.y, row_height, row_height, TRUE);
+
+    m_pResourceEdit->ShowWindow(TRUE);
+    m_pResourceEdit->SetFocus();
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::wstring &value)
+{
+
+}
+
+//----------------------------------------------------------------------------------------------
+template<class T>
+void CWTLPropertyGrid<T>::ShowEditComboControl(int index, const std::wstring &value)
+{
+
 }
