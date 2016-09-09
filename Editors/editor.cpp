@@ -4,6 +4,7 @@
 #include "ViewportManager.h"
 #include "command_base.h"
 #include "Property.h"
+#include "D3DDriver.h"
 
 namespace editors
 {
@@ -287,7 +288,7 @@ void EditorBase::SetProperty(const std::string &value, const std::string &valueO
         std::shared_ptr<CommandBase_>(new CommandBase_(
             [&, prop, ids, value]()
     {
-       // GetApp()->GetRenderSDK()->GetRenderDriver()->PushContext(GetRenderContext());
+        PushContext();
 
         for each (auto &item in ids)
         {
@@ -296,9 +297,13 @@ void EditorBase::SetProperty(const std::string &value, const std::string &valueO
                 prop->SetProperty(actor, value.c_str());
             }
         }
+
+        PopContext();
     },
         [&, prop, ids, valueOld]() {
-        
+    
+        PushContext();
+
         for each (auto &item in ids)
         {
             if (CActor *actor = CActor::GetActorByFullPath(item, GetApp()->GetRootActor()))
@@ -306,6 +311,7 @@ void EditorBase::SetProperty(const std::string &value, const std::string &valueO
                 prop->SetProperty(actor, valueOld.c_str());
             }
         }
+        PopContext();
     }))
     ));
 
@@ -355,4 +361,17 @@ EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<
     }
     return out;
 }
+
+//----------------------------------------------------------------------------------------------
+void EditorBase::PushContext()
+{
+    GetApp()->GetRenderSDK()->GetRenderDriver()->PushContext(GetRenderContext());
+}
+
+//----------------------------------------------------------------------------------------------
+void EditorBase::PopContext()
+{
+    GetApp()->GetRenderSDK()->GetRenderDriver()->PopContext();
+}
+
 }

@@ -74,6 +74,12 @@ protected:
 
     CCoreSDK* GetApp() const override { return m_pApi; }
 
+    /*!
+        push-pop render context
+    */
+    void PushContext();
+    void PopContext();
+
 protected:
     std::function<void()>   m_notifySelectFunc;
 

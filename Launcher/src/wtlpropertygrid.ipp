@@ -388,54 +388,29 @@ LRESULT CWTLPropertyGrid<T>::OnBeginTrack(int idCtrl, LPNMHDR pnmh, BOOL& bHandl
 template<class T>
 LRESULT CWTLPropertyGrid<T>::OnLVEndLabelEdit(WPARAM wParam)
 {
-    m_PropertyCS.enter();
-
     if (wParam == VK_RETURN)
     {
-        TCHAR	szText[256];
-        int SelectedGroup = m_nSelectedGroup;
+        SFetchData &data = m_cacheFill.at(m_EditingPropertyIndex);
 
-        TCITEM tc;
-        tc.mask = TCIF_TEXT;
-        tc.pszText = szText;
-        tc.cchTextMax = 255;
-
-        SPropertyClass *OutClass = 0;
-        Property_Base *OutProperty = 0;
-        int OutMemoryOffset = 0;
-
-        if (GetPropertyByIndex(m_EditingPropertyIndex, SelectedGroup, &OutClass, &OutProperty, OutMemoryOffset))
+        std::string value;
+        if (GetPropertySelectedBatch(data.property, value))
         {
-            if (OutProperty && OutClass)
-            {
-                wchar_t wbuf[256] = { 0 };
-                char ascii[256] = { 0 };
+            wchar_t wbuf[256] = { 0 };
+            char ascii[256] = { 0 };
 
-                if (OutProperty->GetCtrl() == CTRL_EDIT_RESOURCE) // switch property type
-                {
-                    m_pResourceEdit->SendMessage(WM_GETTEXT, 256, (LPARAM)wbuf);
-                }
-                else {
-                    m_pEdit->SendMessage(WM_GETTEXT, 256, (LPARAM)wbuf);
-                }
-
-                WideCharToMultiByte(CP_ACP, 0, wbuf, 256, ascii, 256, NULL, NULL);
-
-                int MemoryOffsetOverride = 0;
-                if (OutClass->nOverrideByteShift != -1) { // interface relative shift
-                    MemoryOffsetOverride = OutClass->nOverrideByteShift;
-                }
-
-                PushContext();
-
-                OutProperty->SetProperty((BYTE*)OutClass->pDataObject + OutMemoryOffset, ascii, MemoryOffsetOverride); // set new value
-
-                PopContext();
+            if (data.property->GetCtrl() == CTRL_EDIT_RESOURCE) { // switch property type
+                m_pResourceEdit->SendMessage(WM_GETTEXT, 256, (LPARAM)wbuf);
             }
-        }
+            else {
+                m_pEdit->SendMessage(WM_GETTEXT, 256, (LPARAM)wbuf);
+            }
+
+            WideCharToMultiByte(CP_ACP, 0, wbuf, 256, ascii, 256, NULL, NULL);
+
+            m_editor->SetProperty(ascii, value, m_editor->GetSelected(), data.property);
+       }
     }
 
-    m_PropertyCS.leave();
     m_EditingPropertyIndex = INDEX_NONE;
     m_MemoryOffset = 0;
 
@@ -1931,10 +1906,7 @@ void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::string &val
 
     if (ChooseColor(&cc) == TRUE)
     {
-        char oldValue[256] = { '\0' };
         char newValue[256] = { '\0' };
-
-        sprintf(oldValue, "%d", buffer);
 
         buffer = (255 << 24) | RGB(GetBValue(cc.rgbResult), GetGValue(cc.rgbResult), GetRValue(cc.rgbResult)); // 0x00bbggrr to 0x00rrggbb
 
@@ -1942,23 +1914,31 @@ void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::string &val
 
         SFetchData &data = m_cacheFill.at(index);
 
-        PushContext();
-
-        m_editor->SetProperty(newValue, oldValue, m_editor->GetSelected(), data.property);
-
-
-//        Prop->SetProperty((BYTE*)Class->pDataObject + MemOffset, txt);
-
-        PopContext();
+        m_editor->SetProperty(newValue, value, m_editor->GetSelected(), data.property);
 
 //        UpdatePreview();
     }
-
 }
 
 //----------------------------------------------------------------------------------------------
 template<class T>
 void CWTLPropertyGrid<T>::ShowEditComboControl(int index, const std::wstring &value)
 {
+    SFetchData &data = m_cacheFill.at(index);
 
+    assert(data.property);
+
+    if (IsPropertyBOOL(data.property))
+    {
+        bool oldValue = (value == TEXT("true"));
+        bool newValue = !oldValue;
+
+        m_editor->SetProperty(newValue ? "true" : "false", oldValue ? "true" : "false", m_editor->GetSelected(), data.property);
+
+        ::PostMessage(GetParent(), WM_USER_UPDATE_PROPS, 0, 0);
+    }
+    else
+    {
+
+    }
 }
