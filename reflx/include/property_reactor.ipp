@@ -19,11 +19,11 @@
 
         //----------------------------------------------------------------------------------------------
         template<class T>
-        void PropertyReactor<T>::Build(std::vector<const T*> &objects)
+        void PropertyReactor<T>::Build(std::vector<T*> &objects)
         {
             Clear();
 
-            for each (const T *item in objects)
+            for each (T *item in objects)
             {
                 BuildObject(item);
             }
@@ -82,7 +82,7 @@
 
         //----------------------------------------------------------------------------------------------
         template<class T>
-        void PropertyReactor<T>::BuildObject(const T *object)
+        void PropertyReactor<T>::BuildObject(T *object)
         {
             oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 

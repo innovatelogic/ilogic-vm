@@ -49,16 +49,12 @@ bool EditorBase::Redo()
 //----------------------------------------------------------------------------------------------
 void EditorBase::AddCommand(ICommandPtr command, bool execute /*= true*/)
 {
-    assert(m_CommandBuffer);
-
     m_CommandBuffer->AddCommand(std::move(command), execute);
 }
 
 //----------------------------------------------------------------------------------------------
 void EditorBase::AddCommandBatch(ICommandPtrList &vector)
 {
-    assert(m_CommandBuffer);
-
     m_CommandBuffer->AddCommands(vector);
 }
 
@@ -222,8 +218,6 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
     std::string out;
     if (object && prop)
     {
-        size_t memoryOffset = 0;
-
         ClassNode *classNode = prop->GetClass();
 
         assert(classNode);
@@ -234,8 +228,6 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
         {
             if (*iterProp == prop)
             {
-                memoryOffset = 0;
-
                 char buff[1024] = { 0 };
                 prop->GetProperty((BYTE*)object, buff);
 
@@ -243,9 +235,11 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
                 return out;
             }
 
-            // array
-            if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
+            // TODO array
+            /*if ((*iterProp)->GetCtrl() == CTRL_ARRAY)
             {
+                size_t memoryOffset = 0;
+
                 size_t size = (*iterProp)->GetSize();
                 int ElementSize = (*iterProp)->GetElementSize();
                 int MemOffset = (*iterProp)->m_MemOffset;
@@ -265,7 +259,7 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
                     }
                     --size;
                 }
-            }
+            }*/
             ++iterProp;
         }
     }
@@ -273,51 +267,52 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
 }
 
 //----------------------------------------------------------------------------------------------
-void EditorBase::SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop)
+void EditorBase::SetProperty(const std::string &value, CActor* object, const Property_Base *prop)
 {
-    /*AddCommand(std::move(
-        std::shared_ptr<CommandBase_>(new CommandBase_(
-            [&, manager, ivprt, actors]()
-    {
-        TMapActorVec mapActors = AdjustActorsToEditorRoot(actors);
-
-        m_selection.Empty();
-
-        std::vector<std::string> ids;
-        for each(auto item in mapActors)
-        {
-            ids.push_back(CActor::GetFullPathID(item.first)); // fill new selection
-
-            for each (auto value in item.second) {
-                m_selection.AddItem(item.first, value);
-            }
-        }
-        manager->SetSelect(ids, ivprt);
-
-        m_notifySelectFunc();
-    },
-            [&, manager, ivprt, old]() {
-
-        m_selection.Empty();
-
-        std::vector<std::string> ids;
-
-        auto keys = old.Keys();
-        for each(auto item in keys) {
-            ids.push_back(CActor::GetFullPathID(item)); // fill new selection
-        }
-
-        manager->SetSelect(ids, ivprt);
-        m_selection = old;
-
-        m_notifySelectFunc();
-    }))
-        ));
-}*/
+   
 }
 
 //----------------------------------------------------------------------------------------------
-const CActor* EditorBase::GetEditorRelatedActor(const CActor *actor)
+void EditorBase::SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop)
+{
+    TMapActorVec editorActors = AdjustActorsToEditorRoot(batch);
+
+    std::vector<std::string> ids;
+    for each(auto item in editorActors)
+    {
+        ids.push_back(CActor::GetFullPathID(item.first)); // fill new selection
+    }
+
+    AddCommand(std::move(
+        std::shared_ptr<CommandBase_>(new CommandBase_(
+            [&, prop, ids, value]()
+    {
+       // GetApp()->GetRenderSDK()->GetRenderDriver()->PushContext(GetRenderContext());
+
+        for each (auto &item in ids)
+        {
+            if (CActor *actor = CActor::GetActorByFullPath(item, GetApp()->GetRootActor()))
+            {
+                prop->SetProperty(actor, value.c_str());
+            }
+        }
+    },
+        [&, prop, ids, valueOld]() {
+        
+        for each (auto &item in ids)
+        {
+            if (CActor *actor = CActor::GetActorByFullPath(item, GetApp()->GetRootActor()))
+            {
+                prop->SetProperty(actor, valueOld.c_str());
+            }
+        }
+    }))
+    ));
+
+}
+
+//----------------------------------------------------------------------------------------------
+CActor* EditorBase::GetEditorRelatedActor(CActor *actor)
 {
     if (actor && actor->GetExternal())
     {
@@ -335,15 +330,15 @@ const CActor* EditorBase::GetEditorRelatedActor(const CActor *actor)
 //----------------------------------------------------------------------------------------------
 EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<CActor*> &actors)
 {
-    std::map<const CActor*, std::vector<CActor*>> out;
+    std::map<CActor*, std::vector<CActor*>> out;
 
     for each (auto actor in actors)
     {
-        const auto *key = GetEditorRelatedActor(actor);
+        auto *key = GetEditorRelatedActor(actor);
 
         assert(key);
 
-        const auto iterFind = out.find(key);
+        auto iterFind = out.find(key);
         if (iterFind == out.end())
         {
             out[key] = { actor };

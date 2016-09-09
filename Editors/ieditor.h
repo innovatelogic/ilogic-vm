@@ -72,7 +72,9 @@ public:
     */
     virtual void    SelectActors(const std::vector<CActor*> &actors) = 0;
 
-    virtual std::vector<const CActor*>  GetSelected() const = 0;
+ //   virtual std::vector<const CActor*>  GetSelected() const = 0;
+
+    virtual std::vector<CActor*>        GetSelected() = 0;
 
     /*!
     * retrieve object attribute
@@ -90,7 +92,9 @@ public:
     * [object] object to set to
     * [prop] property object
     */
-    virtual void SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop) = 0;
+    virtual void SetProperty(const std::string &value, CActor* object, const Property_Base *prop) = 0;
+
+    virtual void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop) = 0;
 
     /*!
     * commits deselect command. 

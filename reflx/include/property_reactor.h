@@ -14,7 +14,7 @@
             PropertyReactor();
             virtual ~PropertyReactor();
             
-            void Build(std::vector<const T*> &objects);
+            void Build(std::vector<T*> &objects);
             void Clear() override;
 
             const TMapClassData& GetClasses() const override { return m_propertyClasses; }
@@ -24,7 +24,7 @@
             void FetchProperties(const std::string &group, TMapClassData &out) override;
 
         private:
-            void BuildObject(const T *object);
+            void BuildObject(T *object);
 
             void FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out);
 

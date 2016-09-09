@@ -15,7 +15,7 @@ class DLLEXPORT EditorBase : public IEditor
 {
 public:
     using TVecConstActor = std::vector<const CActor*>;
-    using TMapActorVec = std::map<const CActor*, std::vector<CActor*>>;
+    using TMapActorVec = std::map<CActor*, std::vector<CActor*>>;
 
     EditorBase(CCoreSDK *pInstance, CActor *actor, ICommandBuffer *buffer);
 	virtual ~EditorBase();
@@ -36,7 +36,8 @@ public:
     */
     void SetNotifySelectFunc(const std::function<void()> &func) override { m_notifySelectFunc = func; }
 
-    std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
+   // std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
+    std::vector<CActor*>       GetSelected() override { return m_selection.Values(); }
 
     void SelectActors(const std::vector<CActor*> &actors);
     void DeselectAll() override;
@@ -53,13 +54,15 @@ public:
         size_t index = 0,
         const Property_Base *holder_array = nullptr) const override;
 
-    void SetProperty(const std::string &value, CObjectAbstract* object, const Property_Base *prop) override;
+    void SetProperty(const std::string &value, CActor* object, const Property_Base *prop) override;
+    
+    void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop) override;
 
 protected:
     /*!
      *  Returns a lowest editor-root related to input actor
      */
-    const CActor* GetEditorRelatedActor(const CActor *actor);
+    CActor* GetEditorRelatedActor(CActor *actor);
 
     /*!
     * return correspondence map where a key actor is in root's space explicitly,

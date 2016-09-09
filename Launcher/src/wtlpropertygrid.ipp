@@ -530,10 +530,18 @@ void CWTLPropertyGrid<T>::CustomDrawProperty(LPNMLVCUSTOMDRAW pNMLVCD)
                 std::string value;
                 if (GetPropertySelectedBatch(data.property, value))
                 {
+                    int val = atoi(value.c_str());
+
                     //assert(value.size() == 4);
                     DWORD buffer = MAKELONG(MAKEWORD(value[4], value[3]), MAKEWORD(value[2], value[1]));
-                    pNMLVCD->clrText = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
-                    pNMLVCD->clrTextBk = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
+                    DWORD color = RGB(GetBValue(val), GetGValue(val), GetRValue(val));
+                    
+                    byte r = (val & 0x00FF0000) >> 16;
+                    byte g = (val & 0x0000FF00) >> 8;
+                    byte b = (val & 0x000000FF);
+
+                    pNMLVCD->clrText = RGB(r, g, b);
+                    pNMLVCD->clrTextBk = RGB(r, g, b);
                 }
             }break;
 
@@ -577,14 +585,14 @@ void CWTLPropertyGrid<T>::FillModel()
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<const T*> &actors)
+void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<T*> &actors)
 {
     m_propReactor->Build(m_editor->GetSelected());
 
     FillModel();
 
     if (!actors.empty()){
-        SetSelected(const_cast<T*>(actors.at(0)));
+        SetSelected(actors.at(0));
     }
 
     PostMessage(WM_USER_DELETE_ALL, 0, 0);
@@ -1465,12 +1473,12 @@ void CWTLPropertyGrid<T>::ClickProperty(int index)
 
         case CTRL_COMBO:
         {
-            ShowEditComboControl(data.id, ConvertStringToWideString(value));
+            ShowEditComboControl(index, ConvertStringToWideString(value));
         }break;
 
         case CTRL_COLOR:
         {
-            ShowEditColorControl(data.id, ConvertStringToWideString(value));
+            ShowEditColorControl(index, value);
         }break;
 
         default:
@@ -1635,19 +1643,6 @@ BOOL CWTLPropertyGrid<T>::ProcessClickListProperties(LPNMLISTVIEW plvdi, SProper
                         m_pComboBox->GetButton()->ShowWindow(SW_SHOW);
                         m_pComboBox->SetFocus();
                     }
-
-                    /*else
-                    {
-                    MoveWindow(m_hwndEditComboBtn,
-                    Point.x + ListView_GetColumnWidth(m_hwndListProperty, 0) + ListView_GetColumnWidth(m_hwndListProperty, 1) - 16,
-                    Point.y,
-                    16,
-                    16,
-                    TRUE);
-
-                    ShowWindow(m_hwndEditComboBtn, SW_SHOW);
-                    SetFocus(m_hwndEditComboBtn);
-                    }*/
                 }
             }
         }break;
@@ -1837,8 +1832,8 @@ bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(Property_Base *prop, std::str
     {
         bResult = true;
 
-        std::vector<const T*>::const_iterator iter = selected.begin();
-
+        std::vector<T*>::const_iterator iter = selected.begin();
+        
         out = m_editor->GetProperty(*iter, prop);
         
         iter++;
@@ -1915,8 +1910,49 @@ void CWTLPropertyGrid<T>::ShowEditResourceControl(int index, SFetchData &data, c
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::wstring &value)
+void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::string &value)
 {
+    //	var argb  : int = (alpha<<24)|rgb;
+    //	var rgb   : int = 0xFFFFFF & argb;
+    //	var alpha : int = (argb>>24)&0xFF; 
+    
+    DWORD buffer;
+    CHOOSECOLOR cc;
+    COLORREF acrCustClr[16];
+
+    ZeroMemory(&cc, sizeof(cc));
+    cc.lStructSize = sizeof(cc);
+    cc.hwndOwner = m_hWnd;
+    cc.lpCustColors = (LPDWORD)acrCustClr;
+    cc.Flags = CC_FULLOPEN | CC_RGBINIT;
+
+    buffer = MAKELONG(MAKEWORD(value[4], value[3]), MAKEWORD(value[2], value[1]));
+    cc.rgbResult = RGB(GetBValue(buffer), GetGValue(buffer), GetRValue(buffer)); // 0x00rrggbb -> 0x00bbggrr
+
+    if (ChooseColor(&cc) == TRUE)
+    {
+        char oldValue[256] = { '\0' };
+        char newValue[256] = { '\0' };
+
+        sprintf(oldValue, "%d", buffer);
+
+        buffer = (255 << 24) | RGB(GetBValue(cc.rgbResult), GetGValue(cc.rgbResult), GetRValue(cc.rgbResult)); // 0x00bbggrr to 0x00rrggbb
+
+        sprintf(newValue, "%d", buffer);
+
+        SFetchData &data = m_cacheFill.at(index);
+
+        PushContext();
+
+        m_editor->SetProperty(newValue, oldValue, m_editor->GetSelected(), data.property);
+
+
+//        Prop->SetProperty((BYTE*)Class->pDataObject + MemOffset, txt);
+
+        PopContext();
+
+//        UpdatePreview();
+    }
 
 }
 

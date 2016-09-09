@@ -279,7 +279,7 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 	XML_DEF_ATTRIBUTES_NODE(Transient);\
 	XML_DEF_ATTRIBUTES_NODE(Value);\
 	ValueParser ValueStore(Value);\
-	if (Transient == "0" || !Transient.empty() || !External.empty())\
+	if (Transient == "0" || Transient.empty() || !External.empty())\
 	{\
 		TYPE_FAMILY_BASE *pNewObject = static_cast<TYPE_FAMILY_BASE*>(GENERATE_OBJECT_SDK(TYPE_NAME, ValueStore.GetValueString("Name").c_str(), PARENT));\
 		if (pNewObject)\

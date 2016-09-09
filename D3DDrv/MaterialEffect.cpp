@@ -68,7 +68,7 @@ void MaterialEffect::Affect() /*const*/
 		glUniform1i(InFog, bFog);
 	}
 	
-	GLint InFogColor = glGetUniformLocation(program, "fogColor");
+	GLuint InFogColor = glGetUniformLocation(program, "fogColor");
 	if (InFogColor != -1)
 	{
 		byte a = (m_pD3DInterface->m_FogColor & 0xFF000000) >> 24;

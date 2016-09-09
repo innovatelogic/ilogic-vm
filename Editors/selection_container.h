@@ -11,7 +11,7 @@ namespace oes
         template<class T_CLASS>
         class SelectionContainer final
         {
-            using TMapContainer = std::map<const T_CLASS*, std::vector<const T_CLASS*>>;
+            using TMapContainer = std::map<T_CLASS*, std::vector<T_CLASS*>>;
 
         public:
             //----------------------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            bool AddItem(const T_CLASS *key, const T_CLASS *item)
+            bool AddItem(T_CLASS *key, T_CLASS *item)
             {
                 bool bResult = false;
                 if (key && item)
@@ -63,7 +63,7 @@ namespace oes
             }
 
             //----------------------------------------------------------------------------------------------
-            bool RemoveItem(const T_CLASS *key, const T_CLASS *item = nullptr)
+            bool RemoveItem(T_CLASS *key, const T_CLASS *item = nullptr)
             {
                 bool bResult = false;
                 if (key)
@@ -139,6 +139,20 @@ namespace oes
                     }
                 }
             }
+            //----------------------------------------------------------------------------------------------
+            void GetAllElements(std::vector<T_CLASS*> &out)
+            {
+                out.resize(Size());
+                size_t idx = 0;
+
+                for each(auto item in m_container)
+                {
+                    for each (auto *elem in item.second)
+                    {
+                        out[idx++] = elem;
+                    }
+                }
+            }
 
             //----------------------------------------------------------------------------------------------
             std::vector<const T_CLASS*> Values() const
@@ -147,6 +161,15 @@ namespace oes
                 GetAllElements(out);
                 return out;
             }
+
+            //----------------------------------------------------------------------------------------------
+            std::vector<T_CLASS*> Values()
+            {
+                std::vector<T_CLASS*> out;
+                GetAllElements(out);
+                return out;
+            }
+
         private:
             TMapContainer m_container;
         };

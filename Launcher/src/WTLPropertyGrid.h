@@ -166,7 +166,7 @@ public:
 
     void FillModel();
 
-    void FillPropertyGrid(std::vector<const T*> &actors);
+    void FillPropertyGrid(std::vector<T*> &actors);
     void FillPropertyTabs();
     void FillPropertyData(T *pActor);
 
@@ -226,7 +226,7 @@ private:
 
         void ShowEditWindowControl(int index, SFetchData &data, const std::wstring &value);
         void ShowEditResourceControl(int index, SFetchData &data, const std::wstring &value);
-        void ShowEditColorControl(int index, const std::wstring &value);
+        void ShowEditColorControl(int index, const std::string &value);
         void ShowEditComboControl(int index, const std::wstring &value);
 private:
 	TEdit						*m_pEdit;

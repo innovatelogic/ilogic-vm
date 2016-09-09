@@ -142,7 +142,7 @@ void PropertyUINT::DoSetProperty(const void * Ptr, const char* Value, unsigned i
 	if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this))
 		return;
 
-	unsigned int ValueINT = atoi(Value);
+	unsigned int ValueINT = strtoul(Value, NULL, 0); //atol(Value);
 	unsigned int *Dest = (unsigned int*)((char*)Ptr + m_MemOffset + byteOffset);
 	*(unsigned int*)(Dest) = *(unsigned int*)&ValueINT;
 

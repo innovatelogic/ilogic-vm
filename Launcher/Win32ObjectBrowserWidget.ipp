@@ -950,7 +950,7 @@ void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
     new_selected.clear();
     new_deselected.clear();
 
-    std::vector<const CActor*> selected = m_editor->GetSelected();
+    std::vector<CActor*> selected = m_editor->GetSelected();
 
     const size_t uiDataSize = m_hwndLeft.m_aData.GetSize();
 
