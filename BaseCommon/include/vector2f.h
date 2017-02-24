@@ -1,6 +1,3 @@
-#ifndef __vector2f_h__
-#define __vector2f_h__
-
 #pragma once
 
 #include <math.h>
@@ -85,8 +82,5 @@ COMMON_BASE_EXPORT float sq_length(const Vector2f & n);
 COMMON_BASE_EXPORT float length(const Vector2f & n);
 COMMON_BASE_EXPORT float DotProduct(const Vector2f& v1, const Vector2f& v2);
 
-
 }
 }
-
-#endif

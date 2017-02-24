@@ -1,6 +1,3 @@
-#ifndef __vector4f_h__
-#define __vector4f_h__
-
 #pragma once
 
 #include <assert.h>
@@ -46,5 +43,3 @@ public:
 
 }
 }
-
-#endif

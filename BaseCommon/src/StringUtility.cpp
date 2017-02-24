@@ -3,289 +3,294 @@
 #include <string>
 #include <windows.h>
 
-using namespace oes::common_base;
-
-//----------------------------------------------------------------------------------------------
-//  split formatted string to components
-//----------------------------------------------------------------------------------------------
-CStringUtility<int>::CStringUtility(const std::string& str, std::string splitter)
+namespace oes
 {
-	size_t start = 0;
-	size_t end   = str.find(splitter, start);
+    namespace common_base
+    {
+        //----------------------------------------------------------------------------------------------
+        //  split formatted string to components
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<int>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            size_t start = 0;
+            size_t end = str.find(splitter, start);
 
-	m_vector.clear();
+            m_vector.clear();
 
-	while (end != std::string::npos)
-	{
-		std::string substring = str.substr(start, end - start);
+            while (end != std::string::npos)
+            {
+                std::string substring = str.substr(start, end - start);
 
-		int value = atoi(substring.c_str());  
+                int value = atoi(substring.c_str());
 
-		m_vector.push_back(value);
+                m_vector.push_back(value);
 
-		start = end + 1;
-		end   = str.find(splitter, start);
+                start = end + 1;
+                end = str.find(splitter, start);
 
-		if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
-		{													 // need to parse remains range 
-			std::string last_substring = str.substr(start);
-			m_vector.push_back(atoi(last_substring.c_str()));
-		}
-	} 
-}
+                if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
+                {													 // need to parse remains range 
+                    std::string last_substring = str.substr(start);
+                    m_vector.push_back(atoi(last_substring.c_str()));
+                }
+            }
+        }
 
-//----------------------------------------------------------------------------------------------
-CStringUtility<size_t>::CStringUtility(const std::string& str, std::string splitter)
-{
-	size_t start = 0;
-	size_t end   = str.find(splitter, start);
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<size_t>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            size_t start = 0;
+            size_t end = str.find(splitter, start);
 
-	m_vector.clear();
+            m_vector.clear();
 
-	while (end != std::string::npos)
-	{
-		std::string substring = str.substr(start, end - start);
+            while (end != std::string::npos)
+            {
+                std::string substring = str.substr(start, end - start);
 
-		int value = atoi(substring.c_str());  
+                int value = atoi(substring.c_str());
 
-		m_vector.push_back(value);
+                m_vector.push_back(value);
 
-		start = end + 1;
-		end   = str.find(splitter, start);
+                start = end + 1;
+                end = str.find(splitter, start);
 
-		if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
-		{													 // need to parse remains range 
-			std::string last_substring = str.substr(start);
-			m_vector.push_back(atoi(last_substring.c_str()));
-		}
-	} 
-}
-//----------------------------------------------------------------------------------------------
-CStringUtility<float>::CStringUtility(const std::string& str, std::string splitter)
-{
-	size_t start = 0;
-	size_t end   = str.find(splitter, start);
+                if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
+                {													 // need to parse remains range 
+                    std::string last_substring = str.substr(start);
+                    m_vector.push_back(atoi(last_substring.c_str()));
+                }
+            }
+        }
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<float>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            size_t start = 0;
+            size_t end = str.find(splitter, start);
 
-	m_vector.clear();
+            m_vector.clear();
 
-	while (end != std::string::npos)
-	{
-		std::string substring = str.substr(start, end - start);
+            while (end != std::string::npos)
+            {
+                std::string substring = str.substr(start, end - start);
 
-		float value = (float)atof(substring.c_str());  
+                float value = (float)atof(substring.c_str());
 
-		m_vector.push_back(value);
+                m_vector.push_back(value);
 
-		start = end + 1;
-		end   = str.find(splitter, start);
+                start = end + 1;
+                end = str.find(splitter, start);
 
-		if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
-		{													 // need to parse remains range 
-			std::string last_substring = str.substr(start);
-			m_vector.push_back((float)atof(last_substring.c_str()));
-		}
-	}
-}
+                if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
+                {													 // need to parse remains range 
+                    std::string last_substring = str.substr(start);
+                    m_vector.push_back((float)atof(last_substring.c_str()));
+                }
+            }
+        }
 
-//----------------------------------------------------------------------------------------------
-CStringUtility<double>::CStringUtility(const std::string& str, std::string splitter)
-{
-	size_t start = 0;
-	size_t end   = str.find(splitter, start);
-	
-	m_vector.clear();
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<double>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            size_t start = 0;
+            size_t end = str.find(splitter, start);
 
-	while (end != std::string::npos)
-	{
-		std::string substring = str.substr(start, end - start);
+            m_vector.clear();
 
-		double value = atof(substring.c_str());  
+            while (end != std::string::npos)
+            {
+                std::string substring = str.substr(start, end - start);
 
-		m_vector.push_back(value);
+                double value = atof(substring.c_str());
 
-		start = end + 1;
-		end   = str.find(splitter, start);
+                m_vector.push_back(value);
 
-		if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
-		{													 // need to parse remains range 
-			std::string last_substring = str.substr(start);
-			m_vector.push_back(atof(last_substring.c_str()));
-		}
-	}
-}
+                start = end + 1;
+                end = str.find(splitter, start);
 
-//----------------------------------------------------------------------------------------------
-CStringUtility<std::string>::CStringUtility(const std::string& str, std::string splitter)
-{
-	if (!str.empty())
-	{
-		size_t start = 0;
-		size_t end   = str.find(splitter, start);
+                if (start != str.size() && end == std::string::npos) // in case if last symbol not splitter character
+                {													 // need to parse remains range 
+                    std::string last_substring = str.substr(start);
+                    m_vector.push_back(atof(last_substring.c_str()));
+                }
+            }
+        }
 
-		// push whole by defaults
-		m_vector.push_back(str);
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<std::string>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            if (!str.empty())
+            {
+                size_t start = 0;
+                size_t end = str.find(splitter, start);
 
-		if (end != std::string::npos)
-		{
-			m_vector.clear();
+                // push whole by defaults
+                m_vector.push_back(str);
 
-			while (end != std::string::npos)
-			{
-				std::string substring = str.substr(start, end - start);
+                if (end != std::string::npos)
+                {
+                    m_vector.clear();
 
-				m_vector.push_back(substring);
+                    while (end != std::string::npos)
+                    {
+                        std::string substring = str.substr(start, end - start);
 
-				start = end + 1;
-				end   = str.find(splitter, start);
+                        m_vector.push_back(substring);
 
-				if (start != str.size() && end == std::string::npos)
-				{
-					std::string last_substring = str.substr(start);
-					m_vector.push_back(last_substring);
-				}
-			}
-		}
-	}
-}
-//----------------------------------------------------------------------------------------------
-CStringUtility<std::string>::CStringUtility(const std::string& str, std::vector<std::string> &OutArray, std::string splitter /*= " "*/)
-{
-	if (str.empty())
-	{
-		size_t start = 0;
-		size_t end   = str.find(splitter, start);
+                        start = end + 1;
+                        end = str.find(splitter, start);
 
-		// push whole by defaults
-		m_vector.push_back(str);
-		OutArray.push_back(str);
+                        if (start != str.size() && end == std::string::npos)
+                        {
+                            std::string last_substring = str.substr(start);
+                            m_vector.push_back(last_substring);
+                        }
+                    }
+                }
+            }
+        }
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<std::string>::CStringUtility(const std::string& str, std::vector<std::string> &OutArray, std::string splitter /*= " "*/)
+        {
+            if (str.empty())
+            {
+                size_t start = 0;
+                size_t end = str.find(splitter, start);
 
-		if (end != std::string::npos)
-		{
-			m_vector.clear();
-			OutArray.clear();
+                // push whole by defaults
+                m_vector.push_back(str);
+                OutArray.push_back(str);
 
-			while (end != std::string::npos)
-			{
-				std::string substring = str.substr(start, end-start);
+                if (end != std::string::npos)
+                {
+                    m_vector.clear();
+                    OutArray.clear();
 
-				m_vector.push_back(substring);
-				OutArray.push_back(substring);
+                    while (end != std::string::npos)
+                    {
+                        std::string substring = str.substr(start, end - start);
 
-				start = end + 1;
-				end   = str.find(splitter, start);
+                        m_vector.push_back(substring);
+                        OutArray.push_back(substring);
 
-				if (end == std::string::npos)
-				{
-					std::string last_substring = str.substr(start, str.length());
-					m_vector.push_back(last_substring);
-					OutArray.push_back(last_substring);
-				}
-			}
-		}
-	}
-}
-//----------------------------------------------------------------------------------------------
-CStringUtility<Vector>::CStringUtility(const std::string& str, std::string splitter)
-{
-	CStringUtility<float> parser(str);
-	
-	std::vector<float> &vec = parser.GetVectorRef();
+                        start = end + 1;
+                        end = str.find(splitter, start);
 
-    for(size_t i=0;i<vec.size();i+=3)
-	{
-       Vector point;
+                        if (end == std::string::npos)
+                        {
+                            std::string last_substring = str.substr(start, str.length());
+                            m_vector.push_back(last_substring);
+                            OutArray.push_back(last_substring);
+                        }
+                    }
+                }
+            }
+        }
+        //----------------------------------------------------------------------------------------------
+        CStringUtility<Vector>::CStringUtility(const std::string& str, std::string splitter)
+        {
+            CStringUtility<float> parser(str);
 
-       for(int j=0;j<3;j++)
-	   {
-           if (j==0) point.x = vec[i+j];  
-		   if (j==1) point.y = vec[i+j]; 
-		   if (j==2) point.z = vec[i+j]; 
-	   }
+            std::vector<float> &vec = parser.GetVectorRef();
 
-	   m_vector.push_back(point);
-	}
-}
+            for (size_t i = 0; i < vec.size(); i += 3)
+            {
+                Vector point;
 
-//----------------------------------------------------------------------------------------------
-//  DataStore markup string checker
-//----------------------------------------------------------------------------------------------  
-CStringDataStoreMarkup::CStringDataStoreMarkup( const std::string& str,
-											    std::string open_tag /* = "<"*/,
-											    std::string close_tag /* = ">"*/ )
-{
-    m_PathString = "";
+                for (int j = 0; j < 3; j++)
+                {
+                    if (j == 0) point.x = vec[i + j];
+                    if (j == 1) point.y = vec[i + j];
+                    if (j == 2) point.z = vec[i + j];
+                }
 
-    
-	//std::string::iterator _iter = str.begin();
-	//@todo parse string heare
-}
+                m_vector.push_back(point);
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
+        //  DataStore markup string checker
+        //----------------------------------------------------------------------------------------------  
+        CStringDataStoreMarkup::CStringDataStoreMarkup(const std::string& str,
+            std::string open_tag /* = "<"*/,
+            std::string close_tag /* = ">"*/)
+        {
+            m_PathString = "";
 
 
-//----------------------------------------------------------------------------------------------
-// Name: ConvertWideStringToAnsi()
-// Desc: This is a UNICODE conversion utility to convert a WCHAR string into a
-//       char string. 
-//       cchDestChar is the size in TCHARs of strDestination
-//----------------------------------------------------------------------------------------------
-bool ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar)
-{
-	if( strDestination==nullptr || wstrSource==nullptr || cchDestChar < 1 )
-		return false;
+            //std::string::iterator _iter = str.begin();
+            //@todo parse string heare
+        }
 
-	int nResult = WideCharToMultiByte( CP_ACP, 0, wstrSource, -1, strDestination, 
-		cchDestChar*sizeof(char), nullptr, nullptr );
-	strDestination[cchDestChar-1] = 0;
 
-	if( nResult == 0 )
-		return false;
-	return true;
-}
+        //----------------------------------------------------------------------------------------------
+        // Name: ConvertWideStringToAnsi()
+        // Desc: This is a UNICODE conversion utility to convert a WCHAR string into a
+        //       char string. 
+        //       cchDestChar is the size in TCHARs of strDestination
+        //----------------------------------------------------------------------------------------------
+        bool ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar)
+        {
+            if (strDestination == nullptr || wstrSource == nullptr || cchDestChar < 1)
+                return false;
 
-//----------------------------------------------------------------------------------------------
-std::string ConvertWideStringToString(const std::wstring& strSource)
-{
-	int Length = (int)strSource.length() + 1;
-	char* buf = new char[Length];
-	ConvertWideStringToAnsiCch(buf, strSource.c_str(), Length);
-	std::string r(buf);
-	delete [] buf;
-	return r;
-}
+            int nResult = WideCharToMultiByte(CP_ACP, 0, wstrSource, -1, strDestination,
+                cchDestChar*sizeof(char), nullptr, nullptr);
+            strDestination[cchDestChar - 1] = 0;
 
-//----------------------------------------------------------------------------------------------
-// Name: ConvertStringToWideString()
-// Desc: 
-//----------------------------------------------------------------------------------------------
-std::wstring ConvertStringToWideString(const std::string& strSource)
-{
-	int Length;
-	int slength = (int)strSource.length() + 1;
-	Length = MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), slength, 0, 0);
-	wchar_t* buf = new wchar_t[Length];
-	MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), -1, buf, Length);
-	std::wstring r(buf);
-	delete[] buf;
-	return r;
-}
+            if (nResult == 0)
+                return false;
+            return true;
+        }
 
-//----------------------------------------------------------------------------------------------
-bool hasEnding(std::string const &fullString, std::string const &ending)
-{
-	if (fullString.length() >= ending.length()) {
-		return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
-	} else {
-		return false;
-	}
-}
+        //----------------------------------------------------------------------------------------------
+        std::string ConvertWideStringToString(const std::wstring& strSource)
+        {
+            int Length = (int)strSource.length() + 1;
+            char* buf = new char[Length];
+            ConvertWideStringToAnsiCch(buf, strSource.c_str(), Length);
+            std::string r(buf);
+            delete[] buf;
+            return r;
+        }
 
-//----------------------------------------------------------------------------------------------
-std::wstring getPathFileName(const std::wstring &fullString)
-{
-	size_t idx_find = fullString.find_last_of(L"/\\");
+        //----------------------------------------------------------------------------------------------
+        // Name: ConvertStringToWideString()
+        // Desc: 
+        //----------------------------------------------------------------------------------------------
+        std::wstring ConvertStringToWideString(const std::string& strSource)
+        {
+            int Length;
+            int slength = (int)strSource.length() + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), slength, 0, 0);
+            wchar_t* buf = new wchar_t[Length];
+            MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), -1, buf, Length);
+            std::wstring r(buf);
+            delete[] buf;
+            return r;
+        }
 
-	if (idx_find != std::wstring::npos)
-	{
-		return fullString.substr(idx_find + 1);
-	}
-	return fullString;
+        //----------------------------------------------------------------------------------------------
+        bool hasEnding(std::string const &fullString, std::string const &ending)
+        {
+            if (fullString.length() >= ending.length()) {
+                return (0 == fullString.compare(fullString.length() - ending.length(), ending.length(), ending));
+            }
+            else {
+                return false;
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
+        std::wstring getPathFileName(const std::wstring &fullString)
+        {
+            size_t idx_find = fullString.find_last_of(L"/\\");
+
+            if (idx_find != std::wstring::npos)
+            {
+                return fullString.substr(idx_find + 1);
+            }
+            return fullString;
+        }
+    }
 }

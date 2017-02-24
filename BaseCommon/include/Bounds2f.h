@@ -1,6 +1,3 @@
-#ifndef __bounds2f_h__
-#define __bounds2f_h__
-
 #pragma once
 
 #include "vector2f.h"
@@ -70,5 +67,3 @@ public:
 
 }
 }
-
-#endif

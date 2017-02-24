@@ -2,54 +2,62 @@
 
 #include "OEMBase.h"
 
-//------------------------------------------------------------------------
-//  split formatted string to components
-//------------------------------------------------------------------------
-template <class T> 
-class COMMON_BASE_EXPORT CStringUtility
+namespace oes
 {
-	typedef std::vector<T> TVector; 
+    namespace common_base
+    {
 
-public:
-	CStringUtility(const std::string& str, std::string splitter = " ");
-	CStringUtility(const std::string& str, std::vector<std::string> &OutArray, std::string splitter = " ");
-	
-	bool GetValue(size_t Index, T& OutVal)
-	{ 
-		bool bResult = false;
+        //------------------------------------------------------------------------
+        //  split formatted string to components
+        //------------------------------------------------------------------------
+        template <class T>
+        class COMMON_BASE_EXPORT CStringUtility
+        {
+            typedef std::vector<T> TVector;
 
-		if (Index < m_vector.size())
-		{
-            OutVal  = m_vector[Index];
-			bResult = true;
-		}
-		return bResult;
-	}
+        public:
+            CStringUtility(const std::string& str, std::string splitter = " ");
+            CStringUtility(const std::string& str, std::vector<std::string> &OutArray, std::string splitter = " ");
 
-	bool IsEmpty() { return (m_vector.size() == 0); }
-	TVector& GetVectorRef() { return m_vector; }
+            bool GetValue(size_t Index, T& OutVal)
+            {
+                bool bResult = false;
 
-    TVector m_vector;
-};
+                if (Index < m_vector.size())
+                {
+                    OutVal = m_vector[Index];
+                    bResult = true;
+                }
+                return bResult;
+            }
 
-//------------------------------------------------------------------------
-//  DataStore markup string checker
-//------------------------------------------------------------------------  
-class COMMON_BASE_EXPORT CStringDataStoreMarkup
-{
-public:
-	CStringDataStoreMarkup(const std::string& str,std::string open_tag = "<",std::string close_tag = ">");
+            bool IsEmpty() { return (m_vector.size() == 0); }
+            TVector& GetVectorRef() { return m_vector; }
 
-	std::string& GetPathString() { return m_PathString; }
+            TVector m_vector;
+        };
 
-private:
-	std::string m_PathString;
-};
+        //------------------------------------------------------------------------
+        //  DataStore markup string checker
+        //------------------------------------------------------------------------  
+        class COMMON_BASE_EXPORT CStringDataStoreMarkup
+        {
+        public:
+            CStringDataStoreMarkup(const std::string& str, std::string open_tag = "<", std::string close_tag = ">");
 
-// Utility functions
-COMMON_BASE_EXPORT bool		   ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar);
-COMMON_BASE_EXPORT std::string  ConvertWideStringToString(const std::wstring& strSource);
-COMMON_BASE_EXPORT std::wstring ConvertStringToWideString(const std::string& strSource);
+            std::string& GetPathString() { return m_PathString; }
 
-COMMON_BASE_EXPORT bool hasEnding(std::string const &fullString, std::string const &ending);
-COMMON_BASE_EXPORT std::wstring getPathFileName(const std::wstring &fullString);
+        private:
+            std::string m_PathString;
+        };
+
+        // Utility functions
+        COMMON_BASE_EXPORT bool		   ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar);
+        COMMON_BASE_EXPORT std::string  ConvertWideStringToString(const std::wstring& strSource);
+        COMMON_BASE_EXPORT std::wstring ConvertStringToWideString(const std::string& strSource);
+
+        COMMON_BASE_EXPORT bool hasEnding(std::string const &fullString, std::string const &ending);
+        COMMON_BASE_EXPORT std::wstring getPathFileName(const std::wstring &fullString);
+
+    }
+}

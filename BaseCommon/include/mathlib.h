@@ -1,6 +1,3 @@
-#ifndef __mathlib_h__
-#define __mathlib_h__
-
 #pragma once
 
 #include <list>
@@ -355,5 +352,3 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 
 }
 }
-
-#endif

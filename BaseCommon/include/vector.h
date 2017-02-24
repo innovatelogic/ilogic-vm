@@ -1,6 +1,3 @@
-#ifndef __vector_h__
-#define __vector_h__
-
 #pragma once
 
 #include <assert.h>
@@ -101,5 +98,3 @@ COMMON_BASE_EXPORT Vector CrossProduct(const Vector &a, const Vector &b, Vector 
 COMMON_BASE_EXPORT void VectorAbs(const Vector &vIn, const Vector &v2, Vector &vOut);
 }
 }
-
-#endif

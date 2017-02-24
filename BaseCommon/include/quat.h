@@ -1,6 +1,3 @@
-#ifndef __quat_h__
-#define __quat_h__
-
 #pragma once
 
 #include "matrix3.h"
@@ -50,5 +47,3 @@ COMMON_BASE_EXPORT Quaternion & Slerp(Quaternion & p, float s, const Quaternion 
 
 }
 }
-
-#endif

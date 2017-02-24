@@ -24,10 +24,10 @@ def main():
 	
 	args = parser.parse_args()
 	
-	cur_file_dir = os.path.dirname(os.path.realpath(__file__))
-	source_dir = os.path.dirname(cur_file_dir)
-	root_dir = root_dir = os.path.dirname(source_dir)
-	cmake_dir = os.path.join(source_dir, "utils/cmake-3.2.1/bin")
+	cur_file_dir 	= os.path.dirname(os.path.realpath(__file__))
+	source_dir 		= os.path.dirname(cur_file_dir)
+	root_dir  		= os.path.dirname(source_dir)
+	cmake_dir 		= os.path.join(source_dir, "utils/cmake-3.2.1/bin")
 
 	out_folder = 'out32'
 	if args.out == None:

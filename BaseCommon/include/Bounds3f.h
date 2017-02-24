@@ -1,6 +1,3 @@
-#ifndef __bounds3f_h__
-#define __bounds3f_h__
-
 #pragma once
 
 #include "vector.h"
@@ -154,5 +151,3 @@ public:
 
 }
 }
-
-#endif
