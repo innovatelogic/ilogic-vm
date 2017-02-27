@@ -9,7 +9,7 @@
 #include "BaseModificator.h"
 
 class CollisionController : public BaseModificator,
-							public ICollisionInterface
+							public oes::common_base::ICollisionInterface
 {
 	DECLARE_CLASS_SIMPLE(CollisionController, BaseModificator);
 

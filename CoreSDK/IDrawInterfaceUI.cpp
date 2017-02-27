@@ -590,8 +590,8 @@ void IDrawInterfaceUI::DoBuildWorldTransform_(const Matrix &WTM)
 	Matrix TWTM = m_WorldMatrixTransform;
 	scale(TWTM, Scale.x, Scale.y, 1.f);
 
-	std::vector<IRenderInterface*> &VecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
-	for (std::vector<IRenderInterface*>::iterator Iter = VecRenderEntities.begin(); Iter != VecRenderEntities.end(); ++Iter)
+	std::vector<oes::common_base::IRenderInterface*> &VecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
+	for (std::vector<oes::common_base::IRenderInterface*>::iterator Iter = VecRenderEntities.begin(); Iter != VecRenderEntities.end(); ++Iter)
 	{
 		(*Iter)->SetRWTM(TWTM);
 	}

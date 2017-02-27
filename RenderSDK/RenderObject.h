@@ -12,7 +12,7 @@
 
 //----------------------------------------------------------------------------------
 class RENDERSDK_API CRenderObject : 
-	public CActor, public RenderSDKInterface, public IRenderInterface
+	public CActor, public RenderSDKInterface, public oes::common_base::IRenderInterface
 {
 	DECLARE_CLASS_SIMPLE(CRenderObject, CActor);
 

@@ -4,43 +4,48 @@
 #include "matrix.h"
 #include "Bounds3f.h"
 
-class COMMON_BASE_EXPORT IRenderInterface
-{
-public:
-	IRenderInterface()
-		: m_nForceLODLvl(0)
-		, m_nDestrLvl(0)
-		, m_Flags(0)
-	{
-	}
+namespace oes {
+    namespace common_base {
 
-	inline_ Matrix			GetRWTM() const { return m_WorldMatrixTransform; }
-	inline_ void			SetRWTM(const Matrix &matrix) { m_WorldMatrixTransform = matrix; }
+        class COMMON_BASE_EXPORT IRenderInterface
+        {
+        public:
+            IRenderInterface()
+                : m_nForceLODLvl(0)
+                , m_nDestrLvl(0)
+                , m_Flags(0)
+            {
+            }
 
-	virtual void			SetRBounds_(const Bounds3f &bound) { m_Bounds = bound; }
-	virtual const Bounds3f&	GetRBounds_() const { return m_Bounds; }
+            inline_ Matrix			GetRWTM() const { return m_WorldMatrixTransform; }
+            inline_ void			SetRWTM(const Matrix &matrix) { m_WorldMatrixTransform = matrix; }
 
-	virtual void			SetWBounds(const Bounds3f &bound) { m_WorldBounds = bound; }
-	virtual const Bounds3f&	GetWBounds() const { return m_WorldBounds; }
+            virtual void			SetRBounds_(const Bounds3f &bound) { m_Bounds = bound; }
+            virtual const Bounds3f&	GetRBounds_() const { return m_Bounds; }
 
-	virtual unsigned int	GetForceLODLvl() const { return m_nForceLODLvl; }
-	virtual void			SetForceLODLvl(unsigned int Value) { m_nForceLODLvl = Value; }
+            virtual void			SetWBounds(const Bounds3f &bound) { m_WorldBounds = bound; }
+            virtual const Bounds3f&	GetWBounds() const { return m_WorldBounds; }
 
-	virtual unsigned int	GetDestructLvl() const { return m_nDestrLvl; }
-	virtual void			SetDestructLvl(unsigned int Value) { m_nDestrLvl = Value; }
+            virtual unsigned int	GetForceLODLvl() const { return m_nForceLODLvl; }
+            virtual void			SetForceLODLvl(unsigned int Value) { m_nForceLODLvl = Value; }
 
-	unsigned int			GetFlags() const { return m_Flags; }
-	void					SetFlags(unsigned int Value) { m_Flags = Value; }
+            virtual unsigned int	GetDestructLvl() const { return m_nDestrLvl; }
+            virtual void			SetDestructLvl(unsigned int Value) { m_nDestrLvl = Value; }
 
-protected:
-	/** precomputed world matrix */
-	mutable Matrix		m_WorldMatrixTransform;
+            unsigned int			GetFlags() const { return m_Flags; }
+            void					SetFlags(unsigned int Value) { m_Flags = Value; }
 
-	Bounds3f			m_Bounds;
-	Bounds3f			m_WorldBounds;
+        protected:
+            /** precomputed world matrix */
+            mutable Matrix		m_WorldMatrixTransform;
 
-	unsigned int		m_nForceLODLvl;
-	unsigned int		m_nDestrLvl;
+            Bounds3f			m_Bounds;
+            Bounds3f			m_WorldBounds;
 
-	unsigned int		m_Flags;
-};
+            unsigned int		m_nForceLODLvl;
+            unsigned int		m_nDestrLvl;
+
+            unsigned int		m_Flags;
+        };
+    }
+}

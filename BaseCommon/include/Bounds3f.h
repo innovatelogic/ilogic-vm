@@ -6,10 +6,8 @@
 #include "vector.h"
 #include <string> 
 
-namespace oes
-{
-namespace common_base
-{
+namespace oes { namespace common_base {
+
 class COMMON_BASE_EXPORT Bounds3f
 {
 public:

@@ -88,7 +88,7 @@ if (${ENABLE_TESTING})
 
 	source_group("Moc Files" FILES ${SOURCE_MOC})
 
-	add_executable(  ${PROJECT_TEST_NAME}
+	add_executable( ${PROJECT_TEST_NAME}
 					${SOURCE_MOC}
 					${SOURCE_UT}
 					)
@@ -99,7 +99,7 @@ if (${ENABLE_TESTING})
 
 	add_test(NAME ${PROJECT_NAME_U}_TEST COMMAND ${PROJECT_TEST_NAME})
 
-	set_target_properties(${PROJECT_TEST_NAME} PROPERTIES FOLDER "UT" )
+	set_target_properties(${PROJECT_TEST_NAME} PROPERTIES FOLDER "UT")
 	set_target_properties(${PROJECT_TEST_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}

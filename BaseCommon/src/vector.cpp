@@ -139,7 +139,7 @@ Vector Vector::operator*(TFlt32 f)const
 }
 
 //----------------------------------------------------------------------------------------------
-inline Vector& Vector::operator=(const Vector &vOther)
+Vector& Vector::operator=(const Vector &vOther)
 {
     x = vOther.x;
     y = vOther.y;

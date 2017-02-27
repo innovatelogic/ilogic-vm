@@ -267,8 +267,8 @@ void IDrawInterface::DoBuildWorldTransform_(const Matrix &WTM)
 
     m_Bounds.SetUnvalid(); // invalidate
 
-    std::vector<IRenderInterface*> &vecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
-	for (std::vector<IRenderInterface*>::const_iterator iter = vecRenderEntities.begin(); iter != vecRenderEntities.end(); ++iter)
+    std::vector<oes::common_base::IRenderInterface*> &vecRenderEntities = const_cast<CActor*>(m_pNode->m_pKey)->m_VecRenderEntities;
+	for (std::vector<oes::common_base::IRenderInterface*>::const_iterator iter = vecRenderEntities.begin(); iter != vecRenderEntities.end(); ++iter)
 	{
 		(*iter)->SetRWTM(m_WorldMatrixTransform);
 	

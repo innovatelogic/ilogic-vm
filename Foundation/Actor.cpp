@@ -525,7 +525,7 @@ CActor * CActor::FindActorByPath(const std::string &Path)
 //----------------------------------------------------------------------------------------------
 void CActor::UpdateEntitiesChangeWorldPos(const Matrix &World)
 {
-	std::for_each(m_VecCollisionEntities.begin(), m_VecCollisionEntities.end(), std::bind2nd(std::mem_fun(&ICollisionInterface::SetWorldPos), World));
+	std::for_each(m_VecCollisionEntities.begin(), m_VecCollisionEntities.end(), std::bind2nd(std::mem_fun(&oes::common_base::ICollisionInterface::SetWorldPos), World));
 }
 
 //----------------------------------------------------------------------------------------------

@@ -328,7 +328,7 @@ void CPawnCueBall::PostPhysEvent(EPhysEventCallback EVENT_ID, void *pParamA, voi
 
 			//pOtherActor->Release();
 
-			for (std::vector<IRenderInterface*>::iterator Iter = pOtherActor->m_VecRenderEntities.begin();
+			for (std::vector<oes::common_base::IRenderInterface*>::iterator Iter = pOtherActor->m_VecRenderEntities.begin();
 				Iter != pOtherActor->m_VecRenderEntities.end(); ++Iter)
 			{
 				(*Iter)->SetFlags((*Iter)->GetFlags() + 1);

@@ -24,7 +24,14 @@
 #include "IObjectAbstract.h"
 #include "IEventManager.h"
 
-class EXPORT CObjectAbstract : public IObjectAbstract
+namespace oes {
+    namespace common_base {
+        class IRenderInterface;
+        class ICollisionInterface;
+    }
+}
+
+class EXPORT CObjectAbstract : public oes::common_base::IObjectAbstract
 {
 	friend class ValueParser;
 
@@ -214,11 +221,11 @@ public:
 	void			RegisterInterfaceImpl(class IBaseInterface *pInt);
 	void			UnregisterInterfaceImpl(class IBaseInterface *pInt);
 
-	bool			RegisterRenderEntity(class IRenderInterface *pPtr);
-	bool			UnregisterRenderEntity(class IRenderInterface *pPtr);
+	bool			RegisterRenderEntity(IRenderInterface *pPtr);
+	bool			UnregisterRenderEntity(IRenderInterface *pPtr);
 
-	bool			RegisterCollisionEntity(class ICollisionInterface *pPtr);
-	bool			UnregisterCollisionEntity(class ICollisionInterface *pPtr);
+	bool			RegisterCollisionEntity(ICollisionInterface *pPtr);
+	bool			UnregisterCollisionEntity(ICollisionInterface *pPtr);
 
 	void			SetPlainDeserializationPos(unsigned int Value) { m_nPlainDeserializationPos = Value; }
 	unsigned int	GetPlainDeserializationPos() const { return m_nPlainDeserializationPos; }

@@ -3,13 +3,19 @@
 #include "OEMBase.h"
 #include "matrix.h"
 
-class COMMON_BASE_EXPORT ICollisionInterface
-{
-public:
-	virtual void Enable(bool bFlag) = 0;
+namespace oes {
+    namespace common_base {
 
-	virtual void SetWorldPos(const Matrix &matrix) = 0;
+        class COMMON_BASE_EXPORT ICollisionInterface
+        {
+        public:
+            virtual void Enable(bool bFlag) = 0;
 
-protected:
-private:
-};
+            virtual void SetWorldPos(const Matrix &matrix) = 0;
+
+        protected:
+        private:
+        };
+
+    }
+}
