@@ -37,7 +37,7 @@
 #if (defined(ES_WINDOWS))
 #ifdef COMMON_LIB_COMPILE
 #define COMMON_BASE_EXPORT _declspec(dllexport)
-#define EXTERN_COMMON_BASE_EXPORT   extern COMMON_BASE_EXPORT
+#define EXTERN_COMMON_BASE_EXPORT extern COMMON_BASE_EXPORT
 
 #else
 #define COMMON_BASE_EXPORT

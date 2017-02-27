@@ -1,7 +1,4 @@
-//------------------------------------------------------------------------
-// Copyright 2006
-// Auth: Yur.G
-//
+
 //------------------------------------------------------------------------
 //
 //     class Matrix 
@@ -13,9 +10,6 @@
 
 // links: http://www.euclideanspace.com/maths/geometry/affine/reflection/index.htm
 //        http://www.euclideanspace.com/maths/geometry/elements/plane/lineOnPlane/index.htm
-
-#ifndef __matrix3_h__
-#define __matrix3_h__
 
 #pragma once
 
@@ -96,5 +90,3 @@ Matrix3f & mult(Matrix3f & C, const Matrix3f & A, const Matrix3f & B);
 
 }
 }
-
-#endif
