@@ -1,5 +1,6 @@
-#include "TypesBase.h"
+
 #include "vector2f.h"
+#include <math.h>
 
 namespace oes
 {
@@ -14,7 +15,7 @@ Vector2f::Vector2f()
 }
 
 //------------------------------------------------------------------------
-Vector2f::Vector2f(float _x, float _y)
+Vector2f::Vector2f(TFlt32 _x, TFlt32 _y)
 : x(_x)
 , y(_y)
 {
@@ -31,14 +32,14 @@ Vector2f::Vector2f(const Vector2f& Source)
 }
 
 //------------------------------------------------------------------------
-void Vector2f::Set(float _x, float _y)
+void Vector2f::Set(TFlt32 _x, TFlt32 _y)
 {
 	x = _x;
 	y = _y;
 }
 
 //------------------------------------------------------------------------
-float Vector2f::Normalize()
+TFlt32 Vector2f::Normalize()
 {
 	float norm = sqrtf(x * x + y * y);
 	if (norm > m_eps)
@@ -52,33 +53,38 @@ float Vector2f::Normalize()
 	return norm;
 }
 
-float sq_length(const Vector2f & n)
+TFlt32 sq_length(const Vector2f & n)
 {
     return n.x * n.x + n.y * n.y;
 }
+
 //--------------------------------------------------------------------------------
 /** Computes the magnitude */
 float length(const Vector2f & n)
 {
     return sqrtf(sq_length(n));
 }
+
 //----------------------------------------------------------------------------------
 float DotProduct(const Vector2f& v1, const Vector2f& v2)
 {
     return  v1.x * v2.x + v1.y * v2.y;
 }
+
 //----------------------------------------------------------------------------------
-float Vector2f::Length() const
+TFlt32 Vector2f::Length() const
 {
     return ::sqrtf(x * x + y * y);
 }
+
 //----------------------------------------------------------------------------------
-float Vector2f::LengthSqr() const
+TFlt32 Vector2f::LengthSqr() const
 {
     return x * x + y * y;
 }
+
 //----------------------------------------------------------------------------------
-float Vector2f::Dot(const Vector2f& _vector_other)const
+TFlt32 Vector2f::Dot(const Vector2f& _vector_other)const
 {
     return DotProduct(*this, _vector_other);
 }

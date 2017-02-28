@@ -1,4 +1,5 @@
 #include "vector4f.h"
+#include <assert.h>
 
 namespace oes
 {
@@ -14,7 +15,7 @@ Vector4f::Vector4f()
 }
 
 //------------------------------------------------------------------------
-Vector4f::Vector4f(float _x, float _y, float _z, float _w)
+Vector4f::Vector4f(TFlt32 _x, TFlt32 _y, TFlt32 _z, TFlt32 _w)
 : x(_x)
 , y(_y)
 , z(_z)
@@ -34,7 +35,7 @@ Vector4f::Vector4f(const Vector4f& Source)
 	}
 }
 //------------------------------------------------------------------------
-void Vector4f::Set(float _x, float _y, float _z, float _w)
+void Vector4f::Set(TFlt32 _x, TFlt32 _y, TFlt32 _z, TFlt32 _w)
 {
 	x = _x;
 	y = _y;
@@ -49,17 +50,17 @@ bool Vector4f::operator!= (const Vector4f& Other) const
 }
 
 //------------------------------------------------------------------------
-float Vector4f::operator[](int i)const
+TFlt32 Vector4f::operator[](int i) const
 {
     assert((i >= 0) && (i < 4));
     return ((float*)this)[i];
 }
 
 //------------------------------------------------------------------------
-float& Vector4f::operator[](int i)
+TFlt32& Vector4f::operator[](int i)
 {
     assert((i >= 0) && (i < 4));
-    return ((float*)this)[i];
+    return ((TFlt32*)this)[i];
 }
 }
 }

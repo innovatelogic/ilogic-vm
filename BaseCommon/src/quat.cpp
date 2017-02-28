@@ -1,5 +1,6 @@
 #include "quat.h"
 #include "Matrix.h"
+#include <assert.h>
 
 namespace oes
 {
@@ -9,26 +10,27 @@ namespace common_base
 //------------------------------------------------------------------------
 Quaternion::Quaternion()
 {
-   Set(0.f,0.f,0.f,1.f);
+   Set(0.f, 0.f, 0.f, 1.f);
 }
+
 //------------------------------------------------------------------------
-Quaternion::Quaternion(float _x, float _y, float _z, float _w)
+Quaternion::Quaternion(TFlt32 _x, TFlt32 _y, TFlt32 _z, TFlt32 _w)
 {
    Set(_x, _y, _z, _w);
 }
 
 //------------------------------------------------------------------------
-float Quaternion::operator[](int i)const
+TFlt32 Quaternion::operator[](int i)const
 {
 	assert((i>=0)&&(i<=4));
-	return ((float*)this)[i];
+	return ((TFlt32*)this)[i];
 }
 
 //------------------------------------------------------------------------
-float Quaternion::operator[](int i) 
+TFlt32 Quaternion::operator[](int i)
 {
 	assert((i>=0)&&(i<=4));
-	return ((float*)this)[i];
+	return ((TFlt32*)this)[i];
 }
 
 //------------------------------------------------------------------------
@@ -41,10 +43,10 @@ Quaternion& Quaternion::operator*=(const Quaternion &q)
 //------------------------------------------------------------------------
 void Quaternion::FromMatrix(const Matrix3f &mat)
 {
-	float trace = mat(0, 0) + mat(1, 1) + mat(2, 2);
+    TFlt32 trace = mat(0, 0) + mat(1, 1) + mat(2, 2);
 	if (trace > 0.f) 
 	{
-		float scale = sqrtf(trace + 1.f);
+        TFlt32 scale = sqrtf(trace + 1.f);
 		w = 0.5f * scale;
 		scale = 0.5f / scale;
 		x = scale * (mat(2, 1) - mat(1, 2));
@@ -61,8 +63,8 @@ void Quaternion::FromMatrix(const Matrix3f &mat)
 			i = 2;
 		int j = next[i];
 		int k = next[j];
-		float scale = sqrtf(mat(i, i) - mat(j, j) - mat(k, k) + 1.f);
-		float* q[] = { &x, &y, &z };
+        TFlt32 scale = sqrtf(mat(i, i) - mat(j, j) - mat(k, k) + 1.f);
+        TFlt32* q[] = { &x, &y, &z };
 		*q[i] = 0.5f * scale;
 		scale = 0.5f / scale;
 		w = scale * (mat(k, j) - mat(j, k));
@@ -74,18 +76,18 @@ void Quaternion::FromMatrix(const Matrix3f &mat)
 //------------------------------------------------------------------------
 void Quaternion::ToMatrix(Matrix3f &mat) const
 {
-	float x2 = x * 2;
-	float y2 = y * 2;
-	float z2 = z * 2;
-	float wx = x2 * w;
-	float wy = y2 * w;
-	float wz = z2 * w;
-	float xx = x2 * x;
-	float xy = y2 * x;
-	float xz = z2 * x;
-	float yy = y2 * y;
-	float yz = z2 * y;
-	float zz = z2 * z;
+    TFlt32 x2 = x * 2;
+    TFlt32 y2 = y * 2;
+    TFlt32 z2 = z * 2;
+    TFlt32 wx = x2 * w;
+    TFlt32 wy = y2 * w;
+    TFlt32 wz = z2 * w;
+    TFlt32 xx = x2 * x;
+    TFlt32 xy = y2 * x;
+    TFlt32 xz = z2 * x;
+    TFlt32 yy = y2 * y;
+    TFlt32 yz = z2 * y;
+    TFlt32 zz = z2 * z;
 
 	mat.a00 = 1.f - (yy + zz);
 	mat.a01 = xy - wz;
@@ -99,7 +101,7 @@ void Quaternion::ToMatrix(Matrix3f &mat) const
 }
 
 //------------------------------------------------------------------------
-void Quaternion::ToMatrix(class Matrix* mat) const
+void Quaternion::ToMatrix(Matrix* mat) const
 {
 	 // Converts this quaternion to a rotation matrix.
     //
@@ -146,18 +148,18 @@ void Quaternion::ToMatrix(class Matrix* mat) const
     //  | 2(xz + wy)		2(yz - wx)			1 - 2(x^2 + y^2)	0  |
     //  | 0					0					0					1  |
 
-    float x2 = x + x; 
-    float y2 = y + y; 
-    float z2 = z + z;
-    float xx = x * x2;
-    float xy = x * y2;
-    float xz = x * z2;
-    float yy = y * y2;
-    float yz = y * z2;
-    float zz = z * z2;
-    float wx = w * x2;
-    float wy = w * y2;
-    float wz = w * z2;
+    TFlt32 x2 = x + x;
+    TFlt32 y2 = y + y;
+    TFlt32 z2 = z + z;
+    TFlt32 xx = x * x2;
+    TFlt32 xy = x * y2;
+    TFlt32 xz = x * z2;
+    TFlt32 yy = y * y2;
+    TFlt32 yz = y * z2;
+    TFlt32 zz = z * z2;
+    TFlt32 wx = w * x2;
+    TFlt32 wy = w * y2;
+    TFlt32 wz = w * z2;
 
 	mat->a00 = 1.0f - (yy + zz);
     mat->a01 = xy + wz;
@@ -181,9 +183,9 @@ void Quaternion::ToMatrix(class Matrix* mat) const
 }
 
 //------------------------------------------------------------------------
-void Quaternion::set_rot(float yaw, float pitch, float roll)
+void Quaternion::set_rot(TFlt32 yaw, TFlt32 pitch, TFlt32 roll)
 {
-	float sinY, cosY, sinP, cosP, sinR, cosR;
+    TFlt32 sinY, cosY, sinP, cosP, sinR, cosR;
 
 	sinY = sinf(0.5f * yaw);
 	cosY = cosf(0.5f * yaw);
@@ -203,7 +205,7 @@ void Quaternion::set_rot(float yaw, float pitch, float roll)
 //------------------------------------------------------------------------
 const Quaternion operator*(const Quaternion& p, const Quaternion& q)
 {
- 	float A, B, C, D, E, F, G, H;
+    TFlt32 A, B, C, D, E, F, G, H;
  
  	A = (p.w + p.x) * (q.w + q.x);
  	B = (p.z - p.y) * (q.y - q.z);
@@ -231,11 +233,11 @@ Quaternion Quaternion::Inverse()
 //------------------------------------------------------------------------
 void Quaternion::Normalize()
 {
-	float  len = sqrtf(x * x + y * y + z * z + w * w);
+    TFlt32  len = sqrtf(x * x + y * y + z * z + w * w);
 
 	if (len > 0) 
 	{
-		float invLen = 1.f / len;
+        TFlt32 invLen = 1.f / len;
 
 		x *= invLen;
 		y *= invLen;
@@ -249,14 +251,15 @@ void Quaternion::Normalize()
 #endif
 
 //------------------------------------------------------------------------
-float dot(const Quaternion& q1, const Quaternion& q2)
+float dot(const Quaternion &q1, const Quaternion &q2)
 {
 	return q1.x*q2.x + q1.y*q2.y + q1.z*q2.z + q1.w*q2.w;
 }
+
 //------------------------------------------------------------------------
-Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2)
+Quaternion & Slerp(Quaternion &p, TFlt32 s, const Quaternion &q1, const Quaternion &q2)
 {
-	float cosine = dot(q1, q2);
+    TFlt32 cosine = dot(q1, q2);
 
 	if (cosine < -1)
 		cosine = -1;
@@ -264,15 +267,15 @@ Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quatern
 	else if (cosine > 1)
 		cosine = 1;
 
-	float angle = (float)acosf(cosine);
+    TFlt32 angle = (TFlt32)acosf(cosine);
 	if (fabs(angle) < m_eps) {
 		p = q1;
 		return p;
 	}
-	float sine = sinf(angle);
-	float sineInv = 1.0f / sine;
-	float c1 = sinf((1.0f - s) * angle) * sineInv;
-	float c2 = sinf(s * angle) * sineInv;
+    TFlt32 sine = sinf(angle);
+    TFlt32 sineInv = 1.0f / sine;
+    TFlt32 c1 = sinf((1.0f - s) * angle) * sineInv;
+    TFlt32 c2 = sinf(s * angle) * sineInv;
 	p.x = c1 * q1.x + c2 * q2.x;
 	p.y = c1 * q1.y + c2 * q2.y;
 	p.z = c1 * q1.z + c2 * q2.z;

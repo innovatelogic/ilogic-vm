@@ -1,10 +1,11 @@
 #include "vector.h"
+#include <math.h>
+#include <assert.h>
 
 namespace oes
 {
 namespace common_base
 {
-
 //------------------------------------------------------------------------
 Vector::Vector()
 {

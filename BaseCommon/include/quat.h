@@ -1,49 +1,50 @@
 #pragma once
 
+#include "TypesBase.h"
 #include "matrix3.h"
 
 namespace oes
 {
-namespace common_base
-{
+    namespace common_base
+    {
 
-class COMMON_BASE_EXPORT Quaternion
-{
-public:
-    Quaternion();
-	Quaternion(float _x, float _y, float _z, float _w);
+        class COMMON_BASE_EXPORT Quaternion
+        {
+        public:
+            Quaternion();
+            Quaternion(TFlt32 _x, TFlt32 _y, TFlt32 _z, TFlt32 _w);
 
-	inline void Set(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f, float _w = 1.f) { x = _x; y = _y; z = _z; w = _w; }
+            inline void Set(TFlt32 _x = 0.0f, TFlt32 _y = 0.0f, TFlt32 _z = 0.0f, TFlt32 _w = 1.f) { x = _x; y = _y; z = _z; w = _w; }
 
-	float  operator[] (int i)const;
-	float  operator[] (int i);
-	Quaternion& operator*= (const Quaternion& q);
+            float  operator[] (int i)const;
+            float  operator[] (int i);
+            Quaternion& operator*= (const Quaternion& q);
 
-	void FromMatrix(const Matrix3f &mat);
-	void ToMatrix(Matrix3f &mat) const;
-	void ToMatrix(class Matrix *mat) const;
-	
-	void set_rot(float yaw, float pitch, float roll);
+            void FromMatrix(const Matrix3f &mat);
+            void ToMatrix(Matrix3f &mat) const;
+            void ToMatrix(class Matrix *mat) const;
 
-	Quaternion Inverse();
-	void Normalize();
+            void set_rot(TFlt32 yaw, TFlt32 pitch, TFlt32 roll);
 
-	 float* GetPtr() { return q; }
-	 const float* GetPtr() const { return q; }
+            Quaternion Inverse();
+            void Normalize();
 
-public:
-    union
-	{
-       struct{
-          float x, y, z, w;
-       }; 
-       float q[4];
-	};
-};
+            TFlt32* GetPtr() { return q; }
+            const TFlt32* GetPtr() const { return q; }
 
-COMMON_BASE_EXPORT const Quaternion operator*(const Quaternion& p, const Quaternion& q);
-COMMON_BASE_EXPORT float dot(const Quaternion& q1, const Quaternion& q2);
-COMMON_BASE_EXPORT Quaternion & Slerp(Quaternion & p, float s, const Quaternion & q1, const Quaternion & q2);
+        public:
+            union
+            {
+                struct {
+                    TFlt32 x, y, z, w;
+                };
+                TFlt32 q[4];
+            };
+        };
 
-}
+        COMMON_BASE_EXPORT const Quaternion operator*(const Quaternion &p, const Quaternion &q);
+        COMMON_BASE_EXPORT TFlt32 dot(const Quaternion &q1, const Quaternion &q2);
+        COMMON_BASE_EXPORT Quaternion& Slerp(Quaternion &p, TFlt32 s, const Quaternion &q1, const Quaternion &q2);
+
+    }
 }

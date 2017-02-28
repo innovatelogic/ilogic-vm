@@ -1,7 +1,5 @@
 #pragma once
 
-#include <assert.h>
-#include <math.h>
 #include "OEMBase.h"
 #include "TypesBase.h"
 
