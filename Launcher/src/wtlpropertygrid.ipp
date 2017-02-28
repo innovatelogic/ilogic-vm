@@ -16,7 +16,7 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
-    m_propReactor = std::make_shared<nmLauncher::PropertyReactor<T>>();
+    m_propReactor = std::make_shared<oes::rflex::PropertyReactor<T>>();
 
     m_editor = editor;
     m_pAppMain = editor->GetApp();
@@ -544,7 +544,7 @@ void CWTLPropertyGrid<T>::FillModel()
 {
     m_cacheDataAll.clear();
 
-    nmLauncher::IPropertyReactor::TMapClassData &classes = m_propReactor->GetClasses();
+    oes::rflex::IPropertyReactor::TMapClassData &classes = m_propReactor->GetClasses();
 
     // fetch data
     for each (auto &item in classes)
@@ -1095,7 +1095,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     {
     case LIST_CLASS_ELEMENT:
     {
-        const nmLauncher::SClassNode *pclass = data.pclass;
+        const oes::rflex::SClassNode *pclass = data.pclass;
         assert(pclass);
 
         switch (pItem->iSubItem)
@@ -1115,7 +1115,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 
     case LIST_PROP_ELEMENT:
     {
-        const nmLauncher::SClassNode *pclass = data.pclass;
+        const oes::rflex::SClassNode *pclass = data.pclass;
         Property_Base *prop = data.property;
 
         assert(pclass && prop);

@@ -1,8 +1,8 @@
 #pragma once
 
-//namespace oes
-//{
-    namespace nmLauncher
+namespace oes
+{
+    namespace rflex
     {
         using TMapProperties = std::vector<Property_Base*>;
 
@@ -25,8 +25,8 @@
         class IPropertyReactor
         {
         public:
-            using TMapClassData = std::vector<SClassNode>;
-            using TClassDataPtr = std::vector<SClassNode*>;
+            using TMapClassData = std::vector<oes::rflex::SClassNode>;
+            using TClassDataPtr = std::vector<oes::rflex::SClassNode*>;
 
             virtual ~IPropertyReactor() = 0 {};
 
@@ -41,4 +41,4 @@
         };
 
     }
-//}
+}

@@ -93,13 +93,13 @@ class CWTLPropertyGrid : public CWindowImpl<CWTLPropertyGrid<T>, CListViewCtrl, 
     // proxy plain stuff to getdispdata routine
     struct SFetchData 
     {
-        SFetchData(int _id, const nmLauncher::SClassNode * _class, Property_Base *_prop) 
+        SFetchData(int _id, const oes::rflex::SClassNode * _class, Property_Base *_prop) 
             : id(_id)
             , pclass(_class)
             , property(_prop){}
 
         int id;
-        const nmLauncher::SClassNode *pclass;
+        const oes::rflex::SClassNode *pclass;
         Property_Base *property;
     };
     
@@ -258,7 +258,7 @@ private:
 	CCoreSDK		*m_pAppMain;
 	SRenderContext	*m_pRenderContext;
 
-    std::shared_ptr<nmLauncher::PropertyReactor<T>> m_propReactor;
+    std::shared_ptr<oes::rflex::PropertyReactor<T>> m_propReactor;
 
     // cache data all fields in plain array
     std::vector<SFetchData> m_cacheDataAll;

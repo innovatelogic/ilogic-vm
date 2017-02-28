@@ -1,8 +1,8 @@
 #include "property_reactor.h"
 
-//namespace oes
-//{
-    namespace nmLauncher
+namespace oes
+{
+    namespace rflex
     {
         //----------------------------------------------------------------------------------------------
         template<class T>
@@ -167,7 +167,7 @@
 
         //----------------------------------------------------------------------------------------------
         template<class T>
-        void nmLauncher::PropertyReactor<T>::FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out)
+        void PropertyReactor<T>::FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out)
         {
             if (classNode)
             {
@@ -202,4 +202,4 @@
             }
         }
     }
-//}
+}

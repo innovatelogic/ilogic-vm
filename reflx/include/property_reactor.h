@@ -3,9 +3,9 @@
 #include "iproperty_reactor.h"
 #include "ieditor.h"
 
-//namespace oes
-//{
-    namespace nmLauncher
+namespace oes
+{
+    namespace rflex
     {
         template<class T>
         class PropertyReactor : public IPropertyReactor
@@ -29,11 +29,11 @@
             void FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out);
 
         private:
-            editors::TIEditor m_editor;
+            //editors::TIEditor m_editor;
         
             TMapClassData m_propertyClasses;
         };
     }
-//}
+}
 
 #include "property_reactor.ipp"
