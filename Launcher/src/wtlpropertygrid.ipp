@@ -170,7 +170,7 @@ LRESULT CWTLPropertyGrid<T>::OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandl
             tc.pszText = szText;
             tc.cchTextMax = 255;
 
-            SPropertyClass *pOutClass = 0;
+            oes::rflex::SPropertyClass *pOutClass = 0;
             Property_Base *pOutProperty = 0;
             int OutMemoryOffset = 0;
 
@@ -206,7 +206,7 @@ LRESULT CWTLPropertyGrid<T>::OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandl
         tc.pszText = szText;
         tc.cchTextMax = 255;
 
-        SPropertyClass *pOutClass = 0;
+        oes::rflex::SPropertyClass *pOutClass = 0;
         Property_Base *pOutProperty = 0;
         int OutMemoryOffset = 0;
 
@@ -618,8 +618,8 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
                 }
 
                 // find or alloc class
-                SPropertyClass *pClass = 0;
-                TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin();
+                oes::rflex::SPropertyClass *pClass = 0;
+                oes::rflex::TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin();
 
                 while (IterClass != pGroup->VecPropertyClasses.end())
                 {
@@ -633,7 +633,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
 
                 if (!pClass)
                 {
-                    pClass = new SPropertyClass((*IterProp)->GetClassName(), (void*)pActor);
+                    pClass = new oes::rflex::SPropertyClass((*IterProp)->GetClassName(), (void*)pActor);
                     pGroup->VecPropertyClasses.insert(pGroup->VecPropertyClasses.begin(), pClass);
                     pClass->InheritProperties.push_back(NULL); // separator
                 }
@@ -664,8 +664,8 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
                         assert(pGroup);
 
                         // find or alloc class
-                        SPropertyClass *pClass = 0;
-                        TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin();
+                        oes::rflex::SPropertyClass *pClass = 0;
+                        oes::rflex::TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin();
 
                         while (IterClass != pGroup->VecPropertyClasses.end())
                         {
@@ -679,7 +679,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
 
                         if (!pClass)
                         {
-                            pClass = new SPropertyClass((*IterIntf)->strType, (void*)pActor, (*IterIntf)->byteShift);
+                            pClass = new oes::rflex::SPropertyClass((*IterIntf)->strType, (void*)pActor, (*IterIntf)->byteShift);
                             pGroup->VecPropertyClasses.insert(pGroup->VecPropertyClasses.begin(), pClass);
                             pClass->InheritProperties.push_back(NULL);
                         }
@@ -979,7 +979,7 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
 
     if (ClassNode *pCNode = CTree.Find(pActor->GetType()))
     {
-        SPropertyClass *pClassRoot = new SPropertyClass(pCNode->GetName(), (void*)pActor);
+        oes::rflex::SPropertyClass *pClassRoot = new oes::rflex::SPropertyClass(pCNode->GetName(), (void*)pActor);
         pClassRoot->InheritProperties.push_back(NULL);
 
         SPropertyGroup *pGroupValue = GetGroupByName("Value");
@@ -994,14 +994,14 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
             {
                 //if ((*IterProp)->IsSerializable())
                 {
-                    SPropertyClass *pClass = pClassRoot;
+                    oes::rflex::SPropertyClass *pClass = pClassRoot;
 
                     // find or alloc group
                     SPropertyGroup *pGroup = GetGroupByName((*IterProp)->GetGroupName());
                     if (!pGroup)
                     {
                         pGroup = new SPropertyGroup((*IterProp)->GetGroupName());
-                        pClass = new SPropertyClass(pCNode->GetName(), (void*)pActor);
+                        pClass = new oes::rflex::SPropertyClass(pCNode->GetName(), (void*)pActor);
 
                         pGroup->VecPropertyClasses.push_back(pClass);
                         pClass->InheritProperties.push_back(NULL);
@@ -1055,9 +1055,9 @@ void CWTLPropertyGrid<T>::UpdatePreview()
 
         if (m_GridViewStyle == EGV_Categorized)
         {
-            for (TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
+            for (oes::rflex::TVecPropertyClassIter IterClass = pGroup->VecPropertyClasses.begin(); IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
             {
-                for (TVecPropertyBaseIter IterProp = (*IterClass)->InheritProperties.begin(); IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
+                for (oes::rflex::TVecPropertyBaseIter IterProp = (*IterClass)->InheritProperties.begin(); IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
                 {
                     Update(PropertyListIndex++);
                 }
@@ -1162,7 +1162,11 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex, int IndexGroup, struct SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const
+bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex,
+    int IndexGroup,
+    oes::rflex::SPropertyClass **OutClass,
+    class Property_Base **OutProperty,
+    int &OutMemoryOffset) const
 {
     bool bFind = false;
     const unsigned int sSize = 256;
@@ -1183,13 +1187,13 @@ bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex, int IndexGroup, s
 
         if (m_GridViewStyle == EGV_Categorized)
         {
-            for (TVecPropertyClassConstIter IterClass = pGroup->VecPropertyClasses.begin();
+            for (oes::rflex::TVecPropertyClassConstIter IterClass = pGroup->VecPropertyClasses.begin();
             !bFind && IterClass != pGroup->VecPropertyClasses.end(); ++IterClass)
             {
                 // selection query
                 bool bAllowClass = IsClassAllowed((*IterClass)->ClassName);
 
-                for (TVecPropertyBaseConstIter IterProp = (*IterClass)->InheritProperties.begin(); !bFind && IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
+                for (oes::rflex::TVecPropertyBaseConstIter IterProp = (*IterClass)->InheritProperties.begin(); !bFind && IterProp != (*IterClass)->InheritProperties.end(); ++IterProp)
                 {
                     if (InPlainIndex == Counter++)
                     {
@@ -1331,7 +1335,7 @@ void CWTLPropertyGrid<T>::ClearListProperties()
 
     for (TVecPropertyGroupConstIter Iter = m_PropertyGroups.begin(); Iter != m_PropertyGroups.end(); ++Iter)
     {
-        for (TVecPropertyClassIter IterClass = (*Iter)->VecPropertyClasses.begin(); IterClass != (*Iter)->VecPropertyClasses.end(); ++IterClass)
+        for (oes::rflex::TVecPropertyClassIter IterClass = (*Iter)->VecPropertyClasses.begin(); IterClass != (*Iter)->VecPropertyClasses.end(); ++IterClass)
         {
             delete *IterClass;
         }
@@ -1465,7 +1469,8 @@ void CWTLPropertyGrid<T>::ClickProperty(int index)
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-BOOL CWTLPropertyGrid<T>::ProcessClickListProperties(LPNMLISTVIEW plvdi, SPropertyClass *Class, Property_Base* Prop, int MemOffset /*= 0*/)
+BOOL CWTLPropertyGrid<T>::ProcessClickListProperties(LPNMLISTVIEW plvdi, oes::rflex::SPropertyClass *Class,
+                                                        Property_Base* Prop, int MemOffset /*= 0*/)
 {
     POINT Point;
 
@@ -1679,7 +1684,7 @@ BOOL CWTLPropertyGrid<T>::ClickListComboProperties(LPNMLISTVIEW plvdi)
 
     int SelectedGroup = m_nSelectedGroup;
 
-    SPropertyClass *pOutClass = 0;
+    oes::rflex::SPropertyClass *pOutClass = 0;
     Property_Base *pOutProperty = 0;
     int OutMemoryOffset = 0;
 

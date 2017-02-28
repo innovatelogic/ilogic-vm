@@ -2,10 +2,10 @@
 
 #include "Property.h"
 
-//namespace eos
-//{
-//	namespace rflex
-//	{
+namespace oes
+{
+	namespace rflex
+	{
 		
 		//----------------------------------------------------------------------------------------------
 		typedef std::vector<class Property_Base*>	TVecPropertyBase;
@@ -30,5 +30,5 @@
 		typedef std::vector<struct SPropertyClass*>	TVecPropertyClass;
 		typedef TVecPropertyClass::const_iterator	TVecPropertyClassConstIter;
 		typedef TVecPropertyClass::iterator			TVecPropertyClassIter;
-//	}
-//}
+	}
+}

@@ -24,7 +24,7 @@ enum EGridView
 struct SPropertyGroup
 {
 	std::string GroupName;
-	TVecPropertyClass VecPropertyClasses;
+	oes::rflex::TVecPropertyClass VecPropertyClasses;
 
 	SPropertyGroup(const std::string& Name)
 		: GroupName(Name)
@@ -40,10 +40,10 @@ typedef TVecPropertyGroup::iterator			TVecPropertyGroupIter;
 struct SPropertyWrapper
 {
 	Property_Base	*pProp;
-	SPropertyClass	*pClass;
+	oes::rflex::SPropertyClass	*pClass;
 	bool bDisclosed;
 
-	SPropertyWrapper(Property_Base* prop, SPropertyClass* pclass)
+	SPropertyWrapper(Property_Base* prop, oes::rflex::SPropertyClass* pclass)
 		: pProp(prop)
 		, pClass(pclass)
 		, bDisclosed(false)
@@ -182,7 +182,8 @@ public:
 
     BOOL GETDISPINFO_FillList(LVITEMA *pItem);
 
-    bool GetPropertyByIndex(int InPlainIndex, int IndexGroup, struct SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const;
+    bool GetPropertyByIndex(int InPlainIndex, int IndexGroup, 
+        oes::rflex::SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const;
 
     bool IsPropertyBOOL(const Property_Base * Prop);
 
@@ -193,7 +194,8 @@ public:
     BOOL ClickListProperties(LPNMLISTVIEW plvdi);
 
     
-    BOOL ProcessClickListProperties(LPNMLISTVIEW plvdi, SPropertyClass *Class, Property_Base* Prop, int MemOffset /*= 0*/);
+    BOOL ProcessClickListProperties(LPNMLISTVIEW plvdi, oes::rflex::SPropertyClass *Class,
+                                    Property_Base* Prop, int MemOffset /*= 0*/);
 
     BOOL ClickListComboProperties(LPNMLISTVIEW plvdi);
 
