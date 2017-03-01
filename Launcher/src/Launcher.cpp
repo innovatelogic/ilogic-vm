@@ -539,10 +539,10 @@ void HandlePopupContextMenu(HWND hwnd, POINT pt, CActor * Selected)
 		}
 */
 	
-	std::vector<const ClassNode*> vecNodes;
+	std::vector<const oes::rflex::ClassNode*> vecNodes;
 	oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
-	oes::rflex::CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
+	oes::rflex::CEnumerateChildTypeStrategy<std::vector<const oes::rflex::ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
 
 	NumBrushes = 0;
 	for (size_t Index = 0; Index < vecNodes.size(); ++Index)
@@ -695,11 +695,11 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 		{
 			oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
-			std::vector<const ClassNode*> vecNodes;
+			std::vector<const oes::rflex::ClassNode*> vecNodes;
 
-			oes::rflex::CEnumerateChildTypeStrategy<std::vector<const ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
+			oes::rflex::CEnumerateChildTypeStrategy<std::vector<const oes::rflex::ClassNode*> > ObjEnumerate(IDrawInterface::ThisClassName(), classTree.GetTree(), vecNodes);
 
-			const ClassNode *pClass = vecNodes.at((INT)(wParam) - 5000);
+			const oes::rflex::ClassNode *pClass = vecNodes.at((INT)(wParam) - 5000);
 
 			std::string strNewName = CActor::ResolveName(std::string("New"), SelectedActor);
 			CActor *pNewObject = static_cast<CActor*>(GENERATE_OBJECT_SDK(pClass->GetName(), strNewName.c_str(), SelectedActor));

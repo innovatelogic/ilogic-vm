@@ -1,9 +1,9 @@
 #include "StdafxRender.h"
 
 REGISTER_CLASS_A(UIComp_DrawFont, CRenderObject)
-	new PropertyString("FontFamily", (BYTE*)&((UIComp_DrawFont*)NULL)->m_FontFamily - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("Height", (BYTE*)&((UIComp_DrawFont*)NULL)->m_Height - (BYTE*)NULL, "UIComp_DrawFont", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("Color", (BYTE*)&((UIComp_DrawFont*)NULL)->m_Color - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("FontFamily", (BYTE*)&((UIComp_DrawFont*)NULL)->m_FontFamily - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("Height", (BYTE*)&((UIComp_DrawFont*)NULL)->m_Height - (BYTE*)NULL, "UIComp_DrawFont", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((UIComp_DrawFont*)NULL)->m_Color - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(UIComp_DrawFont, CRenderObject);
 
 //----------------------------------------------------------------------------------

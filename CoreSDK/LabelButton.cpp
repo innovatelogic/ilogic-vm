@@ -2,9 +2,9 @@
 #include "ObjectFactory.h"
 
 REGISTER_CLASS_A(LabelButton, UIScreenObject)
-	new PropertyFLOAT("TextPositionX", (BYTE*)&((LabelButton*)NULL)->TextPositionX - (BYTE*)NULL, "LabelButton", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("TextPositionY", (BYTE*)&((LabelButton*)NULL)->TextPositionY - (BYTE*)NULL, "LabelButton", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyStringW("Text",	(BYTE*)&((LabelButton*)NULL)->Text - (BYTE*)NULL, "LabelButton", "Text", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, COMMON_PROP, INT_PROP), // common uninterrupted value
+	new oes::rflex::PropertyFLOAT("TextPositionX", (BYTE*)&((LabelButton*)NULL)->TextPositionX - (BYTE*)NULL, "LabelButton", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("TextPositionY", (BYTE*)&((LabelButton*)NULL)->TextPositionY - (BYTE*)NULL, "LabelButton", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyStringW("Text",	(BYTE*)&((LabelButton*)NULL)->Text - (BYTE*)NULL, "LabelButton", "Text", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, COMMON_PROP, INT_PROP), // common uninterrupted value
 END_REGISTER_CLASS(LabelButton, UIScreenObject)
 
 //----------------------------------------------------------------------------------------------

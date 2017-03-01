@@ -1,10 +1,10 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(CLevelActor, ActorAllocator)
-	new PropertyString("XRef", DATAFIELD_OFFSET(CLevelActor, m_XRef), "CLevelActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("XRef", DATAFIELD_OFFSET(CLevelActor, m_XRef), "CLevelActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 ASSEMBLE_PROPS(CLevelActor)
 BEGIN_INTERFACE_DECLARATION(CLevelActor)
-    new SInterfaceDecl("IDrawInterface", (BYTE*)&((CLevelActor*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
+    new oes::rflex::SInterfaceDecl("IDrawInterface", (BYTE*)&((CLevelActor*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
 ASSEMBLE_INTERFACES(CLevelActor)
 CLASS_ENDL(CLevelActor)
 CLASS_INSTANCE_EX(CLevelActor, ActorAllocator);

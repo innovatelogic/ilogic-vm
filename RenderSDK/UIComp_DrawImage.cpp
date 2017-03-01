@@ -1,9 +1,9 @@
 #include "StdafxRender.h"
 
 REGISTER_CLASS_A(UIComp_DrawImage, CRenderObject)
-	new PropertyString("ResourceTag", (BYTE*)&((UIComp_DrawImage*)NULL)->ResourceTag - (BYTE*)NULL, "UIComp_DrawImage",	"Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyVector4f("UV", (BYTE*)&((UIComp_DrawImage*)NULL)->UV - (BYTE*)NULL,	"UIComp_DrawImage",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("Color", (BYTE*)&((UIComp_DrawImage*)NULL)->Color - (BYTE*)NULL, "UIComp_DrawImage", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP)
+	new oes::rflex::PropertyString("ResourceTag", (BYTE*)&((UIComp_DrawImage*)NULL)->ResourceTag - (BYTE*)NULL, "UIComp_DrawImage",	"Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyVector4f("UV", (BYTE*)&((UIComp_DrawImage*)NULL)->UV - (BYTE*)NULL,	"UIComp_DrawImage",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((UIComp_DrawImage*)NULL)->Color - (BYTE*)NULL, "UIComp_DrawImage", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP)
 END_REGISTER_CLASS(UIComp_DrawImage, CRenderObject);
 
 //----------------------------------------------------------------------------------------------

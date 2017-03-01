@@ -3,82 +3,89 @@
 #include "defexport.h"
 #include <vector>
 
-class REFLX_EXPORT ClassNode
+namespace oes
 {
-public:
-	typedef std::vector<ClassNode*>		        TVecClassNode;
-	typedef TVecClassNode::iterator				TVecClassNodeIterator;
-	typedef TVecClassNode::const_iterator		TVecClassNodeConstIterator;
-	typedef TVecClassNode::reverse_iterator		TVecClassNodeRevIterator;
+    namespace rflex
+    {
+        class REFLX_EXPORT ClassNode
+        {
+        public:
+            typedef std::vector<ClassNode*>		        TVecClassNode;
+            typedef TVecClassNode::iterator				TVecClassNodeIterator;
+            typedef TVecClassNode::const_iterator		TVecClassNodeConstIterator;
+            typedef TVecClassNode::reverse_iterator		TVecClassNodeRevIterator;
 
-	typedef std::vector<struct SInterfaceDecl*>	TVecInterfaces;
-	typedef TVecInterfaces::iterator			TVecInterfaceIter;
-	typedef TVecInterfaces::const_iterator		TVecInterfaceConstIter;
+            typedef std::vector<struct SInterfaceDecl*>	TVecInterfaces;
+            typedef TVecInterfaces::iterator			TVecInterfaceIter;
+            typedef TVecInterfaces::const_iterator		TVecInterfaceConstIter;
 
-	typedef std::vector<class Property_Base*>	TVecProperties;
-	typedef TVecProperties::iterator			TVecPropertyIterator;
-	typedef TVecProperties::const_iterator		TVecPropertyConstIterator;
-	
-public:
-	ClassNode(const char *name);
-	virtual ~ClassNode();
+            typedef std::vector<class Property_Base*>	TVecProperties;
+            typedef TVecProperties::iterator			TVecPropertyIterator;
+            typedef TVecProperties::const_iterator		TVecPropertyConstIterator;
 
-    ClassNode(const ClassNode &other) = delete;
-    ClassNode& operator=(const ClassNode &other) = delete;
+        public:
+            ClassNode(const char *name);
+            virtual ~ClassNode();
 
-	void		Release();
+            ClassNode(const ClassNode &other) = delete;
+            ClassNode& operator=(const ClassNode &other) = delete;
 
-	ClassNode*	Find(const char *Type);
-	ClassNode*	AddChild(ClassNode *pNode);
-	ClassNode*	RemoveNode(ClassNode *pNode);
+            void		Release();
 
-	class Property_Base*	GetProperty(const char* Name) const;
-	bool					AddProperty(const char* Name, Property_Base *pProp);
+            ClassNode*	Find(const char *Type);
+            ClassNode*	AddChild(ClassNode *pNode);
+            ClassNode*	RemoveNode(ClassNode *pNode);
 
-	void	SetProprties(const class IPropertiesAllocator *pPropAlloc);
-	void	SetProprties(const class Property_Base** Arr, int Count);
+            class Property_Base*	GetProperty(const char* Name) const;
+            bool					AddProperty(const char* Name, Property_Base *pProp);
 
-	class ClassNode* GetRootNode() const { return m_pRootNode; }
-	void			 SetRootNode(ClassNode *pNode) { m_pRootNode = pNode; }
+            void	SetProprties(const class IPropertiesAllocator *pPropAlloc);
+            void	SetProprties(const class Property_Base** Arr, int Count);
 
-    ClassNode* GetChild(char *type) const;
+            class ClassNode* GetRootNode() const { return m_pRootNode; }
+            void			 SetRootNode(ClassNode *pNode) { m_pRootNode = pNode; }
 
-	virtual bool	PrePropertyChange(const void *pPrt, class Property_Base *pProp);
-	virtual void	PostPropertyChange(const void *pPrt, class Property_Base *pProp);
+            ClassNode* GetChild(char *type) const;
 
-	const char* GetName() const { return m_name.c_str(); }
+            virtual bool	PrePropertyChange(const void *pPrt, class Property_Base *pProp);
+            virtual void	PostPropertyChange(const void *pPrt, class Property_Base *pProp);
 
-	Property_Base** GetPropsRaw() const { return m_pPropsRaw; }
-	unsigned int	GetPropsSize() const { return m_PropsSize; }
+            const char* GetName() const { return m_name.c_str(); }
 
-	const ClassNode::TVecInterfaces& GetInterfaceProps() const { return m_VecInterfaces; }
-	const ClassNode::TVecProperties& GetProperties() const { return PropertyMap; }
+            Property_Base** GetPropsRaw() const { return m_pPropsRaw; }
+            unsigned int	GetPropsSize() const { return m_PropsSize; }
 
-	SInterfaceDecl* GetInterfaceDecl(const char *Name) const;
+            const ClassNode::TVecInterfaces& GetInterfaceProps() const { return m_VecInterfaces; }
+            const ClassNode::TVecProperties& GetProperties() const { return PropertyMap; }
 
-	bool IsInheritBaseClass(const char *Name) const;
+            SInterfaceDecl* GetInterfaceDecl(const char *Name) const;
 
-	const TVecClassNode&	GetChilds() const { return Childs; }
+            bool IsInheritBaseClass(const char *Name) const;
 
-	const TVecInterfaces&	GetInterfaces() const { return m_VecInterfaces; }
+            const TVecClassNode&	GetChilds() const { return Childs; }
 
-public:
-	std::string				m_name;
+            const TVecInterfaces&	GetInterfaces() const { return m_VecInterfaces; }
 
-	TVecClassNode			Childs;
-	TVecInterfaces			m_VecInterfaces;
+        public:
+            std::string				m_name;
 
-	/** property map */
-	TVecProperties			PropertyMap;
+            TVecClassNode			Childs;
+            TVecInterfaces			m_VecInterfaces;
 
-private:
-	ClassNode				*m_pRootNode;
-	
-	IPropertiesAllocator	*m_pPropAlloc;
+            /** property map */
+            TVecProperties			PropertyMap;
 
-	Property_Base			**m_pPropsRaw;
-	unsigned int			m_PropsSize;
+        private:
+            ClassNode				*m_pRootNode;
 
-	struct SInterfaceDecl	**m_pInterfaces;
-	unsigned int			m_nIntfSize;
-};
+            IPropertiesAllocator	*m_pPropAlloc;
+
+            Property_Base			**m_pPropsRaw;
+            unsigned int			m_PropsSize;
+
+            struct SInterfaceDecl	**m_pInterfaces;
+            unsigned int			m_nIntfSize;
+        };
+    }
+}
+

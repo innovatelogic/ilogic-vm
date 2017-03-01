@@ -3,15 +3,15 @@
 static const bool	V_TRUE = true;
 
 REGISTER_CLASS_A(CRestrictedVolume, ActorAllocator)
-	new PropertyBOOL("bSideBT", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[0] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bSideTP", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[1] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bSideX+", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[2] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bSideX-", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[3] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bSideZ+", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[4] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bSideZ-", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[5] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideBT", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[0] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideTP", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[1] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideX+", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[2] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideX-", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[3] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideZ+", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[4] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bSideZ-", (BYTE*)&((CRestrictedVolume*)NULL)->m_bSides[5] - (BYTE*)NULL, "CRestrictedVolume", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
 ASSEMBLE_PROPS(CRestrictedVolume)
 BEGIN_INTERFACE_DECLARATION(CRestrictedVolume)
-	new SInterfaceDecl("IDrawInterface", (BYTE*)&((CRestrictedVolume*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
+	new oes::rflex::SInterfaceDecl("IDrawInterface", (BYTE*)&((CRestrictedVolume*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
 ASSEMBLE_INTERFACES(CRestrictedVolume)
 CLASS_ENDL(CRestrictedVolume)
 CLASS_INSTANCE_EX(CRestrictedVolume, ActorAllocator);

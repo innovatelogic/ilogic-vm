@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(CPawnCueBall, ActorAllocator)
-	new PropertyString("XRef", (BYTE*)&((CPawnCueBall*)NULL)->m_XRef - (BYTE*)NULL, "CPawnCueBall", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((CPawnCueBall*)NULL)->m_XRef - (BYTE*)NULL, "CPawnCueBall", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(CPawnCueBall, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

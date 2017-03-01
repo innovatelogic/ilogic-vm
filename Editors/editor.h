@@ -50,13 +50,13 @@ public:
 
     std::string GetProperty(
         const CObjectAbstract* object, 
-        const Property_Base *prop,
+        const oes::rflex::Property_Base *prop,
         size_t index = 0,
-        const Property_Base *holder_array = nullptr) const override;
+        const oes::rflex::Property_Base *holder_array = nullptr) const override;
 
-    void SetProperty(const std::string &value, CActor* object, const Property_Base *prop) override;
+    void SetProperty(const std::string &value, CActor* object, const oes::rflex::Property_Base *prop) override;
     
-    void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop) override;
+    void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, oes::rflex::Property_Base *prop) override;
 
 protected:
     /*!

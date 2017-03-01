@@ -4,9 +4,9 @@ static const EHandleInputKey DefInputKeyMode = HIK_HandleInputKey;
 static const EHandleInputMouse DefInputMouseMode = HIM_HandleInputMouse;
 
 REGISTER_CLASS_A(UIScene, UIScreenObject)
-	new PropertySceneInputmode("InputMode",	(BYTE*)&((UIScene*)NULL)->m_eInputMode - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyEHandleInputKey("HandleInputKey", (BYTE*)&((UIScene*)NULL)->m_eHandleInputKey - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&DefInputKeyMode)),
-	new PropertyEHandleInputMouse("HandleInputMouse", (BYTE*)&((UIScene*)NULL)->m_eHandleInputMouse - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&DefInputMouseMode)),
+	new oes::rflex::PropertySceneInputmode("InputMode",	(BYTE*)&((UIScene*)NULL)->m_eInputMode - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyEHandleInputKey("HandleInputKey", (BYTE*)&((UIScene*)NULL)->m_eHandleInputKey - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&DefInputKeyMode)),
+	new oes::rflex::PropertyEHandleInputMouse("HandleInputMouse", (BYTE*)&((UIScene*)NULL)->m_eHandleInputMouse - (BYTE*)NULL, "UIScene", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&DefInputMouseMode)),
 END_REGISTER_CLASS(UIScene, UIScreenObject)
 
 //----------------------------------------------------------------------------------------------

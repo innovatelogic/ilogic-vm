@@ -145,11 +145,11 @@ typedef std::map<std::string, class Property_Base*> TMapProperty;
 typedef TMapProperty::iterator					TMapPropertyIterator;
 typedef TMapProperty::const_iterator			TMapPropertyConstIterator;
 
-typedef std::vector<class Property_Base*>		TVecProperty;
+typedef std::vector<oes::rflex::Property_Base*>		TVecProperty;
 typedef TVecProperty::iterator					TVecPropertyIterator;
 typedef TVecProperty::const_iterator			TVecPropertyConstIterator;
 
-typedef std::vector<struct SInterfaceDecl*>	TVecInterfaceDecl;
+typedef std::vector<oes::rflex::SInterfaceDecl*>	TVecInterfaceDecl;
 typedef TVecInterfaceDecl::iterator			TVecInterfaceDeclIter;
 typedef TVecInterfaceDecl::const_iterator	TVecInterfaceDeclConstIter;
 

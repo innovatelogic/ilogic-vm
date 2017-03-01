@@ -6,7 +6,7 @@
 //----------------------------------------------------------------------------------------------
 TEST(TestAutoTree, RegisterBroadTree)
 {
-    oes::rflex::CAutoTree<ClassNode> tree;
+    oes::rflex::CAutoTree<oes::rflex::ClassNode> tree;
 
     //    A       I
     //  B   C     K
@@ -34,43 +34,43 @@ TEST(TestAutoTree, RegisterBroadTree)
         tree.Add(res[5].first.c_str(), res[5].second.c_str());
         tree.Add(res[6].first.c_str(), res[6].second.c_str());
 
-        const std::vector<ClassNode*> &roots = tree.GetRoots();
+        const std::vector<oes::rflex::ClassNode*> &roots = tree.GetRoots();
 
         EXPECT_EQ(roots.size(), 2);
 
-        const ClassNode *node_rootA = tree.GetRoot("A");
+        const oes::rflex::ClassNode *node_rootA = tree.GetRoot("A");
         EXPECT_EQ(std::string(node_rootA->GetName()), "A");
         EXPECT_EQ(node_rootA->GetRootNode(), nullptr);
 
-        const ClassNode *node_B = node_rootA->GetChild("B");
+        const oes::rflex::ClassNode *node_B = node_rootA->GetChild("B");
         EXPECT_EQ(std::string(node_B->GetName()), "B");
         EXPECT_EQ(node_B->GetRootNode(), node_rootA);
 
-        const ClassNode *node_C = node_rootA->GetChild("C");
+        const oes::rflex::ClassNode *node_C = node_rootA->GetChild("C");
         EXPECT_EQ(std::string(node_C->GetName()), "C");
         EXPECT_EQ(node_C->GetRootNode(), node_rootA);
 
-        const ClassNode *node_D = node_B->GetChild("D");
+        const oes::rflex::ClassNode *node_D = node_B->GetChild("D");
         EXPECT_EQ(std::string(node_D->GetName()), "D");
         EXPECT_EQ(node_D->GetRootNode(), node_B);
 
-        const ClassNode *node_E = node_B->GetChild("E");
+        const oes::rflex::ClassNode *node_E = node_B->GetChild("E");
         EXPECT_EQ(std::string(node_E->GetName()), "E");
         EXPECT_EQ(node_E->GetRootNode(), node_B);
 
-        const ClassNode *node_F = node_C->GetChild("F");
+        const oes::rflex::ClassNode *node_F = node_C->GetChild("F");
         EXPECT_EQ(std::string(node_F->GetName()), "F");
         EXPECT_EQ(node_F->GetRootNode(), node_C);
 
-        const ClassNode *node_H = node_C->GetChild("H");
+        const oes::rflex::ClassNode *node_H = node_C->GetChild("H");
         EXPECT_EQ(std::string(node_H->GetName()), "H");
         EXPECT_EQ(node_H->GetRootNode(), node_C);
 
-        const ClassNode *node_rootI = tree.GetRoot("I");
+        const oes::rflex::ClassNode *node_rootI = tree.GetRoot("I");
         EXPECT_EQ(std::string(node_rootI->GetName()), "I");
         EXPECT_EQ(node_rootI->GetRootNode(), nullptr);
 
-        const ClassNode *node_K = node_rootI->GetChild("K");
+        const oes::rflex::ClassNode *node_K = node_rootI->GetChild("K");
         EXPECT_EQ(std::string(node_K->GetName()), "K");
         EXPECT_EQ(node_K->GetRootNode(), node_rootI);
 

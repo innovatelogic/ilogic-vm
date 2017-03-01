@@ -7,9 +7,9 @@ class AutoRegisterProps
 public:
 	AutoRegisterProps()
 	{
-		const Property_Base* Arr[] =
+		const oes::rflex::Property_Base *Arr[] =
 		{
-			new PropertyString("FontFamily",
+			new oes::rflex::PropertyString("FontFamily",
 				(BYTE*)&((SFontState*)NULL)->FontFamily - (BYTE*)NULL,
 				"SFontState",
 				"Value",
@@ -18,7 +18,7 @@ public:
 				TRUE,
 				false,
 				0,
-					new PropertyUINT("Height",
+					new oes::rflex::PropertyUINT("Height",
 						(BYTE*)&((SFontState*)NULL)->Height - (BYTE*)NULL,
 						"SFontState",
 						"Value",
@@ -27,7 +27,7 @@ public:
 						TRUE,
 						false,
 						0,
-							new PropertyUINT("Color",
+							new oes::rflex::PropertyUINT("Color",
 								(BYTE*)&((SFontState*)NULL)->Color - (BYTE*)NULL,
 								"SFontState",
 								"Value",
@@ -42,7 +42,7 @@ public:
 		if (ARRAY_COUNT_SIZE(Arr))
 		{
 			unsigned int nSize = ARRAY_COUNT_SIZE(Arr);
-			const Property_Base** pPropsBase = new const Property_Base*[nSize];
+			const oes::rflex::Property_Base** pPropsBase = new const oes::rflex::Property_Base*[nSize];
 			for (unsigned int Index = 0; Index < nSize; ++Index)
 			{
 				*(pPropsBase + Index) = *(Arr + Index);
@@ -62,13 +62,13 @@ public:
 	AutoRegisterPropsUIComp_DrawFontState()
 	{
         oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
-		ClassNode* pFontState = classTree.Find("SFontState");
+        oes::rflex::ClassNode* pFontState = classTree.Find("SFontState");
 
-		Property_Base** raw = pFontState->GetPropsRaw();
+        oes::rflex::Property_Base** raw = pFontState->GetPropsRaw();
 
-		const Property_Base * PropArray[] = {
+		const oes::rflex::Property_Base *PropArray[] = {
 
-			new PropertyArrayStatic("ArrFontStates",
+			new oes::rflex::PropertyArrayStatic("ArrFontStates",
 			(BYTE*)&((UIComp_DrawFontState*)NULL)->ArrFontStates - (BYTE*)NULL,
 			"UIComp_DrawFontState",
 			"Value",
@@ -84,7 +84,7 @@ public:
 		};
 
 		unsigned int nSize = ARRAY_COUNT_SIZE(PropArray);
-		const Property_Base** pProps = new const Property_Base*[nSize];
+		const oes::rflex::Property_Base** pProps = new const oes::rflex::Property_Base*[nSize];
 		for (unsigned int Index = 0; Index < nSize; ++Index)
 		{
 			*(pProps + Index) = *(PropArray + Index);

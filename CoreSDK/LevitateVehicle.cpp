@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(LevitateVehicle, ActorAllocator)
-	new PropertyString("XRef", (BYTE*)&((LevitateVehicle*)NULL)->XRef - (BYTE*)NULL, "LevitateVehicle",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((LevitateVehicle*)NULL)->XRef - (BYTE*)NULL, "LevitateVehicle",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(LevitateVehicle, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

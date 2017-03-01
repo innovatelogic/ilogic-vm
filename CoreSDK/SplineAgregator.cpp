@@ -3,12 +3,12 @@
 #include "Comp_MeshNode.h"
 
 REGISTER_CLASS_A(SplineAgregator, UIScreenObject)
-	new PropertyUINT("Detail", (BYTE*)&((SplineAgregator*)NULL)->Detail - (BYTE*)NULL, "SplineAgregator", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("Color", (BYTE*)&((SplineAgregator*)NULL)->Color - (BYTE*)NULL, "SplineAgregator", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("BorderSize",	(BYTE*)&((SplineAgregator*)NULL)->BorderSize - (BYTE*)NULL,	"SplineAgregator", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyString("DiffuseTex", (BYTE*)&((SplineAgregator*)NULL)->DiffuseTex - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyBOOL("bBorder",	(BYTE*)&((SplineAgregator*)NULL)->bBorder - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("BorderColor",	(BYTE*)&((SplineAgregator*)NULL)->BorderColor - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Detail", (BYTE*)&((SplineAgregator*)NULL)->Detail - (BYTE*)NULL, "SplineAgregator", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((SplineAgregator*)NULL)->Color - (BYTE*)NULL, "SplineAgregator", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("BorderSize",	(BYTE*)&((SplineAgregator*)NULL)->BorderSize - (BYTE*)NULL,	"SplineAgregator", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("DiffuseTex", (BYTE*)&((SplineAgregator*)NULL)->DiffuseTex - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyBOOL("bBorder",	(BYTE*)&((SplineAgregator*)NULL)->bBorder - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("BorderColor",	(BYTE*)&((SplineAgregator*)NULL)->BorderColor - (BYTE*)NULL, "SplineAgregator",	"Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(SplineAgregator, UIScreenObject)	
 
 //----------------------------------------------------------------------------------------------

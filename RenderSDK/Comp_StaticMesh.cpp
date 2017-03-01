@@ -4,11 +4,11 @@ static const bool V_FALSE = false;
 static const unsigned int IDX_ZERO = 0;
 
 REGISTER_CLASS_A(Comp_StaticMesh, CRenderObject)
-	new PropertyBOOL("bShowNormals", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowNormals - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("bShowTangent", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowTangent - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("bShowBinormal", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowBinormal - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyUINT("nForceLODLvl", (BYTE*)&((Comp_StaticMesh*)NULL)->m_nForceLODLvl - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &IDX_ZERO),
-	new PropertyUINT("nDestrLvl", (BYTE*)&((Comp_StaticMesh*)NULL)->m_nDestrLvl - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &IDX_ZERO),
+	new oes::rflex::PropertyBOOL("bShowNormals", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowNormals - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("bShowTangent", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowTangent - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("bShowBinormal", (BYTE*)&((Comp_StaticMesh*)NULL)->m_bShowBinormal - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyUINT("nForceLODLvl", (BYTE*)&((Comp_StaticMesh*)NULL)->m_nForceLODLvl - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &IDX_ZERO),
+	new oes::rflex::PropertyUINT("nDestrLvl", (BYTE*)&((Comp_StaticMesh*)NULL)->m_nDestrLvl - (BYTE*)NULL, "Comp_StaticMesh", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &IDX_ZERO),
 END_REGISTER_CLASS(Comp_StaticMesh, CRenderObject);
 
 //----------------------------------------------------------------------------------------------

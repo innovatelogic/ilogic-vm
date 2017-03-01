@@ -71,7 +71,7 @@ static IObjectAbstract* CopyGenerator##CLASS(const IObjectAbstract *Source, cons
 
 //----------------------------------------------------------------------------------------------
 #define BEGIN_PROPS_DECLARATION(CLASS)\
-const Property_Base* Arr[] = {
+const oes::rflex::Property_Base* Arr[] = {
 
 
 //----------------------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ const size_t count = ARRAY_COUNT_SIZE(Arr);\
 if (count)\
 {\
 	m_nSize = count;\
-	m_pProps = new const Property_Base*[m_nSize];\
+	m_pProps = new const oes::rflex::Property_Base*[m_nSize];\
 	for (unsigned int index = 0; index < m_nSize; ++index)\
 	{\
 		*(m_pProps + index) = *(Arr + index);\
@@ -90,7 +90,7 @@ if (count)\
 
 //----------------------------------------------------------------------------------------------
 #define BEGIN_AUTO_CLASS(CLASS)\
-class AutoRegisterProps##CLASS : public IPropertiesAllocator\
+class AutoRegisterProps##CLASS : public oes::rflex::IPropertiesAllocator\
 {\
 public:\
 	AutoRegisterProps##CLASS()\
@@ -104,7 +104,7 @@ public:\
 
 //----------------------------------------------------------------------------------------------
 #define BEGIN_INTERFACE_DECLARATION(CLASS)\
-const SInterfaceDecl* ArrIntf[] = {
+const oes::rflex::SInterfaceDecl* ArrIntf[] = {
 
 
 //----------------------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ const SInterfaceDecl* ArrIntf[] = {
 if (ARRAY_COUNT_SIZE(ArrIntf))\
 {\
 	m_nIntfSize = ARRAY_COUNT_SIZE(ArrIntf);\
-	m_pInterfaces = new const SInterfaceDecl*[m_nIntfSize];\
+	m_pInterfaces = new const oes::rflex::SInterfaceDecl*[m_nIntfSize];\
 	for (unsigned int index = 0; index < m_nIntfSize; ++index)\
 	{\
 		*(m_pInterfaces + index) = *(ArrIntf + index);\
@@ -128,14 +128,14 @@ CLASS_ENDL()
 //----------------------------------------------------------------------------------------------
 #define CLASS_ENDL()\
 	}\
-	virtual const Property_Base** GetProps() const { return m_pProps; }\
+	virtual const oes::rflex::Property_Base** GetProps() const { return m_pProps; }\
 	virtual unsigned int GetSize() const { return m_nSize; }\
-	virtual const SInterfaceDecl** GetInterfaces() const { return m_pInterfaces; }\
+	virtual const oes::rflex::SInterfaceDecl** GetInterfaces() const { return m_pInterfaces; }\
 	virtual unsigned int GetIntfSize() const { return m_nIntfSize; }\
 private:\
-	const Property_Base **m_pProps;\
+	const oes::rflex::Property_Base **m_pProps;\
 	unsigned int m_nSize;\
-	const SInterfaceDecl **m_pInterfaces;\
+	const oes::rflex::SInterfaceDecl **m_pInterfaces;\
 	unsigned int m_nIntfSize;\
 };
 

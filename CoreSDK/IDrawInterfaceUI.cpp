@@ -1,15 +1,15 @@
 #include "coresdkafx.h"
 
-static const EPixelTransform TransformDef = PixelOwner_Transform;
+static const oes::common_base::EPixelTransform TransformDef = PixelOwner_Transform;
 static const float fDefaultDim = 100.f;
 
 BEGIN_AUTO_CLASS(IDrawInterfaceUI)
-	new PropertyPixelTransform("HPixelTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_HPixelTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
-	new PropertyPixelTransform("VPixelTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VPixelTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
-	new PropertyPixelTransform("HSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_HSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
-	new PropertyPixelTransform("VSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
-	new PropertyFLOAT("Width", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Width - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
-	new PropertyFLOAT("Height", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Height - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
+	new oes::rflex::PropertyPixelTransform("HPixelTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_HPixelTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
+	new oes::rflex::PropertyPixelTransform("VPixelTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VPixelTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
+	new oes::rflex::PropertyPixelTransform("HSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_HSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
+	new oes::rflex::PropertyPixelTransform("VSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
+	new oes::rflex::PropertyFLOAT("Width", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Width - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
+	new oes::rflex::PropertyFLOAT("Height", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Height - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
 	END_AUTO_CLASS(IDrawInterfaceUI)
 CLASS_INSTANCE_INTERFACE(IDrawInterfaceUI);
 

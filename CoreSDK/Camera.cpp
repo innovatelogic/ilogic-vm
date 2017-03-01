@@ -9,15 +9,15 @@ static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
 REGISTER_CLASS_A(CCamera, NpCameraT)
-	new PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, m_bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, m_Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
-	new PropertyFLOAT("Aspect", DATAFIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
-	new PropertyFLOAT("NearDist", DATAFIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
-	new PropertyFLOAT("FarDist", DATAFIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
-	new PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
+	new oes::rflex::PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, m_bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, m_Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
+	new oes::rflex::PropertyFLOAT("Aspect", DATAFIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
+	new oes::rflex::PropertyFLOAT("NearDist", DATAFIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
+	new oes::rflex::PropertyFLOAT("FarDist", DATAFIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
+	new oes::rflex::PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new oes::rflex::PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+	new oes::rflex::PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
 END_REGISTER_CLASS(CCamera, NpCameraT);
 
 //----------------------------------------------------------------------------------------------

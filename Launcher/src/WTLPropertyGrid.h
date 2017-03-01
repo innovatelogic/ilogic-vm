@@ -39,11 +39,11 @@ typedef TVecPropertyGroup::iterator			TVecPropertyGroupIter;
 // for sorted arrays
 struct SPropertyWrapper
 {
-	Property_Base	*pProp;
+    oes::rflex::Property_Base	*pProp;
 	oes::rflex::SPropertyClass	*pClass;
 	bool bDisclosed;
 
-	SPropertyWrapper(Property_Base* prop, oes::rflex::SPropertyClass* pclass)
+	SPropertyWrapper(oes::rflex::Property_Base* prop, oes::rflex::SPropertyClass* pclass)
 		: pProp(prop)
 		, pClass(pclass)
 		, bDisclosed(false)
@@ -93,14 +93,14 @@ class CWTLPropertyGrid : public CWindowImpl<CWTLPropertyGrid<T>, CListViewCtrl, 
     // proxy plain stuff to getdispdata routine
     struct SFetchData 
     {
-        SFetchData(int _id, const oes::rflex::SClassNode * _class, Property_Base *_prop) 
+        SFetchData(int _id, const oes::rflex::SClassNode * _class, oes::rflex::Property_Base *_prop)
             : id(_id)
             , pclass(_class)
             , property(_prop){}
 
         int id;
         const oes::rflex::SClassNode *pclass;
-        Property_Base *property;
+        oes::rflex::Property_Base *property;
     };
     
 
@@ -183,9 +183,9 @@ public:
     BOOL GETDISPINFO_FillList(LVITEMA *pItem);
 
     bool GetPropertyByIndex(int InPlainIndex, int IndexGroup, 
-        oes::rflex::SPropertyClass **OutClass, class Property_Base **OutProperty, int &OutMemoryOffset) const;
+        oes::rflex::SPropertyClass **OutClass, oes::rflex::Property_Base **OutProperty, int &OutMemoryOffset) const;
 
-    bool IsPropertyBOOL(const Property_Base * Prop);
+    bool IsPropertyBOOL(const oes::rflex::Property_Base * Prop);
 
     void _Update(const T *pSender, ESystemEventID EventId);
 
@@ -224,7 +224,7 @@ private:
         * returns true if selected elements have a similar value
         otherwise if selected elements are empty or different value return false
         */
-        bool GetPropertySelectedBatch(Property_Base *prop, std::string &out);
+        bool GetPropertySelectedBatch(oes::rflex::Property_Base *prop, std::string &out);
 
         void ShowEditWindowControl(int index, SFetchData &data, const std::wstring &value);
         void ShowEditResourceControl(int index, SFetchData &data, const std::wstring &value);

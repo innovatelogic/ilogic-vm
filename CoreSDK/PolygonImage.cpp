@@ -5,7 +5,7 @@
 #include "../D3DDrv/SubMeshNode.h"
 
 REGISTER_CLASS_A(CPolygonImage, ActorAllocator)
-	new PropertyString("m_sDiffuseTex", (BYTE*)&((CPolygonImage*)NULL)->m_sDiffuseTex - (BYTE*)NULL, "CPolygonImage", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("m_sDiffuseTex", (BYTE*)&((CPolygonImage*)NULL)->m_sDiffuseTex - (BYTE*)NULL, "CPolygonImage", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(CPolygonImage, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

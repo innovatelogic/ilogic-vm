@@ -171,7 +171,7 @@ LRESULT CWTLPropertyGrid<T>::OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandl
             tc.cchTextMax = 255;
 
             oes::rflex::SPropertyClass *pOutClass = 0;
-            Property_Base *pOutProperty = 0;
+            oes::rflex::Property_Base *pOutProperty = 0;
             int OutMemoryOffset = 0;
 
             if (GetPropertyByIndex(m_EditingPropertyIndex, SelectedGroup, &pOutClass, &pOutProperty, OutMemoryOffset))
@@ -207,7 +207,7 @@ LRESULT CWTLPropertyGrid<T>::OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandl
         tc.cchTextMax = 255;
 
         oes::rflex::SPropertyClass *pOutClass = 0;
-        Property_Base *pOutProperty = 0;
+        oes::rflex::Property_Base *pOutProperty = 0;
         int OutMemoryOffset = 0;
 
         if (GetPropertyByIndex(m_EditingPropertyIndex, SelectedGroup, &pOutClass, &pOutProperty, OutMemoryOffset))
@@ -595,7 +595,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
 
     oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
-    if (ClassNode *pClassNode = classTree.Find(pActor->GetType()))
+    if (oes::rflex::ClassNode *pClassNode = classTree.Find(pActor->GetType()))
     {
         while (pClassNode)
         {
@@ -647,11 +647,11 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
             }
 
             // add interface properties
-            ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
 
             while (IterIntf != pClassNode->m_VecInterfaces.end())
             {
-                ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType);
+                oes::rflex::ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType);
 
                 if (pNodeInterface)
                 {
@@ -977,7 +977,7 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
 {
     oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-    if (ClassNode *pCNode = CTree.Find(pActor->GetType()))
+    if (oes::rflex::ClassNode *pCNode = CTree.Find(pActor->GetType()))
     {
         oes::rflex::SPropertyClass *pClassRoot = new oes::rflex::SPropertyClass(pCNode->GetName(), (void*)pActor);
         pClassRoot->InheritProperties.push_back(NULL);
@@ -1116,7 +1116,7 @@ BOOL CWTLPropertyGrid<T>::GETDISPINFO_FillList(LVITEMA *pItem)
     case LIST_PROP_ELEMENT:
     {
         const oes::rflex::SClassNode *pclass = data.pclass;
-        Property_Base *prop = data.property;
+        oes::rflex::Property_Base *prop = data.property;
 
         assert(pclass && prop);
 
@@ -1165,7 +1165,7 @@ template<class T>
 bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex,
     int IndexGroup,
     oes::rflex::SPropertyClass **OutClass,
-    class Property_Base **OutProperty,
+    class oes::rflex::Property_Base **OutProperty,
     int &OutMemoryOffset) const
 {
     bool bFind = false;
@@ -1217,7 +1217,7 @@ bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex,
                         while (ElementDim && !bFind)
                         {
                             // go through child nodes
-                            Property_Base * ChildProp = (*IterProp)->GetNext();
+                            oes::rflex::Property_Base * ChildProp = (*IterProp)->GetNext();
 
                             while (ChildProp)
                             {
@@ -1268,7 +1268,7 @@ bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex,
                         while (ElementDim)
                         {
                             // go through child nodes
-                            Property_Base * ChildProp = (*Iter)->pProp->GetNext();
+                            oes::rflex::Property_Base * ChildProp = (*Iter)->pProp->GetNext();
 
                             while (ChildProp)
                             {
@@ -1297,7 +1297,7 @@ bool CWTLPropertyGrid<T>::GetPropertyByIndex(int InPlainIndex,
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-bool CWTLPropertyGrid<T>::IsPropertyBOOL(const Property_Base *prop)
+bool CWTLPropertyGrid<T>::IsPropertyBOOL(const oes::rflex::Property_Base *prop)
 {
     return prop->PredefinedValues.size() == 2 &&
         prop->PredefinedValues[0] == "true" &&
@@ -1685,7 +1685,7 @@ BOOL CWTLPropertyGrid<T>::ClickListComboProperties(LPNMLISTVIEW plvdi)
     int SelectedGroup = m_nSelectedGroup;
 
     oes::rflex::SPropertyClass *pOutClass = 0;
-    Property_Base *pOutProperty = 0;
+    oes::rflex::Property_Base *pOutProperty = 0;
     int OutMemoryOffset = 0;
 
     if (GetPropertyByIndex(m_EditingPropertyIndex, SelectedGroup, &pOutClass, &pOutProperty, OutMemoryOffset))
@@ -1802,7 +1802,7 @@ void CWTLPropertyGrid<T>::PopContext()
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(Property_Base *prop, std::string &out)
+bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(oes::rflex::Property_Base *prop, std::string &out)
 {
     bool bResult = false;
 

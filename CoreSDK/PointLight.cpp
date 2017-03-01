@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(PointLight, ActorAllocator)
-	new PropertyUINT("Color", (BYTE*)&((PointLight*)NULL)->Color - (BYTE*)NULL,	"PointLight", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((PointLight*)NULL)->Color - (BYTE*)NULL,	"PointLight", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(PointLight, ActorAllocator);
 
 //----------------------------------------------------------------------------------

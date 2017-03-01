@@ -212,14 +212,14 @@ void EditorBase::InputKey(const EventInput &InputData)
 
 //----------------------------------------------------------------------------------------------
 std::string EditorBase::GetProperty(const CObjectAbstract* object, 
-                                    const Property_Base *prop,
+                                    const oes::rflex::Property_Base *prop,
                                     size_t index /*= 0*/,
-                                    const Property_Base *holder_array /*= nullptr*/) const
+                                    const oes::rflex::Property_Base *holder_array /*= nullptr*/) const
 {
     std::string out;
     if (object && prop)
     {
-        ClassNode *classNode = prop->GetClass();
+        oes::rflex::ClassNode *classNode = prop->GetClass();
 
         assert(classNode);
 
@@ -268,13 +268,13 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
 }
 
 //----------------------------------------------------------------------------------------------
-void EditorBase::SetProperty(const std::string &value, CActor* object, const Property_Base *prop)
+void EditorBase::SetProperty(const std::string &value, CActor* object, const oes::rflex::Property_Base *prop)
 {
    
 }
 
 //----------------------------------------------------------------------------------------------
-void EditorBase::SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop)
+void EditorBase::SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, oes::rflex::Property_Base *prop)
 {
     TMapActorVec editorActors = AdjustActorsToEditorRoot(batch);
 
@@ -314,7 +314,6 @@ void EditorBase::SetProperty(const std::string &value, const std::string &valueO
         PopContext();
     }))
     ));
-
 }
 
 //----------------------------------------------------------------------------------------------

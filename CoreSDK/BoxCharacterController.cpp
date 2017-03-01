@@ -2,9 +2,9 @@
 #include "RenderSDK.h"
 
 REGISTER_CLASS_A(BoxCharacterController, BaseModificator)
-	new PropertyVector("Extends", (BYTE*)&((BoxCharacterController*)NULL)->Extends - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("UpForce", (BYTE*)&((BoxCharacterController*)NULL)->UpForce - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("MoveSpeed", (BYTE*)&((BoxCharacterController*)NULL)->MoveSpeed - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyVector("Extends", (BYTE*)&((BoxCharacterController*)NULL)->Extends - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("UpForce", (BYTE*)&((BoxCharacterController*)NULL)->UpForce - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("MoveSpeed", (BYTE*)&((BoxCharacterController*)NULL)->MoveSpeed - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(BoxCharacterController, BaseModificator);
 
 //------------------------------------------------------------------------

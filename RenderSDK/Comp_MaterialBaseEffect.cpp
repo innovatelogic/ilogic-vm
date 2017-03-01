@@ -1,8 +1,8 @@
 #include "stdafxrender.h"
 
 REGISTER_CLASS_PURE(Comp_MaterialBaseEffect, CRenderObject)
-	new PropertyString("XRef", (BYTE*)&((Comp_MaterialBaseEffect*)NULL)->XRef - (BYTE*)NULL, "Comp_MaterialBaseEffect",	"Value", READ_WRITE, CTRL_EDIT,	true, false),
-	new PropertyString("NameTehnique", (BYTE*)&((Comp_MaterialBaseEffect*)NULL)->NameTehnique - (BYTE*)NULL, "Comp_MaterialBaseEffect", "Value", READ_WRITE, CTRL_EDIT,	true, false),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((Comp_MaterialBaseEffect*)NULL)->XRef - (BYTE*)NULL, "Comp_MaterialBaseEffect",	"Value", READ_WRITE, CTRL_EDIT,	true, false),
+	new oes::rflex::PropertyString("NameTehnique", (BYTE*)&((Comp_MaterialBaseEffect*)NULL)->NameTehnique - (BYTE*)NULL, "Comp_MaterialBaseEffect", "Value", READ_WRITE, CTRL_EDIT,	true, false),
 END_REGISTER_CLASS_PURE(Comp_MaterialBaseEffect, CRenderObject);
 
 //----------------------------------------------------------------------------------------------

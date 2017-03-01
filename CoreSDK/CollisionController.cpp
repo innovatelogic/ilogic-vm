@@ -5,20 +5,20 @@ static const float	fDestenyDef = 0.1f;
 static const Matrix DefMatrixTransform(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 0.f, 1.f);
 
 REGISTER_CLASS_A(CollisionController, BaseModificator)
-	new PropertyBOOL("bStatic",	(BYTE*)&((CollisionController*)NULL)->bStatic - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyFLOAT("Desteny", (BYTE*)&((CollisionController*)NULL)->Desteny - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDestenyDef),
-	new PropertyBOOL("b2DMode", (BYTE*)&((CollisionController*)NULL)->b2DMode - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("DISABLE_GRAVITY",	(BYTE*)&((CollisionController*)NULL)->DISABLE_GRAVITY - (BYTE*)NULL, "CollisionController",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_POS_X", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_X - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_POS_Y", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_Y - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_POS_Z", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_Z - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_ROT_X", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_X - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_ROT_Y", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_Y - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_ROT_Z", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_Z - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_POS", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("FROZEN_ROT", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyBOOL("KINEMATIC", (BYTE*)&((CollisionController*)NULL)->KINEMATIC - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new PropertyMatrix("LTM", (BYTE*)&((CollisionController*)NULL)->m_LTM - (BYTE*)NULL, "CollisionController", "Value", CTRL_MATRIX16, READ_WRITE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &DefMatrixTransform),
+	new oes::rflex::PropertyBOOL("bStatic",	(BYTE*)&((CollisionController*)NULL)->bStatic - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyFLOAT("Desteny", (BYTE*)&((CollisionController*)NULL)->Desteny - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDestenyDef),
+	new oes::rflex::PropertyBOOL("b2DMode", (BYTE*)&((CollisionController*)NULL)->b2DMode - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("DISABLE_GRAVITY",	(BYTE*)&((CollisionController*)NULL)->DISABLE_GRAVITY - (BYTE*)NULL, "CollisionController",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_POS_X", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_X - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_POS_Y", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_Y - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_POS_Z", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS_Z - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_ROT_X", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_X - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_ROT_Y", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_Y - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_ROT_Z", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT_Z - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_POS", (BYTE*)&((CollisionController*)NULL)->FROZEN_POS - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("FROZEN_ROT", (BYTE*)&((CollisionController*)NULL)->FROZEN_ROT - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyBOOL("KINEMATIC", (BYTE*)&((CollisionController*)NULL)->KINEMATIC - (BYTE*)NULL, "CollisionController", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyMatrix("LTM", (BYTE*)&((CollisionController*)NULL)->m_LTM - (BYTE*)NULL, "CollisionController", "Value", CTRL_MATRIX16, READ_WRITE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &DefMatrixTransform),
 END_REGISTER_CLASS(CollisionController, BaseModificator);
 
 //----------------------------------------------------------------------------------

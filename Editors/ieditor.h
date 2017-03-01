@@ -82,9 +82,9 @@ public:
     * [prop] property object
     */
     virtual std::string GetProperty(const CObjectAbstract* object,
-        const Property_Base *prop,
+        const oes::rflex::Property_Base *prop,
         size_t index = 0,
-        const Property_Base *holder_array = nullptr) const = 0;
+        const oes::rflex::Property_Base *holder_array = nullptr) const = 0;
 
     /*!
     * set object property
@@ -92,9 +92,9 @@ public:
     * [object] object to set to
     * [prop] property object
     */
-    virtual void SetProperty(const std::string &value, CActor* object, const Property_Base *prop) = 0;
+    virtual void SetProperty(const std::string &value, CActor* object, const oes::rflex::Property_Base *prop) = 0;
 
-    virtual void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, Property_Base *prop) = 0;
+    virtual void SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, oes::rflex::Property_Base *prop) = 0;
 
     /*!
     * commits deselect command. 

@@ -6,12 +6,12 @@
 
 
 REGISTER_CLASS_A(SkyDome, ActorAllocator)
-	new PropertyUINT("Detail", (BYTE*)&((SkyDome*)NULL)->Detail - (BYTE*)NULL, "SkyDome", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyString("DiffuseTex", (BYTE*)&((SkyDome*)NULL)->DiffuseTex - (BYTE*)NULL, "SkyDome",	"Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("Color", (BYTE*)&((SkyDome*)NULL)->Color - (BYTE*)NULL, "SkyDome",	"Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Detail", (BYTE*)&((SkyDome*)NULL)->Detail - (BYTE*)NULL, "SkyDome", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("DiffuseTex", (BYTE*)&((SkyDome*)NULL)->DiffuseTex - (BYTE*)NULL, "SkyDome",	"Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((SkyDome*)NULL)->Color - (BYTE*)NULL, "SkyDome",	"Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 ASSEMBLE_PROPS(SkyDome)
 BEGIN_INTERFACE_DECLARATION(SkyDome)
-		new SInterfaceDecl("IDrawInterface", (BYTE*)&((SkyDome*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
+		new oes::rflex::SInterfaceDecl("IDrawInterface", (BYTE*)&((SkyDome*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
 ASSEMBLE_INTERFACES(SkyDome)
 CLASS_ENDL(SkyDome)
 CLASS_INSTANCE_EX(SkyDome, ActorAllocator);

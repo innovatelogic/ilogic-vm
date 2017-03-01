@@ -4,8 +4,8 @@
 static const bool	V_TRUE = true;
 
 REGISTER_CLASS_PURE(CRenderObject, CActor)
-	new PropertyBOOL("bCastShadows", (BYTE*)&((CRenderObject*)NULL)->bCastShadows - (BYTE*)NULL, "CRenderObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("bReciveShadows", (BYTE*)&((CRenderObject*)NULL)->bReciveShadows - (BYTE*)NULL, "CRenderObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bCastShadows", (BYTE*)&((CRenderObject*)NULL)->bCastShadows - (BYTE*)NULL, "CRenderObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bReciveShadows", (BYTE*)&((CRenderObject*)NULL)->bReciveShadows - (BYTE*)NULL, "CRenderObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_TRUE),
 END_REGISTER_CLASS_PURE(CRenderObject, CActor);
 
 //----------------------------------------------------------------------------------------------

@@ -3,40 +3,47 @@
 #include "defexport.h"
 #include "ClassNode.h"
 
-template<typename T>
-class REFLX_EXPORT ClassNodeType : public ClassNode
+namespace oes
 {
-	typedef T OwnerClass;
+    namespace rflex
+    {
 
-public:
-	ClassNodeType(const char *name)
-		: ClassNode(name)
-	{
-	}
+        template<typename T>
+        class REFLX_EXPORT ClassNodeType : public ClassNode
+        {
+            typedef T OwnerClass;
 
-	ClassNodeType(const char *name, TVecProperties &PropInfo)
-		: ClassNode(name, PropInfo)
-	{
-	}
+        public:
+            ClassNodeType(const char *name)
+                : ClassNode(name)
+            {
+            }
 
-	virtual ~ClassNodeType()
-	{
-	}
+            ClassNodeType(const char *name, TVecProperties &PropInfo)
+                : ClassNode(name, PropInfo)
+            {
+            }
 
-	virtual bool PrePropertyChange(const void *pPtr, class Property_Base* Prop)
-	{
-		OwnerClass *pClass = const_cast<OwnerClass*>(reinterpret_cast<const OwnerClass*>(pPtr));
+            virtual ~ClassNodeType()
+            {
+            }
 
-		return pClass->OnPrePropertyChange(Prop->GetName());
-	}
+            virtual bool PrePropertyChange(const void *pPtr, class Property_Base* Prop)
+            {
+                OwnerClass *pClass = const_cast<OwnerClass*>(reinterpret_cast<const OwnerClass*>(pPtr));
 
-	virtual void PostPropertyChange(const void *pPtr, class Property_Base* Prop)
-	{
-		OwnerClass *pClass = const_cast<OwnerClass*>(reinterpret_cast<const OwnerClass*>(pPtr));
+                return pClass->OnPrePropertyChange(Prop->GetName());
+            }
 
-		pClass->OnPropertyChanged(Prop->GetName());
-	}
+            virtual void PostPropertyChange(const void *pPtr, class Property_Base* Prop)
+            {
+                OwnerClass *pClass = const_cast<OwnerClass*>(reinterpret_cast<const OwnerClass*>(pPtr));
 
-protected:
-private:
-};
+                pClass->OnPropertyChanged(Prop->GetName());
+            }
+
+        protected:
+        private:
+        };
+    }
+}

@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(BoxCollisionController, CollisionController)
-	new PropertyVector("Extends", (BYTE*)&((BoxCollisionController*)NULL)->Extends - (BYTE*)NULL, "BoxCollisionController",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyVector("Extends", (BYTE*)&((BoxCollisionController*)NULL)->Extends - (BYTE*)NULL, "BoxCollisionController",	"Value", READ_WRITE, CTRL_EDIT,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(BoxCollisionController, CollisionController);
 
 //----------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(CPawn, ActorAllocator)
-	new PropertyString("XRef", (BYTE*)&((CPawn*)NULL)->XRef - (BYTE*)NULL, "CPawn", "Value", READ_WRITE, CTRL_EDIT,	true, false),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((CPawn*)NULL)->XRef - (BYTE*)NULL, "CPawn", "Value", READ_WRITE, CTRL_EDIT,	true, false),
 END_REGISTER_CLASS(CPawn, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

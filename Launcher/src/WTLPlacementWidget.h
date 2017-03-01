@@ -225,18 +225,18 @@ public:
 	{
 		oes::rflex::AppClassTree &classTree = oes::rflex::GetClassTree();
 
-		if (ClassNode *pClassNode = classTree.Find(m_pSelectedActor->GetType()))
+		if (oes::rflex::ClassNode *pClassNode = classTree.Find(m_pSelectedActor->GetType()))
 		{
 			bool bBreak = false;
 
 			while (pClassNode && !bBreak)
 			{
 				// add interface properties
-				ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
+                oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
 
 				while (IterIntf != pClassNode->m_VecInterfaces.end() && !bBreak)
 				{
-					if (ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType))
+					if (oes::rflex::ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType))
 					{
 						TVecPropertyConstIterator IterIntfProp = pNodeInterface->PropertyMap.begin();
 
@@ -376,7 +376,7 @@ private:
 
 	EObjEditControlMode m_EMode;
 
-	Property_Base	*m_pBaseProp;
+    oes::rflex::Property_Base	*m_pBaseProp;
 	int				m_nByteShift;
 	//SPropertyClass	*m_PropertyClass;
 

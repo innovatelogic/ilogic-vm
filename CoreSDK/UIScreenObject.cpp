@@ -5,12 +5,12 @@
 static const float fOpacityDef = 1.f;
 
 REGISTER_CLASS_A(UIScreenObject, ActorAllocator)
-	new PropertyBOOL("ClipBounds", (BYTE*)&((UIScreenObject*)NULL)->ClipBounds - (BYTE*)NULL, "UIScreenObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("Opacity", (BYTE*)&((UIScreenObject*)NULL)->Opacity - (BYTE*)NULL, "UIScreenObject", "Value",	READ_WRITE,	CTRL_COMBO,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fOpacityDef),
+	new oes::rflex::PropertyBOOL("ClipBounds", (BYTE*)&((UIScreenObject*)NULL)->ClipBounds - (BYTE*)NULL, "UIScreenObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("Opacity", (BYTE*)&((UIScreenObject*)NULL)->Opacity - (BYTE*)NULL, "UIScreenObject", "Value",	READ_WRITE,	CTRL_COMBO,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fOpacityDef),
 ASSEMBLE_PROPS(UIScreenObject)
 BEGIN_INTERFACE_DECLARATION(UIScreenObject)
-	new SInterfaceDecl("IDrawInterface", (BYTE*)&((UIScreenObject*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
-	new SInterfaceDecl("IDrawInterfaceUI", (BYTE*)&((UIScreenObject*)NULL)->___startObjectMarkerIDrawInterfaceUI - (BYTE*)NULL),
+	new oes::rflex::SInterfaceDecl("IDrawInterface", (BYTE*)&((UIScreenObject*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
+	new oes::rflex::SInterfaceDecl("IDrawInterfaceUI", (BYTE*)&((UIScreenObject*)NULL)->___startObjectMarkerIDrawInterfaceUI - (BYTE*)NULL),
 ASSEMBLE_INTERFACES(UIScreenObject)
 CLASS_ENDL(UIScreenObject)
 CLASS_INSTANCE_EX(UIScreenObject, ActorAllocator);

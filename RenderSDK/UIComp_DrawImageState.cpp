@@ -14,9 +14,9 @@ class AutoRegisterPropsUIComp_DrawImageState
 public:
 	AutoRegisterPropsUIComp_DrawImageState()
 	{
-		const Property_Base* Arr[] =
+		const oes::rflex::Property_Base* Arr[] =
 		{
-			new PropertyString("XRef",
+			new oes::rflex::PropertyString("XRef",
 				(BYTE*)&((ImageState*)NULL)->XRef - (BYTE*)NULL,
 				"ImageState",
 				"Value",
@@ -25,7 +25,7 @@ public:
 				TRUE,
 				false,
 				0,
-					new PropertyVector4f("UV",
+					new oes::rflex::PropertyVector4f("UV",
 						(BYTE*)&((ImageState*)NULL)->UV - (BYTE*)NULL,
 						"ImageState",
 						"Value",
@@ -40,7 +40,7 @@ public:
 		if (ARRAY_COUNT_SIZE(Arr))
 		{
 			unsigned int nSize = ARRAY_COUNT_SIZE(Arr);
-			const Property_Base **pPropsBase = new const Property_Base*[nSize];
+			const oes::rflex::Property_Base **pPropsBase = new const oes::rflex::Property_Base*[nSize];
 			for (unsigned int Index = 0; Index < nSize; ++Index)
 			{
 				*(pPropsBase + Index) = *(Arr + Index);
@@ -51,13 +51,13 @@ public:
 
 			// Scope Init2
 			{
-			const Property_Base *PropArray[] = {
+			const oes::rflex::Property_Base *PropArray[] = {
 
-				new PropertyArrayStatic("ImageStates",
+				new oes::rflex::PropertyArrayStatic("ImageStates",
 					(BYTE*)&((UIComp_DrawImageState*)NULL)->ImageStates - (BYTE*)NULL,
 					"UIComp_DrawImageState",
 					"Value",
-					const_cast<Property_Base*>(*pPropsBase),
+					const_cast<oes::rflex::Property_Base*>(*pPropsBase),
 					sizeof(ImageState),
 					ActiveState_MAX,
 					READ_WRITE,
@@ -65,11 +65,11 @@ public:
 					TRUE,
 					false,
 					0, 
-					const_cast<Property_Base*>(*pPropsBase)),
+					const_cast<oes::rflex::Property_Base*>(*pPropsBase)),
 				};
 
 				unsigned int nSize = ARRAY_COUNT_SIZE(PropArray);
-				const Property_Base **pProps = new const Property_Base*[nSize];
+				const oes::rflex::Property_Base **pProps = new const oes::rflex::Property_Base*[nSize];
 				for (unsigned int Index = 0; Index < nSize; ++Index)
 				{
 					*(pProps + Index) = *(PropArray + Index);

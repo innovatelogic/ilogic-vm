@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(CLevelPlaneActor, ActorAllocator)
-	new PropertyString("XRef", (BYTE*)&((CLevelPlaneActor*)NULL)->m_XRef - (BYTE*)NULL, "CLevelPlaneActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((CLevelPlaneActor*)NULL)->m_XRef - (BYTE*)NULL, "CLevelPlaneActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(CLevelPlaneActor, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

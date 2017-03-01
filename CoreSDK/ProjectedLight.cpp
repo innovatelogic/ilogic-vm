@@ -1,11 +1,11 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(ProjectedLight, CCamera)
-	new PropertyUINT("Color", (BYTE*)&((ProjectedLight*)NULL)->Color - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_COLOR,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyBOOL("bTestAdapt", (BYTE*)&((ProjectedLight*)NULL)->bTestAdapt - (BYTE*)NULL, "ProjectedLight", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyUINT("IndexTest", (BYTE*)&((ProjectedLight*)NULL)->IndexTest - (BYTE*)NULL,	"ProjectedLight", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("DepthBias", (BYTE*)&((ProjectedLight*)NULL)->DepthBias - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyFLOAT("SlopeBias", (BYTE*)&((ProjectedLight*)NULL)->SlopeBias - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("Color", (BYTE*)&((ProjectedLight*)NULL)->Color - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_COLOR,	SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyBOOL("bTestAdapt", (BYTE*)&((ProjectedLight*)NULL)->bTestAdapt - (BYTE*)NULL, "ProjectedLight", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyUINT("IndexTest", (BYTE*)&((ProjectedLight*)NULL)->IndexTest - (BYTE*)NULL,	"ProjectedLight", "Value", READ_WRITE, CTRL_COLOR, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("DepthBias", (BYTE*)&((ProjectedLight*)NULL)->DepthBias - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("SlopeBias", (BYTE*)&((ProjectedLight*)NULL)->SlopeBias - (BYTE*)NULL, "ProjectedLight", "Value",	READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(ProjectedLight, CCamera);
 
 //----------------------------------------------------------------------------------------------

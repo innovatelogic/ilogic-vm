@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(ActorCollisionController, CollisionController)
-	new PropertyString("XRef", (BYTE*)&((ActorCollisionController*)NULL)->m_XRef - (BYTE*)NULL, "ActorCollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyString("XRef", (BYTE*)&((ActorCollisionController*)NULL)->m_XRef - (BYTE*)NULL, "ActorCollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(ActorCollisionController, CollisionController);
 
 //----------------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(TriggerObject, ActorAllocator)
-	new PropertyVector("Extends", (BYTE*)&((TriggerObject*)NULL)->Extends - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyBOOL("OnEnter",	(BYTE*)&((TriggerObject*)NULL)->OnEnter - (BYTE*)NULL, "TriggerObject",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyBOOL("OnStay", (BYTE*)&((TriggerObject*)NULL)->OnStay - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-	new PropertyBOOL("OnLeave", (BYTE*)&((TriggerObject*)NULL)->OnLeave - (BYTE*)NULL, "TriggerObject",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyVector("Extends", (BYTE*)&((TriggerObject*)NULL)->Extends - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyBOOL("OnEnter",	(BYTE*)&((TriggerObject*)NULL)->OnEnter - (BYTE*)NULL, "TriggerObject",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyBOOL("OnStay", (BYTE*)&((TriggerObject*)NULL)->OnStay - (BYTE*)NULL, "TriggerObject", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyBOOL("OnLeave", (BYTE*)&((TriggerObject*)NULL)->OnLeave - (BYTE*)NULL, "TriggerObject",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(TriggerObject, ActorAllocator);
 
 //----------------------------------------------------------------------------------------------

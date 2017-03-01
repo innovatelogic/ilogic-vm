@@ -4,7 +4,7 @@
 static const bool V_TRUE = true;
 
 REGISTER_CLASS_PURE(CActor, CObjectAbstract)
-	new PropertyBOOL("bEnabled",(BYTE*)&((CActor*)nullptr)->bEnabled - (BYTE*)nullptr, "CActor", "Value",	CTRL_COMBO,	READ_WRITE,	SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("bEnabled",(BYTE*)&((CActor*)nullptr)->bEnabled - (BYTE*)nullptr, "CActor", "Value",	CTRL_COMBO,	READ_WRITE,	SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
 END_REGISTER_CLASS_PURE(CActor, CObjectAbstract);
 
 //----------------------------------------------------------------------------------------------

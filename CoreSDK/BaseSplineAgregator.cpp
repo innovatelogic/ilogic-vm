@@ -2,8 +2,8 @@
 #include "RenderSDK.h"
 
 REGISTER_CLASS_PURE(BaseSplineAgregator, UIScreenObject)
-	new PropertyUINT("SplineDetail", (BYTE*)&((BaseSplineAgregator*)NULL)->SplineDetail - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_EDIT, true, false),
-	new PropertyBOOL("SplineClosed", (BYTE*)&((BaseSplineAgregator*)NULL)->SplineClosed - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_COMBO, true, false),
+	new oes::rflex::PropertyUINT("SplineDetail", (BYTE*)&((BaseSplineAgregator*)NULL)->SplineDetail - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_EDIT, true, false),
+	new oes::rflex::PropertyBOOL("SplineClosed", (BYTE*)&((BaseSplineAgregator*)NULL)->SplineClosed - (BYTE*)NULL, "UIComp_DrawFont", "Value", READ_WRITE, CTRL_COMBO, true, false),
 END_REGISTER_CLASS_PURE(BaseSplineAgregator, UIScreenObject);
 
 //----------------------------------------------------------------------------------------------

@@ -110,8 +110,8 @@ void CObjectAbstract::SetEventMgr(oes::foundation::IEventManager *mgr)
 static const bool V_FALSE = false;
 
 REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
-	new PropertyBOOL("bExternal", (BYTE*)&((CObjectAbstract*)nullptr)->m_bExternal - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
- 	new PropertyString("FilenameTag", (BYTE*)&((CObjectAbstract*)nullptr)->m_FilenameTag - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP),
+	new oes::rflex::PropertyBOOL("bExternal", (BYTE*)&((CObjectAbstract*)nullptr)->m_bExternal - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+ 	new oes::rflex::PropertyString("FilenameTag", (BYTE*)&((CObjectAbstract*)nullptr)->m_FilenameTag - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP),
 END_REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
 
 //----------------------------------------------------------------------------------------------
@@ -166,7 +166,7 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-	if (ClassNode *pCNode = CTree.Find(GetType()))
+	if (oes::rflex::ClassNode *pCNode = CTree.Find(GetType()))
 	{
 		while (pCNode)
 		{
@@ -203,11 +203,11 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 			}
 
 			// add interface properties
-			ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
 
 			while (IterIntf != pCNode->m_VecInterfaces.end())
 			{
-				ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
+                oes::rflex::ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
 
 				if (pNodeInterface)
 				{
@@ -260,7 +260,7 @@ void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_curren
 {
     oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-	if (ClassNode *pCNode = CTree.Find(GetType()))
+	if (oes::rflex::ClassNode *pCNode = CTree.Find(GetType()))
 	{
 		while (pCNode)
 		{
@@ -296,11 +296,11 @@ void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_curren
 			}
 
 			// add interface properties
-			ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
 
 			while (IterIntf != pCNode->m_VecInterfaces.end())
 			{
-				ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
+                oes::rflex::ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
 
 				if (pNodeInterface)
 				{
@@ -350,7 +350,7 @@ void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_curren
 }
 
 //----------------------------------------------------------------------------------------------
-bool IsNestedBy(ClassNode *pNode, const char *pTypeBase)
+bool IsNestedBy(oes::rflex::ClassNode *pNode, const char *pTypeBase)
 {
 	bool bResult = false;
 
@@ -358,7 +358,7 @@ bool IsNestedBy(ClassNode *pNode, const char *pTypeBase)
 	{
 		oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-		ClassNode *pBaseType = CTree.Find(pTypeBase);
+        oes::rflex::ClassNode *pBaseType = CTree.Find(pTypeBase);
 
 		assert(pBaseType && pNode);
 
@@ -385,7 +385,7 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 
 	std::map<std::string, std::string> ValueMap;
 
-	ClassNode *pOwnClassNode = CTree.Find(GetType());
+    oes::rflex::ClassNode *pOwnClassNode = CTree.Find(GetType());
 
 	if (pOwnClassNode)
 	{
@@ -399,13 +399,13 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 		}
 
 		// write down groups map
-		ClassNode *pClassNode = pOwnClassNode;
+        oes::rflex::ClassNode *pClassNode = pOwnClassNode;
 
 		while (pClassNode)
 		{
 			// general properties
-			const ClassNode::TVecProperties &VecProps = pClassNode->GetProperties();
-			ClassNode::TVecPropertyConstIterator IterProp = VecProps.begin();
+			const oes::rflex::ClassNode::TVecProperties &VecProps = pClassNode->GetProperties();
+            oes::rflex::ClassNode::TVecPropertyConstIterator IterProp = VecProps.begin();
 
 			while (IterProp != VecProps.end())
 			{
@@ -417,17 +417,17 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 			}
 
 			// Interfaces
-			const ClassNode::TVecInterfaces &VecInterfaces = pClassNode->GetInterfaceProps();
-			ClassNode::TVecInterfaceConstIter IterIntf = VecInterfaces.begin();
+			const oes::rflex::ClassNode::TVecInterfaces &VecInterfaces = pClassNode->GetInterfaceProps();
+            oes::rflex::ClassNode::TVecInterfaceConstIter IterIntf = VecInterfaces.begin();
 
 			while (IterIntf != VecInterfaces.end())
 			{
-				ClassNode *pInfClass = CTree.FindInterface((*IterIntf)->strType);
+                oes::rflex::ClassNode *pInfClass = CTree.FindInterface((*IterIntf)->strType);
 
 				if (pInfClass)
 				{
-					const ClassNode::TVecProperties &IntfPropArray = pInfClass->GetProperties();
-					ClassNode::TVecPropertyConstIterator &IterPropIntf = IntfPropArray.begin();
+					const oes::rflex::ClassNode::TVecProperties &IntfPropArray = pInfClass->GetProperties();
+                    oes::rflex::ClassNode::TVecPropertyConstIterator &IterPropIntf = IntfPropArray.begin();
 
 					while (IterPropIntf != IntfPropArray.end())
 					{
@@ -452,13 +452,13 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 				IterGroup++;
 			}
 
-			ClassNode *pClassNode = pOwnClassNode;
+            oes::rflex::ClassNode *pClassNode = pOwnClassNode;
 
 			// write 
 			while (pClassNode)
 			{
-				const ClassNode::TVecProperties &PropsArray = pClassNode->GetProperties();
-				ClassNode::TVecPropertyConstIterator IterProp = PropsArray.begin();
+				const oes::rflex::ClassNode::TVecProperties &PropsArray = pClassNode->GetProperties();
+                oes::rflex::ClassNode::TVecPropertyConstIterator IterProp = PropsArray.begin();
 
 				while (IterProp != PropsArray.end())
 				{
@@ -497,17 +497,17 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 				}
 
 				//Interface Properties
-				const ClassNode::TVecInterfaces &VecInterfaces = pClassNode->GetInterfaceProps();
-				ClassNode::TVecInterfaceConstIter IterIntf = VecInterfaces.begin();
+				const oes::rflex::ClassNode::TVecInterfaces &VecInterfaces = pClassNode->GetInterfaceProps();
+                oes::rflex::ClassNode::TVecInterfaceConstIter IterIntf = VecInterfaces.begin();
 
 				while (IterIntf != VecInterfaces.end())
 				{
-					ClassNode *pInfClass = CTree.FindInterface((*IterIntf)->strType);
+                    oes::rflex::ClassNode *pInfClass = CTree.FindInterface((*IterIntf)->strType);
 
 					if (pInfClass)
 					{
-						const ClassNode::TVecProperties &IntfPropArray = pInfClass->GetProperties();
-						ClassNode::TVecPropertyConstIterator &IterPropIntf = IntfPropArray.begin();
+						const oes::rflex::ClassNode::TVecProperties &IntfPropArray = pInfClass->GetProperties();
+                        oes::rflex::ClassNode::TVecPropertyConstIterator &IterPropIntf = IntfPropArray.begin();
 
 						while (IterPropIntf != IntfPropArray.end())
 						{
@@ -518,7 +518,7 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 
 								int MemoryOffsetOverride = 0;
 								{
-									SInterfaceDecl* pIntfDecl = pClassNode->GetInterfaceDecl((*IterPropIntf)->GetClassName());
+                                    oes::rflex::SInterfaceDecl* pIntfDecl = pClassNode->GetInterfaceDecl((*IterPropIntf)->GetClassName());
 									if (pIntfDecl){
 										MemoryOffsetOverride = pIntfDecl->byteShift;
 									}

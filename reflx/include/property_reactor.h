@@ -29,8 +29,7 @@ namespace oes
             void FillClassProperties(const ClassNode *classNode, int shift, TMapClassData &out);
 
         private:
-            //editors::TIEditor m_editor;
-        
+       
             TMapClassData m_propertyClasses;
         };
     }

@@ -13,11 +13,11 @@ static const Matrix3f DefMatrixScale(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f
 static const Vector DefVec(0.f, 0.f, 0.f);
 
 BEGIN_AUTO_CLASS(IDrawInterface)
-	new PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
-	new PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
-	new PropertyMatrix("LTM", (BYTE*)&((IDrawInterface*)NULL)->m_LTM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX16, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixTransform),
-	new PropertyMatrix3x3("STM", (BYTE*)&((IDrawInterface*)NULL)->m_STM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX9, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixScale),
-	new PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
+	new oes::rflex::PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
+	new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+	new oes::rflex::PropertyMatrix("LTM", (BYTE*)&((IDrawInterface*)NULL)->m_LTM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX16, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixTransform),
+	new oes::rflex::PropertyMatrix3x3("STM", (BYTE*)&((IDrawInterface*)NULL)->m_STM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX9, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixScale),
+	new oes::rflex::PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
 END_AUTO_CLASS(IDrawInterface)
 CLASS_INSTANCE_INTERFACE(IDrawInterface);
 

@@ -1,7 +1,7 @@
 #include "coresdkafx.h"
 
 REGISTER_CLASS_A(CSphereCollisionController, CollisionController)
-	new PropertyFLOAT("Radius", (BYTE*)&((CSphereCollisionController*)NULL)->m_fRadius - (BYTE*)NULL, "CSphereCollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+	new oes::rflex::PropertyFLOAT("Radius", (BYTE*)&((CSphereCollisionController*)NULL)->m_fRadius - (BYTE*)NULL, "CSphereCollisionController", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(CSphereCollisionController, CollisionController);
 
 //------------------------------------------------------------------------
