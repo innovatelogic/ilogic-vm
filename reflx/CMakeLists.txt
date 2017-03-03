@@ -35,6 +35,7 @@ set(SRC
 	src/ClassTree.cpp
 	src/ClassFactory.cpp
 	src/ObjectFactory.cpp
+	src/reflx.cpp
 	src/main.cpp
 )
 

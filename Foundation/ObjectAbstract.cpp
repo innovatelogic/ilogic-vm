@@ -170,10 +170,10 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 	{
 		while (pCNode)
 		{
-			TVecPropertyConstIterator IterProp = pCNode->PropertyMap.begin();
+			TVecPropertyConstIterator IterProp = pCNode->propertyMap.begin();
 
 			// deserialize embedded class props
-			while (IterProp != pCNode->PropertyMap.end())
+			while (IterProp != pCNode->propertyMap.end())
 			{
 				if ((*IterProp)->IsSerializable())
 				{
@@ -203,18 +203,18 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 			}
 
 			// add interface properties
-            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->interfaces.begin();
 
-			while (IterIntf != pCNode->m_VecInterfaces.end())
+			while (IterIntf != pCNode->interfaces.end())
 			{
                 oes::rflex::ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
 
 				if (pNodeInterface)
 				{
-					TVecPropertyConstIterator IterIntfProp = pNodeInterface->PropertyMap.begin();
+					TVecPropertyConstIterator IterIntfProp = pNodeInterface->propertyMap.begin();
 
 					// deserialize embedded class props
-					while (IterIntfProp != pNodeInterface->PropertyMap.end())
+					while (IterIntfProp != pNodeInterface->propertyMap.end())
 					{
 						if ((*IterIntfProp)->IsSerializable())
 						{
@@ -264,10 +264,10 @@ void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_curren
 	{
 		while (pCNode)
 		{
-			TVecPropertyConstIterator IterProp = pCNode->PropertyMap.begin();
+			TVecPropertyConstIterator IterProp = pCNode->propertyMap.begin();
 
 			// deserialize embedded class props
-			while (IterProp != pCNode->PropertyMap.end())
+			while (IterProp != pCNode->propertyMap.end())
 			{
 				if ((*IterProp)->IsSerializable())
 				{
@@ -296,18 +296,18 @@ void CObjectAbstract::SuperDeserializerExternal(tinyxml2::XMLElement *xml_curren
 			}
 
 			// add interface properties
-            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->interfaces.begin();
 
-			while (IterIntf != pCNode->m_VecInterfaces.end())
+			while (IterIntf != pCNode->interfaces.end())
 			{
                 oes::rflex::ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
 
 				if (pNodeInterface)
 				{
-					TVecPropertyConstIterator IterIntfProp = pNodeInterface->PropertyMap.begin();
+					TVecPropertyConstIterator IterIntfProp = pNodeInterface->propertyMap.begin();
 
 					// deserialize embedded class props
-					while (IterIntfProp != pNodeInterface->PropertyMap.end())
+					while (IterIntfProp != pNodeInterface->propertyMap.end())
 					{
 						if ((*IterIntfProp)->IsExternalProp())
 						{

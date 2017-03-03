@@ -232,15 +232,15 @@ public:
 			while (pClassNode && !bBreak)
 			{
 				// add interface properties
-                oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
+                oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->interfaces.begin();
 
-				while (IterIntf != pClassNode->m_VecInterfaces.end() && !bBreak)
+				while (IterIntf != pClassNode->interfaces.end() && !bBreak)
 				{
 					if (oes::rflex::ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType))
 					{
-						TVecPropertyConstIterator IterIntfProp = pNodeInterface->PropertyMap.begin();
+						TVecPropertyConstIterator IterIntfProp = pNodeInterface->propertyMap.begin();
 
-						while (IterIntfProp != pNodeInterface->PropertyMap.end() && !bBreak)
+						while (IterIntfProp != pNodeInterface->propertyMap.end() && !bBreak)
 						{
 							if (!strcmp((*IterIntfProp)->GetName(), "LTM"))
 							{

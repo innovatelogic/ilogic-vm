@@ -1,8 +1,22 @@
 #include "coresdkafx.h"
+#include "reflx.h"
 
 REGISTER_CLASS_A(CPawnCueBall, ActorAllocator)
 	new oes::rflex::PropertyString("XRef", (BYTE*)&((CPawnCueBall*)NULL)->m_XRef - (BYTE*)NULL, "CPawnCueBall", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
 END_REGISTER_CLASS(CPawnCueBall, ActorAllocator);
+
+oes::rflex::Rflex::STypeWrapper<oes::rflex::rflex_allocator<IObjectAbstract>> gobject(
+    "CPawnCueBall", 
+{oes::rflex::ProperyInfo{"1", 101},
+ oes::rflex::ProperyInfo{"2", 102 }}
+);
+
+
+/*<CPawnCueBall, ActorAllocator, oes::rflex::rflex_allocator<IObjectAbstract>>*/
+    
+       // , { GeneratorCPawnCueBall, CopyGeneratorCPawnCueBall }, "bbb", "ccc"
+        
+
 
 //----------------------------------------------------------------------------------------------
 CPawnCueBall::CPawnCueBall(const CObjectAbstract *pParent)

@@ -223,9 +223,9 @@ std::string EditorBase::GetProperty(const CObjectAbstract* object,
 
         assert(classNode);
 
-        TVecPropertyConstIterator iterProp = classNode->PropertyMap.begin();
+        TVecPropertyConstIterator iterProp = classNode->propertyMap.begin();
 
-        while (iterProp != classNode->PropertyMap.end())
+        while (iterProp != classNode->propertyMap.end())
         {
             if (*iterProp == prop)
             {

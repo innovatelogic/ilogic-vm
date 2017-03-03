@@ -9,6 +9,12 @@ namespace oes
     {
         class REFLX_EXPORT ClassNode
         {
+            enum class inheritance
+            {
+                plain = 0,
+                virt,
+            };
+
         public:
             typedef std::vector<ClassNode*>		        TVecClassNode;
             typedef TVecClassNode::iterator				TVecClassNodeIterator;
@@ -42,8 +48,8 @@ namespace oes
             void	SetProprties(const class IPropertiesAllocator *pPropAlloc);
             void	SetProprties(const class Property_Base** Arr, int Count);
 
-            class ClassNode* GetRootNode() const { return m_pRootNode; }
-            void			 SetRootNode(ClassNode *pNode) { m_pRootNode = pNode; }
+            ClassNode*  GetRootNode() const { return m_pRootNode; }
+            void        SetRootNode(ClassNode *pNode) { m_pRootNode = pNode; }
 
             ClassNode* GetChild(char *type) const;
 
@@ -55,29 +61,31 @@ namespace oes
             Property_Base** GetPropsRaw() const { return m_pPropsRaw; }
             unsigned int	GetPropsSize() const { return m_PropsSize; }
 
-            const ClassNode::TVecInterfaces& GetInterfaceProps() const { return m_VecInterfaces; }
-            const ClassNode::TVecProperties& GetProperties() const { return PropertyMap; }
+            const ClassNode::TVecInterfaces& GetInterfaceProps() const { return interfaces; }
+            const ClassNode::TVecProperties& GetProperties() const { return propertyMap; }
 
             SInterfaceDecl* GetInterfaceDecl(const char *Name) const;
 
             bool IsInheritBaseClass(const char *Name) const;
 
-            const TVecClassNode&	GetChilds() const { return Childs; }
+            const TVecClassNode&	GetChilds() const { return childs; }
 
-            const TVecInterfaces&	GetInterfaces() const { return m_VecInterfaces; }
+            const TVecInterfaces&	GetInterfaces() const { return interfaces; }
 
         public:
             std::string				m_name;
 
-            TVecClassNode			Childs;
-            TVecInterfaces			m_VecInterfaces;
+            TVecClassNode			childs;
+            TVecInterfaces			interfaces;
 
             /** property map */
-            TVecProperties			PropertyMap;
+            TVecProperties			propertyMap;
 
         private:
-            ClassNode				*m_pRootNode;
+            std::vector<std::pair<ClassNode*, inheritance>> parents;
 
+            ClassNode				*m_pRootNode;
+            
             IPropertiesAllocator	*m_pPropAlloc;
 
             Property_Base			**m_pPropsRaw;

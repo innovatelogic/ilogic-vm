@@ -37,9 +37,9 @@ namespace oes
                     if (pBase && pSiblin) // already exist
                     {
                         // check if already linked
-                        std::vector<T_CLASS*>::iterator iterFind = std::find(pBase->Childs.begin(), pBase->Childs.end(), pSiblin);
+                        std::vector<T_CLASS*>::iterator iterFind = std::find(pBase->childs.begin(), pBase->childs.end(), pSiblin);
 
-                        if (iterFind != pBase->Childs.end()) {
+                        if (iterFind != pBase->childs.end()) {
                             return pSiblin;
                         }
                         else // need rearrange

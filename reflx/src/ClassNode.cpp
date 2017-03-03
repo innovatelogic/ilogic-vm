@@ -43,7 +43,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         void ClassNode::Release()
         {
-            for_each(Childs.begin(), Childs.end(), std::mem_fun(&ClassNode::Release));
+            for_each(childs.begin(), childs.end(), std::mem_fun(&ClassNode::Release));
 
             delete this;
         }
@@ -56,7 +56,7 @@ namespace oes
             }
             else
             {
-                for (TVecClassNodeIterator Iter = Childs.begin(); Iter != Childs.end(); ++Iter)
+                for (TVecClassNodeIterator Iter = childs.begin(); Iter != childs.end(); ++Iter)
                 {
                     ClassNode * FindNode = (*Iter)->Find(Type);
                     if (FindNode) {
@@ -71,22 +71,22 @@ namespace oes
         ClassNode* ClassNode::AddChild(ClassNode *pNode)
         {
             // adds compatibility check
-            Childs.push_back(pNode);
+            childs.push_back(pNode);
             return pNode;
         }
 
         //----------------------------------------------------------------------------------------------
         ClassNode* ClassNode::RemoveNode(ClassNode * Node)
         {
-            TVecClassNodeIterator IterFind = std::find(Childs.begin(), Childs.end(), Node);
+            TVecClassNodeIterator IterFind = std::find(childs.begin(), childs.end(), Node);
 
-            if (IterFind != Childs.end())
+            if (IterFind != childs.end())
             {
-                Childs.erase(IterFind);
+                childs.erase(IterFind);
                 return this;
             }
 
-            for (TVecClassNodeIterator Iter = Childs.begin(); Iter != Childs.end(); ++Iter)
+            for (TVecClassNodeIterator Iter = childs.begin(); Iter != childs.end(); ++Iter)
             {
                 ClassNode *pParentToRemove = (*Iter)->RemoveNode(Node);
 
@@ -100,7 +100,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         Property_Base* ClassNode::GetProperty(const char *Name) const
         {
-            for (TVecPropertyConstIterator Iter = PropertyMap.begin(); Iter != PropertyMap.end(); ++Iter)
+            for (TVecPropertyConstIterator Iter = propertyMap.begin(); Iter != propertyMap.end(); ++Iter)
             {
                 if (!strcmp((*Iter)->m_Name.c_str(), Name))
                 {
@@ -113,7 +113,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         bool ClassNode::AddProperty(const char *Name, Property_Base *Prop)
         {
-            PropertyMap.push_back(Prop);
+            propertyMap.push_back(Prop);
             return true;
         }
 
@@ -128,7 +128,7 @@ namespace oes
             for (unsigned int index = 0; index < m_PropsSize; ++index)
             {
                 const_cast<Property_Base*>(*(m_pPropsRaw + index))->m_ClassNodePtr = this;
-                PropertyMap.push_back(const_cast<Property_Base*>(*(m_pPropsRaw + index)));
+                propertyMap.push_back(const_cast<Property_Base*>(*(m_pPropsRaw + index)));
             }
 
             m_pInterfaces = const_cast<SInterfaceDecl**>(pPropAlloc->GetInterfaces());
@@ -136,14 +136,14 @@ namespace oes
 
             for (unsigned int Index = 0; Index < m_nIntfSize; ++Index)
             {
-                m_VecInterfaces.push_back(const_cast<SInterfaceDecl*>(*(m_pInterfaces + Index)));
+                interfaces.push_back(const_cast<SInterfaceDecl*>(*(m_pInterfaces + Index)));
             }
         }
 
         //----------------------------------------------------------------------------------------------
         ClassNode* ClassNode::GetChild(char *type) const
         {
-            for each (auto item in Childs)
+            for each (auto item in childs)
             {
                 if (std::string(item->GetName()).compare(type) == 0)
                 {
@@ -161,7 +161,7 @@ namespace oes
 
             for (unsigned int Index = 0; Index < m_PropsSize; ++Index)
             {
-                PropertyMap.push_back(const_cast<Property_Base*>(*(Arr + Index)));
+                propertyMap.push_back(const_cast<Property_Base*>(*(Arr + Index)));
             }
         }
 
@@ -182,7 +182,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         SInterfaceDecl* ClassNode::GetInterfaceDecl(const char *Name) const
         {
-            for (TVecInterfaces::const_iterator Iter = m_VecInterfaces.begin(); Iter != m_VecInterfaces.end(); ++Iter)
+            for (TVecInterfaces::const_iterator Iter = interfaces.begin(); Iter != interfaces.end(); ++Iter)
             {
                 if (!strcmp((*Iter)->strType, Name))
                 {
@@ -190,7 +190,7 @@ namespace oes
                 }
             }
 
-            return 0;
+            return nullptr;
         }
 
         //----------------------------------------------------------------------------------------------

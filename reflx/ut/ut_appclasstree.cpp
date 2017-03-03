@@ -17,7 +17,7 @@ struct SNode
 	SNode* AddChild(SNode *pNode)
 	{
 		// adds compatibility check
-		Childs.push_back(pNode);
+		childs.push_back(pNode);
 		return pNode;
 	}
 
@@ -31,7 +31,7 @@ struct SNode
 		}
 		else
 		{
-			for (TChilds::iterator Iter = Childs.begin(); Iter != Childs.end(); ++Iter)
+			for (TChilds::iterator Iter = childs.begin(); Iter != childs.end(); ++Iter)
 			{
 				SNode * FindNode = (*Iter)->Find(key);
 				if (FindNode) {
@@ -42,7 +42,7 @@ struct SNode
 		return nullptr;
 	}
 
-	TChilds	Childs;
+	TChilds	childs;
 
 	std::string __id;
 };

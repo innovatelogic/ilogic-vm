@@ -49,16 +49,16 @@ namespace oes
             class CAuto
             {
             public:
-                using TGlobalFactory = Utility::CSingleton<CClassFactory, CAuto>;
+                using TGlobalFactory = Utility::CSingleton<CClassFactory>;
 
                 CAuto(const char *key, TGenFunction func, TCloneFunction cloneFunc, const char *className, const char *baseClassName)
                 {
                     TGlobalFactory::GetInstance()->Register(key, func, cloneFunc, className, baseClassName);
                 }
 
-                CAuto(const char *Key, std::vector<class Property_Base*> &VecPropInfo)
+                CAuto(const char *key, std::vector<class Property_Base*> &VecPropInfo)
                 {
-                    TGlobalFactory::GetInstance()->RegisterPure(Key, VecPropInfo);
+                    TGlobalFactory::GetInstance()->RegisterPure(key, VecPropInfo);
                 }
             };
 

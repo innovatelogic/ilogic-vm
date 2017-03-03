@@ -115,9 +115,9 @@ namespace oes
                     }
 
                     // add interface properties
-                    ClassNode::TVecInterfaceIter iterIntf = classNode->m_VecInterfaces.begin();
+                    ClassNode::TVecInterfaceIter iterIntf = classNode->interfaces.begin();
 
-                    while (iterIntf != classNode->m_VecInterfaces.end())
+                    while (iterIntf != classNode->interfaces.end())
                     {
                         ClassNode *nodeInterface = classTree.FindInterface((*iterIntf)->strType);
 

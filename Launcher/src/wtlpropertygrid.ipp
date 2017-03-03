@@ -599,9 +599,9 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
     {
         while (pClassNode)
         {
-            TVecPropertyConstIterator IterProp = pClassNode->PropertyMap.begin();
+            TVecPropertyConstIterator IterProp = pClassNode->propertyMap.begin();
 
-            while (IterProp != pClassNode->PropertyMap.end())
+            while (IterProp != pClassNode->propertyMap.end())
             {
                 // find or alloc group
                 SPropertyGroup *pGroup = GetGroupByName((*IterProp)->GetGroupName());
@@ -647,17 +647,17 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
             }
 
             // add interface properties
-            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->m_VecInterfaces.begin();
+            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pClassNode->interfaces.begin();
 
-            while (IterIntf != pClassNode->m_VecInterfaces.end())
+            while (IterIntf != pClassNode->interfaces.end())
             {
                 oes::rflex::ClassNode *pNodeInterface = classTree.FindInterface((*IterIntf)->strType);
 
                 if (pNodeInterface)
                 {
-                    TVecPropertyConstIterator IterIntfProp = pNodeInterface->PropertyMap.begin();
+                    TVecPropertyConstIterator IterIntfProp = pNodeInterface->propertyMap.begin();
 
-                    while (IterIntfProp != pNodeInterface->PropertyMap.end())
+                    while (IterIntfProp != pNodeInterface->propertyMap.end())
                     {
                         // find or alloc group
                         SPropertyGroup *pGroup = GetGroupByName("Value");
@@ -989,8 +989,8 @@ void CWTLPropertyGrid<T>::FillPropertyDataTransient(T *pActor)
 
         while (pCNode)
         {
-            TVecPropertyConstIterator IterProp = pCNode->PropertyMap.begin();
-            while (IterProp != pCNode->PropertyMap.end())
+            TVecPropertyConstIterator IterProp = pCNode->propertyMap.begin();
+            while (IterProp != pCNode->propertyMap.end())
             {
                 //if ((*IterProp)->IsSerializable())
                 {
