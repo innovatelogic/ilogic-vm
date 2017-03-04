@@ -88,7 +88,6 @@
 #include "SplineAgregator_PointInserter_Brush.h"
 #include "SplineCollision2DModificator_Brush.h"
 #include "BoxCollisionController_Brush.h"
-#include "SphereCollisionController_Brush.h"
 #include "Brush_LevelActor.h"
 #include "LabelButton_Brush.h"
 #include "ImageProjection.h"

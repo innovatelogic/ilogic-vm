@@ -206,8 +206,6 @@ set(SOURCE
 	SkyDome.h
 	SphereCollisionController.cpp
 	SphereCollisionController.h
-	SphereCollisionController_Brush.cpp
-	SphereCollisionController_Brush.h
 	SphereController.cpp
 	SphereController.h
 	SplineAgregator.cpp
