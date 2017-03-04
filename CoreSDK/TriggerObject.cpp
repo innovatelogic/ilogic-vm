@@ -15,7 +15,8 @@ TriggerObject::TriggerObject(const CObjectAbstract * Parent)
 , OnStay(false)
 , OnLeave(false)
 {
-	NEW_OBJECT_TRANSIENT(ActionEvent, ActionTrigger, "ActionEvent");
+	#if 0
+NEW_OBJECT_TRANSIENT(ActionEvent, ActionTrigger, "ActionEvent");
 	//NEW_OBJECT_TRANSIENT(ActionOnStay, ActionBase, "ActionOnStay");
 	//NEW_OBJECT_TRANSIENT(ActionOnLeave, ActionBase, "ActionOnLeave");
 
@@ -28,11 +29,13 @@ TriggerObject::TriggerObject(const CObjectAbstract * Parent)
 	Driver->RegisterAction(ActionEvent);
 //	Driver->RegisterAction(ActionOnStay);
 //	Driver->RegisterAction(ActionOnLeave);
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
 TriggerObject::~TriggerObject()
 {
+#if 0
 //	UNREGISTER_EVENT(this, this, Event_OnChangePivot);
 
 	//GetPhysicsEngine()->ReleaseObject(this);
@@ -42,6 +45,7 @@ TriggerObject::~TriggerObject()
 
 	ActionEvent->ProcessRelease(true);
 	ActionEvent = 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -69,7 +73,8 @@ void TriggerObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
 	Super::SuperDeserializer(xml_current_tree);
 
-	XML_FOR_EACH_TREE(xml_current_tree)
+	#if 0
+XML_FOR_EACH_TREE(xml_current_tree)
 	{
 		XML_CHECK_NODE("ActionTrigger")
 		{
@@ -87,11 +92,13 @@ void TriggerObject::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 			}
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
 void TriggerObject::SuperSerializer(std::ofstream &Stream, bool bSaveAsExternal /*= false*/)
 {
+#if 0
 	std::string OutValue;
 
 	GetValueString(OutValue);
@@ -111,6 +118,7 @@ void TriggerObject::SuperSerializer(std::ofstream &Stream, bool bSaveAsExternal 
 		ActionEvent->SuperSerializer(Stream, bSaveAsExternal);
 	}
 	Stream << "</" << GetType() << ">";
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
@@ -118,7 +126,7 @@ void TriggerObject::Initialize()
 {
 	Super::Initialize();
 
-	ActionEvent->Initialize();
+	//ActionEvent->Initialize();
 	
 	CreatePhysActor();
 }
@@ -188,7 +196,8 @@ void TriggerObject::CreatePhysActor()
 //----------------------------------------------------------------------------------------------
 void TriggerObject::OnTriggerEvent(CActor * OtherActor, TriggerShapeFlag Flag)
 {
-	if (OnEnter && Flag == PHYS_TRIGGER_ON_ENTER){
+	#if 0
+if (OnEnter && Flag == PHYS_TRIGGER_ON_ENTER){
 		ActionEvent->Execute(OtherActor);
 	}
 
@@ -199,4 +208,5 @@ void TriggerObject::OnTriggerEvent(CActor * OtherActor, TriggerShapeFlag Flag)
 	if (OnLeave && Flag == PHYS_TRIGGER_ON_LEAVE){
 		ActionEvent->Execute(OtherActor);
 	}
+#endif
 }

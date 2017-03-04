@@ -47,8 +47,8 @@ private:
 	class UIComp_DrawFontState *FontComponentState;
 	
 	// actions
-	class ActionHandler * ActionPress;
-	class ActionHandler * ActionRelease;
+	//class ActionHandler * ActionPress;
+	//class ActionHandler * ActionRelease;
 
 	std::wstring Text;
 	float TextPositionX;

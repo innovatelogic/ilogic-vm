@@ -52,16 +52,6 @@ set(SOURCE
 	transform_traits.h
 	transform_history_traits.cpp
 	transform_history_traits.h
-	ActionBase.cpp
-	ActionBase.h
-	ActionEventUI.cpp
-	ActionEventUI.h
-	ActionHandler.cpp
-	ActionHandler.h
-	ActionLoadLevel.cpp
-	ActionLoadLevel.h
-	ActionTrigger.cpp
-	ActionTrigger.h
 	ActorAllocator.cpp
 	ActorAllocator.h
 	ActorAllocator_Static.cpp
@@ -108,7 +98,6 @@ set(SOURCE
 	CoreSDK.cpp
 	CoreSDK.h
 	coresdkafx.h
-	coresdkafx_actions.h
 	coresdkafx_components.h
 	coresdkafx_manager.h
 	coresdkafx_objects.h
@@ -280,8 +269,6 @@ set(SOURCE
 	UpdateManager.h
 	UVModificator.cpp
 	UVModificator.h
-	UVModificator_Brush.cpp
-	UVModificator_Brush.h
 	ViewportInterface.ipp
 	ViewportInterface.h
 	ViewportManager.cpp

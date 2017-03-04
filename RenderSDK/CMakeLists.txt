@@ -123,14 +123,19 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
 	include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
-	add_executable( unittest_${PROJECT_NAME} 
+	
+	set(PROJECT_NAME ${PROJECT_NAME})
+	set(PROJECT_TEST_NAME Tests_${PROJECT_NAME})
+	string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_U)
+	
+	add_executable( ${PROJECT_TEST_NAME}
 					ut/main.cpp )
 	
-	target_link_libraries(unittest_${PROJECT_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
+	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
 
-	set_target_properties(unittest_${PROJECT_NAME} PROPERTIES FOLDER "UT" )
+	set_target_properties(${PROJECT_TEST_NAME} PROPERTIES FOLDER "UT" )
 
-	set_target_properties( unittest_${PROJECT_NAME} PROPERTIES
+	set_target_properties(${PROJECT_TEST_NAME} PROPERTIES
 						RUNTIME_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 						LIBRARY_OUTPUT_DIRECTORY_DEBUG ${G_BIN_DIR}
 						RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}

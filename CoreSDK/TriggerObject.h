@@ -58,7 +58,7 @@ private:
 	bool	OnStay;
 	bool	OnLeave;
 
-	class ActionTrigger *ActionEvent;
+	//class ActionTrigger *ActionEvent;
 
 // 	class ActionBase	* ActionOnEnter;
 // 	class ActionBase	* ActionOnStay;

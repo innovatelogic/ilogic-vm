@@ -72,7 +72,7 @@ if (${ENABLE_TESTING})
 	enable_testing()
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
-	set( PROJECT_TEST_NAME unittest_${PROJECT_NAME} )
+	set( PROJECT_TEST_NAME Tests_${PROJECT_NAME} )
 	string( TOUPPER ${PROJECT_NAME} PROJECT_NAME_U )
 
 	set(SOURCE_MOC moc/moc_editor.cxx

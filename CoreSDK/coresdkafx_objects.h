@@ -87,7 +87,6 @@
 #include "SplineAgregator_Brush.h"
 #include "BezierSplineAgregator_Brush.h"
 #include "SplineAgregator_PointInserter_Brush.h"
-#include "UVModificator_Brush.h"
 #include "SplineCollision2DModificator_Brush.h"
 #include "BoxCollisionController_Brush.h"
 #include "SphereCollisionController_Brush.h"

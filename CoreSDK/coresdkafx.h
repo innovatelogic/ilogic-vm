@@ -7,13 +7,6 @@
 #include "coresdkafx_objects.h"
 #include "coresdkafx_ui.h"
 #include "coresdkafx_components.h"
-#include "coresdkafx_actions.h"
-
-#include "ActionBase.h"
-#include "ActionTrigger.h"
-#include "ActionLoadLevel.h"
-#include "ActionEventUI.h"
-#include "ActionHandler.h"
 
 #include "Property.h"
 

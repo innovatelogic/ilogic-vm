@@ -17,41 +17,41 @@ LabelButton::LabelButton(const CObjectAbstract * Parent /*= NULL*/)
 	NEW_OBJECT_TRANSIENT_CHILD(ImageComponents, UIComp_DrawImageState, "ImageComponents", this);
 	NEW_OBJECT_TRANSIENT_CHILD(FontComponentState, UIComp_DrawFontState, "FontComponentState", this);
 
-	NEW_OBJECT_TRANSIENT(ActionPress, ActionHandler, "ActionPress");
-	NEW_OBJECT_TRANSIENT(ActionRelease, ActionHandler, "ActionRelease");
+	//NEW_OBJECT_TRANSIENT(ActionPress, ActionHandler, "ActionPress");
+	//NEW_OBJECT_TRANSIENT(ActionRelease, ActionHandler, "ActionRelease");
 
 	RegisterRenderEntity(ImageComponents);
 	RegisterRenderEntity(ImageComponents->GetStaticMesh());
 	RegisterRenderEntity(FontComponentState);
 	
-	ActionPress->SetOwnerActor(this);
-	ActionRelease->SetOwnerActor(this);
+	//ActionPress->SetOwnerActor(this);
+	//ActionRelease->SetOwnerActor(this);
 
-	ActionPress->SetPosition2f(Vector2f(100, 100));
-	ActionRelease->SetPosition2f(Vector2f(100, 150));
+	//ActionPress->SetPosition2f(Vector2f(100, 100));
+	//ActionRelease->SetPosition2f(Vector2f(100, 150));
 
-	ActionPress->SetAppMain(GetAppMain());
-	ActionRelease->SetAppMain(GetAppMain());
+	//ActionPress->SetAppMain(GetAppMain());
+	//ActionRelease->SetAppMain(GetAppMain());
 
-	ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
+	//ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
 
-	Driver->RegisterAction(ActionPress);
-	Driver->RegisterAction(ActionRelease);
+	//Driver->RegisterAction(ActionPress);
+	//Driver->RegisterAction(ActionRelease);
 }
 
 //----------------------------------------------------------------------------------------------
 LabelButton::~LabelButton()
 {
-	ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
+	//ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
 	
-	Driver->UnRegisterAction(ActionPress);
-	Driver->UnRegisterAction(ActionRelease);
+	//Driver->UnRegisterAction(ActionPress);
+	//Driver->UnRegisterAction(ActionRelease);
 
-	ActionPress->ProcessRelease(true);
-	ActionRelease->ProcessRelease(true);
+	//ActionPress->ProcessRelease(true);
+	//ActionRelease->ProcessRelease(true);
 
-	ActionPress = NULL;
-	ActionRelease = NULL;
+	//ActionPress = NULL;
+	//ActionRelease = NULL;
 }
 
 //----------------------------------------------------------------------------------------------
@@ -124,14 +124,14 @@ float LabelButton::GetTextPositionY() const
 //----------------------------------------------------------------------------------------------
 bool LabelButton::DoEventPressed(const MouseInputData& InputData)
 {
-	ActionPress->Execute(this);
+	//ActionPress->Execute(this);
 	return Super::DoEventPressed(InputData);
 }
 
 //----------------------------------------------------------------------------------------------
 bool LabelButton::DoEventReleased(const MouseInputData& InputData)
 {
-	ActionRelease->Execute(this);
+	//ActionRelease->Execute(this);
 	return Super::DoEventReleased(InputData);
 }
 
@@ -167,22 +167,22 @@ void LabelButton::SuperDeserializerInternal(tinyxml2::XMLElement *pTree)
 		XML_DEF_ATTRIBUTES_NODE(Value);
 		ValueParser ValueStore(Value);
 
-		if (ValueStore.GetValueString("Name") == "ActionPress")
-		{
-			ActionPress->SuperDeserializer(XML_CURRENT_NODE);
-		}
-		else if (ValueStore.GetValueString("Name") == "ActionRelease")
-		{
-			ActionRelease->SuperDeserializer(XML_CURRENT_NODE);
-		}
+		//if (ValueStore.GetValueString("Name") == "ActionPress")
+		//{
+		//	ActionPress->SuperDeserializer(XML_CURRENT_NODE);
+		//}
+		//else if (ValueStore.GetValueString("Name") == "ActionRelease")
+		//{
+		//	ActionRelease->SuperDeserializer(XML_CURRENT_NODE);
+		//}
 	}
 }
 
 //----------------------------------------------------------------------------------------------
 bool LabelButton::SuperSerializerInternal(std::ofstream &Stream) 
 {
-	ActionPress->SuperSerializer(Stream);
-	ActionRelease->SuperSerializer(Stream);
+	//ActionPress->SuperSerializer(Stream);
+	//ActionRelease->SuperSerializer(Stream);
 
 	return false;
 }

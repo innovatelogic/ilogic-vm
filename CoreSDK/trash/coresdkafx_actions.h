@@ -5,7 +5,4 @@
 #pragma once
 #endif
 
-#include "ActionBase.h"
-
-
 #endif//__coresdkafx_actions_h__

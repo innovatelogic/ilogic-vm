@@ -27,39 +27,45 @@ bool ScriptDriver::RegisterAction(ActionBase * Action)
 //----------------------------------------------------------------------------------------------
 bool ScriptDriver::UnRegisterAction(ActionBase * Action)
 {
-	VecActions.erase(std::remove(VecActions.begin(), VecActions.end(), Action), VecActions.end());
-	return true;
+	//VecActions.erase(std::remove(VecActions.begin(), VecActions.end(), Action), VecActions.end());
+	
+    return true;
 }
 
 //----------------------------------------------------------------------------------------------
 void ScriptDriver::Render(CActor* Actor, HDC hdc, const Matrix &ViewMatrix)
 {
-	for (TVecActions::iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
+	#if 0
+for (TVecActions::iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
 	{
 		if ((*Iter)->GetOwnerActor() == Actor)
 		{
 			(*Iter)->Render(hdc, ViewMatrix);
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------------------------------------
 ActionBase* ScriptDriver::GetActionByActor(class CActor *Actor)
 {
-	for (TVecActions::iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
+	#if 0
+for (TVecActions::iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
 	{
 		if ((*Iter)->GetOwnerActor() == Actor)
 		{
 			return (*Iter);
 		}
 	}
+#endif
 	return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
 SocketAction* ScriptDriver::ProcessClickSocket(CActor* OwnerActor, const Vector2f &Point, bool link /*= false*/) const
 {
- 	for (TVecActions::const_iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
+ 	#if 0
+for (TVecActions::const_iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
  	{
  		if ((*Iter)->GetOwnerActor() == OwnerActor)
  		{
@@ -68,13 +74,15 @@ SocketAction* ScriptDriver::ProcessClickSocket(CActor* OwnerActor, const Vector2
 			}
  		}
  	}
+#endif
 	return 0;
 }
 
 //----------------------------------------------------------------------------------------------
 const ActionBase* ScriptDriver::ProcessClickAction(CActor* OwnerActor, const Vector2f &Point) const
 {
-	for (TVecActions::const_iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
+#if 0
+for (TVecActions::const_iterator Iter = VecActions.begin(); Iter != VecActions.end(); ++Iter)
 	{
 		if ((*Iter)->GetOwnerActor() == OwnerActor)
 		{
@@ -83,5 +91,6 @@ const ActionBase* ScriptDriver::ProcessClickAction(CActor* OwnerActor, const Vec
 			}
 		}
 	}
+#endif
 	return 0;
 }

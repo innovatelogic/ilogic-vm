@@ -57,7 +57,7 @@ if (${ENABLE_TESTING})
 	include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
-	set( PROJECT_TEST_NAME unittest_${PROJECT_NAME} )
+	set( PROJECT_TEST_NAME Tests_${PROJECT_NAME} )
 	string( TOUPPER ${PROJECT_NAME} PROJECT_NAME_U )
 
 	add_executable( ${PROJECT_TEST_NAME}
