@@ -67,10 +67,6 @@ set(SOURCE
 	BaseModificatorUI.h
 	BaseSplineAgregator.cpp
 	BaseSplineAgregator.h
-	BezierSplineAgregator_Brush.cpp
-	BezierSplineAgregator_Brush.h
-	Bezier_SplineAgregator.cpp
-	Bezier_SplineAgregator.h
 	BoxCharacterController.cpp
 	BoxCharacterController.h
 	BoxCollisionController.cpp
@@ -179,10 +175,6 @@ set(SOURCE
 	PlaneCollisionController.h
 	Point2D.cpp
 	Point2D.h
-	Point2DBezierKey.cpp
-	Point2DBezierKey.h
-	PointBezier2D.cpp
-	PointBezier2D.h
 	PointLight.cpp
 	PointLight.h
 	PolygonImage.cpp

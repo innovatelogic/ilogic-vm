@@ -78,8 +78,7 @@ void Point2DBezierKey::DoDraw()
 //---------------------------------------------------------------------
 bool Point2DBezierKey::DoEventReleased(const MouseInputData& InputData)
 {
-	#if 0
-if (GetParent() && 
+	if (GetParent() && 
 		GetParent()->GetParent() &&
 		dynamic_cast<Bezier_SplineAgregator*>(GetParent()->GetParent()) &&
 		!GetParent()->GetParent()->IsPendingToDelete())
@@ -92,6 +91,5 @@ if (GetParent() &&
 		GetRenderComponent()->LeaveCS();
 		GetAppMain()->LeaveDrawCS();
 	}
-#endif
 	return Super::DoEventReleased(InputData);
 }
