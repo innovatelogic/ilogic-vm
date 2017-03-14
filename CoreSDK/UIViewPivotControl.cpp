@@ -261,7 +261,7 @@ void UIViewPivotControl::DoDraw()
 	const CameraManager *pMgr = GetAppMain()->GetCameraManager();
 	assert(pMgr);
     
-	const CCamera *buildCamera = pMgr->GetActiveCamera();
+	const CameraManager::T *buildCamera = pMgr->GetActiveCamera();
 	assert(buildCamera);
 
 	Matrix viewmatrix;
@@ -584,7 +584,7 @@ bool UIViewPivotControl::ProcessClick(const MouseInputData& InputData, const Vec
 
 	if (GetAppMain()->GetCameraManager())
 	{
-		CCamera * Camera = const_cast<CCamera*>(GetAppMain()->GetCameraManager()->GetActiveCamera(InputData.pRenderContext));
+        CameraManager::T * Camera = const_cast<CameraManager::T*>(GetAppMain()->GetCameraManager()->GetActiveCamera(InputData.pRenderContext));
 
 		if (Camera)
 		{

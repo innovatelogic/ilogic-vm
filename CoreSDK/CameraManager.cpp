@@ -14,7 +14,7 @@ CameraManager::~CameraManager()
 }
 
 //----------------------------------------------------------------------------------------------
-bool CameraManager::RegisterCamera(CCamera *pCamera, SRenderContext *pContext /*= nullptr*/)
+bool CameraManager::RegisterCamera(T *pCamera, SRenderContext *pContext /*= nullptr*/)
 {
 	bool bResult = false;
 
@@ -64,7 +64,7 @@ bool CameraManager::RegisterCamera(CCamera *pCamera, SRenderContext *pContext /*
 }
 
 //----------------------------------------------------------------------------------------------
-bool CameraManager::UnregisterCamera(CCamera *pCamera)
+bool CameraManager::UnregisterCamera(T *pCamera)
 {
 	bool bResult = false;
 
@@ -119,7 +119,7 @@ bool CameraManager::UnregisterCamera(CCamera *pCamera)
 }
 
 //----------------------------------------------------------------------------------------------
-CCamera* CameraManager::GetActiveCamera(SRenderContext *pContext /*= nullptr*/) const 
+CameraManager::T* CameraManager::GetActiveCamera(SRenderContext *pContext /*= nullptr*/) const
 { 
 	if (pContext == nullptr){
 		pContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
@@ -137,7 +137,7 @@ CCamera* CameraManager::GetActiveCamera(SRenderContext *pContext /*= nullptr*/) 
 }
 
 //----------------------------------------------------------------------------------------------
-bool CameraManager::ActivateCamera(CCamera *pCamera)
+bool CameraManager::ActivateCamera(T *pCamera)
 {
 	bool bResult = false;
 
@@ -158,7 +158,7 @@ bool CameraManager::ActivateCamera(CCamera *pCamera)
 }
 
 //----------------------------------------------------------------------------------------------
-CCamera* CameraManager::GetCamera(size_t Index) const
+CameraManager::T* CameraManager::GetCamera(size_t Index) const
 {
 	/*if (Index < m_VecCameras.size()){
 		return m_VecCameras[Index];

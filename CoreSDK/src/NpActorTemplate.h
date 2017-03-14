@@ -4,7 +4,7 @@
 
 namespace core_sdk_api
 {
-    template<class APIClass>
+    template<typename APIClass>
     class CORESDK_API NpActorTemplate : public APIClass, public ActorAllocator
     {
         DECLARE_CLASS_SIMPLE(NpActorTemplate, ActorAllocator);

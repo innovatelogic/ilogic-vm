@@ -6,6 +6,8 @@
 #include "ActorAllocator.h"
 #include "ViewportInterface.h"
 #include "IDrawInterface.h"
+#include "src/Camera.h"
+#include "include/PxCamera.h"
 
 class CORESDK_API CModelViewer : public ActorAllocator, 
 	public core_sdk_api::TIViewport,
@@ -28,7 +30,7 @@ public:
 	bool GenerateObjectView(const wchar_t *pFilename);
 	bool Save(const wchar_t *pFilename);
 
-	class CCamera* GetCamera() const { return m_pCamera; }
+	CCamera* GetCamera() const { return m_pCamera; }
 
 protected:
 private:
@@ -40,7 +42,7 @@ private:
 	class SRenderContext		*m_pRenderContext;
 
 	class CComp_EnvSceneInfo	*m_pEnvSceneInfo;
-	class CCamera				*m_pCamera;
+	CCamera                     *m_pCamera;
 
 	class CActor				*m_pGenerated;
 

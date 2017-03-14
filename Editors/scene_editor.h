@@ -5,7 +5,6 @@
 
 class SRenderContext;
 class CComp_EnvSceneInfo;
-class CCamera;
 class CModelViewer;
 class CActor;
 

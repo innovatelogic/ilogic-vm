@@ -16,10 +16,10 @@ CPawn::CPawn(const CObjectAbstract* Parent)
 	assert(SetStates);
 
 	//NEW_OBJECT_TRANSIENT_CHILD(MeshComponent, Comp_AnimMesh, "MeshComponent", this);
-	NEW_OBJECT_TRANSIENT_CHILD(MaterialEffect, Comp_MaterialEffect, "UICompDrawImage_MaterialEffect", this);
-	NEW_OBJECT_TRANSIENT_CHILD(CharacterController, BoxCharacterController, "CharacterController", this);
-	NEW_OBJECT_TRANSIENT_CHILD(HeadTracker, DummyObject, "HeadTracker", this);
-	NEW_OBJECT_TRANSIENT_CHILD(PawnCamera, CCamera, "PawnCamera", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(MaterialEffect, Comp_MaterialEffect, "UICompDrawImage_MaterialEffect", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(CharacterController, BoxCharacterController, "CharacterController", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(HeadTracker, DummyObject, "HeadTracker", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(PawnCamera, CCamera, "PawnCamera", this);
 
 }
 

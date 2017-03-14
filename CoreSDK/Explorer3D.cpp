@@ -1,5 +1,6 @@
 #include "coresdkafx.h"
 #include "RenderAdjacency.h"
+#include "include/PxCamera.h"
 
 REGISTER_CLASS(Explorer3D, ActorAllocator);
 

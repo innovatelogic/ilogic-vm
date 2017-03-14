@@ -11,7 +11,6 @@
 
 #define NUM_SPLITS 3
 
-//template<typename APIClass = core_sdk_api::PxCamera>
 class CORESDK_API CCamera : public core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera>,
 							public IDrawInterface,
 							public IUpdateInterface,

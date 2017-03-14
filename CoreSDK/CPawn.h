@@ -32,7 +32,7 @@ private:
 	class Comp_MaterialEffect		*MaterialEffect;
 	class BoxCharacterController	*CharacterController;
 	class DummyObject				*HeadTracker;
-	class CCamera 					*PawnCamera;
+	//class CCamera 					*PawnCamera;
 
 	bool	bWalk;
 	float	blend_weight;

@@ -6,6 +6,8 @@
 #endif
 
 #include "Scene.h"
+#include "src/camera.h"
+#include "include/PxCamera.h"
 
 class CORESDK_API CSceneGameArcanoid : public CScene
 {
@@ -21,8 +23,8 @@ public:
 
 protected:
 private:
-	class CCamera 					 *m_pSceneCamera;
-	class CPawnCueBall				 *m_pPlayerController;
+	CCamera         	 *m_pSceneCamera;
+	class CPawnCueBall	 *m_pPlayerController;
 };
 
 #endif//__scenegamearcanoid_h__

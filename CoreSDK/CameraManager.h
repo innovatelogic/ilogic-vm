@@ -2,10 +2,15 @@
 #pragma once
 
 #include "../Foundation/StdafxFoundation.h"
+#include "include/PxCamera.h"
+#include "src/Camera.h"
 
 class EXPORT CameraManager
 {
-	typedef std::vector<class CCamera*>  TVecCameras;
+public:
+    typedef CCamera T;
+
+	typedef std::vector<T*>  TVecCameras;
 	typedef TVecCameras::iterator		 TVecCameraIter;
 	typedef TVecCameras::const_iterator	 TVecCameraConstIter;
 	typedef class SRenderContext		 TSRenderContext;
@@ -14,7 +19,7 @@ class EXPORT CameraManager
 	{
 		TSRenderContext *pRenderContext;
 		TVecCameras		vecCameras;
-		CCamera			*pActiveCamera;
+		T			    *pActiveCamera;
 	};
 
 	CameraManager(const CameraManager &other) = delete;
@@ -24,13 +29,13 @@ public:
 	CameraManager(class CCoreSDK *pAppMain);
 	~CameraManager();
 
-	bool RegisterCamera(CCamera *pCamera, SRenderContext *pContext = nullptr);
-	bool UnregisterCamera(CCamera *pCamera);
+	bool RegisterCamera(T *pCamera, SRenderContext *pContext = nullptr);
+	bool UnregisterCamera(T *pCamera);
 
-	CCamera* GetActiveCamera(SRenderContext *pContext = nullptr) const;
-	bool ActivateCamera(CCamera *pCamera);
+	T* GetActiveCamera(SRenderContext *pContext = nullptr) const;
+	bool ActivateCamera(T *pCamera);
 
-	class CCamera* GetCamera(size_t Index) const;
+	class T* GetCamera(size_t Index) const;
 
 	void Update(float dt);
 

@@ -199,7 +199,7 @@ namespace core_sdk_api
             CameraManager *pMgr = m_pCoreSDK->GetCameraManager();
             assert(pMgr);
 
-            CCamera *pCam = pMgr->GetActiveCamera(input.pRenderContext);
+            CameraManager::T *pCam = pMgr->GetActiveCamera(input.pRenderContext);
             assert(pCam); // means at least one active camera should persist
 
             MouseMoveInputData inputMod = input;
@@ -215,7 +215,7 @@ namespace core_sdk_api
         CameraManager *pMgr = m_pCoreSDK->GetCameraManager();
         assert(pMgr);
 
-        CCamera *pCam = pMgr->GetActiveCamera(context);
+        CameraManager::T *pCam = pMgr->GetActiveCamera(context);
         assert(pCam); // means at least one active camera should persist
 
         pCam->OnMouseWheel(ds);
