@@ -130,12 +130,11 @@ namespace xml
 		{
 			const std::string &VALUE = XML_ATTRIBUTES_NODE(Name);
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),Type,&Value);
+			std::sscanf(VALUE.c_str(), Type, &Value);
 
 			return true;
 		}
@@ -155,103 +154,126 @@ namespace xml
 		}
 
 		template<>
-		inline bool GetValueAttribute<int>(int &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<int>(int &value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
 		{
 			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%i", &Value);
+            value = std::stoi(VALUE);
 
 			return true;
 		}
 
 		template<>
-		inline bool GetValueAttribute<float>(float &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<float>(float &value, const std::string &name, XML_TYPE_NODE xml_current_tree)
 		{
-			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
+			const std::string VALUE(XML_ATTRIBUTES_NODE(name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%f", &Value);
+            value = std::stof(VALUE);
 
 			return true;
 		}
 
 		template<>
-		inline bool GetValueAttribute<Vector2f>(Vector2f &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<Vector2f>(Vector2f &value, const std::string &name, XML_TYPE_NODE xml_current_tree)
 		{
-			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
+			const std::string VALUE(XML_ATTRIBUTES_NODE(name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%f;%f"
-				,&Value.x,&Value.y
-				);
+            std::stringstream ss(VALUE);
+            float number = 0.f;
+            size_t n = 0;
 
+            while (ss >> number)
+            {
+                assert(n < 2);
+                value[n++] = number;
+                if (ss.peek() == ';') {
+                    ss.ignore();
+                }
+            }
 			return true;
 		}
 
 		template<>
-		inline bool GetValueAttribute<Vector>(Vector &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<Vector>(Vector &value, const std::string &name, XML_TYPE_NODE xml_current_tree)
 		{
-			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
+			const std::string VALUE(XML_ATTRIBUTES_NODE(name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%f;%f;%f"
-				,&Value.x,&Value.y,&Value.z
-				);
+            std::stringstream ss(VALUE);
+            float number = 0.f;
+            size_t n = 0;
 
+            while (ss >> number)
+            {
+                assert(n < 3);
+                value[n++] = number;
+                if (ss.peek() == ';') {
+                    ss.ignore();
+                }
+            }
 			return true;
 		}
 
 		template<>
-		inline bool GetValueAttribute<Vector4f>(Vector4f &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<Vector4f>(Vector4f &value, const std::string &name, XML_TYPE_NODE xml_current_tree)
 		{
-			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
+			const std::string VALUE(XML_ATTRIBUTES_NODE(name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%f;%f;%f;%f"
-				,&Value.x,&Value.y,&Value.z,&Value.w
-				);
+            std::stringstream ss(VALUE);
 
+            float number = 0.f;
+            size_t n = 0;
+            while (ss >> number) 
+            {
+                assert(n < 4);
+                value[n++] = number;
+                if (ss.peek() == ';') {
+                    ss.ignore();
+                }
+            }
 			return true;
 		}
 
 		template<>
-		inline bool GetValueAttribute<Matrix>(Matrix &Value, const std::string &Name, XML_TYPE_NODE xml_current_tree)
+		inline bool GetValueAttribute<Matrix>(Matrix &value, const std::string &name, XML_TYPE_NODE xml_current_tree)
 		{
-			const std::string VALUE(XML_ATTRIBUTES_NODE(Name.c_str()));
+			const std::string VALUE(XML_ATTRIBUTES_NODE(name.c_str()));
 
-			if( VALUE.empty() == true )
-			{
+			if (VALUE.empty()){
 				return false;
 			}
 
-			sscanf(VALUE.c_str(),"%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;",
-				&Value._11,&Value._12,&Value._13,&Value._14,
-				&Value._21,&Value._22,&Value._23,&Value._24,
-				&Value._31,&Value._32,&Value._33,&Value._34,
-				&Value._41,&Value._42,&Value._43,&Value._44
-				);
+            std::stringstream ss(VALUE);
 
+            float number = 0.f;
+            size_t n = 0;
+            while (ss >> number)
+            {
+                assert(n < 16);
+                value[n++] = number;
+                if (ss.peek() == ';') {
+                    ss.ignore();
+                }
+            }
 			return true;
 		}
 	}

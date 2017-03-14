@@ -24,7 +24,7 @@ namespace oes
                 Release();
             }
 
-            const std::vector<T_CLASS*>& GetRoots() const { return m_VRoots; }
+            const std::vector<T_CLASS*>& GetRoots() const { return m_roots; }
 
             //----------------------------------------------------------------------------------------------
             T_CLASS* Add(const char *Type, const char *BaseType)
@@ -45,10 +45,10 @@ namespace oes
                         else // need rearrange
                         {
                             // try to remove in roots if exist
-                            std::vector<T_CLASS*>::iterator iterFindInRoot = std::find(m_VRoots.begin(), m_VRoots.end(), pSiblin);
-                            if (iterFindInRoot != m_VRoots.end())
+                            std::vector<T_CLASS*>::iterator iterFindInRoot = std::find(m_roots.begin(), m_roots.end(), pSiblin);
+                            if (iterFindInRoot != m_roots.end())
                             {
-                                m_VRoots.erase(iterFindInRoot);
+                                m_roots.erase(iterFindInRoot);
 
                                 pBase->AddChild(pSiblin);
                                 pSiblin->SetRootNode(pBase);
@@ -73,7 +73,7 @@ namespace oes
 
                         pInheritClass->SetRootNode(pBaseClass);
 
-                        m_VRoots.push_back(pBaseClass);
+                        m_roots.push_back(pBaseClass);
 
                         return pInheritClass;
                     }
@@ -95,9 +95,9 @@ namespace oes
                         }
                         else if (!pBase && pSiblin)
                         {
-                            std::vector<T_CLASS*>::iterator iterFind = std::find(m_VRoots.begin(), m_VRoots.end(), pSiblin);
+                            std::vector<T_CLASS*>::iterator iterFind = std::find(m_roots.begin(), m_roots.end(), pSiblin);
 
-                            assert(iterFind != m_VRoots.end());
+                            assert(iterFind != m_roots.end());
 
                             //allocate new base
                             T_CLASS *pBaseClass = new T_CLASS(BaseType);
@@ -117,14 +117,14 @@ namespace oes
                     if (Type && !Find(Type))
                     {
                         T_CLASS *pClass = new T_CLASS(Type);
-                        m_VRoots.push_back(pClass);
+                        m_roots.push_back(pClass);
                         return pClass;
                     }
 
                     if (BaseType && !Find(BaseType))
                     {
                         T_CLASS *pClass = new T_CLASS(BaseType);
-                        m_VRoots.push_back(pClass);
+                        m_roots.push_back(pClass);
                         return pClass;
                     }
                 }
@@ -140,7 +140,7 @@ namespace oes
                 if (!pBase)
                 {
                     T_CLASS *pClass = new ClassNode(type);
-                    m_VRoots.push_back(pClass);
+                    m_roots.push_back(pClass);
                     pBase = pClass;
                 }
                 pBase->SetProprties(arr, count);
@@ -155,7 +155,7 @@ namespace oes
                 if (!pBase)
                 {
                     T_CLASS *pClass = new ClassNode(type);
-                    m_VRoots.push_back(pClass);
+                    m_roots.push_back(pClass);
                     pBase = pClass;
                 }
                 pBase->SetProprties(propAlloc);
@@ -165,7 +165,7 @@ namespace oes
             //----------------------------------------------------------------------------------------------
             T_CLASS* Find(const char *Type)
             {
-                for (std::vector<T_CLASS*>::iterator Iter = m_VRoots.begin(); Iter != m_VRoots.end(); ++Iter)
+                for (std::vector<T_CLASS*>::iterator Iter = m_roots.begin(); Iter != m_roots.end(); ++Iter)
                 {
                     if (*Iter != nullptr)
                     {
@@ -181,7 +181,7 @@ namespace oes
             //----------------------------------------------------------------------------------------------
             T_CLASS* GetRoot(const char *type) const
             {
-                for each (auto item in m_VRoots)
+                for each (auto item in m_roots)
                 {
                     if (std::string(item->GetName()).compare(type) == 0)
                     {
@@ -194,12 +194,12 @@ namespace oes
             //----------------------------------------------------------------------------------------------
             void Release()
             {
-                std::for_each(m_VRoots.begin(), m_VRoots.end(), std::mem_fun(&T_CLASS::Release));
-                m_VRoots.clear();
+                std::for_each(m_roots.begin(), m_roots.end(), std::mem_fun(&T_CLASS::Release));
+                m_roots.clear();
             }
 
         private:
-            std::vector<T_CLASS*> m_VRoots;
+            std::vector<T_CLASS*> m_roots;
         };
     }
 }

@@ -17,6 +17,9 @@ namespace oes
 
             void Set(TFlt32 _x, TFlt32 _y);
 
+            TFlt32  operator[] (int i) const;
+            TFlt32& operator[] (int i);
+
             TFlt32* GetPtr() { return vec_array; }
             const TFlt32* GetPtr() const { return vec_array; }
             TFlt32 Normalize();

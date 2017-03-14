@@ -39,6 +39,18 @@ void Vector2f::Set(TFlt32 _x, TFlt32 _y)
 }
 
 //------------------------------------------------------------------------
+TFlt32 Vector2f::operator[] (int i) const
+{
+    return vec_array[i];
+}
+
+//------------------------------------------------------------------------
+TFlt32& Vector2f::operator[] (int i)
+{
+    return vec_array[i];
+}
+
+//------------------------------------------------------------------------
 TFlt32 Vector2f::Normalize()
 {
 	float norm = sqrtf(x * x + y * y);
