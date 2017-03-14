@@ -42,20 +42,6 @@ void Explorer2D::Initialize()
 //----------------------------------------------------------------------------------
 void Explorer2D::InitializeBrushes()
 {
-#ifndef FINAL_RELEASE
-/*	CActor *Generated;
-	// add brushes
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, UIImage_Brush, "Image", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, UISprite_Brush, "Sprite", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, Bezier_SplineAgregator_Brush, "BezierSpline", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineAgregator_Brush, "Spline", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineAgregator_PointInserter_Brush, "PointSpline", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, UVModificator_Brush, "UVModificator", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, SplineCollision2DModificator_Brush, "SplineCollision2D", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, BoxCollisionController_Brush, "BoxController2D", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, SphereCollisionController_Brush, "SphereController2D", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(Generated, LabelButton_Brush, "LabelButton", this);*/
-#endif//FINAL_RELEASE
 }
 
 //----------------------------------------------------------------------------------

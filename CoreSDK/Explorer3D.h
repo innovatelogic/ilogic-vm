@@ -30,7 +30,6 @@ private:
 	virtual void	DrawShadowMaps();
 
 private:
-	std::vector<class PointLight*> VLights;
 };
 
 #endif//__explorer3d_h__

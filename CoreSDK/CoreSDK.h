@@ -78,7 +78,6 @@ public:
 	class Explorer*					GetExplorerInstance()	const { return m_pRootObject; }
 	class CameraManager*			GetCameraManager()	const { return m_pCameraManager; }
 	class UpdateManager*			GetUpdateManager()	const { return m_pUpdateManager; }
-	class GameRealmInfo*			GetRealmInfo()		const { return m_pGameRealmInfo; }
     class CInputManager*			GetInputManager() const { return m_pInputManager; }
 	class CUISceneManager*			GetUISceneManager() const { return m_pUISceneManager; }
 	class CSceneManager*			GetSceneManager() const { return m_pSceneManager; }
@@ -165,7 +164,6 @@ private:
     class Explorer					*m_pRootObject;
 	class CameraManager				*m_pCameraManager;
 	class UpdateManager				*m_pUpdateManager;
-	class GameRealmInfo				*m_pGameRealmInfo;
 	class ScriptDriver				*m_pScriptDriver;
     core_sdk_api::CViewportManager	*m_pViewportManager;
 	class CInputManager				*m_pInputManager; 

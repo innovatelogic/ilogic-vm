@@ -731,33 +731,6 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			pNewObject->Initialize();
 
 			gRootProcess->GetViewportManager()->RebuildTransform(pNewObject);
-
-			/*ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(SelectedActor);
-
-			if (VInterface)
-			{
-				const CActor * VRoot = dynamic_cast<const CActor*>(VInterface);
-				assert(VRoot);
-
-				INT SelIndex = (INT)(wParam) - 5000;
-				if (SelIndex >= 0 && SelIndex < NumBrushes)
-				{
-					int IndexBrush = 0;
-					for (size_t Index = 0; Index < VRoot->m_ChildNodes.size(); ++Index)
-					{
-						if (dynamic_cast<const Brush_AbstractInterface*>(VRoot->m_ChildNodes[Index]))
-						{
-							if (SelIndex == IndexBrush)
-							{
-								//VRoot->m_ChildNodes[Index]->GainFocus();
-								bResult = true;
-								break;
-							}
-							IndexBrush++;
-						}
-					}
-				}
-			}*/
 		}
 	}
 	return bResult;

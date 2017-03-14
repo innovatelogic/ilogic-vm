@@ -26,27 +26,6 @@ void UISceneLoadingScreen::Initialize()
 	//ProgressLoading->SetValue(0.f);
 	//LabelMessage->SetVisible(false);
 	//ButtonPlay->SetVisible(false);
-
-	{
-		GameRealmInfo * RI = GetAppMain()->GetRealmInfo();
-		std::string LevelName = RI->GetDefaultInfo()->GetLevelNameById(0);
-		CSceneManager * SceneMgr = GetAppMain()->GetSceneManager();
-
-		SceneMgr->Command_LoadScene(LevelName.c_str());
-
-		//GetAppMain()->AddCommand(new Command_Val<UIProgressBar, UIProgressBar, float>(&UIProgressBar::SetValue, ProgressLoading, 0.5f));
-
-		SceneMgr->Command_InitializeScene(LevelName.c_str());
-
-		GetAppMain()->GetUISceneManager()->Command_LoadScene("BaseHUD.xml");
-		GetAppMain()->GetUISceneManager()->Command_InitializeScene("BaseHUD.xml");
-
-		//GetAppMain()->AddCommand(new Command_Val<UIProgressBar, UIProgressBar, float>(&UIProgressBar::SetValue, ProgressLoading, 1.f));
-		//GetAppMain()->AddCommand(new Command_Val<Label, CActor, bool>(&CActor::SetVisible, LabelMessage, true));
-		//GetAppMain()->AddCommand(new Command_Val<LabelButton, CActor, bool>(&CActor::SetVisible, ButtonPlay, true));
-
-		GetAppMain()->GetUISceneManager()->Command_CloseAll();
-	}
 }
 
 //----------------------------------------------------------------------------------------------

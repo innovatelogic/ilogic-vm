@@ -71,18 +71,8 @@ set(SOURCE
 	BoxCharacterController.h
 	BoxCollisionController.cpp
 	BoxCollisionController.h
-	BoxCollisionController_Brush.cpp
-	BoxCollisionController_Brush.h
-	Brush_AbstractInterface.cpp
-	Brush_AbstractInterface.h
-	Brush_LevelActor.cpp
-	Brush_LevelActor.h
 	Camera.cpp
 	Camera.h
-	CameraActor.cpp
-	CameraActor.h
-	CameraEditor.cpp
-	CameraEditor.h
 	CameraManager.cpp
 	CameraManager.h
 	CharacterControl.cpp
@@ -100,8 +90,6 @@ set(SOURCE
 	coresdkafx_ui.h
 	CPawn.cpp
 	CPawn.h
-	DirectionalLight.cpp
-	DirectionalLight.h
 	DummyObject.cpp
 	DummyObject.h
 	Explorer.cpp
@@ -112,12 +100,6 @@ set(SOURCE
 	Explorer3D.h
 	EventManager.h
 	EventManager.cpp
-	GameInfoManager.cpp
-	GameInfoManager.h
-	GameRealmInfo.cpp
-	GameRealmInfo.h
-	GameStaticInfo.cpp
-	GameStaticInfo.h
 	game_types.h
 	IDrawInterface.cpp
 	IDrawInterface.h
@@ -130,8 +112,6 @@ set(SOURCE
 	IInputInterface.h
 	IEventInterface.h
 	IEventInterface.cpp
-	ImageProjection.cpp
-	ImageProjection.h
 	InputControllerEdImpl.cpp
 	InputControllerEdImpl.h
 	InputControllerImpl.cpp
@@ -147,8 +127,6 @@ set(SOURCE
 	Label.h
 	LabelButton.cpp
 	LabelButton.h
-	LabelButton_Brush.cpp
-	LabelButton_Brush.h
 	LevelActor.cpp
 	LevelActor.h
 	LevelPlaneActor.cpp
@@ -175,15 +153,10 @@ set(SOURCE
 	PlaneCollisionController.h
 	Point2D.cpp
 	Point2D.h
-	PointLight.cpp
-	PointLight.h
 	PolygonImage.cpp
 	PolygonImage.h
 	PolygonMesh.cpp
 	PolygonMesh.h
-	project.h
-	ProjectedLight.cpp
-	ProjectedLight.h
 	Registry.cpp
 	Registry.h
 	RemoteControlManager.cpp
@@ -210,14 +183,8 @@ set(SOURCE
 	SphereController.h
 	SplineAgregator.cpp
 	SplineAgregator.h
-	SplineAgregator_Brush.cpp
-	SplineAgregator_Brush.h
-	SplineAgregator_PointInserter_Brush.cpp
-	SplineAgregator_PointInserter_Brush.h
 	SplineCollision2DModificator.cpp
 	SplineCollision2DModificator.h
-	SplineCollision2DModificator_Brush.cpp
-	SplineCollision2DModificator_Brush.h
 	SplineMovementController.cpp
 	SplineMovementController.h
 	SplinePolygon.cpp
@@ -232,8 +199,6 @@ set(SOURCE
 	UIImage.h
 	UIImagePivotControl.cpp
 	UIImagePivotControl.h
-	UIImage_Brush.cpp
-	UIImage_Brush.h
 	UIScene.cpp
 	UIScene.h
 	UISceneBaseHud.cpp
@@ -251,8 +216,6 @@ set(SOURCE
 	UIScreenObject_Static.cpp
 	UISprite.cpp
 	UISprite.h
-	UISprite_Brush.cpp
-	UISprite_Brush.h
 	UIViewPivotControl.cpp
 	UIViewPivotControl.h
 	UpdateManager.cpp

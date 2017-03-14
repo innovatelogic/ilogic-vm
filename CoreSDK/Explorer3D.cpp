@@ -21,19 +21,11 @@ Explorer3D::Explorer3D(const CObjectAbstract * pParent)
 //----------------------------------------------------------------------------------------------
 Explorer3D::~Explorer3D()
 {
-
 }
 
 //----------------------------------------------------------------------------------------------
 void Explorer3D::InitializeBrushes()
 {
-
-/*
-	// add brushes
- 	NEW_OBJECT_TRANSIENT_CHILD(pGenerated, Brush_LevelActor, "LevelActor", this);
- 	NEW_OBJECT_TRANSIENT_CHILD(pGenerated, Brush_TriggerObject, "TriggerObject", this);
-	*/
-	
 }
 
 //----------------------------------------------------------------------------------------------
@@ -103,10 +95,10 @@ void Explorer3D::DrawGrid()
 //----------------------------------------------------------------------------------------------
 void Explorer3D::DrawShadowMaps()
 {
-	ProjectedLight * sun = static_cast<ProjectedLight*>(FindActor("ProjectedLight"));
+	/*ProjectedLight * sun = static_cast<ProjectedLight*>(FindActor("ProjectedLight"));
 
 	if (sun)
 	{
 		sun->PreDraw();
-	}
+	}*/
 }

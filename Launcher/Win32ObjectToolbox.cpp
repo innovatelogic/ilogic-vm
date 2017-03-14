@@ -128,48 +128,7 @@ BOOL CWin32ObjectToolbox::DlgProc(HWND hwndDlg, UINT message, WPARAM wParam, LPA
 //------------------------------------------------------------------------
 void CWin32ObjectToolbox::Update(const CActor * Sender, ESystemEventID EventId)
 {	
-/*	DlgToolboxCS.enter();
 
-	switch (EventId)
-	{
-	case Event_PreRelease:
-		{
-			TTreeMapActorIterator IterFind = TreeMapToolbox.find(Sender);
-
-			if (IterFind != TreeMapToolbox.end())
-			{
-				TreeMapToolbox.erase(IterFind);
-			}
-			::PostMessage(hwndDlgToolbox, WM_USER_UPDATE, 0, 0);
-		}break;
-
-	case Event_OnSelected:
-		{
-			TreeMapToolbox.clear();
-			
-			ViewportInterface * VInterface = ActorAllocator::GetViewportInterface(Sender);
-			
-			if (VInterface)
-			{
-				for (TVecActorChildIterator Iter = dynamic_cast<CActor*>(VInterface)->m_ChildNodes.begin(); 
-						Iter != dynamic_cast<CActor*>(VInterface)->m_ChildNodes.end(); ++Iter) 
-				{
-					if (dynamic_cast<const Brush_AbstractInterface*>(*Iter))
-					{
-						TreeMapToolbox.insert(std::make_pair(*Iter, (HTREEITEM)NULL));
-					}
-				}
-			}
-			::PostMessage(hwndDlgToolbox, WM_USER_UPDATE, 0, 0);
-			
-// 			if (TreeMapToolbox.find(Sender) == TreeMapToolbox.end())
-// 			{
-// 				::PostMessage(hwndDlgToolbox, WM_USER_DESELECT, 0, 0);
-// 			}
-		}break;
-	};
-
-	DlgToolboxCS.leave();*/
 }
 
 //------------------------------------------------------------------------
