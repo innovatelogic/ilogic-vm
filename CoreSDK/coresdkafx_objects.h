@@ -50,7 +50,6 @@
 
 #include "SkyDome.h"
 #include "src/Camera.h"
-#include "CPawn.h"
 #include "PawnCueBall.h"
 #include "DummyObject.h"
 #include "LevelActor.h"

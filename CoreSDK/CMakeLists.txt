@@ -82,8 +82,6 @@ set(SOURCE
 	coresdkafx_manager.h
 	coresdkafx_objects.h
 	coresdkafx_ui.h
-	CPawn.cpp
-	CPawn.h
 	DummyObject.cpp
 	DummyObject.h
 	Explorer.cpp
