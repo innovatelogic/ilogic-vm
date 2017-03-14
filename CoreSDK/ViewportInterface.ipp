@@ -3,7 +3,7 @@
 #include "IDrawInterface.h"
 #include "CoreSDK.h"
 #include "RenderSDK.h"
-#include "Camera.h"
+#include "src/Camera.h"
 #include "Registry.h"
 #include "CameraManager.h"
 #include "ViewportInterface.h"

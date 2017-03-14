@@ -49,7 +49,7 @@
 #include "ModelViewer.h"
 
 #include "SkyDome.h"
-#include "Camera.h"
+#include "src/Camera.h"
 #include "CPawn.h"
 #include "PawnCueBall.h"
 #include "DummyObject.h"
@@ -58,7 +58,6 @@
 #include "Scene.h"
 #include "TriggerObject.h"
 #include "RestrictedVolume.h"
-#include "AnimationSequerence.h"
 #include "UVModificator.h"
 #include "SplineCollision2DModificator.h"
 #include "SplineMovementController.h"

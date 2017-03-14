@@ -1,7 +1,7 @@
 
 #include "RenderSDK.h"
 #include "ModelViewer.h"
-#include "Camera.h"
+#include "src/Camera.h"
 #include "CoreSDK.h"
 #include "CameraManager.h"
 #include "scene_editor.h"

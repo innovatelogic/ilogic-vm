@@ -59,8 +59,6 @@ set(SOURCE
 	ActorCollisionController.h
 	ActorCollisionKinematicController.cpp
 	ActorCollisionKinematicController.h
-	AnimationSequerence.cpp
-	AnimationSequerence.h
 	BaseModificator.cpp
 	BaseModificator.h
 	BaseModificatorUI.cpp
@@ -71,8 +69,6 @@ set(SOURCE
 	BoxCharacterController.h
 	BoxCollisionController.cpp
 	BoxCollisionController.h
-	Camera.cpp
-	Camera.h
 	CameraManager.cpp
 	CameraManager.h
 	CollisionController.cpp
@@ -224,14 +220,19 @@ set(SOURCE
 
 
 set(SOURCE_API
-	include/api/Base.h
-	include/api/BaseActor.h
-	include/NpActorTemplate.h
+	include/Base.h
+	include/BaseActor.h
+)
+
+set(SRC_SOURCE
+	src/NpActorTemplate.h
+	src/Camera.cpp
+	src/Camera.h
 )
 
 source_group("API" FILES ${SOURCE_API})
 	
-add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API})
+add_library(${PROJECT_NAME} SHARED ${SOURCE} ${SOURCE_API} ${SRC_SOURCE})
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 

@@ -1,21 +1,26 @@
 
 #pragma once
 
-#include "include/NpActorTemplate.h"
-#include "include/api/PxCamera.h"
-#include "IDrawInterface.h"
-#include "IUpdateInterface.h"
-#include "IInputInterface.h"
+#include "reflx.h"
+#include "NpActorTemplate.h"
+#include "../include/PxCamera.h"
+#include "../IDrawInterface.h"
+#include "../IUpdateInterface.h"
+#include "../IInputInterface.h"
+
 
 #define NUM_SPLITS 3
 
-typedef core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera> NpCameraT;
-
-class CORESDK_API CCamera : public NpCameraT,
+//template<typename APIClass = core_sdk_api::PxCamera>
+class CORESDK_API CCamera : public core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera>,
 							public IDrawInterface,
 							public IUpdateInterface,
 							public IInputInterface
 {
+public:
+    typedef core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera> NpCameraT;
+
+private:
 	DECLARE_CLASS_SIMPLE(CCamera, NpCameraT);
 
 public:
