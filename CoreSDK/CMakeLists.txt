@@ -159,8 +159,6 @@ set(SOURCE
 	SceneGameArcanoid.h
 	SceneManager.cpp
 	SceneManager.h
-	SceneSelectLevel.cpp
-	SceneSelectLevel.h
 	ScriptDriver.cpp
 	ScriptDriver.h
 	SkyDome.cpp
@@ -177,8 +175,6 @@ set(SOURCE
 	SplineMovementController.h
 	SplinePolygon.cpp
 	SplinePolygon.h
-	TriggerCallbackReport.cpp
-	TriggerCallbackReport.h
 	TriggerObject.cpp
 	TriggerObject.h
 	UIFilter.cpp
@@ -189,16 +185,8 @@ set(SOURCE
 	UIImagePivotControl.h
 	UIScene.cpp
 	UIScene.h
-	UISceneBaseHud.cpp
-	UISceneBaseHud.h
-	UISceneLoadingScreen.cpp
-	UISceneLoadingScreen.h
-	UISceneLogin.cpp
-	UISceneLogin.h
 	UISceneManager.cpp
 	UISceneManager.h
-	UIScenePauseMenu.cpp
-	UIScenePauseMenu.h
 	UIScreenObject.cpp
 	UIScreenObject.h
 	UIScreenObject_Static.cpp
@@ -215,7 +203,6 @@ set(SOURCE
 	ViewportManager.cpp
 	ViewportManager.h
 	)
-
 
 set(SOURCE_API
 	include/Base.h

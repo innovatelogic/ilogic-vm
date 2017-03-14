@@ -19,10 +19,5 @@
 #include "UIViewPivotControl.h"
 
 #include "UIScene.h"
-#include "UISceneLogin.h"
-#include "UISceneLoadingScreen.h"
-#include "UISceneBaseHud.h"
-#include "UIScenePauseMenu.h"
-#include "SceneSelectLevel.h"
 
 #endif//__coresdkafx_ui_h__
