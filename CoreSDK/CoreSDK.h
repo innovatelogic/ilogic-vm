@@ -52,7 +52,6 @@ public:
 	/** global resources accessors*/
 	inline_ class Registry*					GetRegistry()		const { return m_pRegistryInstance.get(); }
 	inline_ class CRenderSDK*				GetRenderSDK()		const { return m_pRenderSDK; }      
-	inline_ class ScriptDriver*				GetScriptDriver()	const { return m_pScriptDriver; } 
 
 #ifdef PHYS_ENABLED
 	inline_ class IPhysicsEngine*			GetPhysicsEngine()	const { return m_pPhysicsEngine; }
@@ -148,7 +147,6 @@ private:
     class Explorer					*m_pRootObject;
 	class CameraManager				*m_pCameraManager;
 	class UpdateManager				*m_pUpdateManager;
-	class ScriptDriver				*m_pScriptDriver;
     core_sdk_api::CViewportManager	*m_pViewportManager;
 	class CInputManager				*m_pInputManager; 
 	class CUISceneManager			*m_pUISceneManager;

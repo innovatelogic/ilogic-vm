@@ -57,8 +57,6 @@ set(SOURCE
 	ActorAllocator_Static.cpp
 	ActorCollisionController.cpp
 	ActorCollisionController.h
-	ActorCollisionKinematicController.cpp
-	ActorCollisionKinematicController.h
 	BaseModificator.cpp
 	BaseModificator.h
 	BaseModificatorUI.cpp
@@ -155,12 +153,8 @@ set(SOURCE
 	RestrictedVolumeCollisionController.h
 	Scene.cpp
 	Scene.h
-	SceneGameArcanoid.cpp
-	SceneGameArcanoid.h
 	SceneManager.cpp
 	SceneManager.h
-	ScriptDriver.cpp
-	ScriptDriver.h
 	SkyDome.cpp
 	SkyDome.h
 	SphereCollisionController.cpp

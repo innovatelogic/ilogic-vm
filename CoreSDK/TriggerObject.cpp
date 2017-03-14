@@ -24,9 +24,9 @@ NEW_OBJECT_TRANSIENT(ActionEvent, ActionTrigger, "ActionEvent");
 	//ActionOnStay->SetOwnerActor(this);
 	//ActionOnLeave->SetOwnerActor(this);
 
-	ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
+	//ScriptDriver * Driver = GetAppMain()->GetScriptDriver();
 
-	Driver->RegisterAction(ActionEvent);
+	//Driver->RegisterAction(ActionEvent);
 //	Driver->RegisterAction(ActionOnStay);
 //	Driver->RegisterAction(ActionOnLeave);
 #endif

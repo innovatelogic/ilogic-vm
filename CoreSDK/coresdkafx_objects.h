@@ -66,7 +66,6 @@
 #include "SphereCollisionController.h"
 #include "PlaneCollisionController.h"
 #include "ActorCollisionController.h"
-#include "ActorCollisionKinematicController.h"
 #include "RestrictedVolumeCollisionController.h"
 #include "MeshCollisionComponent.h"
 #include "SplinePolygon.h"

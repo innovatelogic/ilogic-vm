@@ -9,7 +9,6 @@
 #include "PhysicsEngineBullet.h"
 #include "ContactSensorCallbackBt.h"
 #include "PhysDebugDrawerGL.h"
-#include "ScriptDriver.h"
 #include "CameraManager.h"
 #include "ViewportManager.h"
 #include "UpdateManager.h"

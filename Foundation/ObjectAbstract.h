@@ -165,8 +165,6 @@ public:
 	*/
 	virtual bool	ProcessRelease(bool ForceOperation = false);
 
-	//inline_ virtual class ScriptDriver* GetObjectScriptDriver();
-
 	/**
 	* Set listener to object
 	*
