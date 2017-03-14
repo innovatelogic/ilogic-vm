@@ -75,8 +75,6 @@ set(SOURCE
 	Camera.h
 	CameraManager.cpp
 	CameraManager.h
-	CharacterControl.cpp
-	CharacterControl.h
 	CollisionController.cpp
 	CollisionController.h
 	ContactSensorCallbackBt.cpp
@@ -131,8 +129,6 @@ set(SOURCE
 	LevelActor.h
 	LevelPlaneActor.cpp
 	LevelPlaneActor.h
-	LevitateVehicle.cpp
-	LevitateVehicle.h
 	MeshCollisionComponent.cpp
 	MeshCollisionComponent.h
 	ModelViewer.cpp
@@ -155,8 +151,6 @@ set(SOURCE
 	Point2D.h
 	PolygonImage.cpp
 	PolygonImage.h
-	PolygonMesh.cpp
-	PolygonMesh.h
 	Registry.cpp
 	Registry.h
 	RemoteControlManager.cpp

@@ -50,7 +50,6 @@
 
 #include "SkyDome.h"
 #include "Camera.h"
-#include "LevitateVehicle.h"
 #include "CPawn.h"
 #include "PawnCueBall.h"
 #include "DummyObject.h"
@@ -77,6 +76,5 @@
 #include "BaseModificator.h"
 #include "BaseModificatorUI.h"
 #include "PolygonImage.h"
-#include "PolygonMesh.h"
 
 #endif//__coresdkafx_objects_h__
