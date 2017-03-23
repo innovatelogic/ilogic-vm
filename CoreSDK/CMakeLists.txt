@@ -59,12 +59,6 @@ set(SOURCE
 	ActorCollisionController.h
 	BaseModificator.cpp
 	BaseModificator.h
-	BaseModificatorUI.cpp
-	BaseModificatorUI.h
-	BaseSplineAgregator.cpp
-	BaseSplineAgregator.h
-	BoxCharacterController.cpp
-	BoxCharacterController.h
 	BoxCollisionController.cpp
 	BoxCollisionController.h
 	CameraManager.cpp
@@ -80,8 +74,6 @@ set(SOURCE
 	coresdkafx_manager.h
 	coresdkafx_objects.h
 	coresdkafx_ui.h
-	DummyObject.cpp
-	DummyObject.h
 	Explorer.cpp
 	Explorer.h
 	Explorer2D.cpp
@@ -137,8 +129,6 @@ set(SOURCE
 	PhysNode.h
 	PlaneCollisionController.cpp
 	PlaneCollisionController.h
-	Point2D.cpp
-	Point2D.h
 	PolygonImage.cpp
 	PolygonImage.h
 	Registry.cpp
@@ -159,22 +149,8 @@ set(SOURCE
 	SphereCollisionController.h
 	SphereController.cpp
 	SphereController.h
-	SplineAgregator.cpp
-	SplineAgregator.h
-	SplineCollision2DModificator.cpp
-	SplineCollision2DModificator.h
-	SplineMovementController.cpp
-	SplineMovementController.h
-	SplinePolygon.cpp
-	SplinePolygon.h
-	TriggerObject.cpp
-	TriggerObject.h
-	UIFilter.cpp
-	UIFilter.h
 	UIImage.cpp
 	UIImage.h
-	UIImagePivotControl.cpp
-	UIImagePivotControl.h
 	UIScene.cpp
 	UIScene.h
 	UISceneManager.cpp
@@ -182,14 +158,8 @@ set(SOURCE
 	UIScreenObject.cpp
 	UIScreenObject.h
 	UIScreenObject_Static.cpp
-	UISprite.cpp
-	UISprite.h
-	UIViewPivotControl.cpp
-	UIViewPivotControl.h
 	UpdateManager.cpp
 	UpdateManager.h
-	UVModificator.cpp
-	UVModificator.h
 	ViewportInterface.ipp
 	ViewportInterface.h
 	ViewportManager.cpp

@@ -118,20 +118,17 @@ namespace oes
                 }
             };
 
-            Rflex* GetInstance()
-            {
-                return TGenerator::GetInstance();
-            }
+            static Rflex* GetInstance() { return TGenerator::GetInstance(); }
+
+            bool Load(const std::string &filename);
 
         protected:
         private:
-            Rflex()
-            {}
+            Rflex() {}
 
             Rflex(const Rflex&) = delete;
 
-            ~Rflex()
-            {}
+            ~Rflex() {}
         };
 
         //----------------------------------------------------------------------------------------------

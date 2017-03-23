@@ -40,7 +40,7 @@ bool Registry::Load(const std::string & filename)
 
 	std::string sFilename;  
 
-	if (!FindFile(filename.c_str(),&sFilename))
+	if (!FindFile(filename.c_str(), &sFilename))
 	{
 		//MessageBoxW(NULL, ConvertStringToWideString(sFilename).c_str(), L"Super message", MB_OK);
 		return false;
