@@ -42,10 +42,10 @@ public:
         TFlt32 m_30, TFlt32 m_31, TFlt32 m_32, TFlt32 m_33);
 
 	Matrix& operator= (const Matrix &other);
-	Matrix& operator= (const float  *pOther);
+	Matrix& operator= (const TFlt32  *pOther);
     Matrix  operator* (const Matrix &other) const;
 	Matrix  operator* (const Matrix3f &other) const;
-	Matrix  operator* (const float m) const;
+	Matrix  operator* (const TFlt32 m) const;
 
 	bool operator== (const Matrix &other) const;
 	bool operator!= (const Matrix &other) const;
@@ -118,7 +118,7 @@ public:
             Vector4f row2;
             Vector4f row3;
         };
-	   float m[16];
+        TFlt32 m[16];
 	};
 
  	std::string ToString()

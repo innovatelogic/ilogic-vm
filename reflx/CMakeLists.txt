@@ -14,7 +14,7 @@ set(INCLUDES
 	include/defexport.h
 	include/ObjectDeclaration.h
 	include/iproperty.h
-	include/Property.h
+	include/property.h
 	include/ClassNode.h
 	include/ClassNodeType.h
 	include/ClassFactory.h
@@ -26,7 +26,8 @@ set(INCLUDES
 	include/iproperty_reactor.h
 	include/property_reactor.h
 	include/property_reactor.ipp
-	include/reflx.h	
+	include/property_t.h
+	include/reflx.h
 )
 
 set(SRC
@@ -37,6 +38,7 @@ set(SRC
 	src/ObjectFactory.cpp
 	src/reflx.cpp
 	src/main.cpp
+	src/property_t.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${INCLUDES} ${SRC})

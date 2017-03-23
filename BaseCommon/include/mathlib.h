@@ -174,7 +174,7 @@ typedef std::list<Pose>::const_iterator		  TPoseListConstIterator;
    random value  
 */
 COMMON_BASE_EXPORT int		rand(int r1, int r2);
-COMMON_BASE_EXPORT float	rand(float r1, float r2);
+COMMON_BASE_EXPORT float	rand(TFlt32 r1, TFlt32 r2);
 COMMON_BASE_EXPORT float	GetHalfSpace(const Vector2f& Point, const Vector2f& LineStart, const Vector2f& LineEnd);
 COMMON_BASE_EXPORT int		GetHalfSpace(const Vector& PlaneN, const Vector& PlanePt, const Vector& p);
 

@@ -1,3 +1,10 @@
 {
-  
+  "CLevelActor": {
+	"XRef":{
+		"alias" : "XRef",
+		"policy" : "READ_WRITE",
+		"ctrl" : "CTRL_EDIT_RESOURCE",
+		"serializable" : True
+	}
+  }
 }

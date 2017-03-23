@@ -1,4 +1,4 @@
-#include "Property.h"
+#include "property.h"
 #include "ObjectFactory.h"
 #include "ClassTree.h"
 #include "StringUtility.h"
@@ -392,7 +392,7 @@ namespace oes
                 return;
             }
 
-            std::string *Dest = (std::string*)((char*)Ptr + m_MemOffset + byteOffset);
+            std::string *Dest = (std::string*)((uint8_t*)Ptr + m_MemOffset + byteOffset);
             *Dest = Value;
 
             if (!bSilent && pClassNode) {

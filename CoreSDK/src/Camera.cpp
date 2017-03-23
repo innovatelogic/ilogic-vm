@@ -1,11 +1,11 @@
-#include "Camera.h"
+
 #include "ObjectAbstract.h"
 
 #include "../CameraManager.h"
 #include "RenderSDK.h"
 #include "../CoreSDK.h"
 #include "../ViewportManager.h"
-#include "../ActorAllocator.h"
+#include "Camera.h"
 
 static const bool V_TRUE = true;
 static const bool V_FALSE = false;
@@ -15,7 +15,7 @@ static const float fAspectDef = 1.3333f;
 static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
-REGISTER_CLASS_A(CCamera, CCamera::NpCameraT)
+REGISTER_CLASS_A(CCamera, CCamera::Super)
 	new oes::rflex::PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
 	new oes::rflex::PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, m_bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
 	new oes::rflex::PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, m_Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
@@ -25,7 +25,7 @@ REGISTER_CLASS_A(CCamera, CCamera::NpCameraT)
 	new oes::rflex::PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
 	new oes::rflex::PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
 	new oes::rflex::PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
-END_REGISTER_CLASS(CCamera, CCamera::NpCameraT);
+END_REGISTER_CLASS(CCamera, CCamera::Super);
 
 //----------------------------------------------------------------------------------------------
 CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)

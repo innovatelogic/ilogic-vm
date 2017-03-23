@@ -117,8 +117,6 @@ set(SOURCE
 	Label.h
 	LabelButton.cpp
 	LabelButton.h
-	LevelActor.cpp
-	LevelActor.h
 	LevelPlaneActor.cpp
 	LevelPlaneActor.h
 	MeshCollisionComponent.cpp
@@ -201,12 +199,16 @@ set(SOURCE
 set(SOURCE_API
 	include/Base.h
 	include/BaseActor.h
+	include/PxCamera.h
+	include/PxLevelActor.h
 )
 
 set(SRC_SOURCE
 	src/NpActorTemplate.h
 	src/Camera.cpp
 	src/Camera.h
+	src/LevelActor.cpp
+	src/LevelActor.h
 )
 
 source_group("API" FILES ${SOURCE_API})

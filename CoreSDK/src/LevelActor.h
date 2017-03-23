@@ -1,15 +1,15 @@
-#ifndef __levelactor_h__
-#define __levelactor_h__
-
-#ifdef WIN32
 #pragma once
-#endif
 
-#include "ActorAllocator.h"
+#include "reflx.h"
+#include "NpActorTemplate.h"
+#include "../ActorAllocator.h"
+#include "../IDrawInterface.h"
+#include "../include/PxLevelActor.h"
 
-class CORESDK_API CLevelActor : public ActorAllocator, IDrawInterface
+class CORESDK_API CLevelActor : public core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>,
+                                public IDrawInterface
 {
-	DECLARE_CLASS_SIMPLE(CLevelActor, ActorAllocator);
+	DECLARE_CLASS_SIMPLE(CLevelActor, core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>);
 
 public:
 	CLevelActor(const CObjectAbstract *pParent);
@@ -23,15 +23,13 @@ public:
 	virtual void				SetNameMesh(const char *name) { m_XRef = name; }
 	virtual const std::string&	GetNameMesh() const { return m_XRef; }
 
-protected:
-	bool	Load(const char *url);
-	void	Clear();
+    bool	Load(const char *url);
+    void	Clear();
 
+protected:
 private:
 	class Comp_StaticMesh			*m_pMeshComponent;
 	class ActorCollisionController	*m_pCollisionObject;
 	
 	std::string	m_XRef;
 };
-
-#endif//__levelactor_h__

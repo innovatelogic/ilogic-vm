@@ -1,7 +1,7 @@
 #pragma once
 
 #include "defexport.h"
-#include "Property.h"
+#include "property.h"
 #include <algorithm>
 #include <functional>
 #include <assert.h>

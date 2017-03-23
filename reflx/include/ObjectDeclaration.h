@@ -312,6 +312,7 @@ static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, co
 
 //---------------------------------------------------------------------------------------------
 #define DECLARE_CLASS_SIMPLE( className, baseClassName ) \
+public:\
 	typedef baseClassName Super;\
 	typedef baseClassName BaseClass;\
 	typedef className ThisClass;\

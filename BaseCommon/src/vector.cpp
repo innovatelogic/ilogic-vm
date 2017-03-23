@@ -333,9 +333,9 @@ Vector CrossProduct(const Vector &a, const Vector &b, Vector &_result)
 //----------------------------------------------------------------------------------------------
 void VectorAbs(const Vector &vIn, const Vector &v2, Vector &vOut)
 {
-    vOut.x = fabs(vIn.x);
-    vOut.y = fabs(vIn.y);
-    vOut.z = fabs(vIn.z);
+    vOut.x = static_cast<float>(fabs(vIn.x));
+    vOut.y = static_cast<float>(fabs(vIn.y));
+    vOut.z = static_cast<float>(fabs(vIn.z));
 }
 }
 }

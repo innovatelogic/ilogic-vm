@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Property.h"
+#include "property.h"
 
 namespace oes
 {

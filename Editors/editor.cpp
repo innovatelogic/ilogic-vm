@@ -3,7 +3,7 @@
 #include "ViewportInterface.h"
 #include "ViewportManager.h"
 #include "command_base.h"
-#include "Property.h"
+#include "property.h"
 #include "D3DDriver.h"
 
 namespace editors

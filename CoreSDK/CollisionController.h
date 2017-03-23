@@ -65,7 +65,7 @@ public:
 	void		Set_KINEMATIC(bool flag)	{ KINEMATIC = flag; }
 
 	inline_		Matrix		GetLTM() const { return m_LTM; }
-	inline_		SPhysNode*  GetPNode() const { return m_pPhysNode; }
+	//inline_		SPhysNode*  GetPNode() const { return m_pPhysNode; }
 
 	void		ContactTest();
 

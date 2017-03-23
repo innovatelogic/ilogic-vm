@@ -19,7 +19,7 @@
 
 #include "StdafxFoundation.h"
 #include "EventDesc.h"
-#include "Property.h"
+#include "property.h"
 #include "ObjectFactory.h"
 #include "IObjectAbstract.h"
 #include "IEventManager.h"

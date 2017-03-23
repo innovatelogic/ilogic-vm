@@ -1,19 +1,40 @@
-#include "coresdkafx.h"
+#include "LevelActor.h"
+#include "RenderSDK.h"
+#include "D3DMesh.h"
+#include "Comp_StaticMesh.h"
+#include "../ActorCollisionController.h"
 
-REGISTER_CLASS_A(CLevelActor, ActorAllocator)
-	new oes::rflex::PropertyString("XRef", DATAFIELD_OFFSET(CLevelActor, m_XRef), "CLevelActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-ASSEMBLE_PROPS(CLevelActor)
+
+volatile static oes::rflex::CAuto<core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>, ActorAllocator>
+ClassRegistration___("core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", 0, 0,
+    "core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", "ActorAllocator");
+
+REGISTER_CLASS_A(CLevelActor, CLevelActor::Super)
+	//new oes::rflex::PropertyString("XRef", DATAFIELD_OFFSET(CLevelActor, m_XRef) - 4, "CLevelActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
+    new oes::rflex::TProperty<std::string, CLevelActor>("XRef", "CLevelActor", "Value", 
+        [&](const void *ptr, const std::string &v)
+        { 
+            void *nc_ptr = const_cast<void*>(ptr);
+            CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+            act->m_XRef = v;
+            //o.m_XRef = v;
+        }),
+    
+    ASSEMBLE_PROPS(CLevelActor)
 BEGIN_INTERFACE_DECLARATION(CLevelActor)
     new oes::rflex::SInterfaceDecl("IDrawInterface", (BYTE*)&((CLevelActor*)NULL)->___startObjectMarkerIDrawInterface - (BYTE*)NULL),
 ASSEMBLE_INTERFACES(CLevelActor)
 CLASS_ENDL(CLevelActor)
-CLASS_INSTANCE_EX(CLevelActor, ActorAllocator);
+CLASS_INSTANCE_EX(CLevelActor, CLevelActor::Super);
 
 //----------------------------------------------------------------------------------------------
 CLevelActor::CLevelActor(const CObjectAbstract *pParent)
-: Super(pParent)
+: core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>(pParent)
 , IDrawInterface(pParent)
+, m_XRef("BEEF")
 {
+    //int k = (int)offsetof(CLevelActor, m_XRef);
+
 	RegisterDrawInterface(this);
 
 	NEW_OBJECT_TRANSIENT_CHILD(m_pMeshComponent, Comp_StaticMesh, "MeshComponent", this);

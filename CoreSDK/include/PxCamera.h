@@ -31,8 +31,5 @@ namespace core_sdk_api
 
         virtual void	SetRoll(float roll) = 0;
         virtual float	GetRoll() const = 0;
-
-    protected:
-    private:
     };
 }

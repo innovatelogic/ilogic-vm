@@ -195,7 +195,7 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 
 						if (ValueStore.IsValue(ValueName))
 						{
-							(*IterProp)->SetProperty(this, ValueStore.GetValueString(ValueName).c_str(), 0, true);
+							(*IterProp)->SetProperty((oes::common_base::IObjectAbstract*)this, ValueStore.GetValueString(ValueName).c_str(), 0, true);
 						}
 					}
 				}

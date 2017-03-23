@@ -8,7 +8,6 @@
 #include "../IUpdateInterface.h"
 #include "../IInputInterface.h"
 
-
 #define NUM_SPLITS 3
 
 class CORESDK_API CCamera : public core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera>,
@@ -16,11 +15,7 @@ class CORESDK_API CCamera : public core_sdk_api::NpActorTemplate<core_sdk_api::P
 							public IUpdateInterface,
 							public IInputInterface
 {
-public:
-    typedef core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera> NpCameraT;
-
-private:
-	DECLARE_CLASS_SIMPLE(CCamera, NpCameraT);
+	DECLARE_CLASS_SIMPLE(CCamera, core_sdk_api::NpActorTemplate<core_sdk_api::PxCamera>);
 
 public:
 	struct Subfrustra

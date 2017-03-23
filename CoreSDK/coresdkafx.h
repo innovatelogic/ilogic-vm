@@ -8,7 +8,7 @@
 #include "coresdkafx_ui.h"
 #include "coresdkafx_components.h"
 
-#include "Property.h"
+#include "property.h"
 
 //----------------------------------------------------------------------------------------------
 //

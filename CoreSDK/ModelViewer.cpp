@@ -1,5 +1,6 @@
 #include "coresdkafx.h"
 #include "ObjectFactory.h"
+#include "src/LevelActor.h"
 
 REGISTER_CLASS(CModelViewer, ActorAllocator);
 
