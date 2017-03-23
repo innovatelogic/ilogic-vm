@@ -63,6 +63,5 @@
 #include "MeshCollisionComponent.h"
 
 #include "BaseModificator.h"
-#include "PolygonImage.h"
 
 #endif//__coresdkafx_objects_h__

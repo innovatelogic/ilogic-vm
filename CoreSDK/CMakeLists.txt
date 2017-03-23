@@ -115,8 +115,6 @@ set(SOURCE
 	MeshCollisionComponent.h
 	ModelViewer.cpp
 	ModelViewer.h
-	MovementData.cpp
-	MovementData.h
 	object_export.h
 	PawnCueBall.cpp
 	PawnCueBall.h
@@ -129,8 +127,6 @@ set(SOURCE
 	PhysNode.h
 	PlaneCollisionController.cpp
 	PlaneCollisionController.h
-	PolygonImage.cpp
-	PolygonImage.h
 	Registry.cpp
 	Registry.h
 	RemoteControlManager.cpp
