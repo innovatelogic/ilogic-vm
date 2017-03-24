@@ -50,18 +50,7 @@
 
 #include "SkyDome.h"
 #include "src/Camera.h"
-#include "PawnCueBall.h"
 #include "LevelPlaneActor.h"
 #include "Scene.h"
-#include "RestrictedVolume.h"
-#include "CollisionController.h"
-#include "BoxCollisionController.h"
-#include "SphereCollisionController.h"
-#include "PlaneCollisionController.h"
-#include "ActorCollisionController.h"
-#include "RestrictedVolumeCollisionController.h"
-#include "MeshCollisionComponent.h"
-
-#include "BaseModificator.h"
 
 #endif//__coresdkafx_objects_h__

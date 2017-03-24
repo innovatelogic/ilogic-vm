@@ -1,6 +1,0 @@
-<UIScene Transient="0" Value="Name:SceneBackground InputMode:INPUTMODE_None HPixelTransform:PersentageOwner_Transform VPixelTransform:PersentageOwner_Transform HSizeTransform:PersentageOwner_Transform VSizeTransform:PersentageOwner_Transform ClipBounds:false Width:1.000000 Height:1.000000 Opacity:1.000000 bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;1.0000; Bounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; CompositeBounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; bExternal:false FilenameTag: " >
-
-<UIImagePivotControl Transient="0" Value="Name:Gizmo HPixelTransform:PixelOwner_Transform VPixelTransform:PixelOwner_Transform HSizeTransform:PixelOwner_Transform VSizeTransform:PixelOwner_Transform ClipBounds:true Width:150 Height:150 Opacity:1.000000 bVisible:true bEnabled:true RenderDebug:false LTM:1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;0.0000;1.0000; STM:1.0000;0.0000;0.0000;0.0000;1.0000;0.0000;0.0000;0.0000;1.0000; Bounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; CompositeBounds:0.0000;0.0000;0.0000;1024.0000;600.0000;0.0000; bExternal:false FilenameTag: " >
-</UIImagePivotControl>
-
-</UIScene>

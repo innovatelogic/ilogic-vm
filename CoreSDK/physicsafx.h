@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CriticalSection.h"
-#include "PhysNode.h"
 #include "mathlib.h"
 
 #define PHIS_MULTYPLIER 1.0f
@@ -57,7 +56,8 @@ struct SBodyDesc
 	bool FROZEN_POS;
 	bool FROZEN_ROT;
 	bool KINEMATIC;
-	class CContactSensorCallbackBt *pCallback;
+	
+    class CContactSensorCallbackBt *pCallback;
 
 	SBodyDesc()
 		: bStatic(false)

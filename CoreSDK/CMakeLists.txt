@@ -55,18 +55,8 @@ set(SOURCE
 	ActorAllocator.cpp
 	ActorAllocator.h
 	ActorAllocator_Static.cpp
-	ActorCollisionController.cpp
-	ActorCollisionController.h
-	BaseModificator.cpp
-	BaseModificator.h
-	BoxCollisionController.cpp
-	BoxCollisionController.h
 	CameraManager.cpp
 	CameraManager.h
-	CollisionController.cpp
-	CollisionController.h
-	ContactSensorCallbackBt.cpp
-	ContactSensorCallbackBt.h
 	CoreSDK.cpp
 	CoreSDK.h
 	coresdkafx.h
@@ -111,40 +101,24 @@ set(SOURCE
 	LabelButton.h
 	LevelPlaneActor.cpp
 	LevelPlaneActor.h
-	MeshCollisionComponent.cpp
-	MeshCollisionComponent.h
 	ModelViewer.cpp
 	ModelViewer.h
 	object_export.h
-	PawnCueBall.cpp
-	PawnCueBall.h
 	PhysDebugDrawerGL.cpp
 	PhysDebugDrawerGL.h
 	physicsafx.h
 	PhysicsEngineBullet.cpp
 	PhysicsEngineBullet.h
-	PhysNode.cpp
-	PhysNode.h
-	PlaneCollisionController.cpp
-	PlaneCollisionController.h
 	Registry.cpp
 	Registry.h
 	RemoteControlManager.cpp
 	RemoteControlManager.h
-	RestrictedVolume.cpp
-	RestrictedVolume.h
-	RestrictedVolumeCollisionController.cpp
-	RestrictedVolumeCollisionController.h
 	Scene.cpp
 	Scene.h
 	SceneManager.cpp
 	SceneManager.h
 	SkyDome.cpp
 	SkyDome.h
-	SphereCollisionController.cpp
-	SphereCollisionController.h
-	SphereController.cpp
-	SphereController.h
 	UIImage.cpp
 	UIImage.h
 	UIScene.cpp

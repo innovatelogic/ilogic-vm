@@ -12,7 +12,7 @@ CLevelPlaneActor::CLevelPlaneActor(const CObjectAbstract *pParent)
 	RegisterDrawInterface(this);
 
 	NEW_OBJECT_TRANSIENT_CHILD(m_pMeshComponent, Comp_StaticMesh, "MeshComponent", this);
-	NEW_OBJECT_TRANSIENT_CHILD(m_pCollisionObject, CPlaneCollisionController, "CollisionObject", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(m_pCollisionObject, CPlaneCollisionController, "CollisionObject", this);
 
 	RegisterRenderEntity(m_pMeshComponent);
 }
@@ -76,7 +76,7 @@ void CLevelPlaneActor::DoDraw()
 //----------------------------------------------------------------------------------------------
 bool CLevelPlaneActor::InitPhysPlane()
 {
-	return m_pCollisionObject->CreatePhysActor(GetTransformedWTM_());
+    return false;// m_pCollisionObject->CreatePhysActor(GetTransformedWTM_());
 }
 
 //----------------------------------------------------------------------------------------------

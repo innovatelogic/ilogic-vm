@@ -2,7 +2,7 @@
 #include "RenderSDK.h"
 #include "D3DMesh.h"
 #include "Comp_StaticMesh.h"
-#include "../ActorCollisionController.h"
+//#include "../ActorCollisionController.h"
 
 
 volatile static oes::rflex::CAuto<core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>, ActorAllocator>
@@ -37,10 +37,10 @@ CLevelActor::CLevelActor(const CObjectAbstract *pParent)
 	RegisterDrawInterface(this);
 
 	NEW_OBJECT_TRANSIENT_CHILD(m_pMeshComponent, Comp_StaticMesh, "MeshComponent", this);
-	NEW_OBJECT_TRANSIENT_CHILD(m_pCollisionObject, ActorCollisionController, "CollisionObject", this);
+	//NEW_OBJECT_TRANSIENT_CHILD(m_pCollisionObject, ActorCollisionController, "CollisionObject", this);
 
 	RegisterRenderEntity(m_pMeshComponent);
-	RegisterCollisionEntity(m_pCollisionObject);
+	//RegisterCollisionEntity(m_pCollisionObject);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -246,7 +246,7 @@ bool CLevelActor::Load(const char *url)
 		
 		m_pMeshComponent->LoadMesh(ObjectDesc);
 		
-		m_pCollisionObject->Load(ObjectDesc.ColFile.c_str());
+		//m_pCollisionObject->Load(ObjectDesc.ColFile.c_str());
 
 		bResult = true;
 	}

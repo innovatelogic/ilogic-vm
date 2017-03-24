@@ -29,7 +29,7 @@ public:
 protected:
 private:
 	class Comp_StaticMesh			*m_pMeshComponent;
-	class ActorCollisionController	*m_pCollisionObject;
+	//class ActorCollisionController	*m_pCollisionObject;
 	
 	std::string	m_XRef;
 };

@@ -28,7 +28,7 @@ protected:
 
 private:
 	class Comp_StaticMesh			*m_pMeshComponent;
-	class CPlaneCollisionController	*m_pCollisionObject;
+	//class CPlaneCollisionController	*m_pCollisionObject;
 
 	std::string						m_XRef;
 };
