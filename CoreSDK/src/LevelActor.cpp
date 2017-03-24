@@ -10,13 +10,19 @@ ClassRegistration___("core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>"
     "core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", "ActorAllocator");
 
 REGISTER_CLASS_A(CLevelActor, CLevelActor::Super)
-	//new oes::rflex::PropertyString("XRef", DATAFIELD_OFFSET(CLevelActor, m_XRef) - 4, "CLevelActor", "Value", READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP),
-    new oes::rflex::TProperty<std::string, CLevelActor>("XRef", "CLevelActor", "Value", 
+        new oes::rflex::TProperty<std::string, CLevelActor>("XRef", "CLevelActor", "Value", 
         [&](const void *ptr, const std::string &v)
         { 
             void *nc_ptr = const_cast<void*>(ptr);
             CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_XRef = v;
+        },
+        [&](const void *ptr, const char **out)
+        {
+            //void *nc_ptr = const_cast<void*>(ptr);
+            //CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+            //*out = act->m_XRef.c_str();
+            //out = act->m_XRef.c_str();
         }),
     
     ASSEMBLE_PROPS(CLevelActor)

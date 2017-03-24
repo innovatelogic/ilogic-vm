@@ -90,7 +90,6 @@ set(SOURCE
 	InputControllerImpl.h
 	InputManager.cpp
 	InputManager.h
-	IPhysicsEngine.h
 	IUIInputController.h
 	IUIInputIController.cpp
 	IUpdateInterface.cpp
@@ -104,11 +103,6 @@ set(SOURCE
 	ModelViewer.cpp
 	ModelViewer.h
 	object_export.h
-	PhysDebugDrawerGL.cpp
-	PhysDebugDrawerGL.h
-	physicsafx.h
-	PhysicsEngineBullet.cpp
-	PhysicsEngineBullet.h
 	Registry.cpp
 	Registry.h
 	RemoteControlManager.cpp

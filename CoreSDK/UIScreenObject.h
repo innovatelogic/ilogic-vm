@@ -52,8 +52,6 @@ public:
 	virtual bool			DoVisibilityTest_();
 
 protected:
-	
-
 	virtual void			ResolveActiveState() {}
 
 private:
