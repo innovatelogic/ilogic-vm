@@ -1,3 +1,5 @@
+#include "IDrawInterface.h"
+#include "reflx.h"
 #include "coresdkafx.h"
 
 #define COLOR_DARK_RED		0xff8b1818
@@ -12,12 +14,65 @@ static const Matrix DefMatrixTransform(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0
 static const Matrix3f DefMatrixScale(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f);
 static const Vector DefVec(0.f, 0.f, 0.f);
 
+
 BEGIN_AUTO_CLASS(IDrawInterface)
 	new oes::rflex::PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
 	new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
-	new oes::rflex::PropertyMatrix("LTM", (BYTE*)&((IDrawInterface*)NULL)->m_LTM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX16, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixTransform),
-	new oes::rflex::PropertyMatrix3x3("STM", (BYTE*)&((IDrawInterface*)NULL)->m_STM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX9, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixScale),
-	new oes::rflex::PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
+    new oes::rflex::TProperty<Matrix, IDrawInterface>("LTM", "IDrawInterface", "Value",
+    [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        IDrawInterface *act = reinterpret_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        CStringUtility<float> ParseString(v, ";");
+        assert(ParseString.m_vector.size() == 16);
+       
+        Matrix &Dest = act->m_LTM_;
+        Dest._11 = ParseString.m_vector[0];
+        Dest._12 = ParseString.m_vector[1];
+        Dest._13 = ParseString.m_vector[2];
+        Dest._14 = ParseString.m_vector[3];
+        Dest._21 = ParseString.m_vector[4];
+        Dest._22 = ParseString.m_vector[5];
+        Dest._23 = ParseString.m_vector[6];
+        Dest._24 = ParseString.m_vector[7];
+        Dest._31 = ParseString.m_vector[8];
+        Dest._32 = ParseString.m_vector[9];
+        Dest._33 = ParseString.m_vector[10];
+        Dest._34 = ParseString.m_vector[11];
+        Dest._41 = ParseString.m_vector[12];
+        Dest._42 = ParseString.m_vector[13];
+        Dest._43 = ParseString.m_vector[14];
+        Dest._44 = ParseString.m_vector[15];
+
+    },
+    [&](const void *ptr, const char **out)
+    {
+    }),
+    //new oes::rflex::PropertyMatrix3x3("STM", (BYTE*)&((IDrawInterface*)NULL)->m_STM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX9, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixScale),
+        new oes::rflex::TProperty<Matrix, IDrawInterface>("STM", "IDrawInterface", "Value",
+            [&](const void *ptr, const char *v)
+            {
+                void *nc_ptr = const_cast<void*>(ptr);
+                IDrawInterface *act = reinterpret_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+                CStringUtility<float> ParseString(v, ";");
+                assert(ParseString.m_vector.size() == 9);
+
+                Matrix3f &Dest = act->m_STM_;
+                Dest._11 = ParseString.m_vector[0];
+                Dest._12 = ParseString.m_vector[1];
+                Dest._13 = ParseString.m_vector[2];
+                Dest._21 = ParseString.m_vector[3];
+                Dest._22 = ParseString.m_vector[4];
+                Dest._23 = ParseString.m_vector[5];
+                Dest._31 = ParseString.m_vector[6];
+                Dest._32 = ParseString.m_vector[7];
+                Dest._33 = ParseString.m_vector[8];
+
+            },
+            [&](const void *ptr, const char **out)
+            {
+            }),
+    //new oes::rflex::PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
 END_AUTO_CLASS(IDrawInterface)
 CLASS_INSTANCE_INTERFACE(IDrawInterface);
 
@@ -388,7 +443,7 @@ void IDrawInterface::DoBuildCompounds()
 
 	 std::vector<const IDrawInterface*> TmpActorList;
 
-	 TNodeMap<class CActor, class IDrawInterface> *IterActor = m_pNode->GetRootNode();
+	 TNodeMap<class CActor, IDrawInterface> *IterActor = m_pNode->GetRootNode();
 
 	 while (IterActor) // do not allow top level root processing
 	 {				   // use it as origin for child nodes

@@ -7,6 +7,7 @@
 
 #include "ActorAllocator.h"
 #include "ViewportInterface.h"
+#include "IDrawInterface.h"
 
 class CORESDK_API Explorer3D : public ActorAllocator, 
 	public core_sdk_api::TIViewport,

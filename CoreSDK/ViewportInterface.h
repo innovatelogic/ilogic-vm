@@ -5,9 +5,9 @@
 #include "game_types.h"
 #include "transform_traits.h"
 #include "transform_history_traits.h"
+#include "IDrawInterface.h"
 
 class CCoreSDK;
-class IDrawInterface;
 
 namespace core_sdk_api
 {

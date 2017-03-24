@@ -11,11 +11,11 @@ ClassRegistration___("core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>"
 
 REGISTER_CLASS_A(CLevelActor, CLevelActor::Super)
         new oes::rflex::TProperty<std::string, CLevelActor>("XRef", "CLevelActor", "Value", 
-        [&](const void *ptr, const std::string &v)
+        [&](const void *ptr, const char *v)
         { 
             void *nc_ptr = const_cast<void*>(ptr);
             CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
-            act->m_XRef = v;
+            act->m_XRef = std::string(v);
         },
         [&](const void *ptr, const char **out)
         {

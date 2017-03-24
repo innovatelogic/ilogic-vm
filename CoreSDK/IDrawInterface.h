@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game_types.h"
 #include "IBaseInterface.h"
 #include "../Foundation/StdafxFoundation.h"
 
