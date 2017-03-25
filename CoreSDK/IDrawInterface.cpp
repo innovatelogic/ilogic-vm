@@ -16,34 +16,33 @@ static const Vector DefVec(0.f, 0.f, 0.f);
 
 
 BEGIN_AUTO_CLASS(IDrawInterface)
-	new oes::rflex::PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
-	new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+	//new oes::rflex::PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
+	//new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
     new oes::rflex::TProperty<Matrix, IDrawInterface>("LTM", "IDrawInterface", "Value",
     [&](const void *ptr, const char *v)
     {
         void *nc_ptr = const_cast<void*>(ptr);
-        IDrawInterface *act = reinterpret_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        IDrawInterface *act = dynamic_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
         CStringUtility<float> ParseString(v, ";");
         assert(ParseString.m_vector.size() == 16);
        
-        Matrix &Dest = act->m_LTM_;
-        Dest._11 = ParseString.m_vector[0];
-        Dest._12 = ParseString.m_vector[1];
-        Dest._13 = ParseString.m_vector[2];
-        Dest._14 = ParseString.m_vector[3];
-        Dest._21 = ParseString.m_vector[4];
-        Dest._22 = ParseString.m_vector[5];
-        Dest._23 = ParseString.m_vector[6];
-        Dest._24 = ParseString.m_vector[7];
-        Dest._31 = ParseString.m_vector[8];
-        Dest._32 = ParseString.m_vector[9];
-        Dest._33 = ParseString.m_vector[10];
-        Dest._34 = ParseString.m_vector[11];
-        Dest._41 = ParseString.m_vector[12];
-        Dest._42 = ParseString.m_vector[13];
-        Dest._43 = ParseString.m_vector[14];
-        Dest._44 = ParseString.m_vector[15];
-
+        Matrix &dest = act->m_LTM_;
+        dest._11 = ParseString.m_vector[0];
+        dest._12 = ParseString.m_vector[1];
+        dest._13 = ParseString.m_vector[2];
+        dest._14 = ParseString.m_vector[3];
+        dest._21 = ParseString.m_vector[4];
+        dest._22 = ParseString.m_vector[5];
+        dest._23 = ParseString.m_vector[6];
+        dest._24 = ParseString.m_vector[7];
+        dest._31 = ParseString.m_vector[8];
+        dest._32 = ParseString.m_vector[9];
+        dest._33 = ParseString.m_vector[10];
+        dest._34 = ParseString.m_vector[11];
+        dest._41 = ParseString.m_vector[12];
+        dest._42 = ParseString.m_vector[13];
+        dest._43 = ParseString.m_vector[14];
+        dest._44 = ParseString.m_vector[15];
     },
     [&](const void *ptr, const char **out)
     {
@@ -53,7 +52,7 @@ BEGIN_AUTO_CLASS(IDrawInterface)
             [&](const void *ptr, const char *v)
             {
                 void *nc_ptr = const_cast<void*>(ptr);
-                IDrawInterface *act = reinterpret_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+                IDrawInterface *act = dynamic_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
                 CStringUtility<float> ParseString(v, ";");
                 assert(ParseString.m_vector.size() == 9);
 
@@ -73,6 +72,23 @@ BEGIN_AUTO_CLASS(IDrawInterface)
             {
             }),
     //new oes::rflex::PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
+            new oes::rflex::TProperty<Vector, IDrawInterface>("Rotator", "IDrawInterface", "Value",
+            [&](const void *ptr, const char *v)
+            {
+                void *nc_ptr = const_cast<void*>(ptr);
+                IDrawInterface *act = dynamic_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+                CStringUtility<float> ParseString(v, ";");
+                assert(ParseString.m_vector.size() == 3);
+
+                Vector &dest = act->m_YawPitchRoll;
+                dest.x = ParseString.m_vector[0];
+                dest.y = ParseString.m_vector[1];
+                dest.z = ParseString.m_vector[2];
+            },
+            [&](const void *ptr, const char **out)
+            {
+            }),
+                
 END_AUTO_CLASS(IDrawInterface)
 CLASS_INSTANCE_INTERFACE(IDrawInterface);
 

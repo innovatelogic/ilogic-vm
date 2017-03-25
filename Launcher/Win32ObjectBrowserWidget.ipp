@@ -240,7 +240,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::WndProcessInsertObject()
 
     ::LockWindowUpdate(m_hwndTree);
 
-    for (TVecActorChildIterator Iter = m_ActorAddList.begin(); Iter != m_ActorAddList.end(); ++Iter)
+    for (std::vector<IObjectAbstract*>::iterator Iter = m_ActorAddList.begin(); Iter != m_ActorAddList.end(); ++Iter)
     {
         int IndexBitmap = m_pfnGetResourceIconIndex((*Iter)->GetType());
 
@@ -273,7 +273,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::WndProcessInsertObject()
         TreeView_SelectDropTarget(m_hwndTree, NULL);
     }
 
-    m_ActorAddList.clear();
+    m_ActorAddList.clear();/**/
 
     ::LockWindowUpdate(NULL);
 
@@ -511,9 +511,9 @@ int	Win32ObjectBrowserWidget<T_CLASS>::DirectClearActor(const T_CLASS * Sender)
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmtv) const
+IObjectAbstract* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmtv) const
 {
-    T_CLASS *pOutValue = NULL;
+    IObjectAbstract *pOutValue = NULL;
 
     if (lpnmtv)
     {
@@ -529,7 +529,7 @@ T_CLASS* Win32ObjectBrowserWidget<T_CLASS>::GetActorByData(const HTREEITEM lpnmt
         {
             if (Iter->second == lpnmtv)
             {
-                pOutValue = const_cast<T_CLASS*>(Iter->first);
+                pOutValue = const_cast<IObjectAbstract*>(Iter->first);
                 break;
             }
             ++Iter;
@@ -544,13 +544,13 @@ void Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
 {
     if (!m_bLockUpdate)
     {
-        std::vector<CActor*> actors;
+        std::vector<IObjectAbstract*> actors;
 
         for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
         {
             if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
             {
-                T_CLASS *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
+                IObjectAbstract *actor = GetActorByData(m_hwndLeft.m_aData.GetValueAt(i).hItem);
 
                 actors.push_back(actor);
             }
@@ -566,9 +566,9 @@ bool Win32ObjectBrowserWidget<T_CLASS>::RenameTreeObject()
 {
     bool bResult = false;
 
-    HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
+   /* HTREEITEM hTreeItem = TreeView_GetSelection(m_hwndTree);
 
-    T_CLASS* Actor = GetActorByData(hTreeItem);
+    IObjectAbstract* Actor = GetActorByData(hTreeItem);
 
     if (Actor) // do not allow rename root node
     {
@@ -583,7 +583,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::RenameTreeObject()
             Actor->Rename(ascii);
         }
         bResult = true; // operation clear
-    }
+    }*/
     return bResult;
 }
 
@@ -593,7 +593,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::Copy(const HTREEITEM hTreeItem)
 {
     bool bResult = false;
 
-    T_CLASS * ActorCopy = GetActorByData(hTreeItem);
+   /* T_CLASS * ActorCopy = GetActorByData(hTreeItem);
 
     if (ActorCopy) // do not allow rename root node
     {
@@ -602,7 +602,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::Copy(const HTREEITEM hTreeItem)
         {
             RootNode->Copy(ActorCopy);
         }
-    }
+    }*/
     return bResult;
 }
 
@@ -631,7 +631,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::BeginDragTreeObject(const LPNMTREEVIEW l
 {
     bool bResult = false;
 
-    if (lpnmtv != NULL)
+   /* if (lpnmtv != NULL)
     {
         HIMAGELIST hImg;
         m_bDragging = true; // set global flag
@@ -646,7 +646,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::BeginDragTreeObject(const LPNMTREEVIEW l
         SetCursor(m_hCursHand);
 
         m_ActorPicked = GetActorByData((HTREEITEM)lpnmtv->itemNew.hItem);
-    }
+    }*/
     return bResult;
 }
 
@@ -682,7 +682,7 @@ bool Win32ObjectBrowserWidget<T_CLASS>::MouseMoveTreeObject(const LPARAM lParam)
 template<class T_CLASS>
 bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
 {
-    CCoreSDK *pCoreSDK = m_editor->GetApp();
+   /* CCoreSDK *pCoreSDK = m_editor->GetApp();
 
     SHORT CtrlPressed = GetAsyncKeyState(VK_LCONTROL);
 
@@ -718,31 +718,11 @@ bool Win32ObjectBrowserWidget<T_CLASS>::EndDragTreeObject()
             }
 
             Matrix LTM;
-            /*if (T_CLASS::GetObjectAInLocalSpaceB(LTM, m_ActorDrop, m_ActorPicked))
-            {
-            // remove actor B from prev node and push to selected
-            m_ActorPicked->GetParent()->RemoveChildNode(m_ActorPicked);
-            m_ActorPicked->SetParent(m_ActorDrop);
-            m_ActorPicked->SetPivot(LTM);
-            m_ActorDrop->AddChildNode(m_ActorPicked);
-
-            InvokeActor(m_ActorPicked);
-
-            pCoreSDK->GetViewportManager()->RebuildTransform(m_ActorDrop);
-
-            if (CtrlPressed){
-            MoveObjectNearTo(m_ActorPicked, HitActor);
-            }
-
-            TTreeMapActorIterator Iter = m_TreeMap.find(m_ActorPicked);
-            if (Iter != m_TreeMap.end()){
-            TreeView_Select(m_hwndTree, Iter->second, TVGN_CARET);
-            }
-            }*/
+          
         }
         m_ActorDrop = m_ActorPicked = NULL;
         m_bDragging = false; // drop global flag
-    }
+    }*/
     return true;
 }
 
@@ -790,7 +770,7 @@ template<class T_CLASS>
 void Win32ObjectBrowserWidget<T_CLASS>::ProcessRightClick()
 {
     POINT pt;
-    if (::GetCursorPos(&pt)) // address of structure for cursor position
+   /* if (::GetCursorPos(&pt)) // address of structure for cursor position
     {
         TVHITTESTINFO tvht;
         tvht.pt = pt;
@@ -801,7 +781,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::ProcessRightClick()
         {
             m_pfnContextMenu(m_hwndTree, pt, GetActorByData(m_hitTarget));
         }
-    }
+    }*/
 }
 
 //----------------------------------------------------------------------------------------------
@@ -827,8 +807,8 @@ void Win32ObjectBrowserWidget<T>::OnNotifySelected()
 {
     m_bLockUpdate = true; // lock self calling
 
-    std::vector<const T*> selected;
-    std::vector<const T*> deselected;
+    std::vector<const IObjectAbstract*> selected;
+    std::vector<const IObjectAbstract*> deselected;
 
     GetSelectionModelsDiff(selected, deselected);
     
@@ -944,13 +924,13 @@ void Win32ObjectBrowserWidget<T_CLASS>::UnselectTreeAll()
 // TODO: move to lib / ut
 template<class T>
 void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
-    std::vector<const T*> &new_selected,
-    std::vector<const T*> &new_deselected) const
+    std::vector<const IObjectAbstract*> &new_selected,
+    std::vector<const IObjectAbstract*> &new_deselected) const
 {
     new_selected.clear();
     new_deselected.clear();
 
-    std::vector<CActor*> selected = m_editor->GetSelected();
+    std::vector<IObjectAbstract*> selected = m_editor->GetSelected();
 
     const size_t uiDataSize = m_hwndLeft.m_aData.GetSize();
 
@@ -962,7 +942,7 @@ void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
         {
             const CMultiSelectTreeCtrl::tagTVDATA &uidata = m_hwndLeft.m_aData.GetValueAt(index);
 
-            T *actor = GetActorByData(uidata.hItem);
+            IObjectAbstract *actor = GetActorByData(uidata.hItem);
             assert(actor);
 
             bFind = item == actor;
@@ -980,7 +960,7 @@ void Win32ObjectBrowserWidget<T>::GetSelectionModelsDiff(
     {
         const CMultiSelectTreeCtrl::tagTVDATA &uidata = m_hwndLeft.m_aData.GetValueAt(index);
 
-        T *actor = GetActorByData(uidata.hItem);
+        IObjectAbstract *actor = GetActorByData(uidata.hItem);
 
         if (uidata.bSelected && std::find(selected.begin(), selected.end(), actor) == selected.end())
         {

@@ -9,7 +9,7 @@
 namespace editors
 {
 //----------------------------------------------------------------------------------------------
-EditorBase::EditorBase(CCoreSDK *pInstance, CActor *actor, ICommandBuffer *buffer)
+EditorBase::EditorBase(CCoreSDK *pInstance, IObjectAbstract *actor, ICommandBuffer *buffer)
     : m_MousePosPrevX(0)
     , m_MousePosPrevY(0)
     , m_bShiftPressed(false)
@@ -76,10 +76,10 @@ size_t EditorBase::GetRedoCommandBatchSize(size_t index) const
 }
 
 //----------------------------------------------------------------------------------------------
-void EditorBase::SelectActors(const std::vector<CActor*> &actors)
+void EditorBase::SelectActors(const std::vector<IObjectAbstract*> &actors)
 {
     // skip if nothing to select and deselect
-    std::vector<const CActor*> keys = m_selection.Keys();
+    std::vector<const IObjectAbstract*> keys = m_selection.Keys();
 
     bool bDiff = false;
     for each (auto actor in actors)
@@ -96,7 +96,7 @@ void EditorBase::SelectActors(const std::vector<CActor*> &actors)
         core_sdk_api::CViewportManager *manager = m_pApi->GetViewportManager();
         core_sdk_api::TIViewport *ivprt = manager->GetVeiwportInterface(RootEntity());
 
-        oes::editors::SelectionContainer<CActor> old = m_selection;
+        oes::editors::SelectionContainer<IObjectAbstract> old = m_selection;
 
         AddCommand(std::move(
             std::shared_ptr<CommandBase_>(new CommandBase_(
@@ -276,7 +276,7 @@ void EditorBase::SetProperty(const std::string &value, CActor* object, const oes
 //----------------------------------------------------------------------------------------------
 void EditorBase::SetProperty(const std::string &value, const std::string &valueOld, std::vector<CActor*> &batch, oes::rflex::Property_Base *prop)
 {
-    TMapActorVec editorActors = AdjustActorsToEditorRoot(batch);
+/*    TMapActorVec editorActors = AdjustActorsToEditorRoot(batch);
 
     std::vector<std::string> ids;
     for each(auto item in editorActors)
@@ -313,11 +313,11 @@ void EditorBase::SetProperty(const std::string &value, const std::string &valueO
         }
         PopContext();
     }))
-    ));
+    ));*/
 }
 
 //----------------------------------------------------------------------------------------------
-CActor* EditorBase::GetEditorRelatedActor(CActor *actor)
+IObjectAbstract* EditorBase::GetEditorRelatedActor(IObjectAbstract *actor)
 {
     if (actor && actor->GetExternal())
     {
@@ -333,9 +333,9 @@ CActor* EditorBase::GetEditorRelatedActor(CActor *actor)
 }
 
 //----------------------------------------------------------------------------------------------
-EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<CActor*> &actors)
+EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<IObjectAbstract*> &actors)
 {
-    std::map<CActor*, std::vector<CActor*>> out;
+    std::map<IObjectAbstract*, std::vector<IObjectAbstract*>> out;
 
     for each (auto actor in actors)
     {
@@ -350,7 +350,7 @@ EditorBase::TMapActorVec EditorBase::AdjustActorsToEditorRoot(const std::vector<
         }
         else
         {
-            std::vector<CActor*> &refVec = iterFind->second;
+            std::vector<IObjectAbstract*> &refVec = iterFind->second;
 
             if (std::find(refVec.begin(), refVec.end(), actor) == refVec.end())
             {

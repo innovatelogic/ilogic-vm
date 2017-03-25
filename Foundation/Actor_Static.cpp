@@ -282,7 +282,7 @@ bool CActor::IsChildOf(const CActor *pParent1, const CActor *pParent2, const CAc
 }
 
 //----------------------------------------------------------------------------------------------
-std::string CActor::GetFullPathID(const CActor *actor, const CActor *mostTop /*= nullptr*/)
+std::string CActor::GetFullPathID(const IObjectAbstract *actor, const IObjectAbstract *mostTop /*= nullptr*/)
 {
     std::string outPath;
 

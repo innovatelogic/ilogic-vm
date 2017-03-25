@@ -251,7 +251,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    IDrawInterface* SceneEditorMain::GetByActor(const CActor *actor) const
+    IDrawInterface* SceneEditorMain::GetByActor(const IObjectAbstract *actor) const
     {
         return m_pApi->GetViewportManager()->GetByActor(actor);
     }

@@ -53,14 +53,14 @@
 #define REGISTER_CLASS_FACTORY_A(CLASS)\
 static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract *pParent)\
 {\
-	CObjectAbstract *pObject = new CLASS(static_cast<const CObjectAbstract*>(pParent));\
+	IObjectAbstract *pObject = new CLASS(static_cast<const CObjectAbstract*>(pParent));\
 	if (pObject)\
 	{\
 		pObject->SetName(Name);\
 		pObject->SetType(#CLASS);\
 		pObject->SetTypeId(oes::rflex::GetId(#CLASS));\
 		pObject->FinishGeneration();\
-		return static_cast<CObjectAbstract*>(pObject);\
+		return pObject;\
 	}\
 	return nullptr;\
 }\

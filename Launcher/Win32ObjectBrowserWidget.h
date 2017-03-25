@@ -20,7 +20,7 @@ class Win32ObjectBrowserWidget
 	typedef typename int  (*pGetResourceIconIndex)(const std::string &TypeName);
 
 public:
-	typedef typename std::map<const T_CLASS*, HTREEITEM>  TTreeMapActor;
+	typedef typename std::map<const IObjectAbstract*, HTREEITEM>  TTreeMapActor;
 	typedef typename TTreeMapActor::iterator			  TTreeMapActorIterator;
 	typedef typename TTreeMapActor::const_iterator		  TTreeMapActorConstIterator;
 
@@ -82,7 +82,7 @@ public:
 
     int	DirectClearActor(const T_CLASS *sender);
 
-    T_CLASS* GetActorByData(const HTREEITEM lpnmtv) const;
+    IObjectAbstract* GetActorByData(const HTREEITEM lpnmtv) const;
 
     void SelChangedTreeObject();
 
@@ -126,8 +126,8 @@ protected:
      * new_selected [out] - array of newly selected
      * new_deselected [out] - array of newly deselected
      */
-    void GetSelectionModelsDiff(std::vector<const T_CLASS*> &new_selected,
-                                std::vector<const T_CLASS*> &new_deselected) const;
+    void GetSelectionModelsDiff(std::vector<const IObjectAbstract*> &new_selected,
+                                std::vector<const IObjectAbstract*> &new_deselected) const;
 
 //----------------------------------------------------------------------------------------------
 private:
@@ -135,7 +135,7 @@ private:
     const T_CLASS           *m_pRoot;
 	Registry			    *m_pRegistry;
 
-	TVecActorChild			m_ActorAddList;
+    std::vector<IObjectAbstract*> m_ActorAddList;
 	std::vector<HTREEITEM>	m_HTreeClearList;
 
 	HTREEITEM				m_HTreeSelected;

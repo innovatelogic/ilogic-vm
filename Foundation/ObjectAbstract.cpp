@@ -1,5 +1,6 @@
 #include "ObjectAbstract.h"
 #include "MessageMap.h"
+#include "reflx.h"
 
 //AllocWindows*	GAllocMemory = NULL;
 
@@ -110,8 +111,28 @@ void CObjectAbstract::SetEventMgr(oes::foundation::IEventManager *mgr)
 static const bool V_FALSE = false;
 
 REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
-	new oes::rflex::PropertyBOOL("bExternal", (BYTE*)&((CObjectAbstract*)nullptr)->m_bExternal - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
- 	new oes::rflex::PropertyString("FilenameTag", (BYTE*)&((CObjectAbstract*)nullptr)->m_FilenameTag - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP),
+	//new oes::rflex::PropertyBOOL("bExternal", (BYTE*)&((CObjectAbstract*)nullptr)->m_bExternal - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+ 	//new oes::rflex::PropertyString("FilenameTag", (BYTE*)&((CObjectAbstract*)nullptr)->m_FilenameTag - (BYTE*)nullptr, "CObjectAbstract", "External", READ_ONLY, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP),
+    new oes::rflex::TProperty<bool, CObjectAbstract>("bExternal", "CObjectAbstract", "External",
+        [&](const void *ptr, const char *v)
+        {
+            void *nc_ptr = const_cast<void*>(ptr);
+            CObjectAbstract *act = static_cast<CObjectAbstract*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+            act->m_bExternal = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+        },
+        [&](const void *ptr, const char **out)
+        {
+        }),
+    new oes::rflex::TProperty<std::string, CObjectAbstract>("FilenameTag", "CObjectAbstract", "External",
+        [&](const void *ptr, const char *v)
+        {
+            void *nc_ptr = const_cast<void*>(ptr);
+            CObjectAbstract *act = static_cast<CObjectAbstract*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+            act->m_FilenameTag = std::string(v);
+        },
+        [&](const void *ptr, const char **out)
+        {
+        }),
 END_REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
 
 //----------------------------------------------------------------------------------------------
@@ -238,7 +259,7 @@ void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 
 								if (ValueStore.IsValue(ValueName))
 								{
-									(*IterIntfProp)->SetProperty((byte*)this + MemoryOffsetOverride, ValueStore.GetValueString(ValueName).c_str(), 0, true);
+									(*IterIntfProp)->SetProperty((byte*)this /*+ MemoryOffsetOverride*/, ValueStore.GetValueString(ValueName).c_str(), 0, true);
 								}
 							}
 						}

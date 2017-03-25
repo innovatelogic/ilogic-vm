@@ -96,7 +96,7 @@ public:
 	/** 
 	 * @return parent object or NULL if object is root node.
 	 */
-	CActor*					GetParent() const { return m_pParentActor; }
+	CActor*					GetParent() const override { return m_pParentActor; }
 
 	/** 
 	 * Set's the new Parent object for object.
@@ -234,7 +234,7 @@ public:
      *  @param [in] pointer to most top object
      *  @return sequence of actor's id
     */
-    static std::string  GetFullPathID(const CActor *actor, const CActor *mostTop = nullptr);
+    static std::string  GetFullPathID(const IObjectAbstract *actor, const IObjectAbstract *mostTop = nullptr);
 
     static CActor* GetActorByFullPath(const std::string &paht, const CActor *root);
 

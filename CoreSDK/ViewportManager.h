@@ -34,7 +34,7 @@ namespace core_sdk_api
         TNodeIView* RegisterViewport(const TIViewport *pSrc, const CActor *pKey, const CActor *pKeyParent);
         void        UnregisterViewport(TNodeIView *pNode);
 
-        TIViewport* GetVeiwportInterface(const CActor *key);
+        TIViewport* GetVeiwportInterface(const IObjectAbstract *key);
         TIViewport* GetViewportInterface(const IDrawInterface *pIObject) const;
         
         bool IsRenderable(const CActor *key);
@@ -52,7 +52,7 @@ namespace core_sdk_api
         int				SetMouseOver(IDrawInterface *pIObject, bool bFlag = true);
         IDrawInterface* GetMouseOver() const;
 
-        IDrawInterface* GetByActor(const CActor *pAObject) const;
+        IDrawInterface* GetByActor(const IObjectAbstract *pAObject) const;
 
         void	RebildWorldTransform();
         void	RebuildSizeTransform();

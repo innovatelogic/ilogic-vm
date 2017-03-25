@@ -30,8 +30,7 @@ public:
 	inline_ void			SetAppMain(CCoreSDK *app);
 	inline_ CCoreSDK*       GetAppMain() const { return m_pAppMain; }
 
-    //void	OnEventNotify(unsigned int id) override;
-    //void	OnEventNotify(unsigned int Id, IObjectAbstract *param) override;
+    //ActorAllocator* GetParent() const override { return nullptr; }
 
 public:
 	static bool		MoveObjectHierarchy(CActor *actorMove, const Registry *reg, bool Up = true, bool bMoveEditorVisible = false);

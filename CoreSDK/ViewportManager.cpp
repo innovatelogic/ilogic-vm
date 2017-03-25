@@ -38,7 +38,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    TIViewport* CViewportManager::GetVeiwportInterface(const CActor *key)
+    TIViewport* CViewportManager::GetVeiwportInterface(const IObjectAbstract *key)
     {
         TIViewport *out = nullptr;
 
@@ -269,7 +269,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    IDrawInterface* CViewportManager::GetByActor(const CActor *pAObject) const
+    IDrawInterface* CViewportManager::GetByActor(const IObjectAbstract *pAObject) const
     {
         if (pAObject)
         {

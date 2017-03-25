@@ -16,7 +16,7 @@ CWTLPropertyGrid<T>::CWTLPropertyGrid(editors::TIEditor &editor)
     , m_pAppMain(nullptr)
     , m_pRenderContext(0)
 {
-    m_propReactor = std::make_shared<oes::rflex::PropertyReactor<T>>();
+    m_propReactor = std::make_shared<oes::rflex::PropertyReactor<IObjectAbstract>>();
 
     m_editor = editor;
     m_pAppMain = editor->GetApp();
@@ -407,7 +407,7 @@ LRESULT CWTLPropertyGrid<T>::OnLVEndLabelEdit(WPARAM wParam)
 
             WideCharToMultiByte(CP_ACP, 0, wbuf, 256, ascii, 256, NULL, NULL);
 
-            m_editor->SetProperty(ascii, value, m_editor->GetSelected(), data.property);
+            //m_editor->SetProperty(ascii, value, m_editor->GetSelected(), data.property);
        }
     }
 
@@ -560,7 +560,7 @@ void CWTLPropertyGrid<T>::FillModel()
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<T*> &actors)
+void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<IObjectAbstract*> &actors)
 {
     m_propReactor->Build(m_editor->GetSelected());
 
@@ -578,7 +578,7 @@ void CWTLPropertyGrid<T>::FillPropertyGrid(std::vector<T*> &actors)
 template<class T>
 void CWTLPropertyGrid<T>::FillPropertyTabs()
 {
-    if (T *pSelected = GetSelected())
+    if (IObjectAbstract *pSelected = GetSelected())
     {
         FillPropertyData(pSelected);
     }
@@ -586,7 +586,7 @@ void CWTLPropertyGrid<T>::FillPropertyTabs()
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
+void CWTLPropertyGrid<T>::FillPropertyData(IObjectAbstract *pActor)
 {
     m_PropertyCS.enter();
 
@@ -704,14 +704,14 @@ void CWTLPropertyGrid<T>::FillPropertyData(T *pActor)
     assert(pReg);
 
     // transient properties
-    for (TVecActorChildConstIterator IterActor = pActor->m_ChildNodes.begin(); IterActor != pActor->m_ChildNodes.end(); ++IterActor)
+/*    for (TVecActorChildConstIterator IterActor = pActor->m_ChildNodes.begin(); IterActor != pActor->m_ChildNodes.end(); ++IterActor)
     {
         if ((*IterActor)->IsTransient() &&
             pReg->IsEditorVisible((*IterActor)->GetType()))
         {
             FillPropertyDataTransient(*IterActor);
         }
-    }
+    }*/
 
     std::sort(m_VSortedProperties.begin(), m_VSortedProperties.end(), SPropertyWrapper::CompByName);
 
@@ -1812,9 +1812,9 @@ bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(oes::rflex::Property_Base *pr
     {
         bResult = true;
 
-        std::vector<T*>::const_iterator iter = selected.begin();
+        std::vector<IObjectAbstract*>::const_iterator iter = selected.begin();
         
-        out = m_editor->GetProperty(*iter, prop);
+       /* out = m_editor->GetProperty(*iter, prop);
         
         iter++;
 
@@ -1827,7 +1827,7 @@ bool CWTLPropertyGrid<T>::GetPropertySelectedBatch(oes::rflex::Property_Base *pr
                 break;
             }
             ++iter;
-        }
+        }*/
     }
     return bResult;
 }
@@ -1919,7 +1919,7 @@ void CWTLPropertyGrid<T>::ShowEditColorControl(int index, const std::string &val
 
         SFetchData &data = m_cacheFill.at(index);
 
-        m_editor->SetProperty(newValue, value, m_editor->GetSelected(), data.property);
+//        m_editor->SetProperty(newValue, value, m_editor->GetSelected(), data.property);
 
 //        UpdatePreview();
     }
@@ -1938,7 +1938,7 @@ void CWTLPropertyGrid<T>::ShowEditComboControl(int index, const std::wstring &va
         bool oldValue = (value == TEXT("true"));
         bool newValue = !oldValue;
 
-        m_editor->SetProperty(newValue ? "true" : "false", oldValue ? "true" : "false", m_editor->GetSelected(), data.property);
+//        m_editor->SetProperty(newValue ? "true" : "false", oldValue ? "true" : "false", m_editor->GetSelected(), data.property);
 
         ::PostMessage(GetParent(), WM_USER_UPDATE_PROPS, 0, 0);
     }

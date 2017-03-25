@@ -98,12 +98,12 @@ public:
 	* 
 	* @param name [in] new object's name.
 	*/
-	void			SetName(const char *name) { m_Name = name; }
+	void			SetName(const char *name) override { m_Name = name; }
 
 	/**
 	 * @return object's name.
 	 */
-	const char*		GetName() const { return m_Name.c_str(); }
+	const char*		GetName() const override { return m_Name.c_str(); }
 
 	/** 
 	 * Check object name equal with param value.
@@ -119,12 +119,12 @@ public:
 	 *
 	 * @param type [in] type name.
 	 */
-	void			SetType(const char * type) { m_Type = type; }
+	void			SetType(const char * type) override { m_Type = type; }
 
 	/**
 	 * @return unique class name value.
 	 */
-	const char*		GetType() const { return m_Type.c_str(); }
+	const char*		GetType() const override { return m_Type.c_str(); }
 
 	/** 
 	 * @return self class name.
@@ -136,7 +136,7 @@ public:
 	 * 
 	 * @param type_id [in] class type unique type id.
 	 */
-	void			SetTypeId(size_t type_id) { m_TypeId = type_id; }
+	void			SetTypeId(size_t type_id) override { m_TypeId = type_id; }
 
 	/** 
 	 * @return unique class type id.
@@ -182,7 +182,7 @@ public:
     /*!
         returns session unique id 
     */
-    long    GetUID() const { return m_uID; }
+    long    GetUID() const override { return m_uID; }
 
     /** 
 	 * @return true if object already initialized (flag m_bIsInitialize).

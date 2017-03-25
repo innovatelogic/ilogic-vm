@@ -184,7 +184,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    IDrawInterface* EditorScene3D::GetByActor(const CActor *actor) const
+    IDrawInterface* EditorScene3D::GetByActor(const IObjectAbstract *actor) const
     {
         return nullptr;
     }

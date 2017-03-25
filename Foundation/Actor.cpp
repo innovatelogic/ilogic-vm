@@ -1,11 +1,22 @@
 #include "Actor.h"
 #include "ICollisionInterface.h"
+#include "reflx.h"
 
 static const bool V_TRUE = true;
 
 REGISTER_CLASS_PURE(CActor, CObjectAbstract)
-	new oes::rflex::PropertyBOOL("bEnabled",(BYTE*)&((CActor*)nullptr)->bEnabled - (BYTE*)nullptr, "CActor", "Value",	CTRL_COMBO,	READ_WRITE,	SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
-END_REGISTER_CLASS_PURE(CActor, CObjectAbstract);
+	//new oes::rflex::PropertyBOOL("bEnabled",(BYTE*)&((CActor*)nullptr)->bEnabled - (BYTE*)nullptr, "CActor", "Value",	CTRL_COMBO,	READ_WRITE,	SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
+    new oes::rflex::TProperty<bool, CActor>("bEnabled", "CActor", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CActor *act = static_cast<CActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->bEnabled =  (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+    },
+    [&](const void *ptr, const char **out)
+    {
+    }),
+    END_REGISTER_CLASS_PURE(CActor, CObjectAbstract);
 
 //----------------------------------------------------------------------------------------------
 CActor::CActor(const CObjectAbstract *pParent /*= NULL*/)

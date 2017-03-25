@@ -128,8 +128,8 @@ public:
 	//----------------------------------------------------------------------------------------------
 	BOOL PreTranslateMessage(MSG* pMsg) { pMsg; return FALSE; }
 
-	T*	 GetSelected() const { return m_pSelectedActor; }
-	void SetSelected(T *pActor) { m_pSelectedActor = pActor; }
+    IObjectAbstract*	 GetSelected() const { return m_pSelectedActor; }
+	void SetSelected(IObjectAbstract *pActor) { m_pSelectedActor = pActor; }
 
 	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
 
@@ -166,9 +166,9 @@ public:
 
     void FillModel();
 
-    void FillPropertyGrid(std::vector<T*> &actors);
+    void FillPropertyGrid(std::vector<IObjectAbstract*> &actors);
     void FillPropertyTabs();
-    void FillPropertyData(T *pActor);
+    void FillPropertyData(IObjectAbstract *pActor);
 
     SPropertyGroup* GetGroupByName(const std::string &name) const;
 
@@ -236,7 +236,7 @@ private:
 	TResourceEdit				*m_pResourceEdit;
 
 	EGridView					m_GridViewStyle;
-	T							*m_pSelectedActor;
+	IObjectAbstract				*m_pSelectedActor;
 	CriticalSection				m_PropertyCS;
 
 	TVecPropertyGroup			m_PropertyGroups;
@@ -258,7 +258,7 @@ private:
 	CCoreSDK		*m_pAppMain;
 	SRenderContext	*m_pRenderContext;
 
-    std::shared_ptr<oes::rflex::PropertyReactor<T>> m_propReactor;
+    std::shared_ptr<oes::rflex::PropertyReactor<IObjectAbstract>> m_propReactor;
 
     // cache data all fields in plain array
     std::vector<SFetchData> m_cacheDataAll;

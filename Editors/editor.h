@@ -14,10 +14,10 @@ namespace editors
 class DLLEXPORT EditorBase : public IEditor
 {
 public:
-    using TVecConstActor = std::vector<const CActor*>;
-    using TMapActorVec = std::map<CActor*, std::vector<CActor*>>;
+    using TVecConstActor = std::vector<const IObjectAbstract*>;
+    using TMapActorVec = std::map<IObjectAbstract*, std::vector<IObjectAbstract*>>;
 
-    EditorBase(CCoreSDK *pInstance, CActor *actor, ICommandBuffer *buffer);
+    EditorBase(CCoreSDK *pInstance, IObjectAbstract *actor, ICommandBuffer *buffer);
 	virtual ~EditorBase();
 
     bool Undo() override;
@@ -37,9 +37,9 @@ public:
     void SetNotifySelectFunc(const std::function<void()> &func) override { m_notifySelectFunc = func; }
 
    // std::vector<const CActor*> GetSelected() const override { return m_selection.Values(); }
-    std::vector<CActor*>       GetSelected() override { return m_selection.Values(); }
+    std::vector<IObjectAbstract*>       GetSelected() override { return m_selection.Values(); }
 
-    void SelectActors(const std::vector<CActor*> &actors);
+    void SelectActors(const std::vector<IObjectAbstract*> &actors);
     void DeselectAll() override;
 
     // input
@@ -62,15 +62,15 @@ protected:
     /*!
      *  Returns a lowest editor-root related to input actor
      */
-    CActor* GetEditorRelatedActor(CActor *actor);
+    IObjectAbstract* GetEditorRelatedActor(IObjectAbstract *actor);
 
     /*!
     * return correspondence map where a key actor is in root's space explicitly,
     * values in vector arbitrary implicit scope of selected actors
     */
-    TMapActorVec AdjustActorsToEditorRoot(const std::vector<CActor*> &actors);
+    TMapActorVec AdjustActorsToEditorRoot(const std::vector<IObjectAbstract*> &actors);
 
-    CActor* RootEntity() const { return m_pEditorRoot; }
+    IObjectAbstract* RootEntity() const { return m_pEditorRoot; }
 
     CCoreSDK* GetApp() const override { return m_pApi; }
 
@@ -83,7 +83,7 @@ protected:
 protected:
     std::function<void()>   m_notifySelectFunc;
 
-    oes::editors::SelectionContainer<CActor> m_selection;
+    oes::editors::SelectionContainer<IObjectAbstract> m_selection;
 
 private:
     unsigned int m_MousePosPrevX;
@@ -93,7 +93,7 @@ private:
 
     ICommandBuffer *m_CommandBuffer;
 
-    CActor *m_pEditorRoot;
+    IObjectAbstract *m_pEditorRoot;
 
     CCoreSDK *m_pApi;
 };

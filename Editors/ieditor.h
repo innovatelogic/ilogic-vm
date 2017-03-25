@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IObjectAbstract.h"
 #include "icommand.h"
 #include "icommand_buffer.h"
 #include "StdafxFoundation.h"
@@ -65,16 +66,16 @@ public:
     virtual EObjEditControlMode		GetEditControlMode() const = 0;
     virtual void					SetEditControlMode(EObjEditControlMode mode) = 0;
 
-    virtual IDrawInterface* GetByActor(const CActor *actor) const = 0;
+    virtual IDrawInterface* GetByActor(const IObjectAbstract *actor) const = 0;
     
     /*!
     * commits selection command. empty vector equal to deselect all
     */
-    virtual void    SelectActors(const std::vector<CActor*> &actors) = 0;
+    virtual void    SelectActors(const std::vector<IObjectAbstract*> &actors) = 0;
 
  //   virtual std::vector<const CActor*>  GetSelected() const = 0;
 
-    virtual std::vector<CActor*>        GetSelected() = 0;
+    virtual std::vector<IObjectAbstract*>        GetSelected() = 0;
 
     /*!
     * retrieve object attribute
