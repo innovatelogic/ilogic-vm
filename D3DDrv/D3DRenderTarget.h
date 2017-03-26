@@ -6,10 +6,7 @@
 #endif
 
 #include "D3DRenderInterface.h"
-
-namespace RenderDriver{
-	class RenderTargetNode;
-}
+#include "RenderTargetNode.h"
 
 class D3DDRIVER_API D3DRenderTarget : public D3DRenderInterface
 {

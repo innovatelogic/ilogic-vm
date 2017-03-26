@@ -4,7 +4,7 @@
 #ifdef _WIN32
 #pragma once
 #endif
-
+#include "D3DMesh.h"
 #include "RenderObject.h"
 
 class RENDERSDK_API Comp_StaticMesh : public CRenderObject

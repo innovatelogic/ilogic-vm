@@ -128,6 +128,8 @@ set(SOURCE
 	ViewportInterface.h
 	ViewportManager.cpp
 	ViewportManager.h
+	UIViewPivotControl.h
+	UIViewPivotControl.cpp
 	)
 
 set(SOURCE_API

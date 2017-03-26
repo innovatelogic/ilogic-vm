@@ -14,10 +14,25 @@ static const Matrix DefMatrixTransform(1.f, 0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0
 static const Matrix3f DefMatrixScale(1.f, 0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 0.f, 1.f);
 static const Vector DefVec(0.f, 0.f, 0.f);
 
-
 BEGIN_AUTO_CLASS(IDrawInterface)
 	//new oes::rflex::PropertyBOOL("bVisible", (BYTE*)&((IDrawInterface*)NULL)->m_bVisible - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_TRUE),
-	//new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+    new oes::rflex::TProperty<bool, IDrawInterface>("bVisible", "IDrawInterface", "Value",
+        [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        IDrawInterface *act = dynamic_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_bVisible = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyBOOL("RenderDebug",	(BYTE*)&((IDrawInterface*)NULL)->m_bRenderDebug - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &V_FALSE),
+        new oes::rflex::TProperty<bool, IDrawInterface>("RenderDebug", "IDrawInterface", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        IDrawInterface *act = dynamic_cast<IDrawInterface*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_bRenderDebug = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+    },
+    [&](const void *ptr, const char **out) {}),
     new oes::rflex::TProperty<Matrix, IDrawInterface>("LTM", "IDrawInterface", "Value",
     [&](const void *ptr, const char *v)
     {
@@ -44,9 +59,7 @@ BEGIN_AUTO_CLASS(IDrawInterface)
         dest._43 = ParseString.m_vector[14];
         dest._44 = ParseString.m_vector[15];
     },
-    [&](const void *ptr, const char **out)
-    {
-    }),
+    [&](const void *ptr, const char **out){}),
     //new oes::rflex::PropertyMatrix3x3("STM", (BYTE*)&((IDrawInterface*)NULL)->m_STM_ - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_MATRIX9, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefMatrixScale),
         new oes::rflex::TProperty<Matrix, IDrawInterface>("STM", "IDrawInterface", "Value",
             [&](const void *ptr, const char *v)
@@ -68,9 +81,7 @@ BEGIN_AUTO_CLASS(IDrawInterface)
                 Dest._33 = ParseString.m_vector[8];
 
             },
-            [&](const void *ptr, const char **out)
-            {
-            }),
+            [&](const void *ptr, const char **out){}),
     //new oes::rflex::PropertyVector("Rotator", (BYTE*)&((IDrawInterface*)NULL)->m_YawPitchRoll - (BYTE*)&((IDrawInterface*)NULL)->___startObjectMarkerIDrawInterface, "IDrawInterface", "Value", READ_ONLY, CTRL_VECTOR, SERIALIZABLE, NON_COMMON_PROP, EXT_PROP, 0, 0, &DefVec),
             new oes::rflex::TProperty<Vector, IDrawInterface>("Rotator", "IDrawInterface", "Value",
             [&](const void *ptr, const char *v)
@@ -85,9 +96,7 @@ BEGIN_AUTO_CLASS(IDrawInterface)
                 dest.y = ParseString.m_vector[1];
                 dest.z = ParseString.m_vector[2];
             },
-            [&](const void *ptr, const char **out)
-            {
-            }),
+            [&](const void *ptr, const char **out){}),
                 
 END_AUTO_CLASS(IDrawInterface)
 CLASS_INSTANCE_INTERFACE(IDrawInterface);
