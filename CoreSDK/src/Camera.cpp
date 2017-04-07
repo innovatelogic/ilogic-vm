@@ -16,16 +16,88 @@ static const float fNearDistDef = 1.0f;
 static const float fFarDistDef = 5000.f;
 
 REGISTER_CLASS_A(CCamera, CCamera::Super)
-	new oes::rflex::PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new oes::rflex::PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, m_bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
-	new oes::rflex::PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, m_Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
-	new oes::rflex::PropertyFLOAT("Aspect", DATAFIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
-	new oes::rflex::PropertyFLOAT("NearDist", DATAFIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
-	new oes::rflex::PropertyFLOAT("FarDist", DATAFIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
-	new oes::rflex::PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new oes::rflex::PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
-	new oes::rflex::PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
-END_REGISTER_CLASS(CCamera, CCamera::Super);
+	//new oes::rflex::PropertyBOOL("bArcball", DATAFIELD_OFFSET(CCamera, m_bArcball), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+    new oes::rflex::TProperty<bool, CCamera>("bArcball", "CCamera", "Value",
+    [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_bArcball = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyBOOL("bOrtho", DATAFIELD_OFFSET(CCamera, m_bOrtho), "CCamera", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &V_FALSE),
+    new oes::rflex::TProperty<bool, CCamera>("bOrtho", "CCamera", "Value",
+    [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_bOrtho = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
+    },
+    [&](const void *ptr, const char **out) {}),  
+    //new oes::rflex::PropertyFLOAT("Fov", DATAFIELD_OFFSET(CCamera, m_Fov), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFowDef),
+    new oes::rflex::TProperty<float, CCamera>("Fov", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_Fov = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("Aspect", DATAFIELD_OFFSET(CCamera, Aspect), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fAspectDef),
+    new oes::rflex::TProperty<float, CCamera>("Aspect", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->Aspect = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("NearDist", DATAFIELD_OFFSET(CCamera, NearDist), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fNearDistDef),
+    new oes::rflex::TProperty<float, CCamera>("NearDist", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->NearDist = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("FarDist", DATAFIELD_OFFSET(CCamera, FarDist), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fFarDistDef),
+    new oes::rflex::TProperty<float, CCamera>("FarDist", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->FarDist = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("m_fYaw", DATAFIELD_OFFSET(CCamera, m_fYaw), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+    new oes::rflex::TProperty<float, CCamera>("m_fYaw", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_fYaw = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("m_fPitch", DATAFIELD_OFFSET(CCamera, m_fPitch), "CCamera", "Value", READ_WRITE,	CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal),
+    new oes::rflex::TProperty<float, CCamera>("m_fPitch", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_fPitch = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    //new oes::rflex::PropertyFLOAT("m_fRoll", DATAFIELD_OFFSET(CCamera, m_fRoll), "CCamera", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fZeroVal)
+        new oes::rflex::TProperty<float, CCamera>("m_fRoll", "CCamera", "Value",
+            [&](const void *ptr, const char *v)
+    {
+        void *nc_ptr = const_cast<void*>(ptr);
+        CCamera *act = dynamic_cast<CCamera*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
+        act->m_fRoll = (float)atof(v);
+    },
+    [&](const void *ptr, const char **out) {}),
+    END_REGISTER_CLASS(CCamera, CCamera::Super);
 
 //----------------------------------------------------------------------------------------------
 CCamera::CCamera(const CObjectAbstract *pParent/*= NULL*/)
