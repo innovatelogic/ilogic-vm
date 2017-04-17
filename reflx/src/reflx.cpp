@@ -35,5 +35,41 @@ namespace oes {
 
             return bResult;
         }
+
+        std::string Rflex::GetValueString(const std::string &type, void *ptr)
+        {
+            std::string out;
+
+            if (ptr)
+            {
+                oes::rflex::AppClassTree &tree = oes::rflex::GetClassTree();
+                oes::rflex::ClassNode *node = tree.Find(type.c_str());
+
+                if (node)
+                {
+                    // write down groups map
+                    oes::rflex::ClassNode *p_node = node;
+
+                    while (p_node)
+                    {
+                        const oes::rflex::ClassNode::TVecProperties &props = p_node->GetProperties();
+                        oes::rflex::ClassNode::TVecPropertyConstIterator iter = props.begin();
+
+                        while (iter != props.end())
+                        {
+                            char buff[1024] = { 0 };
+                            char buffDefault[1024] = { 0 };
+
+                            (*iter)->GetProperty(ptr, buff);
+
+                            ++iter;
+                        }
+
+                        p_node = p_node->Parent();
+                    }
+                }
+            }
+            return out;
+        }
     }
 }

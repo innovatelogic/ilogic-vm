@@ -122,6 +122,8 @@ namespace oes
 
             bool Load(const std::string &filename);
 
+            std::string GetValueString(const std::string &type, void *ptr);
+
         protected:
         private:
             Rflex() {}

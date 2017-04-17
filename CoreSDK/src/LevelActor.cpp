@@ -17,7 +17,7 @@ REGISTER_CLASS_A(CLevelActor, CLevelActor::Super)
             CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_XRef = std::string(v);
         },
-        [&](const void *ptr, const char **out)
+        [&](const void *ptr, char *out)
         {
             //void *nc_ptr = const_cast<void*>(ptr);
             //CLevelActor *act = static_cast<CLevelActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));

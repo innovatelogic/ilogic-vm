@@ -13,7 +13,7 @@ REGISTER_CLASS_PURE(CActor, CObjectAbstract)
         CActor *act = static_cast<CActor*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
         act->bEnabled =  (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
     },
-    [&](const void *ptr, const char **out)
+    [&](const void *ptr, char *out)
     {
     }),
     END_REGISTER_CLASS_PURE(CActor, CObjectAbstract);
@@ -110,6 +110,8 @@ void CActor::Initialize()
 	Super::Initialize();
 
     BroadcastEvent(Event_PostInitialize);
+
+    //oes::rflex::Rflex::GetInstance()->GetValueString(GetType(), reinterpret_cast<void*>(this));
 }
 
 //----------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ namespace oes
         public:
             TProperty(const char *name, const char *classname, const char *group, 
                         std::function<void(const void *ptr, const char*)> fset,
-                        std::function<void(const void *ptr, const char**)> fget)
+                        std::function<void(const void *ptr, char*)> fget)
                 : Property_Base(name, 0, classname, group, READ_WRITE, CTRL_EDIT_RESOURCE, SERIALIZABLE, NON_COMMON_PROP, INT_PROP)
                 , m_fset(fset)
                 , m_fget(fget)
@@ -20,9 +20,9 @@ namespace oes
 
             char* GetProperty(const void *ptr, char *pout) const override 
             { 
-                const char **out;
-                m_fget(ptr, out);
-                return const_cast<char*>(*out);
+                //const char **out;
+                m_fget(ptr, pout);
+                return const_cast<char*>(pout);
             }
 
             bool	GetDefaultValue(char *pOutBuffer) const override { return false; }
@@ -36,7 +36,7 @@ namespace oes
         protected:
         private:
             const std::function<void(const void *ptr, const char*)> m_fset;
-            const std::function<void(const void *ptr, const char**)> m_fget;
+            const std::function<void(const void *ptr, char*)> m_fget;
         };
     }
 }

@@ -51,6 +51,8 @@ namespace oes
             ClassNode*  GetRootNode() const { return m_pRootNode; }
             void        SetRootNode(ClassNode *pNode) { m_pRootNode = pNode; }
 
+            ClassNode*  Parent() const { return m_pRootNode; }
+
             ClassNode* GetChild(char *type) const;
 
             virtual bool	PrePropertyChange(const void *pPrt, class Property_Base *pProp);

@@ -26,7 +26,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             }
             act->m_HPixelTransform = iValue;
         },
-        [&](const void *ptr, const char **out){}),
+        [&](const void *ptr, char *out){}),
         //new oes::rflex::PropertyPixelTransform("VPixelTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VPixelTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
         new oes::rflex::TProperty<int, IDrawInterfaceUI>("VPixelTransform", "IDrawInterfaceUI", "Value",
                 [&](const void *ptr, const char *v)
@@ -49,7 +49,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             }
             act->m_VPixelTransform = iValue;
         },
-        [&](const void *ptr, const char **out){}),
+        [&](const void *ptr, char *out){}),
         //new oes::rflex::PropertyPixelTransform("HSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_HSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
         new oes::rflex::TProperty<int, IDrawInterfaceUI>("HSizeTransform", "IDrawInterfaceUI", "Value",
                 [&](const void *ptr, const char *v)
@@ -72,7 +72,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             }
             act->m_HSizeTransform = iValue;
         },
-        [&](const void *ptr, const char **out) {}),
+        [&](const void *ptr, char *out) {}),
         //new oes::rflex::PropertyPixelTransform("VSizeTransform", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_VSizeTransform - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI",	"Value", READ_WRITE, CTRL_COMBO, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, ((const int*)&TransformDef)),
             new oes::rflex::TProperty<int, IDrawInterfaceUI>("VSizeTransform", "IDrawInterfaceUI", "Value",
                 [&](const void *ptr, const char *v)
@@ -95,7 +95,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             }
             act->m_VSizeTransform = iValue;
         },
-        [&](const void *ptr, const char **out) {}),
+        [&](const void *ptr, char *out) {}),
         
         //new oes::rflex::PropertyFLOAT("Width", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Width - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
         new oes::rflex::TProperty<std::string, IDrawInterfaceUI>("Width", "IDrawInterfaceUI", "Value",
@@ -105,7 +105,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             IDrawInterfaceUI *act = dynamic_cast<IDrawInterfaceUI*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_Width = (float)atof(v);
         },
-        [&](const void *ptr, const char **out){}),
+        [&](const void *ptr, char *out){}),
         //new oes::rflex::PropertyFLOAT("Height", (BYTE*)&((IDrawInterfaceUI*)NULL)->m_Height - (BYTE*)&((IDrawInterfaceUI*)NULL)->___startObjectMarkerIDrawInterfaceUI, "IDrawInterfaceUI", "Value", READ_WRITE, CTRL_EDIT, SERIALIZABLE, NON_COMMON_PROP, INT_PROP, 0, 0, &fDefaultDim),
         new oes::rflex::TProperty<std::string, CObjectAbstract>("Height", "IDrawInterfaceUI", "Value",
         [&](const void *ptr, const char *v)
@@ -114,7 +114,7 @@ BEGIN_AUTO_CLASS(IDrawInterfaceUI)
             IDrawInterfaceUI *act = dynamic_cast<IDrawInterfaceUI*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_Height = (float)atof(v);
         },
-        [&](const void *ptr, const char **out){}),
+        [&](const void *ptr, char *out){}),
     END_AUTO_CLASS(IDrawInterfaceUI)
 CLASS_INSTANCE_INTERFACE(IDrawInterfaceUI);
 

@@ -120,7 +120,7 @@ REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
             CObjectAbstract *act = static_cast<CObjectAbstract*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_bExternal = (!stricmp(v, "true") || !strcmp(v, "1")) ? true : false;
         },
-        [&](const void *ptr, const char **out)
+        [&](const void *ptr, char *out)
         {
         }),
     new oes::rflex::TProperty<std::string, CObjectAbstract>("FilenameTag", "CObjectAbstract", "External",
@@ -130,7 +130,7 @@ REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
             CObjectAbstract *act = static_cast<CObjectAbstract*>(reinterpret_cast<CObjectAbstract*>(nc_ptr));
             act->m_FilenameTag = std::string(v);
         },
-        [&](const void *ptr, const char **out)
+        [&](const void *ptr, char *out)
         {
         }),
 END_REGISTER_CLASS_PURE_NOBASE(CObjectAbstract)
