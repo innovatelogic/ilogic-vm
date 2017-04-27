@@ -10,6 +10,7 @@ void _RegisterType(const char *key/*, rflex_alloc &alloc, const char *className,
 namespace oes {
     namespace rflex {
 
+        //----------------------------------------------------------------------------------------------
         bool Rflex::Load(const std::string &filename)
         {
             using json = nlohmann::json;
@@ -36,6 +37,7 @@ namespace oes {
             return bResult;
         }
 
+        //----------------------------------------------------------------------------------------------
         std::string Rflex::GetValueString(const std::string &type, void *ptr)
         {
             std::string out;
@@ -70,6 +72,35 @@ namespace oes {
                 }
             }
             return out;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        void Rflex::Deserialize(void *ptr, const std::string &type, const std::string &attribute)
+        {
+            if (!ptr) {
+                return;
+            }
+
+            oes::rflex::AppClassTree &tree = oes::rflex::GetClassTree();
+
+            if (oes::rflex::ClassNode *node = tree.Find(type.c_str()))
+            {
+                oes::rflex::ClassNode::TVecPropertyConstIterator prop = node->propertyMap.begin();
+
+                // deserialize embedded class props
+                while (prop != node->propertyMap.end())
+                {
+                    ++prop;
+                }
+
+                // add interface properties
+                oes::rflex::ClassNode::TVecInterfaceIter intf = node->interfaces.begin();
+
+                while (intf != node->interfaces.end())
+                {
+                    ++intf;
+                }
+            }
         }
     }
 }

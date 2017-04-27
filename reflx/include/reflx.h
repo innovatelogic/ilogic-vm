@@ -124,6 +124,8 @@ namespace oes
 
             std::string GetValueString(const std::string &type, void *ptr);
 
+            void Deserialize(void *ptr, const std::string &type, const std::string &attribute);
+
         protected:
         private:
             Rflex() {}
