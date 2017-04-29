@@ -6,6 +6,7 @@ add_definitions(-DCOMMON_LIB_COMPILE)
 add_definitions(-DUNICODE -D_UNICODE)
 
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 
 set(INCLUDES
 include/OEMBase.h
@@ -31,6 +32,7 @@ include/ValueParser.h
 include/UtFile.h
 include/TArray.h
 include/permutations.h
+include/xmlparser.h
 )
 
 set(SRC
@@ -55,6 +57,10 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
+
+target_link_libraries( ${PROJECT_NAME} 
+					   ${TINY_XML_LIBRARY}
+)
 					
 #-------------------------------------------------------------------------------		
 # setup testing

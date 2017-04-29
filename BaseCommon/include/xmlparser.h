@@ -1,9 +1,7 @@
 
-
 #pragma once
 
 #include "tinyxml2.h"
-#include "platform_specific.h"
 #include "mathlib.h"
 
 //------------------------------------------------------------------------
@@ -19,7 +17,7 @@
 	if( xml_parse_once = (xml_document.Parse(XML_DATA) == tinyxml2::XML_SUCCESS) )\
 	for (tinyxml2::XMLElement *xml_current_tree = xml_document.FirstChildElement(); xml_current_tree != nullptr;\
 	xml_current_tree = xml_current_tree->NextSiblingElement())\
-	for( bool xml_else_if = false; xml_parse_once == true;xml_parse_once = false)\
+	for( bool xml_else_if = false; xml_parse_once == true;xml_parse_once = false)
 
 //------------------------------------------------------------------------
 #define XML_PARSE_FILE( XML_NAME )\
@@ -34,7 +32,7 @@
 	xml_current_tree != nullptr;\
 	xml_current_tree = xml_current_tree->NextSiblingElement()\
 	)\
-	for (bool xml_else_if = false; xml_parse_once == true; xml_parse_once = false)\
+	for (bool xml_else_if = false; xml_parse_once == true; xml_parse_once = false)
 
 //------------------------------------------------------------------------
 #define XML_FOR_EACH()\

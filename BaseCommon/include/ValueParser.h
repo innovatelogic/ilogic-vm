@@ -1,299 +1,306 @@
-#ifndef __valueparser_h__
-#define __valueparser_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "StringUtility.h"
+#include "mathlib.h"
+#include <map>
 
-class COMMON_BASE_EXPORT ValueParser
+//#ifdef WIN32
+#include <windows.h>
+//#endif
+
+namespace oes
 {
-public:
-	typedef std::map<std::string, std::string> MMapStr; 
+    namespace common_base
+    {
+        class COMMON_BASE_EXPORT ValueParser
+        {
+        public:
+            typedef std::map<std::string, std::string> MMapStr;
 
-	ValueParser(const std::string & InStr) { Parse(InStr); }
+            ValueParser(const std::string & InStr) { Parse(InStr); }
 
-	//------------------------------------------------------------------------
-	bool IsValue(const std::string &Key) const
-	{
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            bool IsValue(const std::string &Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			return true;
-		}
-		return false;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    return true;
+                }
+                return false;
+            }
 
-	//------------------------------------------------------------------------
-	bool GetValueBOOL(const std::string &Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            bool GetValueBOOL(const std::string &Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			if (Iter->second == "1" || Iter->second == "TRUE" || Iter->second == "true")
-				return true;
-		}
-		return false;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    if (Iter->second == "1" || Iter->second == "TRUE" || Iter->second == "true")
+                        return true;
+                }
+                return false;
+            }
 
-	//------------------------------------------------------------------------
-	std::string GetValueString(const std::string &Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            std::string GetValueString(const std::string &Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			return Iter->second;
-		}
-		return "";
-	}
+                if (Iter != ValueMap.end())
+                {
+                    return Iter->second;
+                }
+                return "";
+            }
 
-	//------------------------------------------------------------------------
-	std::wstring GetValueStringUTF8(const std::string& Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            std::wstring GetValueStringUTF8(const std::string& Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			int nLen = MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, nullptr, 0);
+                if (Iter != ValueMap.end())
+                {
+                    int nLen = MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, nullptr, 0);
 
-			wchar_t *lpszW = new wchar_t[nLen];
+                    wchar_t *lpszW = new wchar_t[nLen];
 
-			MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, lpszW, nLen);
+                    MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, lpszW, nLen);
 
-			std::wstring UTF8Text(lpszW);
+                    std::wstring UTF8Text(lpszW);
 
-			delete [] lpszW;
+                    delete[] lpszW;
 
-			return UTF8Text;
-		}
+                    return UTF8Text;
+                }
 
-		std::wstring empty_wstr;
-		return empty_wstr;
-	}
+                std::wstring empty_wstr;
+                return empty_wstr;
+            }
 
-	//------------------------------------------------------------------------
-	float GetValueFloat(const std::string& Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            float GetValueFloat(const std::string& Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			return (float)atof(Iter->second.c_str());  
-		}
-		return 0;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    return (float)atof(Iter->second.c_str());
+                }
+                return 0;
+            }
 
-	//------------------------------------------------------------------------
-	unsigned int GetValueINT(const std::string& Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            unsigned int GetValueINT(const std::string& Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			return (unsigned int)atoi(Iter->second.c_str()); 
-		}
-		return 0;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    return (unsigned int)atoi(Iter->second.c_str());
+                }
+                return 0;
+            }
 
-	//------------------------------------------------------------------------
-	unsigned int GetValueUINT(const std::string& Key) const
-	{ 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            unsigned int GetValueUINT(const std::string& Key) const
+            {
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			return strtoul(Iter->second.c_str(),nullptr,0);
-		}
-		return 0;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    return strtoul(Iter->second.c_str(), nullptr, 0);
+                }
+                return 0;
+            }
 
-	//------------------------------------------------------------------------
-	/**  Get Vector2f value */
-	Vector2f GetValueVector2f(const std::string& Key) const
-	{
-		Vector2f OutValue(0.f,0.f);
+            //------------------------------------------------------------------------
+            //  Get Vector2f value 
+            Vector2f GetValueVector2f(const std::string &Key) const
+            {
+                Vector2f OutValue(0.f, 0.f);
 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			CStringUtility<float> ParseString(Iter->second, ";");
+                if (Iter != ValueMap.end())
+                {
+                    CStringUtility<float> ParseString(Iter->second, ";");
 
-			if (ParseString.m_vector.size() == 2)
-			{
-				OutValue.x = ParseString.m_vector[0];
-				OutValue.y = ParseString.m_vector[1];
-			}
-		}
-		return OutValue;
-	}
+                    if (ParseString.m_vector.size() == 2)
+                    {
+                        OutValue.x = ParseString.m_vector[0];
+                        OutValue.y = ParseString.m_vector[1];
+                    }
+                }
+                return OutValue;
+            }
 
-	//------------------------------------------------------------------------
-	/**  Get Vector2f value */
-	Vector GetValueVector(const std::string& Key) const
-	{
-		Vector OutValue(0.f,0.f,0.f);
+            //------------------------------------------------------------------------
+            // Get Vector2f value
+            Vector GetValueVector(const std::string& Key) const
+            {
+                Vector OutValue(0.f, 0.f, 0.f);
 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-		if (Iter != ValueMap.end())
-		{
-			CStringUtility<float> ParseString(Iter->second, ";");
+                if (Iter != ValueMap.end())
+                {
+                    CStringUtility<float> ParseString(Iter->second, ";");
 
-			if (ParseString.m_vector.size() == 3)
-			{
-				OutValue.x = ParseString.m_vector[0];
-				OutValue.y = ParseString.m_vector[1];
-				OutValue.z = ParseString.m_vector[2];
-			}
-		}
-		return OutValue;
-	}
-	//------------------------------------------------------------------------
-	/**  Get Vector4f value */
-	Vector4f GetValueVector4f(const std::string& Key) const
-	{
-		Vector4f OutValue(0.f,0.f,0.f,0.f);
+                    if (ParseString.m_vector.size() == 3)
+                    {
+                        OutValue.x = ParseString.m_vector[0];
+                        OutValue.y = ParseString.m_vector[1];
+                        OutValue.z = ParseString.m_vector[2];
+                    }
+                }
+                return OutValue;
+            }
 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            //  Get Vector4f value
+            Vector4f GetValueVector4f(const std::string& Key) const
+            {
+                Vector4f OutValue(0.f, 0.f, 0.f, 0.f);
 
-		if (Iter != ValueMap.end())
-		{
-			CStringUtility<float> ParseString(Iter->second, ";");
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-			if (ParseString.m_vector.size() == 4)
-			{
-				OutValue.x = ParseString.m_vector[0];
-				OutValue.y = ParseString.m_vector[1];
-				OutValue.z = ParseString.m_vector[2];
-				OutValue.w = ParseString.m_vector[3];
-			}
-		}
-		return OutValue;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    CStringUtility<float> ParseString(Iter->second, ";");
 
-	//------------------------------------------------------------------------
-	/**  Get Matrix value */
-	Matrix GetValueMatrix(const std::string& Key) const
-	{
-		Matrix OutValue;
+                    if (ParseString.m_vector.size() == 4)
+                    {
+                        OutValue.x = ParseString.m_vector[0];
+                        OutValue.y = ParseString.m_vector[1];
+                        OutValue.z = ParseString.m_vector[2];
+                        OutValue.w = ParseString.m_vector[3];
+                    }
+                }
+                return OutValue;
+            }
 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            // Get Matrix value
+            Matrix GetValueMatrix(const std::string& Key) const
+            {
+                Matrix OutValue;
 
-		if (Iter != ValueMap.end())
-		{
-			CStringUtility<float> ParseString(Iter->second, ";");
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-			if (ParseString.m_vector.size() == 16)
-			{
-				for (int Index = 0; Index < 16; ++Index){
-					OutValue.m[Index] = ParseString.m_vector[Index];
-				}
-			}
-		}
-		return OutValue;
-	}
+                if (Iter != ValueMap.end())
+                {
+                    CStringUtility<float> ParseString(Iter->second, ";");
 
-	//------------------------------------------------------------------------
-	/**  Get Bounds3f value */
-	Bounds3f GetValueBounds3f(const std::string& Key) const
-	{
-		Bounds3f OutValue;
+                    if (ParseString.m_vector.size() == 16)
+                    {
+                        for (int Index = 0; Index < 16; ++Index) {
+                            OutValue.m[Index] = ParseString.m_vector[Index];
+                        }
+                    }
+                }
+                return OutValue;
+            }
 
-		MMapStr::const_iterator Iter = ValueMap.find(Key);
+            //------------------------------------------------------------------------
+            //  Get Bounds3f value
+            Bounds3f GetValueBounds3f(const std::string& Key) const
+            {
+                Bounds3f OutValue;
 
-		if (Iter != ValueMap.end())
-		{
-			CStringUtility<float> ParseString(Iter->second, ";");
+                MMapStr::const_iterator Iter = ValueMap.find(Key);
 
-			if (ParseString.m_vector.size() == 6)
-			{
-				OutValue.bound_min.x = ParseString.m_vector[0];
-				OutValue.bound_min.y = ParseString.m_vector[1];
-				OutValue.bound_min.z = ParseString.m_vector[2];
+                if (Iter != ValueMap.end())
+                {
+                    CStringUtility<float> ParseString(Iter->second, ";");
 
-				OutValue.bound_max.x = ParseString.m_vector[3];
-				OutValue.bound_max.y = ParseString.m_vector[4];
-				OutValue.bound_max.z = ParseString.m_vector[5];
-			}
-		}
-		return OutValue;
-	}
+                    if (ParseString.m_vector.size() == 6)
+                    {
+                        OutValue.bound_min.x = ParseString.m_vector[0];
+                        OutValue.bound_min.y = ParseString.m_vector[1];
+                        OutValue.bound_min.z = ParseString.m_vector[2];
 
-	//------------------------------------------------------------------------
-	void Parse(const std::string & InStr)
-	{
-		std::string SourceString = InStr + " "; // add separate space 
+                        OutValue.bound_max.x = ParseString.m_vector[3];
+                        OutValue.bound_max.y = ParseString.m_vector[4];
+                        OutValue.bound_max.z = ParseString.m_vector[5];
+                    }
+                }
+                return OutValue;
+            }
 
-		while (SourceString.find("\n") != std::string::npos)
-		{
-			size_t EofLIndex = SourceString.find("\n");
+            //------------------------------------------------------------------------
+            void Parse(const std::string & InStr)
+            {
+                std::string SourceString = InStr + " "; // add separate space 
 
-			if (EofLIndex != std::string::npos)
-			{
-				SourceString.erase(EofLIndex, 1); // remove line break 
-			}
-		}
+                while (SourceString.find("\n") != std::string::npos)
+                {
+                    size_t EofLIndex = SourceString.find("\n");
 
-		while (SourceString.find(" ") != std::string::npos)
-		{
-			size_t BrakeIndex = SourceString.find(" ");
+                    if (EofLIndex != std::string::npos)
+                    {
+                        SourceString.erase(EofLIndex, 1); // remove line break 
+                    }
+                }
 
-			if (BrakeIndex > 0)
-			{
-				std::string CompileNode = SourceString.substr(0,  BrakeIndex);
+                while (SourceString.find(" ") != std::string::npos)
+                {
+                    size_t BrakeIndex = SourceString.find(" ");
 
-				size_t KeyBrakeIndex1 = SourceString.find(":");
-				size_t KeyBrakeIndex2 = SourceString.find("=");
-				size_t KeyBrakeIndex = (KeyBrakeIndex1 < KeyBrakeIndex2) ? KeyBrakeIndex1 : KeyBrakeIndex2;
+                    if (BrakeIndex > 0)
+                    {
+                        std::string CompileNode = SourceString.substr(0, BrakeIndex);
 
-				std::string key = CompileNode.substr(0, KeyBrakeIndex);
-				std::string value = CompileNode.substr(KeyBrakeIndex+1);
+                        size_t KeyBrakeIndex1 = SourceString.find(":");
+                        size_t KeyBrakeIndex2 = SourceString.find("=");
+                        size_t KeyBrakeIndex = (KeyBrakeIndex1 < KeyBrakeIndex2) ? KeyBrakeIndex1 : KeyBrakeIndex2;
 
-				ValueMap.insert(std::make_pair(key, value));
-			}
-			SourceString = SourceString.substr(BrakeIndex + 1);
-		}
-	}
+                        std::string key = CompileNode.substr(0, KeyBrakeIndex);
+                        std::string value = CompileNode.substr(KeyBrakeIndex + 1);
 
-	//------------------------------------------------------------------------
-	void ParseCommandLine(const std::string & InStr)
-	{
-		std::string SourceString = InStr + " "; // add separate space 
+                        ValueMap.insert(std::make_pair(key, value));
+                    }
+                    SourceString = SourceString.substr(BrakeIndex + 1);
+                }
+            }
 
-		while (SourceString.find("\n") != std::string::npos)
-		{
-			size_t EofLIndex = SourceString.find("\n");
+            //------------------------------------------------------------------------
+            void ParseCommandLine(const std::string & InStr)
+            {
+                std::string SourceString = InStr + " "; // add separate space 
 
-			if (EofLIndex != std::string::npos){
-				SourceString.erase(EofLIndex, 1); // remove line break 
-			}
-		}
+                while (SourceString.find("\n") != std::string::npos)
+                {
+                    size_t EofLIndex = SourceString.find("\n");
 
-		// push separators & remove '-' char
-		while (SourceString.find("-") != std::string::npos)
-		{
-			size_t EofLIndex = SourceString.find("-");
+                    if (EofLIndex != std::string::npos) {
+                        SourceString.erase(EofLIndex, 1); // remove line break 
+                    }
+                }
 
-			if (EofLIndex != std::string::npos)
-			{
-				size_t TrailingSpaceIndex = SourceString.find(" ", EofLIndex);
+                // push separators & remove '-' char
+                while (SourceString.find("-") != std::string::npos)
+                {
+                    size_t EofLIndex = SourceString.find("-");
 
-				if (TrailingSpaceIndex != std::string::npos){
-					SourceString[TrailingSpaceIndex] = ':'; //replace separator
-				}
-				SourceString.erase(EofLIndex, 1); // remove line break 
-			}
-		}
+                    if (EofLIndex != std::string::npos)
+                    {
+                        size_t TrailingSpaceIndex = SourceString.find(" ", EofLIndex);
 
-		Parse(SourceString); // parse as standard string
-	}
+                        if (TrailingSpaceIndex != std::string::npos) {
+                            SourceString[TrailingSpaceIndex] = ':'; //replace separator
+                        }
+                        SourceString.erase(EofLIndex, 1); // remove line break 
+                    }
+                }
 
-	MMapStr ValueMap;
-};
+                Parse(SourceString); // parse as standard string
+            }
 
-#endif//__valueparser_h__
+            MMapStr ValueMap;
+        };
+    }
+}

@@ -49,7 +49,6 @@ set(SOURCE
 	UtContainer.cpp
 	UtContainer.h
 	UtMemory.h
-	xmlparser.h
 	IEventManager.h
 )
 

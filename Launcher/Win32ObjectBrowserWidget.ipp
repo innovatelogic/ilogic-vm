@@ -546,7 +546,7 @@ void Win32ObjectBrowserWidget<T_CLASS>::SelChangedTreeObject()
     {
         std::vector<IObjectAbstract*> actors;
 
-        for (size_t i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
+        for (int i = 0; i < m_hwndLeft.m_aData.GetSize(); i++)
         {
             if (m_hwndLeft.m_aData.GetValueAt(i).bSelected)
             {

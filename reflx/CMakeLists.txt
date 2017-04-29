@@ -6,6 +6,7 @@ add_definitions(-DREFLX_LIB_COMPILE)
 add_definitions(-DUNICODE -D_UNICODE)
 
 include_directories(${CMAKE_SOURCE_DIR}/BaseCommon/include)
+include_directories(${CMAKE_SOURCE_DIR}/common/tinyxml2)
 include_directories(${CMAKE_SOURCE_DIR}/reflx/include)
 
 set(LIBRARIES CommonBase)

@@ -1,6 +1,7 @@
-#include "reflx.h"
+#include "ValueParser.h"
 #include "json.hpp"
 #include <fstream>
+#include "reflx.h"
 
 void _RegisterType(const char *key/*, rflex_alloc &alloc, const char *className, const char *baseClassName*/)
 {
@@ -75,7 +76,7 @@ namespace oes {
         }
 
         //----------------------------------------------------------------------------------------------
-        void Rflex::Deserialize(void *ptr, const std::string &type, const std::string &attribute)
+        void Rflex::Deserialize(void *ptr, const std::string &type, tinyxml2::XMLElement *xml_current_tree)
         {
             if (!ptr) {
                 return;
@@ -90,6 +91,30 @@ namespace oes {
                 // deserialize embedded class props
                 while (prop != node->propertyMap.end())
                 {
+                    if ((*prop)->IsSerializable())
+                    {
+                        std::string group = (*prop)->GetGroupName();
+
+                        const char *attribute = xml_current_tree->Attribute(group.c_str());
+
+                        const std::string VALUE(attribute);
+
+                        if ((*prop)->IsCommonValue())
+                        {
+                            (*prop)->SetProperty(this, VALUE.c_str(), 0, true);
+                        }
+                        else
+                        {
+                            ValueParser ValueStore(VALUE);
+
+                            std::string ValueName = (*prop)->GetName();
+
+                            if (ValueStore.IsValue(ValueName))
+                            {
+                                (*prop)->SetProperty(ptr, ValueStore.GetValueString(ValueName).c_str(), 0, true);
+                            }
+                        }
+                    }
                     ++prop;
                 }
 
@@ -98,6 +123,37 @@ namespace oes {
 
                 while (intf != node->interfaces.end())
                 {
+                    oes::rflex  ::ClassNode *intf_node = tree.FindInterface((*intf)->strType);
+
+                    if (node)
+                    {
+                        oes::rflex::ClassNode::TVecPropertyConstIterator intf_prop = intf_node->propertyMap.begin();
+
+                        while (intf_prop != intf_node->propertyMap.end())
+                        {
+                            const std::string VALUE(xml_current_tree->Attribute((*intf_prop)->GetGroupName().c_str()));
+
+                            if ((*intf_prop)->IsSerializable())
+                            {
+                                if ((*intf_prop)->IsCommonValue())
+                                {
+                                    (*intf_prop)->SetProperty(ptr, VALUE.c_str(), 0, true);
+                                }
+                                else
+                                {
+                                    ValueParser ValueStore(VALUE);
+
+                                    std::string ValueName = (*intf_prop)->GetName();
+
+                                    if (ValueStore.IsValue(ValueName))
+                                    {
+                                        (*intf_prop)->SetProperty(ptr, ValueStore.GetValueString(ValueName).c_str(), 0, true);
+                                    }
+                                }
+                            }
+                            ++intf_prop;
+                        }
+                    }
                     ++intf;
                 }
             }

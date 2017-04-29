@@ -9,9 +9,12 @@
 #include "ObjectFactory.h"
 #include "classinfo.h"
 #include "singleton.h"
+#include "tinyxml2.h"
 #include <string>
 #include <memory>
 #include <map>
+
+//class tinyxml2::XMLElement;
 
 namespace oes
 {
@@ -124,7 +127,7 @@ namespace oes
 
             std::string GetValueString(const std::string &type, void *ptr);
 
-            void Deserialize(void *ptr, const std::string &type, const std::string &attribute);
+            void Deserialize(void *ptr, const std::string &type, tinyxml2::XMLElement *xml_current_tree);
 
         protected:
         private:
