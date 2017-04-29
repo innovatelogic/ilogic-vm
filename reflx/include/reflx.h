@@ -129,6 +129,9 @@ namespace oes
 
             void Deserialize(void *ptr, const std::string &type, tinyxml2::XMLElement *xml_current_tree);
 
+            void Deserialize(const std::string &filename);
+
+
         protected:
         private:
             Rflex() {}

@@ -1,6 +1,7 @@
 #include "ValueParser.h"
 #include "json.hpp"
 #include <fstream>
+#include <stdexcept>
 #include "reflx.h"
 
 void _RegisterType(const char *key/*, rflex_alloc &alloc, const char *className, const char *baseClassName*/)
@@ -155,6 +156,35 @@ namespace oes {
                         }
                     }
                     ++intf;
+                }
+            }
+        }
+
+        //----------------------------------------------------------------------------------------------
+        void Rflex::Deserialize(const std::string &filename)
+        {
+            tinyxml2::XMLDocument xml_document;
+            if (xml_document.LoadFile(filename.c_str()) == tinyxml2::XML_SUCCESS)
+            {
+                oes::rflex::TClassFactory *pClassFactory = oes::rflex::GetClassFactoryA();
+
+                tinyxml2::XMLElement *xml_current_tree = xml_document.FirstChildElement();
+                for (; xml_current_tree != nullptr;
+                    xml_current_tree = xml_current_tree->NextSiblingElement())
+                {
+                    const char *type = xml_current_tree->Value();
+
+                    oes::rflex::ClassNode *node = pClassFactory->GetClassTree().Find(type);
+
+                    if (node)
+                    {
+
+                    }
+                    else
+                    {
+                        std::string message = std::string(type) + std::string(" not found");
+                        throw std::exception(message.c_str());
+                    }
                 }
             }
         }

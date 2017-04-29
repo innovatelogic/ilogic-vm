@@ -77,12 +77,12 @@ namespace oes
             }
 
             template <typename T_CLASS, typename CLASS_BASE>
-            size_t Register(const char* Key, TGenFunction GenFunc, TCloneFunction CloneFunc, const char * ClassName, const char * BaseClassName)
+            size_t Register(const char* Key, TGenFunction GenFunc, const char * ClassName, const char * BaseClassName)
             {
                 TMapGenerator::iterator Iter = m_MapGenerator.find(Key);
 
                 if (Iter == m_MapGenerator.end()) {
-                    m_MapGenerator.insert(std::make_pair(Key, AutoManager(GenFunc, CloneFunc)));
+                    m_MapGenerator.insert(std::make_pair(Key, AutoManager(GenFunc, nullptr)));
                 }
 
                 ClassTree.Add(ClassName, BaseClassName);

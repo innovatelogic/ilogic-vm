@@ -185,95 +185,9 @@ bool CObjectAbstract::IsGenerationFinished()
 //----------------------------------------------------------------------------------------------
 void CObjectAbstract::SuperDeserializer(tinyxml2::XMLElement *xml_current_tree)
 {
-	oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
+    oes::rflex::Rflex::GetInstance()->Deserialize((oes::common_base::IObjectAbstract*)this, GetType(), xml_current_tree);
 
-	if (oes::rflex::ClassNode *pCNode = CTree.Find(GetType()))
-	{
-		while (pCNode)
-		{
-			TVecPropertyConstIterator IterProp = pCNode->propertyMap.begin();
-
-			// deserialize embedded class props
-			while (IterProp != pCNode->propertyMap.end())
-			{
-				if ((*IterProp)->IsSerializable())
-				{
-                    std::string group = (*IterProp)->GetGroupName();
-
-                    const char *attribute = xml_current_tree->Attribute(group.c_str());
-
-					const std::string VALUE(attribute ? attribute : "");
-
-					if ((*IterProp)->IsCommonValue())
-					{
-						(*IterProp)->SetProperty(this, VALUE.c_str(), 0, true);
-					}
-					else
-					{
-						ValueParser ValueStore(VALUE);
-
-						std::string ValueName = (*IterProp)->GetName();
-
-						if (ValueStore.IsValue(ValueName))
-						{
-							(*IterProp)->SetProperty((oes::common_base::IObjectAbstract*)this, ValueStore.GetValueString(ValueName).c_str(), 0, true);
-						}
-					}
-				}
-				++IterProp;
-			}
-
-			// add interface properties
-            oes::rflex::ClassNode::TVecInterfaceIter IterIntf = pCNode->interfaces.begin();
-
-			while (IterIntf != pCNode->interfaces.end())
-			{
-                oes::rflex::ClassNode *pNodeInterface = CTree.FindInterface((*IterIntf)->strType);
-
-				if (pNodeInterface)
-				{
-					TVecPropertyConstIterator IterIntfProp = pNodeInterface->propertyMap.begin();
-
-					// deserialize embedded class props
-					while (IterIntfProp != pNodeInterface->propertyMap.end())
-					{
-						if ((*IterIntfProp)->IsSerializable())
-						{
-							int MemoryOffsetOverride = 0;
-							if ((*IterIntf)->byteShift != -1) // interface relative shift
-							{ 
-								MemoryOffsetOverride = (*IterIntf)->byteShift;
-							}
-
-							const std::string VALUE(xml_current_tree->Attribute((*IterIntfProp)->GetGroupName().c_str()));
-						
-							if ((*IterIntfProp)->IsCommonValue())
-							{
-								(*IterIntfProp)->SetProperty((byte*)this + MemoryOffsetOverride, VALUE.c_str(), 0, true);
-							}
-							else
-							{
-								ValueParser ValueStore(VALUE);
-
-								std::string ValueName = (*IterIntfProp)->GetName();
-
-								if (ValueStore.IsValue(ValueName))
-								{
-									(*IterIntfProp)->SetProperty((byte*)this /*+ MemoryOffsetOverride*/, ValueStore.GetValueString(ValueName).c_str(), 0, true);
-								}
-							}
-						}
-						++IterIntfProp;
-					}
-				}
-				++IterIntf;
-			}
-
-			pCNode = pCNode->GetRootNode();
-		}
-
-		SuperDeserializerInternal(xml_current_tree);
-	}
+    SuperDeserializerInternal(xml_current_tree);
 }
 
 //----------------------------------------------------------------------------------------------

@@ -39,11 +39,11 @@ namespace oes
 
         //----------------------------------------------------------------------------------------------
         template <typename CLASS_T, typename CLASS_BASE>
-        static void GlobalRegister(const char *Key, TGenFunction Func, TCloneFunction CloneFunc, const char *ClassName, const char *BaseClassName)
+        static void GlobalRegister(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)
         {
             TClassFactory *classFactory = GetClassFactoryA();
 
-            classFactory->Register<CLASS_T, CLASS_BASE>(Key, Func, CloneFunc, ClassName, BaseClassName);
+            classFactory->Register<CLASS_T, CLASS_BASE>(Key, Func, ClassName, BaseClassName);
         }
 
         //----------------------------------------------------------------------------------------------
@@ -126,9 +126,9 @@ namespace oes
         template <class CLASS_T, class CLASS_BASE> class CAuto
         {
         public:
-            CAuto(const char *Key, TGenFunction Func, TCloneFunction CopyFunc, const char * ClassName, const char * BaseClassName)
+            CAuto(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)
             {
-                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
+                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, ClassName, BaseClassName);
             }
 
             CAuto(const char* TypeName, const class Property_Base** Arr, int Count)
@@ -143,9 +143,9 @@ namespace oes
         template <class CLASS_T, class CLASS_BASE, class T_PROPERTY_CLASS> class CAutoEx
         {
         public:
-            CAutoEx(const char *Key, TGenFunction Func, TCloneFunction CopyFunc, const char * ClassName, const char * BaseClassName)
+            CAutoEx(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)
             {
-                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, CopyFunc, ClassName, BaseClassName);
+                GlobalRegister<CLASS_T, CLASS_BASE>(Key, Func, ClassName, BaseClassName);
 
                 T_PROPERTY_CLASS* pPropertyClass = new T_PROPERTY_CLASS();
 
@@ -159,7 +159,7 @@ namespace oes
         template <class CLASS_T, class CLASS_BASE, class T_PROPERTY_CLASS> class CAutoPureEx
         {
         public:
-            CAutoPureEx(const char *Key, TGenFunction Func, TCloneFunction CopyFunc, const char * ClassName, const char * BaseClassName)
+            CAutoPureEx(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)
             {
                 T_PROPERTY_CLASS* pPropertyClass = new T_PROPERTY_CLASS();
 

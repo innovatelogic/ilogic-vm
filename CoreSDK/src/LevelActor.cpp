@@ -6,7 +6,7 @@
 
 
 volatile static oes::rflex::CAuto<core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>, ActorAllocator>
-ClassRegistration___("core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", 0, 0,
+ClassRegistration___("core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", 0,
     "core_sdk_api::NpActorTemplate<core_sdk_api::PxLevelActor>", "ActorAllocator");
 
 REGISTER_CLASS_A(CLevelActor, CLevelActor::Super)

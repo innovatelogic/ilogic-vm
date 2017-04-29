@@ -8,7 +8,7 @@
 namespace 
 {
 	volatile static oes::rflex::CAuto<ActorAllocator, CActor>
-		ClassRegistrationActorAllocator("ActorAllocator", 0,  0, "ActorAllocator", "CActor");
+		ClassRegistrationActorAllocator("ActorAllocator", 0, "ActorAllocator", "CActor");
 }
 
 //----------------------------------------------------------------------------------------------

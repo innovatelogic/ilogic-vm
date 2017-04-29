@@ -6,7 +6,7 @@ namespace
 {
 	// register child type
 	volatile static oes::rflex::CAuto<ImageState, UIComp_DrawImageState>
-		ClassRegistrationImageState("ImageState", 0,  0, "ImageState", "UIComp_DrawImageState");
+		ClassRegistrationImageState("ImageState", 0, "ImageState", "UIComp_DrawImageState");
 }
 
 class AutoRegisterPropsUIComp_DrawImageState

@@ -63,10 +63,6 @@ static IObjectAbstract* Generator##CLASS(const char *Name, const IObjectAbstract
 		return pObject;\
 	}\
 	return nullptr;\
-}\
-static IObjectAbstract* CopyGenerator##CLASS(const IObjectAbstract *Source, const IObjectAbstract *pParent)\
-{\
-	return nullptr;\
 }
 
 //----------------------------------------------------------------------------------------------
@@ -144,7 +140,6 @@ private:\
 namespace {\
 volatile static oes::rflex::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
 	Generator##CLASS,\
-	CopyGenerator##CLASS,\
 	CLASS::ThisClassName(),\
 	CLASS::GetPanelBaseClassName());\
 }
@@ -162,7 +157,6 @@ namespace\
 {\
 volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 									 Generator##CLASS,\
-									 CopyGenerator##CLASS,\
 									 CLASS::ThisClassName(),\
 									 CLASS::GetPanelBaseClassName());\
 }
@@ -173,7 +167,6 @@ namespace\
 {\
 	volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
-	nullptr,\
 	CLASS::ThisClassName(),\
 	CLASS::GetPanelBaseClassName());\
 }
@@ -183,7 +176,6 @@ namespace\
 	namespace\
 {\
 	volatile static oes::rflex::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
-	nullptr,\
 	nullptr,\
 	CLASS::ThisClassName(),\
 	CLASS::GetPanelBaseClassName());\
@@ -203,17 +195,6 @@ static CObjectAbstract * Generator##CLASS(const char *Name, const CObjectAbstrac
 		return Object;\
 	}\
 	return nullptr;\
-}\
-static CObjectAbstract * CopyGenerator##CLASS(const CObjectAbstract * Source, const CObjectAbstract * Parent)\
-{\
-	CObjectAbstract * Object = new CLASS(*static_cast<const CLASS*>(Source));\
-	ActionBase * AParent = const_cast<ActionBase*>(static_cast<const ActionBase*>(Parent));\
-	if (AParent != nullptr && static_cast<const ActionBase*>(Object))\
-	{\
-		const_cast<ActionBase*>(static_cast<const ActionBase*>(Object))->SetParent(AParent);\
-		AParent->AddChildNode(const_cast<ActionBase*>(static_cast<const ActionBase*>(Object)));\
-	}\
-	return Object;\
 }
 
 //----------------------------------------------------------------------------------------------
