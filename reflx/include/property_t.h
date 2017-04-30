@@ -25,7 +25,7 @@ namespace oes
                 return const_cast<char*>(pout);
             }
 
-            bool	GetDefaultValue(char *pOutBuffer) const override { return false; }
+            bool GetDefaultValue(char *pOutBuffer) const override { return false; }
 
         private:
             void DoSetProperty(const void *ptr, const char *value, unsigned int byteOffset = 0, bool bSilent = false) override 

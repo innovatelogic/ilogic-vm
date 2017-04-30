@@ -123,7 +123,8 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         //	auto registration class
         //----------------------------------------------------------------------------------------------
-        template <class CLASS_T, class CLASS_BASE> class CAuto
+        template <class CLASS_T, class CLASS_BASE>
+        class CAuto
         {
         public:
             CAuto(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)
@@ -140,7 +141,8 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         //	auto registration class
         //----------------------------------------------------------------------------------------------
-        template <class CLASS_T, class CLASS_BASE, class T_PROPERTY_CLASS> class CAutoEx
+        template <class CLASS_T, class CLASS_BASE, class T_PROPERTY_CLASS>
+        class CAutoEx
         {
         public:
             CAutoEx(const char *Key, TGenFunction Func, const char *ClassName, const char *BaseClassName)

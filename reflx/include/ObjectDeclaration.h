@@ -141,7 +141,7 @@ namespace {\
 volatile static oes::rflex::CAuto<CLASS, BASE_CLASS> ClassRegistration##CLASS(#CLASS,\
 	Generator##CLASS,\
 	CLASS::ThisClassName(),\
-	CLASS::GetPanelBaseClassName());\
+	CLASS::GetBaseClassName());\
 }
 
 //----------------------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ namespace\
 volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 									 Generator##CLASS,\
 									 CLASS::ThisClassName(),\
-									 CLASS::GetPanelBaseClassName());\
+									 CLASS::GetBaseClassName());\
 }
 
 //----------------------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ namespace\
 	volatile static oes::rflex::CAutoEx<CLASS, BASE_CLASS, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	CLASS::ThisClassName(),\
-	CLASS::GetPanelBaseClassName());\
+	CLASS::GetBaseClassName());\
 }
 
 //----------------------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ namespace\
 	volatile static oes::rflex::CAutoPureEx<CLASS, void, AutoRegisterProps##CLASS> ClassRegistration##CLASS(#CLASS,\
 	nullptr,\
 	CLASS::ThisClassName(),\
-	CLASS::GetPanelBaseClassName());\
+	CLASS::GetBaseClassName());\
 }
 
 //----------------------------------------------------------------------------------------------
@@ -299,16 +299,16 @@ public:\
 	typedef className ThisClass;\
 	friend class AutoRegisterProps##className;\
 public:\
-	static char const* GetPanelClassName() { return #className; }\
-	static char const* GetPanelBaseClassName() { return #baseClassName; }\
+	static char const* GetClassName() { return #className; }\
+	static char const* GetBaseClassName() { return #baseClassName; }\
 	static char const* ThisClassName() { return #className; }
 
 #define DECLARE_CLASS_SIMPLE_NOBASE( className )\
 	typedef className ThisClass;\
 	friend class AutoRegisterProps##className;\
 public:\
-	static char const* GetPanelClassName() { return #className; }\
-	static char const* GetPanelBaseClassName() { return nullptr; }\
+	static char const* GetClassName() { return #className; }\
+	static char const* GetBaseClassName() { return nullptr; }\
 	static char const* ThisClassName() { return #className; }
 
 #define DECLARE_INTERFACE_CLASS( className )\

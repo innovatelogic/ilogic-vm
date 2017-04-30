@@ -28,6 +28,7 @@ set(INCLUDES
 	include/property_reactor.h
 	include/property_reactor.ipp
 	include/property_t.h
+	include/class_node_t.h
 	include/reflx.h
 )
 
