@@ -1,6 +1,7 @@
+#include "reflx.h"
 #include <iostream>
+#include <memory>
 #include <gtest/gtest.h>
-#include "AutoTree.h"
 
 struct SNode
 {
@@ -48,7 +49,7 @@ struct SNode
 };
 
 //----------------------------------------------------------------------------------------------
-TEST(TestUtils, BuildTreeTest)
+TEST(Rflex, BuildTreeTest)
 {
 	oes::rflex::CAutoTree<SNode> foo;
 
@@ -95,7 +96,7 @@ private:
 };
 
 //----------------------------------------------------------------------------------------------
-TEST(TestUtils, PlacementCtor)
+TEST(Rflex, PlacementCtor)
 {
     B *b = new B(1, 2, 3);
     A *a0 = new (b) A(4, 5);
@@ -104,4 +105,24 @@ TEST(TestUtils, PlacementCtor)
     EXPECT_EQ((b->sum() + a0->sum() + a1->sum()), 12 + 9 + 9);
 
     delete b;
+}
+
+struct ADT
+{
+    ADT(int a, int b, int c)
+        : a(a)
+        , b(b)
+        , c(c){}
+    int a, b, c;
+};
+
+TEST(Rflex, TypeGenerator_ADT)
+{
+    oes::rflex::Generator<ADT, int, int, int> gen;
+
+    std::unique_ptr<ADT> ptr(gen.instance(0, 1, 2));
+
+    EXPECT_EQ(ptr->a, 0);
+    EXPECT_EQ(ptr->b, 1);
+    EXPECT_EQ(ptr->c, 2);
 }

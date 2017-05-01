@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 //----------------------------------------------------------------------------------------------
-TEST(TestAutoTree, RegisterBroadTree)
+TEST(Rflex, RegisterBroadTree)
 {
     oes::rflex::CAutoTree<oes::rflex::ClassNode> tree;
 

@@ -29,6 +29,8 @@ set(INCLUDES
 	include/property_reactor.ipp
 	include/property_t.h
 	include/class_node_t.h
+	include/i_generator.h
+	include/t_generator.h
 	include/reflx.h
 )
 
@@ -58,6 +60,9 @@ set_target_properties( ${PROJECT_NAME} PROPERTIES
 # setup testing
 #-------------------------------------------------------------------------------
 if (${ENABLE_TESTING})
+
+	enable_testing()
+
 	include_directories(${CMAKE_SOURCE_DIR}/utils/googletest/googletest/include)
 
 	set( PROJECT_NAME ${PROJECT_NAME} )
@@ -83,5 +88,9 @@ if (${ENABLE_TESTING})
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
-
+	
+	set_target_properties( ${PROJECT_TEST_NAME} PROPERTIES
+            OUTPUT_NAME ${PROJECT_TEST_NAME}.test
+            DEBUG_POSTFIX ""
+        )
 endif( ${ENABLE_TESTING} )			

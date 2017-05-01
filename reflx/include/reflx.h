@@ -9,12 +9,11 @@
 #include "ObjectFactory.h"
 #include "classinfo.h"
 #include "singleton.h"
+#include "t_generator.h"
 #include "tinyxml2.h"
 #include <string>
 #include <memory>
 #include <map>
-
-//class tinyxml2::XMLElement;
 
 namespace oes
 {
