@@ -3,6 +3,7 @@
 #include "defexport.h"
 #include "OEMBase.h"
 #include "ObjectDeclaration.h"
+#include "itype.h"
 #include "property.h"
 #include "property_t.h"
 #include "ClassNode.h"

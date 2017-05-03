@@ -14,6 +14,7 @@ set(LIBRARIES CommonBase)
 set(INCLUDES
 	include/defexport.h
 	include/ObjectDeclaration.h
+	include/itype.h
 	include/iproperty.h
 	include/property.h
 	include/ClassNode.h

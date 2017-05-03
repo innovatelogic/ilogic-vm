@@ -107,22 +107,40 @@ TEST(Rflex, PlacementCtor)
     delete b;
 }
 
+
+
 struct ADT
 {
+    struct inst : public oes::rflex::itype {
+        void *instance() override { return oes::rflex::Generator<ADT, int, int, int>::instance(0, 0, 0); }
+    };
+
     ADT(int a, int b, int c)
         : a(a)
         , b(b)
         , c(c){}
+
+    //void *instance() override { return new ADT(c, b, a); }
     int a, b, c;
 };
 
 TEST(Rflex, TypeGenerator_ADT)
 {
-    oes::rflex::Generator<ADT, int, int, int> gen;
-
-    std::unique_ptr<ADT> ptr(gen.instance(0, 1, 2));
+    std::unique_ptr<ADT> ptr(oes::rflex::Generator<ADT, int, int, int>::instance(0, 1, 2));
 
     EXPECT_EQ(ptr->a, 0);
     EXPECT_EQ(ptr->b, 1);
     EXPECT_EQ(ptr->c, 2);
+
+    std::unique_ptr<oes::rflex::IGenerator> iptr(new oes::rflex::Generator<ADT, int, int, int>());
+    
+    ADT *adt = nullptr;
+    iptr->instance([&]() {
+        
+    });
+
+    oes::rflex::itype *type = new ADT::inst();
+    ADT *copy = static_cast<ADT*>(type->instance());
+
+
 }
