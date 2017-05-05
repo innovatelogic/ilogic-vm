@@ -1,5 +1,4 @@
-#ifndef __ientitycontroller_h__
-#define __ientitycontroller_h__
+#pragma once
 
 class CORESDK_API IEntityController
 {
@@ -23,5 +22,3 @@ private:
 	TNodeMap<class CActor, struct SPlayerEntityInfo> *m_pNode;
 	mutable class CCoreSDK *m_pCoreSDK;
 };
-
-#endif//__ientitycontroller_h__

@@ -462,25 +462,42 @@ void IDrawInterface::DoBuildCompounds()
  }
 
  //----------------------------------------------------------------------------------------------
+ /**
+ 	Calculate a world transformation matrix for given node (not including self!)
+	 Ex: given structure
+	 					Root
+						  |
+				child_A     child_B
+				|                 |
+		 	child_C			    child_D
+			 |
+	     child_E		 
+
+	find global transformation of child_E?
+	1> Move from nested node to root. form transformation stack [Root -> child_A -> child_C]
+	2> Start to multiply local transformations in backward order while stack is not empty.
+	3> resulting matrix is a homogenous world transform for giving node (not including node itself)
+ */
  Matrix IDrawInterface::CalcWorldTransform() const
  {
 	 Matrix OutMatrix;
 
-	 std::vector<const IDrawInterface*> TmpActorList;
+	 std::stack<const IDrawInterface*> stack;
 
-	 TNodeMap<class CActor, IDrawInterface> *IterActor = m_pNode->GetRootNode();
+	 TNodeMap<class CActor, IDrawInterface> *IterActor = m_pNode->parent();
 
 	 while (IterActor) // do not allow top level root processing
 	 {				   // use it as origin for child nodes
-		 TmpActorList.push_back(IterActor->m_pValue);
-		 IterActor = IterActor->GetRootNode();
+         stack.push(IterActor->m_pValue);
+		 IterActor = IterActor->parent();
 	 }
 
 	 // build global space matrix
-	 for (std::vector<const IDrawInterface*>::reverse_iterator Iter = TmpActorList.rbegin(); Iter != TmpActorList.rend(); ++Iter)
-	 {
-		 OutMatrix = OutMatrix * (*Iter)->GetPivot_();
-	 }
+     while (!stack.empty())
+     {
+         OutMatrix = OutMatrix * stack.top()->GetPivot_();
+         stack.pop();
+     }
 	 return OutMatrix;
  }
 
