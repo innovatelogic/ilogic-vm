@@ -601,7 +601,7 @@ void IDrawInterface::DoBuildCompounds()
 
 	 if (pObjectA && pObjectB)
 	 {
-		 CCoreSDK *pApp =  pObjectA->GetCoreSDK();
+		 CCoreSDK *pApp = pObjectA->GetCoreSDK();
 		 assert(pApp);
 
 		 // common parent object
@@ -638,8 +638,8 @@ void IDrawInterface::DoBuildCompounds()
 				 if (pIActor){
 					CB_LTM = CB_LTM * (pIActor->GetLTM_());
 				 }
-				 
 			 }
+
 			 // [Parent - ObjectA] local transform
 			 for (std::vector<const CActor*>::reverse_iterator Iter = tmpActorListA.rbegin(); Iter != tmpActorListA.rend(); ++Iter)
 			 {

@@ -64,6 +64,8 @@ public:
     Matrix& invert(Matrix &B, const Matrix &A);
     Matrix	inverse() const;   
 
+    Matrix getInverse3x3() const;
+
 	void set_rot(const Quaternion &q);
 	void set_rot(const Matrix3f &M);
 	void set_rot(TFlt32 yaw, TFlt32 pitch, TFlt32 roll);
@@ -78,6 +80,12 @@ public:
 	void Transpose();
 
 	float Determinant() const;
+    float Determinant3x3() const;
+
+    /*
+        Compare matrix each component +/-epsilon tolerance
+    */
+    bool equal(const Matrix &other) const;
 
 public:
 	union {

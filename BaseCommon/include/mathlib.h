@@ -186,7 +186,7 @@ COMMON_BASE_EXPORT Matrix& invert(Matrix &B, const Matrix &A);
 // Computes B = Transpose(B)
 //       T
 //  B = B
-COMMON_BASE_EXPORT Matrix & transpose(Matrix &B);
+COMMON_BASE_EXPORT Matrix&  transpose(Matrix &B);
 COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 
  Vector&  mult_pos(Vector &vOut, const Matrix &mIn, const Vector &vIn);
@@ -195,17 +195,17 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 
 // mult point by matrix
 // Out: transformed point
- COMMON_BASE_EXPORT Vector&	transform_coord(Vector &u, const Vector &v, const Matrix &M);
- COMMON_BASE_EXPORT Vector	transform_coord(const Vector &v, const Matrix& M);
- COMMON_BASE_EXPORT Vector2f& transform_coord(Vector2f &u, const Vector2f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector&	    transform_coord(Vector &u, const Vector &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector	    transform_coord(const Vector &v, const Matrix& M);
+ COMMON_BASE_EXPORT Vector2f&   transform_coord(Vector2f &u, const Vector2f &v, const Matrix &M);
  COMMON_BASE_EXPORT Vector2f	transform_coord(const Vector2f &v, const Matrix &M);
- COMMON_BASE_EXPORT Vector4f& transform_coord(Vector4f &u, const Vector4f &v, const Matrix &M);
+ COMMON_BASE_EXPORT Vector4f&   transform_coord(Vector4f &u, const Vector4f &v, const Matrix &M);
  COMMON_BASE_EXPORT Vector4f	transform_coord(const Vector4f &v, const Matrix &M);
  COMMON_BASE_EXPORT Bounds3f&	transform_bound(Bounds3f &OutBound, const Bounds3f &InBound, const Matrix &M);
  COMMON_BASE_EXPORT Bounds3f	transform_bound(const Bounds3f InBound, const Matrix &M);
 
  COMMON_BASE_EXPORT inline_ Matrix & frustum( Matrix &M, const float l, const float r, const float b,
-                          const float t, const float n, const float f);
+                                                const float t, const float n, const float f);
 
 /** build perspective matrix */
  COMMON_BASE_EXPORT inline_ Matrix& perspective(Matrix &vOut, float fov, float aspect, float n, float f);
@@ -239,9 +239,6 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
                                          const Vector &planeNorm,
                                          const Vector &linePos, 
                                          const Vector &lineDir);
-
-
-
 
 /** ray triangle intersection */
  COMMON_BASE_EXPORT inline_ int IntersectRayWithTriangle(const Vector &start,
@@ -299,7 +296,7 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 
 
  COMMON_BASE_EXPORT inline_ void RotateMatrixAxisSelf(Matrix &out,const Vector &u, float rad);
- COMMON_BASE_EXPORT inline_ void AngleMatrix( const float Yaw, const float Pitch, const float Roll, Matrix& matrix );
+ COMMON_BASE_EXPORT inline_ void AngleMatrix(const float Yaw, const float Pitch, const float Roll, Matrix& matrix );
 
  COMMON_BASE_EXPORT inline_ bool IsPointInRect(float x, float y, const Vector2f &Start, const Vector2f &End);
  COMMON_BASE_EXPORT inline_ Vector2f GetSegmentNormal(const Vector2f &Start, const Vector2f &End);
@@ -325,27 +322,29 @@ COMMON_BASE_EXPORT Matrix&  scale(Matrix &pValue, float sx, float sy, float sz);
 											  float *mu1,
 											  float *mu2);
 
- COMMON_BASE_EXPORT inline_ bool	TestBBoxIntercection(const Bounds2f& A, const Bounds2f& B);
- COMMON_BASE_EXPORT inline_ bool	TestBBoxIntercection(const Bounds3f& A, const Bounds3f& B);
+ COMMON_BASE_EXPORT inline_ bool TestBBoxIntercection(const Bounds2f& A, const Bounds2f& B);
+ COMMON_BASE_EXPORT inline_ bool TestBBoxIntercection(const Bounds3f& A, const Bounds3f& B);
  COMMON_BASE_EXPORT inline_ bool FrustrumIntersectBBox(const FrustrumCullinfo& cullinfo, const Bounds3f& B);
  COMMON_BASE_EXPORT inline_ bool FrustrumIntersectBBox(const UniCullinfo& cullinfo, const Bounds3f& B);
 
 // linear interpolation
- COMMON_BASE_EXPORT inline_ float Lerp(float t, float a, float b);
- COMMON_BASE_EXPORT inline_ Vector& Lerp(Vector &OutVec, float t, const Vector &a, const Vector &b);
- COMMON_BASE_EXPORT inline_ Vector4f& Lerp(Vector4f &OutVec, float t, const Vector4f &a, const Vector4f &b);
- COMMON_BASE_EXPORT inline_ Pose& Lerp(Pose &OutPose, float t, const Pose &a, const Pose &b);
+ COMMON_BASE_EXPORT inline_ float       Lerp(float t, float a, float b);
+ COMMON_BASE_EXPORT inline_ Vector&     Lerp(Vector &OutVec, float t, const Vector &a, const Vector &b);
+ COMMON_BASE_EXPORT inline_ Vector4f&   Lerp(Vector4f &OutVec, float t, const Vector4f &a, const Vector4f &b);
+ COMMON_BASE_EXPORT inline_ Pose&       Lerp(Pose &OutPose, float t, const Pose &a, const Pose &b);
 
  COMMON_BASE_EXPORT inline_ bool BuildEdgeList(std::vector<UniEdge> &OutEdges, const std::vector<UniTriangle> &TriInfo);
 
  COMMON_BASE_EXPORT float det2x2(float a1, float a2,
-						   float b1, float b2);
+						         float b1, float b2);
 
  COMMON_BASE_EXPORT float det3x3(float a1, float a2, float a3,
 							float b1, float b2, float b3, 
 							float c1, float c2, float c3);
 
  COMMON_BASE_EXPORT inline_ float GetDistToLine(const Vector &Point, const Vector &start, const Vector &end);
+
+ COMMON_BASE_EXPORT inline_ bool fequal(float a, float with);
 
 // clamp inBound into toBound if not overlap result invalid bound
  //COMMON_BASE_EXPORT Bounds2f ClampBound(const Bounds2f &inBound, const Bounds2f &toBound);

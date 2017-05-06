@@ -75,6 +75,7 @@ if (${ENABLE_TESTING})
 	add_executable( ${PROJECT_TEST_NAME}
 					ut/ut_treemap.cpp
 					ut/ut_treemap_fixture.h
+					ut/ut_matrix_transform.cpp
 					ut/main.cpp )
 	
 	target_link_libraries(${PROJECT_TEST_NAME} ${PROJECT_NAME} ${GTEST_BOTH_LIBRARIES})
@@ -88,5 +89,9 @@ if (${ENABLE_TESTING})
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					LIBRARY_OUTPUT_DIRECTORY_RELEASE ${G_BIN_DIR}
 					)
-
+	
+	set_target_properties( ${PROJECT_TEST_NAME} PROPERTIES
+            OUTPUT_NAME ${PROJECT_TEST_NAME}.test
+            DEBUG_POSTFIX ""
+        )
 endif( ${ENABLE_TESTING} )			

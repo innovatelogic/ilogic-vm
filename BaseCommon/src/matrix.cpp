@@ -556,5 +556,67 @@ float Matrix::Determinant() const
 						  _41, _42, _43);
 }
 
+//----------------------------------------------------------------------------------------------
+float Matrix::Determinant3x3() const
+{
+    return _row0.Dot(_row1.Cross(_row2));
+}
+
+//----------------------------------------------------------------------------------------------
+Matrix Matrix::getInverse3x3() const
+{
+    const float det = Determinant3x3();
+    Matrix inverse;
+
+    if (det != 0)
+    {
+        const float invDet = 1.0f / det;
+
+        inverse.row0.x = invDet * (row1.y * row2.z - row2.y * row1.z);
+        inverse.row0.y = invDet * -(row0.y * row2.z - row2.y * row0.z);
+        inverse.row0.z = invDet * (row0.y * row1.z - row0.z * row1.y);
+
+        inverse.row1.x = invDet * -(row1.x * row2.z - row1.z * row2.x);
+        inverse.row1.y = invDet * (row0.x * row2.z - row0.z * row2.x);
+        inverse.row1.z = invDet * -(row0.x * row1.z - row0.z * row1.x);
+
+        inverse.row2.x = invDet * (row1.x * row2.y - row1.y * row2.x);
+        inverse.row2.y = invDet * -(row0.x * row2.y - row0.y * row2.x);
+        inverse.row2.z = invDet * (row0.x * row1.y - row1.x * row0.y);
+
+        return inverse;
+    }
+    else
+    {
+        return Matrix();
+    }
+}
+
+//----------------------------------------------------------------------------------------------
+bool Matrix::equal(const Matrix &other) const
+{
+    TFlt32 a00, a10, a20, a30;   // standard names for components
+    TFlt32 a01, a11, a21, a31;   // standard names for components
+    TFlt32 a02, a12, a22, a32;   // standard names for components
+    TFlt32 a03, a13, a23, a33;   // standard names for components
+
+    return
+        fequal(_11, other._11) &&
+        fequal(_12, other._12) &&
+        fequal(_13, other._13) &&
+        fequal(_14, other._14) &&
+        fequal(_21, other._21) &&
+        fequal(_22, other._22) &&
+        fequal(_23, other._23) &&
+        fequal(_24, other._24) &&
+        fequal(_31, other._31) &&
+        fequal(_32, other._32) &&
+        fequal(_33, other._33) &&
+        fequal(_34, other._34) &&
+        fequal(_41, other._41) &&
+        fequal(_42, other._42) &&
+        fequal(_43, other._43) &&
+        fequal(_44, other._44);
+}
 }
 }

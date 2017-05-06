@@ -91,19 +91,18 @@ public:
     * call after DoBuildWorldTransform_
     * complexity: N(n)??
     */
-    virtual void            DoBuildCompounds();
+    virtual void    DoBuildCompounds();
 
-	inline_ virtual	Vector2f	GetTransformedSize_() const { return Vector2f(1.f, 1.f); }
+	inline_ virtual	Vector2f    GetTransformedSize_() const { return Vector2f(1.f, 1.f); }
 
 	/** Transforms local space position in to global space */
-	virtual Vector&		LocalToGlobalTransform(Vector& OutGlobalPoint, const Vector& InLocalPoint) const;
-	virtual Vector&		GlobalToLocalTransform(Vector& OutLocalPoint, const Vector& InGlobalPoint) const;
-	virtual Matrix		CalcWorldTransform() const;
+	virtual Vector& LocalToGlobalTransform(Vector& OutGlobalPoint, const Vector& InLocalPoint) const;
+	virtual Vector& GlobalToLocalTransform(Vector& OutLocalPoint, const Vector& InGlobalPoint) const;
+	virtual Matrix  CalcWorldTransform() const;
 
-	virtual bool		IsValidBounds() { return m_Bounds.IsValid(); }
+	virtual bool    IsValidBounds() { return m_Bounds.IsValid(); }
 	
     void AddYawPitchRoll(const Vector &ypr) { m_YawPitchRoll += ypr; }
-
 
     /*!
      * Hierarchy helper function
