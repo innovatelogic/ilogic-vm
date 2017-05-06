@@ -484,7 +484,10 @@ Matrix& Matrix::invert(Matrix & B, const Matrix & A)
 //----------------------------------------------------------------------------------------------
 Matrix Matrix::inverse() const
 {
-	Matrix Result;
+    Matrix inv = getInverse3x3();
+    inv.t = transformTranspose(-t);
+    return inv;
+	/*Matrix Result;
 	float det = Determinant();
 
 	if (det == 0.f){
@@ -500,7 +503,7 @@ Matrix Matrix::inverse() const
 	Result._31 *= oodet; Result._32 *= oodet; Result._33 *= oodet; Result._34 *= oodet;
 	Result._41 *= oodet; Result._42 *= oodet; Result._43 *= oodet; Result._44 *= oodet;
 
-	return Result;
+	return Result;*/
 }
 
 
@@ -595,11 +598,6 @@ Matrix Matrix::getInverse3x3() const
 //----------------------------------------------------------------------------------------------
 bool Matrix::equal(const Matrix &other) const
 {
-    TFlt32 a00, a10, a20, a30;   // standard names for components
-    TFlt32 a01, a11, a21, a31;   // standard names for components
-    TFlt32 a02, a12, a22, a32;   // standard names for components
-    TFlt32 a03, a13, a23, a33;   // standard names for components
-
     return
         fequal(_11, other._11) &&
         fequal(_12, other._12) &&
@@ -617,6 +615,12 @@ bool Matrix::equal(const Matrix &other) const
         fequal(_42, other._42) &&
         fequal(_43, other._43) &&
         fequal(_44, other._44);
+}
+
+//----------------------------------------------------------------------------------------------
+Vector Matrix::transformTranspose(const Vector &other) const
+{
+    return Vector(_row0.Dot(other), _row1.Dot(other), _row2.Dot(other));
 }
 }
 }

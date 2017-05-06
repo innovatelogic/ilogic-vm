@@ -82,10 +82,11 @@ public:
 	float Determinant() const;
     float Determinant3x3() const;
 
-    /*
-        Compare matrix each component +/-epsilon tolerance
-    */
+    //! Compare matrix each component +/-epsilon tolerance
     bool equal(const Matrix &other) const;
+
+    //! Transform vec by matrix transpose v' = M^t*v
+    Vector transformTranspose(const Vector &other) const;
 
 public:
 	union {

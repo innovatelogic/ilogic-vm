@@ -59,6 +59,9 @@ public:
 	 TFlt32  Dot(const Vector& _vector_other)const;
 	 Vector Cross(const Vector& _vector_other)const;
 
+     //! Compare vector's each component +/-epsilon tolerance
+     bool equal(const Vector &other) const;
+
 public:
 	union  // data
 	{

@@ -1,6 +1,5 @@
 #include "vector.h"
-#include <math.h>
-#include <assert.h>
+#include "mathlib.h"
 
 namespace oes
 {
@@ -303,6 +302,16 @@ Vector Vector::Cross(const Vector &_vector_other) const
     return CrossProduct(*this, _vector_other, out);
 }
 
+//----------------------------------------------------------------------------------------------
+bool Vector::equal(const Vector &other) const
+{
+    return
+        fequal(x, other.x) &&
+        fequal(y, other.y) &&
+        fequal(z, other.z);
+}
+
+//----------------------------------------------------------------------------------------------
 TFlt32 sq_length(const Vector & n)
 {
     return n.x * n.x + n.y * n.y + n.z * n.z;
