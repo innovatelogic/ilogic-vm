@@ -1,7 +1,10 @@
 #pragma once
 
 #include "defexport.h"
+
+#include "itype.h"
 #include <vector>
+#include <memory>
 
 namespace oes
 {
@@ -95,6 +98,8 @@ namespace oes
 
             struct SInterfaceDecl	**m_pInterfaces;
             unsigned int			m_nIntfSize;
+
+            std::unique_ptr<oes::rflex::itype> m_type;
         };
     }
 }
