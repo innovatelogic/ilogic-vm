@@ -73,10 +73,6 @@ namespace oes
                 Vector bw;
                 transform_coord(bw, b, root_AB);
 
-                bool flag = cw.equal(bw);
-                if (!flag) {
-                    int k = 0;
-                }
                 EXPECT_TRUE(cw.equal(bw));
             }
         }
