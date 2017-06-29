@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Foundation/StdafxFoundation.h"
+#include "coresdkafx.h"
 #include "ViewportInterface.h"
 #include "IDrawInterface.h"
 #include "game_types.h"
@@ -44,7 +45,7 @@ namespace core_sdk_api
 
         void InputMouse(const MouseInputData &input, const TIViewport *viewport = nullptr);
         void InputMouse(const MouseMoveInputData &input, const TIViewport *viewport = nullptr);
-        void InputMouseWheel(float ds, int x, int y, SRenderContext *context = nullptr);
+        void InputMouseWheel(float ds, int x, int y, oes::d3d::SRenderContext *context = nullptr);
 
         IDrawInterface* GetFocused() const;
         CActor*			GetFocusedActor() const;

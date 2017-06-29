@@ -6,9 +6,6 @@
 #include "variant_render_adj.h"
 #include "variant_render_command.h"
 
-class D3DDriver;
-class SRenderContext;
-
 namespace RenderSDK
 {
 class EXPORT RenderAdjacency final
@@ -83,7 +80,7 @@ public:
 	};
 
 public:
-	RenderAdjacency(D3DDriver *driver);
+	RenderAdjacency(oes::d3d::D3DDriver *driver);
 	~RenderAdjacency();
 
 	SRTVariant_Adjacency& PushRenderQuevueAdjaency();
@@ -107,7 +104,7 @@ public:
 	LPRTVARIANTCMD begin_cmd(size_t index) const;
 	LPRTVARIANTCMD end_cmd(size_t index) const;
 
-	void render(SRenderContext *pContext);
+	void render(oes::d3d::SRenderContext *pContext);
 
 	// aux helpers
 	void auxDrawDot(const Vector &point, unsigned int Color, bool bZEnable = true);
@@ -122,9 +119,9 @@ protected:
 
 	void renderAux(const LPRTVARIANT adjacency);
 
-	void renderRenderTargets(SRenderContext *pContext);
+	void renderRenderTargets(oes::d3d::SRenderContext *pContext);
 
-	void renderTargets(SRenderContext *pContext);
+	void renderTargets(oes::d3d::SRenderContext *pContext);
 
 private:
 	LPRTVARIANT m_pVariantAdjacency;
@@ -137,6 +134,6 @@ private:
 
 	volatile int m_ActiveStack;
 
-	D3DDriver	*m_pRenderDriver;
+    oes::d3d::D3DDriver	*m_pRenderDriver;
 };
 } // RenderSDK

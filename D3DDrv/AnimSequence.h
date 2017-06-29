@@ -1,30 +1,35 @@
-#ifndef __animsequence_h__
-#define __animsequence_h__
+
+#pragma once
 
 #ifdef WIN32
-#pragma once
 #pragma warning(disable: 4251)
 #endif
 
 #include "dxstdafx.h"
 
-class D3DDRIVER_API AnimSequence
+namespace oes
 {
-	typedef std::vector<class AnimFrame*> TAnimFrames;
+    namespace d3d
+    {
+        class AnimFrame;
 
-public:
-	AnimSequence(unsigned int Start, unsigned int End);
-	~AnimSequence();
+        class D3DDRIVER_API AnimSequence
+        {
+            typedef std::vector<AnimFrame*> TAnimFrames;
 
-	virtual void ReadFromStream(std::ifstream& stream, int numBones);
+        public:
+            AnimSequence(unsigned int Start, unsigned int End);
+            ~AnimSequence();
 
-//	bool operator < (const AnimSequence & Other) { return Other.StartFrame < StartFrame; }
+            virtual void ReadFromStream(std::ifstream& stream, int numBones);
 
-	unsigned int NumFrames;
-	unsigned int StartFrame;
-	unsigned int EndFrame;
-	float AnimTime;
-	TAnimFrames AnimFrames;
-};
+            //	bool operator < (const AnimSequence & Other) { return Other.StartFrame < StartFrame; }
 
-#endif//__animsequence_h__
+            unsigned int NumFrames;
+            unsigned int StartFrame;
+            unsigned int EndFrame;
+            float AnimTime;
+            TAnimFrames AnimFrames;
+        };
+    }
+}

@@ -32,256 +32,262 @@ struct SDDSURFACEDESC2
 	int dwReserved2;
 };
 
-//----------------------------------------------------------------------------------------------
-TextureNode* D3DDriver::LoadTexture(const char *URL)
+namespace oes
 {
-	// TODO: remove to separate func.
-	int Length;
-	int slength = (int)strlen(URL) + 1;
-	Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
-	wchar_t* buf = new wchar_t[Length];
-	MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
-	std::wstring wstrUrl(buf);
-	delete[] buf;
+    namespace d3d
+    {
+        //----------------------------------------------------------------------------------------------
+        TextureNode* D3DDriver::LoadTexture(const char *URL)
+        {
+            // TODO: remove to separate func.
+            int Length;
+            int slength = (int)strlen(URL) + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
+            wchar_t* buf = new wchar_t[Length];
+            MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
+            std::wstring wstrUrl(buf);
+            delete[] buf;
 
-	SRenderContext *pContext = m_stackContext.top();
+            SRenderContext *pContext = m_stackContext.top();
 
-	assert(pContext);
+            assert(pContext);
 
-	return pContext->LoadTextureW(wstrUrl.c_str());
-}
+            return pContext->LoadTextureW(wstrUrl.c_str());
+        }
 
-//----------------------------------------------------------------------------------------------
-TextureNode* D3DDriver::LoadTextureW(const wchar_t *URL)
-{
-	SRenderContext *pContext = m_stackContext.top();
+        //----------------------------------------------------------------------------------------------
+        TextureNode* D3DDriver::LoadTextureW(const wchar_t *URL)
+        {
+            SRenderContext *pContext = m_stackContext.top();
 
-	assert(pContext);
+            assert(pContext);
 
-	return pContext->LoadTextureW(URL);
-}
+            return pContext->LoadTextureW(URL);
+        }
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::UnregisterTexture(TextureNode *pNode)
-{
-	SRenderContext *pContext = pNode->GetOwnerContext();
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::UnregisterTexture(TextureNode *pNode)
+        {
+            SRenderContext *pContext = pNode->GetOwnerContext();
 
-	assert(pContext);
-	
-	return pContext->UnregisterTexture(pNode);
-}
+            assert(pContext);
 
-//----------------------------------------------------------------------------------------------
-CFontNode* D3DDriver::LoadFont(const char *FaceName, int Height)
-{
-	SRenderContext *pContext = m_stackContext.top();
+            return pContext->UnregisterTexture(pNode);
+        }
 
-	assert(pContext);
+        //----------------------------------------------------------------------------------------------
+        CFontNode* D3DDriver::LoadFont(const char *FaceName, int Height)
+        {
+            SRenderContext *pContext = m_stackContext.top();
 
-	return pContext->LoadFontW(FaceName, Height);
-}
+            assert(pContext);
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::UnregisterFont(const CFontNode *pFont)
-{
-	SRenderContext *pContext = pFont->GetOwnerContext();
-	
-	assert(pContext);
+            return pContext->LoadFontW(FaceName, Height);
+        }
 
-	return pContext->UnregisterFont(pFont);
-}
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::UnregisterFont(const CFontNode *pFont)
+        {
+            SRenderContext *pContext = pFont->GetOwnerContext();
 
-//----------------------------------------------------------------------------------------------
-MaterialEffectNode*	D3DDriver::LoadMaterialEffect(const char *URL)
-{
-	// TODO: remove to separate func.
-	int Length;
-	int slength = (int)strlen(URL) + 1;
-	Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
-	wchar_t* buf = new wchar_t[Length];
-	MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
-	std::wstring wstrUrl(buf);
-	delete[] buf;
+            assert(pContext);
 
-	SRenderContext *pContext = m_stackContext.top();
-	assert(pContext);
+            return pContext->UnregisterFont(pFont);
+        }
 
-	return pContext->LoadMaterialEffectW(wstrUrl.c_str());
-}
+        //----------------------------------------------------------------------------------------------
+        MaterialEffectNode*	D3DDriver::LoadMaterialEffect(const char *URL)
+        {
+            // TODO: remove to separate func.
+            int Length;
+            int slength = (int)strlen(URL) + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
+            wchar_t* buf = new wchar_t[Length];
+            MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
+            std::wstring wstrUrl(buf);
+            delete[] buf;
 
-//----------------------------------------------------------------------------------------------
-MaterialEffectNode*	D3DDriver::LoadMaterialEffectW(const wchar_t * URL)
-{
-	SRenderContext *pContext = m_stackContext.top();
-	assert(pContext);
+            SRenderContext *pContext = m_stackContext.top();
+            assert(pContext);
 
-	return pContext->LoadMaterialEffectW(URL);
-}
+            return pContext->LoadMaterialEffectW(wstrUrl.c_str());
+        }
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::UnregisterMaterialEffect(MaterialEffectNode *pNode)
-{
-	SRenderContext *pContext = pNode->GetOwnerContext();
+        //----------------------------------------------------------------------------------------------
+        MaterialEffectNode*	D3DDriver::LoadMaterialEffectW(const wchar_t * URL)
+        {
+            SRenderContext *pContext = m_stackContext.top();
+            assert(pContext);
 
-	assert(pContext);
+            return pContext->LoadMaterialEffectW(URL);
+        }
 
-	return pContext->UnregisterMaterialEffect(pNode);
-}
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::UnregisterMaterialEffect(MaterialEffectNode *pNode)
+        {
+            SRenderContext *pContext = pNode->GetOwnerContext();
 
-//----------------------------------------------------------------------------------------------
-CSceneMeshNode*	D3DDriver::GetSceneMeshNode(const char *pURL /*= 0*/)
-{
-	// TODO: remove to separate func.
-	int Length = 0;
-	int slength = (int)strlen(pURL) + 1;
-	Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
-	wchar_t* buf = new wchar_t[Length];
-	MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
-	std::wstring wstrUrl(buf);
-	delete[] buf;
+            assert(pContext);
 
-	SRenderContext *pContext = m_stackContext.top();
-	assert(pContext);
+            return pContext->UnregisterMaterialEffect(pNode);
+        }
 
-	return pContext->GetSceneMeshNode(wstrUrl.c_str());
-}
+        //----------------------------------------------------------------------------------------------
+        CSceneMeshNode*	D3DDriver::GetSceneMeshNode(const char *pURL /*= 0*/)
+        {
+            // TODO: remove to separate func.
+            int Length = 0;
+            int slength = (int)strlen(pURL) + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
+            wchar_t* buf = new wchar_t[Length];
+            MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
+            std::wstring wstrUrl(buf);
+            delete[] buf;
 
-//----------------------------------------------------------------------------------------------
-CSceneMeshNode*	D3DDriver::GetSceneMeshNodeW(const wchar_t *pURL /*= 0*/)
-{
-	SRenderContext *pContext = m_stackContext.top();
-	assert(pContext);
+            SRenderContext *pContext = m_stackContext.top();
+            assert(pContext);
 
-	return pContext->GetSceneMeshNode(pURL);
-}
+            return pContext->GetSceneMeshNode(wstrUrl.c_str());
+        }
 
-//----------------------------------------------------------------------------------------------
-CSceneMeshNode* D3DDriver::AllocSceneMeshNode(const char *pURL /*= 0*/)
-{
-	// TODO: remove to separate func.
-	int Length = 0;
-	int slength = (int)strlen(pURL) + 1;
-	Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
-	wchar_t* buf = new wchar_t[Length];
-	MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
-	std::wstring wstrUrl(buf);
-	delete[] buf;
+        //----------------------------------------------------------------------------------------------
+        CSceneMeshNode*	D3DDriver::GetSceneMeshNodeW(const wchar_t *pURL /*= 0*/)
+        {
+            SRenderContext *pContext = m_stackContext.top();
+            assert(pContext);
 
-	return AllocSceneMeshNodeW(wstrUrl.c_str());
-}
+            return pContext->GetSceneMeshNode(pURL);
+        }
 
-//----------------------------------------------------------------------------------------------
-CSceneMeshNode* D3DDriver::AllocSceneMeshNodeW(const wchar_t *pURL /*= 0*/)
-{
-	SRenderContext *pContext = m_stackContext.top();
-	
-	assert(pContext);
+        //----------------------------------------------------------------------------------------------
+        CSceneMeshNode* D3DDriver::AllocSceneMeshNode(const char *pURL /*= 0*/)
+        {
+            // TODO: remove to separate func.
+            int Length = 0;
+            int slength = (int)strlen(pURL) + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
+            wchar_t* buf = new wchar_t[Length];
+            MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
+            std::wstring wstrUrl(buf);
+            delete[] buf;
 
-	return pContext->AllocSceneMeshNode(pURL);
-}
+            return AllocSceneMeshNodeW(wstrUrl.c_str());
+        }
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::UnregisterSceneMeshNode(const CSceneMeshNode *pNode)
-{
-	SRenderContext *pContext = pNode->GetOwnerContext();
-	
-	assert(pContext);
+        //----------------------------------------------------------------------------------------------
+        CSceneMeshNode* D3DDriver::AllocSceneMeshNodeW(const wchar_t *pURL /*= 0*/)
+        {
+            SRenderContext *pContext = m_stackContext.top();
 
-	return pContext->UnregisterSceneMeshNode(pNode);
-}
+            assert(pContext);
 
-//----------------------------------------------------------------------------------------------
-SkeletonNode* D3DDriver::GetSkeletonNode(const char *filename)
-{
-	SkeletonNode * Node = NULL;
+            return pContext->AllocSceneMeshNode(pURL);
+        }
 
-	TSkeletonNodes::const_iterator Iter = SkeletonNodes.find(filename);
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::UnregisterSceneMeshNode(const CSceneMeshNode *pNode)
+        {
+            SRenderContext *pContext = pNode->GetOwnerContext();
 
-	if (Iter != SkeletonNodes.end())
-	{
-		if (Iter->second->IsClear())
-		{
-			Node = Iter->second;
-			Node->AddRef();
-		}
-		else
-		{
-			Iter->second->AddRef();
-			return Iter->second;
-		}
-	}
-	else
-	{
-		Node = new SkeletonNode();
-		Node->AddRef();
-	}
+            assert(pContext);
 
-	if (Node->ReadMarkers(std::string(filename).substr(0, std::string(filename).rfind('.')) + ".mrk"))
-	{
-		std::ifstream stream;
-		stream.open(filename, std::ios::in);
+            return pContext->UnregisterSceneMeshNode(pNode);
+        }
 
-		if (stream.is_open())
-		{
-			Node->ReadFromStream(stream);
-			stream.close();
-		}
-	}
+        //----------------------------------------------------------------------------------------------
+        SkeletonNode* D3DDriver::GetSkeletonNode(const char *filename)
+        {
+            SkeletonNode * Node = NULL;
 
-	SkeletonNodes.insert(std::make_pair(filename, Node));
-	return Node;
-}
+            TSkeletonNodes::const_iterator Iter = SkeletonNodes.find(filename);
 
-//----------------------------------------------------------------------------------------------
-RenderDriver::RenderTargetNode* D3DDriver::CreateRenderTarget(unsigned int width, unsigned height)
-{
-	SRenderContext *pContext = m_stackContext.top();
+            if (Iter != SkeletonNodes.end())
+            {
+                if (Iter->second->IsClear())
+                {
+                    Node = Iter->second;
+                    Node->AddRef();
+                }
+                else
+                {
+                    Iter->second->AddRef();
+                    return Iter->second;
+                }
+            }
+            else
+            {
+                Node = new SkeletonNode();
+                Node->AddRef();
+            }
 
-	assert(pContext);
+            if (Node->ReadMarkers(std::string(filename).substr(0, std::string(filename).rfind('.')) + ".mrk"))
+            {
+                std::ifstream stream;
+                stream.open(filename, std::ios::in);
 
-	return pContext->AllocRenderTarget(width, height);
-}
-//----------------------------------------------------------------------------------------------
-void D3DDriver::ReleaseRenderTarget(RenderDriver::RenderTargetNode *rt)
-{
-	SRenderContext * const pContext = rt->GetOwnerContext();
+                if (stream.is_open())
+                {
+                    Node->ReadFromStream(stream);
+                    stream.close();
+                }
+            }
 
-	assert(pContext);
+            SkeletonNodes.insert(std::make_pair(filename, Node));
+            return Node;
+        }
 
-	pContext->FreeRenderTarget(rt);
-}
+        //----------------------------------------------------------------------------------------------
+        RenderDriver::RenderTargetNode* D3DDriver::CreateRenderTarget(unsigned int width, unsigned height)
+        {
+            SRenderContext *pContext = m_stackContext.top();
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::LoadUncompressedTGA(TextureNode * pOut, const wchar_t *URL, FILE *file)
-{
-	bool bResult = false;
+            assert(pContext);
 
-	return bResult;
-}
+            return pContext->AllocRenderTarget(width, height);
+        }
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::ReleaseRenderTarget(RenderDriver::RenderTargetNode *rt)
+        {
+            SRenderContext * const pContext = rt->GetOwnerContext();
 
-//----------------------------------------------------------------------------------------------
-bool D3DDriver::LoadCompressedTGA(TextureNode * pOut, const wchar_t *URL, FILE *file)
-{
-	bool bResult = false;
+            assert(pContext);
 
-	return bResult;
-}
+            pContext->FreeRenderTarget(rt);
+        }
 
-//----------------------------------------------------------------------------------------------
-SubMeshAgregator* D3DDriver::GetD3DMeshNode(const char * filename)
-{
-	SubMeshAgregator * pAgregator = NULL;
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::LoadUncompressedTGA(TextureNode * pOut, const wchar_t *URL, FILE *file)
+        {
+            bool bResult = false;
 
-	TSubMeshAgregatorNodes::iterator Iter = SubMeshAgregatorNodes.find(filename);
+            return bResult;
+        }
 
-	if (Iter != SubMeshAgregatorNodes.end())
-	{
-		pAgregator = Iter->second;
-	}
-	else
-	{		
-		pAgregator = new SubMeshAgregator(this);
-	}
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::LoadCompressedTGA(TextureNode * pOut, const wchar_t *URL, FILE *file)
+        {
+            bool bResult = false;
 
-	return pAgregator;
+            return bResult;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        SubMeshAgregator* D3DDriver::GetD3DMeshNode(const char * filename)
+        {
+            SubMeshAgregator * pAgregator = NULL;
+
+            TSubMeshAgregatorNodes::iterator Iter = SubMeshAgregatorNodes.find(filename);
+
+            if (Iter != SubMeshAgregatorNodes.end())
+            {
+                pAgregator = Iter->second;
+            }
+            else
+            {
+                pAgregator = new SubMeshAgregator(this);
+            }
+
+            return pAgregator;
+        }
+    }
 }

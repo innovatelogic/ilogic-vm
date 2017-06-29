@@ -131,7 +131,7 @@ public:
     IObjectAbstract*	 GetSelected() const { return m_pSelectedActor; }
 	void SetSelected(IObjectAbstract *pActor) { m_pSelectedActor = pActor; }
 
-	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
+	void SetRenderContext(oes::d3d::SRenderContext *pContext) { m_pRenderContext = pContext; }
 
     // Used with Views: Overridden create function sets required listview styles
     HWND Create(HWND hWndParent, 
@@ -256,7 +256,7 @@ private:
 	BOOL			m_bInit;
 
 	CCoreSDK		*m_pAppMain;
-	SRenderContext	*m_pRenderContext;
+    oes::d3d::SRenderContext	*m_pRenderContext;
 
     std::shared_ptr<oes::rflex::PropertyReactor<IObjectAbstract>> m_propReactor;
 

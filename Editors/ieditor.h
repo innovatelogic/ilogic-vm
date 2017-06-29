@@ -4,10 +4,10 @@
 #include "icommand.h"
 #include "icommand_buffer.h"
 #include "StdafxFoundation.h"
+#include "D3DDriver.h"
 #include <memory>
 #include <assert.h>
 
-class SRenderContext;
 class CCoreSDK;
 class IDrawInterface;
 
@@ -29,7 +29,7 @@ public:
     virtual size_t  GetUndoCommandBatchSize(size_t index) const = 0;
     virtual size_t  GetRedoCommandBatchSize(size_t index) const = 0;
 
-    virtual SRenderContext* GetRenderContext() const = 0;
+    virtual oes::d3d::SRenderContext* GetRenderContext() const = 0;
 
     virtual bool    Open(const std::wstring &path) = 0;
     virtual bool    Save(const std::wstring &path) = 0;

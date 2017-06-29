@@ -3,7 +3,6 @@
 #include "module.h" 
 #include "editor.h"
 
-class SRenderContext;
 class CComp_EnvSceneInfo;
 class CModelViewer;
 class CActor;
@@ -28,7 +27,7 @@ namespace editors
 
         CCoreSDK* GetApp() const override;
 
-        SRenderContext* GetRenderContext() const override;
+        oes::d3d::SRenderContext* GetRenderContext() const override;
 
         bool    Open(const std::wstring &path) override;
         bool    Save(const std::wstring &path) override;

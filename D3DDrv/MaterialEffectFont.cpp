@@ -1,26 +1,32 @@
 #include "d3ddriverstdafx.h"
 
-//----------------------------------------------------------------------------------------------
-CMaterialEffectFont::CMaterialEffectFont(const class D3DDriver *pInterface)
-: BaseMaterial(pInterface)
+namespace oes
 {
+    namespace d3d
+    {
+        //----------------------------------------------------------------------------------------------
+        CMaterialEffectFont::CMaterialEffectFont(const D3DDriver *pInterface)
+            : BaseMaterial(pInterface)
+        {
 
-}
+        }
 
-//----------------------------------------------------------------------------------------------
-CMaterialEffectFont::~CMaterialEffectFont()
-{
+        //----------------------------------------------------------------------------------------------
+        CMaterialEffectFont::~CMaterialEffectFont()
+        {
 
-}
+        }
 
-//----------------------------------------------------------------------------------------------
-bool CMaterialEffectFont::Release()
-{
-	return true;
-}
+        //----------------------------------------------------------------------------------------------
+        bool CMaterialEffectFont::Release()
+        {
+            return true;
+        }
 
-//----------------------------------------------------------------------------------------------
-void CMaterialEffectFont::Affect()
-{
+        //----------------------------------------------------------------------------------------------
+        void CMaterialEffectFont::Affect()
+        {
 
+        }
+    }
 }

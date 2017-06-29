@@ -7,7 +7,7 @@ Comp_RenderTarget::Comp_RenderTarget(const CObjectAbstract *parent)
 : Super(parent)
 , m_pRenderTarget(nullptr)
 {
-	m_pRenderTarget = Alloc_D3DRenderTarget(GetRenderComponent()->GetRenderDriver());
+	m_pRenderTarget = oes::d3d::Alloc_D3DRenderTarget(GetRenderComponent()->GetRenderDriver());
 }
 
 //----------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ Comp_RenderTarget::Comp_RenderTarget(const Comp_RenderTarget &source)
 //----------------------------------------------------------------------------------------------
 Comp_RenderTarget::~Comp_RenderTarget()
 {
-	Release_D3DRenderTarget(m_pRenderTarget);
+    oes::d3d::Release_D3DRenderTarget(m_pRenderTarget);
 	delete m_pRenderTarget;
 	m_pRenderTarget = NULL;
 }
@@ -37,7 +37,7 @@ bool Comp_RenderTarget::CreateRenderTarget(unsigned int width, unsigned int heig
 }
 
 //----------------------------------------------------------------------------------------------
-const D3DRenderTarget* Comp_RenderTarget::GetRenderTarget() const
+const oes::d3d::D3DRenderTarget* Comp_RenderTarget::GetRenderTarget() const
 {
 	return m_pRenderTarget;
 }

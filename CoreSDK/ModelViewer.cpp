@@ -37,10 +37,10 @@ void CModelViewer::Initialize()
 	CRenderSDK *pRenderSDK = pApp->GetRenderSDK();
 	assert(pRenderSDK);
 
-	D3DDriver *pDriver = pRenderSDK->GetRenderDriver();
+    oes::d3d::D3DDriver *pDriver = pRenderSDK->GetRenderDriver();
 	assert(pDriver);
 
-	m_pRenderContext = new SRenderContext(pDriver);
+	m_pRenderContext = new oes::d3d::SRenderContext(pDriver);
 
 	m_pCamera->SetRenderContext(m_pRenderContext);
 
@@ -49,6 +49,11 @@ void CModelViewer::Initialize()
 
 	Super::Initialize();
 }
+/*
+CCamera* CModelViewer::GetCamera() const
+{ 
+    return m_pCamera; 
+}*/
 
 //----------------------------------------------------------------------------------------------
 void CModelViewer::DoDraw()
@@ -305,7 +310,7 @@ void CModelViewer::RebuildMesh(const char *diffuseTexture)
 	unsigned int numDistinctBones = 0;
 	std::vector<int> VecBoneRemapper;
 
-	SubMeshNode *pSubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+    oes::d3d::SubMeshNode *pSubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 
 	pSubMesh->InitializeVertexData(	GetRenderComponent()->GetRenderDriver(),
 		(float*)vertices,
@@ -331,18 +336,18 @@ void CModelViewer::RebuildMesh(const char *diffuseTexture)
 		m_pMaterialEffect->pMaterialEffect->fog = false;
 	}
 
-	D3DMesh *dx_mesh = m_pMeshComponent->GetD3DMesh();
+	oes::d3d::D3DMesh *dx_mesh = m_pMeshComponent->GetD3DMesh();
 
 	dx_mesh->Clear(true);
 
-	CSceneMeshNode *pSceneMesh = new CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
+    oes::d3d::CSceneMeshNode *pSceneMesh = new oes::d3d::CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
 	pSceneMesh->AddRef();
 
 	pSceneMesh->GetSubMeshNodes().push_back(pSubMesh);
 
 	dx_mesh->SetSceneMeshNode(pSceneMesh);
 
-	dx_mesh->AddMesh(SMeshEffectPair(pSubMesh, m_pMaterialEffect->pMaterialEffect));
+	dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(pSubMesh, m_pMaterialEffect->pMaterialEffect));
 
 	// finally set mesh parameters
 	// UGLY need research for correct parameters set

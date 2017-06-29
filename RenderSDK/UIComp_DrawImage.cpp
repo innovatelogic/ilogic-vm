@@ -177,10 +177,10 @@ void UIComp_DrawImage::DoRebuildMesh()
 	unsigned int numDistinctBones = 0;
 	std::vector<int> VecBoneRemapper;
 
-	CSceneMeshNode *pSceneMesh = new CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
+    oes::d3d::CSceneMeshNode *pSceneMesh = new oes::d3d::CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
 	pSceneMesh->AddRef();
 
-	SubMeshNode	*SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+    oes::d3d::SubMeshNode	*SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 
 	SubMesh->InitializeVertexData(GetRenderComponent()->GetRenderDriver(),
 								(float*)vertices,
@@ -206,7 +206,7 @@ void UIComp_DrawImage::DoRebuildMesh()
 
 	MaterialEffect->SetUV(UV);
 
-	D3DMesh * dx_mesh = m_pMeshComponent->GetD3DMesh();
+    oes::d3d::D3DMesh * dx_mesh = m_pMeshComponent->GetD3DMesh();
 
 	dx_mesh->Clear(true);
 	//dx_mesh->AddMesh(SMeshEffectPair(SubMesh, MaterialEffect->pMaterialEffectUI));
@@ -215,7 +215,7 @@ void UIComp_DrawImage::DoRebuildMesh()
 
 	dx_mesh->SetSceneMeshNode(pSceneMesh);
 
-	dx_mesh->AddMesh(SMeshEffectPair(SubMesh, MaterialEffect->pMaterialEffectUI));
+	dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, MaterialEffect->pMaterialEffectUI));
 
 	delete [] texcoords;
 	delete [] vertices;

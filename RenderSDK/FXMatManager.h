@@ -15,8 +15,8 @@ public:
 
 	void Release();
 
-	class MaterialEffect*	GetMaterialInstance(const char *Name);
-	void					ReleaseMaterial(class MaterialEffect *Inst);
+    oes::d3d::MaterialEffect*	GetMaterialInstance(const char *Name);
+	void					ReleaseMaterial(oes::d3d::MaterialEffect *Inst);
 
 protected:
 	bool Load(const char *Path, m_material &OutMaterial);

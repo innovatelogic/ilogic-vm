@@ -45,7 +45,7 @@ public:
 	CPanePropertyContainer(editors::TIEditor &editor);
 	~CPanePropertyContainer();
 
-    void SetRenderContext(SRenderContext *pContext);
+    void SetRenderContext(oes::d3d::SRenderContext *pContext);
 
     void Update(const T_CLASS *pSender, ESystemEventID EventId);
 

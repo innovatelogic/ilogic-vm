@@ -38,11 +38,11 @@ public:
         CALLBACK_FN pfnDirectClearObject,
         CALLBACK_EV pfnOnEventUpdate,
         HIMAGELIST hImageList,
-        SRenderContext *pRenderContext = 0);
+        oes::d3d::SRenderContext *pRenderContext = 0);
 
     ~CTreePaneContainer();
 
-    void SetRenderContext(SRenderContext *pRenderContext);
+    void SetRenderContext(oes::d3d::SRenderContext *pRenderContext);
 
     LRESULT OnCreate(UINT, WPARAM, LPARAM, BOOL&);
     LRESULT OnAppInsertObject(UINT, WPARAM, LPARAM, BOOL&);
@@ -83,7 +83,8 @@ private:
 	HIMAGELIST m_hImageList;
 
 public:
-	class SRenderContext *m_pRenderContext;
+	oes::d3d::SRenderContext *m_pRenderContext;
+
 private:
     std::shared_ptr<editors::IEditor> m_editor;
 

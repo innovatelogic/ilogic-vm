@@ -1,25 +1,31 @@
 #include "d3ddriverstdafx.h"
 
-//----------------------------------------------------------------------------------------------
-VolumeTextureNode::VolumeTextureNode()
-//: VolumeTexture(NULL)
+namespace oes
 {
+    namespace d3d
+    {
+        //----------------------------------------------------------------------------------------------
+        VolumeTextureNode::VolumeTextureNode()
+            //: VolumeTexture(NULL)
+        {
 
-}
+        }
 
-//----------------------------------------------------------------------------------------------
-VolumeTextureNode::~VolumeTextureNode()
-{
+        //----------------------------------------------------------------------------------------------
+        VolumeTextureNode::~VolumeTextureNode()
+        {
 
-}
+        }
 
-//----------------------------------------------------------------------------------------------
-void VolumeTextureNode::DoRelease()
-{
-	/*if (VolumeTexture)
-	{
-		SAFE_RELEASE(VolumeTexture);
-		VolumeTexture = NULL;
-	}*/
-	Refcount::DoRelease();
+        //----------------------------------------------------------------------------------------------
+        void VolumeTextureNode::DoRelease()
+        {
+            /*if (VolumeTexture)
+            {
+                SAFE_RELEASE(VolumeTexture);
+                VolumeTexture = NULL;
+            }*/
+            Refcount::DoRelease();
+        }
+    }
 }

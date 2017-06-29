@@ -372,40 +372,6 @@ typedef struct
 } STGADesc;
 
 //----------------------------------------------------------------------------------------------
-// Base command
-//----------------------------------------------------------------------------------------------
-class CommandBaseRI
-{
-public:
-	CommandBaseRI()
-	{
-	}
-
-	virtual ~CommandBaseRI()
-	{
-	}
-
-	virtual void Execute() = 0;
-};
-
-typedef std::vector<class CommandBaseRI*>	TVCommandListRI;
-typedef TVCommandListRI::iterator			TVCommandListIterRI;
-typedef TVCommandListRI::const_iterator		TVCommandListConstIterRI;
-
-typedef std::map<std::string, class TextureNode*> TMapTextureNode;
-typedef std::map<std::wstring, class TextureNode*> TMapTextureNodeW;
-typedef std::map<std::string, class VolumeTextureNode*> TMapVolumeTextureNode;
-typedef std::map<std::string, class MaterialEffectNode*> TMapMaterialEffects;
-typedef std::map<std::wstring, class MaterialEffectNode*> TMapMaterialEffectsW;
-typedef std::map<std::string, class SubMeshNode*> TSubMeshNodes;
-typedef std::map<std::string, class CSceneMeshNode*> TSceneMeshNodes;
-typedef std::map<std::wstring, class CSceneMeshNode*> TSceneMeshNodesW;
-typedef std::map<std::string, class SubMeshAgregator*> TSubMeshAgregatorNodes;
-typedef std::map<std::string, class SkeletonNode*> TSkeletonNodes;
-typedef std::vector<class CFontNode*> TVecFontNodes;
-typedef std::vector<class SubMeshNode*> TVecMeshes;
-
-//----------------------------------------------------------------------------------------------
 static void Matrix4Mul(Matrix4f M, Matrix4f A, Matrix4f B)
 {
 	M[ 0] = A[ 0] * B[ 0] + A[ 1] * B[ 4] + A[ 2] * B[ 8] + A[ 3] * B[12];

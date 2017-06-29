@@ -17,7 +17,7 @@ public:
 
 	virtual void			OnPropertyChanged(const char* PropertyName);
 
-	virtual void			LoadMesh(const SMeshMaterialSet &Desc);
+	virtual void			LoadMesh(const oes::d3d::SMeshMaterialSet &Desc);
 
 	virtual void			Clear();
 
@@ -37,7 +37,7 @@ public:
 	void					SetCastShadows(bool Value);
 	void					SetReciveShadows(bool Value);
 
-	class D3DMesh*			GetD3DMesh() const { return m_pMesh; }
+    oes::d3d::D3DMesh*			GetD3DMesh() const { return m_pMesh; }
 
 	virtual void			SetForceLODLvl(unsigned int Value);
 	virtual void			SetDestructLvl(unsigned int Value);
@@ -53,7 +53,7 @@ public:
 	bool					m_bShowTangent;
 
 private:
-	class D3DMesh			*m_pMesh;
+	oes::d3d::D3DMesh			*m_pMesh;
 };
 
 #endif//__staticmesh_h__

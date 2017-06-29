@@ -6,7 +6,7 @@ REGISTER_CLASS(Comp_MaterialEffectUI, Comp_MaterialBaseEffect);
 Comp_MaterialEffectUI::Comp_MaterialEffectUI(const CObjectAbstract * Parent)
 : Super(Parent)
 {
-	pMaterialEffectUI = Alloc_MaterialEffectUI(GetRenderComponent()->GetRenderDriver());
+	pMaterialEffectUI = oes::d3d::Alloc_MaterialEffectUI(GetRenderComponent()->GetRenderDriver());
 	SetBaseEffectPtr(pMaterialEffectUI);
 }
 
@@ -24,7 +24,7 @@ Comp_MaterialEffectUI::Comp_MaterialEffectUI(const Comp_MaterialEffectUI & Sourc
 //----------------------------------------------------------------------------------------------
 Comp_MaterialEffectUI::~Comp_MaterialEffectUI()
 {
-	Release_MaterialEffectUI(pMaterialEffectUI);
+    oes::d3d::Release_MaterialEffectUI(pMaterialEffectUI);
 	pMaterialEffectUI = NULL;
 
 	SetBaseEffectPtr(NULL);
@@ -62,28 +62,28 @@ bool Comp_MaterialEffectUI::LoadDiffuseMapW(const wchar_t *filename)
 //----------------------------------------------------------------------------------------------
 Vector4f Comp_MaterialEffectUI::GetUV() const
 {
-	Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
 	return Vector4f(Tex->GetU(), Tex->GetV(), Tex->GetUL(), Tex->GetVL());
 }
 
 //----------------------------------------------------------------------------------------------
 void Comp_MaterialEffectUI::SetUV(const Vector4f & UV)
 {
-	Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
 	Tex->SetTexcoords(UV.x, UV.y, UV.z, UV.w);
 }
 
 //----------------------------------------------------------------------------------------------
 void Comp_MaterialEffectUI::SetDiffuseReference(const std::string & StrRef)
 {
-	Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
 	Tex->SetReference(StrRef);
 }
 
 //----------------------------------------------------------------------------------------------
 std::string	Comp_MaterialEffectUI::GetDiffuseReference() const
 {
-	Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffectUI->GetDiffuseTexture();
 	return Tex->GetReference();
 }
 

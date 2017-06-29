@@ -6,6 +6,9 @@ namespace oes
 {
 	namespace rflex
 	{
+        class IParamTuple
+        {};
+
 		class IGenerator
 		{
 			public:

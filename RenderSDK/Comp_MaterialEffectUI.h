@@ -34,7 +34,7 @@ public:
 protected:
 private:
 public:
-	class MaterialEffectUI	*pMaterialEffectUI;
+    oes::d3d::MaterialEffectUI	*pMaterialEffectUI;
 };
 
 #endif//__comp_materialeffectui_h__

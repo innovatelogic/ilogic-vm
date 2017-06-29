@@ -46,11 +46,11 @@ public:
         CALLBACK_FN pfnClearObject,
         CALLBACK_FN pfnDirectClearObject,
         HIMAGELIST hImageList,
-        SRenderContext *pRenderContext = 0);
+        oes::d3d::SRenderContext *pRenderContext = 0);
 
     ~Win32ObjectBrowserWidget();
 
-	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
+	void SetRenderContext(oes::d3d::SRenderContext *pContext) { m_pRenderContext = pContext; }
 
     void InvokeActor(const T_CLASS *pSender);
 
@@ -165,7 +165,7 @@ private:
 	bool m_bDragging;
 	HCURSOR	m_hCursHand, m_hCursArrow;     // cursor handles
 
-	SRenderContext			*m_pRenderContext;
+    oes::d3d::SRenderContext			*m_pRenderContext;
 
     std::shared_ptr<editors::IEditor> m_editor;
 

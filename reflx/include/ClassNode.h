@@ -61,7 +61,7 @@ namespace oes
             virtual bool	PrePropertyChange(const void *pPrt, class Property_Base *pProp);
             virtual void	PostPropertyChange(const void *pPrt, class Property_Base *pProp);
 
-            const char* GetName() const { return m_name.c_str(); }
+            virtual const char* GetName() const { return m_name.c_str(); }
 
             Property_Base** GetPropsRaw() const { return m_pPropsRaw; }
             unsigned int	GetPropsSize() const { return m_PropsSize; }
@@ -99,7 +99,7 @@ namespace oes
             struct SInterfaceDecl	**m_pInterfaces;
             unsigned int			m_nIntfSize;
 
-            std::unique_ptr<oes::rflex::itype> m_type;
+            //std::unique_ptr<oes::rflex::itype> m_type;
         };
     }
 }

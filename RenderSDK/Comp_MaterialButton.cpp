@@ -7,7 +7,7 @@ Comp_MaterialButton::Comp_MaterialButton(const CObjectAbstract * Parent)
 : Super(Parent)
 , m_pMaterialEffect(NULL)
 {
-	m_pMaterialEffect = Alloc_MaterialEffect_ButtonStates(GetRenderComponent()->GetRenderDriver());
+	m_pMaterialEffect = oes::d3d::Alloc_MaterialEffect_ButtonStates(GetRenderComponent()->GetRenderDriver());
 
 	SetBaseEffectPtr(m_pMaterialEffect);
 }
@@ -28,7 +28,7 @@ Comp_MaterialButton::Comp_MaterialButton(const Comp_MaterialButton & Source)
 //----------------------------------------------------------------------------------------------
 Comp_MaterialButton::~Comp_MaterialButton()
 {
-	Release_MaterialEffect_ButtonStates(m_pMaterialEffect);
+    oes::d3d::Release_MaterialEffect_ButtonStates(m_pMaterialEffect);
 	m_pMaterialEffect = NULL;
 
 // 	pMaterialEffect->Release();
@@ -75,28 +75,28 @@ bool Comp_MaterialButton::LoadDiffuseMap(const char *filename, unsigned int Inde
 //----------------------------------------------------------------------------------------------
 Vector4f Comp_MaterialButton::GetUV(unsigned int StateIdx) const
 {
-	Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
+    oes::d3d::Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
 	return Vector4f(Tex->GetU(), Tex->GetV(), Tex->GetUL(), Tex->GetVL());
 }
 
 //----------------------------------------------------------------------------------------------
 void Comp_MaterialButton::SetUV(const Vector4f & UV, unsigned int StateIdx)
 {
-	Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
+    oes::d3d::Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
 	Tex->SetTexcoords(UV.x, UV.y, UV.z, UV.w);
 }
 
 //----------------------------------------------------------------------------------------------
 void Comp_MaterialButton::SetDiffuseReference(const std::string & StrRef, unsigned int StateIdx)
 {
-	Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
+    oes::d3d::Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
 	Tex->SetReference(StrRef);
 }
 
 //----------------------------------------------------------------------------------------------
 std::string	Comp_MaterialButton::GetDiffuseReference(unsigned int StateIdx) const
 {
-	Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
+    oes::d3d::Texture2D * Tex = m_pMaterialEffect->GetDiffuseTexture(StateIdx);
 	return Tex->GetReference();
 }
 

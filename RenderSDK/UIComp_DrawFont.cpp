@@ -14,7 +14,7 @@ UIComp_DrawFont::UIComp_DrawFont(const CObjectAbstract * Parent/* = NULL*/)
 , m_Height(12)
 , m_Color(0xff000000)
 {
-	m_pFontComponent = Alloc_Font2D(GetRenderComponent()->GetRenderDriver());
+	m_pFontComponent = oes::d3d::Alloc_Font2D(GetRenderComponent()->GetRenderDriver());
 }
 
 //----------------------------------------------------------------------------------

@@ -31,21 +31,21 @@ public:
 
 	virtual void			SetMatrixParam(const char *ParamName, const Matrix & Value);
 	virtual void			SetVectorParam(const char *ParamName, const Vector & Value);
-	virtual void			SetSampleTexture(const char *ParamName, const class Texture2D * Value);
+	virtual void			SetSampleTexture(const char *ParamName, const oes::d3d::Texture2D * Value);
 	virtual void			SetScalarValue(const char *ParamName, float Value);
 
-	class BaseMaterial*		GetPrtEffect() const;
+    oes::d3d::BaseMaterial*		GetPrtEffect() const;
 
 	void					ReloadEffect();
 
 protected:
 	virtual	void			DoReloadEffect();
-	void					SetBaseEffectPtr(/*const*/ class BaseMaterial * pEffect);
+	void					SetBaseEffectPtr(/*const*/ oes::d3d::BaseMaterial * pEffect);
 	
 private:
 	std::string				XRef;
 	std::string				NameTehnique;
-	class BaseMaterial		*pMaterialBaseEffect;
+    oes::d3d::BaseMaterial		*pMaterialBaseEffect;
 };
 
 #endif//__comp_materialbaseeffect_h__

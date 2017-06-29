@@ -5,6 +5,7 @@
 #pragma once
 #endif
 
+#include "coresdkafx.h"
 #include "UIScreenObject.h"
 
 class EXPORT LabelButton : public UIScreenObject

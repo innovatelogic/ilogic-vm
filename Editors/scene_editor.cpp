@@ -41,7 +41,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    SRenderContext* EditorScene3D::GetRenderContext() const
+    oes::d3d::SRenderContext* EditorScene3D::GetRenderContext() const
     {
         assert(m_pViewer);
         return m_pViewer->GetRenderContext();
@@ -64,13 +64,13 @@ namespace editors
     //----------------------------------------------------------------------------------------------
     void EditorScene3D::InitViewport(void *canvas, size_t width, size_t height)
     {
-        D3DDriver *pDriver = m_pViewer->GetAppMain()->GetRenderSDK()->GetRenderDriver();
+        oes::d3d::D3DDriver *pDriver = m_pViewer->GetAppMain()->GetRenderSDK()->GetRenderDriver();
         assert(pDriver);
 
         CCamera *pCamera = m_pViewer->GetCamera();
         assert(pCamera);
 
-        SRenderContext *context = pCamera->GetRenderContext();
+        oes::d3d::SRenderContext *context = pCamera->GetRenderContext();
         assert(context);
 
         m_pViewer->GetAppMain()->GetRenderSDK()->InitCanvas(canvas, width, height, context);
@@ -82,7 +82,7 @@ namespace editors
         CCamera *pCamera = m_pViewer->GetCamera();
         assert(pCamera);
 
-        SRenderContext *context = pCamera->GetRenderContext();
+        oes::d3d::SRenderContext *context = pCamera->GetRenderContext();
         assert(context);
 
         m_pViewer->GetAppMain()->GetRenderSDK()->ResizeWindow(width, height, context);
@@ -95,7 +95,7 @@ namespace editors
         CCamera *pCamera = m_pViewer->GetCamera();
         assert(pCamera);
 
-        SRenderContext *context = pCamera->GetRenderContext();
+        oes::d3d::SRenderContext *context = pCamera->GetRenderContext();
         assert(context);
 
         m_pViewer->GetAppMain()->Render(context); // Render & change buffer

@@ -1,23 +1,23 @@
-#ifndef __materialeffectfont_h__
-#define __materialeffectfont_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "BaseMaterial.h"
 
-class D3DDRIVER_API CMaterialEffectFont : public BaseMaterial
+namespace oes
 {
-public:
-	CMaterialEffectFont(const class D3DDriver *pInterface);
-	virtual ~CMaterialEffectFont();
+    namespace d3d
+    {
+        class D3DDRIVER_API CMaterialEffectFont : public BaseMaterial
+        {
+        public:
+            CMaterialEffectFont(const D3DDriver *pInterface);
+            virtual ~CMaterialEffectFont();
 
-	virtual	bool	Release();
-	virtual void	Affect();
+            virtual	bool	Release();
+            virtual void	Affect();
 
-protected:
-private:
-};
-
-#endif//__materialeffectui_h__
+        protected:
+        private:
+        };
+    }
+}

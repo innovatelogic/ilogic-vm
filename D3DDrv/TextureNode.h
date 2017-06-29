@@ -1,36 +1,42 @@
-#ifndef __texturenode_h__
-#define __texturenode_h__
+
+#pragma once
 
 #ifdef _WIN32
-#pragma once
 #pragma warning (disable:4251)
 #endif
 
 #include "Refcount.h"
 
-/** 
- * Platform dependent primitives.
- */
-class D3DDRIVER_API TextureNode : public Refcount
+namespace oes
 {
-public:
-	TextureNode(class D3DDriver *p3DDriver);
-	virtual ~TextureNode();
+    namespace d3d
+    {
+        class SRenderContext;
+        class D3DDriver;
 
-	bool GetInfo(unsigned int &Width, unsigned int &Height) const;
-	bool GetDIB(BYTE** pData, bool bResample = false, unsigned int NewWidth = 0, unsigned int NewHeight = 0) const;
+        /**
+         * Platform dependent primitives.
+         */
+        class D3DDRIVER_API TextureNode : public Refcount
+        {
+        public:
+            TextureNode(D3DDriver *p3DDriver);
+            virtual ~TextureNode();
 
-	class SRenderContext* GetOwnerContext() const { return m_pRenderContext; }
+            bool GetInfo(unsigned int &Width, unsigned int &Height) const;
+            bool GetDIB(BYTE** pData, bool bResample = false, unsigned int NewWidth = 0, unsigned int NewHeight = 0) const;
 
-protected:
-	virtual void DoRelease();
+            SRenderContext* GetOwnerContext() const { return m_pRenderContext; }
 
-public:
-	STGADesc			m_TGADesc;
-	STextureBitmap		m_pSTextureBitmap;
+        protected:
+            virtual void DoRelease();
 
-	SRenderContext		*m_pRenderContext;
-	D3DDriver			*m_p3DDriver;
-};
+        public:
+            STGADesc			m_TGADesc;
+            STextureBitmap		m_pSTextureBitmap;
 
-#endif//__texturenode_h__
+            SRenderContext		*m_pRenderContext;
+            D3DDriver			*m_p3DDriver;
+        };
+    }
+}

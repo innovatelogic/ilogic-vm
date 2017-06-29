@@ -32,7 +32,7 @@ public:
 	virtual ~CRenderSDK();
 	
 	__forceinline class CFXMatManager*	GetFXManager() const { return m_pFXManager; }
-	__forceinline class D3DDriver*		GetRenderDriver() const { return m_pRenderDriver; }
+    oes::d3d::D3DDriver*		GetRenderDriver() const { return m_pRenderDriver; }
 
 	bool					EnterCS() { return m_CriticalSection.enter(); }
 	bool					LeaveCS() { return m_CriticalSection.leave(); }
@@ -41,16 +41,16 @@ public:
 
 	void					Initialize(void *canvas, size_t width, size_t height, void *driver = NULL);
 
-    void                    InitCanvas(void *canvas, size_t width, size_t height, SRenderContext *context);
+    void                    InitCanvas(void *canvas, size_t width, size_t height, oes::d3d::SRenderContext *context);
 
 	void					ProcessStreaming();
 
 	void					SetViewport(float x, float y, float ext_x, float ext_y);
 	
-	bool					ResizeWindow(unsigned int width, unsigned int height, class SRenderContext *pContext = 0);
+	bool					ResizeWindow(unsigned int width, unsigned int height, class oes::d3d::SRenderContext *pContext = 0);
 
-	bool					GetWireframeMode(const SRenderContext *ctxt) const;
-	void					SetWireframeMode(SRenderContext *ctxt, bool value);
+	bool					GetWireframeMode(const oes::d3d::SRenderContext *ctxt) const;
+	void					SetWireframeMode(oes::d3d::SRenderContext *ctxt, bool value);
 
 	unsigned int			GetViewportWidth() const;
 	unsigned int			GetViewportHeight() const;
@@ -86,9 +86,9 @@ public:
 	void					DrawBounds2f(const Matrix &WTM, const Bounds3f &Bound, unsigned int Color = 0xffffffff);
 	
 	void					SwapBuffer();
-	void					Render(SRenderContext *pContext, int cps = 0);
+	void					Render(oes::d3d::SRenderContext *pContext, int cps = 0);
 
-	void					Present(const SRenderContext *pContext);
+	void					Present(const oes::d3d::SRenderContext *pContext);
 
 	void					UpdateResources(bool bLock = false);
 
@@ -211,7 +211,7 @@ private:
 	bool					bDrawHelpers;
 
 	class CFXMatManager		*m_pFXManager;
-	class D3DDriver			*m_pRenderDriver;
+	oes::d3d::D3DDriver *m_pRenderDriver;
 
 public:
 	int						ThreadRenderID;

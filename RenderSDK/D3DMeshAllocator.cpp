@@ -1,8 +1,8 @@
 #include "StdafxRender.h"
 
 //----------------------------------------------------------------------------------------------
-D3DMeshAllocator::D3DMeshAllocator(const class D3DDriver * Interface)
-: D3DMesh(Interface)
+D3DMeshAllocator::D3DMeshAllocator(const oes::d3d::D3DDriver * Interface)
+: oes::d3d::D3DMesh(Interface)
 {
 
 }
@@ -21,7 +21,7 @@ D3DMeshAllocator::~D3DMeshAllocator()
 }
 
 //----------------------------------------------------------------------------------------------
-bool D3DMeshAllocator::LoadFromDesc(const SMeshMaterialSet &Desc)
+bool D3DMeshAllocator::LoadFromDesc(const oes::d3d::SMeshMaterialSet &Desc)
 {
 	bool bResult = false;
 
@@ -32,25 +32,25 @@ bool D3DMeshAllocator::LoadFromDesc(const SMeshMaterialSet &Desc)
 	{
 		// try to find already initialized scenes
 		// recreate full mesh tree replica with binded materials
-		if (CSceneMeshNode *pScene = m_pD3DInterface->GetSceneMeshNode(sFilename.c_str()))
+		if (oes::d3d::CSceneMeshNode *pScene = m_pD3DInterface->GetSceneMeshNode(sFilename.c_str()))
 		{
-			std::vector<SMeshNodesBank> &VBank = pScene->GetMeshBank();
+			std::vector<oes::d3d::SMeshNodesBank> &VBank = pScene->GetMeshBank();
 
-			for (std::vector<SMeshNodesBank>::iterator Iter = VBank.begin(); Iter != VBank.end(); ++Iter)
+			for (std::vector<oes::d3d::SMeshNodesBank>::iterator Iter = VBank.begin(); Iter != VBank.end(); ++Iter)
 			{
-				m_VMeshEffectBank.push_back(SMeshEffectBank());
+				m_VMeshEffectBank.push_back(oes::d3d::SMeshEffectBank());
 
-				for (TSVMeshNodes::iterator IterLod = (*Iter).VBankNodes.begin();
+				for (oes::d3d::TSVMeshNodes::iterator IterLod = (*Iter).VBankNodes.begin();
 						IterLod != (*Iter).VBankNodes.end(); ++IterLod)
 				{
 					const size_t nLastIdx = m_VMeshEffectBank.size() - 1;
-					m_VMeshEffectBank[nLastIdx].VBankNodes.push_back(SVecSubMeshes());
+					m_VMeshEffectBank[nLastIdx].VBankNodes.push_back(oes::d3d::SVecSubMeshes());
 
-					TVecMeshes &VNodes = (*IterLod).MeshNodes;
+                    oes::d3d::TVecMeshes &VNodes = (*IterLod).MeshNodes;
 
-					for (TVecMeshes::iterator Iter = VNodes.begin(); Iter != VNodes.end(); ++Iter)
+					for (oes::d3d::TVecMeshes::iterator Iter = VNodes.begin(); Iter != VNodes.end(); ++Iter)
 					{
-						SMeshEffectPair MeshEffect;
+                        oes::d3d::SMeshEffectPair MeshEffect;
 						MeshEffect.SubMesh = *Iter;
 						MeshEffect.Effect = ApplyMeshMaterial(MeshEffect.SubMesh->m_materialID, Desc);
 						
@@ -102,9 +102,9 @@ bool D3DMeshAllocator::LoadFromDesc(const SMeshMaterialSet &Desc)
 }
 
 //----------------------------------------------------------------------------------------------
-BaseMaterial* D3DMeshAllocator::ApplyMeshMaterial(int materialID, const SMeshMaterialSet &MaterialSet)
+oes::d3d::BaseMaterial* D3DMeshAllocator::ApplyMeshMaterial(int materialID, const oes::d3d::SMeshMaterialSet &MaterialSet)
 {
-	BaseMaterial *pOutMateral = 0;
+    oes::d3d::BaseMaterial *pOutMateral = 0;
 
 	// init material
 	if (materialID != INDEX_NONE)
@@ -113,7 +113,7 @@ BaseMaterial* D3DMeshAllocator::ApplyMeshMaterial(int materialID, const SMeshMat
 		{
 			if (MaterialSet.Materials[IndexMaterial].id == materialID)
 			{
-				MaterialEffect *pMatEffect = new MaterialEffect(m_pD3DInterface);
+                oes::d3d::MaterialEffect *pMatEffect = new oes::d3d::MaterialEffect(m_pD3DInterface);
 
 				for (size_t TextureIdx = 0; TextureIdx < MaterialSet.Materials[IndexMaterial].textures.size(); ++TextureIdx)
 				{
@@ -154,7 +154,7 @@ BaseMaterial* D3DMeshAllocator::ApplyMeshMaterial(int materialID, const SMeshMat
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DMeshAllocator::DeserializeMesh(m_file &oFile, SubMeshNode *pInMesh, unsigned int &numDistinctBones,	std::vector<int> &VecBoneRemapper)
+void D3DMeshAllocator::DeserializeMesh(m_file &oFile, oes::d3d::SubMeshNode *pInMesh, unsigned int &numDistinctBones,	std::vector<int> &VecBoneRemapper)
 {
 	// temp variables similar to serialization
 	// geometry...
@@ -287,7 +287,7 @@ void D3DMeshAllocator::DeserializeMesh(m_file &oFile, SubMeshNode *pInMesh, unsi
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const SMeshMaterialSet &Desc)
+void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const oes::d3d::SMeshMaterialSet &Desc)
 {
 	unsigned int nNameLength;
 	oFile >> nNameLength;
@@ -303,7 +303,7 @@ void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const SMeshMaterialSet &Desc
 	unsigned int nNumMeshes = 0;
 	oFile >> nNumMeshes;
 
-	std::vector<SMeshNodesBank> &VBank = m_pSceneMesh->GetMeshBank();
+	std::vector<oes::d3d::SMeshNodesBank> &VBank = m_pSceneMesh->GetMeshBank();
 
 	//initialize bone remapper
 	unsigned int numDistinctBones = 0;
@@ -314,22 +314,22 @@ void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const SMeshMaterialSet &Desc
 		VecBoneRemapper.push_back(INDEX_NONE);
 	}
 
-	VBank.push_back(SMeshNodesBank());
-	m_VMeshEffectBank.push_back(SMeshEffectBank());
+	VBank.push_back(oes::d3d::SMeshNodesBank());
+	m_VMeshEffectBank.push_back(oes::d3d::SMeshEffectBank());
 
-	VBank[0].VBankNodes.push_back(SVMeshNodes());
-	m_VMeshEffectBank[0].VBankNodes.push_back(SVecSubMeshes());
+	VBank[0].VBankNodes.push_back(oes::d3d::SVMeshNodes());
+	m_VMeshEffectBank[0].VBankNodes.push_back(oes::d3d::SVecSubMeshes());
 
 	for (unsigned int Index = 0; Index < nNumMeshes; ++Index)
 	{
-		SubMeshNode *pSubMeshNode = new SubMeshNode(m_pD3DInterface);
+        oes::d3d::SubMeshNode *pSubMeshNode = new oes::d3d::SubMeshNode(m_pD3DInterface);
 
 		DeserializeMesh(oFile, pSubMeshNode, numDistinctBones, VecBoneRemapper);
 
 		VBank[0].VBankNodes[0].MeshNodes.push_back(pSubMeshNode);
 
 		// init material pair
-		SMeshEffectPair MeshEffect;		
+        oes::d3d::SMeshEffectPair MeshEffect;
 		MeshEffect.SubMesh = pSubMeshNode;
 		MeshEffect.Effect = ApplyMeshMaterial(MeshEffect.SubMesh->m_materialID, Desc);
 
@@ -351,9 +351,9 @@ void D3DMeshAllocator::LoadFile_v1_0(m_file &oFile, const SMeshMaterialSet &Desc
 }
 
 //----------------------------------------------------------------------------------------------
-void D3DMeshAllocator::LoadFile_v1_2(m_file &oFile, const SMeshMaterialSet &Desc)
+void D3DMeshAllocator::LoadFile_v1_2(m_file &oFile, const oes::d3d::SMeshMaterialSet &Desc)
 {	
-	std::vector<SMeshNodesBank> &VBank = m_pSceneMesh->GetMeshBank();
+	std::vector<oes::d3d::SMeshNodesBank> &VBank = m_pSceneMesh->GetMeshBank();
 
 	unsigned int nNameLength;
 	oFile >> nNameLength;
@@ -380,8 +380,8 @@ void D3DMeshAllocator::LoadFile_v1_2(m_file &oFile, const SMeshMaterialSet &Desc
 
 	for (unsigned int Index = 0; Index < nNumBanks; ++Index)
 	{
-		VBank.push_back(SMeshNodesBank());
-		m_VMeshEffectBank.push_back(SMeshEffectBank());
+		VBank.push_back(oes::d3d::SMeshNodesBank());
+		m_VMeshEffectBank.push_back(oes::d3d::SMeshEffectBank());
 
 		unsigned int nNumLods = 0;
 		oFile >> nNumLods;
@@ -391,15 +391,15 @@ void D3DMeshAllocator::LoadFile_v1_2(m_file &oFile, const SMeshMaterialSet &Desc
 
 		for (unsigned int Index2 = 0; Index2 < nNumLods; ++Index2)
 		{
-			VBank[Index].VBankNodes.push_back(SVMeshNodes());
-			m_VMeshEffectBank[Index].VBankNodes.push_back(SVecSubMeshes());
+			VBank[Index].VBankNodes.push_back(oes::d3d::SVMeshNodes());
+			m_VMeshEffectBank[Index].VBankNodes.push_back(oes::d3d::SVecSubMeshes());
 
 			unsigned int nNumMeshes = 0;
 			oFile >> nNumMeshes;
 
 			for (unsigned int IndexMesh = 0; IndexMesh < nNumMeshes; ++IndexMesh)
 			{
-				SubMeshNode *pSubMeshNode = new SubMeshNode(m_pD3DInterface);
+                oes::d3d::SubMeshNode *pSubMeshNode = new oes::d3d::SubMeshNode(m_pD3DInterface);
 
 				for (size_t IndexRemap = 0; IndexRemap < 512; ++IndexRemap){
 					VecBoneRemapper.push_back(INDEX_NONE);
@@ -410,7 +410,7 @@ void D3DMeshAllocator::LoadFile_v1_2(m_file &oFile, const SMeshMaterialSet &Desc
 				VBank[Index].VBankNodes[Index2].MeshNodes.push_back(pSubMeshNode);
 				
 				// init material pair
-				SMeshEffectPair MeshEffect;		
+                oes::d3d::SMeshEffectPair MeshEffect;
 				MeshEffect.SubMesh = pSubMeshNode;
 				MeshEffect.Effect = ApplyMeshMaterial(MeshEffect.SubMesh->m_materialID, Desc);
 

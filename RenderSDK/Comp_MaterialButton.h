@@ -33,6 +33,6 @@ public:
 protected:
 private:
 public:
-	class MaterialEffect_ButtonStates *m_pMaterialEffect;
+    oes::d3d::MaterialEffect_ButtonStates *m_pMaterialEffect;
 };
 #endif//__comp_materialbutton_h__

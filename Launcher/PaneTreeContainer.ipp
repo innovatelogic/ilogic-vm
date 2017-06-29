@@ -13,7 +13,7 @@ CTreePaneContainer<T_CLASS>::CTreePaneContainer(
     CALLBACK_FN pfnDirectClearObject,
     CALLBACK_EV pfnOnEventUpdate,
     HIMAGELIST hImageList,
-    SRenderContext *pRenderContext = 0)
+    oes::d3d::SRenderContext *pRenderContext = 0)
     : m_pfnContextMenu(pfMenu)
     , m_pfnContextMenuProcessor(pfnMenuProcessor)
     , m_pfnGetResourceIconIndex(pfnGetResourceIconIndex)
@@ -43,7 +43,7 @@ CTreePaneContainer<T_CLASS>::~CTreePaneContainer()
 
 //----------------------------------------------------------------------------------------------
 template<class T_CLASS>
-void CTreePaneContainer<T_CLASS>::SetRenderContext(SRenderContext *pRenderContext)
+void CTreePaneContainer<T_CLASS>::SetRenderContext(oes::d3d::SRenderContext *pRenderContext)
 {
     m_pRenderContext = pRenderContext;
 

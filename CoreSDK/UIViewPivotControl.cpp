@@ -340,13 +340,13 @@ void UIViewPivotControl::RebuildMesh()
 	m_pMaterialEffect->SetAlphaTestEnable(true);
 	m_pMaterialEffect->SetTransparent(0.f);
 
-	D3DMesh * dx_mesh = MeshComponent->GetD3DMesh();
+	oes::d3d::D3DMesh * dx_mesh = MeshComponent->GetD3DMesh();
 
 	dx_mesh->Clear(true);
 
 	// bottom
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+        oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f * texcoords = new Vector2f[NumVertices];
@@ -379,7 +379,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;
@@ -387,7 +387,7 @@ void UIViewPivotControl::RebuildMesh()
 	}
 	// top
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+        oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f *texcoords = new Vector2f[NumVertices];
@@ -420,7 +420,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;
@@ -428,7 +428,7 @@ void UIViewPivotControl::RebuildMesh()
 	}
 	// front
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+		oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f *texcoords = new Vector2f[NumVertices];
@@ -461,7 +461,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;
@@ -469,7 +469,7 @@ void UIViewPivotControl::RebuildMesh()
 	}
 	// back
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+        oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f *texcoords = new Vector2f[NumVertices];
@@ -502,7 +502,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;
@@ -510,7 +510,7 @@ void UIViewPivotControl::RebuildMesh()
 	}
 	// left
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+        oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f * texcoords = new Vector2f[NumVertices];
@@ -543,7 +543,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;
@@ -552,7 +552,7 @@ void UIViewPivotControl::RebuildMesh()
 
 	// right
 	{
-		SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+        oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 //		SubMesh->AddRef();
 
 		Vector2f * texcoords = new Vector2f[NumVertices];
@@ -585,7 +585,7 @@ void UIViewPivotControl::RebuildMesh()
 			VecBoneRemapper,
 			numDistinctBones);
 
-		dx_mesh->AddMesh(SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
+		dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, m_pMaterialEffect->pMaterialEffect));
 
 		delete [] texcoords;
 		delete [] normals;

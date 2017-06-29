@@ -1,32 +1,36 @@
-#ifndef __font2d_h__
-#define __font2d_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "D3DRenderInterface.h"
 
-class D3DDRIVER_API CFont2D : public D3DRenderInterface
+namespace oes
 {
-	DECL_CLASS_SIMPLE(CFont2D, D3DRenderInterface);
+    namespace d3d
+    {
+        class CFontNode;
+        class BaseMaterial;
+        class D3DDriver;
 
-public:
-	CFont2D(const class D3DDriver *Interface);
-	CFont2D(const CFont2D &Source);
-	virtual ~CFont2D();
+        class D3DDRIVER_API CFont2D : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(CFont2D, D3DRenderInterface);
 
-	virtual bool Load(const char *StrRef, int Height, BaseMaterial *pEffect = NULL);
+        public:
+            CFont2D(const D3DDriver *Interface);
+            CFont2D(const CFont2D &Source);
+            virtual ~CFont2D();
 
-	virtual void Release();
-	virtual void Draw(const wchar_t *text, unsigned int color);
+            virtual bool Load(const char *StrRef, int Height, BaseMaterial *pEffect = NULL);
 
-	class CFontNode* GetFontNode() const { return m_pFontNode; }
+            virtual void Release();
+            virtual void Draw(const wchar_t *text, unsigned int color);
 
-protected:
-private:
-	class CFontNode		*m_pFontNode;
-	class BaseMaterial	*m_pEffect;
-};
+            CFontNode* GetFontNode() const { return m_pFontNode; }
 
-#endif//__font2d_h__
+        protected:
+        private:
+            CFontNode		*m_pFontNode;
+            BaseMaterial	*m_pEffect;
+        };
+    }
+}

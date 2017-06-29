@@ -12,8 +12,8 @@ struct SFontState
 	std::string			FontFamily;
 	size_t				Height;
 	unsigned int		Color;
-	class CFont2D		*FontComponent;
-	class CD3DFontMesh	*pMesh;
+    oes::d3d::CFont2D		*FontComponent;
+    oes::d3d::CD3DFontMesh	*pMesh;
 	class UIComp_DrawFontState * m_pOwner;
 
 	bool	IsInitialized() const;

@@ -48,7 +48,7 @@ namespace RenderSDK
 
 				float	viewPos[4];
 
-				const D3DRenderTarget *rt_target;
+				const oes::d3d::D3DRenderTarget *rt_target;
 				float	rt_ProjMatrix[16];
 				float	rt_ViewMatrix[16];
 				bool	bClearTarget;
@@ -80,7 +80,7 @@ namespace RenderSDK
 				bool glBlend;
 				float blendValue;
 
-				class SRenderContext *pRenderContext;
+				class oes::d3d::SRenderContext *pRenderContext;
 			
 			} __RT_VARIANT_NAME_2;
 

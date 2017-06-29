@@ -13,11 +13,11 @@ public:
 	typedef std::vector<T*>  TVecCameras;
 	typedef TVecCameras::iterator		 TVecCameraIter;
 	typedef TVecCameras::const_iterator	 TVecCameraConstIter;
-	typedef class SRenderContext		 TSRenderContext;
+	typedef oes::d3d::SRenderContext		 TSRenderContext;
 
 	struct SCameraContext
 	{
-		TSRenderContext *pRenderContext;
+        oes::d3d::SRenderContext *pRenderContext;
 		TVecCameras		vecCameras;
 		T			    *pActiveCamera;
 	};
@@ -29,10 +29,10 @@ public:
 	CameraManager(class CCoreSDK *pAppMain);
 	~CameraManager();
 
-	bool RegisterCamera(T *pCamera, SRenderContext *pContext = nullptr);
+	bool RegisterCamera(T *pCamera, oes::d3d::SRenderContext *pContext = nullptr);
 	bool UnregisterCamera(T *pCamera);
 
-	T* GetActiveCamera(SRenderContext *pContext = nullptr) const;
+	T* GetActiveCamera(oes::d3d::SRenderContext *pContext = nullptr) const;
 	bool ActivateCamera(T *pCamera);
 
 	class T* GetCamera(size_t Index) const;
@@ -40,7 +40,7 @@ public:
 	void Update(float dt);
 
 	/** reinit cameras projection */
-	void ViewportResized(SRenderContext *context);
+	void ViewportResized(oes::d3d::SRenderContext *context);
 
 	void Clear();
 

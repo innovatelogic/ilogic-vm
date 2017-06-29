@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------------------------------------
 CRenderSDK::CRenderSDK()
-: m_pRenderDriver(new D3DDriver())
+: m_pRenderDriver(new oes::d3d::D3DDriver())
 , ActiveStack(0)
 , bFlagSwapStack(false)
 , RenderCPS(0)
@@ -54,6 +54,10 @@ CRenderSDK::~CRenderSDK()
 	delete m_pRenderAdjacency;
 }
 
+//oes::d3d::D3DDriver* CRenderSDK::GetRenderDriver() const
+//{ 
+//    return m_pRenderDriver; 
+//}
 //----------------------------------------------------------------------------------------------
 oes::rflex::TClassFactory* CRenderSDK::GetClassFactory()
 {
@@ -72,7 +76,7 @@ void CRenderSDK::Initialize(void *canvas, size_t width, size_t height, void *dri
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::InitCanvas(void *canvas, size_t width, size_t height, SRenderContext *context)
+void CRenderSDK::InitCanvas(void *canvas, size_t width, size_t height, oes::d3d::SRenderContext *context)
 {
     m_pRenderDriver->InitRenderDriver(canvas, width, height, context);
 }
@@ -99,7 +103,7 @@ void CRenderSDK::SetViewport(float x, float y, float ext_x, float ext_y)
 }
 
 //----------------------------------------------------------------------------------------------
-bool CRenderSDK::ResizeWindow(unsigned int width, unsigned int height, SRenderContext *pContext /*= 0*/)
+bool CRenderSDK::ResizeWindow(unsigned int width, unsigned int height, oes::d3d::SRenderContext *pContext /*= 0*/)
 {
 	bool bResult = false;
 	if (m_pRenderDriver){
@@ -109,21 +113,21 @@ bool CRenderSDK::ResizeWindow(unsigned int width, unsigned int height, SRenderCo
 }
 
 //----------------------------------------------------------------------------------------------
-bool CRenderSDK::GetWireframeMode(const SRenderContext *ctxt) const
+bool CRenderSDK::GetWireframeMode(const oes::d3d::SRenderContext *ctxt) const
 {
 	bool bResult = false;
 	if (m_pRenderDriver)
     {
-        const SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
+        const oes::d3d::SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
 		bResult = pActiveContext->GetWireframeMode();
 	}
 	return bResult;
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::SetWireframeMode(SRenderContext *ctxt, bool value)
+void CRenderSDK::SetWireframeMode(oes::d3d::SRenderContext *ctxt, bool value)
 {
-    SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
+    oes::d3d::SRenderContext *pActiveContext = (ctxt != 0) ? ctxt : m_pRenderDriver->GetDefaultContext();
     pActiveContext->SetWireframeMode(value);
 }
 
@@ -163,13 +167,13 @@ void CRenderSDK::SwapBuffer()
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
+void CRenderSDK::Render(oes::d3d::SRenderContext *pContext, int cps /*= 0*/)
 {
 	EnterCS();
 
 	RenderCPS = cps;
 
-	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
+    oes::d3d::SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
 	// forward rendering
 	m_pRenderDriver->PushContext(pActiveContext);
@@ -194,7 +198,7 @@ void CRenderSDK::Render(SRenderContext *pContext, int cps /*= 0*/)
 }
 
 //----------------------------------------------------------------------------------------------
-void CRenderSDK::Present(const SRenderContext *pContext)
+void CRenderSDK::Present(const oes::d3d::SRenderContext *pContext)
 {
 	m_pRenderDriver->Present(pContext);
 }
@@ -307,7 +311,7 @@ void CRenderSDK::SetBlendOpacity(float blend)
 {
 	if (!bFakeDraw)
 	{
-		PushToRenderStack(new RenderChunk_SetOpacity<D3DDriver, float>(m_pRenderDriver, blend));
+		PushToRenderStack(new RenderChunk_SetOpacity<oes::d3d::D3DDriver, float>(m_pRenderDriver, blend));
 	}
 }
 
@@ -725,7 +729,7 @@ void CRenderSDK::SetProjectedLight(const Vector &position,
 	if (!bFakeDraw)
 	{
 		PushToRenderStack(
-			new RenderChunk_SetLightProjected<D3DDriver, Vector, Matrix, Vector4f>(m_pRenderDriver,
+			new RenderChunk_SetLightProjected<oes::d3d::D3DDriver, Vector, Matrix, Vector4f>(m_pRenderDriver,
 																					position,
 																					Direction,
 																					LightView,
@@ -749,7 +753,7 @@ void CRenderSDK::ResetRenderInfoData()
 //----------------------------------------------------------------------------------------------
 void CRenderSDK::SetBias(float DepthBias, float SlopeDepthBias)
 {
-	PushToRenderStack(new RenderChunk_SetBias<D3DDriver, float>(&D3DDriver::SetBias, m_pRenderDriver, DepthBias, SlopeDepthBias));
+	PushToRenderStack(new RenderChunk_SetBias<oes::d3d::D3DDriver, float>(&oes::d3d::D3DDriver::SetBias, m_pRenderDriver, DepthBias, SlopeDepthBias));
 }
 
 //----------------------------------------------------------------------------------------------

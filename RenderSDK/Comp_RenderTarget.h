@@ -18,11 +18,11 @@ public:
 	virtual void	Initialize();
 	virtual bool	CreateRenderTarget(unsigned int width, unsigned int height);
 
-	const D3DRenderTarget * GetRenderTarget() const;
+	const oes::d3d::D3DRenderTarget * GetRenderTarget() const;
 
 protected:
 private:
-	class D3DRenderTarget *m_pRenderTarget;
+    oes::d3d::D3DRenderTarget *m_pRenderTarget;
 };
 
 #endif//__comp_rendertarget_h__

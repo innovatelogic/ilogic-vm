@@ -88,7 +88,7 @@ CPanePropertyContainer<T>::~CPanePropertyContainer()
 
 //----------------------------------------------------------------------------------------------
 template<class T>
-void CPanePropertyContainer<T>::SetRenderContext(SRenderContext *pContext)
+void CPanePropertyContainer<T>::SetRenderContext(oes::d3d::SRenderContext *pContext)
 {
     assert(m_pPropGrid);
 

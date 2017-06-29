@@ -51,7 +51,7 @@ public:
 	
 	class CViewAssetContainer *m_pViewCtrl;
 
-	SRenderContext		*m_pRenderContext;
+    oes::d3d::SRenderContext		*m_pRenderContext;
 	class CCoreSDK		*m_pAppMain;
 
     editors::TIEditor    m_editor;

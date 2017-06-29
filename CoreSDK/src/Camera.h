@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "coresdkafx.h"
 #include "reflx.h"
 #include "NpActorTemplate.h"
 #include "../include/PxCamera.h"
@@ -97,8 +98,8 @@ public:
 	virtual void			UpdateSplitDist();
 	virtual void			UpdateRotationQuat();
 
-	class SRenderContext* GetRenderContext() const { return m_pRenderContext; }
-	void SetRenderContext(SRenderContext *pContext) { m_pRenderContext = pContext; }
+    oes::d3d::SRenderContext* GetRenderContext() const { return m_pRenderContext; }
+	void SetRenderContext(oes::d3d::SRenderContext *pContext) { m_pRenderContext = pContext; }
 
 	bool IsArcball() const { return m_bArcball; }
 
@@ -140,5 +141,5 @@ private:
 
 	float m_IntTime;
 
-	class SRenderContext *m_pRenderContext;
+    oes::d3d::SRenderContext *m_pRenderContext;
 };

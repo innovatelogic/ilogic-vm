@@ -49,13 +49,13 @@ void Comp_StaticMesh::OnPropertyChanged(const char *PropertyName)
 }
 
 //----------------------------------------------------------------------------------------------
-void Comp_StaticMesh::LoadMesh(const SMeshMaterialSet &Desc)
+void Comp_StaticMesh::LoadMesh(const oes::d3d::SMeshMaterialSet &Desc)
 {
 	Clear();
 
 	m_pMesh->LoadFromDesc(Desc);
 
-	if (CSceneMeshNode *pScene = m_pMesh->GetSceneMeshNode())
+	if (oes::d3d::CSceneMeshNode *pScene = m_pMesh->GetSceneMeshNode())
 	{
 		Bounds3f modelBBox;
 

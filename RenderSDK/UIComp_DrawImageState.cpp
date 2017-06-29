@@ -236,7 +236,7 @@ void UIComp_DrawImageState::DoRebuildMesh()
 	unsigned int numDistinctBones = 0;
 	std::vector<int> VecBoneRemapper;
 
-	SubMeshNode * SubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+    oes::d3d::SubMeshNode * SubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 	//SubMesh->AddRef();
 
 	SubMesh->InitializeVertexData(
@@ -263,10 +263,10 @@ void UIComp_DrawImageState::DoRebuildMesh()
 	MaterialEffect->LoadDiffuseMap(ImageStates.Elements[ActiveState_Pressed].XRef.c_str(), ActiveState_Pressed);
 	MaterialEffect->LoadDiffuseMap(ImageStates.Elements[ActiveState_Disabled].XRef.c_str(), ActiveState_Disabled);
 
-	D3DMesh * dx_mesh = MeshComponent->GetD3DMesh();
+    oes::d3d::D3DMesh * dx_mesh = MeshComponent->GetD3DMesh();
 
 	dx_mesh->Clear(true);
-	dx_mesh->AddMesh(SMeshEffectPair(SubMesh, MaterialEffect->m_pMaterialEffect));
+	dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(SubMesh, MaterialEffect->m_pMaterialEffect));
 
 	delete [] texcoords;
 	delete [] vertices;

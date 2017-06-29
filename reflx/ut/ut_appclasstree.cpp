@@ -112,6 +112,7 @@ struct ADT
 {
     struct inst : public oes::rflex::itype {
         void* instance() override { return oes::rflex::Generator<ADT, int, int, int>::instance(0, 0, 0); }
+        const char *GetName() const override { return "inst"; }
     };
 
     ADT(int a, int b, int c)
@@ -126,6 +127,7 @@ struct BADT : public ADT
 {
     struct inst : public oes::rflex::itype {
         void *instance() override { return oes::rflex::Generator<BADT>::instance(); }
+        const char *GetName() const override { return "inst";  }
     };
     BADT() : ADT(0, 1, 2) {}
 };

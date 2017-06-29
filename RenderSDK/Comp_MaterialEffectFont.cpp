@@ -7,7 +7,7 @@ CComp_MaterialEffectFont::CComp_MaterialEffectFont(const CObjectAbstract *pParen
 	: Super(pParent)
 	, m_pMaterialEffect(NULL)
 {
-	m_pMaterialEffect = Alloc_MaterialEffectFont(GetRenderComponent()->GetRenderDriver());
+	m_pMaterialEffect = oes::d3d::Alloc_MaterialEffectFont(GetRenderComponent()->GetRenderDriver());
 	SetBaseEffectPtr(m_pMaterialEffect);
 }
 
@@ -24,7 +24,7 @@ CComp_MaterialEffectFont::CComp_MaterialEffectFont(const CComp_MaterialEffectFon
 //----------------------------------------------------------------------------------------------
 CComp_MaterialEffectFont::~CComp_MaterialEffectFont()
 {
-	Release_MaterialEffectFont(m_pMaterialEffect);
+    oes::d3d::Release_MaterialEffectFont(m_pMaterialEffect);
 	m_pMaterialEffect = NULL;
 
 	SetBaseEffectPtr(NULL);

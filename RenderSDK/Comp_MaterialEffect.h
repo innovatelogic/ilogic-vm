@@ -17,7 +17,7 @@ public:
 
 	virtual void			Initialize();
 
-	/*const*/ class MaterialEffect*	GetMaterialEffect() const;
+	/*const*/ oes::d3d::MaterialEffect*	GetMaterialEffect() const;
 
 	virtual bool			LoadDiffuseMap(const char *filename, bool ImmidiateLoad = true);
 	virtual bool			LoadNormalMap(const char *filename, bool ImmidiateLoad = true);
@@ -38,7 +38,7 @@ public:
 protected:
 private:
 public:
-	class MaterialEffect	*pMaterialEffect;
+    oes::d3d::MaterialEffect	*pMaterialEffect;
 };
 
 #endif//__comp_materialeffect_h__

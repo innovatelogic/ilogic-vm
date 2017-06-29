@@ -84,7 +84,7 @@ bool CLevelPlaneActor::LoadMesh(const char *url)
 {
 	bool bResult = false;
    
-	SMeshMaterialSet ObjectDesc;
+    oes::d3d::SMeshMaterialSet ObjectDesc;
 
 	std::string sFilename;
 
@@ -141,7 +141,7 @@ bool CLevelPlaneActor::LoadMesh(const char *url)
 									XML_DEF_ATTRIBUTES_NODE(fog);
 									XML_DEF_ATTRIBUTES_NODE(fogcolor);
 
-									SMeshMaterial MeshMat;
+                                    oes::d3d::SMeshMaterial MeshMat;
 
 									MeshMat.Name = name;
 									MeshMat.FX = fx;

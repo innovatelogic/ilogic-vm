@@ -131,7 +131,6 @@ namespace oes
 
             void Deserialize(const std::string &filename);
 
-
         protected:
         private:
             Rflex() {}

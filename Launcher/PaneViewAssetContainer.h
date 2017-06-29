@@ -125,7 +125,7 @@ public:
 		int xPos = (int)GET_X_LPARAM(lParam);
         int yPos = (int)GET_Y_LPARAM(lParam);
 
-        SRenderContext *context = m_editor->GetRenderContext();
+        oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
         m_editor->InputMouse(MOUSE_Pressed, MOUSE_LEFT, xPos, yPos, ModifKey);
 
@@ -149,7 +149,7 @@ public:
 		float xPosRel = (wndWidth > 0.f) ? xPos / (float)wndWidth : 0.f;
 		float yPosRel = (wndHeight > 0.f) ? yPos / (float)wndHeight : 0.f;
 
-        SRenderContext *context = m_editor->GetRenderContext();
+        oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
 		unsigned int vprtWidth = context->m_displayModeWidth;
 		unsigned int vprtHeight = context->m_displayModeHeight;
@@ -164,7 +164,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBDown(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-        SRenderContext *context = m_editor->GetRenderContext();
+        oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
         m_editor->InputMouse(MOUSE_Pressed, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
 		
@@ -178,7 +178,7 @@ public:
 	//----------------------------------------------------------------------------------------------
 	LRESULT OnMBUp(UINT iunt_, WPARAM wParam, LPARAM lParam, BOOL&)
 	{
-        SRenderContext *context = m_editor->GetRenderContext();
+        oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
         m_editor->InputMouse(MOUSE_Released, MOUSE_MIDDLE, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam), 0);
 
@@ -215,7 +215,7 @@ public:
 			unsigned int wndWidth = rectWindow.right - rectWindow.left;
 			unsigned int wndHeight = rectWindow.bottom - rectWindow.top;
 
-            SRenderContext *context = m_editor->GetRenderContext();
+            oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
 			unsigned int vprtWidth = context->m_displayModeWidth;
 			unsigned int vprtHeight = context->m_displayModeHeight;
@@ -239,7 +239,7 @@ public:
 	{
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
-        SRenderContext *context = m_editor->GetRenderContext();
+        oes::d3d::SRenderContext *context = m_editor->GetRenderContext();
 
         m_editor->MouseWheel((float)zDelta, 0, 0);
 

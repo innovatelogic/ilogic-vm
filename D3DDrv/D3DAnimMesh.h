@@ -1,50 +1,51 @@
-#ifndef __d3danimmesh_h__
-#define __d3danimmesh_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "D3DRenderInterface.h"
 
-class D3DDRIVER_API D3DAnimMesh : public D3DRenderInterface
+namespace oes
 {
-	DECL_CLASS_SIMPLE(D3DAnimMesh, D3DRenderInterface);
+    namespace d3d
+    {
+        class D3DDriver;
 
-public:
-	D3DAnimMesh(class D3DDriver *Interface);
-	D3DAnimMesh(const D3DAnimMesh & Source);
-	virtual ~D3DAnimMesh();
+        class D3DDRIVER_API D3DAnimMesh : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(D3DAnimMesh, D3DRenderInterface);
 
-protected:
-private:
-public:
-	//the vertex buffer
-	/*unsigned int            m_NumVertices;
-	LPDIRECT3DVERTEXBUFFER9 m_VertexBuffer;
+        public:
+            D3DAnimMesh(D3DDriver *Interface);
+            D3DAnimMesh(const D3DAnimMesh & Source);
+            virtual ~D3DAnimMesh();
 
-	unsigned int            m_NumTriangles;
-	LPDIRECT3DINDEXBUFFER9  m_IndexBuffer;
+        protected:
+        private:
+        public:
+            //the vertex buffer
+            /*unsigned int            m_NumVertices;
+            LPDIRECT3DVERTEXBUFFER9 m_VertexBuffer;
 
-	//vertex buffers used to display the normals and tangent basis
-	LPDIRECT3DVERTEXBUFFER9 m_NormalBuffer;
-	LPDIRECT3DVERTEXBUFFER9 m_SBuffer;
-	LPDIRECT3DVERTEXBUFFER9 m_TBuffer;
-	LPDIRECT3DVERTEXBUFFER9 m_SxTBuffer;*/
+            unsigned int            m_NumTriangles;
+            LPDIRECT3DINDEXBUFFER9  m_IndexBuffer;
 
-	//boolean values that describe the information available for every vertex of every mesh
-	bool m_VertexHasNormal;
-	bool m_VertexHasColor;
-	bool m_VertexHasTexture;
-	bool m_VertexHasS;
-	bool m_VertexHasT;
-	bool m_VertexHasSxT;
-	bool m_VertexHasTangentBasis;
+            //vertex buffers used to display the normals and tangent basis
+            LPDIRECT3DVERTEXBUFFER9 m_NormalBuffer;
+            LPDIRECT3DVERTEXBUFFER9 m_SBuffer;
+            LPDIRECT3DVERTEXBUFFER9 m_TBuffer;
+            LPDIRECT3DVERTEXBUFFER9 m_SxTBuffer;*/
 
-	bool bShowNormals;
-	bool bShowTangent;
-	bool bShowBinormal;
-};
+            //boolean values that describe the information available for every vertex of every mesh
+            bool m_VertexHasNormal;
+            bool m_VertexHasColor;
+            bool m_VertexHasTexture;
+            bool m_VertexHasS;
+            bool m_VertexHasT;
+            bool m_VertexHasSxT;
+            bool m_VertexHasTangentBasis;
 
-
-#endif//__d3danimmesh_h__
+            bool bShowNormals;
+            bool bShowTangent;
+            bool bShowBinormal;
+        };
+    }
+}

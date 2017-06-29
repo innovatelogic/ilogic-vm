@@ -2,40 +2,46 @@
 
 #include "Refcount.h"
 
-const SRenderContext;
-
-namespace RenderDriver
+namespace oes
 {
-	class D3DDRIVER_API RenderTargetNode : public Refcount
-	{
-		struct STarget
-		{
-			GLuint dynamicTextureID;
-			GLuint frameBuffer;
-			GLuint depthRenderBuffer;
+    namespace d3d
+    {
+        class SRenderContext;
 
-			size_t width;
-			size_t height;
-		};
+        namespace RenderDriver
+        {
+            class D3DDRIVER_API RenderTargetNode : public Refcount
+            {
+                struct STarget
+                {
+                    GLuint dynamicTextureID;
+                    GLuint frameBuffer;
+                    GLuint depthRenderBuffer;
 
-	public:
-		RenderTargetNode(size_t width, size_t height, SRenderContext *const pCtxt);
-		virtual ~RenderTargetNode();
+                    size_t width;
+                    size_t height;
+                };
 
-		SRenderContext* GetOwnerContext() { return m_pContextOwner; }
+            public:
+                RenderTargetNode(size_t width, size_t height, SRenderContext *const pCtxt);
+                virtual ~RenderTargetNode();
 
-		size_t GetWidth() const { return m_target.width; }
-		size_t GetHeight() const { return m_target.height; }
+                SRenderContext* GetOwnerContext() { return m_pContextOwner; }
 
-		GLuint GetTexture() const { return m_target.dynamicTextureID; }
-		GLuint GetFrameBuffer() const { return m_target.frameBuffer; }
-		GLuint GetDepthBuffer() const { return m_target.depthRenderBuffer; }
+                size_t GetWidth() const { return m_target.width; }
+                size_t GetHeight() const { return m_target.height; }
 
-	protected:
-		virtual void DoRelease();
+                GLuint GetTexture() const { return m_target.dynamicTextureID; }
+                GLuint GetFrameBuffer() const { return m_target.frameBuffer; }
+                GLuint GetDepthBuffer() const { return m_target.depthRenderBuffer; }
 
-	public:
-		STarget m_target;
-		SRenderContext *const m_pContextOwner;
-	};
+            protected:
+                virtual void DoRelease();
+
+            public:
+                STarget m_target;
+                SRenderContext *const m_pContextOwner;
+            };
+        }
+    }
 }

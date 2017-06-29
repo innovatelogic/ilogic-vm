@@ -12,7 +12,7 @@ Win32ObjectBrowserWidget<T_CLASS>::Win32ObjectBrowserWidget(editors::TIEditor &e
 							 CALLBACK_FN pfnClearObject,
 							 CALLBACK_FN pfnDirectClearObject,
 							 HIMAGELIST hImageList,
-							 SRenderContext *pRenderContext = 0)
+                            oes::d3d::SRenderContext *pRenderContext = 0)
 	: m_pRoot(nullptr)
     , m_editor(nullptr)
     , m_pRegistry(nullptr)

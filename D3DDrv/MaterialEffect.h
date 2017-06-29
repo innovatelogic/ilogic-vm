@@ -1,42 +1,48 @@
-#ifndef __materialeffect_h__
-#define __materialeffect_h__
+
+#pragma once
 
 #ifdef _WIN32
-#pragma once
 #pragma warning(disable: 4251)
 #endif
 
 #include "BaseMaterial.h"
 
-class D3DDRIVER_API MaterialEffect : public BaseMaterial
+namespace oes
 {
-public:
-	MaterialEffect(const MaterialEffect &other) = delete;
-	MaterialEffect operator= (const MaterialEffect &other) = delete;
+    namespace d3d
+    {
+        class D3DDriver;
+        class Texture2D;
 
-	MaterialEffect(const class D3DDriver *Interface);
-	virtual ~MaterialEffect();
-	
-	virtual bool			Release();
-	virtual void			Affect();
+        class D3DDRIVER_API MaterialEffect : public BaseMaterial
+        {
+        public:
+            MaterialEffect(const MaterialEffect &other) = delete;
+            MaterialEffect operator= (const MaterialEffect &other) = delete;
 
-	/*const*/ class Texture2D*	GetDiffuseTexture() const;
-	const class Texture2D*	GetNormalTexture() const;
-	const class Texture2D*	GetHeightTexure() const;
+            MaterialEffect(const D3DDriver *Interface);
+            virtual ~MaterialEffect();
 
-	virtual bool			LoadDiffuseMap(const char *filename, bool ImmidiateLoad = true);
-	virtual bool			LoadNormalMap(const char *filename, bool ImmidiateLoad = true);
-	virtual bool			LoadHeightMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			Release();
+            virtual void			Affect();
 
-	float GetDiffuseU() const;
-	float GetDiffuseV() const;
-	float GetDiffuseUL() const;
-	float GetDiffuseVL() const;
+            /*const*/ Texture2D*	GetDiffuseTexture() const;
+            const Texture2D*	GetNormalTexture() const;
+            const Texture2D*	GetHeightTexure() const;
 
-protected:
-	class Texture2D			*DiffuseMap; // diffuse texture
-	class Texture2D			*HeightMap;  // height texture
-	class Texture2D			*NormalMap;  // normal map 
-};
+            virtual bool			LoadDiffuseMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			LoadNormalMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			LoadHeightMap(const char *filename, bool ImmidiateLoad = true);
 
-#endif//__materialeffect_h__
+            float GetDiffuseU() const;
+            float GetDiffuseV() const;
+            float GetDiffuseUL() const;
+            float GetDiffuseVL() const;
+
+        protected:
+            Texture2D			*DiffuseMap; // diffuse texture
+            Texture2D			*HeightMap;  // height texture
+            Texture2D			*NormalMap;  // normal map 
+        };
+    }
+}

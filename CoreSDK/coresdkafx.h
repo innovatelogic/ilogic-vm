@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "game_types.h"
 #include "StdafxFoundation.h"
 
@@ -9,6 +10,8 @@
 #include "coresdkafx_components.h"
 
 #include "property.h"
+
+
 
 //----------------------------------------------------------------------------------------------
 //

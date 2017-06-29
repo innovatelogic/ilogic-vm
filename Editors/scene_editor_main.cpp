@@ -33,7 +33,7 @@ namespace editors
     void SceneEditorMain::Initialize()
     {
         // HACK: set default context
-        D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
+        oes::d3d::D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
         pDriver->PushContext(GetRenderContext());
 
         m_pApi->Deserialize("3d_scene_controller.xml", nullptr);
@@ -85,7 +85,7 @@ namespace editors
     }
 
     //----------------------------------------------------------------------------------------------
-    SRenderContext* SceneEditorMain::GetRenderContext() const
+    oes::d3d::SRenderContext* SceneEditorMain::GetRenderContext() const
     {
         return m_pApi->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
     }
@@ -99,7 +99,7 @@ namespace editors
         if (ConvertWideStringToAnsiCch(chFileName, path.c_str(), MAX_PATH))
         {
             // HACK: set default context
-            D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
+            oes::d3d::D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
             pDriver->PushContext(GetRenderContext());
 
             m_pApi->Deserialize(chFileName, nullptr);

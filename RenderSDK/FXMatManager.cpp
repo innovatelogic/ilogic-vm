@@ -20,7 +20,7 @@ void CFXMatManager::Release()
 }
 
 //----------------------------------------------------------------------------------------------
-MaterialEffect* CFXMatManager::GetMaterialInstance(const char *Name)
+oes::d3d::MaterialEffect* CFXMatManager::GetMaterialInstance(const char *Name)
 {
 	std::string sFilename;  
 
@@ -28,13 +28,13 @@ MaterialEffect* CFXMatManager::GetMaterialInstance(const char *Name)
 		return NULL;
 	}
 
-	MaterialEffect * pOutMatInstance = NULL;
+    oes::d3d::MaterialEffect * pOutMatInstance = NULL;
 
 	std::map<std::string, m_material>::iterator IterFind = m_MapMatPrototypes.find(sFilename.c_str());
 
 	if (IterFind != m_MapMatPrototypes.end())
 	{
-		pOutMatInstance = Alloc_MaterialEffect(m_pRenderSDK->GetRenderDriver());
+		pOutMatInstance = oes::d3d::Alloc_MaterialEffect(m_pRenderSDK->GetRenderDriver());
 		
 		std::string sFXFilename;
 
@@ -52,7 +52,7 @@ MaterialEffect* CFXMatManager::GetMaterialInstance(const char *Name)
 
 		if (Load(sFilename.c_str(), OutMaterial))
 		{
-			pOutMatInstance = Alloc_MaterialEffect(m_pRenderSDK->GetRenderDriver());
+			pOutMatInstance = oes::d3d::Alloc_MaterialEffect(m_pRenderSDK->GetRenderDriver());
 
 			std::string sFXFilename;
 
@@ -72,9 +72,9 @@ MaterialEffect* CFXMatManager::GetMaterialInstance(const char *Name)
 }
 
 //----------------------------------------------------------------------------------------------
-void CFXMatManager::ReleaseMaterial(MaterialEffect *Inst)
+void CFXMatManager::ReleaseMaterial(oes::d3d::MaterialEffect *Inst)
 {
-	Release_MaterialEffect(Inst);
+	oes::d3d::Release_MaterialEffect(Inst);
 }
 
 //----------------------------------------------------------------------------------------------

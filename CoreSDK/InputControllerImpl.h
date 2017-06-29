@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Foundation/StdafxFoundation.h"
+#include "coresdkafx.h"
 
 namespace core_sdk_api
 {
@@ -14,7 +15,7 @@ namespace core_sdk_api
 
         bool ProcessInputMouse(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);
         void ProcessInputMouse(const MouseMoveInputData &InputData, IDrawInterface *pIObjectMask = 0);
-        void ProcessMouseWheel(float ds, class SRenderContext *pRenderContext = 0);
+        void ProcessMouseWheel(float ds, oes::d3d::SRenderContext *pRenderContext = 0);
 
     protected:
         bool ProcessPress(const MouseInputData &InputData, IDrawInterface *pIObjectMask = 0);

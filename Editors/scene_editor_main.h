@@ -19,7 +19,7 @@ namespace editors
 
         void Update(float deltaTime) override;
 
-        SRenderContext* GetRenderContext() const override;
+        oes::d3d::SRenderContext* GetRenderContext() const override;
 
         bool    Open(const std::wstring &path) override;
         bool    Save(const std::wstring &path) override;

@@ -5,7 +5,9 @@
 #pragma once
 #endif
 
+#include "coresdkafx.h"
 #include "IDrawInterface.h"
+
 
 class CORESDK_API IDrawInterfaceUI : public IDrawInterface
 {

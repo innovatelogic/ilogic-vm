@@ -7,7 +7,7 @@ Comp_MeshNode::Comp_MeshNode(const CObjectAbstract * Parent)
 : Super(Parent)
 , Effect(NULL)
 {
-	Mesh = new D3DMesh(GetRenderComponent()->GetRenderDriver());
+	Mesh = new oes::d3d::D3DMesh(GetRenderComponent()->GetRenderDriver());
 	assert(Mesh);
 }
 

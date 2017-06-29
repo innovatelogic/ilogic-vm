@@ -39,7 +39,7 @@ private:
 
 	std::wstring m_Value;
 
-	class CFont2D* m_pFontComponent;
+    oes::d3d::CFont2D* m_pFontComponent;
 };
 
 #endif//__uicomp_drawfont_h__

@@ -19,9 +19,12 @@ namespace oes
             virtual void instance(const std::function<void()> &f)
             {
                 std::tuple<Args...> tup;
-
                 f();
             }
+
+            void embed(T *obj) { embed_impl(obj); return obj; }
+
+            virtual void embed_impl(T *obj) {}
 
             static T* instance(Args&&... args)
             {

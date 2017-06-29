@@ -1,84 +1,88 @@
-#ifndef __rendercontext_h__
-#define __rendercontext_h__
 
 #pragma once
 
 #ifdef _WIN32
-#pragma once
 #pragma warning (disable:4251) 
 #endif
 
 #include "dxstdafx.h"
 
-class D3DDriver;
-class TextureNode;
-class MaterialEffectNode;
-class CFontNode;
-class CSceneMeshNode;
-
-namespace RenderDriver{
-	class RenderTargetNode;
-}
-
-class D3DDRIVER_API SRenderContext final
+namespace oes
 {
-public:
-	SRenderContext(D3DDriver *pDriver);
-	~SRenderContext();
+    namespace d3d
+    {
+        class D3DDriver;
+        class TextureNode;
+        class MaterialEffectNode;
+        class CFontNode;
+        class CSceneMeshNode;
 
-	TextureNode*			LoadTextureW(const wchar_t *URL);
-	bool					UnregisterTexture(TextureNode *pNode);
+        namespace RenderDriver {
+            class RenderTargetNode;
+        }
 
-	MaterialEffectNode*		LoadMaterialEffectW(const wchar_t *URL);
-	bool					UnregisterMaterialEffect(MaterialEffectNode *Node);
+        typedef std::map<std::wstring, CSceneMeshNode*> TSceneMeshNodesW;
+        typedef std::map<std::wstring, MaterialEffectNode*> TMapMaterialEffectsW;
+        typedef std::map<std::wstring, TextureNode*> TMapTextureNodeW;
+        typedef std::vector<CFontNode*> TVecFontNodes;
 
-	CFontNode*				LoadFontW(const char *Name, int Size);
-	bool					UnregisterFont(const CFontNode* pFont);
+        class D3DDRIVER_API SRenderContext final
+        {
+        public:
+            SRenderContext(D3DDriver *pDriver);
+            ~SRenderContext();
 
-	CSceneMeshNode*			GetSceneMeshNode(const wchar_t *pURL);
-	CSceneMeshNode*			AllocSceneMeshNode(const wchar_t *pURL);
-	bool					UnregisterSceneMeshNode(const CSceneMeshNode *pNode);
+            TextureNode*			LoadTextureW(const wchar_t *URL);
+            bool					UnregisterTexture(TextureNode *pNode);
 
-	RenderDriver::RenderTargetNode* AllocRenderTarget(unsigned int width, unsigned int height);
-	void							FreeRenderTarget(RenderDriver::RenderTargetNode *rt);
+            MaterialEffectNode*		LoadMaterialEffectW(const wchar_t *URL);
+            bool					UnregisterMaterialEffect(MaterialEffectNode *Node);
 
-    bool    GetWireframeMode() const { return m_bWireframe; }
-    void    SetWireframeMode(bool flag) { m_bWireframe = flag; }
+            CFontNode*				LoadFontW(const char *Name, int Size);
+            bool					UnregisterFont(const CFontNode* pFont);
 
-private:
-	bool LoadTGAW(TextureNode *pNode, const wchar_t *filename);
-	//void make_dlist(FT_Face face, char ch, GLuint list_base, GLuint *tex_base);
-	//void fill_texture_data(uint32_t ch, class CFontNode::font_info_t *font, uint32_t texture_width, uint8_t *texture_data);
+            CSceneMeshNode*			GetSceneMeshNode(const wchar_t *pURL);
+            CSceneMeshNode*			AllocSceneMeshNode(const wchar_t *pURL);
+            bool					UnregisterSceneMeshNode(const CSceneMeshNode *pNode);
 
-	bool LoadUncompressedTGA(TextureNode *pNode, FILE *fTGA);
-	bool LoadCompressedTGA(TextureNode *pNode, FILE *fTGA);
+            RenderDriver::RenderTargetNode* AllocRenderTarget(unsigned int width, unsigned int height);
+            void							FreeRenderTarget(RenderDriver::RenderTargetNode *rt);
 
-	bool LoadFile(const wchar_t *fileName, bool binary, uint8_t **buffer, uint32_t *size);
-	GLint ShaderStatus(GLuint shader, GLenum param);
+            bool    GetWireframeMode() const { return m_bWireframe; }
+            void    SetWireframeMode(bool flag) { m_bWireframe = flag; }
 
+        private:
+            bool LoadTGAW(TextureNode *pNode, const wchar_t *filename);
+            //void make_dlist(FT_Face face, char ch, GLuint list_base, GLuint *tex_base);
+            //void fill_texture_data(uint32_t ch, class CFontNode::font_info_t *font, uint32_t texture_width, uint8_t *texture_data);
 
+            bool LoadUncompressedTGA(TextureNode *pNode, FILE *fTGA);
+            bool LoadCompressedTGA(TextureNode *pNode, FILE *fTGA);
 
-public:
-	HWND	m_hWnd;
-	HDC		m_hDC;				// Private GDI Device Context
-	size_t	m_displayModeWidth;
-	size_t	m_displayModeHeight;
+            bool LoadFile(const wchar_t *fileName, bool binary, uint8_t **buffer, uint32_t *size);
+            GLint ShaderStatus(GLuint shader, GLenum param);
 
-	HGLRC	m_hRC;				// Permanent Rendering Context
-	GLuint	m_PixelFormat;		// Holds The Results After Searching For A Match
+        public:
+            HWND	m_hWnd;
+            HDC		m_hDC;				// Private GDI Device Context
+            size_t	m_displayModeWidth;
+            size_t	m_displayModeHeight;
 
-    // render settings
-    bool    m_bWireframe;
+            HGLRC	m_hRC;				// Permanent Rendering Context
+            GLuint	m_PixelFormat;		// Holds The Results After Searching For A Match
 
-private:
-	class D3DDriver					*m_pDriver;
+            // render settings
+            bool    m_bWireframe;
 
-	TMapTextureNodeW				m_MapTextureNodesW;
-	TMapMaterialEffectsW			m_MapMaterialEffects;
-	TVecFontNodes					m_VecFontNodes;
-	TSceneMeshNodesW				m_MapSceneMeshNodes;
+        private:
+            D3DDriver					*m_pDriver;
 
-	std::vector<RenderDriver::RenderTargetNode*> m_renderTargets;
-};
+            TMapTextureNodeW				m_MapTextureNodesW;
+            TMapMaterialEffectsW			m_MapMaterialEffects;
+            TVecFontNodes					m_VecFontNodes;
+            TSceneMeshNodesW				m_MapSceneMeshNodes;
 
-#endif//__rendercontext_h__
+            std::vector<RenderDriver::RenderTargetNode*> m_renderTargets;
+        };
+    }
+}

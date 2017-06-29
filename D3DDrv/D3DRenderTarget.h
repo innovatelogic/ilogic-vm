@@ -1,36 +1,37 @@
-#ifndef __d3drendertarget_h__
-#define __d3drendertarget_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "D3DRenderInterface.h"
 #include "RenderTargetNode.h"
 
-class D3DDRIVER_API D3DRenderTarget : public D3DRenderInterface
+namespace oes
 {
-	DECL_CLASS_SIMPLE(D3DRenderTarget, D3DRenderInterface);
+    namespace d3d
+    {
+        class D3DDriver;
 
-public:
-	D3DRenderTarget(const class D3DDriver *pInterface);
-	D3DRenderTarget(const D3DRenderTarget &Source);
-	virtual ~D3DRenderTarget();
+        class D3DDRIVER_API D3DRenderTarget : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(D3DRenderTarget, D3DRenderInterface);
 
-	virtual bool CreateRenderTarget(size_t width, size_t height);
-	virtual void Release();
+        public:
+            D3DRenderTarget(const D3DDriver *pInterface);
+            D3DRenderTarget(const D3DRenderTarget &Source);
+            virtual ~D3DRenderTarget();
 
-	size_t GetWidth() const { return m_pRenderTarget->GetWidth(); }
-	size_t GetHeight() const { return m_pRenderTarget->GetHeight(); }
+            virtual bool CreateRenderTarget(size_t width, size_t height);
+            virtual void Release();
 
-	GLuint GetTexture() const { return m_pRenderTarget->GetTexture(); }
-	GLuint GetFrameBuffer() const { return m_pRenderTarget->GetFrameBuffer(); }
-	GLuint GetDepthBuffer() const { return m_pRenderTarget->GetDepthBuffer(); }
+            size_t GetWidth() const { return m_pRenderTarget->GetWidth(); }
+            size_t GetHeight() const { return m_pRenderTarget->GetHeight(); }
 
-protected:
-private:
-	RenderDriver::RenderTargetNode *m_pRenderTarget;
-};
+            GLuint GetTexture() const { return m_pRenderTarget->GetTexture(); }
+            GLuint GetFrameBuffer() const { return m_pRenderTarget->GetFrameBuffer(); }
+            GLuint GetDepthBuffer() const { return m_pRenderTarget->GetDepthBuffer(); }
 
-
-#endif//__d3drendertarget_h__
+        protected:
+        private:
+            RenderDriver::RenderTargetNode *m_pRenderTarget;
+        };
+    }
+}

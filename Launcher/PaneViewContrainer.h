@@ -37,7 +37,7 @@ public:
     bool m_bCtrlPressed;
     bool m_bPush;
 
-    class SRenderContext *m_pRenderContext;
+    oes::d3d::SRenderContext *m_pRenderContext;
 
 private:
     std::shared_ptr<editors::IEditor> m_editor;

@@ -4,6 +4,7 @@
 
 #include "platform_specific.h"
 #include "module.h"
+#include "D3DDriver.h"
 
 enum RENDER_INFO
 {
@@ -82,6 +83,7 @@ struct AdjDebugInfo
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
+
 struct RenderQuevueAdjacency
 {
 	size_t	IdxCommandStart;	// start command index
@@ -124,7 +126,7 @@ struct RenderQuevueAdjacency
 	
 	AdjDebugInfo DebugInfo; // debug render info
 
-	class SRenderContext *pRenderContext;
+	oes::d3d::SRenderContext *pRenderContext;
 
 	RenderQuevueAdjacency(size_t Start, size_t ObjStart)
 		: IdxCommandStart(Start)

@@ -15,7 +15,7 @@ namespace core_sdk_api
         void ProcessInputMouse(const MouseInputData &InputData);
         void ProcessInputMouse2(const MouseInputData &input, const TIViewport *viewport);
         void ProcessInputMouse(const MouseMoveInputData &InputData);
-        void ProcessMouseWheel(float ds, SRenderContext *pRenderContext = 0);
+        void ProcessMouseWheel(float ds, oes::d3d::SRenderContext *pRenderContext = 0);
 
     protected:
 

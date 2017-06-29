@@ -210,7 +210,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CViewportManager::InputMouseWheel(float ds, int x, int y, SRenderContext *context/*= nullptr*/)
+    void CViewportManager::InputMouseWheel(float ds, int x, int y, oes::d3d::SRenderContext *context/*= nullptr*/)
     {
         CameraManager *pMgr = m_pCoreSDK->GetCameraManager();
         assert(pMgr);

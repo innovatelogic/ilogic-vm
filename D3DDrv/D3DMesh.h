@@ -1,157 +1,169 @@
-#ifndef __d3dmesh_h__
-#define __d3dmesh_h__
+
+#pragma once
 
 #ifdef _WIN32
-#pragma once
 #pragma warning(disable: 4251)
 #endif
 
 #include "D3DRenderInterface.h"
 
-//----------------------------------------------------------------------------------------------
-// mesh 
-struct D3DDRIVER_API SMeshMaterial
+namespace oes
 {
-	std::string Name;
-	int id;
+    namespace d3d
+    {
+        class D3DDriver;
+        class SubMeshNode;
+        class BaseMaterial;
+        class CSceneMeshNode;
 
-	std::string FX;
-	std::string tehnique;
+        //----------------------------------------------------------------------------------------------
+        // mesh 
+        struct D3DDRIVER_API SMeshMaterial
+        {
+            std::string Name;
+            int id;
 
-	// material colors...
-	float				diffuse[4];			// diffuse color
-	float				specular[4];		// specular color
-	float               shininess;			// specular exponent
-	float				ambient[4];			// ambient color
-	float				emission[4];		// emitted light intensity of the material
-	float               transparent;		// level of transparency
-	// fog properties...
-	bool                fog;				// fog
-	float				fog_color[4];		// fog color
+            std::string FX;
+            std::string tehnique;
 
-	std::vector<unsigned int>	textures;
-	std::vector<unsigned int>	tex_channel;
-};
+            // material colors...
+            float				diffuse[4];			// diffuse color
+            float				specular[4];		// specular color
+            float               shininess;			// specular exponent
+            float				ambient[4];			// ambient color
+            float				emission[4];		// emitted light intensity of the material
+            float               transparent;		// level of transparency
+            // fog properties...
+            bool                fog;				// fog
+            float				fog_color[4];		// fog color
 
-//----------------------------------------------------------------------------------------------
-struct D3DDRIVER_API SMeshMaterialSet
-{
-	std::string	ObjectFile;
-	std::string	SklFile;
-	std::string	TrkFile;
-	std::string MrkFile;
-	std::string ColFile;
+            std::vector<unsigned int>	textures;
+            std::vector<unsigned int>	tex_channel;
+        };
 
-	std::vector<std::string> Textures;
-	std::vector<SMeshMaterial> Materials;
-};
+        //----------------------------------------------------------------------------------------------
+        struct D3DDRIVER_API SMeshMaterialSet
+        {
+            std::string	ObjectFile;
+            std::string	SklFile;
+            std::string	TrkFile;
+            std::string MrkFile;
+            std::string ColFile;
 
-//----------------------------------------------------------------------------------------------
-struct D3DDRIVER_API SMeshEffectPair
-{
-	class SubMeshNode	*SubMesh;
-	class BaseMaterial	*Effect;
+            std::vector<std::string> Textures;
+            std::vector<SMeshMaterial> Materials;
+        };
 
-	SMeshEffectPair()
-		: SubMesh(NULL)
-		, Effect(NULL)
-	{
-	}
+        //----------------------------------------------------------------------------------------------
+        struct D3DDRIVER_API SMeshEffectPair
+        {
+            SubMeshNode	*SubMesh;
+            BaseMaterial	*Effect;
 
-	SMeshEffectPair(SubMeshNode *pSubMesh, BaseMaterial *pEffect)
-		: SubMesh(pSubMesh)
-		, Effect(pEffect)
-	{
-	}
-};
+            SMeshEffectPair()
+                : SubMesh(NULL)
+                , Effect(NULL)
+            {
+            }
 
-//----------------------------------------------------------------------------------------------
-class D3DDRIVER_API D3DMesh : public D3DRenderInterface
-{
-	DECL_CLASS_SIMPLE(D3DMesh, D3DRenderInterface);
+            SMeshEffectPair(SubMeshNode *pSubMesh, BaseMaterial *pEffect)
+                : SubMesh(pSubMesh)
+                , Effect(pEffect)
+            {
+            }
+        };
+       
+        typedef std::vector<SMeshEffectPair>	TVecSubMeshes;
+        typedef TVecSubMeshes::iterator			TVecSubMeshesIterator;
+        typedef TVecSubMeshes::const_iterator	TVecSubMeshesConstIterator;
 
-protected:
-	typedef std::vector<SMeshEffectPair>	TVecSubMeshes;
-	typedef TVecSubMeshes::iterator			TVecSubMeshesIterator;
-	typedef TVecSubMeshes::const_iterator	TVecSubMeshesConstIterator;
+        struct SVecSubMeshes
+        {
+            TVecSubMeshes VSubMeshes;
+        };
 
-	struct SVecSubMeshes
-	{
-		TVecSubMeshes VSubMeshes;
-	};
+        struct SMeshEffectBank
+        {
+            std::vector<SVecSubMeshes> VBankNodes;
+        };
 
-	struct SMeshEffectBank
-	{
-		std::vector<SVecSubMeshes> VBankNodes;
-	};
+        //----------------------------------------------------------------------------------------------
+        class D3DDRIVER_API D3DMesh : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(D3DMesh, D3DRenderInterface);
 
-public:
-	D3DMesh(const class D3DDriver *pDrv);
-	D3DMesh(const D3DMesh &Sender);
-	virtual ~D3DMesh();
+        protected:
 
-	virtual void	Release();
-	virtual void	Clear(bool SkipEffects = false);
 
-	virtual bool	LoadFromDesc(const SMeshMaterialSet &Desc);
-	
-	virtual BaseMaterial*	ApplyMeshMaterial(int materialID, const SMeshMaterialSet &MaterialSet);
-	
-	void	AddMesh(SMeshEffectPair &Pair, size_t LOD = 0, size_t Dstr = 0);
-	
-	void	Render();
 
-	bool	GetShowDebug() const { return m_bShowDebug; }
-	void	SetShowDebug(bool Value) { m_bShowDebug = Value; }
 
- 	bool	GetShowNormals() const { return bShowNormals; }
- 	void	SetShowNormals(bool Value) { bShowNormals = Value; }
- 
- 	bool	GetShowTangent() const { return bShowTangent; }
- 	void	SetShowTangent(bool Value) { bShowTangent = Value; }
- 
- 	bool	GetShowBinormal() const { return bShowBinormal; }
- 	void	SetShowBinormal(bool Value) { bShowBinormal = Value; }
+        public:
+            D3DMesh(const D3DDriver *pDrv);
+            D3DMesh(const D3DMesh &Sender);
+            virtual ~D3DMesh();
 
-	bool	GetCastShadows() const { return bCastShadow; }
-	void	SetCastShadows(bool Value) { bCastShadow = Value; }
+            virtual void	Release();
+            virtual void	Clear(bool SkipEffects = false);
 
-	bool	GetReciveShadows() const { return bReciveShadow; }
-	void	SetReciveShadows(bool Value) { bReciveShadow = Value; }
+            virtual bool	LoadFromDesc(const SMeshMaterialSet &Desc);
 
-	unsigned int GetForceLODLvl() const { return m_nForceLODLvl; }
-	void		 SetForceLODLvl(unsigned int Value) { m_nForceLODLvl = Value; }
+            virtual BaseMaterial*	ApplyMeshMaterial(int materialID, const SMeshMaterialSet &MaterialSet);
 
-	unsigned int GetDestructLvl() const { return m_nDestructLvl; }
-	void		 SetDestructLvl(unsigned int Value) { m_nDestructLvl = Value; }
+            void	AddMesh(SMeshEffectPair &Pair, size_t LOD = 0, size_t Dstr = 0);
 
-	void					SetSceneMeshNode(class CSceneMeshNode* pScene) { m_pSceneMesh = pScene; }
-	class CSceneMeshNode*	GetSceneMeshNode() const { return m_pSceneMesh; }
-	
-private:
-	virtual void	DoRender();
+            void	Render();
 
-public: 
-	virtual void	SetBoneTransform(unsigned int index, float *pMatrix);
+            bool	GetShowDebug() const { return m_bShowDebug; }
+            void	SetShowDebug(bool Value) { m_bShowDebug = Value; }
 
-	class CSceneMeshNode	*m_pSceneMesh;
+            bool	GetShowNormals() const { return bShowNormals; }
+            void	SetShowNormals(bool Value) { bShowNormals = Value; }
 
-protected:
-	// CSceneMeshNode Nodes replica  
-	std::vector<SMeshEffectBank>	m_VMeshEffectBank; // Dstr0[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]],
-													   // Dstr1[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]],
-													   // Dstr2[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]], 
+            bool	GetShowTangent() const { return bShowTangent; }
+            void	SetShowTangent(bool Value) { bShowTangent = Value; }
 
-	bool m_bShowDebug;
-	bool bShowNormals;
-	bool bShowTangent;
-	bool bShowBinormal;
+            bool	GetShowBinormal() const { return bShowBinormal; }
+            void	SetShowBinormal(bool Value) { bShowBinormal = Value; }
 
-	bool bCastShadow;
-	bool bReciveShadow;
+            bool	GetCastShadows() const { return bCastShadow; }
+            void	SetCastShadows(bool Value) { bCastShadow = Value; }
 
-	unsigned int m_nForceLODLvl;
-	unsigned int m_nDestructLvl;
-};
+            bool	GetReciveShadows() const { return bReciveShadow; }
+            void	SetReciveShadows(bool Value) { bReciveShadow = Value; }
 
-#endif//__d3dmesh_h__
+            unsigned int GetForceLODLvl() const { return m_nForceLODLvl; }
+            void		 SetForceLODLvl(unsigned int Value) { m_nForceLODLvl = Value; }
+
+            unsigned int GetDestructLvl() const { return m_nDestructLvl; }
+            void		 SetDestructLvl(unsigned int Value) { m_nDestructLvl = Value; }
+
+            void					SetSceneMeshNode(CSceneMeshNode* pScene) { m_pSceneMesh = pScene; }
+            CSceneMeshNode*	GetSceneMeshNode() const { return m_pSceneMesh; }
+
+        private:
+            virtual void	DoRender();
+
+        public:
+            virtual void	SetBoneTransform(unsigned int index, float *pMatrix);
+
+            oes::d3d::CSceneMeshNode	*m_pSceneMesh;
+
+        protected:
+            // CSceneMeshNode Nodes replica  
+            std::vector<SMeshEffectBank>	m_VMeshEffectBank; // Dstr0[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]],
+                                                               // Dstr1[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]],
+                                                               // Dstr2[ Lod0[Node0, ...], Lod1[Node0, ...], Lod2[...]], 
+
+            bool m_bShowDebug;
+            bool bShowNormals;
+            bool bShowTangent;
+            bool bShowBinormal;
+
+            bool bCastShadow;
+            bool bReciveShadow;
+
+            unsigned int m_nForceLODLvl;
+            unsigned int m_nDestructLvl;
+        };
+    }
+}

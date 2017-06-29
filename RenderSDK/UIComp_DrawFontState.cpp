@@ -129,8 +129,8 @@ UIComp_DrawFontState::UIComp_DrawFontState(const CObjectAbstract *Parent)
 
 	for (unsigned int Index = 0; Index < ActiveState_MAX; ++Index)
 	{
-		ArrFontStates.Elements[Index].FontComponent = Alloc_Font2D(GetRenderComponent()->GetRenderDriver());
-		ArrFontStates.Elements[Index].pMesh = new CD3DFontMesh(GetRenderComponent()->GetRenderDriver());
+		ArrFontStates.Elements[Index].FontComponent = oes::d3d::Alloc_Font2D(GetRenderComponent()->GetRenderDriver());
+		ArrFontStates.Elements[Index].pMesh = new oes::d3d::CD3DFontMesh(GetRenderComponent()->GetRenderDriver());
 		ArrFontStates.Elements[Index].m_pOwner = this;
 	}
 }
@@ -181,14 +181,14 @@ void UIComp_DrawFontState::Initialize()
 //----------------------------------------------------------------------------------------------
 void UIComp_DrawFontState::Render() const
 {
-	D3DDriver* pDrv3D = GetRenderComponent()->GetRenderDriver();
+    oes::d3d::D3DDriver* pDrv3D = GetRenderComponent()->GetRenderDriver();
 
 	Matrix M;
 	M.t = m_WorldMatrixTransform.t;
 
 	pDrv3D->SetWorldMatrix(M.GetPtr());
 
-	BaseMaterial *pEffect = m_pMaterialEffect->GetPrtEffect();
+    oes::d3d::BaseMaterial *pEffect = m_pMaterialEffect->GetPrtEffect();
 	if (pEffect)
 	{	
 		pEffect->BeginEffect(0);
@@ -269,8 +269,8 @@ void UIComp_DrawFontState::RebuildMesh(const std::wstring &text)
 			std::wstring::const_iterator c = text.begin();
 			std::wstring::const_iterator const temp_end = text.end();
 
-			CFont2D *pFont = ArrFontStates.Elements[Index].FontComponent;
-			CFontNode *pNode = pFont->GetFontNode();
+            oes::d3d::CFont2D *pFont = ArrFontStates.Elements[Index].FontComponent;
+            oes::d3d::CFontNode *pNode = pFont->GetFontNode();
 
 			int advance = 0;
 			int i = 0;
@@ -278,7 +278,7 @@ void UIComp_DrawFontState::RebuildMesh(const std::wstring &text)
 
 			for (; c != temp_end; ++c)
 			{
-				CFontNode::char_info_t *ci = &pNode->m_Info.ch[*c];
+                oes::d3d::CFontNode::char_info_t *ci = &pNode->m_Info.ch[*c];
 
 				vertices[i + 0].x = ci->left + advance + ci->v[0].x;
 				vertices[i + 0].y = ci->v[0].y + (pNode->m_Info.max_height - ci->top);
@@ -309,7 +309,7 @@ void UIComp_DrawFontState::RebuildMesh(const std::wstring &text)
 	
 			for (; c != temp_end; ++c)
 			{
-				const CFontNode::char_info_t *ci = &pNode->m_Info.ch[*c];
+				const oes::d3d::CFontNode::char_info_t *ci = &pNode->m_Info.ch[*c];
 
 				uv[i + 0].x = ci->uv[0].u;
 				uv[i + 0].y = ci->uv[0].v;

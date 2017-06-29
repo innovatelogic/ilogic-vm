@@ -66,7 +66,7 @@ namespace core_sdk_api
     }
 
     //----------------------------------------------------------------------------------------------
-    void CInputControllerImpl::ProcessMouseWheel(float ds, SRenderContext *pRenderContext /*= 0*/)
+    void CInputControllerImpl::ProcessMouseWheel(float ds, oes::d3d::SRenderContext *pRenderContext /*= 0*/)
     {
 
     }

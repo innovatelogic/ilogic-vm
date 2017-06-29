@@ -25,7 +25,7 @@ public:
 
 protected:
 public:
-	class MaterialEffectLava	*pMaterialEffectLava;
+    oes::d3d::MaterialEffectLava	*pMaterialEffectLava;
 };
 
 #endif//__comp_materialeffect_lava_h__

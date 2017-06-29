@@ -14,7 +14,7 @@ CameraManager::~CameraManager()
 }
 
 //----------------------------------------------------------------------------------------------
-bool CameraManager::RegisterCamera(T *pCamera, SRenderContext *pContext /*= nullptr*/)
+bool CameraManager::RegisterCamera(T *pCamera, oes::d3d::SRenderContext *pContext /*= nullptr*/)
 {
 	bool bResult = false;
 
@@ -119,7 +119,7 @@ bool CameraManager::UnregisterCamera(T *pCamera)
 }
 
 //----------------------------------------------------------------------------------------------
-CameraManager::T* CameraManager::GetActiveCamera(SRenderContext *pContext /*= nullptr*/) const
+CameraManager::T* CameraManager::GetActiveCamera(oes::d3d::SRenderContext *pContext /*= nullptr*/) const
 { 
 	if (pContext == nullptr){
 		pContext = m_pAppMain->GetRenderSDK()->GetRenderDriver()->GetDefaultContext();
@@ -180,7 +180,7 @@ void CameraManager::Update(float dt)
 }
 
 //----------------------------------------------------------------------------------------------
-void CameraManager::ViewportResized(SRenderContext *context)
+void CameraManager::ViewportResized(oes::d3d::SRenderContext *context)
 {
     for (auto *record : m_VecCtxtCameras)
     {

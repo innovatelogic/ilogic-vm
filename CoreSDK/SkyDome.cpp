@@ -152,7 +152,7 @@ void SkyDome::DoRebuildMesh()
 	unsigned int numDistinctBones = 0;
 	std::vector<int> VecBoneRemapper;
 
-	SubMeshNode *pSubMesh = new SubMeshNode(GetRenderComponent()->GetRenderDriver());
+    oes::d3d::SubMeshNode *pSubMesh = new oes::d3d::SubMeshNode(GetRenderComponent()->GetRenderDriver());
 
 	pSubMesh->InitializeVertexData(	GetRenderComponent()->GetRenderDriver(),
 									(float*)vertices,
@@ -178,18 +178,18 @@ void SkyDome::DoRebuildMesh()
 		m_pMaterialEffect->pMaterialEffect->fog = false;
 	}
 
-	D3DMesh *dx_mesh = m_pMeshComponent->GetD3DMesh();
+    oes::d3d::D3DMesh *dx_mesh = m_pMeshComponent->GetD3DMesh();
 	
 	dx_mesh->Clear(true);
 
-	CSceneMeshNode *pSceneMesh = new CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
+    oes::d3d::CSceneMeshNode *pSceneMesh = new oes::d3d::CSceneMeshNode(GetRenderComponent()->GetRenderDriver()); //AllocSceneMeshNode(sFilename.c_str());
 	pSceneMesh->AddRef();
 
 	pSceneMesh->GetSubMeshNodes().push_back(pSubMesh);
 
 	dx_mesh->SetSceneMeshNode(pSceneMesh);
 	
-	dx_mesh->AddMesh(SMeshEffectPair(pSubMesh, m_pMaterialEffect->pMaterialEffect));
+	dx_mesh->AddMesh(oes::d3d::SMeshEffectPair(pSubMesh, m_pMaterialEffect->pMaterialEffect));
 
 	// finally set mesh parameters
 	// UGLY need research for correct parameters set

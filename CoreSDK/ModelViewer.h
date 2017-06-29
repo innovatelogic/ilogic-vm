@@ -3,11 +3,13 @@
 
 #pragma once
 
+#include "D3DDriver.h"
 #include "ActorAllocator.h"
 #include "ViewportInterface.h"
 #include "IDrawInterface.h"
 #include "src/Camera.h"
 #include "include/PxCamera.h"
+
 
 class CORESDK_API CModelViewer : public ActorAllocator, 
 	public core_sdk_api::TIViewport,
@@ -25,12 +27,12 @@ public:
 	virtual void	DoDraw();
 	virtual bool	DoVisibilityTest_();
 
-	class SRenderContext* GetRenderContext() const { return  m_pRenderContext; }
+	oes::d3d::SRenderContext* GetRenderContext() const { return  m_pRenderContext; }
 
 	bool GenerateObjectView(const wchar_t *pFilename);
 	bool Save(const wchar_t *pFilename);
 
-	CCamera* GetCamera() const { return m_pCamera; }
+    class CCamera* GetCamera() const { return m_pCamera; }
 
 protected:
 private:
@@ -39,7 +41,7 @@ private:
 	void RebuildMesh(const char *diffuseTexture);
 
 private:
-	class SRenderContext		*m_pRenderContext;
+    oes::d3d::SRenderContext		*m_pRenderContext;
 
 	class CComp_EnvSceneInfo	*m_pEnvSceneInfo;
 	CCamera                     *m_pCamera;

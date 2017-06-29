@@ -1,75 +1,80 @@
-#ifndef __basematerial_h__
-#define __basematerial_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "D3DRenderInterface.h"
 
-class D3DDRIVER_API BaseMaterial : public D3DRenderInterface
+namespace oes
 {
-public:
-	BaseMaterial(const BaseMaterial &other) = delete;
-	//BaseMaterial operator= (const BaseMaterial &other) = delete;
+    namespace d3d
+    {
+        class MaterialEffectNode;
+        class D3DDriver;
+        class Texture2D;
+        class Texture3D;
 
-	BaseMaterial(const class D3DDriver *pInterface);
-	virtual ~BaseMaterial();
+        class D3DDRIVER_API BaseMaterial : public D3DRenderInterface
+        {
+        public:
+            BaseMaterial(const BaseMaterial &other) = delete;
+            //BaseMaterial operator= (const BaseMaterial &other) = delete;
 
-	virtual bool				Load(const char *URL);
-	virtual bool				LoadW(const wchar_t *URL);
-	
-	virtual bool				Release();
-	virtual void				Affect() = 0;
+            BaseMaterial(const D3DDriver *pInterface);
+            virtual ~BaseMaterial();
 
-	virtual unsigned int		BeginEffect(const char *Tehnique) const;
-	virtual void				EndEffect();
+            virtual bool				Load(const char *URL);
+            virtual bool				LoadW(const wchar_t *URL);
 
-	virtual void				BeginPass(unsigned int Pass) const;
-	virtual void				EndPass() const;
+            virtual bool				Release();
+            virtual void				Affect() = 0;
 
-	void						SetBoolParam(const char *ParamName, bool Value) const;
-	void						SetMatrixParam(const char *ParamName, const float* Value, int index = -1) const;
-	void						SetVector3Param(const char *ParamName, const float* Value) const;
-	void						SetVector4Param(const char *ParamName, const float* Value) const;
-	void						SetSampleTexture(const char *ParamName, const class Texture2D * Value) const;
-	void						SetSampleTextureID(short Index, const class Texture2D * Value) const;
-	void						SetSampleTexture(const char *ParamName, const class Texture3D * Value) const;
-//	void						SetSampleTextureDirect(const char *ParamName, LPDIRECT3DTEXTURE9 Value) const;
-	void						SetScalarValue(const char *ParamName, float Value) const;
+            virtual unsigned int		BeginEffect(const char *Tehnique) const;
+            virtual void				EndEffect();
 
-	const char*					GetTechniqueName() const { return m_TechniqueName.c_str(); }
-	void						SetTechniqueName(const char *name) { m_TechniqueName = name; }
+            virtual void				BeginPass(unsigned int Pass) const;
+            virtual void				EndPass() const;
 
-	void						SetReference(const char *Ref) { m_Reference = Ref; }
-	const char*					GetReference() const { return m_Reference.c_str(); }
+            void						SetBoolParam(const char *ParamName, bool Value) const;
+            void						SetMatrixParam(const char *ParamName, const float* Value, int index = -1) const;
+            void						SetVector3Param(const char *ParamName, const float* Value) const;
+            void						SetVector4Param(const char *ParamName, const float* Value) const;
+            void						SetSampleTexture(const char *ParamName, const Texture2D * Value) const;
+            void						SetSampleTextureID(short Index, const Texture2D * Value) const;
+            void						SetSampleTexture(const char *ParamName, const Texture3D * Value) const;
+            //	void						SetSampleTextureDirect(const char *ParamName, LPDIRECT3DTEXTURE9 Value) const;
+            void						SetScalarValue(const char *ParamName, float Value) const;
 
-	class MaterialEffectNode*	GetNode() const { return m_pEffectNode; }
+            const char*					GetTechniqueName() const { return m_TechniqueName.c_str(); }
+            void						SetTechniqueName(const char *name) { m_TechniqueName = name; }
 
-	void						SetAlphaTestEnable(bool flag) { m_bAlphaTest = flag; }
-	bool						GetAlphaTestEnable() { return m_bAlphaTest; }
+            void						SetReference(const char *Ref) { m_Reference = Ref; }
+            const char*					GetReference() const { return m_Reference.c_str(); }
 
-	void						SetTransparent(float value) { transperent = value; }
-	float						GetTransparent() { return transperent; }
+            MaterialEffectNode*	        GetNode() const { return m_pEffectNode; }
 
-public:
-	unsigned int				diffuse;	// diffuse color
-	unsigned int				specular;	// specular color
-	float						shininess;
-	unsigned int				ambient;
-	unsigned int				emmision;
-	float						transperent;
-	bool						fog;
-	unsigned int				fog_color;
+            void						SetAlphaTestEnable(bool flag) { m_bAlphaTest = flag; }
+            bool						GetAlphaTestEnable() { return m_bAlphaTest; }
 
-	// opengl states
-	bool						m_bAlphaTest;
+            void						SetTransparent(float value) { transperent = value; }
+            float						GetTransparent() { return transperent; }
 
-protected:
-	std::string					m_Reference;
-	std::string					m_TechniqueName;
+        public:
+            unsigned int				diffuse;	// diffuse color
+            unsigned int				specular;	// specular color
+            float						shininess;
+            unsigned int				ambient;
+            unsigned int				emmision;
+            float						transperent;
+            bool						fog;
+            unsigned int				fog_color;
 
-	class MaterialEffectNode	*m_pEffectNode;
-};
+            // opengl states
+            bool						m_bAlphaTest;
 
-#endif//__basematerial_h__
+        protected:
+            std::string					m_Reference;
+            std::string					m_TechniqueName;
+
+            MaterialEffectNode	        *m_pEffectNode;
+        };
+    }
+}

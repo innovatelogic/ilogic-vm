@@ -37,7 +37,7 @@ RenderAdjacency::SDebugInfo::~SDebugInfo()
 }
 
 //----------------------------------------------------------------------------------------------
-RenderAdjacency::RenderAdjacency(D3DDriver *driver)
+RenderAdjacency::RenderAdjacency(oes::d3d::D3DDriver *driver)
 	: m_ActiveStack(0)
 	, m_pRenderDriver(driver)
 {
@@ -205,9 +205,9 @@ LPRTVARIANTCMD RenderAdjacency::end_cmd(size_t index) const
 }
 
 //----------------------------------------------------------------------------------------------
-void RenderAdjacency::render(SRenderContext *pContext)
+void RenderAdjacency::render(oes::d3d::SRenderContext *pContext)
 {
-	SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
+    oes::d3d::SRenderContext *pActiveContext = (pContext != 0) ? pContext : m_pRenderDriver->GetDefaultContext();
 
 	// render targets first
 	renderTargets(pActiveContext);
@@ -467,7 +467,7 @@ void RenderAdjacency::renderAux(const LPRTVARIANT adjacency)
 }
 
 //----------------------------------------------------------------------------------------------
-void RenderAdjacency::renderRenderTargets(SRenderContext *pContext)
+void RenderAdjacency::renderRenderTargets(oes::d3d::SRenderContext *pContext)
 {
 	int activeStack = getActiveStackIndex();
 
@@ -511,7 +511,7 @@ void RenderAdjacency::renderRenderTargets(SRenderContext *pContext)
 }
 
 //----------------------------------------------------------------------------------------------
-void RenderAdjacency::renderTargets(SRenderContext *pContext)
+void RenderAdjacency::renderTargets(oes::d3d::SRenderContext *pContext)
 {
 	int activeStack = getActiveStackIndex();
 

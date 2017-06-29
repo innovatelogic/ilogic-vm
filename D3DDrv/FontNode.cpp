@@ -6,29 +6,35 @@
 #include "freetype/ftoutln.h"
 #include "freetype/fttrigon.h"
 
-//----------------------------------------------------------------------------------------------
-// CFontNode
-//----------------------------------------------------------------------------------------------
-CFontNode::CFontNode(D3DDriver *p3DDriver, const char* faceName, float height)
-: m_FaceName(faceName)
-, m_fHeight(height)
-, m_p3DDriver(p3DDriver)
+namespace oes
 {
-	m_pRenderContext = m_p3DDriver->GetCurrentContext();
-}
+    namespace d3d
+    {
+        //----------------------------------------------------------------------------------------------
+        // CFontNode
+        //----------------------------------------------------------------------------------------------
+        CFontNode::CFontNode(D3DDriver *p3DDriver, const char* faceName, float height)
+            : m_FaceName(faceName)
+            , m_fHeight(height)
+            , m_p3DDriver(p3DDriver)
+        {
+            m_pRenderContext = m_p3DDriver->GetCurrentContext();
+        }
 
-//----------------------------------------------------------------------------------------------
-CFontNode::~CFontNode()
-{
+        //----------------------------------------------------------------------------------------------
+        CFontNode::~CFontNode()
+        {
 
-}
+        }
 
-//----------------------------------------------------------------------------------------------
-void CFontNode::DoRelease()
-{
-	glDeleteTextures(1, &m_BitmapTexID);
+        //----------------------------------------------------------------------------------------------
+        void CFontNode::DoRelease()
+        {
+            glDeleteTextures(1, &m_BitmapTexID);
 
-	m_p3DDriver->UnregisterFont(this);
+            m_p3DDriver->UnregisterFont(this);
 
-	Refcount::DoRelease();
+            Refcount::DoRelease();
+        }
+    }
 }

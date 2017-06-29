@@ -19,7 +19,7 @@ public:
 	virtual void	Initialize();
 
 private:
-	class CMaterialEffectFont *m_pMaterialEffect;
+    oes::d3d::CMaterialEffectFont *m_pMaterialEffect;
 };
 
 #endif//__comp_materialeffectfont_h__

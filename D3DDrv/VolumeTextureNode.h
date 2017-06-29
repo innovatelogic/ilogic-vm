@@ -1,24 +1,25 @@
-#ifndef __volumetexturenode_h__
-#define __volumetexturenode_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "Refcount.h"
 
-class D3DDRIVER_API VolumeTextureNode : public Refcount
+namespace oes
 {
+    namespace d3d
+    {
 
-public:
-	VolumeTextureNode();
-	virtual ~VolumeTextureNode();
+        class D3DDRIVER_API VolumeTextureNode : public Refcount
+        {
 
-protected:
-	virtual void DoRelease();
+        public:
+            VolumeTextureNode();
+            virtual ~VolumeTextureNode();
 
-public:
-	//LPDIRECT3DVOLUMETEXTURE9 VolumeTexture;
-};
+        protected:
+            virtual void DoRelease();
 
-#endif//__volumetexturenode_h__
+        public:
+            //LPDIRECT3DVOLUMETEXTURE9 VolumeTexture;
+        };
+    }
+}

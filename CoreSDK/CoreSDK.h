@@ -7,6 +7,7 @@
 #include "IEventManager.h"
 #include "include/BaseActor.h"
 #include "include/PxCamera.h"
+#include "D3DDriver.h"
 
 // BUS functions prototypes
 // prototype functions calls from kernel to launcher
@@ -77,7 +78,7 @@ public:
 	void	ProcessEventCopy();
 	void	ProcessEventPaste();
 
-	void	Render(class SRenderContext *pContext = 0,/* bool bSwapBuffer = false,*/ int cps = 0);
+	void	Render(oes::d3d::SRenderContext *pContext = 0,/* bool bSwapBuffer = false,*/ int cps = 0);
 	void	RebuildTransform();
 
 	void	SetSparitalSubdivisionVisible(bool bVisible) { bShowSparitalSubdivision = bVisible; }
@@ -126,8 +127,8 @@ public:
 
     core_sdk_api::PxCamera* getCamera();
 
-    bool    GetWireframeMode(SRenderContext *ctxt) const;
-    void    SetWireframeMode(SRenderContext *ctxt, bool value);
+    bool    GetWireframeMode(oes::d3d::SRenderContext *ctxt) const;
+    void    SetWireframeMode(oes::d3d::SRenderContext *ctxt, bool value);
 
     //////////////////////////////////////////////////////////////////////////
 

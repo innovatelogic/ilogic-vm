@@ -96,7 +96,7 @@ void Comp_MaterialBaseEffect::SetVectorParam(const char *ParamName, const Vector
 }
 
 //----------------------------------------------------------------------------------------------
-void Comp_MaterialBaseEffect::SetSampleTexture(const char *ParamName, const Texture2D * Value)
+void Comp_MaterialBaseEffect::SetSampleTexture(const char *ParamName, const oes::d3d::Texture2D * Value)
 {
 	assert(pMaterialBaseEffect);
 	pMaterialBaseEffect->SetSampleTexture(ParamName, Value);
@@ -110,13 +110,13 @@ void Comp_MaterialBaseEffect::SetScalarValue(const char *ParamName, float Value)
 }
 
 //----------------------------------------------------------------------------------------------
-void Comp_MaterialBaseEffect::SetBaseEffectPtr(/*const*/ BaseMaterial * pEffect)
+void Comp_MaterialBaseEffect::SetBaseEffectPtr(/*const*/ oes::d3d::BaseMaterial * pEffect)
 {
 	pMaterialBaseEffect = pEffect;
 }
 
 //----------------------------------------------------------------------------------------------
-BaseMaterial* Comp_MaterialBaseEffect::GetPrtEffect() const
+oes::d3d::BaseMaterial* Comp_MaterialBaseEffect::GetPrtEffect() const
 {
 	return pMaterialBaseEffect;
 }

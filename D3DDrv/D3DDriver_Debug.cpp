@@ -1,195 +1,202 @@
 #include "d3ddriverstdafx.h"
 
-//----------------------------------------------------------------------------------------------
-void D3DDriver::DrawDebugInfo()
+namespace oes
 {
-	//DrawDebugLines();
-	//DrawDebugTriangles();
-	//DebugRenderShadowmap();
+    namespace d3d
+    {
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::DrawDebugInfo()
+        {
+            //DrawDebugLines();
+            //DrawDebugTriangles();
+            //DebugRenderShadowmap();
 
-	DrawFPS();
-	DrawPerfInfo();
-}
+            DrawFPS();
+            DrawPerfInfo();
+        }
 
-//----------------------------------------------------------------------------------------------
-void D3DDriver::DrawDebugLines()
-{
-	// render 3D point data
-	if (m_3DDotsList.size() > 0)
-	{	
-		size_t num_points = (m_3DDotsList.size() <= MAX_LINE_POINTS) ? m_3DDotsList.size() : MAX_LINE_POINTS;
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::DrawDebugLines()
+        {
+            // render 3D point data
+            if (m_3DDotsList.size() > 0)
+            {
+                size_t num_points = (m_3DDotsList.size() <= MAX_LINE_POINTS) ? m_3DDotsList.size() : MAX_LINE_POINTS;
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(GetProjMatrix());
+                glMatrixMode(GL_PROJECTION);
+                glLoadMatrixf(GetProjMatrix());
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(GetViewMatrix());
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsList[0].m_Position);
+                glMatrixMode(GL_MODELVIEW);
+                glLoadMatrixf(GetViewMatrix());
 
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsList[0].m_Color);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsList[0].m_Position);
 
-		glDrawArrays(GL_POINTS, 0, num_points);
+                glEnableClientState(GL_COLOR_ARRAY);
+                glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsList[0].m_Color);
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+                glDrawArrays(GL_POINTS, 0, num_points);
 
-		m_3DDotsList.clear();
-	}
+                glDisableClientState(GL_COLOR_ARRAY);
+                glDisableClientState(GL_VERTEX_ARRAY);
 
-	// z disable
-	if (m_3DDotsListNoZ.size() > 0)
-	{	
-		size_t num_points = (m_3DDotsListNoZ.size() <= MAX_LINE_POINTS) ? m_3DDotsListNoZ.size() : MAX_LINE_POINTS;
+                m_3DDotsList.clear();
+            }
 
-		glDisable(GL_DEPTH_TEST);
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(GetProjMatrix());
+            // z disable
+            if (m_3DDotsListNoZ.size() > 0)
+            {
+                size_t num_points = (m_3DDotsListNoZ.size() <= MAX_LINE_POINTS) ? m_3DDotsListNoZ.size() : MAX_LINE_POINTS;
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(GetViewMatrix());
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsListNoZ[0].m_Position);
+                glDisable(GL_DEPTH_TEST);
+                glMatrixMode(GL_PROJECTION);
+                glLoadMatrixf(GetProjMatrix());
 
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsListNoZ[0].m_Color);
+                glMatrixMode(GL_MODELVIEW);
+                glLoadMatrixf(GetViewMatrix());
 
-		glDrawArrays(GL_POINTS, 0, num_points);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsListNoZ[0].m_Position);
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-		glEnable(GL_DEPTH_TEST);
+                glEnableClientState(GL_COLOR_ARRAY);
+                glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DDotsListNoZ[0].m_Color);
 
-		m_3DDotsListNoZ.clear();
-	}
+                glDrawArrays(GL_POINTS, 0, num_points);
 
-	// render 3D point data
-	if (m_3DPointList.size() > 1)
-	{	
-		size_t num_points = (m_3DPointList.size() <= MAX_LINE_POINTS) ? m_3DPointList.size() : MAX_LINE_POINTS;
-		size_t num_lines  = num_points / 2;
+                glDisableClientState(GL_COLOR_ARRAY);
+                glDisableClientState(GL_VERTEX_ARRAY);
+                glEnable(GL_DEPTH_TEST);
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(GetProjMatrix());
+                m_3DDotsListNoZ.clear();
+            }
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(GetViewMatrix());
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DPointList[0].m_Position);
+            // render 3D point data
+            if (m_3DPointList.size() > 1)
+            {
+                size_t num_points = (m_3DPointList.size() <= MAX_LINE_POINTS) ? m_3DPointList.size() : MAX_LINE_POINTS;
+                size_t num_lines = num_points / 2;
 
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DPointList[0].m_Color);
+                glMatrixMode(GL_PROJECTION);
+                glLoadMatrixf(GetProjMatrix());
 
-		glDrawArrays(GL_LINES, 0, num_lines * 2);
+                glMatrixMode(GL_MODELVIEW);
+                glLoadMatrixf(GetViewMatrix());
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DPointList[0].m_Position);
 
-		m_3DPointList.clear();
-	}
+                glEnableClientState(GL_COLOR_ARRAY);
+                glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_3DPointList[0].m_Color);
 
-	// z disable
-	if (m_PointListNoZ.size() > 1)
-	{	
-		size_t num_points = (m_PointListNoZ.size() <= MAX_LINE_POINTS) ? m_PointListNoZ.size() : MAX_LINE_POINTS;
-		size_t num_lines  = num_points / 2;
+                glDrawArrays(GL_LINES, 0, num_lines * 2);
 
-		glDisable(GL_DEPTH_TEST);
+                glDisableClientState(GL_COLOR_ARRAY);
+                glDisableClientState(GL_VERTEX_ARRAY);
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(GetProjMatrix());
+                m_3DPointList.clear();
+            }
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(GetViewMatrix());
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointListNoZ[0].m_Position);
+            // z disable
+            if (m_PointListNoZ.size() > 1)
+            {
+                size_t num_points = (m_PointListNoZ.size() <= MAX_LINE_POINTS) ? m_PointListNoZ.size() : MAX_LINE_POINTS;
+                size_t num_lines = num_points / 2;
 
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointListNoZ[0].m_Color);
+                glDisable(GL_DEPTH_TEST);
 
-		glDrawArrays(GL_LINES, 0, num_lines * 2);
+                glMatrixMode(GL_PROJECTION);
+                glLoadMatrixf(GetProjMatrix());
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+                glMatrixMode(GL_MODELVIEW);
+                glLoadMatrixf(GetViewMatrix());
 
-		glEnable(GL_DEPTH_TEST);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointListNoZ[0].m_Position);
 
-		m_PointListNoZ.clear();
-	}
-}
+                glEnableClientState(GL_COLOR_ARRAY);
+                glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointListNoZ[0].m_Color);
 
-//----------------------------------------------------------------------------------------------
-void D3DDriver::DrawDebugTriangles()
-{
-	if (m_PointsTriangle.size() >= 3)
-	{
-		size_t NumTriangles = (m_PointsTriangle.size() <= MAX_DBG_TRIANGLES * 3) ? m_PointsTriangle.size() / 3 : MAX_DBG_TRIANGLES;
+                glDrawArrays(GL_LINES, 0, num_lines * 2);
 
-		glDisable(GL_DEPTH_TEST);
+                glDisableClientState(GL_COLOR_ARRAY);
+                glDisableClientState(GL_VERTEX_ARRAY);
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixf(GetProjMatrix());
+                glEnable(GL_DEPTH_TEST);
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixf(GetViewMatrix());
-		
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointsTriangle[0].m_Position);
+                m_PointListNoZ.clear();
+            }
+        }
 
-		glEnableClientState(GL_COLOR_ARRAY);
-		glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointsTriangle[0].m_Color);
-		
-		glDrawArrays(GL_TRIANGLES, 0, NumTriangles * 3);
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::DrawDebugTriangles()
+        {
+            if (m_PointsTriangle.size() >= 3)
+            {
+                size_t NumTriangles = (m_PointsTriangle.size() <= MAX_DBG_TRIANGLES * 3) ? m_PointsTriangle.size() / 3 : MAX_DBG_TRIANGLES;
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
-		
-		glEnable(GL_DEPTH_TEST);
+                glDisable(GL_DEPTH_TEST);
 
-		m_PointsTriangle.clear();
-	}
-}
+                glMatrixMode(GL_PROJECTION);
+                glLoadMatrixf(GetProjMatrix());
 
-//----------------------------------------------------------------------------------------------
-void D3DDriver::DrawFPS()
-{
+                glMatrixMode(GL_MODELVIEW);
+                glLoadMatrixf(GetViewMatrix());
 
-}
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointsTriangle[0].m_Position);
 
-//----------------------------------------------------------------------------------------------
-void D3DDriver::DrawPerfInfo()
-{
-/*	RECT rc;
+                glEnableClientState(GL_COLOR_ARRAY);
+                glColorPointer(3, GL_FLOAT, sizeof(D3DVertexDbg), &m_PointsTriangle[0].m_Color);
 
-	D3DXMATRIX TxtTransform;
-	D3DXMatrixIdentity(&TxtTransform);
+                glDrawArrays(GL_TRIANGLES, 0, NumTriangles * 3);
 
-	TxtTransform._42 += 100;
-	
-	m_pd3dDevice->SetTransform(D3DTS_WORLD, &TxtTransform);
-	m_pd3dDevice->SetTransform(D3DTS_VIEW, &m_view);
-	m_pd3dDevice->SetTransform(D3DTS_PROJECTION, &m_proj);
-	
- 	char buffer[256] = {'\0'};
+                glDisableClientState(GL_COLOR_ARRAY);
+                glDisableClientState(GL_VERTEX_ARRAY);
 
-	SetRect( &rc, 0, 0, 0, 0 );
+                glEnable(GL_DEPTH_TEST);
 
-	m_pTextSprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+                m_PointsTriangle.clear();
+            }
+        }
 
-	sprintf(buffer, " %s \n cps \n event %d \n update %d \n render %d \n timer %d \n serialize %d",
-				(m_bParalell ? "serial" : "parallel"),
-				m_eventCPS,
-				m_updateCPS,
-				m_renderCPS,
-				m_timerCPS,
-				m_streamCPS
-			);
-	m_CanvasFont->DrawTextA(m_pTextSprite, buffer, -1, &rc, DT_NOCLIP, 0xffffffff);
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::DrawFPS()
+        {
 
-	m_pTextSprite->End();*/
+        }
+
+        //----------------------------------------------------------------------------------------------
+        void D3DDriver::DrawPerfInfo()
+        {
+            /*	RECT rc;
+
+                D3DXMATRIX TxtTransform;
+                D3DXMatrixIdentity(&TxtTransform);
+
+                TxtTransform._42 += 100;
+
+                m_pd3dDevice->SetTransform(D3DTS_WORLD, &TxtTransform);
+                m_pd3dDevice->SetTransform(D3DTS_VIEW, &m_view);
+                m_pd3dDevice->SetTransform(D3DTS_PROJECTION, &m_proj);
+
+                char buffer[256] = {'\0'};
+
+                SetRect( &rc, 0, 0, 0, 0 );
+
+                m_pTextSprite->Begin( D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+
+                sprintf(buffer, " %s \n cps \n event %d \n update %d \n render %d \n timer %d \n serialize %d",
+                            (m_bParalell ? "serial" : "parallel"),
+                            m_eventCPS,
+                            m_updateCPS,
+                            m_renderCPS,
+                            m_timerCPS,
+                            m_streamCPS
+                        );
+                m_CanvasFont->DrawTextA(m_pTextSprite, buffer, -1, &rc, DT_NOCLIP, 0xffffffff);
+
+                m_pTextSprite->End();*/
+        }
+
+    }
 }

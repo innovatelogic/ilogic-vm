@@ -6,7 +6,7 @@ REGISTER_CLASS(Comp_MaterialEffectLava, Comp_MaterialBaseEffect);
 Comp_MaterialEffectLava::Comp_MaterialEffectLava(const CObjectAbstract * Parent)
 : Super(Parent)
 {
-	pMaterialEffectLava = new MaterialEffectLava(GetRenderComponent()->GetRenderDriver());
+	pMaterialEffectLava = new oes::d3d::MaterialEffectLava(GetRenderComponent()->GetRenderDriver());
 	SetBaseEffectPtr(pMaterialEffectLava);
 }
 

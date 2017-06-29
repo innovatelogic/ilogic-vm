@@ -1,31 +1,33 @@
-#ifndef __d3dskeleton_h__
-#define __d3dskeleton_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "D3DRenderInterface.h"
 
-class D3DDRIVER_API D3DSkeleton : public D3DRenderInterface
+namespace oes
 {
-	DECL_CLASS_SIMPLE(D3DSkeleton, D3DRenderInterface);
+    namespace d3d
+    {
+        class D3DDriver;
+        class SkeletonNode;
 
-public:
-	D3DSkeleton(const class D3DDriver * Interface);
-	D3DSkeleton(const D3DSkeleton & Source);
-	~D3DSkeleton();
+        class D3DDRIVER_API D3DSkeleton : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(D3DSkeleton, D3DRenderInterface);
 
-	virtual bool Load(const std::string& filename);
-	virtual void Release();
+        public:
+            D3DSkeleton(const D3DDriver * Interface);
+            D3DSkeleton(const D3DSkeleton & Source);
+            ~D3DSkeleton();
 
-	virtual float* GetBoneBindMatrix(float * pMatrix, int BoneIndex) const;
-	virtual bool   GetFramePosition(float * pQuat, float * pPos, const std::string & Name, unsigned int BoneIndex, float Time) const;
-	virtual unsigned int GetNumFrames(const std::string & Name) const;
-protected:
-private:
-	class SkeletonNode * pSkeletonNode;
-};
+            virtual bool Load(const std::string& filename);
+            virtual void Release();
 
-
-#endif//__d3dskeleton_h__
+            virtual float* GetBoneBindMatrix(float * pMatrix, int BoneIndex) const;
+            virtual bool   GetFramePosition(float * pQuat, float * pPos, const std::string & Name, unsigned int BoneIndex, float Time) const;
+            virtual unsigned int GetNumFrames(const std::string & Name) const;
+        protected:
+        private:
+            SkeletonNode * pSkeletonNode;
+        };
+    }
+}

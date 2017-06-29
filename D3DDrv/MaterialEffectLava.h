@@ -1,38 +1,39 @@
-#ifndef __materialeffectlava_h__
-#define __materialeffectlava_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "MaterialEffect.h"
 
-class D3DDRIVER_API MaterialEffectLava : public BaseMaterial
+namespace oes
 {
-public:
-	MaterialEffectLava(const class D3DDriver * Interface);
-	virtual ~MaterialEffectLava();
+    namespace d3d
+    {
 
-	virtual void			Affect();
+        class D3DDRIVER_API MaterialEffectLava : public BaseMaterial
+        {
+        public:
+            MaterialEffectLava(const D3DDriver * Interface);
+            virtual ~MaterialEffectLava();
 
-	virtual bool			LoadDiffuseMap(const char *filename, bool ImmidiateLoad = true);
-	virtual bool			LoadNormalMap(const char *filename, bool ImmidiateLoad = true);
-	virtual bool			LoadHeightMap(const char *filename, bool ImmidiateLoad = true);
-	virtual bool			LoadNoiseMap(const char *filename, bool ImmidiateLoad = true);
+            virtual void			Affect();
 
-protected:
-	class Texture2D			*DiffuseMap; // diffuse texture
-	class Texture2D			*HeightMap;  // height texture
-	class Texture2D			*NormalMap;  // normal map
-	class Texture3D			*NoiseMap;
+            virtual bool			LoadDiffuseMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			LoadNormalMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			LoadHeightMap(const char *filename, bool ImmidiateLoad = true);
+            virtual bool			LoadNoiseMap(const char *filename, bool ImmidiateLoad = true);
 
-private:
-	float	noiseScale;
-	float	morphRate;
-	float	bubbleRate;
-	float	bubbleScale;
-	float	scale;
-	float	bias;
-};
+        protected:
+            class Texture2D			*DiffuseMap; // diffuse texture
+            class Texture2D			*HeightMap;  // height texture
+            class Texture2D			*NormalMap;  // normal map
+            class Texture3D			*NoiseMap;
 
-#endif//__materialeffectlava_h__
+        private:
+            float	noiseScale;
+            float	morphRate;
+            float	bubbleRate;
+            float	bubbleScale;
+            float	scale;
+            float	bias;
+        };
+    }
+}

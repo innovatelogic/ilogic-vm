@@ -19,8 +19,8 @@ public:
 	virtual void	Clear();
 	virtual void	Render() const;
 	
-	class D3DMesh		*Mesh;
-	class BaseMaterial	*Effect;
+    oes::d3d::D3DMesh		*Mesh;
+    oes::d3d::BaseMaterial	*Effect;
 };
 
 #endif//__meshnode_h__

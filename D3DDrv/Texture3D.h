@@ -1,31 +1,37 @@
-#ifndef __texture3d_h__
-#define __texture3d_h__
+
+#pragma once
 
 #ifdef WIN32
-#pragma once
 #pragma warning(disable: 4251)
 #endif
 
 #include "D3DRenderInterface.h"
 
-class D3DDRIVER_API Texture3D : public D3DRenderInterface
+namespace oes
 {
-	DECL_CLASS_SIMPLE(Texture3D, D3DRenderInterface);
+    namespace d3d
+    {
+        class D3DDriver;
+        class VolumeTextureNode;
 
-public:
-	Texture3D(const class D3DDriver * Interface);
-	Texture3D(const Texture3D &Sender);
-	virtual ~Texture3D();
+        class D3DDRIVER_API Texture3D : public D3DRenderInterface
+        {
+            DECL_CLASS_SIMPLE(Texture3D, D3DRenderInterface);
 
-	virtual bool	Load(const std::string & URL, unsigned int width, unsigned int height, unsigned int depth, bool ImmidiateLoad = true);
-	virtual void	Release();
+        public:
+            Texture3D(const D3DDriver * Interface);
+            Texture3D(const Texture3D &Sender);
+            virtual ~Texture3D();
 
-	//LPDIRECT3DVOLUMETEXTURE9	GetTexture(bool NoNull = true) const;
+            virtual bool	Load(const std::string & URL, unsigned int width, unsigned int height, unsigned int depth, bool ImmidiateLoad = true);
+            virtual void	Release();
 
-protected:
-private:
-	class VolumeTextureNode		*pVolumeTextureNode;
-	std::string					Reference;
-};
+            //LPDIRECT3DVOLUMETEXTURE9	GetTexture(bool NoNull = true) const;
 
-#endif//__texture3d_h__
+        protected:
+        private:
+            VolumeTextureNode		*pVolumeTextureNode;
+            std::string					Reference;
+        };
+    }
+}

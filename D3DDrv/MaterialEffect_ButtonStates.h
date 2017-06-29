@@ -1,31 +1,32 @@
-#ifndef __materialeffect_buttonstates_h__
-#define __materialeffect_buttonstates_h__
 
-#ifdef WIN32
 #pragma once
-#endif
 
 #include "BaseMaterial.h"
 
-class D3DDRIVER_API MaterialEffect_ButtonStates : public BaseMaterial
+namespace oes
 {
-public:
-	MaterialEffect_ButtonStates(const class D3DDriver * Interface);
-	virtual ~MaterialEffect_ButtonStates();
+    namespace d3d
+    {
 
-	virtual bool			Release();
-	virtual void			Affect();
+        class D3DDRIVER_API MaterialEffect_ButtonStates : public BaseMaterial
+        {
+        public:
+            MaterialEffect_ButtonStates(const D3DDriver * Interface);
+            virtual ~MaterialEffect_ButtonStates();
 
-	virtual bool			LoadDiffuseMap(const char *filename, unsigned int StateIdx);
+            virtual bool			Release();
+            virtual void			Affect();
 
-	/*const*/ class Texture2D*	GetDiffuseTexture(unsigned int StateIdx) const;
+            virtual bool			LoadDiffuseMap(const char *filename, unsigned int StateIdx);
 
-	virtual void			SetActiveIdx(unsigned int Idx);
+            /*const*/ class Texture2D*	GetDiffuseTexture(unsigned int StateIdx) const;
 
-protected:
-private:
-	std::vector<class Texture2D*> DiffuseMaps; // diffuse texture
-	unsigned int StateIndex;
-};
+            virtual void			SetActiveIdx(unsigned int Idx);
 
-#endif//__materialeffect_buttonstates_h__
+        protected:
+        private:
+            std::vector<class Texture2D*> DiffuseMaps; // diffuse texture
+            unsigned int StateIndex;
+        };
+    }
+}

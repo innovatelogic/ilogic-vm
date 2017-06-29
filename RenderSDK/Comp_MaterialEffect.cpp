@@ -6,14 +6,14 @@ REGISTER_CLASS(Comp_MaterialEffect, Comp_MaterialBaseEffect);
 Comp_MaterialEffect::Comp_MaterialEffect(const CObjectAbstract * Parent)
 : Super(Parent)
 {
-	pMaterialEffect = Alloc_MaterialEffect(GetRenderComponent()->GetRenderDriver());
+	pMaterialEffect = oes::d3d::Alloc_MaterialEffect(GetRenderComponent()->GetRenderDriver());
 	SetBaseEffectPtr(pMaterialEffect);
 }
 
 //----------------------------------------------------------------------------------------------
 Comp_MaterialEffect::~Comp_MaterialEffect()
 {
-	Release_MaterialEffect(pMaterialEffect);
+    oes::d3d::Release_MaterialEffect(pMaterialEffect);
 	pMaterialEffect = NULL;
 
 	SetBaseEffectPtr(NULL);
@@ -28,7 +28,7 @@ void Comp_MaterialEffect::Initialize()
 }
 
 //----------------------------------------------------------------------------------------------
-/*const*/ MaterialEffect* Comp_MaterialEffect::GetMaterialEffect() const
+/*const*/ oes::d3d::MaterialEffect* Comp_MaterialEffect::GetMaterialEffect() const
 {
 	assert(pMaterialEffect);
 	return pMaterialEffect; 
@@ -66,7 +66,7 @@ Vector4f Comp_MaterialEffect::GetUV() const
 {
 	assert(pMaterialEffect);
 
-	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	return Vector4f(Tex->GetU(), Tex->GetV(), Tex->GetUL(), Tex->GetVL());
 }
 
@@ -75,7 +75,7 @@ void Comp_MaterialEffect::SetUV(const Vector4f &uv)
 {
 	assert(pMaterialEffect);
 
-	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	Tex->SetTexcoords(uv.x, uv.y, uv.z, uv.w);
 }
 
@@ -84,7 +84,7 @@ void Comp_MaterialEffect::SetDiffuseReference(const std::string &strRef)
 {
 	assert(pMaterialEffect);
 
-	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	Tex->SetReference(strRef);
 }
 
@@ -93,7 +93,7 @@ std::string	Comp_MaterialEffect::GetDiffuseReference() const
 {
 	assert(pMaterialEffect);
 
-	Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
+    oes::d3d::Texture2D * Tex = pMaterialEffect->GetDiffuseTexture();
 	return Tex->GetReference();
 }
 
