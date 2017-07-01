@@ -84,10 +84,17 @@ namespace oes
             const char* GetName() const { return m_Name.c_str(); }
 
             ClassNode*	GetClass() const { return m_ClassNodePtr; }
+            
+            /**
+            * @return property's class group name.
+            */
+            const char* ClassName() const { return m_ClassName.c_str(); }
+
             /**
              * @return property's class group name.
+                TODO: Remove
              */
-            const char* GetClassName() const { return m_ClassName.c_str(); }
+            //const char* GetClassName() const { return ClassName(); }
 
             /**
              * @return property's policy: NO_READ_WRITE, READ_ONLY, WRITE_ONLY, READ_WRITE etc..

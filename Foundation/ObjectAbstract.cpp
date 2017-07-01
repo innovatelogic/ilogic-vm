@@ -453,7 +453,7 @@ std::string& CObjectAbstract::GetValueString(std::string &OutValue, bool bSaveAs
 
 								int MemoryOffsetOverride = 0;
 								{
-                                    oes::rflex::SInterfaceDecl* pIntfDecl = pClassNode->GetInterfaceDecl((*IterPropIntf)->GetClassName());
+                                    oes::rflex::SInterfaceDecl* pIntfDecl = pClassNode->GetInterfaceDecl((*IterPropIntf)->ClassName());
 									if (pIntfDecl){
 										MemoryOffsetOverride = pIntfDecl->byteShift;
 									}

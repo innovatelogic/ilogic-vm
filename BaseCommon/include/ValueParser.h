@@ -4,10 +4,8 @@
 #include "StringUtility.h"
 #include "mathlib.h"
 #include <map>
-
-//#ifdef WIN32
-#include <windows.h>
-//#endif
+#include <locale>
+#include <codecvt>
 
 namespace oes
 {
@@ -58,27 +56,16 @@ namespace oes
             }
 
             //------------------------------------------------------------------------
-            std::wstring GetValueStringUTF8(const std::string& Key) const
+            std::wstring GetValueStringUTF8(const std::string &key) const
             {
-                MMapStr::const_iterator Iter = ValueMap.find(Key);
+                MMapStr::const_iterator iter = ValueMap.find(key);
 
-                if (Iter != ValueMap.end())
+                if (iter != ValueMap.end())
                 {
-                    int nLen = MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, nullptr, 0);
-
-                    wchar_t *lpszW = new wchar_t[nLen];
-
-                    MultiByteToWideChar(CP_UTF8, 0, Iter->second.c_str(), -1, lpszW, nLen);
-
-                    std::wstring UTF8Text(lpszW);
-
-                    delete[] lpszW;
-
-                    return UTF8Text;
+                    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+                    return converter.from_bytes(iter->second);
                 }
-
-                std::wstring empty_wstr;
-                return empty_wstr;
+                return L"";
             }
 
             //------------------------------------------------------------------------

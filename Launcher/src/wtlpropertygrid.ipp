@@ -157,8 +157,8 @@ LRESULT CWTLPropertyGrid<T>::OnLBClick(UINT, WPARAM, LPARAM lParam, BOOL& bHandl
         ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
         ofn.lpstrDefExt = L"txt";
 
-        CHAR chFileName[MAX_PATH] = "";
-        if (GetOpenFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
+        std::string chFileName = ConvertWideStringToString(szFileName);
+        if (GetOpenFileName(&ofn))
         {
             m_PropertyCS.enter();
 
@@ -623,7 +623,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(IObjectAbstract *pActor)
 
                 while (IterClass != pGroup->VecPropertyClasses.end())
                 {
-                    if ((*IterClass)->ClassName == (*IterProp)->GetClassName())
+                    if ((*IterClass)->ClassName == (*IterProp)->ClassName())
                     {
                         pClass = *IterClass;
                         break;
@@ -633,7 +633,7 @@ void CWTLPropertyGrid<T>::FillPropertyData(IObjectAbstract *pActor)
 
                 if (!pClass)
                 {
-                    pClass = new oes::rflex::SPropertyClass((*IterProp)->GetClassName(), (void*)pActor);
+                    pClass = new oes::rflex::SPropertyClass((*IterProp)->ClassName(), (void*)pActor);
                     pGroup->VecPropertyClasses.insert(pGroup->VecPropertyClasses.begin(), pClass);
                     pClass->InheritProperties.push_back(NULL); // separator
                 }

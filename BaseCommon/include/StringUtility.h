@@ -53,7 +53,6 @@ namespace oes
         };
 
         // Utility functions
-        COMMON_BASE_EXPORT bool		   ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar);
         COMMON_BASE_EXPORT std::string  ConvertWideStringToString(const std::wstring& strSource);
         COMMON_BASE_EXPORT std::wstring ConvertStringToWideString(const std::string& strSource);
 

@@ -642,10 +642,10 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 				ofn.lpstrDefExt = L"txt";
 
-				CHAR chFileName[MAX_PATH] = "";
-				if (GetSaveFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
+				std::string chFileName = ConvertWideStringToString(szFileName);
+				if (GetSaveFileName(&ofn))
 				{
-					gRootProcess->SerializeActor(chFileName, SelectedActor, true);
+					gRootProcess->SerializeActor(chFileName.c_str(), SelectedActor, true);
 				}
 			}break;
 
@@ -662,10 +662,9 @@ bool ContextMenuProcessor(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 				ofn.lpstrDefExt = L"txt";
 
-				CHAR chFileName[MAX_PATH] = "";
-				if (GetOpenFileName(&ofn) && ConvertWideStringToAnsiCch(chFileName, szFileName, MAX_PATH))
-				{
- 					gRootProcess->DeserializeActor(chFileName, SelectedActor, true);
+				std::string chFileName = ConvertWideStringToString(szFileName);
+				if (GetOpenFileName(&ofn)){
+ 					gRootProcess->DeserializeActor(chFileName.c_str(), SelectedActor, true);
 				}
 			}break;
 		}

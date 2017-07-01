@@ -1,7 +1,12 @@
 #include "mathlib.h"
 #include "StringUtility.h"
 #include <string>
+#include <locale>
+#include <codecvt>
+
+#ifdef WIN32
 #include <windows.h>
+#endif
 
 namespace oes
 {
@@ -222,52 +227,32 @@ namespace oes
             //@todo parse string heare
         }
 
-
         //----------------------------------------------------------------------------------------------
-        // Name: ConvertWideStringToAnsi()
-        // Desc: This is a UNICODE conversion utility to convert a WCHAR string into a
-        //       char string. 
-        //       cchDestChar is the size in TCHARs of strDestination
-        //----------------------------------------------------------------------------------------------
-        bool ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar)
+        std::string ConvertWideStringToString(const std::wstring& str16)
         {
-            if (strDestination == nullptr || wstrSource == nullptr || cchDestChar < 1)
-                return false;
-
-            int nResult = WideCharToMultiByte(CP_ACP, 0, wstrSource, -1, strDestination,
-                cchDestChar*sizeof(char), nullptr, nullptr);
-            strDestination[cchDestChar - 1] = 0;
-
-            if (nResult == 0)
-                return false;
-            return true;
-        }
-
-        //----------------------------------------------------------------------------------------------
-        std::string ConvertWideStringToString(const std::wstring& strSource)
-        {
-            int Length = (int)strSource.length() + 1;
-            char* buf = new char[Length];
-            ConvertWideStringToAnsiCch(buf, strSource.c_str(), Length);
-            std::string r(buf);
-            delete[] buf;
-            return r;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            return converter.to_bytes(str16);
         }
 
         //----------------------------------------------------------------------------------------------
         // Name: ConvertStringToWideString()
         // Desc: 
         //----------------------------------------------------------------------------------------------
-        std::wstring ConvertStringToWideString(const std::string& strSource)
+        std::wstring ConvertStringToWideString(const std::string &str8)
         {
+#ifdef WIN32
             int Length;
-            int slength = (int)strSource.length() + 1;
-            Length = MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), slength, 0, 0);
+            int slength = (int)str8.length() + 1;
+            Length = MultiByteToWideChar(CP_ACP, 0, str8.c_str(), slength, 0, 0);
             wchar_t* buf = new wchar_t[Length];
-            MultiByteToWideChar(CP_ACP, 0, strSource.c_str(), -1, buf, Length);
+            MultiByteToWideChar(CP_ACP, 0, str8.c_str(), -1, buf, Length);
             std::wstring r(buf);
             delete[] buf;
             return r;
+#else
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            return converter.from_bytes(str8);
+#endif//WIN32
         }
 
         //----------------------------------------------------------------------------------------------

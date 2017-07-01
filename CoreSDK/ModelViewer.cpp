@@ -240,10 +240,8 @@ bool CModelViewer::Save(const wchar_t *pFilename)
 
 	if (m_pGenerated)
 	{
-		CHAR chFileName[MAX_PATH] = "";
-		ConvertWideStringToAnsiCch(chFileName, pFilename, MAX_PATH);
-
-		GetAppMain()->SerializeActor(chFileName, m_pGenerated, true);
+        std::string chFileName = ConvertWideStringToString(pFilename);
+		GetAppMain()->SerializeActor(chFileName.c_str(), m_pGenerated, true);
 	}
 	return bResult;
 }

@@ -9,9 +9,11 @@
 #include "command_base.h"
 #include "transform_history_traits.h"
 #include "CoreSDK.h"
+#include "scene_editor_main.h"
+#include "StringUtility.h"
 #include <memory>
 #include <algorithm>
-#include "scene_editor_main.h"
+
 
 namespace editors
 {
@@ -95,19 +97,18 @@ namespace editors
     {
         bool bResult = false;
 
-        CHAR chFileName[MAX_PATH] = "";
-        if (ConvertWideStringToAnsiCch(chFileName, path.c_str(), MAX_PATH))
-        {
-            // HACK: set default context
-            oes::d3d::D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
-            pDriver->PushContext(GetRenderContext());
+        std::string chFileName = ConvertWideStringToString(path);
 
-            m_pApi->Deserialize(chFileName, nullptr);
+        // HACK: set default context
+        oes::d3d::D3DDriver *pDriver = m_pApi->GetRenderSDK()->GetRenderDriver();
+        pDriver->PushContext(GetRenderContext());
+
+        m_pApi->Deserialize(chFileName.c_str(), nullptr);
             
-            pDriver->PopContext();
+        pDriver->PopContext();
 
-            bResult = true;
-        }
+        bResult = true;
+
         return bResult;
     }
 
@@ -116,12 +117,10 @@ namespace editors
     {
         bool bResult = false;
 
-        CHAR chFileName[MAX_PATH] = "";
-        if (ConvertWideStringToAnsiCch(chFileName, path.c_str(), MAX_PATH))
-        {
-            m_pApi->Serialize(chFileName);
-            bResult = true;
-        }
+        std::string chFileName = ConvertWideStringToString(path);
+        m_pApi->Serialize(chFileName.c_str());
+        bResult = true;
+
         return bResult;
     }
 

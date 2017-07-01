@@ -1,4 +1,6 @@
 #include "d3ddriverstdafx.h"
+#include <locale>
+#include <codecvt>
 
 struct SD3D_PixelFormat // DDPIXELFORMAT
 {
@@ -39,20 +41,14 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         TextureNode* D3DDriver::LoadTexture(const char *URL)
         {
-            // TODO: remove to separate func.
-            int Length;
-            int slength = (int)strlen(URL) + 1;
-            Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
-            wchar_t* buf = new wchar_t[Length];
-            MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
-            std::wstring wstrUrl(buf);
-            delete[] buf;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            std::wstring wide = converter.from_bytes(URL);
 
             SRenderContext *pContext = m_stackContext.top();
 
             assert(pContext);
 
-            return pContext->LoadTextureW(wstrUrl.c_str());
+            return pContext->LoadTextureW(wide.c_str());
         }
 
         //----------------------------------------------------------------------------------------------
@@ -98,19 +94,13 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         MaterialEffectNode*	D3DDriver::LoadMaterialEffect(const char *URL)
         {
-            // TODO: remove to separate func.
-            int Length;
-            int slength = (int)strlen(URL) + 1;
-            Length = MultiByteToWideChar(CP_ACP, 0, URL, slength, 0, 0);
-            wchar_t* buf = new wchar_t[Length];
-            MultiByteToWideChar(CP_ACP, 0, URL, -1, buf, Length);
-            std::wstring wstrUrl(buf);
-            delete[] buf;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            std::wstring wide = converter.from_bytes(URL);
 
             SRenderContext *pContext = m_stackContext.top();
             assert(pContext);
 
-            return pContext->LoadMaterialEffectW(wstrUrl.c_str());
+            return pContext->LoadMaterialEffectW(wide.c_str());
         }
 
         //----------------------------------------------------------------------------------------------
@@ -133,21 +123,16 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
-        CSceneMeshNode*	D3DDriver::GetSceneMeshNode(const char *pURL /*= 0*/)
+        CSceneMeshNode*	D3DDriver::GetSceneMeshNode(const char *URL /*= 0*/)
         {
             // TODO: remove to separate func.
-            int Length = 0;
-            int slength = (int)strlen(pURL) + 1;
-            Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
-            wchar_t* buf = new wchar_t[Length];
-            MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
-            std::wstring wstrUrl(buf);
-            delete[] buf;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            std::wstring wide = converter.from_bytes(URL);
 
             SRenderContext *pContext = m_stackContext.top();
             assert(pContext);
 
-            return pContext->GetSceneMeshNode(wstrUrl.c_str());
+            return pContext->GetSceneMeshNode(wide.c_str());
         }
 
         //----------------------------------------------------------------------------------------------
@@ -160,18 +145,13 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
-        CSceneMeshNode* D3DDriver::AllocSceneMeshNode(const char *pURL /*= 0*/)
+        CSceneMeshNode* D3DDriver::AllocSceneMeshNode(const char *URL /*= 0*/)
         {
             // TODO: remove to separate func.
-            int Length = 0;
-            int slength = (int)strlen(pURL) + 1;
-            Length = MultiByteToWideChar(CP_ACP, 0, pURL, slength, 0, 0);
-            wchar_t* buf = new wchar_t[Length];
-            MultiByteToWideChar(CP_ACP, 0, pURL, -1, buf, Length);
-            std::wstring wstrUrl(buf);
-            delete[] buf;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+            std::wstring wide = converter.from_bytes(URL);
 
-            return AllocSceneMeshNodeW(wstrUrl.c_str());
+            return AllocSceneMeshNodeW(wide.c_str());
         }
 
         //----------------------------------------------------------------------------------------------
@@ -278,12 +258,9 @@ namespace oes
 
             TSubMeshAgregatorNodes::iterator Iter = SubMeshAgregatorNodes.find(filename);
 
-            if (Iter != SubMeshAgregatorNodes.end())
-            {
+            if (Iter != SubMeshAgregatorNodes.end()){
                 pAgregator = Iter->second;
-            }
-            else
-            {
+            }else{
                 pAgregator = new SubMeshAgregator(this);
             }
 

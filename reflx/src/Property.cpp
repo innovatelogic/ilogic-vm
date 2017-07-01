@@ -3,6 +3,8 @@
 #include "ClassTree.h"
 #include "StringUtility.h"
 
+#include <windows.h>
+
 namespace oes
 {
     namespace rflex
@@ -79,9 +81,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -139,9 +141,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this))
@@ -199,9 +201,9 @@ namespace oes
         {
             oes::rflex::AppClassTree & CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this))
@@ -260,9 +262,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this))
@@ -321,9 +323,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -383,9 +385,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -419,6 +421,26 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
+        // Name: ConvertWideStringToAnsi()
+        // Desc: This is a UNICODE conversion utility to convert a WCHAR string into a
+        //       char string. 
+        //       cchDestChar is the size in TCHARs of strDestination
+        //----------------------------------------------------------------------------------------------
+        bool ConvertWideStringToAnsiCch(char *strDestination, const wchar_t *wstrSource, int cchDestChar)
+        {
+            if (strDestination == nullptr || wstrSource == nullptr || cchDestChar < 1)
+                return false;
+
+            int nResult = WideCharToMultiByte(CP_ACP, 0, wstrSource, -1, strDestination,
+                cchDestChar * sizeof(char), nullptr, nullptr);
+            strDestination[cchDestChar - 1] = 0;
+
+            if (nResult == 0)
+                return false;
+            return true;
+        }
+
+        //----------------------------------------------------------------------------------------------
         char* PropertyStringW::GetProperty(const void * Ptr, char * OutBuffer) const
         {
             std::wstring *Dest = (std::wstring*)((char*)Ptr + m_MemOffset);
@@ -445,9 +467,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -505,9 +527,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -571,9 +593,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -644,9 +666,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -734,9 +756,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &tree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = tree.Find(GetClassName());
+            ClassNode *pClassNode = tree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = tree.FindInterface(GetClassName());
+                pClassNode = tree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -841,9 +863,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -936,9 +958,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -1033,9 +1055,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -1127,9 +1149,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -1218,9 +1240,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
@@ -1309,9 +1331,9 @@ namespace oes
         {
             oes::rflex::AppClassTree &CTree = oes::rflex::GetClassTree();
 
-            ClassNode *pClassNode = CTree.Find(GetClassName());
+            ClassNode *pClassNode = CTree.Find(ClassName());
             if (!pClassNode) {
-                pClassNode = CTree.FindInterface(GetClassName());
+                pClassNode = CTree.FindInterface(ClassName());
             }
 
             if (!bSilent && pClassNode && !pClassNode->PrePropertyChange(Ptr, this)) {
