@@ -44,21 +44,52 @@ namespace oes
             std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
             std::wstring wide = converter.from_bytes(URL);
 
-            SRenderContext *pContext = m_stackContext.top();
-
-            assert(pContext);
-
-            return pContext->LoadTextureW(wide.c_str());
+            try
+            {
+                SRenderContext *pContext = m_stackContext.top();
+                return pContext->LoadTextureW(wide.c_str());
+            }
+            catch (...)
+            {
+                return nullptr;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
         TextureNode* D3DDriver::LoadTextureW(const wchar_t *URL)
         {
-            SRenderContext *pContext = m_stackContext.top();
+            try
+            {
+                SRenderContext *pContext = m_stackContext.top();
+                return pContext->LoadTextureW(URL);
+            }
+            catch (...)
+            {
+                return nullptr;
+            }  
+        }
 
-            assert(pContext);
-
-            return pContext->LoadTextureW(URL);
+        //----------------------------------------------------------------------------------------------
+        TextureNode* D3DDriver::LoadTextureFromPixels32(
+            unsigned int *pixels,
+            unsigned int imgWidth,
+            unsigned int imgHeight,
+            unsigned int texWidth,
+            unsigned int texHeight)
+        {
+            try
+            {
+                SRenderContext *pContext = m_stackContext.top();
+                return pContext->LoadTextureFromPixels32(pixels,
+                    imgWidth,
+                    imgHeight,
+                    texWidth,
+                    texHeight);
+            }
+            catch (...)
+            {
+                return nullptr;
+            }
         }
 
         //----------------------------------------------------------------------------------------------

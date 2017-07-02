@@ -20,7 +20,7 @@ namespace oes
         class D3DDRIVER_API TextureNode : public Refcount
         {
         public:
-            TextureNode(D3DDriver *p3DDriver);
+            TextureNode(D3DDriver *drv);
             virtual ~TextureNode();
 
             bool GetInfo(unsigned int &Width, unsigned int &Height) const;

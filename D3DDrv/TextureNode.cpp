@@ -5,8 +5,8 @@ namespace oes
     namespace d3d
     {
         //----------------------------------------------------------------------------------------------
-        TextureNode::TextureNode(D3DDriver *p3DDriver)
-            : m_p3DDriver(p3DDriver)
+        TextureNode::TextureNode(D3DDriver *d3d)
+            : m_p3DDriver(d3d)
         {
             m_pRenderContext = m_p3DDriver->GetCurrentContext();
         }
@@ -14,7 +14,6 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         TextureNode::~TextureNode()
         {
-
         }
 
         //----------------------------------------------------------------------------------------------

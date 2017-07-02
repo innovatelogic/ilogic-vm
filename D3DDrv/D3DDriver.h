@@ -92,12 +92,20 @@ namespace oes
             void	AddCommandLockRI(CommandBaseRI *Command);
             void	AddCommandsArrayRI(std::vector<CommandBaseRI*> &ArrayCmd);
 
-            /**
+            /*!
             *	Loaders: render resource primitives
             */
-            TextureNode*			LoadTexture(const char *pURL);
-            TextureNode*			LoadTextureW(const wchar_t *pURL);
-            bool					UnregisterTexture(TextureNode *pNode);
+            TextureNode*    LoadTexture(const char *pURL);
+            TextureNode*    LoadTextureW(const wchar_t *pURL);
+            
+            TextureNode*    LoadTextureFromPixels32(
+                unsigned int *pixels,
+                unsigned int imgWidth,
+                unsigned int imgHeight,
+                unsigned int texWidth,
+                unsigned int texHeight);
+
+            bool    UnregisterTexture(TextureNode *pNode);
 
             // TODO
             //	VolumeTextureNode*	LoadVolumeTexture(const char *pURL, UINT width, UINT height, UINT depth, D3DFORMAT format = D3DFMT_A8R8G8B8, D3DPOOL pool = D3DPOOL_DEFAULT, bool ImmidiateLoad = true);

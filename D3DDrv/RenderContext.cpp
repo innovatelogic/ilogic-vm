@@ -324,6 +324,21 @@ namespace oes
         }
 
         //----------------------------------------------------------------------------------------------
+        TextureNode* SRenderContext::LoadTextureFromPixels32(
+            unsigned int *pixels,
+            unsigned int imgWidth,
+            unsigned int imgHeight,
+            unsigned int texWidth,
+            unsigned int texHeight)
+        {
+            //TextureNode *pNodeTexture = TAllocStrategyW
+            //    <TextureNode, TMapTextureNodeW, D3DDriver>(URL, m_MapTextureNodesW, m_pDriver);
+
+
+            return nullptr;
+        }
+
+        //----------------------------------------------------------------------------------------------
         bool SRenderContext::UnregisterTexture(TextureNode *pNode)
         {
             return TReleaseStrategyBOOL<TextureNode, TMapTextureNodeW>(pNode, m_MapTextureNodesW);

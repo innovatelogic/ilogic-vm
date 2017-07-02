@@ -86,7 +86,9 @@ set(SOURCE
 	TextureNode.cpp
 	TextureNode.h
 	VolumeTextureNode.cpp
-	VolumeTextureNode.h)
+	VolumeTextureNode.h
+	texturedyn2d.h
+	texturedyn2d.cpp)
 	
 	add_library(${PROJECT_NAME} SHARED ${SOURCE})
 	

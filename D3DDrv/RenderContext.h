@@ -32,8 +32,15 @@ namespace oes
             SRenderContext(D3DDriver *pDriver);
             ~SRenderContext();
 
-            TextureNode*			LoadTextureW(const wchar_t *URL);
-            bool					UnregisterTexture(TextureNode *pNode);
+            TextureNode*    LoadTextureW(const wchar_t *url);
+            TextureNode*    LoadTextureFromPixels32(
+                unsigned int *pixels,
+                unsigned int imgWidth,
+                unsigned int imgHeight,
+                unsigned int texWidth,
+                unsigned int texHeight);
+            
+            bool    UnregisterTexture(TextureNode *node);
 
             MaterialEffectNode*		LoadMaterialEffectW(const wchar_t *URL);
             bool					UnregisterMaterialEffect(MaterialEffectNode *Node);
@@ -75,7 +82,7 @@ namespace oes
             bool    m_bWireframe;
 
         private:
-            D3DDriver					*m_pDriver;
+            D3DDriver					    *m_pDriver;
 
             TMapTextureNodeW				m_MapTextureNodesW;
             TMapMaterialEffectsW			m_MapMaterialEffects;

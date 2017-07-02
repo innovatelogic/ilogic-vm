@@ -14,8 +14,8 @@
 #define _WIN32_IE	0x0400
 #define _RICHEDIT_VER	0x0100
 
-#define APP_NAME TEXT("OpenES [v0.21]")
-#define STR_COPYRIGHT "© Innovatelogic 2014"
+#define APP_NAME TEXT("Sandbox [v0.01]")
+#define STR_COPYRIGHT "© Innovatelogic 2017"
 #define STR_SOURCE_COPYRIGHT "Source Code licence: GNU GPLv2"
 
 #define USE_THREADS

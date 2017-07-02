@@ -7,8 +7,6 @@ namespace oes
 {
     namespace d3d
     {
-        class MaterialEffectNode;
-        class D3DDriver;
         class Texture2D;
         class Texture3D;
 
