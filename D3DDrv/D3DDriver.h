@@ -269,8 +269,16 @@ namespace oes
             unsigned int GetLodBenefitByBBox(float *min_x, float *min_y, float *min_z,
                 float *max_x, float *max_y, float *max_z);
 
-            bool LoadDDS(TextureNode *pNode, const wchar_t *filename);
-            bool LoadPNG(TextureNode *pNode, const char *filename);
+            bool LoadDDS(TextureNode *node, const wchar_t *filename);
+            bool LoadPNG(TextureNode *node, const char *filename);
+
+            bool LoadTextureFromPixels32(
+                TextureNode *node,
+                unsigned int *pixels,
+                unsigned int imgWidth,
+                unsigned int imgHeight,
+                unsigned int texWidth,
+                unsigned int texHeight);
 
         private:
             SDDS_IMAGE_DATA* LoadDDSData(const wchar_t *filename);

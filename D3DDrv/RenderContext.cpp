@@ -169,27 +169,26 @@ namespace oes
 
         //----------------------------------------------------------------------------------------------
         template<class TCLASS, class TCONT_CLASS, class TCLASS_DRIVER>
-        TCLASS* TAllocStrategyW(const wchar_t *pUrl, TCONT_CLASS &refContainer, TCLASS_DRIVER *pDrv)
+        TCLASS* TAllocStrategyShared(const wchar_t *url, TCONT_CLASS &refContainer, TCLASS_DRIVER *pDrv)
         {
-            TCLASS *pOutNode = NULL;
+            TCLASS *pOutNode = nullptr;
 
-            TCONT_CLASS::const_iterator Iter = refContainer.find(pUrl);
-
-            if (pUrl && Iter != refContainer.end())
+            if (url)
             {
-                Iter->second->AddRef();
-                return Iter->second;
-            }
-            else
-            {
-                pOutNode = new TCLASS(pDrv);
-                pOutNode->AddRef();
-
-                if (pUrl) {
-                    refContainer.insert(std::make_pair(pUrl, pOutNode));
+                TCONT_CLASS::const_iterator Iter = refContainer.find(url);
+                if (Iter != refContainer.end())
+                {
+                    Iter->second->AddRef();
+                    return Iter->second;
+                }
+                else
+                {
+                    pOutNode = new TCLASS(pDrv);
+                    refContainer.insert(std::make_pair(url, pOutNode));
                 }
             }
-            return pOutNode;
+            
+            return pOutNode ? pOutNode : new TCLASS(pDrv);
         }
 
         //----------------------------------------------------------------------------------------------
@@ -283,7 +282,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         TextureNode* SRenderContext::LoadTextureW(const wchar_t *URL)
         {
-            TextureNode *pNodeTexture = TAllocStrategyW
+            TextureNode *pNodeTexture = TAllocStrategyShared
                 <TextureNode, TMapTextureNodeW, D3DDriver>(URL, m_MapTextureNodesW, m_pDriver);
 
             assert(pNodeTexture);
@@ -331,11 +330,14 @@ namespace oes
             unsigned int texWidth,
             unsigned int texHeight)
         {
-            //TextureNode *pNodeTexture = TAllocStrategyW
-            //    <TextureNode, TMapTextureNodeW, D3DDriver>(URL, m_MapTextureNodesW, m_pDriver);
+            TextureNode *pNodeTexture = TAllocStrategyShared
+                <TextureNode, TMapTextureNodeW, D3DDriver>(nullptr, m_MapTextureNodesW, m_pDriver);
 
+            assert(pNodeTexture);
 
-            return nullptr;
+            m_pDriver->LoadTextureFromPixels32(pNodeTexture, pixels, imgWidth, imgHeight, texWidth, texHeight);
+
+            return pNodeTexture;
         }
 
         //----------------------------------------------------------------------------------------------
@@ -350,12 +352,11 @@ namespace oes
             std::wstring fileName(URL);
 
             size_t idx_find = fileName.find_last_of(L"/\\");
-            if (idx_find != std::wstring::npos)
-            {
+            if (idx_find != std::wstring::npos){
                 fileName = fileName.substr(idx_find + 1);
             }
 
-            MaterialEffectNode *pEffectNode = TAllocStrategyW
+            MaterialEffectNode *pEffectNode = TAllocStrategyShared
                 <MaterialEffectNode, TMapMaterialEffectsW, D3DDriver>(fileName.c_str(), m_MapMaterialEffects, m_pDriver);
 
             if (pEffectNode->GetRefCount() == 1) // check first init
@@ -665,7 +666,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         CSceneMeshNode*	SRenderContext::AllocSceneMeshNode(const wchar_t *pURL)
         {
-            return TAllocStrategyW<CSceneMeshNode, TSceneMeshNodesW, D3DDriver>(pURL, m_MapSceneMeshNodes, m_pDriver);
+            return TAllocStrategyShared<CSceneMeshNode, TSceneMeshNodesW, D3DDriver>(pURL, m_MapSceneMeshNodes, m_pDriver);
         }
 
         //----------------------------------------------------------------------------------------------

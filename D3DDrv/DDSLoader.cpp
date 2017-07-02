@@ -395,5 +395,41 @@ namespace oes
             }
             return true;
         }
+
+        //----------------------------------------------------------------------------------------------
+        bool D3DDriver::LoadTextureFromPixels32(
+            TextureNode *node,
+            unsigned int *pixels,
+            unsigned int imgWidth,
+            unsigned int imgHeight,
+            unsigned int texWidth,
+            unsigned int texHeight)
+        {
+            int nHeight = texHeight;
+            int nWidth = texWidth;
+
+            glGenTextures(1, &node->m_pSTextureBitmap.texID);
+            glBindTexture(GL_TEXTURE_2D, node->m_pSTextureBitmap.texID);
+
+            //Generate texture
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+            //Set texture parameters
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // GL_NEAREST
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+            //Unbind texture
+            glBindTexture(GL_TEXTURE_2D, NULL);
+
+            //Check for error
+            GLenum error = glGetError();
+            if (error != GL_NO_ERROR)
+            {
+                printf("Error loading texture from %p pixels! %s\n", pixels, gluErrorString(error));
+                return false;
+            }
+
+            return true;
+        }
     }
 }

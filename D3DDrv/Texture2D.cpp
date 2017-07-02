@@ -1,4 +1,4 @@
-#include "Texture2D.h"
+﻿#include "Texture2D.h"
 #include "D3DDriver.h"
 #include "TextureNode.h"
 #include <string>
@@ -47,6 +47,14 @@ namespace oes
             if (filepath != "")
             {
                 m_node = m_pD3DInterface->LoadTexture(filepath);
+
+                /*unsigned char px[] = { 255, 0, 0, 0, 
+                                       0, 255, 0, 0,
+                                       0, 0, 255, 0,
+                                       0, 0, 0, 0 };
+
+                m_node = m_pD3DInterface->LoadTextureFromPixels32((unsigned int*)px, 2, 2, 2, 2);
+                */
                 bResult = (m_node != 0);
             }
 
