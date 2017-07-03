@@ -7,6 +7,7 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         TextureNode::TextureNode(D3DDriver *d3d)
             : m_p3DDriver(d3d)
+            , m_PixelsTmp(nullptr)
         {
             m_pRenderContext = m_p3DDriver->GetCurrentContext();
         }
@@ -14,6 +15,9 @@ namespace oes
         //----------------------------------------------------------------------------------------------
         TextureNode::~TextureNode()
         {
+            if (m_PixelsTmp) {
+                delete[] m_PixelsTmp;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
@@ -208,6 +212,47 @@ namespace oes
                     bResult = true;
                 }
             }*/
+            return bResult;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        bool TextureNode::Lock()
+        {
+            bool bResult = false;
+            if (m_PixelsTmp == nullptr && m_pSTextureBitmap.texID != 0)
+            {
+                GLuint size = m_pSTextureBitmap.height * m_pSTextureBitmap.width;
+
+                m_PixelsTmp = new GLuint[size];
+
+                glBindTexture(GL_TEXTURE_2D, m_pSTextureBitmap.texID);
+
+                glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_PixelsTmp);
+
+                glBindTexture(GL_TEXTURE_2D, NULL);
+
+                bResult = true;
+            }
+            return bResult;
+        }
+
+        //----------------------------------------------------------------------------------------------
+        bool TextureNode::Unlock()
+        {
+            bool bResult = false;
+            if (m_PixelsTmp && m_pSTextureBitmap.texID != 0)
+            {
+                glBindTexture(GL_TEXTURE_2D, m_pSTextureBitmap.texID);
+
+                glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_pSTextureBitmap.width, m_pSTextureBitmap.height, GL_RGBA, GL_UNSIGNED_BYTE, m_PixelsTmp);
+
+                delete[] m_PixelsTmp;
+                m_PixelsTmp = nullptr;
+
+                glBindTexture(GL_TEXTURE_2D, NULL);
+
+                bResult = true;
+            }
             return bResult;
         }
 

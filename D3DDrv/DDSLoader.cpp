@@ -405,8 +405,8 @@ namespace oes
             unsigned int texWidth,
             unsigned int texHeight)
         {
-            int nHeight = texHeight;
-            int nWidth = texWidth;
+            const int nHeight = texHeight;
+            const int nWidth = texWidth;
 
             glGenTextures(1, &node->m_pSTextureBitmap.texID);
             glBindTexture(GL_TEXTURE_2D, node->m_pSTextureBitmap.texID);
@@ -415,11 +415,14 @@ namespace oes
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, nWidth, nHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
 
             //Set texture parameters
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // GL_NEAREST
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); // GL_LINEAR
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
             //Unbind texture
             glBindTexture(GL_TEXTURE_2D, NULL);
+
+            node->m_pSTextureBitmap.width = nWidth;
+            node->m_pSTextureBitmap.height = nHeight;
 
             //Check for error
             GLenum error = glGetError();

@@ -48,13 +48,19 @@ namespace oes
             {
                 m_node = m_pD3DInterface->LoadTexture(filepath);
 
-                /*unsigned char px[] = { 255, 0, 0, 0, 
-                                       0, 255, 0, 0,
-                                       0, 0, 255, 0,
-                                       0, 0, 0, 0 };
+               /* unsigned char px[] = { 255, 0, 0, 0, 
+                                       255, 0, 0, 0,
+                                       255, 0, 0, 0,
+                                       255, 0, 0, 0 };
 
                 m_node = m_pD3DInterface->LoadTextureFromPixels32((unsigned int*)px, 2, 2, 2, 2);
-                */
+
+                m_node->Lock();
+
+                m_node->SetPixel32(1, 1, 0);
+
+                m_node->Unlock();*/
+                
                 bResult = (m_node != 0);
             }
 

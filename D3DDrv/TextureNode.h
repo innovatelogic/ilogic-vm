@@ -28,6 +28,13 @@ namespace oes
 
             SRenderContext* GetOwnerContext() const { return m_pRenderContext; }
 
+            bool Lock();
+            bool Unlock();
+
+            GLuint* GetPixelData32() { return m_PixelsTmp; }
+            GLuint  GetPixel32(unsigned int x, unsigned int y) const { return m_PixelsTmp[m_pSTextureBitmap.width * y + x]; }
+            GLuint  SetPixel32(unsigned int x, unsigned int y, unsigned int pixel) { return m_PixelsTmp[m_pSTextureBitmap.width * y + x] = pixel; }
+        
         protected:
             virtual void DoRelease();
 
@@ -37,6 +44,8 @@ namespace oes
 
             SRenderContext		*m_pRenderContext;
             D3DDriver			*m_p3DDriver;
+
+            GLuint* m_PixelsTmp;
         };
     }
 }
