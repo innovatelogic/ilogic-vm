@@ -1,4 +1,4 @@
-﻿#include "coresdkafx.h"
+﻿
 #include "RenderContext.h"
 #include "ViewportManager.h"
 #include "IDrawInterface.h"

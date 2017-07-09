@@ -1,18 +1,13 @@
-#ifndef __UIScreenObject_h__
-#define __UIScreenObject_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "ActorAllocator.h"
 #include "IDrawInterfaceUI.h"
+#include "game_types.h"
 
 /** Class: UIScreenObject 
  *  Desc:  basic UI screen presentation class. 
  */
-class CORESDK_API UIScreenObject :
-	public ActorAllocator, public IDrawInterfaceUI
+class CORESDK_API UIScreenObject : public ActorAllocator, public IDrawInterfaceUI
 {
 	DECLARE_CLASS_SIMPLE(UIScreenObject, ActorAllocator);
 
@@ -61,4 +56,3 @@ private:
 
 	bool					ClipBounds; 
 };
-#endif//__UIScreenObject_h__

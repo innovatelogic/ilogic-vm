@@ -1,14 +1,9 @@
-#ifndef __explorer2d_h__
-#define __explorer2d_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "UIScreenObject.h"
 #include "ViewportInterface.h"
 
-class CORESDK_API Explorer2D : public UIScreenObject , public core_sdk_api::TIViewport
+class CORESDK_API Explorer2D : public UIScreenObject, public core_sdk_api::TIViewport
 {
 	DECLARE_CLASS_SIMPLE(Explorer2D, UIScreenObject);
 
@@ -26,11 +21,6 @@ public:
 
 	inline_ virtual bool	HitTest(const Vector2f& Position) { return false; }
 
-	
-
 protected:
 private:
-	
 };
-
-#endif//__explorer2d_h__

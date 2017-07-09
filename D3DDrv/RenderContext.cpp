@@ -22,7 +22,7 @@ namespace oes
         inline int _next_p2(int a)
         {
             int rval = 1;
-            while (rval < a)	rval <<= 1;
+            while (rval < a) { rval <<= 1; }
             return rval;
         }
 
@@ -291,34 +291,12 @@ namespace oes
                 return pNodeTexture;
             }
 
-            if (wcsstr(URL, L".dds"))
-            {
+            if (wcsstr(URL, L".dds")){
                 m_pDriver->LoadDDS(pNodeTexture, URL);
             }
-            else
-            {
+            else{
                 LoadTGAW(pNodeTexture, URL);
             }
-
-            // Typical Texture Generation Using Data From The TGA ( CHANGE )
-            /*glGenTextures(1, &pNodeTexture->m_pSTextureBitmap.texID);				// Create The Texture ( CHANGE )
-            glBindTexture(GL_TEXTURE_2D, pNodeTexture->m_pSTextureBitmap.texID);
-
-            glTexImage2D(GL_TEXTURE_2D, 0, pNodeTexture->m_TGADesc.bytesPerPixel,
-                pNodeTexture->m_pSTextureBitmap.width,
-                pNodeTexture->m_pSTextureBitmap.height,
-                0,
-                pNodeTexture->m_pSTextureBitmap.type,
-                GL_UNSIGNED_BYTE,
-                pNodeTexture->m_pSTextureBitmap.imageData);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            if (pNodeTexture->m_pSTextureBitmap.imageData)						// If Texture Image Exists ( CHANGE )
-            {
-                free(pNodeTexture->m_pSTextureBitmap.imageData);				// Free The Texture Image Memory ( CHANGE )
-            }*/
             return pNodeTexture;
         }
 
@@ -849,8 +827,7 @@ namespace oes
             if (fread(tga.header, sizeof(tga.header), 1, fTGA) == 0)				// Attempt to read header
             {
                 //MessageBox(NULL, "Could not read info header", "ERROR", MB_OK);	// Display Error
-                if (fTGA != NULL)													// If file is open
-                {
+                if (fTGA != NULL) {													// If file is open
                     fclose(fTGA);													// Close it
                 }
                 return false;														// Return failed
@@ -866,8 +843,7 @@ namespace oes
             if ((texture->width <= 0) || (texture->height <= 0) || ((texture->bpp != 24) && (texture->bpp != 32)))	//Make sure all texture info is ok
             {
                 //MessageBox(NULL, "Invalid texture information", "ERROR", MB_OK);	// If it isnt...Display error
-                if (fTGA != NULL)													// Check if file is open
-                {
+                if (fTGA != NULL) {												// Check if file is open
                     fclose(fTGA);													// Ifit is, close it
                 }
                 return false;														// Return failed

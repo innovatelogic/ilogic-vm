@@ -5,7 +5,6 @@
 #pragma once
 #endif
 
-#include "coresdkafx.h"
 #include "IDrawInterface.h"
 
 

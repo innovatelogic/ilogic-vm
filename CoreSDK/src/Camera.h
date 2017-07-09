@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "coresdkafx.h"
 #include "reflx.h"
 #include "NpActorTemplate.h"
 #include "../include/PxCamera.h"

@@ -1,11 +1,9 @@
-#ifndef __uicomp_drawimage_h__
-#define __uicomp_drawimage_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "RenderObject.h"
+
+class Comp_MaterialEffectUI;
+class Comp_StaticMesh;
 
 class RENDERSDK_API UIComp_DrawImage : public CRenderObject
 {
@@ -51,8 +49,8 @@ public:
 	void			SetColor(unsigned int color) { Color = color; }
 	unsigned int	GetColor() { return Color; }
 
-	Comp_StaticMesh*		GetStaticMesh() const { return m_pMeshComponent; }
-	Comp_MaterialEffectUI*	GetMaterialEffect() const { return MaterialEffect; } 
+    Comp_StaticMesh*		GetStaticMesh() const;
+    Comp_MaterialEffectUI*	GetMaterialEffect() const;
 
 	void			SetRenderTarget(Comp_RenderTarget *pRT);
 
@@ -61,13 +59,11 @@ protected:
 
 protected:
 	/** mesh data*/
-	class Comp_StaticMesh		*m_pMeshComponent;
-	class Comp_MaterialEffectUI	*MaterialEffect;
+	Comp_StaticMesh		        *m_pMeshComponent;
+	Comp_MaterialEffectUI	    *MaterialEffect;
 
 	unsigned int				Color;
 	std::string					ResourceTag;
 	Vector4f					UV;
 };
-
-#endif//__uicomp_drawimage_h__
 

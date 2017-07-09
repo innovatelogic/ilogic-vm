@@ -130,6 +130,8 @@ set(SOURCE
 	ViewportManager.h
 	UIViewPivotControl.h
 	UIViewPivotControl.cpp
+	UIImagePivotControl.h
+	UIImagePivotControl.cpp
 	)
 
 set(SOURCE_API

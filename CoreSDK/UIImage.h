@@ -1,11 +1,8 @@
-#ifndef __uiimage_h__
-#define __uiimage_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "UIScreenObject.h"
+
+class UIComp_DrawImage;
 
 class EXPORT UIImage : public UIScreenObject
 {
@@ -23,7 +20,5 @@ public:
 	bool GetDIB(BYTE** pData, bool bResample = false, unsigned int NewWidth = 0, unsigned int NewHeight = 0) const;
 
 protected:
-	class UIComp_DrawImage	*m_pImageComponent; // transient
+	UIComp_DrawImage	*m_pImageComponent; // transient
 };
-
-#endif//__uiimage_h__

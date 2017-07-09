@@ -1,5 +1,4 @@
-#ifndef __uiscene_h__
-#define __uiscene_h__
+#pragma once
 
 #include "UIScreenObject.h"
 
@@ -46,5 +45,3 @@ private:
 	EHandleInputKey		m_eHandleInputKey;
 	EHandleInputMouse	m_eHandleInputMouse;
 };
-
-#endif//__uiscene_h__

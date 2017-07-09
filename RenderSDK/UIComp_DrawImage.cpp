@@ -29,6 +29,18 @@ UIComp_DrawImage::~UIComp_DrawImage()
 }
 
 //----------------------------------------------------------------------------------------------
+Comp_StaticMesh* UIComp_DrawImage::GetStaticMesh() const
+{
+    return m_pMeshComponent;
+}
+
+//----------------------------------------------------------------------------------------------
+Comp_MaterialEffectUI* UIComp_DrawImage::GetMaterialEffect() const
+{ 
+    return MaterialEffect; 
+}
+
+//----------------------------------------------------------------------------------------------
 void UIComp_DrawImage::OnPropertyChanged(const char* PropertyName)
 {
 	Super::OnPropertyChanged(PropertyName);

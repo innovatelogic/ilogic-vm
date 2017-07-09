@@ -1,9 +1,5 @@
-#ifndef __Label_h__
-#define __Label_h__
 
-#ifdef _WIN32
 #pragma once
-#endif
 
 #include "UIScreenObject.h"
 
@@ -27,5 +23,3 @@ private:
 	UIComp_DrawFont * FontComponent;
 	std::wstring Text;
 };
-
-#endif//__Label_h__

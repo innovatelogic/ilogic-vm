@@ -1,10 +1,12 @@
-#include "coresdkafx.h"
+#include "UIImagePivotControl.h"
+#include "UIViewPivotControl.h"
+#include "UIComp_DrawImage.h"
 
 REGISTER_CLASS(UIImagePivotControl, UIImage)
 
 //----------------------------------------------------------------------------------------------
 UIImagePivotControl::UIImagePivotControl(const CObjectAbstract *Parent)
-: Super(Parent)
+: UIImage(Parent)
 {
 	NEW_OBJECT_TRANSIENT_CHILD(m_pPivot, UIViewPivotControl, "Pivot", this);
 	
@@ -14,7 +16,7 @@ UIImagePivotControl::UIImagePivotControl(const CObjectAbstract *Parent)
 //----------------------------------------------------------------------------------------------
 UIImagePivotControl::~UIImagePivotControl()
 {
-	//m_pImageComponent->SetRenderTarget(0);
+	m_pImageComponent->SetRenderTarget(0);
 }
 
 //----------------------------------------------------------------------------------------------
@@ -26,7 +28,6 @@ bool UIImagePivotControl::DoEventPressed(const MouseInputData &InputData)
 	if (m_pPivot->ProcessClick(RelInputData, GetTransformedSize_())){
 		return true;
 	}
-
 	return Super::DoEventPressed(InputData);
 }
 

@@ -431,7 +431,6 @@ namespace oes
                 printf("Error loading texture from %p pixels! %s\n", pixels, gluErrorString(error));
                 return false;
             }
-
             return true;
         }
     }

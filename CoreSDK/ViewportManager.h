@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Foundation/StdafxFoundation.h"
-#include "coresdkafx.h"
 #include "ViewportInterface.h"
 #include "IDrawInterface.h"
 #include "game_types.h"

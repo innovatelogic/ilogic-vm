@@ -1,11 +1,5 @@
-#ifndef __LabelButton_h__
-#define __LabelButton_h__
-
-#ifdef _WIN32
 #pragma once
-#endif
 
-#include "coresdkafx.h"
 #include "UIScreenObject.h"
 
 class EXPORT LabelButton : public UIScreenObject
@@ -55,5 +49,3 @@ private:
 	float TextPositionX;
 	float TextPositionY;
 };
-
-#endif//__LabelButton_h__

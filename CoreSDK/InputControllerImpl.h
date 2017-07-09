@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Foundation/StdafxFoundation.h"
-#include "coresdkafx.h"
 
 namespace core_sdk_api
 {
